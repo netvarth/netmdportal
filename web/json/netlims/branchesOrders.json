@@ -1,0 +1,27 @@
+{
+    "data": [
+        {
+            "id": "branchesOrdersListTableCont",
+            "elements": [
+                {
+                    "type": "table",
+                    "content": {
+                        "name" : "orders",
+                        "idProperty" : "orders",
+                        "className" :"stdtable stdtablecb",
+                        "style":"border-spacing:0;border-collapse:collapse; border:0;",
+                        "colHeaders" : [
+                            { "className" : "head0", "name" : "Branch Id", "style":"width:5%"},
+                            { "className" : "head1",    "name" : "Branch Name", "style":"width:10%"},
+                            { "className" : "head0",    "name" : "Order Date", "style":"width:15%"},
+                            { "className" : "head1",    "name" : "Total Orders", "style":"width:10%"},
+                            { "className" : "head0",    "name" : "Net Amount", "style":"width:10%"},
+                            { "className" : "head1",    "name" : "Paid Amount", "style":"width:10%"},
+                            { "className" : "head0",    "name" : "Last Orderedtime", "style":"width:10%"}
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

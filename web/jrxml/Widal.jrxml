@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="WidalReport" pageWidth="516" pageHeight="802" columnWidth="516" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2d3b2e79-a4da-4601-863d-7bb9ab1ec365">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="Values" uuid="5e6727d5-f331-4655-92d0-48bb91f12203">
+		<field name="key" class="java.lang.String">
+			<fieldDescription><![CDATA[key]]></fieldDescription>
+		</field>
+		<field name="id" class="java.lang.String">
+			<fieldDescription><![CDATA[id]]></fieldDescription>
+		</field>
+		<field name="value" class="java.lang.String">
+			<fieldDescription><![CDATA[value]]></fieldDescription>
+		</field>
+		<field name="unit" class="java.lang.String">
+			<fieldDescription><![CDATA[unit]]></fieldDescription>
+		</field>
+		<variable name="observedValue" class="java.lang.String">
+			<variableExpression><![CDATA[$F{value}.concat( $F{unit} )]]></variableExpression>
+		</variable>
+		<variable name="normalValue" class="java.lang.String">
+			<variableExpression><![CDATA[$F{value}.concat( $F{unit} )]]></variableExpression>
+		</variable>
+	</subDataset>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="testName" class="java.lang.String">
+		<fieldDescription><![CDATA[testName]]></fieldDescription>
+	</field>
+	<variable name="val_unit" class="java.lang.String"/>
+	<detail>
+		<band height="126" splitType="Stretch">
+			<componentElement>
+				<reportElement x="79" y="31" width="360" height="23" uuid="73cf192f-0ee4-4f02-8a57-21c27b7dada7"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="86b2bbd6-2cb5-4d4b-8c96-36904bc6c047">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="23" width="360">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+							<reportElement x="34" y="0" width="159" height="23" isRemoveLineWhenBlank="true" uuid="ae1aa22f-b82c-4382-ad09-1c321a13d970">
+								<printWhenExpression><![CDATA[$F{id}.equals( "index1" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="216" y="0" width="96" height="23" uuid="03b091e0-ad30-4319-b9c1-cda8b8f994da">
+								<printWhenExpression><![CDATA[$F{id}.equals( "index1" )]]></printWhenExpression>
+							</reportElement>
+							<textElement verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{normalValue}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="197" y="0" width="13" height="23" uuid="7a69b5e5-2f44-409a-a2ef-c36ef3c137a5">
+								<printWhenExpression><![CDATA[$F{id}.equals( "index1" )]]></printWhenExpression>
+							</reportElement>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font isBold="true"/>
+							</textElement>
+							<text><![CDATA[:]]></text>
+						</staticText>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<textField>
+				<reportElement x="79" y="0" width="290" height="25" uuid="cfe1004e-6198-4337-a0b0-74904aa260cf"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{testName}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="79" y="54" width="360" height="23" uuid="a8b79148-dd78-4184-b232-7c731dabab77"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="e42c91f8-8117-44be-9124-1fbf172f04a4">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="23" width="360">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+							<reportElement x="34" y="0" width="159" height="23" isRemoveLineWhenBlank="true" uuid="b97a7256-29f8-4ba4-9897-92ce66f1a388">
+								<printWhenExpression><![CDATA[$F{id}.equals( "index2" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="215" y="0" width="96" height="23" uuid="86ab8385-c0b1-443b-bee2-b12777183ef6">
+								<printWhenExpression><![CDATA[$F{id}.equals( "index2" )]]></printWhenExpression>
+							</reportElement>
+							<textElement verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{normalValue}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="198" y="0" width="13" height="23" uuid="c92b0682-4953-4596-ba76-0dde69e38de2">
+								<printWhenExpression><![CDATA[$F{id}.equals( "index2" )]]></printWhenExpression>
+							</reportElement>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font isBold="true"/>
+							</textElement>
+							<text><![CDATA[:]]></text>
+						</staticText>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="79" y="77" width="360" height="23" uuid="98058482-7036-4961-8fc0-838f8bcfd332"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="de405f3e-06cb-4837-9703-a1b4f0c5982d">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="23" width="360">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+							<reportElement x="34" y="0" width="158" height="23" isRemoveLineWhenBlank="true" uuid="ee4496a5-5c96-4cb3-a161-76ced4b0659e">
+								<printWhenExpression><![CDATA[$F{id}.equals( "index3" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="215" y="0" width="96" height="23" uuid="0b6fb1ba-367f-4c4b-a375-e925010f618c">
+								<printWhenExpression><![CDATA[$F{id}.equals( "index3" )]]></printWhenExpression>
+							</reportElement>
+							<textElement verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{normalValue}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="199" y="0" width="13" height="23" uuid="08e92492-ca2d-438e-ad9e-accbb65eb1e5">
+								<printWhenExpression><![CDATA[$F{id}.equals( "index3" )]]></printWhenExpression>
+							</reportElement>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font isBold="true"/>
+							</textElement>
+							<text><![CDATA[:]]></text>
+						</staticText>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="79" y="100" width="360" height="23" uuid="1af8b405-3cf6-4e49-a30b-8c3fb278669b"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="f155219c-eebd-4ffa-9133-a7da7299a8de">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="23" width="360">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+							<reportElement x="34" y="0" width="158" height="23" isRemoveLineWhenBlank="true" uuid="f98296bf-f90e-49ca-a59b-161668a67441">
+								<printWhenExpression><![CDATA[$F{id}.equals( "index4" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="215" y="0" width="96" height="23" isRemoveLineWhenBlank="true" uuid="a1bec36d-63ab-4ca2-b281-d10d30cea827">
+								<printWhenExpression><![CDATA[$F{id}.equals( "index4" )]]></printWhenExpression>
+							</reportElement>
+							<textElement verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{normalValue}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="199" y="0" width="13" height="23" uuid="16105fef-c594-417d-82b6-3881940ea4bc">
+								<printWhenExpression><![CDATA[$F{id}.equals( "index4" )]]></printWhenExpression>
+							</reportElement>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font isBold="true"/>
+							</textElement>
+							<text><![CDATA[:]]></text>
+						</staticText>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

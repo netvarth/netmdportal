@@ -1,0 +1,168 @@
+{
+    "className": "sep-div",
+    "id": "patientPersonalDiv",
+    "data": [
+        {
+            "className": "sep-div",
+            "data": [
+                {
+                    "className": "five_sixth",
+                    "elements": [
+                        {
+                            "type": "label",
+                            "title": "Find your healthcare provider",
+                            "spanstyle": "font-size:14px;"
+                        }
+                    ]
+                },
+                {
+                    "className": "five_sixth",
+                    "elements": [
+                        {
+                                   
+                                    "type": "combined",
+                                    "items": [
+                                {
+                                    "name": "namefield",
+                                    "id": "namefield",
+                                    "placeHolder": "Enter Name",
+                                    "type": "text",
+									"style":"margin-right: 5%;",
+                                    "className": "large"
+                                },
+                            
+                       
+                                {
+                                    "name": "phonefield",
+                                    "id": "phonefield",
+                                    "placeHolder": "Enter Phone no",
+                                    "type": "text",
+									"style":"margin-right: 5%;",
+                                    "className": "large"
+                                },
+                           
+                       
+                                {
+                                    "name": "mobilefield",
+                                    "id": "mobilefield",
+                                    "placeHolder": "Mobile number",
+                                    "type": "text",
+									"style":"margin-right: 5%;",
+                                    "className": "large"
+                                },
+                           
+                       
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                            {
+                                                "name": "btnNewOrderAdd",
+                                                "id": "btnNewOrderAdd",
+                                                "title": "Find",
+                                                "type": "button",
+												"className": "stdbtn",
+                                                "style": "opacity:1;"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "className": "sep-div-view",
+            "data": [
+                {
+                    "className": "five_sixth",
+                    "elements": [
+                        {
+                            "type": "label",
+                            "title": "Aswini Hospital,Aswini Junction,chembookave",
+                            "spanstyle": "font-size:15px;"
+                        },
+						{
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                            {
+                                                "name": "viewdoctor",
+                                                "id": "viewdoctor",
+                                                "title": "View Doctor",
+                                                "type": "button",
+												"className": "stdbtn",
+                                                "style": "opacity:1;float:right;margin: 0px 15px 18px 10px;"
+                                            }
+                                        ]
+                                    }
+                                }
+                    ]
+                }
+            ]
+        },
+        
+        {
+            "className": "sep-div-view",
+            "data": [
+                {
+                    "className": "five_sixth",
+                    "elements": [
+                        {
+                            "type": "label",
+                            "title": "Baby Memorial,S.A  road,ekm",
+                            "spanstyle": "font-size:15px;"
+                        },
+						{
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                            {
+                                                "name": "viewdoctorone",
+                                                "id": "viewdoctorone",
+                                                "title": "View Doctor",
+                                                "type": "button",
+												"className": "stdbtn",
+                                                "style": "opacity:1;float:right;margin: 0px 15px 18px 10px;"
+                                            }
+                                        ]
+                                    }
+                                }
+                    ]
+                }
+            ]
+        },
+		 {
+            "className": "sep-div-view",
+            "data": [
+                {
+                    "className": "five_sixth",
+                    "elements": [
+                        {
+                            "type": "label",
+                            "title": "Chinmaya mission Hospital,cochi",
+                            "spanstyle": "font-size:15px;"
+                        },
+						{
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                            {
+                                                "name": "viewdoctortwo",
+                                                "id": "viewdoctortwo",
+                                                "title": "View Doctor",
+                                                "type": "button",
+												"className": "stdbtn",
+                                                "style": "opacity:1;float:right;margin: 0px 15px 18px 10px;"
+                                            }
+                                        ]
+                                    }
+                                }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,104 @@
+{
+    "title": "Update Appointment",
+    "style": "width:35%;margin:0 30%",
+    "data": [
+        {
+            "name": "viewpatintAppointmentForm",
+            "id": "viewpatintAppointmentForm",
+            "content": [
+               
+                {
+                    "className": "sep-div",
+                    "data": [
+                        {
+                            "className": "column-left",
+							"id":"viewappointment",
+                            "elements": [
+                                {
+                                    "name": "Patientappointment",
+                                    "id": "Patientappointment",
+									"type": "label",
+                                    "title": "You have an appointment at"
+                                }
+                            ]
+                        },
+						 {
+                            "className": "five_sixth",
+							"id":"updatedetails",
+							"style":"display:none;",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "Startdate",
+                                            "id": "Startdate",
+                                            "type": "text",
+                                            "className": "large",
+                                            "title": "Start Date"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "from",
+                                            "id": "from",
+                                            "type": "select",
+                                            "className": "select",
+                                            "title": "Time"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                       
+                    ]
+                },
+
+                {
+                    "className": "sep-div-view",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                            {
+                                                "name": "btnEdit",
+                                                "id": "btnEdit",
+                                                "title": "Edit",
+                                                "type": "button",
+												"className": "stdbtn btn_black",
+                                                "style": "opacity:1; margin:2px"
+                                            },
+											{
+                                                "name": "btnDone",
+                                                "id": "btnDone",
+                                                "title": "Done",
+                                                "type": "button",
+												"className": "stdbtn btn_black",
+                                                "style": "opacity:1;display:none; margin:2px"
+                                            },
+											{
+                                                "name": "btnCancel",
+                                                "id": "btnCancel",
+                                                "title": "Cancel",
+                                                "type": "button",
+                                                "className": "stdbtn",
+                                                "style": "opacity:1; "
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+{		
+	"buttons":	[
+		{"name":"home","title":"Home"},
+		{"name":"view","title":"View"}
+	]
+}

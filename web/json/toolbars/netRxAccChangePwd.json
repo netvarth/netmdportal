@@ -1,0 +1,5 @@
+{
+	"buttons":	[
+		{"title" 	: 	"Change Password","className":"d2",  "name":"btnNetRxChangePwd"}
+	]
+}

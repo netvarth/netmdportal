@@ -1,0 +1,21 @@
+{
+    "data": [
+        {
+            "id": "clinicsListTableCont",
+            "elements": [
+				{
+                    "type": "table",
+                    "content": {
+                        "name" : "clinics",
+						"idProperty" : "clinics",
+						"className" :"stdtable stdtablecb",
+						"style":"border-spacing:0;border-collapse:collapse; border:0;",
+						"colHeaders" : [
+							{ "className" : "head0","name" : "Clinic Name","style":"width:100%;text-align:left;"}
+						]
+                    }
+                }
+            ]
+        }
+    ]
+}

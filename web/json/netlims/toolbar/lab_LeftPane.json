@@ -1,0 +1,9 @@
+{
+    "buttons":[{"title": "Branch List","className": "netlims","name": "leftPaneNetlimsBranch"},
+		  {"title": "Branch Orders","className": "branchorders","name": "leftPaneNetlimsOrders"},
+		  {"title": "Transferred Orders","className": "branchorders","name": "leftPaneTransferredOrders"},
+		  {"title": "Transferred Results","className": "branchorders","name": "leftPaneTransferredResults"},
+      {"title": "Online Results","className": "branchorders","name": "leftPaneOnlineResults"},
+		  {"title": "Settings","className": "admin","name": "leftPaneSettings"}
+    ]
+}

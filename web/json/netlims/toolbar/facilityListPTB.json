@@ -1,0 +1,7 @@
+{		
+	"buttons":	[		
+		{"name":"orderCount","title":"Order count"},
+		{"name":"orderList","title":"Order list"}
+		
+	]
+}

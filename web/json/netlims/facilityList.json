@@ -1,0 +1,25 @@
+{
+    "data": [
+        {
+            "id": "facilityListTableCont",
+            "elements": [
+				{
+                    "type": "table",
+                    "content": {
+                        "name" : "facilityList",
+						"idProperty" : "facilityList",
+						"className" :"stdtable stdtablecb",
+						"style":"border-spacing:0;border-collapse:collapse; border:0;",
+						"colHeaders" : [
+							{ "className" : "head1",	"name" : "Id", "style":"width:10%"},
+							{ "className" : "head1",	"name" : "Name", "style":"width:20%"},
+							{ "className" : "head1",	"name" : "Phone", "style":"width:20%"},
+							{ "className" : "head1",	"name" : "Address", "style":"width:50%"}
+							
+						]
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,34 @@
+{		
+	"buttons":	[
+		{
+			"name" 	: 	"back",
+			"id"    :   "back",
+			"title"	:	"back to netlims list"
+		},
+			
+		{
+			"name" 	: 	"delete",
+			"title"	:	"Delete"
+			
+		},
+		{
+			"name" 	: 	"view",
+			"title"	:	"View"
+			
+		},
+		{
+			"name" 	: 	"health",
+			"title"	:	"Health monitor"
+			
+		},
+		{
+			"name" 	: 	"change",
+			"title"	:	"Sync Set"
+		},
+		{
+			"name" 	: 	"orderCount",
+			"title"	:	"Order count"
+		}
+
+	]
+}

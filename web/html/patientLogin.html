@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>YouNeverWait-Patient Login</title>
+		<link href="/youNeverWait/css/style_patient.css" type="text/css" rel="stylesheet">
+	</head>
+	<body>
+		<div id="wrapper">
+			<div id="logo-login-section">
+				<div id="logo-section"><img src="/youNeverWait/images/ynwLogo.png" hspace="4" vspace="4" style="margin: 1% 0 0 1%;"></div>
+				<div id="login-section">
+					<form id="netlimsLoginForm" name="loginForm" >
+						<table class="login-table"><tbody>
+							<tr>
+								<td class="nvmagic"><label for="userName">Email or UserId</label></td>
+								<td class="nvmagic"><label for="password">Password</label></td>
+							</tr><tr>
+								<td><input id="userName" class="inputtext" type="text" tabindex="1" value="" name="userName"></td>
+								<td><input id="password" class="inputtext" type="password" tabindex="2" name="password"></td>
+								<td ><button id="btnLogin" tabindex="3">Log In</button></td>
+							</tr><tr>
+								<td><div id="errorInfo"/></td>
+								<td><a href="#" id="forgotpwdpatnt" tabindex="4">Forgot your password?</a></td>
+							</tr>
+						</tbody></table>
+					</form>
+				</div>
+			</div>
+			<div class="search-section">
+				<div class="search-content-left">&nbsp;	</div>
+				<div class="search-content">
+					<form name="search-form" id="search-form">	
+						<div class="lab-btn"><input id="labname" class="inputsearch" type="text" tabindex="5" value="" name="labname" placeholder="Laboratory Name"/></div>
+						<div class="city-btn"><input id="city" class="inputsearch" type="text" tabindex="6" value="" name="city" placeholder="City"/></div>
+						<div class="search-btn"><input name="btnSearch" type="button" class="search-button" tabindex="7"/></div>
+					</form>
+				</div>
+			</div>
+			<div id="main-cnts-listing-bg">
+				<img src="/youNeverWait/images/icon/icon8.jpg"><h1>Find appointments </h1>
+				<p>Find your future and past appointments with doctors</p><br><hr>
+				<img src="/youNeverWait/images/icon/icon1.jpg"><h1>Online appointment</h1>
+				<p>Create appointments online</p><br><hr>
+				<img src="/youNeverWait/images/icon/icon5.jpg"><h1>Online result   </h1>
+				<p>View test results online</p>
+			</div>
+		</div>
+		<div id="footer">	
+		<h2><img src="/youNeverWait/images/icon/netvarth-icon.jpg">&copy;2014 Netvarth Technologies Inc. All rights reserved.</h2>
+		</div>
+	</body>
+	<script type="text/javascript" src="/youNeverWait/js/plugins/jquery-1.7.min.js"></script>
+	<script type="text/javascript" src="/youNeverWait/js/ynw_general.js"></script>
+	<script type="text/javascript" src="/youNeverWait/js/ynw/patient_login.js"></script>
+</html>

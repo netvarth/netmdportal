@@ -1,0 +1,13 @@
+
+{
+    "buttons": [
+		{
+            "title": " Download",
+            "className": "big-link",
+            "name": "ribbonNetlimsDownload",
+            "image": "/youNeverWait/images/icon/dashboard/ready.png"
+        }
+		
+       
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "list": [
+        {
+            "id": "today",
+            "h3_caption":"Today"
+        },
+		{
+            "id": "week",
+            "h3_caption":"This Week"
+        },
+		{
+            "id": "future",
+            "h3_caption":"Future"
+        },
+        {
+            "id": "past",
+            "h3_caption":"Past"
+        }
+    ]
+}

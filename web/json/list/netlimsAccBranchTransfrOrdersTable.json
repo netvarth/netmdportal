@@ -1,0 +1,46 @@
+{
+    "name": "transfrorderViewForm",
+    "id": "transfrorderViewForm",
+    "content": [
+        {
+            "className": "sep-div-view",
+            "style": "display:none",
+            "id": "errorDivHeader",
+            "data": [
+                {
+                    "className": "five_sixth",
+                    "id": "errorDivvwnetlimsData"
+                }
+            ]
+        },
+       
+		{
+            
+			"className": "sep-div-view",
+			"id": "viewBranchHeader",
+           "data": [
+					{
+                        "className": "five_sixth",
+						"id":"branchtransfrOrderNetlimsCont",
+                        "elements": [
+                                {
+                    "type": "table",
+                    "content": {
+                        "name" : "branchtransfrOrderNetlimsAcc",
+						"idProperty" : "branchtransfrOrderNetlimsAcc",
+						"className" :"stdtable stdtablecb",
+						"style":"border-spacing:0;border-collapse:collapse; border:0;",
+						"colHeaders" : [
+							{ "className" : "head0",	"name" : "From Branch", "style":"width:20%"},
+							{ "className" : "head1",	"name" : "To Branch", "style":"width:20%"},
+							{ "className" : "head0",	"name" : "Order Uid", "style":"width:5%"},
+							{ "className" : "head1",	"name" : "Sent To Destination ?", "style":"width:5%"}
+						]
+                    }
+                }
+							]
+                    }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="General" language="java" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" >
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="Values" >
+		<field name="key" class="java.lang.String">
+			<fieldDescription><![CDATA[key]]></fieldDescription>
+		</field>
+		<field name="value" class="java.lang.String">
+			<fieldDescription><![CDATA[value]]></fieldDescription>
+		</field>
+		<field name="unit" class="java.lang.String">
+			<fieldDescription><![CDATA[unit]]></fieldDescription>
+		</field>
+		<field name="normal" class="java.lang.String">
+			<fieldDescription><![CDATA[normal]]></fieldDescription>
+		</field>
+		<variable name="value_unit" class="java.lang.String">
+			<variableExpression><![CDATA[$F{value}.concat(" ").concat( $F{unit} )]]></variableExpression>
+		</variable>
+		<variable name="normal_unit" class="java.lang.String">
+			<variableExpression><![CDATA[$F{normal}.concat(" ").concat( $F{unit} )]]></variableExpression>
+		</variable>
+	</subDataset>
+	<field name="testName" class="java.lang.String">
+		<fieldDescription><![CDATA[testName]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="24">
+			<staticText>
+				<reportElement x="2" y="0" width="201" height="24" />
+				<textElement verticalAlignment="Middle"  isStyledText="true">
+					<font fontName="Arial Black" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Investigation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="203" y="0" width="156" height="24" />
+				<textElement verticalAlignment="Middle"  isStyledText="true">
+					<font fontName="Arial Black" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Patient's Value]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="359" y="0" width="196" height="24" />
+				<textElement verticalAlignment="Middle"  isStyledText="true">
+					<font fontName="Arial Black" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reference Range & Unit]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<componentElement>
+				<reportElement x="2" y="0" width="553" height="25" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="25" width="553">
+						<textField>
+							<reportElement x="0" y="0" width="201" height="25" />
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle"  isStyledText="true">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="201" y="0" width="156" height="25" />
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle"  isStyledText="true">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{value_unit}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="357" y="0" width="196" height="25" />
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle"  isStyledText="true">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{normal_unit}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

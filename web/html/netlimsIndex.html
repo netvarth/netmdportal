@@ -1,0 +1,133 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>NETLIMS</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
+		<link href="/youNeverWait/css/ui-lightness/jquery-ui-1.8.20.custom.css" type="text/css" rel="stylesheet" />	
+		<link href="/youNeverWait/css/style.css" type="text/css" rel="stylesheet" />		
+	</head>
+	<body>
+		<!-- START OF HEADER -->
+		<div class="header">
+			<div class="headimage"><img src="/youNeverWait/images/leftmenu/logo.png" style="margin:5px 0 0 10px;" /></div>
+			<div class="headright" style="border:1px #000;">
+				<div class="wrapper-demo" id="dropdownOne">
+					<div id="dd" class="wrapper-dropdown-5" tabindex="1">Logout
+						<ul class="dropdown" id="dropdownTwo" style="z-index: 1000;">
+							<li id="btnChangePassword"><a href="#"><i class="icon-user"></i>Change password</a></li>
+							<li id="btnLogout"><a href="#" ><i class="icon-remove" ></i>Log out</a></li>
+						</ul>
+					</div>
+				</div>   
+				<div style="float:right; padding:10px;font-size: 12;" >Welcome <span id="useType"></span><span id="userName" class="userNameColor"></span></div>
+			</div>
+		</div>
+		<!-- END OF HEADER --> 
+		<div id="dvLoading" class="dvLoading"></div>
+		<!-- START OF MAIN CONTENT -->
+		<div class="mainwrapper">
+			<div class="mainwrapperinner">
+				<div class="mainleft">
+					<div class="mainleftinner">
+						<div class="leftmenu">
+						<!--leftpaneToolbar will load from json file-->
+						</div>
+						<div id="togglemenuleft"><a></a></div>
+					</div>
+				</div>
+				<div class="maincontent">
+					<div class="maincontentinner">
+						<div class="content">
+							<div id="tabs">
+								<ul >
+									<li><a href="#tabs-1" style="display:none;"></a></li>
+									<h1 id="pageTitle"></h1>
+									<button class="stdbtn btn_black" id="filter" style="float:right;">Filter</button> 
+									<div id="pageToolBar-Container"></div>
+								</ul>            
+								<div class="filter-main" id="filterToolBar-Container"></div> 
+								<div class="error-main" id="errorDivHeader" style="display:none"><div id="errorDivData"></div></div> 
+								<div id="tabs-1"> </div>                           
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="BeeperBox" class="UIBeeper">
+			 <div class="UIBeeper_Full">
+				<div class="Beeps">
+				   <div class="UIBeep UIBeep_Top UIBeep_Bottom UIBeep_Selected" style="opacity: 1; ">
+				   <!-- Below Is The Link To Which Bepper Will Point To (replace # with the required link) -->
+						<a class="UIBeep_NonIntentional" href="#">                     
+							 <span class="beeper_x">&nbsp;</span>
+							 <div class="UIBeep_Title">
+								This is a notification
+							 </div>
+						</a>
+				   </div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="/youNeverWait/js/plugins/jquery-1.7.min.js"></script>
+		<script type="text/javascript" src="/youNeverWait/js/plugins/jquery-ui-1.8.16.custom.min.js"></script>
+		<script type="text/javascript" src="/youNeverWait/js/plugins/colorpicker.js"></script>
+		<script type="text/javascript" src="/youNeverWait/js/plugins/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="/youNeverWait/js/custom/elements.js"></script>
+		<script type="text/javascript" src="/youNeverWait/js/custom/general.js"></script>
+		<script src="/youNeverWait/js/custom/jquery.reveal.js" type="text/javascript"></script>  
+		<script src="/youNeverWait/js/ynw_general.js" type="text/javascript"></script> 
+		<script src="/youNeverWait/js/ynw/netlims_print_processor.js" type="text/javascript"></script> 
+		<script src="/youNeverWait/js/ynw/netlims_lab_index.js" type="text/javascript"></script> 
+		<script type="text/javascript">
+			//$(document).ready(function() {
+				$(window).load(function(){
+					$('#dvLoading').fadeOut(200);
+				});
+				//Select all anchor tag with rel set to tooltip
+				$('a[rel=tooltip]').mouseover(function(e) {
+					
+					//Grab the title attribute's value and assign it to a variable
+					var tip = $(this).attr('title');	
+					
+					//Remove the title attribute's to avoid the native tooltip from the browser
+					$(this).attr('title','800');
+					
+					//Append the tooltip template and its value
+					$(this).append('<div id="tooltip"><div class="tipHeader"></div><div class="tipBody">' + tip + '</div><div class="tipFooter"></div></div>');		
+							
+					//Show the tooltip with faceIn effect
+					$('#tooltip').fadeIn('500');
+					$('#tooltip').fadeTo('10',0.8);
+					
+				}).mousemove(function(e) {
+				
+					//Keep changing the X and Y axis for the tooltip, thus, the tooltip move along with the mouse
+					$('#tooltip').css('top', e.pageY + -150 );
+					$('#tooltip').css('left', e.pageX + -250 );
+					
+				}).mouseout(function() {
+				
+					//Put back the title attribute's value
+					$(this).attr('title',$('.tipBody').html());
+				
+					//Remove the appended tooltip template
+					$(this).children('div#tooltip').remove();
+					
+				});
+				//$('.leftmenu li:first').closest('li').attr('class','current');
+				$('.leftmenu li').live('click',function() {
+					$('.search-bar').hide();
+					$('.leftmenu li').removeClass('current');
+					$(this).closest('li').attr('class','current');
+					$('.leftmenu li ul').slideUp();	
+				});
+				$('.leftmenu li ul li').live('click',function() {
+					$('.leftmenu li ul li').removeClass('current1');
+					$(this).closest('li').attr('class','current1');
+				});
+			//});
+		</script>
+	</html>
