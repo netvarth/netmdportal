@@ -145,7 +145,7 @@ public class MailSendAdapter {
 				.getUserName());
 		String resetPasswordLink = "http://"
 				+ ynwServerIpAddress
-				+ "/youNeverWait/EmailFormat/PatientResetPassword.html?userName="
+				+ "/youNeverWait/EmailFormat/NetlimsPatientResetLink.html?userName="
 				+ encryptedUserName;
 		java.net.URLConnection openConnection = url.openConnection();
 		InputStream inputStream = openConnection.getInputStream();
