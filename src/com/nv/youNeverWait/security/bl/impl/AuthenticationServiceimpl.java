@@ -537,6 +537,11 @@ public class AuthenticationServiceimpl implements AuthenticationService {
 		return user;
 	}
 
+	@Override
+	public String getDecriptedUserName(String userName) {
+		return StringEncoder.decryptWithStaticKey(userName);
+	}
+
 	
 
 }
