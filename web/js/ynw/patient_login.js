@@ -1,6 +1,7 @@
 var ajaxProcessor=new ServerUrlProcessor();
 validator = new Validator();
 constants = new Constants();
+notifier = new Notifier();
 query = new Query();
 var errorHandler = new ErrorHandler();
 $(document).ready(function() {
@@ -12,20 +13,30 @@ function Constants() {
 	this.LOGINURL = "/youNeverWait/ynw/auth/patientLogin";
 	this.FIELDREQUIRED = "Field required";
 	this.INVALIDUSERNAMEPASSWORD = 	"Invalid UserId/Password";
+	this.RESETPASSWORDURL="/youNeverWait/ynw/auth/resetPassword";
+	this.PASSWORDRESETSUCCESS="Password reset successfully";
+	this.INVALIDPASSWORDLENGTH="Password length should be greater than 6";
 }
 function Query(){
 	this.login = function(loginInfo) {
 		ajaxProcessor.setUrl(constants.LOGINURL);
 		return ajaxProcessor.post(loginInfo);
 	}
+	this.resetPassword =function(loginInfo){
+		ajaxProcessor.setUrl(constants.RESETPASSWORDURL);
+		return ajaxProcessor.post(loginInfo);
+	}
 }
 function PatientLogin(){
-	this.userName = "#loginForm #userName";
-	this.password = "#loginForm #password";
-	this.loginButton = "#loginForm #btnLogin";
-	this.forgotPassword = "#loginForm #forgotpwdpatnt";
-	this.errorInfo = "#loginForm #errorInfo";
-
+	this.loginForm = "#netlimsLoginForm";
+	this.userName = this.loginForm + " #userName";
+	this.password = this.loginForm + " #password";
+	this.userType = this.loginForm + " #userType";
+	this.loginButton = "#btnLogin";
+	this.forgotPassword = "#forgotpwdpatnt";
+	this.resetButton="#resetPassword";
+	this.errorInfo = this.loginForm + " #errorInfo";
+	
 	this.init=function() {
 		$(this.errorInfo).hide();
 		this.bindEvents();
@@ -55,12 +66,35 @@ function PatientLogin(){
 			var login = new Login();
 			login.setUserName($(self.userName).val());
 			login.setPassword($(self.password).val());	
+			login.setUserType("Patient");
 			var error = self.validate(login);		
 			if(error.errorStatus==false){	
 				var response = query.login(login);
 				if(response.success==true)
 					location.reload();
 				else {
+					errorHandler.addErrorMessage(self.errorInfo, constants.INVALIDUSERNAMEPASSWORD);
+					return false;
+				}
+			} else{
+				self.createError(error);
+				return false;
+			}
+		});
+		$(self.resetButton).die('click').live("click",function(){
+			var url = window.location.toString();
+			var name = url.substring(url.indexOf("=")+1);
+			var login = new Login();
+			login.setUserName(name);
+			login.setPassword($(self.password).val());	
+			login.setUserType("Patient");
+			var error = self.validate(login);		
+			if(error.errorStatus==false){	
+				var response = query.resetPassword(login);
+				if(response.success==true){
+					window.open('http://www.youneverwait.com',"_self");
+					return false;
+				}else {
 					errorHandler.addErrorMessage(self.errorInfo, constants.INVALIDUSERNAMEPASSWORD);
 					return false;
 				}
