@@ -38,5 +38,6 @@ public interface AuthenticationService {
 	ResponseDTO resetPassword(LoginDTO login);
 	ResponseDTO forgotPassword(LoginDTO login);
 	UserDetails getFacilityUserInfo(String userName, String userType);
+	public String getDecriptedUserName(String userName);
 	
 }
