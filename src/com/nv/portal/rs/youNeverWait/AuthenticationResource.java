@@ -167,10 +167,10 @@ public class AuthenticationResource extends ServiceExceptionHandler{
 	 * @param login
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "resetPassword", method = RequestMethod.POST)
+	@RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseDTO resetPassword(@RequestBody LoginDTO login) {
-
+		
 		ResponseDTO response = new ResponseDTO();
 		try {
 			response = authenticationService.resetPassword(login);
@@ -184,11 +184,12 @@ public class AuthenticationResource extends ServiceExceptionHandler{
 			response.setSuccess(false);
 			return response;
 		}
+		String decrypedUserName = authenticationService.getDecriptedUserName(login.getUserName());
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
 		logService.saveUserDetails(request.getRemoteAddr(),
-				login.getUserName(), login.getUserType(), null, null,
+				decrypedUserName, login.getUserType(), null, null,
 				ApplicationNameEnum.Patient.getDisplayName(),
 				Constants.RESET_PSWD);
 		return response;
@@ -199,7 +200,7 @@ public class AuthenticationResource extends ServiceExceptionHandler{
 	 * @param login
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "forgotPassword", method = RequestMethod.POST)
+	@RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseDTO forgotPassword(@RequestBody LoginDTO login)
 	{
