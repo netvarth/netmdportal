@@ -736,6 +736,10 @@ public class PatientServiceImpl implements PatientService {
 
 		StringBuffer msgBodyBfr = new StringBuffer();
 		String fullMsgBody = "";
+		String encryptedUserName = StringEncoder.encryptWithStaticKey(login.getUserName());
+		String resetPasswordLink = "http://" + ynwServerIpAddress
+				+ "/youNeverWait/EmailFormat/NetlimsPatientResetLink.html?userName="
+				+ encryptedUserName;
 		java.net.URLConnection openConnection = url.openConnection();
 		InputStream inputStream = openConnection.getInputStream();
 		BufferedReader in = new BufferedReader(new InputStreamReader(
@@ -749,7 +753,7 @@ public class PatientServiceImpl implements PatientService {
 		fullMsgBody = fullMsgBody.replace("{patientName}",patient.getName());
 		fullMsgBody = fullMsgBody.replace("{branchName}", branchName);
 		fullMsgBody = fullMsgBody.replace("{userid}", login.getUserName());
-		fullMsgBody = fullMsgBody.replace("{password}",password);
+		fullMsgBody = fullMsgBody.replace("{ResetLink}",resetPasswordLink);
 		fullMsgBody = fullMsgBody.replace("{serverIpAddress}",
 				ynwServerIpAddress);
 		return fullMsgBody;
