@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="youNeverWaitPU">
+	   <class>com.nv.youNeverWait.pl.entity.AnswerTbl</class>
+	    <class>com.nv.youNeverWait.pl.entity.AnswerStatTbl</class>
+	     <class>com.nv.youNeverWait.pl.entity.AnswerSetTbl</class>
+		
+		<class>com.nv.youNeverWait.pl.entity.CaseTbl</class>
+		
+		<class>com.nv.youNeverWait.pl.entity.QuestionnaireTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.DataPointTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.DepartmentTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.DoctorAchievementTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.DoctorEducationalQualificationTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.DoctorExpertiseTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.DoctorMembershipTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.DoctorPracticeExperienceTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.DoctorScheduleTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.DoctorTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.HealthCareOrganisationTbl</class>
+		
+		
+		<class>com.nv.youNeverWait.pl.entity.LabBranchSystemInfoTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.LabBranchTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.LabHealthMonitorTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.LabPassphraseTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.LabTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.LabUserTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.UserTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.LogTbl</class>
+		
+		<class>com.nv.youNeverWait.pl.entity.MedicalRecordTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.MessageTbl</class>
+		
+		<class>com.nv.youNeverWait.pl.entity.NetmdBillTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdBranchSystemInfoTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdBranchTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdHealthMonitorTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.LoginTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdUserTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetposBranchTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetposLoginTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetposPassphraseTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetposTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetposUserTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetrxBranchTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetrxLoginTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetrxPassphraseTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetrxTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetrxUserTbl</class>
+		
+		<class>com.nv.youNeverWait.pl.entity.OrderAmountTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.OrderBranchTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.OrderResultTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.OrderTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.OrderTransferTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.OrganisationLoginTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.OrganisationTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.OrganisationUserTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.OrganisationNetmdTbl</class>
+		
+		<class>com.nv.youNeverWait.pl.entity.PatientAppointmentTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.PatientMedicalHistoryTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.PatientTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.PendingMessageTbl</class>
+		
+		<class>com.nv.youNeverWait.pl.entity.QuestionTbl</class>
+		
+		<class>com.nv.youNeverWait.pl.entity.ResultTbl</class>
+		
+		<class>com.nv.youNeverWait.pl.entity.SeriesTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.SpecimenTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.SuperAdminTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.SyncLogTbl</class>
+		
+		<class>com.nv.youNeverWait.pl.entity.TestSpecimenTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.TestTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdAnswerTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdQuestionTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdQuestionnaireTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.UploadInstallerTbl</class>
+		
+		<class>com.nv.youNeverWait.pl.entity.FacilityResultTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.LabFacilityTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetlimsOrderTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetlimsResultTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetlimsReferralTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.PatientResultTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.ReferralResultTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetlimsPatientTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdPatientTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdDoctorTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.OrderTransferCountTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.BranchFacilityTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.PageSettingsTbl</class>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+		</properties>
+	</persistence-unit>
+</persistence>
+
