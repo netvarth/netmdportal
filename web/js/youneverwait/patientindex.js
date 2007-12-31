@@ -6,7 +6,7 @@ commonMethodInvoker = new CommonMethodInvoker();
 validator = new Validator();
 var notifier = new Notifier();
 var errorHandler = new ErrorHandler();
-//var methodInvoker = new MethodInvoker();
+var methodInvoker = new MethodInvoker();
 var query = new Query();
 $(function() {
 	$("#BeeperBox").mouseenter(notifier.stopHide).mouseleave(notifier.startHide);
@@ -67,6 +67,37 @@ function Constants() {
 	this.USERURL = "/youNeverWait/netlims/ui/lab/user/";
 	this.SELECTONEORDER = "Select atleast one order";
 	this.SELECTONEORDERONLY = "Select only one order";
+	this.GETPAGESETTINGSURL="/youNeverWait/netlims/ui/result/pageSettings/";
+	this.DELIVERED="Delivered";
+	this.LAYOUTGENERAL="General";
+	this.LAYOUTGENERALONE="GeneralOne";
+	this.LAYOUTGENERALMED="GeneralMed";
+	this.LAYOUT1="Layout1";
+	this.LAYOUTSEMEN = "Semen Layout";
+	this.LAYOUTDC ="DC";
+	this.LAYOUTCULTURE ="Culture Report";
+	this.LAYOUTWATERCULTURE="WaterCultureReport";
+	this.LAYOUTHAEMOGRAM = "Haemogram";
+	this.LAYOUTHAEMOGRAMESR ="HaemogramESR";
+	this.LAYOUTAMINOACIDOGRAM="Aminoacidogram";
+	this.LAYOUTOSMOTIC="Osmotic";
+	this.LAYOUTSTOOLANALYSIS="Stool Analysis";
+	this.LAYOUTENA="ENA";
+	this.LAYOUTSTONEANALYSIS ="Stone Analysis" ;
+	this.LAYOUTURINE = "Urine";
+	this.LAYOUTAFB = "AFB";
+	this.LAYOUTCD = "CD";
+	this.LAYOUTGTT = "GTT";
+	this.LAYOUTPERIPHERAL = "Peripheral";
+	this.LAYOUTPT = "PT";
+	this.LAYOUTAPPT = "APPT";
+	this.LAYOUTHISTOPATH = "HistoPath";
+	this.LAYOUTLIPID = "LipidLayout";
+	this.LAYOUTLFT = "LFT";
+	this.LAYOUTANA = "ANA";
+	this.LAYOUTGCT="GCT";
+	this.LAYOUTBETAHCG = "BetaHCGLayout";
+	this.MODEPRINT = "print";
 }
 function Query() {
 	this.showMyName = function() {return "Query";}
@@ -137,6 +168,10 @@ function Query() {
 	this.showResult = function(param) {
 		ajaxProcessor.setUrl(constants.SHOWRESULTURL+ param + "/");
 		return ajaxProcessor.post();
+	}
+	this.getPageSettings = function(branchId){
+		ajaxProcessor.setUrl(constants.GETPAGESETTINGSURL + branchId);
+		return ajaxProcessor.get();
 	}
 }
 function User() {
@@ -564,7 +599,34 @@ function ResultsProcessor(patientHome){
 	this.getTestList = function() {return this.testList;}
 	this.setPageTitle = function(value) {this.pageTitle.empty().html(value);}
 	this.setTestList = function(testList) {	this.testList=testList;}
+	this.getSetting = function() {return this.setting;}
+	this.setResultPrintObj=function(resultPrintObj){this.resultPrintObj=resultPrintObj;}
+	this.getResultPrintObj=function(){return this.resultPrintObj;}
+	this.setOrderHeader_Setting = function(header_setting){
+		this.orderHeader=$.parseJSON(header_setting).header;
+		this.setting = this.getPageSettings();
+		methodInvoker.setSetting(this.setting);
+	}
+	this.getPageSettings = function(){
+		return this.pageSettings;
+	}
 	this.pageTitle = $('#pageTitle');
+	this.setPageSettings=function(branchId){
+		if(this.pageSettings==null || this.pageSettings=='undefined' || branchId!=this.getBranchId() ){
+			this.pageSettings = query.getPageSettings(branchId);
+		} 
+		if(this.pageSettings.length==0)
+			alert("Print settings not available for this branch");
+	}
+	this.generateSelectedTestList = function(selectedList){
+		var resultList = [];
+		$(this.getTestList()).each(function(index, test){
+			if(commonMethodInvoker.isIndexExists(selectedList,test.uid)==true)
+				resultList.push($.parseJSON(test.result));
+		});
+		return resultList;
+	}
+	this.getOrderHeader = function() {return this.orderHeader;}
 	this.init = function() {
 		$('#pageToolBar-Container').empty().html('');
 		parent = this.getParent();
@@ -581,30 +643,17 @@ function ResultsProcessor(patientHome){
 		this.bindEvents();
 	}
 	this.view = function(order_Branch_Id) {
+		$(constants.FILTER).hide();
+		$('.filter-main').hide();
 		orderbranchId = order_Branch_Id.split('_');
 		orderId = orderbranchId[0];
 		branchId = orderbranchId[1];
 		this.setOrderId(orderId);
 		this.setOrder(orderId);
+		this.setPageSettings(branchId);
 		this.setBranchId(branchId);
-		var tests = query.getTests(orderId);
-		this.setTestList(tests);
-		pageHandler.create(constants.VIEWORDERPAGEURL);
-		commonMethodInvoker.setViewTable(this.testTable);
-		var ptbProcessor = new PageToolBarProcessor();
-		ptbProcessor.create(constants.HOME, constants.HOMEPAGETOOLBAR);
-		this.setTests(tests);
-		this.viewEvents();
-	}
-	this.setTests = function(tests) {
-		self=this;
-		var checkbox = '<input type="checkbox" class="' + this.chkSelectTestClassName + '"/>';
-		$(tests).each(function(){
-			var testTable=$(self.testTable).dataTable().fnAddData([this.uid, this.testName,checkbox]);
-			var row=$(tableObj).dataTable().fnSettings().aoData[testTable].nTr;
-			$(row).attr('id',this.uid);
-			
-		});
+		var orderView = new OrdersView(this);
+		orderView.init(orderId, this.getBranchId());
 	}
 	this.getSelectedOrder_BranchId=function() {
 		var self=this;
@@ -642,10 +691,10 @@ function ResultsProcessor(patientHome){
 			var orderId = objId.split("_")[0];
 			var branchId = objId.split("_")[1];
 			var testList=[];
-			self.print(testList,orderId,branchId);
+	//		self.print(testList,orderId,branchId);
 		});
 	}
-	this.print=function(testList, orderId,branchId){
+	/*this.print=function(testList, orderId,branchId){
 		var order = query.getOrder(orderId);
 		var layout = new LayoutJson();
 		var layoutUpdater = new LayoutUpdater();
@@ -757,87 +806,10 @@ function ResultsProcessor(patientHome){
 		f.appendTo($('body')); // required for submission to work in Firefox
 		f.submit();
 		f.remove();
-	}
-	this.viewEvents = function() {
-		var self=this;
-		var order = self.getOrder();
-		$(self.chkSelectAllTest).die('click').live('click',function(e) {
-			var obj=$(this);
-			if(obj.attr('checked'))
-				$(self.chkSelectTest).each(function(){
-					$(this).closest('tr').attr('selected','selected');
-					$(this).closest('tr').attr('style',constants.SELECTEDROWCOLOR);
-					$(this).attr('checked',true);
-				});
-			else
-				$(self.chkSelectTest).each(function(){
-					$(this).removeAttr('checked');
-					$(this).closest('tr').removeAttr('selected');
-					$(this).closest('tr').removeAttr('style');
-				});
-		});
-		$(self.testTable + ' tbody tr').die('click').live('click',function(){
-			var obj = $(this);
-			var objId=$(this).attr('id');		
-			if($(this).attr('selected')) {
-				$(this).removeAttr('selected');
-				$(this).removeAttr('style');
-			} else {	
-				$(this).attr('selected','selected');
-			}
-			if(obj.attr('selected')) {
-				$(this).children('td').children(self.chkSelectTest).attr('checked',true);
-				if($(self.testTable + " tbody tr td input[class='" + self.chkSelectTestClassName + "']:checked").length == $(self.testTable).dataTable().fnGetData().length)
-					$(self.chkSelectAllTest).attr('checked',true);
-			} else {
-				$(this).children('td').children(self.chkSelectTest).removeAttr('checked');
-				$(self.chkSelectAllTest).removeAttr('checked');
-			}
-		});
-		$('#homePTBContainer #btn_home_ptb_id').die('click').live('click',function() {
-			$('#pageToolBar-Container').empty().html('');
-			self.init();	
-		});
-		$('#btnPrint').die('click').live('click',function(e) {
-			var testArray = []; //To store the selected tests
-			$(self.testTable + ' tbody tr td input[class="printTestSelection"]:checked').each(function(){
-				testArray.push($(this).closest('tr').attr('id'));
-			});
-			self.print(testArray,self.getOrderId(),self.getBranchId());
-		});	
-	}
+	}*/
+	
 	this.setTableValues = function(tableObj, orderResult) {
-		$(tableObj).dataTable().fnClearTable();
-		if(orderResult.list) {
-			if(orderResult.list.length>0) {			
-				$(orderResult.list).each(function(index, order) {
-					var patient=order.patient;
-					var createdOn=order.createdOn;
-					var paymentStatus=order.orderStatus
-					var branchId = order.branchId;
-					if(order.headerData!=null) {
-						var header = $.parseJSON(order.headerData).header;
-						var ageheader = header.age.split("-");
-						var age="";
-						var age_year = "";
-						var age_month = "";
-						var age_day = "";
-						if(ageheader[0]!="" && ageheader[0]!=undefined)
-							age_year = ageheader[0] + "Y";
-						if(ageheader[1]!="" && ageheader[1]!=undefined)
-							age_month = ageheader[1] + "M";
-						if(ageheader[2]!="" && ageheader[2]!=undefined)
-							age_day = ageheader[2] + "D";
-						age = age_year + age_month + age_day;
-					var rowData=$(tableObj).dataTable().fnAddData([order.uid, header.patientName, age, createdOn,header.collectedAt,header.referral, order.branchName]);
-					var row=$(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
-					$(row).children("td:nth-child(9)").attr("class","column-2");
-					$(row).attr('id',order.id + "_" + branchId );
-					$(row).children("td:nth-child(1)").attr("class","orderIdCol Ustyle");
-					}
-				});
-			}		
-		}
+		methodInvoker.setOrdersList(tableObj,orderResult);
 	}
 }
 function ResultString() {
@@ -1534,4 +1506,424 @@ function Calendar() {
 		});
 	}
 	this.init = function() {this.bindEvents();}
+}
+function MethodInvoker() {
+	this.setOrdersList = function(tableObj, orderResult){
+		$(tableObj).dataTable().fnClearTable();
+		if(orderResult.list) {
+			if(orderResult.list.length>0) {			
+				$(orderResult.list).each(function(index, order) {
+					var patient=order.patient;
+					var createdOn=order.createdOn;
+					var paymentStatus=order.orderStatus
+					var branchId = order.branchId;
+					if(order.headerData!=null && order.headerData!="") {
+						var header = $.parseJSON(order.headerData).header;
+						var ageheader = header.age.split("-");
+						var age="";
+						var age_year = "";
+						var age_month = "";
+						var age_day = "";
+						if(ageheader[0]!="" && ageheader[0]!=undefined)
+							age_year = ageheader[0] + "Y";
+						if(ageheader[1]!="" && ageheader[1]!=undefined)
+							age_month = ageheader[1] + "M";
+						if(ageheader[2]!="" && ageheader[2]!=undefined)
+							age_day = ageheader[2] + "D";
+						age = age_year + age_month + age_day;
+						var rowData=$(tableObj).dataTable().fnAddData([order.uid, header.patientName, age, createdOn,header.collectedAt,header.referral, order.branchName]);
+						var row=$(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+						$(row).children("td:nth-child(9)").attr("class","column-2");
+						$(row).attr('id',order.id + "_" + branchId );
+						$(row).children("td:nth-child(1)").attr("class","orderIdCol Ustyle");
+					}
+				});
+			}		
+		}
+	}
+	this.setDPI=function(dpi){this.dpi = dpi;}
+	this.getDPI = function(){return this.dpi;}
+	this.setSetting= function(setting) {this.setting = setting;}
+	this.getPageSettingByKey=function(key) {
+		var self=this;
+		var result = null; 
+		$(self.setting).each(function(index, data){
+			if(data.key==key){
+				result = data;
+				return false;
+			}
+		});
+		return result;
+	}
+	this.getAgeValue=function(age){
+		age= ""+age;
+		var curAge="";
+		if(age.indexOf('D')!=-1 || age.indexOf('d')!=-1){
+			age = parseFloat(age);
+			curAge = age/360;
+		} else if(age.indexOf('M')!=-1 || age.indexOf('m')!=-1){
+			age = parseFloat(age);
+			curAge = (age*30)/360;
+		} else if(age!=""){
+			age=parseFloat(age);
+			curAge = age;
+		}
+		return curAge;
+	}
+	this.getCurrentNormalRange = function(order, testResult) {
+		var self=this;
+		var curNormalRange = "";
+		var age=order.header.age;
+		var curAge = age.split("-");
+		var curYear=0, curMonth=0; curDay=0;
+		years = parseFloat(curAge[0],10)||0;
+		curYear = years * 360;
+		curMonth = parseFloat(curAge[1],10)||0;
+		curMonth = curMonth * 30;
+		curDay = parseFloat(curAge[2],10)||0;
+		curDay = curDay + curMonth + curYear;
+		curYear = curDay/360;
+		age = curYear;
+		var state=false;
+		if(order.header.gender=='Male'){
+			if(testResult.normalRange){
+				$(testResult.normalRange).each(function(index, resultGenderLevel){
+					if(resultGenderLevel.sex=='male'){
+						$(resultGenderLevel.values).each(function(index1, resultAgeLevel){
+							var curMinAge = self.getAgeValue(resultAgeLevel.minAge);
+							var curMaxAge = self.getAgeValue(resultAgeLevel.maxAge);
+							if(age=="")
+								return;							
+							if(curMinAge<=age && curMaxAge>=age){
+								if(resultAgeLevel.minValue!=null && resultAgeLevel.maxValue!=null){
+									curNormalRange=resultAgeLevel.minValue + " - " + resultAgeLevel.maxValue + " " + testResult.testUnit;
+								} else if(resultAgeLevel.minValue==null){
+									curNormalRange="< " + resultAgeLevel.maxValue + " " + testResult.testUnit; 
+								} else if(resultAgeLevel.maxValue==null){
+									curNormalRange="> " + resultAgeLevel.minValue + " " + testResult.testUnit; 
+								}
+								state=true;
+								return false;
+							} else if(curMinAge==null && curMaxAge>=age){
+								if(resultAgeLevel.minValue!=null && resultAgeLevel.maxValue!=null){
+									curNormalRange=resultAgeLevel.minValue + " - " + resultAgeLevel.maxValue + " " + testResult.testUnit;
+								} else if(resultAgeLevel.minValue==null){
+									curNormalRange="< " + resultAgeLevel.maxValue + " " + testResult.testUnit; 
+								} else if(resultAgeLevel.maxValue==null){
+									curNormalRange="> " + resultAgeLevel.minValue + " " + testResult.testUnit; 
+								}
+								state=true;
+								return false;
+							} else if(curMinAge<age && resultAgeLevel.maxAge==null){
+								if(resultAgeLevel.minValue!=null && resultAgeLevel.maxValue!=null){
+									curNormalRange=resultAgeLevel.minValue + " - " + resultAgeLevel.maxValue + " " + testResult.testUnit;
+								} else if(resultAgeLevel.minValue==null){
+									curNormalRange="< " + resultAgeLevel.maxValue + " " + testResult.testUnit; 
+								} else if(resultAgeLevel.maxValue==null){
+									curNormalRange="> " + resultAgeLevel.minValue + " " + testResult.testUnit; 
+								}
+								state=true;
+								return false;
+							}															
+						});
+						if(state==true)
+							return false;
+					}
+				});
+			}
+		} else {
+			if(testResult.normalRange){
+				$(testResult.normalRange).each(function(index, resultGenderLevel){
+					if(resultGenderLevel.sex=='female'){
+						$(resultGenderLevel.values).each(function(index1, resultAgeLevel){
+							var curMinAge = self.getAgeValue(resultAgeLevel.minAge);
+							var curMaxAge = self.getAgeValue(resultAgeLevel.maxAge);
+							if(age=="")
+								return;
+							if(curMinAge<=age && curMaxAge>=age){
+								if(resultAgeLevel.minValue!=null && resultAgeLevel.maxValue!=null){
+									curNormalRange=resultAgeLevel.minValue + " - " + resultAgeLevel.maxValue + " " + testResult.testUnit;
+								} else if(resultAgeLevel.minValue==null){
+									curNormalRange="< " + resultAgeLevel.maxValue + " " + testResult.testUnit; 
+								} else if(resultAgeLevel.maxValue==null){
+									curNormalRange="> " + resultAgeLevel.minValue + " " + testResult.testUnit; 
+								}
+								state=true;
+								return false;
+							} else if(curMinAge==null && curMaxAge>=age){
+								if(resultAgeLevel.minValue!=null && resultAgeLevel.maxValue!=null){
+									curNormalRange=resultAgeLevel.minValue + " - " + resultAgeLevel.maxValue + " " + testResult.testUnit;
+								} else if(resultAgeLevel.minValue==null){
+									curNormalRange="< " + resultAgeLevel.maxValue + " " + testResult.testUnit; 
+								} else if(resultAgeLevel.maxValue==null){
+									curNormalRange="> " + resultAgeLevel.minValue + " " + testResult.testUnit; 
+								}
+								state=true;
+								return false;
+							} else if(curMinAge<age && resultAgeLevel.maxAge==null){
+								if(resultAgeLevel.minValue!=null && resultAgeLevel.maxValue!=null){
+									curNormalRange=resultAgeLevel.minValue + " - " + resultAgeLevel.maxValue + " " + testResult.testUnit;
+								} else if(resultAgeLevel.minValue==null){
+									curNormalRange="< " + resultAgeLevel.maxValue + " " + testResult.testUnit; 
+								} else if(resultAgeLevel.maxValue==null){
+									curNormalRange="> " + resultAgeLevel.minValue + " " + testResult.testUnit; 
+								}
+								state=true;
+								return false;
+							}															
+						});
+						if(state==true)
+							return false;
+					}
+				});
+			}
+		}
+		return curNormalRange;
+	}
+}
+function OrdersView(parent){
+	this.parent = parent;
+	this.errorHeader= $('#errorDivHeader');
+	this.errorData = $('#errorDivData');
+	this.chkSelectTestClassName = "printTestSelection";
+	this.chkSelectTest=  ".printTestSelection";
+	this.chkSelectAllTest="#printTestSelectAll";
+	this.viewTestPage = "#viewTest";
+	this.testTable= this.viewTestPage + " #testTable";
+	this.getParent = function(){return this.parent};
+	this.getSetting = function() {return this.setting;}
+	this.setResultPrintObj=function(resultPrintObj){this.resultPrintObj=resultPrintObj;}
+	this.getResultPrintObj=function(){return this.resultPrintObj;}
+	this.getBranchId =function() {return this.parent.branchId;}
+	this.getActiveId = function(){return this.activeId};
+	this.setActiveId=function(activeId){this.activeId=activeId};
+	this.setOrderHeader_Setting = function(header_setting){
+		this.orderHeader=$.parseJSON(header_setting).header;
+		this.setting = this.getPageSettings();
+		methodInvoker.setSetting(this.setting);
+	}
+	this.getPageSettingByKey = function(key){
+		var result = null; 
+		var self=this;
+		var result = null; 
+		$(self.setting).each(function(index, data){
+			if(data==key){
+				result=data;
+				return false;
+			}
+		});
+		return result;
+	}
+	this.getPageSettings = function(){
+		parent = self.getParent();
+		return parent.pageSettings;
+	}
+	this.getOrderHeader = function() {return this.orderHeader;}
+	this.getTestList = function() {return this.testList;}
+	this.setPageTitle = function(value) {this.pageTitle.empty().html(value);}
+	this.setTestList = function(testList) {	this.testList=testList;}
+	this.generateSelectedTestList = function(selectedList){
+		var resultList = [];
+		$(this.getTestList()).each(function(index, test){
+			if(commonMethodInvoker.isIndexExists(selectedList,test.uid)==true)
+				resultList.push($.parseJSON(test.result));
+		});
+		return resultList;
+	}
+	this.setTests = function(tests) {
+		self=this;
+		var checkbox = '<input type="checkbox" class="' + this.chkSelectTestClassName + '"/>';
+		$(tests).each(function(){
+			var testTable=$(self.testTable).dataTable().fnAddData([this.uid, this.testName,checkbox]);
+			var row=$(tableObj).dataTable().fnSettings().aoData[testTable].nTr;
+			$(row).attr('id',this.uid);
+
+		});
+	}
+	this.init = function(orderId, activeId){
+		$(constants.PAGETITLE).empty().html("Selected Order");
+		this.setActiveId(activeId);
+		var tests = query.getTests(orderId);
+		pageHandler.create(constants.VIEWORDERPAGEURL);
+		commonMethodInvoker.setViewTable(this.testTable);
+		this.setTestList(tests);
+		var ptbProcessor = new PageToolBarProcessor();
+		ptbProcessor.create(constants.HOME, constants.HOMEPAGETOOLBAR);
+		this.setTests(tests);
+		this.bindEvents();
+	}
+	this.bindEvents=function(){
+		var self=this;
+		var parent=this.getParent();
+		var order = parent.getOrder();
+		this.setOrderHeader_Setting(order.headerData);
+		$(self.chkSelectAllTest).die('click').live('click',function(e) {
+			var obj=$(this);
+			if(obj.attr('checked'))
+				$(self.chkSelectTest).each(function(){
+					$(this).closest('tr').attr('selected','selected');
+					$(this).closest('tr').attr('style',constants.SELECTEDROWCOLOR);
+					$(this).attr('checked',true);
+				});
+			else
+				$(self.chkSelectTest).each(function(){
+					$(this).removeAttr('checked');
+					$(this).closest('tr').removeAttr('selected');
+					$(this).closest('tr').removeAttr('style');
+				});
+		});
+		$(self.testTable + ' tbody tr').die('click').live('click',function(){
+			var obj = $(this);
+			var objId=$(this).attr('id');		
+			if($(this).attr('selected')) {
+				$(this).removeAttr('selected');
+				$(this).removeAttr('style');
+			} else {	
+				$(this).attr('selected','selected');
+			}
+			if(obj.attr('selected')) {
+				$(this).children('td').children(self.chkSelectTest).attr('checked',true);
+				if($(self.testTable + " tbody tr td input[class='" + self.chkSelectTestClassName + "']:checked").length == $(self.testTable).dataTable().fnGetData().length)
+					$(self.chkSelectAllTest).attr('checked',true);
+			} else {
+				$(this).children('td').children(self.chkSelectTest).removeAttr('checked');
+				$(self.chkSelectAllTest).removeAttr('checked');
+			}
+		});
+		$('#homePTBContainer #btn_home_ptb_id').die('click').live('click',function() {
+			$('#pageToolBar-Container').empty().html('');
+			parent.init(self.getActiveId());	
+		});
+		$('#btnPrint').die('click').live('click',function(e) {
+			var printStatus=true;
+			var obj = $(this);
+			/*Select Tests to Print*/
+			var testArray = []; //To store the selected tests
+			$(self.testTable + ' tbody tr td input[class="printTestSelection"]:checked').each(function(){
+				testArray.push($(this).closest('tr').attr('id'));
+			});
+			var resultDataGenerator = new ResultDataGenerator();
+			var orderHeader=self.getOrderHeader();
+			var response = self.generateSelectedTestList(testArray);
+			if(response.length<=0)
+				return false;
+			status="";
+			if(status==constants.DELIVERED) {
+				var printResultArray = resultDataGenerator.generatedDeliveredResult(self, testArray, response);
+				var resultEntryParent = $('<div class="parent"/>');
+				var resultEntryForm=$('<div class="inner-data"/>');
+				var resultProcessor = new ResultPreviewProcessor(self);
+				$(printResultArray).each(function(index, result) {
+					var previewResult = resultProcessor.preview("", $.parseJSON(result), orderHeader.orderId, order,printStatus);
+					resultEntryForm.append(previewResult);
+				});	
+				resultEntryParent.html(resultEntryForm);
+				resultEntryAction = $('<div class="box" style="width:98%; margin-left:10px; padding:0px 0px 5px 0px"/>'); // create div for store the save button
+				var savebutton = $('<input type="button" class="stdbtn" value="Print" id="btnPrintResult"/>');
+				resultEntryAction.html(savebutton);	
+				resultEntryParent.append(resultEntryAction);
+				createResultModal(resultEntryParent,"finalresultModal","","215mm");
+				$('.noBorder').parent().addClass('noBorder');
+				e.preventDefault();
+				openModalBox(obj,"finalresultModal");
+			} else {
+				var resultJson;
+				var resultPrintObj = new ResultPrintResponseDTO();
+				result = resultDataGenerator.generateResultData(self, testArray, response);	
+				resultJson = $.parseJSON(result.getPrintResult());
+				resultPrintObj.setOrderUid(result.getOrderUid());
+				resultPrintObj.setResult(result.getResult());
+				resultPrintObj.setReportDate(result.getReportDate());
+				resultPrintObj.setReportTime(result.getReportTime());
+				resultPrintObj.setTestList(result.getTestList());
+				resultPrintObj.setPrinted(true);
+				self.setResultPrintObj(resultPrintObj);
+				var resultEntryParent = $('<div class="parent"/>');
+				var resultEntryForm=$('<div class="inner-data"/>');
+				var resultProcessor = new ResultPreviewProcessor(self);
+				var previewResult = resultProcessor.preview("",resultJson,orderHeader.orderId, order,printStatus);
+				resultEntryForm.html(previewResult);
+				resultEntryParent.html(resultEntryForm);
+				resultEntryAction = $('<div class="box" style="width:98%; margin-left:10px; padding:0px 0px 5px 0px"/>'); // create div for store the save button
+				var printbutton = $('<input type="button" class="stdbtn" value="Print" id="btnPrintResult"/>');
+				resultEntryAction.html(printbutton);	
+				resultEntryParent.append(resultEntryAction);
+				createResultModal(resultEntryParent,"finalresultModal","","204mm");
+				$('.noBorder').parent().addClass('noBorder');
+				e.preventDefault();
+				openModalBox(obj,"finalresultModal");
+			}
+		});	
+		$('#btnPrintResult').die('click').live('click',function(e) {
+			e.preventDefault();
+			errorHandler.removeErrors();
+			var resultPrintObj = self.getResultPrintObj();
+			var buffer=$('<div/>');
+			var pageNos = $('#finalresultModal .pageRoot').length;
+			var count=1;
+			var layoutStatus = methodInvoker.getPageSettingByKey('general_layout');
+			newLayouts=layoutStatus.visible;
+			if(newLayouts==true) {		
+				var resultHeight = $(".printresultTable").height() +  $(".remarks").height();
+				var heightmm = commonMethodInvoker.getmmFromPixel(resultHeight, methodInvoker.getDPI()).toFixed();	
+				var contentset =methodInvoker.getPageSettingByKey('content');
+				var headerset =methodInvoker.getPageSettingByKey('header');
+				var originalHeight = parseInt(contentset.height,10) || 0;
+				var marginHeight = parseInt(contentset.marginTop,10) || 0;
+				var totalHeight = originalHeight-marginHeight;
+				var len = 0;
+				var pagecount=1;
+				var page = $('<div class="page">&nbsp;</div>');
+				var header = $('.pageRoot .resultHeader');
+				var footer = $('.pageRoot .printReportFooter'); 
+				var content = $('<div class="pageResultContent" />');
+				content.css("height",totalHeight + "mm");
+				content.css("width",contentset.width+"mm");
+				content.css("margin-top",contentset.marginTop+"mm");
+				content.css("font-size",contentset.fontSize + "px");
+				page.height("297mm");
+				//page.append(header);
+				content.css("margin-left",headerset.marginLeft + "mm");
+				footer.css("margin-left",headerset.marginLeft + "mm");
+				$('.pageRoot .one').each(function() {
+					pixelvalue = $(this).height();
+					content.append($(this));
+					len=len + commonMethodInvoker.getmmFromPixel(pixelvalue, methodInvoker.getDPI());
+					if(len>=totalHeight){
+						pagecount+=1;
+						len=0;
+						page.append(header.clone());
+						page.append(content);
+						page.append(footer.clone());
+						buffer.append(page.clone());
+						page.empty();
+						content.empty();
+						//var pageDiv = $('<div style="height:2mm;">&nbsp;</div>');
+						buffer.append(pageDiv);
+					}
+				});
+				if(len!=0) {
+					page.append(header.clone());
+					page.append(content);
+					page.append(footer.clone());
+					buffer.append(page);
+				}
+			} else {
+				$('#finalresultModal .pageRoot').each(function() {
+					var tbl = $(this);
+					tbl.height("297mm");
+					if(count>1) {
+						//	var pageDiv = $('<div style="height:2mm;">&nbsp;</div>');
+						//	buffer.append(pageDiv);
+					}	
+					buffer.append(tbl.html());
+					count++;
+				});
+			}
+			var printHandler = new ResultPrintHandler();
+			var resultHTML = printHandler.generateHtmlString(buffer.html());
+			printHandler.print(resultHTML);
+			$('#finalresultModal').trigger('reveal:close',"veryfast");
+		});
+	}
 }
