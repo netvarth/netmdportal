@@ -24,6 +24,7 @@ import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
+import com.nv.youNeverWait.rs.dto.MailInfo;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchResponseDTO;
@@ -162,6 +163,7 @@ public interface SuperAdminService {
 	 * @return
 	 */
 	public OrganisationUsersList getOrganisationUserList(FilterDTO filter);
+	public boolean sendMail(MailInfo mailInfo);
 	
 
 }
