@@ -22,6 +22,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 
 				//if (container.toUpperCase()
 						//.contains(adminContent.toUpperCase())) {
+			System.out.println(request.getRequestURI());
 
 					if (!request.getRequestURI().equals(
 							"/youNeverWait/superadmin/auth/")
@@ -39,6 +40,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 									"/youNeverWait/superadmin/auth/getEnumsList")
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/superadmin/auth/getCaptcha")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/superadmin/ui/superAdmin/contactus/mail")
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/superadmin/auth/verifyCaptcha")) {
 
