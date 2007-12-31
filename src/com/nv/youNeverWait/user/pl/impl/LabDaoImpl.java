@@ -1042,7 +1042,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 
 		/* setting user details */
 		List<UserInfoDetail> users = new ArrayList<UserInfoDetail>();
-		List<LabUserTbl> branchUsers = (List<LabUserTbl>) getUsersInBranch(branchpassPhrase
+	/*	List<LabUserTbl> branchUsers = (List<LabUserTbl>) getUsersInBranch(branchpassPhrase
 				.getLabBranchTbl().getId());
 		if (!branchUsers.isEmpty()) {
 			for (LabUserTbl user : branchUsers) {
@@ -1070,10 +1070,11 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 					userDetail.setMobile(user.getUserTbl().getMobile());
 					userDetail.setAddress(user.getUserTbl().getAddress());
 					userDetail.setGlobalId(user.getUserTbl().getId());
+					//userDetail.setUserType(user.getUserTbl().getUserType());
 				}
 				users.add(userDetail);
 			}
-		}
+		}*/
 		response.setUsers(users);
 
 		LabTbl lab = getById(LabTbl.class, branchpassPhrase.getLabBranchTbl()
