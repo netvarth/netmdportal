@@ -50,6 +50,7 @@ import com.nv.youNeverWait.rs.dto.LogDTO;
 import com.nv.youNeverWait.rs.dto.LogDetail;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
+import com.nv.youNeverWait.rs.dto.MailInfo;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchResponseDTO;
@@ -1558,6 +1559,15 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	public OrganisationService getOrganisationService() {
 		return organisationService;
+	}
+
+	@Override
+	public boolean sendMail(MailInfo mailInfo) {
+		SendMailMsgObj obj = new SendMailMsgObj(mailInfo.getSubject(),
+				mailInfo.getBody().toString(), mailInfo.getTo(), mailFrom, 0, 0,
+				null, SendMsgCallbackEnum.FW_CONTACTUS_MAIL.getId(), null);
+				mailThread.addSendMsgObj(obj);
+		return false;
 	}
 
 }
