@@ -1564,7 +1564,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	@Override
 	public boolean sendMail(MailInfo mailInfo) {
 		SendMailMsgObj obj = new SendMailMsgObj(mailInfo.getSubject(),
-				mailInfo.getBody().toString(), mailInfo.getTo(), mailFrom, 0, 0,
+				mailInfo.getBody().toString(), mailInfo.getTo(), mailInfo.getFrom(), 0, 0,
 				null, SendMsgCallbackEnum.FW_CONTACTUS_MAIL.getId(), null);
 				mailThread.addSendMsgObj(obj);
 		return false;
