@@ -42,6 +42,7 @@ import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
+import com.nv.youNeverWait.rs.dto.MailInfo;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchResponseDTO;
@@ -63,7 +64,6 @@ import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
 import com.nv.youNeverWait.rs.dto.OrganisationUsersList;
 import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
-import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
@@ -2050,7 +2050,11 @@ RequestMethod.GET)
 		}
 		return response;
 	}
-	
+	@RequestMapping(value="contactus/mail", method=RequestMethod.POST)
+	@ResponseBody
+	public boolean sendMail(@RequestBody MailInfo mailInfo){
+		return service.sendMail(mailInfo);
+	}
 	/**
 	 * @return the service
 	 */
@@ -2060,7 +2064,7 @@ RequestMethod.GET)
 
 	/**
 	 * @param service
-	 *            the service to set
+	 *            the service to setb 
 	 */
 	public void setService(SuperAdminService service) {
 		this.service = service;
