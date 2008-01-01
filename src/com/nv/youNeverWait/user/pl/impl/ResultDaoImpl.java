@@ -347,7 +347,7 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 				netlimsPatientTbl.setLabBranchTbl(getById(LabBranchTbl.class, branchId));
 			}
 			saveOrUpdate(NetlimsPatientTbl.class, netlimsPatientTbl);
-			PatientResultTbl patientResult = getByOrderid_PatientId(netlimsOrderTbl.getId(), patientId);
+			PatientResultTbl patientResult = getByOrderid_PatientId(netlimsOrderTbl.getId(), netlimsPatientTbl.getId());
 			if(patientResult==null)
 				patientResult=new PatientResultTbl();
 			patientResult.setNetlimsOrderTbl(netlimsOrderTbl);
