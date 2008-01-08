@@ -49,7 +49,7 @@
     
   	<!-- Compile the java code from ${src.dir} into ${build.dir} -->
     
-  	<javac srcdir="${src.dir}" destdir="${temp.build.dir}" debug="on">
+  	<javac srcdir="${src.dir}" destdir="${temp.build.dir}" debug="on"  source ="1.7" target="1.7">
 	    <exclude  name="**/test/*.*" /> 
     	<classpath>
 	  	<path refid="project.class.path"/>
