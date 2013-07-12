@@ -1,0 +1,16 @@
+{
+    "buttons": [
+		{
+          "title": "Branch List",
+		  "className": "netmd",
+          "name": "leftPaneNetMdBranch"
+        },
+		
+		{
+          "title": "Settings",
+		  "className": "admin",
+          "name": "leftPaneSettings"
+        }
+		
+    ]
+}
