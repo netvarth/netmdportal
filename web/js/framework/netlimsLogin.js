@@ -2,8 +2,7 @@ $j = jQuery.noConflict();/* avoid conflicts of js--*/
 $j.ajaxSetup({async:false});
 
 var serverPath = "";
-$j.getScript("/youNeverWait/js/framework/RequestHandler.js").done(function(script, textStatus) {
-}) 
+ 
 
 $j(document).ready(function() {
 	
@@ -20,7 +19,7 @@ $j(document).ready(function() {
 		if (e.keyCode == 13) {
 			if($j("#passwordNetlims").val()=="")
 				return false;
-			$j("#btnLoginNetlims").focus();
+			$j("#btnLoginNetlims").trigger('click');
 		}		
 	});
 	
