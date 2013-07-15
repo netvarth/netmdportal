@@ -1,7 +1,6 @@
 function Container(contentgroup,resultId) {
     this.result = function () {
-     var  patientresultId=$j("#select").val();
-		patientresultId=patientresultId.split("_")[0];
+     
 	   var content = $j('<div>');
         content.attr('class', contentgroup.className);
         if (contentgroup.id) content.attr('id', contentgroup.id);
