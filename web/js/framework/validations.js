@@ -56,7 +56,10 @@
 	function updateTipsNew(t,errorDiv, errorDivParent) {
 		$j(errorDivParent).show();
 		errorDiv.attr('class',"errorHeaderStyle");
-		errorDiv.text(t);		
+		errorDiv.text(t);
+			setTimeout(function() {
+				$j(errorDivParent).hide();
+			}, 5000 );
 	}
 	function updateTipsSuccess(t,errorDiv, errorDivParent) {
 		$j(errorDivParent).show();
