@@ -54,28 +54,17 @@ $j(document).ready(function(){
 		})
 	});
 	
-	/*$j('#leftPaneNetMd').die('click').live("click",function() {
-		removeErrors();
-		$j.cachedScript(constant_NetMdEntry_Url).done(function(script, textStatus) {
-		})
-	});
 	
-	$j('#leftPaneSettings').die('click').live("click",function() {
+	
+	$j('#leftPaneNetMdSettings').die('click').live("click",function() {
 		removeErrors();
 		$j('#pageToolBar-Container').html("");
-		$j.cachedScript(constant_SettingsEntry_Url).done(function(script, textStatus) {
+		$j.cachedScript(constant_netMdaccSettingsEntry_Url).done(function(script, textStatus) {
 		})
 	});
 	
 	
-	$j('#ribbonNewNetLims').die('click').live("click",function() {
-		removeErrors();
-		var obj=$j(this);
-		createModal(constants_newNetLimsJson,'netlimsModal');	
-		openModalBox(obj,'netlimsModal')
-		$j.cachedScript(constants_newNetLims).done(function(script, textStatus) {
-		})
-	});*/
+
 	
 	$j('#ribbonNewNetMdBranch').die('click').live("click",function() {
 		removeErrors();
@@ -87,8 +76,7 @@ $j(document).ready(function(){
 	});
 		
 	$j('#ribbonDownload').die('click').live("click",function() {
-		//removeErrors();
-		//window.open("/youNeverWait/html/netMdDownload.html","newtabnetmd");
+		
 		removeErrors();
 		
 		$j.ajax({

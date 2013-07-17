@@ -9,7 +9,7 @@
 		{
           "title": "Settings",
 		  "className": "admin",
-          "name": "leftPaneSettings"
+          "name": "leftPaneNetMdSettings"
         }
 		
     ]

@@ -159,6 +159,9 @@ constant_BranchNetlimsAccView_Msg="View NetLims Branch";
 constant_newNetLimsAccBranch_Delete_Url="/youNeverWait/ws/ui/lab/deleteBranch";
 constants_ShowOrdersModalJson='/youNeverWait/json/BranchNetlimsOrders.json';
 //NetMd Account
+constant_netMdaccSettingsEntry_Url="/youNeverWait/js/youneverwait/settings/netMdAccChangePwd.js";
+constants_netMdAccChangePwdJson='/youNeverWait/json/changepassword/netMdAccChangePassword.json';
+constant_netMdAccChangePassword_Url="/youNeverWait/ws/ui/netMd/changePassword";
 constant_NetMdAccEntry_Url="/youNeverWait/js/youneverwait/netmdAcc/netmdAccEntryPoint.js";
 constant_NetMdAccList_Msg="BRANCH LIST";
 constant_NetMdAccFunctions_Url="/youNeverWait/js/youneverwait/netmdAcc/netmdAccFunctions.js";
