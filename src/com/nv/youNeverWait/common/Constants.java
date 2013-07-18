@@ -86,4 +86,6 @@ public class Constants {
 	public static final String NETRX_BRANCH_REGISTER ="NetRx Branch Registration";
 	public static final String NETRX_DOWNLOAD = "Download netRX application";
 	public static final String RESULT = "result";
+	public static final String DOCTOR_CREDENTIALS = "Doctor Credentials";
+	public static final String DOCTOR_REMAINDER = "Doctor Password Set";
 }
