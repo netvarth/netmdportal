@@ -84,41 +84,68 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 		String newPassword = StringEncoder.encryptWithKey(login.getPassword());
 		String decrypedUserName = StringEncoder.decryptWithStaticKey(login
 				.getUserName());
-		List<NetmdLoginTbl> netmdLoginList = getLoginByUserName(decrypedUserName);
-		if (netmdLoginList.isEmpty()) {
+		/* Checking userName and password existing or not */
+		NetmdLoginTbl netmdLogin = getLoginByUserNameAndUserType(
+				decrypedUserName,NetmdUserTypeEnum.Doctor.getDisplayName());
+		
+		if (netmdLogin == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidUserName);
 			se.setDisplayErrMsg(true);
 			throw se;
+		} 
+		netmdLogin.setPassword(newPassword);
+		update(netmdLogin);	
+		
+		List<DoctorTbl> doctorList = getDoctorByLoginId(netmdLogin.getId());
+		if (doctorList.isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDoctorLogin);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(netmdLogin
+					.getId())));
+			se.setDisplayErrMsg(true);
+			throw se;
 		}
-		int count = 0;
-		for (NetmdLoginTbl netmdLogin : netmdLoginList) {
-			count++;
-			if (netmdLogin.getUserType().equals(
-					NetmdUserTypeEnum.Doctor.getDisplayName())) {
-				netmdLogin.setPassword(newPassword);
-				update(netmdLogin);
-				List<DoctorTbl> doctorList = getDoctorByLoginId(netmdLogin
-						.getId());
-				if (doctorList.isEmpty()) {
-					ServiceException se = new ServiceException(
-							ErrorCodeEnum.InvalidDoctorLogin);
-					se.addParam(new Parameter(Constants.ID, Integer
-							.toString(netmdLogin.getId())));
-					se.setDisplayErrMsg(true);
-					throw se;
-				}
-				for (DoctorTbl doctr : doctorList) {
-					doctr.setUpdateDateTime(new Date());
-					update(doctr);
-				}
-			} else if (count == netmdLoginList.size()) {
-				ServiceException se = new ServiceException(
-						ErrorCodeEnum.InvalidUserName);
-				se.setDisplayErrMsg(true);
-				throw se;
-			}
+		for (DoctorTbl doctr : doctorList) {
+			doctr.setUpdateDateTime(new Date());
+			update(doctr);
 		}
+		// List<NetmdLoginTbl> netmdLoginList =
+		// getLoginByUserName(decrypedUserName);
+		// if (netmdLoginList.isEmpty()) {
+		// ServiceException se = new ServiceException(
+		// ErrorCodeEnum.InvalidUserName);
+		// se.setDisplayErrMsg(true);
+		// throw se;
+		// }
+		// int count = 0;
+		// for (NetmdLoginTbl netmdLogin : netmdLoginList) {
+		// count++;
+		// if (netmdLogin.getUserType().equals(
+		// NetmdUserTypeEnum.Doctor.getDisplayName())) {
+		// netmdLogin.setPassword(newPassword);
+		// update(netmdLogin);
+		// List<DoctorTbl> doctorList = getDoctorByLoginId(netmdLogin
+		// .getId());
+		// if (doctorList.isEmpty()) {
+		// ServiceException se = new ServiceException(
+		// ErrorCodeEnum.InvalidDoctorLogin);
+		// se.addParam(new Parameter(Constants.ID, Integer
+		// .toString(netmdLogin.getId())));
+		// se.setDisplayErrMsg(true);
+		// throw se;
+		// }
+		// for (DoctorTbl doctr : doctorList) {
+		// doctr.setUpdateDateTime(new Date());
+		// update(doctr);
+		// }
+		// } else if (count == netmdLoginList.size()) {
+		// ServiceException se = new ServiceException(
+		// ErrorCodeEnum.InvalidUserName);
+		// se.setDisplayErrMsg(true);
+		// throw se;
+		// }
+		// }
 
 		response.setSuccess(true);
 		return response;
@@ -242,7 +269,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				String seconds = "20";
+				String seconds = "5";
 				String newDateAdds = df.format(new Date(oldDateInMillis
 						+ Long.valueOf(seconds) * 1000)); // new upadted time
 															// after adding
@@ -256,15 +283,13 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
-			else {
+			} else {
 				newDoctor.setUpdateDateTime(createdTime);
 			}
-		}
-		 else {
+		} else {
 			newDoctor.setUpdateDateTime(createdTime);
 		}
-			
+
 		save(newDoctor);
 
 		// Saving doctor educational qualification details
@@ -832,6 +857,18 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 			flag = false;
 		}
 		return flag;
+	}
+
+	/**
+	 * Method to retreive doctor login details if exists
+	 */
+	@Override
+	@Transactional
+	public NetmdLoginTbl DoctorLoginDetails(String email, String userType) {
+
+		NetmdLoginTbl doctorLogin = getLoginByUserNameAndUserType(email.trim(),
+				userType);
+		return doctorLogin;
 	}
 
 	/**
