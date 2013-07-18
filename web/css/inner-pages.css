@@ -25,7 +25,7 @@
 	float:left;
 	}
 #main-cnts-header {
-	width:100%;
+	width:644px;
 	height:50px;
 	float:left;
 
@@ -37,14 +37,14 @@
 	background:url(../images/icon/left_top_crnr.png) no-repeat;
 	}
 #main-cnts-header-right {
-	width:24px;
+	width:22px;
 	height:50px;
 	float:right;
 	background:url(../images/icon/right_top_crnr.png) no-repeat;
-	margin: -50px 2px 0px 0px;
+	
 	}
 #main-cnts-header-text {
-	width: 625px;
+	width: 600px;
 	height:50px;
 	float:left;
 	background:url(../images/icon/centr.png) repeat-x;
