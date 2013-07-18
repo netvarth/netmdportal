@@ -2,8 +2,11 @@ package com.nv.youNeverWait.pl.entity;
 
 
 
+
+
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 
 /**
@@ -67,11 +70,30 @@ public class PatientAppointmentTbl implements Serializable {
 	@Column(name="update_date_time",nullable = false)
 	private Date updateDateTime;
 	
+	@Column(name="appointmnet_level",nullable=false)
+	private boolean appointmnetLevel;
+	
 	public PatientAppointmentTbl() {
 	}
 
 	public int getId() {
 		return this.id;
+	}
+
+	
+
+	/**
+	 * @return the appointmnetLevel
+	 */
+	public boolean isAppointmnetLevel() {
+		return appointmnetLevel;
+	}
+
+	/**
+	 * @param appointmnetLevel the appointmnetLevel to set
+	 */
+	public void setAppointmnetLevel(boolean appointmnetLevel) {
+		this.appointmnetLevel = appointmnetLevel;
 	}
 
 	public void setId(int id) {
