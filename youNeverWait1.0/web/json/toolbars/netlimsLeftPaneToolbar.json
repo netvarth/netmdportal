@@ -1,0 +1,20 @@
+{
+    "buttons": [
+		{
+          "title": "Branch List",
+		  "className": "netlims",
+          "name": "leftPaneNetlimsBranch"
+        },
+		{
+          "title": "Branch Orders",
+		  "className": "branchorders",
+          "name": "leftPaneNetlimsOrders"
+        },
+		{
+          "title": "Settings",
+		  "className": "admin",
+          "name": "leftPaneNetlimsSettings"
+        }
+		
+    ]
+}

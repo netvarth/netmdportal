@@ -1,0 +1,15 @@
+{		
+	"buttons":	[
+		{
+			"name" 	: 	"back",
+			"title"	:	"back"
+			
+		},
+
+		{
+			"name" 	: 	"userlogcontrol",
+			"title"	:	"User Log Control"
+			
+		}
+	]
+}

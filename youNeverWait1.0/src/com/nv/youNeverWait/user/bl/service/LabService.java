@@ -1,0 +1,82 @@
+/**
+ * LabService.java
+ *
+ * Jan 3, 2013
+ *
+ * @author Asha Chandran 
+ */
+package com.nv.youNeverWait.user.bl.service;
+
+import java.util.Date;
+
+import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
+import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
+import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
+import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabBranchDTO;
+import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabBranchRetrievalDTO;
+import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
+import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabRetrievalDTO;
+import com.nv.youNeverWait.rs.dto.LabUserDTO;
+import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
+import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
+import com.nv.youNeverWait.rs.dto.FilterDTO;
+import com.nv.youNeverWait.rs.dto.LabDTO;
+import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabResponseDTO;
+import com.nv.youNeverWait.rs.dto.PasswordDTO;
+import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.ResultRetrievalDTO;
+import com.nv.youNeverWait.rs.dto.ResultRetrievalResponseDTO;
+import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
+import com.nv.youNeverWait.rs.dto.ResultTransferResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveLabListResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
+import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
+import com.nv.youNeverWait.rs.dto.UserRetrievalDTO;
+
+
+
+public interface LabService {
+	public ResponseDTO  create(LabDTO lab);
+	public ResponseDTO  update(LabDTO lab);
+	public ResponseDTO  delete(int labId);
+	public LabResponseDTO  view(int labId);
+	public LabListResponseDTO list(FilterDTO filter);
+	public ResponseDTO  createBranch(LabBranchDTO branch);
+	public ResponseDTO  deleteBranch(LabBranchDTO branch);
+	public ResponseDTO  updateBranch(LabBranchDTO branch);
+	public LabBranchResponseDTO viewBranch(int globalId);
+	public BranchListResponseDTO branchList(FilterDTO filter);
+	public ResultTransferResponseDTO transferResult(ResultTransferDTO resultTranferDto);
+	public MacStatusResponseDTO  getMacStatus(String passPhrase);
+	public LabActivationResponseDTO activateLab(LabHeaderDTO header);
+	public ResultRetrievalResponseDTO getResult(LabHeaderDTO header, String lastSyncTime,Date currentTime);
+	public ResponseDTO changePassword(PasswordDTO passwords);
+	public ResponseDTO clearMacId(LabBranchDTO branch);
+	public LabBranchListResponseDTO retrieveLabBranchList(
+			LabHeaderDTO header, String lastSyncTime,Date currentTime);
+	public RetrieveLabListResponseDTO retrieveLabList(
+		LabHeaderDTO header, String lastSyncTime,Date currentTime);
+	public ResponseDTO createUser(LabUserDTO user);
+	public ResponseDTO updateUser(LabUserDTO user);
+	public ResponseDTO deleteUser(int id);
+	public LabUserDTO viewUser(int globalId);
+	public RetrieveUserListResponseDTO retrieveUserList(LabHeaderDTO header, String lastSyncTime,Date currentTime);
+	public ResponseDTO forgotPassword(LoginDTO login);
+	public ResponseDTO resetPassword(LoginDTO login);
+	public ResultTransferResponseDTO transferResultToNetMd(TransferNetMdResultDTO resultTranfer);
+	public RetrieveNetmdListResponseDTO retrieveNetmdList(LabHeaderDTO header, String lastSyncTime,Date currentTime);
+	public RetrieveNetmdBranchListResponseDTO retrieveNetmdBranchList(LabHeaderDTO header, String lastSyncTime,Date currentTime);
+	public BranchOrdersResponseDTO viewBranchOrders(int globalId);
+	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO);
+	public BranchOrderCountResponseDTO createTotalOrders(LabHeaderDTO header,
+			BranchOrderDetail branchOrders);
+
+}

@@ -1,0 +1,289 @@
+{
+    "name": "netmdbranchViewForm",
+    "id": "netmdbranchViewForm",
+    "content": [
+        {
+            "className": "sep-div-view",
+            "style": "display:none",
+            "id": "errorDivHeader",
+            "data": [
+                {
+                    "className": "five_sixth",
+                    "id": "errorDivvwnetmdBranchData"
+                }
+            ]
+        },
+        {
+            "className": "sep-div-view",
+            "id": "viewNetmdBranchHeader",
+            "data": [
+                {
+                    "className": "column-left",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "name": "netmdid",
+                                    "id": "netmdid",
+                                    "type": "text",
+                                    "title": "NetMd Id",
+                                    "className": "newBox"
+                                }
+                            ]
+                        },
+                        {
+                            "className": "column-right",
+                            "elements": [
+                                {
+                                    "name": "branchid",
+                                    "id": "branchid",
+                                    "type": "text",
+                                    "title": "Branch Id",
+                                    "className": "newBox"
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five-sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "branchStatus",
+                                            "id": "branchStatus",
+                                            "type": "text",
+                                            "title": "Status",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "devicesno",
+                                            "id": "devicesno",
+                                            "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "No Of Devices",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five-sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "address",
+                                            "id": "address",
+                                            "type": "textarea",
+                                            "readonly": "readonly",
+                                            "title": "Address",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "column-right",
+                    "data": [
+                        {
+                            "className": "five-sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "organizationName",
+                                            "id": "organizationName",
+                                            "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "Branch Name",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "branchPhone",
+                                            "id": "branchPhone",
+                                            "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "Phone",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five-sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "email",
+                                            "id": "email",
+                                            "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "Email",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "branchMobile",
+                                            "id": "branchMobile",
+                                            "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "Mobile",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },{
+            "className": "sep-div",
+            "data": [
+                {
+                    "className": "five_sixth",
+                    "elements": [
+                        {
+                            "type": "button",
+                            "content": {
+                                "buttons": [
+                                    {
+                                        "name": "netmdbranchvwbtnEdit",
+                                        "id": "netmdbranchvwbtnEdit",
+                                        "title": "Edit",
+                                        "type": "button",
+                                        "className": "stdbtn btn_black",
+                                        "style": "opacity:1;margin:4px"
+                                    },
+                                    {
+                                        "name": "netmdbranchvwbtnDone",
+                                        "id": "netmdbranchvwbtnDone",
+                                        "title": "Done",
+                                        "type": "button",
+                                        "className": "stdbtn btn_black",
+                                        "style": "opacity:1;display:none;margin-top:1%"
+                                    },
+                                    {
+                                        "name": "netmdbranchvwbtnCancel",
+                                        "id": "netmdbranchvwbtnCancel",
+                                        "title": "Cancel",
+                                        "type": "button",
+                                        "className": "stdbtn",
+                                        "style": "opacity:1;display:none;margin-top:1%"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+            ]
+        },
+        
+        {
+            "className": "sep-div-view",
+            "id": "viewBranchHeader1",
+            "data": [
+ 
+				
+				
+								{
+                    "className": "five_sixth",
+                    "elements": [
+                        {
+                            "type": "label",
+                            "title": "Primary Device",
+                            "spanstyle": "font-size:15px;"
+                        }
+                    ]
+                },
+				                {
+                    "className": "five_sixth",
+                    "elements": [
+
+						{
+                    "type": "table",
+                    "content": {
+                        "name" : "passphrasePrimaryViewTable",
+						"idProperty" : "passphrasePrimaryViewTable",
+						"className" :"stdtable stdtablecb",
+						"style":"border-spacing:0;border-collapse:collapse; border:0;",
+						"colHeaders" : [
+							{ "className" : "head0",	"name" : "Pass Phrase", "style":"width:45%"},
+							{ "className" : "head1",	"name" : "Mac Id", "style":"width:40%"},
+							{ "className" : "head0",	"name" : "", "style":"width:15%"}
+							
+						]
+                    }
+                }
+						]
+                }
+				
+				]},
+				
+				
+				        {
+            "className": "sep-div-view",
+            "id": "viewBranchHeader1",
+            "data": [
+				
+				
+				{
+                    "className": "five_sixth",
+                    "elements": [
+                        {
+                            "type": "label",
+                            "title": "Other Devices",
+                            "spanstyle": "font-size:15px;"
+                        }
+                    ]
+                },
+				                {
+                    "className": "five_sixth",
+                    "elements": [
+
+						{
+                    "type": "table",
+                    "content": {
+                        "name" : "passphraseViewTable",
+						"idProperty" : "passphraseViewTable",
+						"className" :"stdtable stdtablecb",
+						"style":"border-spacing:0;border-collapse:collapse; border:0;",
+						"colHeaders" : [
+							{ "className" : "head0",	"name" : "Pass Phrase", "style":"width:40%"},
+							{ "className" : "head1",	"name" : "Mac Id", "style":"width:30%"},
+							{ "className" : "head0",	"name" : "", "style":"width:30%"}
+							
+						]
+                    }
+                }
+						]
+                }
+            ]
+        }
+    ]
+}
