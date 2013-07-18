@@ -1,0 +1,28 @@
+{
+    "buttons": [
+        {
+            "title": "NetLims",
+			"className": "netlims",
+            "name": "leftPaneNetLims"
+        },
+     
+		{
+          "title": "NetMd",
+		  "className": "netmd",
+          "name": "leftPaneNetMd"
+        },
+				
+		{
+          "title": "NetRx",
+		  "className": "netrx",
+          "name": "leftPaneNetRx"
+        },
+		
+		{
+          "title": "Settings",
+		  "className": "admin",
+          "name": "leftPaneSettings"
+        }
+		
+    ]
+}

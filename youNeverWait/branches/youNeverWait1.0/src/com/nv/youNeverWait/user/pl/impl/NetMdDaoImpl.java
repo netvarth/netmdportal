@@ -1,0 +1,1586 @@
+/**
+ * NetMdDaoImpl.java
+ *
+ * Jan 3, 2013
+ *
+ * @author Asha Chandran 
+ */
+package com.nv.youNeverWait.user.pl.impl;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.nv.framework.util.text.StringEncoder;
+import com.nv.youNeverWait.common.Constants;
+import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.pl.entity.BranchStatusEnum;
+import com.nv.youNeverWait.pl.entity.DoctorScheduleTbl;
+import com.nv.youNeverWait.pl.entity.DoctorTbl;
+import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.pl.entity.LabBranchTbl;
+import com.nv.youNeverWait.pl.entity.LabLoginTbl;
+import com.nv.youNeverWait.pl.entity.LabPassphraseTbl;
+import com.nv.youNeverWait.pl.entity.LabTbl;
+import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
+import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
+import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
+import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
+import com.nv.youNeverWait.pl.entity.NetmdTbl;
+import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
+import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
+import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
+import com.nv.youNeverWait.pl.entity.PatientTbl;
+import com.nv.youNeverWait.pl.entity.StatusEnum;
+import com.nv.youNeverWait.pl.entity.SuperAdminTbl;
+import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.NetMdActivationResponseDTO;
+import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
+import com.nv.youNeverWait.rs.dto.NetMdBranchResponseDTO;
+import com.nv.youNeverWait.rs.dto.NetMdDTO;
+import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
+import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
+import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
+import com.nv.youNeverWait.rs.dto.Parameter;
+import com.nv.youNeverWait.rs.dto.PassPhraseDTO;
+import com.nv.youNeverWait.rs.dto.PasswordDTO;
+import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
+import com.nv.youNeverWait.rs.dto.UserCredentials;
+import com.nv.youNeverWait.security.pl.Query;
+import com.nv.youNeverWait.user.pl.dao.NetMdDao;
+
+public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
+
+	@PersistenceContext()
+	private EntityManager em;
+
+	/**
+	 * Creates a netmd account
+	 * 
+	 * @param netMd
+	 * @return ResponseDTO
+	 */
+	@Transactional(readOnly = false)
+	@Override
+	public ResponseDTO create(NetMdDTO netMd) {
+		ResponseDTO response = new ResponseDTO();
+		NetmdLoginTbl loginTbl = getLoginByUserName(netMd.getUserName());
+		if (loginTbl != null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.NetMdAccountAlreadyExists);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		// save login details
+		NetmdLoginTbl login = new NetmdLoginTbl();
+		login.setUserName(netMd.getUserName());
+		login.setUserType(NetmdUserTypeEnum.Owner.getDisplayName());
+		String password = StringEncoder.encryptWithKey(netMd.getPassword().trim());
+		login.setPassword(password);
+		save(login);
+
+		// checking whether the netmd account with given name already exists or
+		// not
+		if (netMd.getName() != null) {
+			String alphaDigitsOnly = netMd.getName().replaceAll(
+					"[^a-zA-Z0-9]+", "");
+			NetmdTbl dupNetMdTbl = (NetmdTbl) getNetMdByName(alphaDigitsOnly
+					.toUpperCase().trim());
+			if (dupNetMdTbl != null) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.DuplicateNetMd);
+				se.addParam(new Parameter(Constants.NAME, netMd.getName()));
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+		}
+		// save netmd details to netmd table
+		NetmdTbl netMdTbl = new NetmdTbl();
+		netMdTbl.setName(netMd.getName());
+		netMdTbl.setOwnerFirstName(netMd.getOwnerFirstName());
+		netMdTbl.setOwnerLastName(netMd.getOwnerLastName());
+		netMdTbl.setOwnerEmail(netMd.getOwnerEmail());
+		netMdTbl.setOwnerAddress(netMd.getOwnerAddress());
+		netMdTbl.setOwnerMobile(netMd.getOwnerMobile());
+		netMdTbl.setOwnerPhone(netMd.getOwnerPhone());
+		netMdTbl.setNetmdLoginTbl(login);
+		netMdTbl.setHeadOfficeAddress(netMd.getHeadOfficeAddress());
+		netMdTbl.setHeadOfficeEmail(netMd.getHeadOfficeEmail());
+		netMdTbl.setHeadOfficeMobile(netMd.getHeadOfficeMobile());
+		netMdTbl.setHeadOfficeName(netMd.getHeadOfficeName());
+		netMdTbl.setHeadOfficePhone(netMd.getHeadOfficePhone());
+		netMdTbl.setStatus(StatusEnum.Active.getDisplayName());
+		Date createdTime = new Date();
+		netMdTbl.setCreateDateTime(createdTime);
+		netMdTbl.setUpdateDateTime(createdTime);
+		save(netMdTbl);
+		response.setGlobalId(netMdTbl.getId());
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * Retrieves all Netmd list after last synchronization time
+	 * 
+	 * @param syncTime
+	 * @return RetrieveNetmdListResponseDTO
+	 */
+	@Override
+	@Transactional
+	public RetrieveNetmdListResponseDTO retrieveNetmdList(String syncTime, Date currentTime) {
+		RetrieveNetmdListResponseDTO response = new RetrieveNetmdListResponseDTO();
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		Date lastSyncTime = null;
+		try {
+			lastSyncTime = sdf.parse(syncTime);
+		} catch (ParseException e) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidSyncTime);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		List<NetMdDTO> newNetmdList = new ArrayList<NetMdDTO>();
+		List<NetMdDTO> updateNetmdList = new ArrayList<NetMdDTO>();
+
+		List<NetmdTbl> newNetmds = getNewNetmd(lastSyncTime,currentTime);
+		for (NetmdTbl newNetmd : newNetmds) {
+			NetMdDTO netmdDTO = new NetMdDTO();
+			netmdDTO.setName(newNetmd.getName());
+			netmdDTO.setOwnerFirstName(newNetmd.getOwnerFirstName());
+			netmdDTO.setOwnerLastName(newNetmd.getOwnerLastName());
+			netmdDTO.setOwnerAddress(newNetmd.getOwnerAddress());
+			netmdDTO.setOwnerEmail(newNetmd.getOwnerEmail());
+			netmdDTO.setOwnerMobile(newNetmd.getOwnerMobile());
+			netmdDTO.setOwnerPhone(newNetmd.getOwnerPhone());
+			netmdDTO.setHeadOfficeName(newNetmd.getHeadOfficeName());
+			netmdDTO.setHeadOfficeAddress(newNetmd.getHeadOfficeAddress());
+			netmdDTO.setHeadOfficeEmail(newNetmd.getHeadOfficeEmail());
+			netmdDTO.setHeadOfficeMobile(newNetmd.getHeadOfficeMobile());
+			netmdDTO.setHeadOfficePhone(newNetmd.getHeadOfficePhone());
+			netmdDTO.setGlobalId(newNetmd.getId());
+			netmdDTO.setStatus(newNetmd.getStatus());
+
+			newNetmdList.add(netmdDTO);
+		//	lastSyncTime = newNetmd.getCreateDateTime();
+			//System.out.println("last sync time" + lastSyncTime);
+		}
+
+		List<NetmdTbl> updateNetmds = getUpdateNetmd(lastSyncTime, currentTime);
+		for (NetmdTbl updateNetmd : updateNetmds) {
+			NetMdDTO netmdDTO = new NetMdDTO();
+			netmdDTO.setName(updateNetmd.getName());
+			netmdDTO.setOwnerFirstName(updateNetmd.getOwnerFirstName());
+			netmdDTO.setOwnerLastName(updateNetmd.getOwnerLastName());
+			netmdDTO.setOwnerAddress(updateNetmd.getOwnerAddress());
+			netmdDTO.setOwnerEmail(updateNetmd.getOwnerEmail());
+			netmdDTO.setOwnerMobile(updateNetmd.getOwnerMobile());
+			netmdDTO.setOwnerPhone(updateNetmd.getOwnerPhone());
+			netmdDTO.setHeadOfficeName(updateNetmd.getHeadOfficeName());
+			netmdDTO.setHeadOfficeAddress(updateNetmd.getHeadOfficeAddress());
+			netmdDTO.setHeadOfficeEmail(updateNetmd.getHeadOfficeEmail());
+			netmdDTO.setHeadOfficeMobile(updateNetmd.getHeadOfficeMobile());
+			netmdDTO.setHeadOfficePhone(updateNetmd.getHeadOfficePhone());
+			netmdDTO.setGlobalId(updateNetmd.getId());
+			netmdDTO.setStatus(updateNetmd.getStatus());
+
+			updateNetmdList.add(netmdDTO);
+//			if (lastSyncTime.before(updateNetmd.getUpdateDateTime())) {
+//				lastSyncTime = updateNetmd.getUpdateDateTime();
+//			}
+		}
+		//response.setLastSynctime(sdf.format(lastSyncTime));
+		response.setNewNetmdList(newNetmdList);
+		response.setUpdateNetmdList(updateNetmdList);
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * Retrieves all Netmd branch list after last synchronization time
+	 * 
+	 * @param syncTime
+	 * @return RetrieveNetmdBranchListResponseDTO
+	 */
+	@Override
+	@Transactional
+	public RetrieveNetmdBranchListResponseDTO retrieveNetmdBranchList(
+			String syncTime, Date currentTime) {
+		RetrieveNetmdBranchListResponseDTO response = new RetrieveNetmdBranchListResponseDTO();
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		Date lastSyncTime = null;
+		try {
+			lastSyncTime = sdf.parse(syncTime);
+		} catch (ParseException e) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidSyncTime);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		List<NetMdBranchDTO> newNetmdBranchList = new ArrayList<NetMdBranchDTO>();
+		List<NetMdBranchDTO> updateNetmdBranchList = new ArrayList<NetMdBranchDTO>();
+
+		List<NetmdBranchTbl> newNetmdBranches = getNewNetmdBranches(lastSyncTime, currentTime);
+		for (NetmdBranchTbl newBranch : newNetmdBranches) {
+
+			NetMdBranchDTO newNetmdBranch = new NetMdBranchDTO();
+			newNetmdBranch.setGlobalId(newBranch.getId());
+			newNetmdBranch.setName(newBranch.getName());
+			newNetmdBranch.setAddress(newBranch.getAddress());
+			newNetmdBranch.setPhone(newBranch.getPhone());
+			newNetmdBranch.setMobile(newBranch.getMobile());
+			newNetmdBranch.setEmail(newBranch.getEmail());
+			newNetmdBranch.setNetMdId(newBranch.getNetmdTbl().getId());
+			newNetmdBranch.setStatus(newBranch.getStatus());
+
+			newNetmdBranchList.add(newNetmdBranch);
+			//lastSyncTime = newBranch.getCreateDateTime();
+		}
+		List<NetmdBranchTbl> updateNetmdBranches = getUpdateNetmdBranches(lastSyncTime, currentTime);
+		for (NetmdBranchTbl updateBranch : updateNetmdBranches) {
+			NetMdBranchDTO updateNetmdBranch = new NetMdBranchDTO();
+			updateNetmdBranch.setGlobalId(updateBranch.getId());
+			updateNetmdBranch.setName(updateBranch.getName());
+			updateNetmdBranch.setAddress(updateBranch.getAddress());
+			updateNetmdBranch.setPhone(updateBranch.getPhone());
+			updateNetmdBranch.setMobile(updateBranch.getMobile());
+			updateNetmdBranch.setEmail(updateBranch.getEmail());
+			updateNetmdBranch.setNetMdId(updateBranch.getNetmdTbl().getId());
+			updateNetmdBranch.setStatus(updateBranch.getStatus());
+
+			updateNetmdBranchList.add(updateNetmdBranch);
+//			if (lastSyncTime.before(updateBranch.getUpdateDateTime()))
+//				
+//			lastSyncTime = updateBranch.getUpdateDateTime();
+
+		}
+		//response.setLastSyncTime(sdf.format(lastSyncTime));
+		response.setNewNetmdBranchList(newNetmdBranchList);
+		response.setUpdateNetmdBranchList(updateNetmdBranchList);
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * Creates a netmd branch
+	 * 
+	 * @param branch
+	 * @return ResponseDTO
+	 */
+	@Transactional
+	@Override
+	public ResponseDTO createBranch(NetMdBranchDTO branch) {
+		ResponseDTO response = new ResponseDTO();
+		NetmdTbl netMd = getById(NetmdTbl.class, branch.getNetMdId());
+		if (netMd == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMd);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(branch
+					.getNetMdId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		NetmdBranchTbl netMdBranch = new NetmdBranchTbl();
+		netMdBranch.setAddress(branch.getAddress());
+		Date createdTime = new Date();
+		netMdBranch.setName(branch.getName());
+		netMdBranch.setStatus(BranchStatusEnum.Active.getDisplayName());
+		netMdBranch.setCreateDateTime(createdTime);
+		netMdBranch.setUpdateDateTime(createdTime);
+		netMdBranch.setPhone(branch.getPhone());
+		netMdBranch.setMobile(branch.getMobile());
+		netMdBranch.setEmail(branch.getEmail());
+		netMdBranch.setNetmdTbl(netMd);
+		save(netMdBranch);
+		NetmdPassphraseTbl netMdPassPhrase = new NetmdPassphraseTbl();
+		String passphrase = StringEncoder.getKeyvalue(StringEncoder.getKey());
+		netMdPassPhrase.setPassPhrase(passphrase);
+		netMdPassPhrase.setNetmdBranchTbl(netMdBranch);
+		netMdPassPhrase.setMacId(null);
+		netMdPassPhrase.setPrimaryDevice(true);
+		save(netMdPassPhrase);
+		for (int i = 1; i < branch.getNumberOfDevices(); i++) {
+			NetmdPassphraseTbl netMdPassPhraseTbl = new NetmdPassphraseTbl();
+			String pass = StringEncoder.getKeyvalue(StringEncoder.getKey());
+			netMdPassPhraseTbl.setPassPhrase(pass);
+			netMdPassPhraseTbl.setNetmdBranchTbl(netMdBranch);
+			netMdPassPhrase.setMacId(null);
+			netMdPassPhraseTbl.setPrimaryDevice(false);
+			save(netMdPassPhraseTbl);
+		}
+		response.setSuccess(true);
+		response.setGlobalId(netMdBranch.getId());
+		return response;
+	}
+
+	/**
+	 * Update netmd account
+	 * 
+	 * @param netMd
+	 * @return ResponseDTO
+	 */
+	@Transactional
+	@Override
+	public ResponseDTO update(NetMdDTO netMd) {
+		ResponseDTO response = new ResponseDTO();
+		if (netMd.getGlobalId() <= 0) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMd);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(netMd
+					.getGlobalId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		NetmdTbl netmdTbl = getById(NetmdTbl.class, netMd.getGlobalId());
+		if (netmdTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMd);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(netMd
+					.getGlobalId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		/* checking whether the name already exists */
+		String alphaDigitsOnly = netMd.getName()
+				.replaceAll("[^a-zA-Z0-9]+", "");
+		NetmdTbl netMdTbl = (NetmdTbl) getNetMdByName(alphaDigitsOnly
+				.toUpperCase().trim());
+		if (netMdTbl != null) {
+			if (netMdTbl.getId() != netMd.getGlobalId()) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.NetMdNameExists);
+				se.addParam(new Parameter(Constants.NAME, netMd.getName()));
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+		}
+
+		netmdTbl.setName(netMd.getName());
+		netmdTbl.setOwnerFirstName(netMd.getOwnerFirstName());
+		netmdTbl.setOwnerLastName(netMd.getOwnerLastName());
+		netmdTbl.setOwnerEmail(netMd.getOwnerEmail());
+		netmdTbl.setOwnerAddress(netMd.getOwnerAddress());
+		netmdTbl.setOwnerMobile(netMd.getOwnerMobile());
+		netmdTbl.setOwnerPhone(netMd.getOwnerPhone());
+		netmdTbl.setHeadOfficeAddress(netMd.getHeadOfficeAddress());
+		netmdTbl.setHeadOfficeEmail(netMd.getHeadOfficeEmail());
+		netmdTbl.setHeadOfficeMobile(netMd.getHeadOfficeMobile());
+		netmdTbl.setHeadOfficeName(netMd.getHeadOfficeName());
+		netmdTbl.setHeadOfficePhone(netMd.getHeadOfficePhone());
+		netmdTbl.setUpdateDateTime(new Date());
+		update(netmdTbl);
+
+		response.setGlobalId(netmdTbl.getId());
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * Delete netMd
+	 * 
+	 * @param netmdId
+	 * @return ResponseDTO
+	 */
+	@Transactional(readOnly = false)
+	@Override
+	public ResponseDTO delete(int netMdId) {
+		ResponseDTO response = new ResponseDTO();
+		NetmdTbl netmd = getById(NetmdTbl.class, netMdId);
+		if (netmd == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMdId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		netmd.setStatus(StatusEnum.InActive.getDisplayName());
+		for (NetmdBranchTbl netMdBranchTbl : netmd.getNetmdBranchTbls()) {
+
+			for (PatientTbl patientTbl : netMdBranchTbl.getPatientTbls()) {
+				patientTbl.setStatus(StatusEnum.InActive.getDisplayName());
+				update(patientTbl);
+			}
+			for (NetmdUserTbl netmdUserTbl : netMdBranchTbl.getNetmdUserTbls()) {
+				netmdUserTbl.setStatus(StatusEnum.InActive.getDisplayName());
+				update(netmdUserTbl);
+			}
+			for (PatientAppointmentTbl patientAppointmentTbl : netMdBranchTbl
+					.getPatientAppointmentTbls()) {
+				patientAppointmentTbl.setStatus(StatusEnum.InActive
+						.getDisplayName());
+				update(patientAppointmentTbl);
+			}
+			for (DoctorTbl doctorTbl : netMdBranchTbl.getDoctorTbls()) {
+				doctorTbl.setStatus(StatusEnum.InActive.getDisplayName());
+				update(doctorTbl);
+			}
+			for (DoctorScheduleTbl doctorScheduleTbl : netMdBranchTbl
+					.getDoctorScheduleTbls()) {
+				doctorScheduleTbl.setStatus(StatusEnum.InActive
+						.getDisplayName());
+				update(doctorScheduleTbl);
+			}
+			netMdBranchTbl.setStatus(StatusEnum.InActive.getDisplayName());
+			update(netMdBranchTbl);
+		}
+		update(netmd);
+		response.setSuccess(true);
+		return response;
+	}
+
+	@Transactional
+	@Override
+	public NetMdViewResponseDTO view(int netMdId) {
+		NetmdTbl netmdTbl = getById(NetmdTbl.class, netMdId);
+		if (netmdTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMd);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(netMdId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		NetMdDTO netMd = new NetMdDTO();
+		netMd.setGlobalId(netmdTbl.getId());
+		netMd.setName(netmdTbl.getName());
+		netMd.setOwnerAddress(netmdTbl.getOwnerAddress());
+		netMd.setOwnerEmail(netmdTbl.getOwnerEmail());
+		netMd.setOwnerMobile(netmdTbl.getOwnerMobile());
+		netMd.setOwnerFirstName(netmdTbl.getOwnerFirstName());
+		netMd.setOwnerLastName(netmdTbl.getOwnerLastName());
+		netMd.setOwnerPhone(netmdTbl.getOwnerPhone());
+		netMd.setHeadOfficeAddress(netmdTbl.getHeadOfficeAddress());
+		netMd.setHeadOfficeEmail(netmdTbl.getHeadOfficeEmail());
+		netMd.setHeadOfficeMobile(netmdTbl.getHeadOfficeMobile());
+		netMd.setHeadOfficePhone(netmdTbl.getHeadOfficePhone());
+		netMd.setHeadOfficeName(netmdTbl.getHeadOfficeName());
+		netMd.setUserName(netmdTbl.getNetmdLoginTbl().getUserName());
+		netMd.setPassword(netmdTbl.getNetmdLoginTbl().getPassword());
+		netMd.setUserType(netmdTbl.getNetmdLoginTbl().getUserType());
+		NetMdViewResponseDTO response = new NetMdViewResponseDTO();
+		response.setNetMd(netMd);
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * Updates a branch details
+	 * 
+	 * @param branch
+	 * @return ResponseDTO
+	 */
+	@Override
+	@Transactional(readOnly = false)
+	public ResponseDTO updateBranch(NetMdBranchDTO branch) {
+		ResponseDTO response = new ResponseDTO();
+		NetmdTbl netMd = getById(NetmdTbl.class, branch.getNetMdId());
+		if (netMd == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMd);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(branch
+					.getNetMdId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		NetmdBranchTbl netMdBranch = (NetmdBranchTbl) getBranchByNetMdId(
+				branch.getGlobalId(), branch.getNetMdId());
+		if (netMdBranch == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		netMdBranch.setName(branch.getName());
+		netMdBranch.setAddress(branch.getAddress());
+		netMdBranch.setPhone(branch.getPhone());
+		netMdBranch.setMobile(branch.getMobile());
+		netMdBranch.setEmail(branch.getEmail());
+		netMdBranch.setUpdateDateTime(new Date());
+		update(netMdBranch);
+		response.setGlobalId(netMdBranch.getId());
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * view a branch details
+	 * 
+	 * @param globalId
+	 * @return BranchResponseDTO
+	 */
+	@Override
+	@Transactional(readOnly = false)
+	public NetMdBranchResponseDTO viewBranch(int netMdBranchId) {
+		NetMdBranchResponseDTO response = new NetMdBranchResponseDTO();
+		NetmdBranchTbl netMdBranch = getById(NetmdBranchTbl.class,
+				netMdBranchId);
+		if (netMdBranch == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		NetMdBranchDTO branch = new NetMdBranchDTO();
+		branch.setName(netMdBranch.getName());
+		branch.setAddress(netMdBranch.getAddress());
+		branch.setMobile(netMdBranch.getMobile());
+		branch.setPhone(netMdBranch.getPhone());
+		branch.setStatus(netMdBranch.getStatus());
+		branch.setGlobalId(netMdBranch.getId());
+		branch.setNetMdId(netMdBranch.getNetmdTbl().getId());
+		branch.setEmail(netMdBranch.getEmail());
+		List<NetmdPassphraseTbl> passPhrases = getMacPassPhraseByNetMdBranch(netMdBranchId);
+		List<PassPhraseDTO> passPhraseList = new ArrayList<PassPhraseDTO>();
+		branch.setNumberOfDevices(passPhrases.size());
+		for (NetmdPassphraseTbl netmdPassphraseTbl : passPhrases) {
+			PassPhraseDTO pass = new PassPhraseDTO();
+			pass.setPassPhrase(netmdPassphraseTbl.getPassPhrase());
+			pass.setMacId(netmdPassphraseTbl.getMacId());
+			if (netmdPassphraseTbl.isPrimaryDevice()) {
+				pass.setPrimary(true);
+			} else {
+				pass.setPrimary(false);
+			}
+			passPhraseList.add(pass);
+		}
+		branch.setPassPhrase(passPhraseList);
+		response.setBranch(branch);
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * deletes a branch
+	 * 
+	 * @param branch
+	 * @return ResponseDTO
+	 */
+	@Override
+	@Transactional(readOnly = false)
+	public ResponseDTO deleteBranch(int netMdBranchId) {
+		ResponseDTO response = new ResponseDTO();
+		NetmdBranchTbl netmdBranch = getById(NetmdBranchTbl.class,
+				netMdBranchId);
+		if (netmdBranch == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		netmdBranch.setStatus(StatusEnum.InActive.getDisplayName());
+
+		for (PatientTbl patientTbl : netmdBranch.getPatientTbls()) {
+			patientTbl.setStatus(StatusEnum.InActive.getDisplayName());
+			update(patientTbl);
+		}
+		for (NetmdUserTbl netmdUserTbl : netmdBranch.getNetmdUserTbls()) {
+			netmdUserTbl.setStatus(StatusEnum.InActive.getDisplayName());
+			update(netmdUserTbl);
+		}
+		for (PatientAppointmentTbl patientAppointmentTbl : netmdBranch
+				.getPatientAppointmentTbls()) {
+			patientAppointmentTbl.setStatus(StatusEnum.InActive
+					.getDisplayName());
+			update(patientAppointmentTbl);
+		}
+		for (DoctorTbl doctorTbl : netmdBranch.getDoctorTbls()) {
+			doctorTbl.setStatus(StatusEnum.InActive.getDisplayName());
+			update(doctorTbl);
+		}
+		for (DoctorScheduleTbl doctorScheduleTbl : netmdBranch
+				.getDoctorScheduleTbls()) {
+			doctorScheduleTbl.setStatus(StatusEnum.InActive.getDisplayName());
+			update(doctorScheduleTbl);
+		}
+
+		update(netmdBranch);
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * Method performed for deleting users from NetmdUserTbl
+	 * 
+	 * @param globalId
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO deleteUser(int globalId) {
+		ResponseDTO response = new ResponseDTO();
+		NetmdUserTbl user = getById(NetmdUserTbl.class, globalId);
+		if (user == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMdUser);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(globalId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		user.setStatus(StatusEnum.InActive.getDisplayName());
+		user.setUpdateDateTime(new Date());
+		update(user);
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * Returns netmd branch details and set Mac Id
+	 * 
+	 * @param header
+	 * @return
+	 */
+	@Override
+	@Transactional
+	public NetMdActivationResponseDTO activateNetMd(HeaderDTO header) {
+		NetMdActivationResponseDTO response = new NetMdActivationResponseDTO();
+		NetmdPassphraseTbl netmdpassPhrase = (NetmdPassphraseTbl) getByPassphrase(header
+				.getPassPhrase());
+		if (netmdpassPhrase == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPassphrase);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (netmdpassPhrase.getMacId() != null
+				&& !netmdpassPhrase.getMacId().isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.MacIdExists);
+			se.addParam(new Parameter(Constants.PASSPHRASE, netmdpassPhrase
+					.getPassPhrase()));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		netmdpassPhrase.setMacId(header.getMacId());
+		update(netmdpassPhrase);
+
+		NetmdBranchTbl netMdBranch = getById(NetmdBranchTbl.class,
+				netmdpassPhrase.getNetmdBranchTbl().getId());
+		if (netMdBranch == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMdAccount);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		// setting whether it's primary or not
+
+		if (netmdpassPhrase.isPrimaryDevice()) {
+			response.setPrimary(true);
+		} else {
+			response.setPrimary(false);
+		}
+
+		// setting branch details
+		NetMdBranchDTO branchDetail = new NetMdBranchDTO();
+		branchDetail.setName(netMdBranch.getName());
+		branchDetail.setAddress(netMdBranch.getAddress());
+		branchDetail.setStatus(netMdBranch.getStatus());
+		branchDetail.setPhone(netMdBranch.getPhone());
+		branchDetail.setMobile(netMdBranch.getMobile());
+		branchDetail.setGlobalId(netMdBranch.getId());
+		branchDetail.setEmail(netMdBranch.getEmail());
+		branchDetail.setNetMdId(netMdBranch.getNetmdTbl().getId());
+		response.setBranch(branchDetail);
+
+		NetmdTbl netMdTbl = getById(NetmdTbl.class, netMdBranch.getNetmdTbl()
+				.getId());
+		// setting netmd details
+		NetMdDTO netMd = new NetMdDTO();
+		netMd.setOwnerFirstName(netMdTbl.getOwnerFirstName());
+		netMd.setOwnerLastName(netMdTbl.getOwnerLastName());
+		netMd.setName(netMdTbl.getName());
+		netMd.setOwnerAddress(netMdTbl.getOwnerAddress());
+		netMd.setOwnerEmail(netMdTbl.getOwnerEmail());
+		netMd.setOwnerMobile(netMdTbl.getOwnerMobile());
+		netMd.setOwnerPhone(netMdTbl.getOwnerPhone());
+		netMd.setStatus(netMdTbl.getStatus());
+		netMd.setGlobalId(netMdTbl.getId());
+		netMd.setHeadOfficeAddress(netMdTbl.getHeadOfficeAddress());
+		netMd.setHeadOfficeEmail(netMdTbl.getHeadOfficeEmail());
+		netMd.setHeadOfficeMobile(netMdTbl.getHeadOfficeMobile());
+		netMd.setHeadOfficeName(netMdTbl.getHeadOfficeName());
+		netMd.setHeadOfficePhone(netMdTbl.getHeadOfficePhone());
+		netMd.setPassword(netMdTbl.getNetmdLoginTbl().getPassword());
+		netMd.setUserName(netMdTbl.getNetmdLoginTbl().getUserName());
+		netMd.setUserType(netMdTbl.getNetmdLoginTbl().getUserType());
+		response.setNetmd(netMd);
+
+		List<NetmdUserTbl> users = getNetMdUsersByBranchId(netMdBranch.getId());
+		List<NetMdUserDetail> userList = new ArrayList<NetMdUserDetail>();
+		for (NetmdUserTbl netmdUserTbl : users) {
+			NetMdUserDetail user = new NetMdUserDetail();
+			user.setAddress(netmdUserTbl.getAddress());
+			user.setEmail(netmdUserTbl.getEmail());
+			user.setFirstName(netmdUserTbl.getFirstName());
+			user.setGlobalId(netmdUserTbl.getId());
+			user.setLastName(netmdUserTbl.getLastName());
+			user.setMobile(netmdUserTbl.getMobile());
+			user.setNetMdBranchId(netmdUserTbl.getNetmdBranchTbl().getId());
+			user.setPassword(netmdUserTbl.getNetmdLoginTbl().getPassword());
+			user.setPhone(netmdUserTbl.getPhone());
+			user.setStatus(netmdUserTbl.getStatus());
+			user.setUserType(netmdUserTbl.getNetmdLoginTbl().getUserType());
+			user.setUserName(netmdUserTbl.getNetmdLoginTbl().getUserName());
+			userList.add(user);
+		}
+		response.setUser(userList);
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * To retreive users in netmd branch by giving branchId
+	 * 
+	 * @param netMdBranchId
+	 * @return NetmdUserTbl
+	 */
+	private List<NetmdUserTbl> getNetMdUsersByBranchId(int netMdBranchId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_USRS_BY_NETMD_BRANCH);
+		query.setParameter("param1", netMdBranchId);
+		return (List<NetmdUserTbl>) executeQuery(NetmdUserTbl.class, query);
+	}
+
+	/**
+	 * Retrieve netmd owner details
+	 * 
+	 * @param netMdBranchId
+	 * @return NetMdBranchOwnerDetails
+	 */
+
+	@Override
+	@Transactional
+	public NetMdBranchOwnerDetails getBranchOwners(int netMdBranchId) {
+		NetmdBranchTbl netmdBranchTbl = getById(NetmdBranchTbl.class,
+				netMdBranchId);
+		NetMdBranchOwnerDetails response = new NetMdBranchOwnerDetails();
+		response.setOwnerEmail(netmdBranchTbl.getNetmdTbl().getOwnerEmail());
+		response.setOwnerFirstName(netmdBranchTbl.getNetmdTbl()
+				.getOwnerFirstName());
+		response.setOwnerLastName(netmdBranchTbl.getNetmdTbl()
+				.getOwnerLastName());
+		response.setNetMdName(netmdBranchTbl.getNetmdTbl().getName());
+		List<NetmdPassphraseTbl> netmdPassphraseTbls = getMacPassPhraseByNetMdBranch(netMdBranchId);
+		List<String> passPhrases = new ArrayList<String>();
+		for (NetmdPassphraseTbl netmdPassphraseTbl : netmdPassphraseTbls) {
+			if (netmdPassphraseTbl.isPrimaryDevice()) {
+				response.setPrimaryPassPhrase(netmdPassphraseTbl
+						.getPassPhrase());
+			} else {
+				passPhrases.add(netmdPassphraseTbl.getPassPhrase());
+			}
+
+		}
+		response.setPassPhrase(passPhrases);
+		response.setBranchName(netmdBranchTbl.getName());
+		return response;
+	}
+
+	/**
+	 * Creates netmd user
+	 * 
+	 * @param netmdUser
+	 * @return ResponseDTO
+	 */
+	@Transactional
+	@Override
+	public ResponseDTO createUser(HeaderDTO header, NetMdUserDetail netMdUser) {
+		ResponseDTO response = new ResponseDTO();
+		NetmdUserTbl user = new NetmdUserTbl();
+
+		NetmdBranchTbl branch = getById(NetmdBranchTbl.class,
+				header.getNetMdBranchId());
+		if (branch == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMdBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (header.getMacId() != null && header.getPassPhrase() != null
+				&& !header.getMacId().isEmpty()
+				&& !header.getPassPhrase().isEmpty()) {
+
+			NetmdPassphraseTbl passPhrase = getByPassphrase(header
+					.getPassPhrase());
+			if (passPhrase == null
+					|| passPhrase.getMacId() == null
+					|| !passPhrase.getMacId().equals(header.getMacId())
+					|| passPhrase.getNetmdBranchTbl().getId() != header
+							.getNetMdBranchId()
+					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != header
+							.getNetMdId()) {
+
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidNetMdAccount);
+				se.setDisplayErrMsg(true);
+				throw se;
+			} else {
+				user.setNetmdPassphraseTbl(passPhrase);
+			}
+		}
+
+		NetmdUserTbl netmdUserTbl = getNetMdUserByEmail(netMdUser.getEmail(),
+				header.getNetMdBranchId());
+		if (netmdUserTbl != null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.NetMdUserAlreadyExists);
+			se.addParam(new Parameter(Constants.EMAIL, netMdUser.getEmail()));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		NetmdLoginTbl loginTbl = getLoginByUserName(netMdUser.getUserName());
+		if (loginTbl != null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.NetMdUserAccountAlreadyExists);
+			se.addParam(new Parameter(Constants.USER, netMdUser.getUserName()));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		// save user login details to NetMdLoginTbl
+		NetmdLoginTbl login = new NetmdLoginTbl();
+		login.setUserName(netMdUser.getUserName());
+		String password = new StringEncoder().encryptWithKey(netMdUser
+				.getPassword().trim());
+		login.setUserType(netMdUser.getUserType());
+		login.setPassword(password);
+		save(login);
+
+		Date date = new Date();
+		user.setAddress(netMdUser.getAddress());
+		user.setCreateDateTime(date);
+		user.setEmail(netMdUser.getEmail());
+		user.setMobile(netMdUser.getMobile());
+		user.setFirstName(netMdUser.getFirstName());
+		user.setLastName(netMdUser.getLastName());
+		user.setNetmdBranchTbl(branch);
+		user.setNetmdLoginTbl(login);
+		user.setPhone(netMdUser.getPhone());
+		user.setStatus(StatusEnum.Active.getDisplayName());
+		user.setUpdateDateTime(date);
+		user.setUserType(netMdUser.getUserType());
+		save(user);
+		response.setGlobalId(user.getId());
+		response.setId(netMdUser.getId());
+		return response;
+	}
+
+	/**
+	 * Update netmd user
+	 * 
+	 * @param netmdUser
+	 * @return ResponseDTO
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO updateUser(HeaderDTO header, NetMdUserDetail netMdUser) {
+		ResponseDTO response = new ResponseDTO();
+		NetmdUserTbl user = getById(NetmdUserTbl.class, netMdUser.getGlobalId());
+		if (user == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMdUser);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(netMdUser
+					.getGlobalId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		NetmdUserTbl netmdUserTbl = getNetMdUserByEmail(netMdUser.getEmail(),
+				netMdUser.getNetMdBranchId());
+		// duplicate checking
+		if (netmdUserTbl != null && netmdUserTbl.getId() != user.getId()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.NetMdUserAlreadyExists);
+			se.addParam(new Parameter(Constants.EMAIL, netMdUser.getEmail()));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		user.setAddress(netMdUser.getAddress());
+		user.setEmail(netMdUser.getEmail());
+		user.setMobile(netMdUser.getMobile());
+		user.setFirstName(netMdUser.getFirstName());
+		user.setLastName(netMdUser.getLastName());
+		user.setPhone(netMdUser.getPhone());
+		user.setUserType(netMdUser.getUserType());
+		user.setUpdateDateTime(new Date());
+		update(user);
+		NetmdLoginTbl login = getById(NetmdLoginTbl.class, user
+				.getNetmdLoginTbl().getId());
+		login.setUserType(netMdUser.getUserType());
+		update(login);
+
+		response.setGlobalId(user.getId());
+		response.setId(netMdUser.getId());
+		return response;
+	}
+
+	/**
+	 * View netmd user
+	 * 
+	 * @param globalId
+	 * @return ResponseDTO
+	 */
+	@Override
+	@Transactional
+	public NetMdUserDTO viewUser(int globalId) {
+		NetMdUserDTO response = new NetMdUserDTO();
+		NetMdUserDetail userDetail = new NetMdUserDetail();
+		NetmdUserTbl user = getById(NetmdUserTbl.class, globalId);
+		if (user == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMdUser);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(globalId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		userDetail.setAddress(user.getAddress());
+		userDetail.setEmail(user.getEmail());
+		userDetail.setFirstName(user.getFirstName());
+		userDetail.setGlobalId(user.getId());
+		userDetail.setLastName(user.getLastName());
+		userDetail.setMobile(user.getMobile());
+		userDetail.setNetMdBranchId(user.getNetmdBranchTbl().getId());
+		userDetail.setNetMdId(user.getNetmdBranchTbl().getNetmdTbl().getId());
+		userDetail.setPhone(user.getPhone());
+		userDetail.setStatus(user.getStatus());
+		if (user.getNetmdLoginTbl() != null) {
+			userDetail.setUserName(user.getNetmdLoginTbl().getUserName());
+			userDetail.setUserType(user.getNetmdLoginTbl().getUserType());
+		}
+		response.setUser(userDetail);
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * Method to retrieve details of a lab owner/user
+	 * 
+	 * @param login
+	 * @return UserCredentials
+	 */
+	@Override
+	@Transactional
+	public UserCredentials getUserCredentials(LoginDTO login) {
+
+		UserCredentials user = new UserCredentials();
+		NetmdLoginTbl userLogin = getNetMdUserByName(login.getUserName().trim());
+		if (userLogin == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUserName);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (userLogin.getUserType().equals(
+				LabUserTypeEnum.Owner.getDisplayName())) {
+			NetmdTbl netmdTbl = getNetMdByLoginId(userLogin.getId());
+			if (netmdTbl == null) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.NoUserExists);
+				se.addParam(new Parameter(Constants.NAME, userLogin
+						.getUserName()));
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			user.setEmailId(netmdTbl.getOwnerEmail());
+			user.setFirstName(netmdTbl.getOwnerFirstName());
+			user.setLastName(netmdTbl.getOwnerLastName());
+			user.setUserName(userLogin.getUserName());
+		} else {
+			NetmdUserTbl netmdUser = getNetMdUserByLoginId(userLogin.getId());
+			if (netmdUser == null) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.NoUserExists);
+				se.addParam(new Parameter(Constants.NAME, userLogin
+						.getUserName()));
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			user.setEmailId(netmdUser.getEmail());
+			user.setFirstName(netmdUser.getFirstName());
+			user.setLastName(netmdUser.getLastName());
+			user.setUserName(userLogin.getUserName());
+		}
+		return user;
+	}
+
+	/**
+	 * Method performed to retrieve created updated and deleted users list from
+	 * portal
+	 * 
+	 * @param lastSyncTime
+	 * @param passPhrase
+	 * @param netmdBranchId
+	 * @return RetrievalUserResponseDTO
+	 */
+	@Override
+	@Transactional
+	public RetrievalUserResponseDTO retrieveUserList(String syncTime,
+			String passPhrase, int netmdBranchId, Date currentSyncTime) {
+		RetrievalUserResponseDTO response = new RetrievalUserResponseDTO();
+		List<NetMdUserDetail> retrieveUsers = new ArrayList<NetMdUserDetail>();
+//		List<NetMdUserDetail> retrieveUpdatedUsers = new ArrayList<NetMdUserDetail>();
+//		List<NetMdUserDetail> retrieveDeletedUsers = new ArrayList<NetMdUserDetail>();
+		Date lastSyncTime = null;
+		DateFormat df = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		try {
+			lastSyncTime = df.parse(syncTime);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidSyncTime);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		int netmdPassphraseId = getNetmdPassphrase(passPhrase, netmdBranchId);
+		if (netmdPassphraseId == 0) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMdAccount);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		/* Getting users list */
+		List<NetmdUserTbl> usersList = getUsers(lastSyncTime,
+				netmdPassphraseId, netmdBranchId, currentSyncTime);
+		for (NetmdUserTbl user : usersList) {
+			retrieveUsers.add(new NetMdUserDetail(user));
+		}
+
+//		/* Getting updated users */
+//		List<NetmdUserTbl> updatedUsersList = getUpdatedUsers(lastSyncTime,
+//				netmdPassphraseId, netmdBranchId, currentSyncTime);
+//		for (NetmdUserTbl updatedUser : updatedUsersList) {
+//			retrieveUpdatedUsers.add(new NetMdUserDetail(updatedUser));
+//		}
+//
+//		/* Getting deleted users */
+//		List<NetmdUserTbl> deletedUsersList = getDeletedUsers(lastSyncTime,
+//				netmdPassphraseId, netmdBranchId, currentSyncTime);
+//		for (NetmdUserTbl deletedUsers : deletedUsersList) {
+//			retrieveDeletedUsers.add(new NetMdUserDetail(deletedUsers));
+//
+//		}
+
+		response.setRetrieveUsersList(retrieveUsers);
+//		response.setRetrieveUpdatedUsers(retrieveUpdatedUsers);
+//		response.setRetrieveDeletedUsers(retrieveDeletedUsers);
+		response.setSuccess(true);
+		return response;
+	}
+	
+	/**
+	 * Method which performs password changing
+	 * 
+	 * @param passwords
+	 * @return ResponseDTO
+	 */
+	@Override
+	@Transactional(readOnly = false)
+	public ResponseDTO changePassword(@RequestBody PasswordDTO passwords) {
+		ResponseDTO response = new ResponseDTO();
+		String encOldPassword = StringEncoder.encryptWithKey(passwords.getOldPassword()
+				.trim());
+		NetmdLoginTbl login = getNetMdUserByName(passwords
+				.getUsername());
+		if (login == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.UserNotExists);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (!login.getPassword().equals(encOldPassword)) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.PasswordNotExists);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		String encNewPassword = StringEncoder.encryptWithKey(passwords
+				.getNewPassword().trim());
+		login.setPassword(encNewPassword);
+		update(login);
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * Method to reset password
+	 * 
+	 * @param login
+	 * @return ResponseDTO
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO resetPassword(LoginDTO login) {
+		ResponseDTO response = new ResponseDTO();
+		
+		String newPassword = StringEncoder.encryptWithKey(login.getPassword());
+		String decrypedUserName = StringEncoder.decryptWithStaticKey(login
+				.getUserName());
+		NetmdLoginTbl userLogin = getNetMdUserByName(decrypedUserName);
+		if (userLogin == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUserName);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		userLogin.setPassword(newPassword);
+		update(userLogin);
+		response.setSuccess(true);
+		return response;
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO makePrimary(HeaderDTO header) {
+		ResponseDTO response = new ResponseDTO();
+		List<NetmdPassphraseTbl> passphraseObjList = getPassPhraseByBranch(header.getNetMdBranchId());
+		for(NetmdPassphraseTbl netmdPassphraseTblObj : passphraseObjList){
+			if(header.getPassPhrase().equals(netmdPassphraseTblObj.getPassPhrase())){
+				netmdPassphraseTblObj.setPrimaryDevice(true);
+				update(netmdPassphraseTblObj);
+			}else{
+				netmdPassphraseTblObj.setPrimaryDevice(false);
+				update(netmdPassphraseTblObj);
+			}
+			
+		}
+		response.setSuccess(true);
+		return response;
+	}
+	
+	/**
+	 * get passphrase table list
+	 * @param branchId
+	 * @return NetmdPassphraseTbl
+	 */
+	public List<NetmdPassphraseTbl> getPassPhraseByBranch(int branchId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.NETMD_PASSPHRASE_BY_BRANCH);
+		query.setParameter("param1", branchId);
+		return executeQuery(NetmdPassphraseTbl.class, query);
+	}
+	/**
+	 * Method which clears mac Id
+	 * 
+	 * @param header
+	 * @return ResponseDTO
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO clearMacId(HeaderDTO header) {
+
+		ResponseDTO response = new ResponseDTO();
+		/* Query to get netmd record for given netMd id */
+		NetmdTbl netMd = getById(NetmdTbl.class, header.getNetMdId());
+		/* Setting error message when netmd Id is incorrect */
+		if (netMd == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMdAccount);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		/* Quert to get the list of branches for given Netmd id */
+		List<NetmdBranchTbl> branches = (List<NetmdBranchTbl>) getNetMdBranches(netMd
+				.getId());
+		/*Setting error message when there is no branches corresponding to the Netmd given*/
+		if (branches.isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.BranchMissMatch);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(header
+					.getNetMdBranchId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		int count = 0;
+		/*Iterating through each branches and retrieving the netmdPassPhrase record corresponding to it*/
+		for (NetmdBranchTbl netMdBranch : branches) {
+			count++;
+			/*Checking whether netmd branch id matches with given netMd branch id*/
+			if (netMdBranch.getId() == header.getNetMdBranchId()) {
+				/*Query for retrieving netmd branch passphrase*/
+				NetmdPassphraseTbl branchPassPhrase = getMacPassPhraseByBranch(
+						netMdBranch.getId(), header.getPassPhrase());
+				/*Setting error message when there is no netmd branch passphrase*/
+				if (branchPassPhrase == null) {
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.PassPhraseNotExist);
+					se.setDisplayErrMsg(false);
+					throw se;
+				}// end of branch passphrase if loop
+				branchPassPhrase.setMacId(null);
+				update(branchPassPhrase);
+				response.setSuccess(true);
+				return response;
+
+			} else if (count == branches.size()) {
+				/*Setting error message when no branches matches to the given branch id*/
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.BranchMissMatch);
+				se.addParam(new Parameter(Constants.ID, Integer.toString(header
+						.getNetMdBranchId())));
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+		}
+		return response;
+	}
+
+	/**
+	 * 
+	 * @param branchId
+	 * @return LabPassphraseTbl
+	 */
+	public NetmdPassphraseTbl getMacPassPhraseByBranch(int branchId,
+			String passPhrase) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_PASSPHRASE_BY_BRANCH_ID);
+		query.setParameter("param1", branchId);
+		query.setParameter("param2", passPhrase);
+		return executeUniqueQuery(NetmdPassphraseTbl.class, query);
+	}
+
+//	/**
+//	 * Method for retrieving all deleted users after last sync time
+//	 * 
+//	 * @param lastSyncTime
+//	 * @param netmdPassphraseId
+//	 * @param netmdBranchId
+//	 * @return NetmdUserTbl
+//	 */
+//	private List<NetmdUserTbl> getDeletedUsers(Date lastSyncTime,
+//			int netmdPassphraseId, int netmdBranchId, Date currentSyncTime) {
+//		javax.persistence.Query query = em
+//				.createQuery(Query.GET_DELETED_NETMD_USERS);
+//		query.setParameter("param1", lastSyncTime);
+//		query.setParameter("param2", netmdPassphraseId);
+//		query.setParameter("param3", netmdBranchId);
+//		query.setParameter("param4", currentSyncTime);
+//		return executeQuery(NetmdUserTbl.class, query);
+//
+//	}
+
+	/**
+	 * Method for retrieving all  created updated and deleted users after last sync time
+	 * 
+	 * @param lastSyncTime
+	 * @param netmdPassphraseId
+	 * @param netmdBranchId
+	 * @return NetmdUserTbl
+	 */
+	private List<NetmdUserTbl> getUsers(Date lastSyncTime,
+			int netmdPassphraseId, int netmdBranchId, Date currentSyncTime) {
+		javax.persistence.Query query = em
+				.createQuery(Query.RETRIEVE_NETMD_USERS);
+		query.setParameter("param1", lastSyncTime);
+		query.setParameter("param2", netmdPassphraseId);
+		query.setParameter("param3", netmdBranchId);
+		query.setParameter("param4", currentSyncTime);
+		return executeQuery(NetmdUserTbl.class, query);
+
+	}
+
+//	/**
+//	 * Method for retrieving all updated users after last sync time
+//	 * 
+//	 * @param lastSyncTime
+//	 * @param netmdPassphraseId
+//	 * @param netmdBranchId
+//	 * @return NetmdUserTbl
+//	 */
+//	private List<NetmdUserTbl> getUpdatedUsers(Date lastSyncTime,
+//			int netmdPassphraseId, int netmdBranchId, Date currentSyncTime) {
+//		javax.persistence.Query query = em
+//				.createQuery(Query.GET_UPDATED_NETMD_USERS);
+//		query.setParameter("param1", lastSyncTime);
+//		query.setParameter("param2", netmdPassphraseId);
+//		query.setParameter("param3", netmdBranchId);
+//		query.setParameter("param4", currentSyncTime);
+//		return executeQuery(NetmdUserTbl.class, query);
+//
+//	}
+
+	/**
+	 * 
+	 * @param userName
+	 * @return NetmdLoginTbl
+	 */
+	public NetmdLoginTbl getNetMdUserByName(String userName) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_LOGIN_BY_USERNAME);
+		query.setParameter("param1", userName);
+		return executeUniqueQuery(NetmdLoginTbl.class, query);
+	}
+
+	/**
+	 * Method for getting netmd passphrase id
+	 * 
+	 * @param passPhrase
+	 * @param netmdBranchId
+	 * @return netmd passphrase id
+	 */
+	public Integer getNetmdPassphrase(String passPhrase, int netmdBranchId) {
+		int count = 0;
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_PASSPHRASE_ID);
+		query.setParameter("param1", passPhrase);
+		query.setParameter("param2", netmdBranchId);
+		count = (Integer) query.getSingleResult();
+		return count;
+	}
+
+	/**
+	 * 
+	 * @param loginId
+	 * @return NetmdTbl
+	 */
+	public NetmdTbl getNetMdByLoginId(int loginId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_BY_LOGIN_ID);
+		query.setParameter("param1", loginId);
+		return executeUniqueQuery(NetmdTbl.class, query);
+	}
+
+	/**
+	 * 
+	 * @param loginId
+	 * @return NetmdUserTbl
+	 */
+	public NetmdUserTbl getNetMdUserByLoginId(int loginId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_NETMD_USER);
+		query.setParameter("param1", loginId);
+		return executeUniqueQuery(NetmdUserTbl.class, query);
+	}
+
+	/**
+	 * To get netmd name by giving netmd id
+	 * 
+	 * @param netMdId
+	 * @return netmd name
+	 */
+	@Override
+	public String getNetMdName(int netMdId) {
+		NetmdTbl netmdTbl = getById(NetmdTbl.class, netMdId);
+		if (netmdTbl == null) {
+			return "";
+		}
+		return netmdTbl.getName();
+	}
+
+	/**
+	 * To get netmd branch name by giving netmd branch id
+	 * 
+	 * @param netMdBranchId
+	 * @return netmd branch name
+	 */
+	@Override
+	public String getNetMdBranchName(int netMdBranchId) {
+		NetmdBranchTbl netMdBranchTbl = getById(NetmdBranchTbl.class,
+				netMdBranchId);
+		if (netMdBranchTbl == null) {
+			return "";
+		}
+		return netMdBranchTbl.getName();
+	}
+
+	/**
+	 * Retrieve netmd user by email
+	 * 
+	 * @param email
+	 * @return NetmdUserTbl
+	 */
+	private NetmdUserTbl getNetMdUserByEmail(String email, int branchId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_BY_EMAIL_AND_BRANCH);
+		query.setParameter("param1", email.trim());
+		query.setParameter("param2", branchId);
+		return executeUniqueQuery(NetmdUserTbl.class, query);
+	}
+
+	/**
+	 * @param netMdBranchId
+	 * @return
+	 */
+	private List<NetmdPassphraseTbl> getMacPassPhraseByNetMdBranch(
+			int netMdBranchId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_MAC_AND_PASSPHRASE_BY_NETMD_BRANCH);
+		query.setParameter("param1", netMdBranchId);
+		return (List<NetmdPassphraseTbl>) executeQuery(
+				NetmdPassphraseTbl.class, query);
+	}
+
+	/**
+	 * Retrieve netmd record by giving name
+	 * 
+	 * @param name
+	 * @return NetmdTbl
+	 */
+	private NetmdTbl getNetMdByName(String name) {
+		javax.persistence.Query query = em.createQuery(Query.GET_NETMD_BY_NAME);
+		query.setParameter("param1", name);
+		return executeUniqueQuery(NetmdTbl.class, query);
+	}
+
+	/**
+	 * Retrieve NetmdPassphraseTbl record by giving passPhrase
+	 * 
+	 * @param passPhrase
+	 * @return NetmdPassphraseTbl
+	 */
+	private NetmdPassphraseTbl getByPassphrase(String passPhrase) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_BRANCH_PASSPHRASE);
+		query.setParameter("param1", passPhrase);
+		return executeUniqueQuery(NetmdPassphraseTbl.class, query);
+	}
+
+	/**
+	 * Retrieve mac id from NetmdPassphraseTbl by giving passPhrase
+	 * 
+	 * @param passPhrase
+	 * @return macId
+	 */
+	@Override
+	@Transactional
+	public String getMacByPassphrase(String passPhrase) {
+		try {
+			javax.persistence.Query query = em
+					.createQuery(Query.GET_MAC_BY_PASSPHRASE);
+			query.setParameter("param1", passPhrase);
+			return (String) query.getSingleResult();
+		} catch (Exception e) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPassphrase);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+	}
+
+	/**
+	 * Retrieve NetmdLoginTbl record by giving userName
+	 * 
+	 * @param userName
+	 * @return NetmdLoginTbl
+	 */
+	private NetmdLoginTbl getLoginByUserName(String userName) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_LOGIN_BY_OWNER_USERNAME);
+		query.setParameter("param1", userName);
+		return executeUniqueQuery(NetmdLoginTbl.class, query);
+	}
+
+	/**
+	 * Retrieve NetmdBranchTbl record by giving branchId and netMdId
+	 * 
+	 * @param branchId
+	 *            and netMdId
+	 * @return NetmdBranchTbl
+	 */
+	private NetmdBranchTbl getBranchByNetMdId(int branchId, int netMdId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_NETMD_BRANCH);
+		query.setParameter("param1", branchId);
+		query.setParameter("param2", netMdId);
+		return executeUniqueQuery(NetmdBranchTbl.class, query);
+	}
+
+	/**
+	 * Method to retrieve new netmd list
+	 * 
+	 * @param syncTime
+	 * @return
+	 */
+	public List<NetmdTbl> getNewNetmd(Date syncTime, Date currentTime) {
+		javax.persistence.Query query = em.createQuery(Query.GET_NEW_NETMD);
+		query.setParameter("param1", syncTime);
+		query.setParameter("param2", currentTime);
+		return executeQuery(NetmdTbl.class, query);
+	}
+
+	/**
+	 * Method to retrieve updated netmd list
+	 * 
+	 * @param syncTime
+	 * @return
+	 */
+	public List<NetmdTbl> getUpdateNetmd(Date syncTime, Date currentTime) {
+		javax.persistence.Query query = em.createQuery(Query.GET_UPDATE_NETMD);
+		query.setParameter("param1", syncTime);
+		query.setParameter("param2", currentTime);
+		return executeQuery(NetmdTbl.class, query);
+	}
+
+	/**
+	 * Method to get new netmd branches list
+	 * 
+	 * @param syncTime
+	 * @return
+	 */
+	public List<NetmdBranchTbl> getNewNetmdBranches(Date syncTime, Date currentTime) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NEW_NETMD_BRANCHES);
+		query.setParameter("param1", syncTime);
+		query.setParameter("param2", currentTime);
+		return executeQuery(NetmdBranchTbl.class, query);
+	}
+
+	/**
+	 * Method to get new netmd branches list
+	 * 
+	 * @param syncTime
+	 * @return
+	 */
+	public List<NetmdBranchTbl> getNetMdBranches(int netMdId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_BRANCHES);
+		query.setParameter("param1", netMdId);
+		return executeQuery(NetmdBranchTbl.class, query);
+	}
+
+	/**
+	 * Method to retrieve updated netmd branches list
+	 * 
+	 * @param syncTime
+	 * @return
+	 */
+	public List<NetmdBranchTbl> getUpdateNetmdBranches(Date syncTime, Date currentTime) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_UPDATE_NETMD_BRANCHES);
+		query.setParameter("param1", syncTime);
+		query.setParameter("param2", currentTime);
+		return executeQuery(NetmdBranchTbl.class, query);
+	}
+
+	/**
+	 * @return the em
+	 */
+	public EntityManager getEm() {
+		return em;
+	}
+
+	/**
+	 * @param em
+	 *            the em to set
+	 */
+	public void setEm(EntityManager em) {
+		this.em = em;
+	}
+
+}

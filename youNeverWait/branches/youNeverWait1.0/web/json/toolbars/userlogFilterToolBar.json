@@ -1,0 +1,49 @@
+{	
+		"buttons":	[
+		{
+			"name" 	: 	"userName",
+			"type"	:	"text",
+			"title"	:	"User Name",
+			"className"	:"generalType"
+		},
+		{
+			"name" 	: 	"ipAddress",
+			"type"	:	"text",
+			"title"	:	"IP Address",
+			"className"	:"generalType"
+		},
+		{
+			"name" 	: 	"loginTime",
+			"type"	:	"text",
+			"title"	:	"Login Date",
+			"className"	:"generalType"
+		},
+		{
+			"name" 	: 	"logoutTime",
+			"type"	:	"text",
+			"title"	:	"LogOut Date",
+			"className"	:"generalType"
+		},
+		{
+			"name" 	: 	"actionDate",
+			"type"	:	"text",
+			"title"	:	"Action Date",
+			"className"	:"generalType"
+		},
+		
+		{
+			"name" 	: 	"actionTime",
+			"type"	:	"text",
+			"title"	:	"Action Time",
+			"className"	:"generalType"
+		},
+				
+		{
+			"name" 	: 	"applicationName",
+			"type"	:	"select",
+			 "value":	[{"app":"Netlims"},{"app":"Netmd"},{"app":"SuperAdmin"},{"app":"Patient"}],
+			"title"	:	"Application Name",
+			"className"	:"generalType"
+		}
+	]
+}
