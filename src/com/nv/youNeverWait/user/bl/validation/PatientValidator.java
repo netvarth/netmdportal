@@ -249,7 +249,7 @@ public class PatientValidator extends FilterValidator{
 	}
 
 	/**
-	 * Validate clinic filter
+	 * Validate result filter
 	 * 
 	 * @param filter
 	 * @return ErrorDTO
