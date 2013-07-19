@@ -50,6 +50,13 @@ public class Constants {
 	public static final String PATIENT_REGISTRATION = "Patient Registration";
 	public static final String DOCTOR_REGISTER ="Doctor Registration";
 	public static final String DATE ="date";
+	public static final String RESULT = "result";
+	public static final String DOCTOR_CREDENTIALS = "Doctor Credentials";
+	public static final String DOCTOR_REMAINDER = "Doctor Password Set";
+	public static final String PAST_APPOINTMENTS = "Past Appointments";
+	public static final String RESULT_LIST = "Result List";
+	public static final String APPOINTMENTS = "appointments";
+	
 	/* Log */
 	public static final String STARTUP = "Show login page";
 	public static final String RESET_PSWD = "Reset password";
@@ -85,7 +92,5 @@ public class Constants {
 	public static final String NETRX_BRANCH ="netrxBranch";
 	public static final String NETRX_BRANCH_REGISTER ="NetRx Branch Registration";
 	public static final String NETRX_DOWNLOAD = "Download netRX application";
-	public static final String RESULT = "result";
-	public static final String DOCTOR_CREDENTIALS = "Doctor Credentials";
-	public static final String DOCTOR_REMAINDER = "Doctor Password Set";
+	
 }
