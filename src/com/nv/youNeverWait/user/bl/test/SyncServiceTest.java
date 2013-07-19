@@ -668,4 +668,27 @@ private ApplicationContext applicationContext;
 			System.out.println(e.getParamList());
 		}
 	}
+	@Test
+	public void retrieveAppointmentsForPrimary()
+	{
+		System.out.println("########## Sync retrieve appointments for primary... ################ ");
+		SyncService service = (SyncService) applicationContext
+				.getBean("sync.service");
+		SyncDTO sync = new SyncDTO();
+		sync.setLastSyncTime("2013-07-19 11:30:30");
+		HeaderDTO header = new HeaderDTO();
+		header.setNetMdId(83);
+		header.setPassPhrase("cT4GAum1sOK/bqOp8h2x4Q==");
+		header.setMacId("20-CF-30-D9-9C-04");
+		header.setNetMdBranchId(81);
+		sync.setHeader(header);
+		try {
+			service.syncData(sync);
+		} catch (ServiceException e) {
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
 }
