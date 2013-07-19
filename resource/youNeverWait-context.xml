@@ -180,6 +180,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 				</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.ResultPropertyEnum
 				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.AppointmentPropertyEnum
+				</value>
 
 
 			</list>
@@ -295,6 +297,12 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 		<property name="appointmentDao">
 			<ref bean="appointment.dao" />
+		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
 		</property>
 	</bean>
 
@@ -481,6 +489,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 					value="com.nv.youNeverWait.util.filter.queryBuilder.NetRxUserQueryBuilder" />
 					<entry key="result"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.ResultQueryBuilder" />
+					<entry key="appointments"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.AppointmentQueryBuilder" />
 			</map>
 		</property>
 
