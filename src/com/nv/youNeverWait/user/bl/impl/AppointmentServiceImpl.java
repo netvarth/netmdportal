@@ -3,21 +3,35 @@ package com.nv.youNeverWait.user.bl.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.TypedQuery;
+
 import org.springframework.transaction.annotation.Transactional;
+
+import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
+import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.rs.dto.Appointment;
 import com.nv.youNeverWait.rs.dto.AppointmentDTO;
 import com.nv.youNeverWait.rs.dto.AppointmentListResponseDTO;
 import com.nv.youNeverWait.rs.dto.AppointmentResponse;
 import com.nv.youNeverWait.rs.dto.AppointmentsDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
+import com.nv.youNeverWait.rs.dto.ExpressionDTO;
+import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.PastAppointmentListResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.ResultDTO;
+import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalAppointmentResponseDTO;
 import com.nv.youNeverWait.user.bl.service.AppointmentGroup;
 import com.nv.youNeverWait.user.bl.service.AppointmentService;
 import com.nv.youNeverWait.user.bl.validation.AppointmentValidator;
 import com.nv.youNeverWait.user.pl.dao.AppointmentDao;
+import com.nv.youNeverWait.util.filter.core.Filter;
+import com.nv.youNeverWait.util.filter.core.FilterFactory;
+import com.nv.youNeverWait.util.filter.core.QueryBuilder;
+import com.nv.youNeverWait.util.filter.core.QueryBuilderFactory;
 
 /**
  * Appointment services
@@ -32,6 +46,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	private AppointmentGroup futureAppointments;
 	private AppointmentDao appointmentDao;
 	private AppointmentValidator appointmentValidator;
+	private QueryBuilderFactory queryBuilderFactory;
+	private FilterFactory filterFactory;
 	
 	/**
 	 * @param lastSyncTime
@@ -41,9 +57,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 	 */
 	@Override
 	@Transactional
-	public RetrievalAppointmentResponseDTO retrieveAppointmentForNetMd(String lastSyncTime, String passPhrase, int netMdBranchId, Date currentSyncTime){
+	public RetrievalAppointmentResponseDTO retrieveAppointmentForSecondary(String lastSyncTime, String passPhrase, int netMdBranchId, Date currentSyncTime){
 		RetrievalAppointmentResponseDTO retrieveAppointmentObj= new RetrievalAppointmentResponseDTO();
-		retrieveAppointmentObj = appointmentDao.retrieveAppointmentForNetMd(lastSyncTime, passPhrase, netMdBranchId, currentSyncTime);
+		retrieveAppointmentObj = appointmentDao.retrieveAppointmentForSecondary(lastSyncTime, passPhrase, netMdBranchId, currentSyncTime);
 		return retrieveAppointmentObj;
 	}
 	
@@ -126,13 +142,13 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	/**
-	 * create appointment
+	 * create appointment from Netmd
 	 * 
 	 * @param appointment
 	 * @return response
 	 */
 	@Override
-	public AppointmentResponse createAppointment(Appointment appointment) {
+	public AppointmentResponse createAppointmentFromNetMd(Appointment appointment) {
 		AppointmentResponse response = new AppointmentResponse();
 		ErrorDTO error = appointmentValidator
 				.validateCreateAppointment(appointment);
@@ -141,18 +157,18 @@ public class AppointmentServiceImpl implements AppointmentService {
 			response.setSuccess(false);
 			return response;
 		}
-		response = appointmentDao.createAppointment(appointment);
+		response = appointmentDao.createAppointmentFromNetMd(appointment);
 		return response;
 	}
 
 	/**
-	 * Update appointment
+	 * create appointment from portal
 	 * 
 	 * @param appointment
 	 * @return response
 	 */
 	@Override
-	public AppointmentResponse updateAppointment(Appointment appointment) {
+	public AppointmentResponse createAppointmentFromPortal(Appointment appointment) {
 		AppointmentResponse response = new AppointmentResponse();
 		ErrorDTO error = appointmentValidator
 				.validateCreateAppointment(appointment);
@@ -161,24 +177,155 @@ public class AppointmentServiceImpl implements AppointmentService {
 			response.setSuccess(false);
 			return response;
 		}
-		response = appointmentDao.update(appointment);
+		response = appointmentDao.createAppointmentFromPortal(appointment);
+		return response;
+	}
+	
+	/**
+	 * Update appointment from Netmd
+	 * 
+	 * @param appointment
+	 * @return response
+	 */
+	@Override
+	public AppointmentResponse updateAppointmentFromNetMd(Appointment appointment) {
+		AppointmentResponse response = new AppointmentResponse();
+		ErrorDTO error = appointmentValidator
+				.validateCreateAppointment(appointment);
+		if (error != null) {
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+		response = appointmentDao.updateAppointmentFromNetMd(appointment);
+		return response;
+	}
+	/**
+	 * Update appointment from portal
+	 * 
+	 * @param appointment
+	 * @return response
+	 */
+	@Override
+	public AppointmentResponse updateAppointmentFromPortal(Appointment appointment) {
+		AppointmentResponse response = new AppointmentResponse();
+		ErrorDTO error = appointmentValidator
+				.validateCreateAppointment(appointment);
+		if (error != null) {
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+		response = appointmentDao.updateAppointmentFromPortal(appointment);
 		return response;
 	}
 
 	/**
-	 * delete appointment
+	 * delete appointment from Netmd
 	 * 
 	 * @param id
 	 * @return response
 	 */
 	@Override
-	public AppointmentResponse deleteAppointment(int id) {
+	public AppointmentResponse deleteAppointmentFromNetMd(int id) {
 		AppointmentResponse response = new AppointmentResponse();
-		response = appointmentDao.deleteAppointment(id);
+		response = appointmentDao.deleteAppointmentFromNetMd(id);
 		return response;
 
 	}
 
+	/**
+	 * delete appointment from portal
+	 * 
+	 * @param id
+	 * @return response
+	 */
+	@Override
+	public AppointmentResponse deleteAppointmentFromPortal(int id) {
+		AppointmentResponse response = new AppointmentResponse();
+		response = appointmentDao.deleteAppointmentFromPortal(id);
+		return response;
+
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.AppointmentService#retrieveAppointmentForPrimary(java.lang.String, java.lang.String, int, java.util.Date)
+	 */
+	@Override
+	public RetrievalAppointmentResponseDTO retrieveAppointmentForPrimary(
+			String lastSyncTime, String passPhrase, int netMdBranchId,
+			Date currentSyncTime) {
+		RetrievalAppointmentResponseDTO retrieveAppointmentObj= new RetrievalAppointmentResponseDTO();
+		retrieveAppointmentObj = appointmentDao.retrieveAppointmentForPrimary(lastSyncTime, passPhrase, netMdBranchId, currentSyncTime);
+		return retrieveAppointmentObj;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.AppointmentService#getPastAppointments(com.nv.youNeverWait.rs.dto.FilterDTO)
+	 */
+	@Override
+	public PastAppointmentListResponseDTO getPastAppointments(FilterDTO filterDTO) {
+		
+		PastAppointmentListResponseDTO response= new PastAppointmentListResponseDTO();
+		
+		// validate filterDTO to identify invalid expressions and if there is
+				// any,return result with appropriate error code
+				ErrorDTO error = appointmentValidator.validateAppointmentFilter(filterDTO);
+				if (error != null) {
+					response.setError(error);
+					response.setSuccess(false);
+					return response;
+				}
+
+				// get queryBuilder for result from builder factory
+				QueryBuilder queryBuilder = queryBuilderFactory
+						.getQueryBuilder(Constants.APPOINTMENTS);
+				if (queryBuilder == null) {
+					return response;
+				}
+				for (ExpressionDTO exp : filterDTO.getExp()) {
+
+					// get filter from filter factory by setting expression name and
+					// value to filter
+					Filter filter = filterFactory.getFilter(exp);
+					queryBuilder.addFilter(filter);
+				}
+				// build query
+				TypedQuery<PatientAppointmentTbl> q = queryBuilder.buildQuery(
+						filterDTO.isAsc(), filterDTO.getFrom(), filterDTO.getCount());
+
+				// get count
+				Long count = queryBuilder.getCount();
+
+				// execute query
+				List<PatientAppointmentTbl> appointmnts = queryBuilder.executeQuery(q);
+				response = PastAppointmentList(appointmnts);
+				response.setCount(count);
+				response.setSuccess(true);
+				return response;
+	}
+	
+	/**
+	 * To set response with details of appointments
+	 * 
+	 * @param branches
+	 * @return NetMdBranchListResponseDTO
+	 */
+	private PastAppointmentListResponseDTO PastAppointmentList(
+			List<PatientAppointmentTbl> appointments) {
+		PastAppointmentListResponseDTO response = new PastAppointmentListResponseDTO();
+		if (appointments == null) {
+			return response;
+		}
+		List<AppointmentsDTO> appointmentsDTO = new ArrayList<AppointmentsDTO>();
+		for (PatientAppointmentTbl appointmnt : appointments) {
+			appointmentsDTO.add(new AppointmentsDTO(appointmnt));
+		}
+		response.setPastAppointments(appointmentsDTO);
+		return response;
+	}
+
+	
 	public AppointmentGroup getAppointmentToday() {
 		return appointmentToday;
 	}
@@ -220,5 +367,35 @@ public class AppointmentServiceImpl implements AppointmentService {
 			AppointmentValidator appointmentValidator) {
 		this.appointmentValidator = appointmentValidator;
 	}
+
+	/**
+	 * @return the queryBuilderFactory
+	 */
+	public QueryBuilderFactory getQueryBuilderFactory() {
+		return queryBuilderFactory;
+	}
+
+	/**
+	 * @param queryBuilderFactory the queryBuilderFactory to set
+	 */
+	public void setQueryBuilderFactory(QueryBuilderFactory queryBuilderFactory) {
+		this.queryBuilderFactory = queryBuilderFactory;
+	}
+
+	/**
+	 * @return the filterFactory
+	 */
+	public FilterFactory getFilterFactory() {
+		return filterFactory;
+	}
+
+	/**
+	 * @param filterFactory the filterFactory to set
+	 */
+	public void setFilterFactory(FilterFactory filterFactory) {
+		this.filterFactory = filterFactory;
+	}
+
+	
 
 }
