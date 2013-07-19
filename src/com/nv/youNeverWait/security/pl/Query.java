@@ -23,8 +23,10 @@ public class Query {
 	public static final String GET_APPOINTMENTS_OF_THE_WEEK = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.date >=:param2 and  appointment.date <=:param3 and appointment.status='active'";
 	public static final String GET_REJECTED_APPOINTMENTS = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.appointmentStatus = 'Rejected'";
 	public static final String GET_APPOINTMENTS_BY_NETMD_BRANCH = "from PatientAppointmentTbl as appointment where appointment.netmdBranchTbl.id=:param1 and appointment.status='active'";
-	public static final String RETRIEVE_APPOINTMENTS = "from PatientAppointmentTbl as appointment where appointment.updateDateTime>:param1 and appointment.updateDateTime<=:param2 and appointment.netmdBranchTbl.id=:param3 and appointment.netmdPassphraseTbl.id=:param4 and appointment.netmdPassphraseTbl.primaryDevice!=true";
+	public static final String RETRIEVE_APPOINTMENTS = "from PatientAppointmentTbl as appointment where appointment.updateDateTime>:param1 and appointment.updateDateTime<=:param2 and appointment.netmdBranchTbl.id=:param3 and appointment.netmdPassphraseTbl.id!=:param4";
 	public static final String RETRIEVE_APPOINTMENTS_CREATED_IN_PORTAL = "from PatientAppointmentTbl as appointment where appointment.updateDateTime>:param1 and appointment.updateDateTime<=:param2 and appointment.netmdBranchTbl.id=:param3 and appointment.netmdPassphraseTbl.id is null";
+	public static final String RETRIEVE_APPOINTMENTS_FOR_PRIMARY ="from PatientAppointmentTbl as appointment where appointment.updateDateTime>:param1 and appointment.updateDateTime<=:param2 and appointment.netmdBranchTbl.id=:param3 and appointment.appointmnetLevel=true";
+	
 	/* NetmdUserTbl */
 	public static final String GET_USER = "from NetmdUserTbl as user where user.netmdLoginTbl.id= :param1";
 	public static final String GET_USER_BY_NAME = "from NetmdUserTbl as user where TRIM(UPPER(user.name))= :param1";
@@ -223,6 +225,7 @@ public class Query {
 	public static final String GET_NETRX_LOGIN_BY_USERNAME = "from NetrxLoginTbl as login where login.userName=:param1";
 	public static final String GET_NETRX_USER_BY_USERNAME_PASSWORD = "from NetrxLoginTbl as login  where login.password =:param1 and login.userName =:param2";
 	public static final String GET_NETRX_PASSPHRASE_BY_BRANCH_ID = "from NetrxPassphraseTbl as branchPassphrase where branchPassphrase.netrxBranchTbl.id=:param1 and branchPassphrase.passPhrase=:param2";
+	
 	
 	
 	
