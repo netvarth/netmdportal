@@ -34,7 +34,7 @@ $j('.createAppointment').die('click').live('click',function(){
 		});
 		
 		
-	monthlyviewSchedule(doctorid);	
+	monthlyviewSchedule(doctorid,parentid);	
 		
 	
 	
@@ -50,7 +50,7 @@ $j('.createAppointment').die('click').live('click',function(){
 		
 	});
 	
-	function monthlyviewSchedule(doctorid){
+	function monthlyviewSchedule(doctorid,parentid){
 	
 	var selectedmonyr=$j('.fc-header-title h2').text();
 	var monyersplit=selectedmonyr.split(' ');
@@ -58,8 +58,7 @@ var month=monyersplit[0];
 var realmonth=convertToIntMonth(month);
 if(realmonth<10){realmonth="0"+realmonth;}
 var yer=monyersplit[1];
-	var branchId=$j("#select").val();
-		branchId=branchId.split("_")[2];
+	 var branchId=parentid.split("_")[0];
 	 var startdate=getLastDateOfMonth(yer,realmonth);
 	 var currentstartdate=startdate.getDate();
 	 var CurntMonthlastDate=yer+'-'+realmonth+'-'+currentstartdate;

@@ -261,7 +261,7 @@
 				$j(this).nextAll('td:first').children('div').text(patient);
 				$j(this).nextAll('td:first').children('div').attr('style','font-size:150%;margin: 10px 0px 0px 300px;');
 				$j(this).nextAll('td:first').attr('value',appId);
-				$j('tr td[selected] div').text("");
+				$j('tr td[selected] div').text("Take Your Appointment");
 				$j('tr td[selected]').removeAttr('style');
 				$j('tr td').removeAttr('selected');
 				}
