@@ -10,9 +10,9 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-		
+
 		if (request.getSession(true).getAttribute("user") == null) {
-			
+
 			/* youneverwait domain */
 			if (request.getServerName().equals("www.youneverwait.com")) {
 
@@ -40,14 +40,14 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 
 			/* netLims domain */
 			if (request.getServerName().equals("www.netlims.in")) {
-	
+
 				String container = request.getRequestURI();
 				String adminContent = "youNeverWait/ws/ui/superAdmin/";
 
 				/* Super admin login */
 				if (container.toUpperCase()
 						.contains(adminContent.toUpperCase())) {
-				
+
 					if (!request.getRequestURI().equals(
 							"/youNeverWait/ws/ui/superAdmin/sForm")
 							&& !request.getRequestURI().equals(
@@ -62,7 +62,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 									"/youNeverWait/ws/ui/auth/getErrorCodes")
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/ws/ui/auth/getEnumsList")) {
-		
+
 						request.getRequestDispatcher("/ws/ui/superAdmin/sForm")
 								.forward(request, response);
 						return false;
@@ -90,7 +90,15 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/ws/ui/auth/getErrorCodes")
 							&& !request.getRequestURI().equals(
-									"/youNeverWait/ws/ui/auth/getEnumsList")) {
+									"/youNeverWait/ws/ui/auth/getEnumsList")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/lab/aboutNetLims")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/lab/contactUs")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/lab/pricing")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/lab/privacyPolicy")) {
 						request.getRequestDispatcher("/ws/ui/lab/lForm")
 								.forward(request, response);
 						return false;
@@ -98,10 +106,10 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 					return true;
 				}
 			} // end of netlims if loop
-			
+
 			/* netRx domain */
 			if (request.getServerName().equals("www.netrx.in")) {
-				
+
 				if (!request.getRequestURI().equals(
 						"/youNeverWait/ws/ui/netRx/rForm")
 						&& !request.getRequestURI().equals(
@@ -120,7 +128,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				}
 				return true;
 			} // end of netrx if loop
-			
+
 			/* netMd domain */
 			if (request.getServerName().equals("www.netmd.co.in")) {
 				if (!request.getRequestURI().equals(
