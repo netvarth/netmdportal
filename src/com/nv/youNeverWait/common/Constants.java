@@ -93,4 +93,10 @@ public class Constants {
 	public static final String NETRX_BRANCH_REGISTER ="NetRx Branch Registration";
 	public static final String NETRX_DOWNLOAD = "Download netRX application";
 	
+	/*NetLims*/
+	public static final String ABOUT_NETLIMS = "Show NetLims Details Page";
+	public static final String CONTACT_US = "Show Contact Page";
+	public static final String PRICING = "Shows NetLims Pricing Page";
+	public static final String POLICY = "Shows NetLims privacyPolicy page";
+	
 }
