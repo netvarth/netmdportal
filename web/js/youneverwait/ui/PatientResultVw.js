@@ -18,7 +18,7 @@ PatientResultVw.prototype.viewresult= function(url,parent) {
 	$j(parent).html(new resultpatient(tabdata).result); */
 	
 	
-	var pgNetLimsList;
+	var pgNetlimsList;
 	var exp=[]; //For storing the filter expressions
 	var pgTableName = "#labTable"; // Table showing netlims list
 	pgTableContainer = "#labResultTableCont"; // Parent container of the netlims list table

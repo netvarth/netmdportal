@@ -1,4 +1,4 @@
-function appointment(contents,pastapp) {
+function appointment(contents) {
 this.result =function(){ 
 		var content =$j('<div/>');
 		var div=$j('<div></div>');
@@ -23,6 +23,10 @@ this.result =function(){
 			}); 
           div.append(subdiv);			
 		 }
+		 else{div.append(todaydiv);
+			var subdiv=$j('<div style="font-weight: bold;" align="center">There are no appointments</div>');
+				div.append(subdiv);	
+		 }
 		 if((contents.currentWeeksAppointment)!=""){
 			div.append(currweekdiv);
 			var subdivcurr=$j('<div class="list"style="overflow: hidden;"><label class="dochead">Doctor</label><label class="doctime">Time Slot</label></div>');
@@ -39,6 +43,10 @@ this.result =function(){
 				subdivcurr.append(newdiv);
 		 }); 
 		 div.append(subdivcurr);
+		 }
+		 else{div.append(currweekdiv);
+		 var subdiv=$j('<div style="font-weight: bold;" align="center">There are no appointments</div>');
+				div.append(subdiv);	
 		 }
 		
 		if((contents.futureAppointment)!=""){
@@ -58,21 +66,25 @@ this.result =function(){
 		 }); 
 		 div.append(subdivfutur);
 		 }
+		 else{div.append(futurediv);
+		 var subdiv=$j('<div style="font-weight: bold;" align="center">There are no appointments</div>');
+				div.append(subdiv);	
+		 }
 		
-		 if((pastapp.pastAppointments)!=""){
+		 //if((pastapp.pastAppointments)!=""){
 			div.append(pastdiv);
 			
 			var subpastdiv=$j('<div class="list pastappointment"style="display:none;overflow: hidden;"></div>');
 			
 		 div.append(subpastdiv);
-		 }
+		// }
 		
 		 content.append(div);
-		if((pastapp.pastAppointments=="")&&(contents.todaysAppointment==""))
+		/* if((pastapp.pastAppointments=="")&&(contents.todaysAppointment==""))
 		{
 		var msg=$j('<div style="font-weight: bold;" align="center">There are no appointments</div>');
 		content.append(msg);
-		}
+		} */
 		return content; 
 	};
 	

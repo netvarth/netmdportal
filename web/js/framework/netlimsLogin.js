@@ -6,7 +6,46 @@ var serverPath = "";
 
 $j(document).ready(function() {
 	
+	$j('.Home').die('click').live("click",function(){
+		
+		$j.get('/youNeverWait/ws/ui/lab/startUp', function(data){
+		$j('html').html(data);
+		});
 
+	});
+	
+	$j('.AboutNetlims').die('click').live("click",function(){
+		
+		$j.get('/youNeverWait/ws/ui/lab/aboutNetLims', function(data){
+		$j('html').html(data);
+		
+		});
+	
+	});
+	
+	$j('.ContactUs').die('click').live("click",function(){
+		
+		$j.get('/youNeverWait/ws/ui/lab/contactUs', function(data){
+		$j('html').html(data);
+		});
+	});
+	
+	
+	$j('.Pricing').die('click').live("click",function(){
+	
+		$j.get('/youNeverWait/ws/ui/lab/pricing', function(data){
+		$j('html').html(data);
+		});
+	
+	});
+	
+	$j('.PrivacyPolicy').die('click').live("click",function(){
+		$j.get('/youNeverWait/ws/ui/lab/privacyPolicy', function(data){
+		$j('html').html(data);
+		});
+	
+	});
+	
 	$j("#userNameNetlims").bind("keypress", function (e) {
 		if (e.keyCode == 13) {
 			if($j("#userNameNetlims").val()=="")
