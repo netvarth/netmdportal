@@ -15,7 +15,7 @@ PatientAppointmentVw.prototype.viewappointment= function(url,url1,parent) {
 	var pgNetlimsList;
 	var exp=[]; //For storing the filter expressions
 	var pgTableName = "#pastappointment"; // Table showing netlims list
-	pgTableContainer = "#pastappointmentTableCont"; // Parent container of the netlims list table
+	var pgTableContainer = "#pastappointmentTableCont"; // Parent container of the netlims list table
 	var maxRecords=0; // Total number of records
 	var maxPages = 0; // Total number of pages
 	var interval = 8;// Interval between pages
