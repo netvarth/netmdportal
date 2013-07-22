@@ -653,15 +653,17 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (netmdpassPhrase.getMacId() != null
-				&& !netmdpassPhrase.getMacId().isEmpty()) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.MacIdExists);
-			se.addParam(new Parameter(Constants.PASSPHRASE, netmdpassPhrase
-					.getPassPhrase()));
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
+				
+			if (netmdpassPhrase.getMacId() != null) {
+				if (!netmdpassPhrase.getMacId().equals(header.getMacId()) ) {
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.MacIdExists);
+					se.addParam(new Parameter(Constants.PASSPHRASE,
+							netmdpassPhrase.getPassPhrase()));
+					se.setDisplayErrMsg(true);
+					throw se;
+				}
+			}
 		netmdpassPhrase.setMacId(header.getMacId());
 		update(netmdpassPhrase);
 
