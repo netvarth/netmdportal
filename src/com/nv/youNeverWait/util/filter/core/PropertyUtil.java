@@ -38,14 +38,15 @@ public class PropertyUtil {
 	 */
 	public static  <T> ParameterExpression<T> getParameterExpForProperty(CriteriaBuilder criteriaBuilder,
 			String propertyName,Class<?> type){
+		Class<?> type1 = null;
 		if(type.getSimpleName().equals("float")){
-			type = Float.class;
+			type1 = Float.class;
 		}else if(type.getSimpleName().equals("int")){
-			type = Integer.class;
+			type1 = Integer.class;
 		}else if(type.getSimpleName().equals("boolean")){
-			type = Boolean.class;
+			type1 = Boolean.class;
 		}
-		ParameterExpression<T> p =(ParameterExpression<T>) criteriaBuilder.parameter(type,propertyName);
+		ParameterExpression<T> p =(ParameterExpression<T>) criteriaBuilder.parameter(type1,propertyName);
 		return p;
 	}
 	/**
@@ -78,16 +79,17 @@ public class PropertyUtil {
 	 *
 	 */
 	public static boolean isValidPropertyValue(Class<?> type, String value){
+		String value1="";
 		String typeName = type.getSimpleName();
 		System.out.println(typeName);
 		if(value!=null && !value.isEmpty()){
-			value = value.trim();
+			value1 = value.trim();
 		}
 		if(typeName.equals("String")){
 			return true;
 		}
 		if(typeName.equals("Date")){
-			if(!validateDate(value)){
+			if(!validateDate(value1)){
 				return false;
 			}
 			SimpleDateFormat df =new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
@@ -135,12 +137,13 @@ public class PropertyUtil {
 	 *
 	 */
 	public static Object getPropertyValue(Class<?> type,String value){
+		String value1="";
 		String typeName = type.getSimpleName();
 		if(value==null){
 			return value;
 		}
 		if(!value.isEmpty()){
-			value = value.trim();
+			value1 = value.trim();
 		}
 		if(typeName.equals("String")){
 			return value;
@@ -242,6 +245,7 @@ public class PropertyUtil {
 	}
 
 	public static ExpressionDTO getExpression(String value,	Property property ){
+		String value1="";
 		ExpressionDTO exp = new ExpressionDTO();
 		Class<?> type = getFieldType(property.getFieldName(),property.getEntityName());
 		String operator = OperatorEnum.like.getDisplayName();
@@ -249,13 +253,13 @@ public class PropertyUtil {
 			return null;
 		}
 		if(!value.isEmpty()){
-			value = value.trim();
+			value1 = value.trim();
 		}
 		if(!property.getPathReferenceName().isEmpty()){
 			return null;
 		}
 
-		if(!isValidPropertyValue(type, value)){
+		if(!isValidPropertyValue(type, value1)){
 			return null;
 		}
 
