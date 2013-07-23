@@ -6,14 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.*;
-
 import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.rs.dto.CaptchaResponseDTO;
 import com.nv.youNeverWait.rs.dto.CaptchaVerificationDTO;
 import com.nv.youNeverWait.rs.dto.CaptchaVerificationResponseDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
-import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.security.bl.service.AuthenticationService;
 
 @RunWith(SpringJUnit4ClassRunner.class)

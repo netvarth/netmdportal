@@ -13,7 +13,6 @@ package com.nv.youNeverWait.security.validation;
 
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
-import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.CaptchaVerificationDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
@@ -55,14 +54,6 @@ public class AuthenticationValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-//		if (!isValidExpValue(userType)) {
-//			ServiceException se = new ServiceException(
-//					ErrorCodeEnum.UserTypeNull);
-//			se.setDisplayErrMsg(true);
-//			throw se;
-//		} else {
-//			NetlimsUserTypeEnum type = NetlimsUserTypeEnum.getEnum(userType);
-//		}
 	}
 
 	/**
