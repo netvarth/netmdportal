@@ -1,3 +1,6 @@
+/**
+ * MedicalRecordDTO.java
+ */
 package com.nv.youNeverWait.rs.dto;
 
 public class MedicalRecordDTO {

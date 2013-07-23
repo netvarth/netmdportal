@@ -7,7 +7,6 @@
  */
 package com.nv.youNeverWait.rs.dto;
 
-import com.nv.youNeverWait.pl.entity.LabBranchTbl;
 import com.nv.youNeverWait.pl.entity.LabTbl;
 
 
