@@ -6,7 +6,6 @@
  */
 package com.nv.youNeverWait.rs.ui;
 
-
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -23,7 +22,6 @@ import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
-import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchDetail;
@@ -42,15 +40,16 @@ import com.nv.youNeverWait.user.bl.service.NetRxService;
 
 /**
  * @author netvarth
- *
+ * 
  */
 @Controller
 @RequestMapping("ui/netRx/")
 public class NetRxResource {
 	private NetRxService netRxService;
 	private LogService logService;
-	/**
 
+	/**
+	 * 
 	 * To show login page for netrx user
 	 * 
 	 * @return netRxLoginPage.html
@@ -59,12 +58,17 @@ public class NetRxResource {
 	public String check() {
 		return "netRxIndex";
 	}
-	
+
+	/**
+	 * To show login page for netRx user/owner
+	 * 
+	 * @return netRxLoginPage.html
+	 */
 	@RequestMapping(value = "rForm", method = RequestMethod.GET)
 	public String rForm() {
 		return "netRxLoginPage";
 	}
-	
+
 	/**
 	 * To retrieve a list of netRx branches which satisfy all filter conditions
 	 * 
@@ -89,9 +93,10 @@ public class NetRxResource {
 			response.setSuccess(false);
 			return response;
 		}
-		
+
 		return response;
 	}
+
 	/**
 	 * To clear mac Id for the purpose of uninstalling netMd application from
 	 * device
@@ -117,6 +122,7 @@ public class NetRxResource {
 		}
 		return response;
 	}
+
 	/**
 	 * To reset password of netmd user/owner
 	 * 
@@ -144,7 +150,7 @@ public class NetRxResource {
 	}
 
 	/**
-
+	 * 
 	 * View netRx account
 	 * 
 	 * @param netRxId
@@ -168,9 +174,9 @@ public class NetRxResource {
 		}
 		return response;
 	}
-	
+
 	/**
-	 * Deletes a netRx 
+	 * Deletes a netRx
 	 * 
 	 * @param netRxId
 	 * @return ResponseDTO
@@ -192,9 +198,8 @@ public class NetRxResource {
 		}
 		return response;
 	}
-	
-	
-/**
+
+	/**
 	 * Deletes a netRx branch
 	 * 
 	 * @param branch
@@ -265,8 +270,9 @@ public class NetRxResource {
 		}
 		return response;
 	}
-	/**
 
+	/**
+	 * 
 	 * Create netrx user account
 	 * 
 	 * @param user
@@ -277,7 +283,8 @@ public class NetRxResource {
 	public ResponseDTO createUser(@RequestBody NetRxUserDTO user) {
 		ResponseDTO response = new ResponseDTO();
 		try {
-			response = netRxService.createUser(user.getHeader(),user.getUser());
+			response = netRxService
+					.createUser(user.getHeader(), user.getUser());
 		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();
@@ -301,6 +308,7 @@ public class NetRxResource {
 		}
 		return response;
 	}
+
 	/**
 	 * Update netrx user account
 	 * 
@@ -312,7 +320,8 @@ public class NetRxResource {
 	public ResponseDTO updateUser(@RequestBody NetRxUserDTO user) {
 		ResponseDTO response = new ResponseDTO();
 		try {
-			response = netRxService.updateUser(user.getHeader(),user.getUser());
+			response = netRxService
+					.updateUser(user.getHeader(), user.getUser());
 		} catch (ServiceException e) {
 
 			List<Parameter> parameters = e.getParamList();
@@ -337,7 +346,7 @@ public class NetRxResource {
 		}
 		return response;
 	}
-	
+
 	/**
 	 * Method performed for session logout
 	 * 
@@ -356,8 +365,6 @@ public class NetRxResource {
 		response.setError(null);
 		return response;
 	}
-	
-
 
 	/**
 	 * View netrx branch details
@@ -394,15 +401,16 @@ public class NetRxResource {
 		}
 		return response;
 	}
+
 	/**
-	 * View netrx user 
+	 * View netrx user
 	 * 
 	 * @param globalId
 	 * @return ResponseDTO
 	 */
 	@RequestMapping(value = "viewUser/{globalId}", method = RequestMethod.POST)
 	@ResponseBody
-	public  NetRxUserDTO viewUser(@PathVariable int globalId) {
+	public NetRxUserDTO viewUser(@PathVariable int globalId) {
 		NetRxUserDTO response = new NetRxUserDTO();
 		try {
 			response = netRxService.viewUser(globalId);
@@ -419,11 +427,17 @@ public class NetRxResource {
 		}
 		return response;
 	}
-	
+
+	/**
+	 * To retrieve the netRx User list
+	 * 
+	 * @param filter
+	 * @return response
+	 */
 	@RequestMapping(value = "listNetRxUser", method = RequestMethod.POST)
 	@ResponseBody
-	public NetRxUserListResponseDTO listNetRxUser(@RequestBody FilterDTO filter){
-		NetRxUserListResponseDTO response= new NetRxUserListResponseDTO();
+	public NetRxUserListResponseDTO listNetRxUser(@RequestBody FilterDTO filter) {
+		NetRxUserListResponseDTO response = new NetRxUserListResponseDTO();
 		try {
 			response = netRxService.listNetRxUser(filter);
 		} catch (ServiceException e) {
@@ -439,6 +453,7 @@ public class NetRxResource {
 		}
 		return response;
 	}
+
 	/**
 	 * Updates netRx branch details
 	 * 
@@ -477,18 +492,17 @@ public class NetRxResource {
 
 	/**
 	 * To reset password if user forgot his password
+	 * 
 	 * @param login
 	 * @return ResponseDTO
 	 */
 	@RequestMapping(value = "forgotPassword", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseDTO forgotPassword(@RequestBody LoginDTO login)
-	{
-		ResponseDTO response=new ResponseDTO();
-		try{
-			response=netRxService.forgotPassword(login);
-		}
-		catch (ServiceException e) {
+	public ResponseDTO forgotPassword(@RequestBody LoginDTO login) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = netRxService.forgotPassword(login);
+		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();
 			error.setErrCode(e.getError().getErrCode());
@@ -508,7 +522,7 @@ public class NetRxResource {
 
 		return response;
 	}
-	
+
 	/**
 	 * To show a page from which NetRX Application can be downloaded
 	 * 
@@ -528,7 +542,7 @@ public class NetRxResource {
 		}
 		return "netRxDownload";
 	}
-	
+
 	/**
 	 * To reset password of netRx user/owner
 	 * 
@@ -570,22 +584,26 @@ public class NetRxResource {
 	}
 
 	/**
-	 * @param netRxService the netRxService to set
+	 * @param netRxService
+	 *            the netRxService to set
 	 */
 	public void setNetRxService(NetRxService netRxService) {
 		this.netRxService = netRxService;
 	}
+
 	/**
 	 * @return the logService
 	 */
 	public LogService getLogService() {
 		return logService;
 	}
+
 	/**
-	 * @param logService the logService to set
+	 * @param logService
+	 *            the logService to set
 	 */
 	public void setLogService(LogService logService) {
 		this.logService = logService;
 	}
-	
+
 }

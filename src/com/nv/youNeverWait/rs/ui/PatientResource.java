@@ -56,11 +56,21 @@ public class PatientResource {
 	private PatientService service;
 	private LogService logService;
 
+	/**
+	 * To show login page for patient
+	 * 
+	 * @return patientLogin.html
+	 */
 	@RequestMapping(value = "pForm", method = RequestMethod.GET)
 	public String pForm() {
 		return "patientLogin";
 	}
 	
+	/**
+	 * To show patient index page
+	 * 
+	 * @return patientindex.html
+	 */
 	@RequestMapping(value = "startUp", method = RequestMethod.GET)
 	public String check() {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
@@ -199,7 +209,6 @@ public class PatientResource {
 		PatientListResponseDTO response = new PatientListResponseDTO();
 		try {
 			response = service.patientListOnLogin(patient.getEmail());
-			System.out.println("--------->"+response.getPatientList().size());
 			
 		} catch (ServiceException e) {
 
@@ -320,8 +329,9 @@ public class PatientResource {
 		return response;
 
 	}
+	
 	/**
-	 * create appointment from Portal
+	 * Create appointment from Portal
 	 * 
 	 * @param appointment
 	 * @return AppointmentResponse
