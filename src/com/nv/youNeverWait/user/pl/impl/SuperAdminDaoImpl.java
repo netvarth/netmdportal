@@ -14,12 +14,8 @@ package com.nv.youNeverWait.user.pl.impl;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
 import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
@@ -205,6 +201,12 @@ SuperAdminDao {
 		return response;
 	}
 
+	/**
+	 * get User By LoginId And Password
+	 * @param password
+	 * @param userName
+	 * @return
+	 */
 	private SuperAdminTbl getUserByLoginIdAndPassword(String password,
 			String userName) {
 		javax.persistence.Query query = em
@@ -214,6 +216,11 @@ SuperAdminDao {
 		return executeUniqueQuery(SuperAdminTbl.class, query);
 	}
 
+	/**
+	 * get User By LoginId
+	 * @param userName
+	 * @return
+	 */
 	private SuperAdminTbl getUserByLoginId(String userName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_SUPER_ADMIN_BY_USERNAME);

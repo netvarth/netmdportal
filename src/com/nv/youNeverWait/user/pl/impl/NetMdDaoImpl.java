@@ -17,7 +17,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
@@ -25,10 +24,6 @@ import com.nv.youNeverWait.pl.entity.BranchStatusEnum;
 import com.nv.youNeverWait.pl.entity.DoctorScheduleTbl;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
-import com.nv.youNeverWait.pl.entity.LabBranchTbl;
-import com.nv.youNeverWait.pl.entity.LabLoginTbl;
-import com.nv.youNeverWait.pl.entity.LabPassphraseTbl;
-import com.nv.youNeverWait.pl.entity.LabTbl;
 import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
@@ -39,7 +34,6 @@ import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.StatusEnum;
-import com.nv.youNeverWait.pl.entity.SuperAdminTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
@@ -87,7 +81,8 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		NetmdLoginTbl login = new NetmdLoginTbl();
 		login.setUserName(netMd.getUserName());
 		login.setUserType(NetmdUserTypeEnum.Owner.getDisplayName());
-		String password = StringEncoder.encryptWithKey(netMd.getPassword().trim());
+		String password = StringEncoder.encryptWithKey(netMd.getPassword()
+				.trim());
 		login.setPassword(password);
 		save(login);
 
@@ -139,7 +134,8 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	 */
 	@Override
 	@Transactional
-	public RetrieveNetmdListResponseDTO retrieveNetmdList(String syncTime, Date currentTime) {
+	public RetrieveNetmdListResponseDTO retrieveNetmdList(String syncTime,
+			Date currentTime) {
 		RetrieveNetmdListResponseDTO response = new RetrieveNetmdListResponseDTO();
 		SimpleDateFormat sdf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
@@ -156,7 +152,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		List<NetMdDTO> newNetmdList = new ArrayList<NetMdDTO>();
 		List<NetMdDTO> updateNetmdList = new ArrayList<NetMdDTO>();
 
-		List<NetmdTbl> newNetmds = getNewNetmd(lastSyncTime,currentTime);
+		List<NetmdTbl> newNetmds = getNewNetmd(lastSyncTime, currentTime);
 		for (NetmdTbl newNetmd : newNetmds) {
 			NetMdDTO netmdDTO = new NetMdDTO();
 			netmdDTO.setName(newNetmd.getName());
@@ -175,8 +171,6 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			netmdDTO.setStatus(newNetmd.getStatus());
 
 			newNetmdList.add(netmdDTO);
-		//	lastSyncTime = newNetmd.getCreateDateTime();
-			//System.out.println("last sync time" + lastSyncTime);
 		}
 
 		List<NetmdTbl> updateNetmds = getUpdateNetmd(lastSyncTime, currentTime);
@@ -198,11 +192,8 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			netmdDTO.setStatus(updateNetmd.getStatus());
 
 			updateNetmdList.add(netmdDTO);
-//			if (lastSyncTime.before(updateNetmd.getUpdateDateTime())) {
-//				lastSyncTime = updateNetmd.getUpdateDateTime();
-//			}
+
 		}
-		//response.setLastSynctime(sdf.format(lastSyncTime));
 		response.setNewNetmdList(newNetmdList);
 		response.setUpdateNetmdList(updateNetmdList);
 		response.setSuccess(true);
@@ -234,7 +225,8 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		List<NetMdBranchDTO> newNetmdBranchList = new ArrayList<NetMdBranchDTO>();
 		List<NetMdBranchDTO> updateNetmdBranchList = new ArrayList<NetMdBranchDTO>();
 
-		List<NetmdBranchTbl> newNetmdBranches = getNewNetmdBranches(lastSyncTime, currentTime);
+		List<NetmdBranchTbl> newNetmdBranches = getNewNetmdBranches(
+				lastSyncTime, currentTime);
 		for (NetmdBranchTbl newBranch : newNetmdBranches) {
 
 			NetMdBranchDTO newNetmdBranch = new NetMdBranchDTO();
@@ -248,9 +240,9 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			newNetmdBranch.setStatus(newBranch.getStatus());
 
 			newNetmdBranchList.add(newNetmdBranch);
-			//lastSyncTime = newBranch.getCreateDateTime();
 		}
-		List<NetmdBranchTbl> updateNetmdBranches = getUpdateNetmdBranches(lastSyncTime, currentTime);
+		List<NetmdBranchTbl> updateNetmdBranches = getUpdateNetmdBranches(
+				lastSyncTime, currentTime);
 		for (NetmdBranchTbl updateBranch : updateNetmdBranches) {
 			NetMdBranchDTO updateNetmdBranch = new NetMdBranchDTO();
 			updateNetmdBranch.setGlobalId(updateBranch.getId());
@@ -263,12 +255,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			updateNetmdBranch.setStatus(updateBranch.getStatus());
 
 			updateNetmdBranchList.add(updateNetmdBranch);
-//			if (lastSyncTime.before(updateBranch.getUpdateDateTime()))
-//				
-//			lastSyncTime = updateBranch.getUpdateDateTime();
-
 		}
-		//response.setLastSyncTime(sdf.format(lastSyncTime));
 		response.setNewNetmdBranchList(newNetmdBranchList);
 		response.setUpdateNetmdBranchList(updateNetmdBranchList);
 		response.setSuccess(true);
@@ -441,6 +428,9 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		return response;
 	}
 
+	/**
+	 * View a netmd account
+	 */
 	@Transactional
 	@Override
 	public NetMdViewResponseDTO view(int netMdId) {
@@ -653,17 +643,17 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-				
-			if (netmdpassPhrase.getMacId() != null) {
-				if (!netmdpassPhrase.getMacId().equals(header.getMacId()) ) {
-					ServiceException se = new ServiceException(
-							ErrorCodeEnum.MacIdExists);
-					se.addParam(new Parameter(Constants.PASSPHRASE,
-							netmdpassPhrase.getPassPhrase()));
-					se.setDisplayErrMsg(true);
-					throw se;
-				}
+
+		if (netmdpassPhrase.getMacId() != null) {
+			if (!netmdpassPhrase.getMacId().equals(header.getMacId())) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.MacIdExists);
+				se.addParam(new Parameter(Constants.PASSPHRASE, netmdpassPhrase
+						.getPassPhrase()));
+				se.setDisplayErrMsg(true);
+				throw se;
 			}
+		}
 		netmdpassPhrase.setMacId(header.getMacId());
 		update(netmdpassPhrase);
 
@@ -1033,8 +1023,10 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			String passPhrase, int netmdBranchId, Date currentSyncTime) {
 		RetrievalUserResponseDTO response = new RetrievalUserResponseDTO();
 		List<NetMdUserDetail> retrieveUsers = new ArrayList<NetMdUserDetail>();
-//		List<NetMdUserDetail> retrieveUpdatedUsers = new ArrayList<NetMdUserDetail>();
-//		List<NetMdUserDetail> retrieveDeletedUsers = new ArrayList<NetMdUserDetail>();
+		// List<NetMdUserDetail> retrieveUpdatedUsers = new
+		// ArrayList<NetMdUserDetail>();
+		// List<NetMdUserDetail> retrieveDeletedUsers = new
+		// ArrayList<NetMdUserDetail>();
 		Date lastSyncTime = null;
 		DateFormat df = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
@@ -1063,28 +1055,28 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			retrieveUsers.add(new NetMdUserDetail(user));
 		}
 
-//		/* Getting updated users */
-//		List<NetmdUserTbl> updatedUsersList = getUpdatedUsers(lastSyncTime,
-//				netmdPassphraseId, netmdBranchId, currentSyncTime);
-//		for (NetmdUserTbl updatedUser : updatedUsersList) {
-//			retrieveUpdatedUsers.add(new NetMdUserDetail(updatedUser));
-//		}
-//
-//		/* Getting deleted users */
-//		List<NetmdUserTbl> deletedUsersList = getDeletedUsers(lastSyncTime,
-//				netmdPassphraseId, netmdBranchId, currentSyncTime);
-//		for (NetmdUserTbl deletedUsers : deletedUsersList) {
-//			retrieveDeletedUsers.add(new NetMdUserDetail(deletedUsers));
-//
-//		}
+		// /* Getting updated users */
+		// List<NetmdUserTbl> updatedUsersList = getUpdatedUsers(lastSyncTime,
+		// netmdPassphraseId, netmdBranchId, currentSyncTime);
+		// for (NetmdUserTbl updatedUser : updatedUsersList) {
+		// retrieveUpdatedUsers.add(new NetMdUserDetail(updatedUser));
+		// }
+		//
+		// /* Getting deleted users */
+		// List<NetmdUserTbl> deletedUsersList = getDeletedUsers(lastSyncTime,
+		// netmdPassphraseId, netmdBranchId, currentSyncTime);
+		// for (NetmdUserTbl deletedUsers : deletedUsersList) {
+		// retrieveDeletedUsers.add(new NetMdUserDetail(deletedUsers));
+		//
+		// }
 
 		response.setRetrieveUsersList(retrieveUsers);
-//		response.setRetrieveUpdatedUsers(retrieveUpdatedUsers);
-//		response.setRetrieveDeletedUsers(retrieveDeletedUsers);
+		// response.setRetrieveUpdatedUsers(retrieveUpdatedUsers);
+		// response.setRetrieveDeletedUsers(retrieveDeletedUsers);
 		response.setSuccess(true);
 		return response;
 	}
-	
+
 	/**
 	 * Method which performs password changing
 	 * 
@@ -1095,10 +1087,9 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	@Transactional(readOnly = false)
 	public ResponseDTO changePassword(@RequestBody PasswordDTO passwords) {
 		ResponseDTO response = new ResponseDTO();
-		String encOldPassword = StringEncoder.encryptWithKey(passwords.getOldPassword()
-				.trim());
-		NetmdLoginTbl login = getNetMdUserByName(passwords
-				.getUsername());
+		String encOldPassword = StringEncoder.encryptWithKey(passwords
+				.getOldPassword().trim());
+		NetmdLoginTbl login = getNetMdUserByName(passwords.getUsername());
 		if (login == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.UserNotExists);
@@ -1129,7 +1120,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	@Transactional
 	public ResponseDTO resetPassword(LoginDTO login) {
 		ResponseDTO response = new ResponseDTO();
-		
+
 		String newPassword = StringEncoder.encryptWithKey(login.getPassword());
 		String decrypedUserName = StringEncoder.decryptWithStaticKey(login
 				.getUserName());
@@ -1145,7 +1136,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		response.setSuccess(true);
 		return response;
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -1153,23 +1144,26 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	@Transactional
 	public ResponseDTO makePrimary(HeaderDTO header) {
 		ResponseDTO response = new ResponseDTO();
-		List<NetmdPassphraseTbl> passphraseObjList = getPassPhraseByBranch(header.getNetMdBranchId());
-		for(NetmdPassphraseTbl netmdPassphraseTblObj : passphraseObjList){
-			if(header.getPassPhrase().equals(netmdPassphraseTblObj.getPassPhrase())){
+		List<NetmdPassphraseTbl> passphraseObjList = getPassPhraseByBranch(header
+				.getNetMdBranchId());
+		for (NetmdPassphraseTbl netmdPassphraseTblObj : passphraseObjList) {
+			if (header.getPassPhrase().equals(
+					netmdPassphraseTblObj.getPassPhrase())) {
 				netmdPassphraseTblObj.setPrimaryDevice(true);
 				update(netmdPassphraseTblObj);
-			}else{
+			} else {
 				netmdPassphraseTblObj.setPrimaryDevice(false);
 				update(netmdPassphraseTblObj);
 			}
-			
+
 		}
 		response.setSuccess(true);
 		return response;
 	}
-	
+
 	/**
 	 * get passphrase table list
+	 * 
 	 * @param branchId
 	 * @return NetmdPassphraseTbl
 	 */
@@ -1179,6 +1173,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		query.setParameter("param1", branchId);
 		return executeQuery(NetmdPassphraseTbl.class, query);
 	}
+
 	/**
 	 * Method which clears mac Id
 	 * 
@@ -1202,7 +1197,10 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		/* Quert to get the list of branches for given Netmd id */
 		List<NetmdBranchTbl> branches = (List<NetmdBranchTbl>) getNetMdBranches(netMd
 				.getId());
-		/*Setting error message when there is no branches corresponding to the Netmd given*/
+		/*
+		 * Setting error message when there is no branches corresponding to the
+		 * Netmd given
+		 */
 		if (branches.isEmpty()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.BranchMissMatch);
@@ -1212,15 +1210,24 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			throw se;
 		}
 		int count = 0;
-		/*Iterating through each branches and retrieving the netmdPassPhrase record corresponding to it*/
+		/*
+		 * Iterating through each branches and retrieving the netmdPassPhrase
+		 * record corresponding to it
+		 */
 		for (NetmdBranchTbl netMdBranch : branches) {
 			count++;
-			/*Checking whether netmd branch id matches with given netMd branch id*/
+			/*
+			 * Checking whether netmd branch id matches with given netMd branch
+			 * id
+			 */
 			if (netMdBranch.getId() == header.getNetMdBranchId()) {
-				/*Query for retrieving netmd branch passphrase*/
+				/* Query for retrieving netmd branch passphrase */
 				NetmdPassphraseTbl branchPassPhrase = getMacPassPhraseByBranch(
 						netMdBranch.getId(), header.getPassPhrase());
-				/*Setting error message when there is no netmd branch passphrase*/
+				/*
+				 * Setting error message when there is no netmd branch
+				 * passphrase
+				 */
 				if (branchPassPhrase == null) {
 					ServiceException se = new ServiceException(
 							ErrorCodeEnum.PassPhraseNotExist);
@@ -1233,7 +1240,10 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				return response;
 
 			} else if (count == branches.size()) {
-				/*Setting error message when no branches matches to the given branch id*/
+				/*
+				 * Setting error message when no branches matches to the given
+				 * branch id
+				 */
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.BranchMissMatch);
 				se.addParam(new Parameter(Constants.ID, Integer.toString(header
@@ -1259,28 +1269,29 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		return executeUniqueQuery(NetmdPassphraseTbl.class, query);
 	}
 
-//	/**
-//	 * Method for retrieving all deleted users after last sync time
-//	 * 
-//	 * @param lastSyncTime
-//	 * @param netmdPassphraseId
-//	 * @param netmdBranchId
-//	 * @return NetmdUserTbl
-//	 */
-//	private List<NetmdUserTbl> getDeletedUsers(Date lastSyncTime,
-//			int netmdPassphraseId, int netmdBranchId, Date currentSyncTime) {
-//		javax.persistence.Query query = em
-//				.createQuery(Query.GET_DELETED_NETMD_USERS);
-//		query.setParameter("param1", lastSyncTime);
-//		query.setParameter("param2", netmdPassphraseId);
-//		query.setParameter("param3", netmdBranchId);
-//		query.setParameter("param4", currentSyncTime);
-//		return executeQuery(NetmdUserTbl.class, query);
-//
-//	}
+	// /**
+	// * Method for retrieving all deleted users after last sync time
+	// *
+	// * @param lastSyncTime
+	// * @param netmdPassphraseId
+	// * @param netmdBranchId
+	// * @return NetmdUserTbl
+	// */
+	// private List<NetmdUserTbl> getDeletedUsers(Date lastSyncTime,
+	// int netmdPassphraseId, int netmdBranchId, Date currentSyncTime) {
+	// javax.persistence.Query query = em
+	// .createQuery(Query.GET_DELETED_NETMD_USERS);
+	// query.setParameter("param1", lastSyncTime);
+	// query.setParameter("param2", netmdPassphraseId);
+	// query.setParameter("param3", netmdBranchId);
+	// query.setParameter("param4", currentSyncTime);
+	// return executeQuery(NetmdUserTbl.class, query);
+	//
+	// }
 
 	/**
-	 * Method for retrieving all  created updated and deleted users after last sync time
+	 * Method for retrieving all created updated and deleted users after last
+	 * sync time
 	 * 
 	 * @param lastSyncTime
 	 * @param netmdPassphraseId
@@ -1299,25 +1310,25 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 
 	}
 
-//	/**
-//	 * Method for retrieving all updated users after last sync time
-//	 * 
-//	 * @param lastSyncTime
-//	 * @param netmdPassphraseId
-//	 * @param netmdBranchId
-//	 * @return NetmdUserTbl
-//	 */
-//	private List<NetmdUserTbl> getUpdatedUsers(Date lastSyncTime,
-//			int netmdPassphraseId, int netmdBranchId, Date currentSyncTime) {
-//		javax.persistence.Query query = em
-//				.createQuery(Query.GET_UPDATED_NETMD_USERS);
-//		query.setParameter("param1", lastSyncTime);
-//		query.setParameter("param2", netmdPassphraseId);
-//		query.setParameter("param3", netmdBranchId);
-//		query.setParameter("param4", currentSyncTime);
-//		return executeQuery(NetmdUserTbl.class, query);
-//
-//	}
+	// /**
+	// * Method for retrieving all updated users after last sync time
+	// *
+	// * @param lastSyncTime
+	// * @param netmdPassphraseId
+	// * @param netmdBranchId
+	// * @return NetmdUserTbl
+	// */
+	// private List<NetmdUserTbl> getUpdatedUsers(Date lastSyncTime,
+	// int netmdPassphraseId, int netmdBranchId, Date currentSyncTime) {
+	// javax.persistence.Query query = em
+	// .createQuery(Query.GET_UPDATED_NETMD_USERS);
+	// query.setParameter("param1", lastSyncTime);
+	// query.setParameter("param2", netmdPassphraseId);
+	// query.setParameter("param3", netmdBranchId);
+	// query.setParameter("param4", currentSyncTime);
+	// return executeQuery(NetmdUserTbl.class, query);
+	//
+	// }
 
 	/**
 	 * 
@@ -1535,7 +1546,8 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	 * @param syncTime
 	 * @return
 	 */
-	public List<NetmdBranchTbl> getNewNetmdBranches(Date syncTime, Date currentTime) {
+	public List<NetmdBranchTbl> getNewNetmdBranches(Date syncTime,
+			Date currentTime) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_NEW_NETMD_BRANCHES);
 		query.setParameter("param1", syncTime);
@@ -1562,7 +1574,8 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	 * @param syncTime
 	 * @return
 	 */
-	public List<NetmdBranchTbl> getUpdateNetmdBranches(Date syncTime, Date currentTime) {
+	public List<NetmdBranchTbl> getUpdateNetmdBranches(Date syncTime,
+			Date currentTime) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_UPDATE_NETMD_BRANCHES);
 		query.setParameter("param1", syncTime);

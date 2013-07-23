@@ -13,20 +13,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.BranchStatusEnum;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetRxUserTypeEnum;
-
-import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
-import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
-import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
-import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
-import com.nv.youNeverWait.pl.entity.NetmdTbl;
-import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
 import com.nv.youNeverWait.pl.entity.NetrxBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetrxLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetrxPassphraseTbl;
@@ -34,11 +26,7 @@ import com.nv.youNeverWait.pl.entity.NetrxTbl;
 import com.nv.youNeverWait.pl.entity.NetrxUserTbl;
 import com.nv.youNeverWait.pl.entity.StatusEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
-
-import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
-import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
-import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
 import com.nv.youNeverWait.rs.dto.NetRxBranchDetail;
 import com.nv.youNeverWait.rs.dto.NetRxBranchOwnerDetails;
 import com.nv.youNeverWait.rs.dto.NetRxBranchResponseDTO;
@@ -288,43 +276,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		}
 		return response;
 	}
-	/**
-	 * 
-	 * @param branchId
-	 * @return LabPassphraseTbl
-	 */
-	public NetrxPassphraseTbl getMacPassPhraseByBranch(int branchId,
-			String passPhrase) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_NETRX_PASSPHRASE_BY_BRANCH_ID);
-		query.setParameter("param1", branchId);
-		query.setParameter("param2", passPhrase);
-		return executeUniqueQuery(NetrxPassphraseTbl.class, query);
-	}
-	/**
-	 * Method to get new netmd branches list
-	 * 
-	 * @param syncTime
-	 * @return
-	 */
-	public List<NetrxBranchTbl> getNetRxBranches(int netRxId) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_NETRX_BRANCHES);
-		query.setParameter("param1", netRxId);
-		return executeQuery(NetrxBranchTbl.class, query);
-	}
-
-	/**
-	 * 
-	 * @param userName
-	 * @return NetmdLoginTbl
-	 */
-	public NetrxLoginTbl getNetRxUserByName(String userName) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_NETRX_LOGIN_BY_USERNAME);
-		query.setParameter("param1", userName);
-		return executeUniqueQuery(NetrxLoginTbl.class, query);
-	}
+	
 	/**
 	 * Creates netrx user
 	 * 
@@ -979,6 +931,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		query.setParameter("param1", name);
 		return executeUniqueQuery(NetrxTbl.class, query);
 	}
+	
 	/**
 	 * Retrieve NetrxLoginTbl record by giving userName
 	 * 
@@ -993,6 +946,55 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 	}
 
 	/**
+	 * @param netRxBranchId
+	 * @return
+	 */
+	private List<NetrxPassphraseTbl> getMacPassPhraseByNetRxBranch(
+			int netRxBranchId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_MAC_AND_PASSPHRASE_BY_NETRX_BRANCH);
+		query.setParameter("param1", netRxBranchId);
+		return (List<NetrxPassphraseTbl>) executeQuery(
+				NetrxPassphraseTbl.class, query);
+	}
+	/**
+	 * get MacPassPhrase By Branch
+	 * @param branchId
+	 * @return LabPassphraseTbl
+	 */
+	public NetrxPassphraseTbl getMacPassPhraseByBranch(int branchId,
+			String passPhrase) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETRX_PASSPHRASE_BY_BRANCH_ID);
+		query.setParameter("param1", branchId);
+		query.setParameter("param2", passPhrase);
+		return executeUniqueQuery(NetrxPassphraseTbl.class, query);
+	}
+	/**
+	 * Method to get new netmd branches list
+	 * 
+	 * @param syncTime
+	 * @return
+	 */
+	public List<NetrxBranchTbl> getNetRxBranches(int netRxId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETRX_BRANCHES);
+		query.setParameter("param1", netRxId);
+		return executeQuery(NetrxBranchTbl.class, query);
+	}
+
+	/**
+	 * Get NetRx User By Name
+	 * @param userName
+	 * @return NetmdLoginTbl
+	 */
+	public NetrxLoginTbl getNetRxUserByName(String userName) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETRX_LOGIN_BY_USERNAME);
+		query.setParameter("param1", userName);
+		return executeUniqueQuery(NetrxLoginTbl.class, query);
+	}
+	/**
 	 * @return the em
 	 */
 	public EntityManager getEm() {
@@ -1006,19 +1008,4 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
-
-
-	/**
-	 * @param netRxBranchId
-	 * @return
-	 */
-	private List<NetrxPassphraseTbl> getMacPassPhraseByNetRxBranch(
-			int netRxBranchId) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_MAC_AND_PASSPHRASE_BY_NETRX_BRANCH);
-		query.setParameter("param1", netRxBranchId);
-		return (List<NetrxPassphraseTbl>) executeQuery(
-				NetrxPassphraseTbl.class, query);
-	}
-
 }

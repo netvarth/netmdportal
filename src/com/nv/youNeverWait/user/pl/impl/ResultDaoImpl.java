@@ -17,20 +17,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import org.springframework.transaction.annotation.Transactional;
-
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
-import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
@@ -46,6 +41,9 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 	@PersistenceContext()
 	private EntityManager em;
 
+	/**
+	 * Get patient results
+	 */
 	@Override
 	public List<RetrieveResultsResponseDTO> getPatientResults(
 			String syncTime, String passPhrase, int netmdBranchId,

@@ -801,7 +801,6 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labBranch.setPhone(branch.getPhone());
 		labBranch.setMobile(branch.getMobile());
 		labBranch.setEmail(branch.getEmail());
-		// labBranch.setStatus(branch.getStatus());
 		labBranch.setUpdateDateTime(new Date());
 		update(labBranch);
 		response.setGlobalId(labBranch.getId());
@@ -875,7 +874,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			throw se;
 		}
 		if (branchpassPhrase.getMacId() != null) {
-			if (!branchpassPhrase.getMacId() .equals(header.getMacId()) ) {
+			if (!branchpassPhrase.getMacId().equals(header.getMacId())) {
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.MacIdExists);
 				se.addParam(new Parameter(Constants.PASSPHRASE,
@@ -927,14 +926,6 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 
 		LabTbl lab = getById(LabTbl.class, branchpassPhrase.getLabBranchTbl()
 				.getLabTbl().getId());
-		// if (lab == null) {
-		// ServiceException se = new ServiceException(
-		// ErrorCodeEnum.InvalidLabId);
-		// se.addParam(new Parameter(Constants.ID,
-		// Integer.toString(lab.getId())));
-		// se.setDisplayErrMsg(true);
-		// throw se;
-		// }
 		// setting netmd details
 		LabDTO newLab = new LabDTO();
 		if (lab.getLabLoginTbl() != null) {
@@ -1101,13 +1092,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 									.getPatient().getEmail());
 					if (patientByEmail == null) {
 						if (count == doctorTbl.size() && flag == false) {
-							// ServiceException se = new ServiceException(
-							// ErrorCodeEnum.PatientListEmpty);
-							// se.addParam(new Parameter(Constants.NAME,
-							// resultTranfer
-							// .getPatient().getFirstName()));
-							// se.setDisplayErrMsg(true);
-							// throw se;
+
 							ErrorDTO error = new ErrorDTO();
 							error.setErrCode(ErrorCodeEnum.EmptyPatientList
 									.getErrCode());
@@ -1444,7 +1429,6 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			newLab.setAuthToSent(labTbl.isAuthToSentResult());
 			newLabList.add(newLab);
 
-			// lastSyncTime = labTbl.getCreateDateTime();
 		}
 		/* Query for getting own labs */
 		LabTbl ownLab = getOwnLab(header.getLabId(), syncTime, currentTime);
@@ -1469,10 +1453,6 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			lab.setHeadOfficePhone(ownLab.getHeadOfficePhone());
 			lab.setAuthToSent(ownLab.isAuthToSentResult());
 			response.setOwnLab(lab);
-
-			// if (lastSyncTime.before(ownLab.getUpdateDateTime())) {
-			// lastSyncTime = ownLab.getUpdateDateTime();
-			// }
 		}
 		/* Query to get updated labs */
 		List<LabTbl> updatedLabs = getUpdatedLabs(header.getLabId(), syncTime,
@@ -1496,14 +1476,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			lab.setHeadOfficePhone(labTbl.getHeadOfficePhone());
 			lab.setAuthToSent(labTbl.isAuthToSentResult());
 			updatedLabList.add(lab);
-
-			// if (lastSyncTime.before(labTbl.getUpdateDateTime())) {
-			// lastSyncTime = labTbl.getUpdateDateTime();
-			// }
 		}
-
-		// String lastTime = sdf.format(lastSyncTime);
-		// response.setLastSynctime(lastTime);
 		response.setNewLabList(newLabList);
 		response.setUpdatedLabList(updatedLabList);
 		response.setSuccess(true);
@@ -1546,7 +1519,6 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 
 				List<LabUserTbl> newUsers = getNewUsers(labUserBranch
 						.getLabUserTbl().getId(), syncTime, currentTime);
-				// Date lastSyncTime = null;
 				for (LabUserTbl labUserTbl : newUsers) {
 
 					UserInfoDetail newUser = new UserInfoDetail();
@@ -1560,7 +1532,6 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 					newUser.setUserType(labUserTbl.getUserType());
 					newUserList.add(newUser);
 
-					// lastSyncTime = labUserTbl.getCreateDateTime();
 				}
 				List<LabUserTbl> updatedUsers = getUpdatedUsers(labUserBranch
 						.getLabUserTbl().getId(), syncTime, currentTime);
@@ -1584,6 +1555,9 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		return response;
 	}
 
+	/**
+	 * Method to validate the header details
+	 */
 	public void validateHeader(LabHeaderDTO header) {
 
 		LabPassphraseTbl passPhrase = getLabBranchByPassphrase(header
@@ -1678,6 +1652,9 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		return response;
 	}
 
+	/**
+	 * Method to show the branch order list for a given period
+	 */
 	@Override
 	@Transactional
 	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO) {
@@ -1717,7 +1694,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	}
 
 	/**
-	 * 
+	 * Create total orders in a branch
 	 */
 	@Override
 	@Transactional
@@ -1801,6 +1778,13 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		return response;
 	}
 
+	/**
+	 * Get Orders By Branch OrderDate
+	 * @param labId
+	 * @param labBranchId
+	 * @param orderDate
+	 * @return
+	 */
 	private OrderAmountTbl getOrdersByBranchOrderDate(int labId,
 			int labBranchId, Date orderDate) {
 		javax.persistence.Query query = em
@@ -1811,6 +1795,14 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		return executeUniqueQuery(OrderAmountTbl.class, query);
 	}
 
+	/**
+	 * Get Branch Orders ByDate
+	 * @param fromDate
+	 * @param toDate
+	 * @param labId
+	 * @param labBranchId
+	 * @return
+	 */
 	private List<OrderAmountTbl> getBranchOrdersByDate(Date fromDate,
 			Date toDate, int labId, int labBranchId) {
 		javax.persistence.Query query = em
@@ -1822,6 +1814,10 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		return executeQuery(OrderAmountTbl.class, query);
 	}
 
+	/**
+	 * Get current date
+	 * @return newDate
+	 */
 	private Date getCurrentDate() {
 		SimpleDateFormat df = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITHOUT_TIME);

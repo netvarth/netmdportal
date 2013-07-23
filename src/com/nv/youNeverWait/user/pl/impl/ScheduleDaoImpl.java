@@ -13,11 +13,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.DoctorScheduleTbl;
@@ -25,7 +23,6 @@ import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
-import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
 import com.nv.youNeverWait.pl.entity.OccuranceTypeEnum;
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
 import com.nv.youNeverWait.pl.entity.ScheduleRepeatEnum;
@@ -37,9 +34,7 @@ import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.AppointmentDetailsDTO;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
-import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
 import com.nv.youNeverWait.rs.dto.Parameter;
-import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalScheduleResponseDTO;
 import com.nv.youNeverWait.rs.dto.ScheduleDetail;
 import com.nv.youNeverWait.rs.dto.ScheduleResponseDTO;
@@ -496,13 +491,6 @@ public class ScheduleDaoImpl extends GenericDaoHibernateImpl implements
 						test++;
 					}
 				}
-				// if(fromTime.before(doctorScheduleTbl.getStartingTime())&&toTime.before(doctorScheduleTbl.getEndingTime())){
-				// test++;
-				// }
-				// if(fromTime.after(doctorScheduleTbl.getEndingTime())){
-				// test++;
-				// }
-
 			}
 			if (test != 0) {
 				return false;
@@ -542,7 +530,7 @@ public class ScheduleDaoImpl extends GenericDaoHibernateImpl implements
 		}
 		List<DoctorScheduleTbl> scheduleList = (List<DoctorScheduleTbl>) getDoctorScheduleByDate(
 				netMdBranchId, doctorId, newDate);
-		System.out.println("scheduleList--->" + scheduleList.size());
+		
 		if (!scheduleList.isEmpty()) {
 			for (DoctorScheduleTbl doctorScheduleTbl : scheduleList) {
 				ViewScheduleDTO viewScheduleDTO = new ViewScheduleDTO();
@@ -578,8 +566,7 @@ public class ScheduleDaoImpl extends GenericDaoHibernateImpl implements
 							s = seriesTbl.getWeeklyType();
 							s = s.trim();
 							String[] items = s.split(",");
-							// System.out.println("a value="+items);
-
+							
 							int[] results = new int[items.length];
 							for (int i = 0; i < items.length; i++) {
 								// giving week days
@@ -635,6 +622,9 @@ public class ScheduleDaoImpl extends GenericDaoHibernateImpl implements
 		return appointmentDetailsList;
 	}
 
+	/**
+	 * Retrieve Schedule list
+	 */
 	@Override
 	@Transactional
 	public RetrievalScheduleResponseDTO retrieveScheduleList(
