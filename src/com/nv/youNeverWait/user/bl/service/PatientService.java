@@ -1,5 +1,5 @@
 /**
- * 
+ * PatientService.java
  */
 package com.nv.youNeverWait.user.bl.service;
 
@@ -23,7 +23,7 @@ import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalPatientResponseDTO;
-import com.nv.youNeverWait.rs.dto.UserCredentials;
+
 
 
 

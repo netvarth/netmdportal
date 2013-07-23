@@ -10,9 +10,7 @@ package com.nv.youNeverWait.user.bl.service;
 import java.util.Date;
 
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
-import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalScheduleResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
 import com.nv.youNeverWait.rs.dto.ScheduleDetail;
 import com.nv.youNeverWait.rs.dto.ScheduleListDTO;
 import com.nv.youNeverWait.rs.dto.ScheduleResponseDTO;

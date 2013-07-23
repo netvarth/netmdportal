@@ -15,10 +15,8 @@ import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabBranchRetrievalDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabRetrievalDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
@@ -30,7 +28,6 @@ import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
-import com.nv.youNeverWait.rs.dto.ResultRetrievalDTO;
 import com.nv.youNeverWait.rs.dto.ResultRetrievalResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferResponseDTO;
@@ -39,7 +36,7 @@ import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
-import com.nv.youNeverWait.rs.dto.UserRetrievalDTO;
+
 
 
 
