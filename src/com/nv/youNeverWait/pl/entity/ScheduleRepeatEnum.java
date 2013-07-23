@@ -1,5 +1,5 @@
 /**
-* RepeatEnum.java
+* ScheduleRepeatEnum.java
 * 
 * @Author Sreeram
 *
@@ -19,13 +19,13 @@ import com.nv.youNeverWait.user.bl.impl.EnumDisplay;
 /**
  * 
  */
-public enum RepeatEnum implements EnumDisplay{
+public enum ScheduleRepeatEnum implements EnumDisplay{
 	NONE("None"),DAILY("Daily"),WEEKLY("Weekly"),MONTHILY_DAY_OF_THE_MONTH("Monthily day of the month"),MONTHILY_DAY_OF_THE_WEEK("Monthily day of the week");
 	private String displayName;
 	/**
 	 * @param displayName
 	 */
-	private RepeatEnum(String displayName) {
+	private ScheduleRepeatEnum(String displayName) {
 		this.displayName = displayName;
 	}
 	
@@ -43,13 +43,13 @@ public enum RepeatEnum implements EnumDisplay{
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
-	public static RepeatEnum getEnum(String value) {
+	public static ScheduleRepeatEnum getEnum(String value) {
 		if(value == null){
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidActionType);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		for(RepeatEnum v : values()){        	
+		for(ScheduleRepeatEnum v : values()){        	
 			if(value.equalsIgnoreCase(v.getDisplayName())){
 				return v;}}
 		ServiceException se = new ServiceException(ErrorCodeEnum.InvalidActionType);
