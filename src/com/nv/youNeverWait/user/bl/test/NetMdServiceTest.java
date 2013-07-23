@@ -1,3 +1,6 @@
+/**
+ * NetMdServiceTest.java
+ */
 package com.nv.youNeverWait.user.bl.test;
 
 import java.net.InetAddress;
@@ -6,20 +9,16 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
-import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDetail;
@@ -30,7 +29,6 @@ import com.nv.youNeverWait.rs.dto.NetMdResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
-import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 
 @RunWith(SpringJUnit4ClassRunner.class)

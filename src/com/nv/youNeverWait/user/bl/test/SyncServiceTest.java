@@ -17,10 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.AppointmentDetailsDTO;
-import com.nv.youNeverWait.rs.dto.DoctorAchievementDTO;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
-import com.nv.youNeverWait.rs.dto.DoctorExperienceDTO;
-import com.nv.youNeverWait.rs.dto.DoctorExpertiseDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
@@ -31,7 +28,6 @@ import com.nv.youNeverWait.rs.dto.ScheduleDetail;
 import com.nv.youNeverWait.rs.dto.SeriesDTO;
 import com.nv.youNeverWait.rs.dto.SyncDTO;
 import com.nv.youNeverWait.user.bl.service.SyncService;
-import com.nv.youNeverWait.rs.dto.AppointmentDTO;
 
 /**
  * @author Luciya Jose

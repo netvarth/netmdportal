@@ -1,13 +1,11 @@
 /**
- * 
+ * SuperAdminServiceTest.java
  */
 package com.nv.youNeverWait.user.bl.test;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +13,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
-import com.nv.youNeverWait.rs.dto.BranchDetail;
-import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.DoctorDTO;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.DoctorExperienceDTO;
@@ -40,9 +35,6 @@ import com.nv.youNeverWait.rs.dto.NetRxListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
 import com.nv.youNeverWait.user.bl.service.DoctorService;
-import com.nv.youNeverWait.user.bl.service.LabService;
-import com.nv.youNeverWait.user.bl.service.NetMdService;
-import com.nv.youNeverWait.user.bl.service.NetRxService;
 import com.nv.youNeverWait.user.bl.service.SuperAdminService;
 
 /**
