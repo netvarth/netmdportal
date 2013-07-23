@@ -1,5 +1,5 @@
 /**
- * 
+ * ErrorCodeListResponseDTO.java
  */
 package com.nv.youNeverWait.rs.dto;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 
 /**
- * @author netvarth
+ * @author AshaChandran
  *
  */
 public class ErrorCodeListResponseDTO {

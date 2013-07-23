@@ -1,5 +1,5 @@
 /**
- * 
+ * LabBranchResponseDTO.java
  */
 package com.nv.youNeverWait.rs.dto;
 
