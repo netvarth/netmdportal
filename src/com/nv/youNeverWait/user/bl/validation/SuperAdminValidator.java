@@ -15,7 +15,6 @@ import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.util.filter.core.Property;
-import com.nv.youNeverWait.util.filter.queryBuilder.LabPropertyEnum;
 import com.nv.youNeverWait.util.filter.queryBuilder.UserLogPropertyEnum;
 import com.nv.youNeverWait.util.filter.validation.FilterValidator;
 

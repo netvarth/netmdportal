@@ -14,9 +14,7 @@ package com.nv.youNeverWait.user.bl.validation;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.rs.dto.Appointment;
@@ -24,10 +22,8 @@ import com.nv.youNeverWait.rs.dto.AppointmentDetailsDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
-import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.util.filter.core.Property;
 import com.nv.youNeverWait.util.filter.queryBuilder.AppointmentPropertyEnum;
-import com.nv.youNeverWait.util.filter.queryBuilder.ResultPropertyEnum;
 import com.nv.youNeverWait.util.filter.validation.FilterValidator;
 
 /**

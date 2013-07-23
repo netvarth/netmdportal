@@ -1,26 +1,21 @@
 /**
- * 
+ * PatientValidator.java
  */
 package com.nv.youNeverWait.user.bl.validation;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
-import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
-import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientOrderDTO;
 import com.nv.youNeverWait.util.filter.core.Property;
-import com.nv.youNeverWait.util.filter.queryBuilder.NetMDBranchPropertyEnum;
 import com.nv.youNeverWait.util.filter.queryBuilder.ResultPropertyEnum;
 import com.nv.youNeverWait.util.filter.validation.FilterValidator;
 
@@ -39,14 +34,7 @@ public class PatientValidator extends FilterValidator{
 			error.setDisplayErrMsg(true);
 			return error;
 		}
-//		if(patient.getLogin().getUserName()!=null && !patient.getLogin().getUserName().equals("")){
-//			if(!patient.getEmail().matches("[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})")){
-//
-//				error.setErrCode(ErrorCodeEnum.InvalidUserId.getErrCode());
-//				error.setDisplayErrMsg(true);
-//				return error;
-//			}
-//		}
+
 		if(patient.getEmail()!=null && !patient.getEmail().equals("")){
 			if(!patient.getEmail().matches("[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})")){
 
@@ -151,6 +139,12 @@ public class PatientValidator extends FilterValidator{
 		return false;
 	}
 
+	/**
+	 * Validate details of patient
+	 * @param patient
+	 * @param header
+	 * @return
+	 */
 	public ErrorDTO validateUpdatePatient(PatientDetail patient, HeaderDTO header){
 		ErrorDTO error=new ErrorDTO();
 		ValidateGlobalId(patient.getGlobalId(), header);
@@ -191,6 +185,11 @@ public class PatientValidator extends FilterValidator{
 		}
 		return false;
 	}
+	/**
+	 * Validates user details
+	 * @param user
+	 * @return error
+	 */
 	public ErrorDTO ValidateCreateUser(LoginDTO user){
 		ErrorDTO error = new ErrorDTO();
 
@@ -207,6 +206,11 @@ public class PatientValidator extends FilterValidator{
 		}
 		return null;
 	}
+	/**
+	 * Validates header details
+	 * @param header
+	 * @return error
+	 */
 	private ErrorDTO ValidateHeaderDetails(HeaderDTO header)
 	{
 		ErrorDTO error = new ErrorDTO();
@@ -237,6 +241,12 @@ public class PatientValidator extends FilterValidator{
 		return null;
 	}
 
+	/**
+	 * Validte id of patient
+	 * @param globalId
+	 * @param header
+	 * @return
+	 */
 	public ErrorDTO ValidateGlobalId(int globalId, HeaderDTO header){
 		ErrorDTO error = new ErrorDTO();
 		ValidateHeaderDetails(header);
@@ -271,6 +281,10 @@ public class PatientValidator extends FilterValidator{
 		}
 		return null;
 	}
+	/**
+	 * Validate patient order details
+	 * @param patient
+	 */
 	public void validatePatientOrderDetails(PatientOrderDTO patient) {
 		if(patient.getPatientId()<=0){
 			ServiceException se = new ServiceException(

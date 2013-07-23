@@ -45,6 +45,11 @@ import com.nv.youNeverWait.util.filter.validation.FilterValidator;
  */
 public class LabValidator extends FilterValidator {
 
+	/**
+	 * Validate user details
+	 * @param user
+	 * @return error
+	 */
 	public ErrorDTO validateUser(LabUserDTO user) {
 
 		ErrorDTO error = new ErrorDTO();
@@ -228,6 +233,12 @@ public class LabValidator extends FilterValidator {
 		return false;
 	}
 
+	/**
+	 * 
+	 * Validate UserName and password
+	 * @param userName
+	 * @param password
+	 */
 	public void validateUserNameAndPassword(String userName, String password) {
 		if (userName == null || userName.isEmpty()) {
 			ServiceException se = new ServiceException(
@@ -243,6 +254,10 @@ public class LabValidator extends FilterValidator {
 		}
 	}
 
+	/**
+	 * Validte lab branch details
+	 * @param branch
+	 */
 	public void validateBranchDetails(LabBranchDTO branch) {
 		if (branch.getLabId() <= 0) {
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidLab);
@@ -276,6 +291,10 @@ public class LabValidator extends FilterValidator {
 		}
 	}
 
+	/**
+	 * Validate lab branch id
+	 * @param branch
+	 */
 	public void validateBranchId(LabBranchDTO branch) {
 		if (branch.getLabId() <= 0) {
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidLab);
@@ -292,6 +311,11 @@ public class LabValidator extends FilterValidator {
 		}
 	}
 
+	/**
+	 * Method which return false if value is null/empty
+	 * @param value
+	 * @return
+	 */
 	private boolean isValidName(String value) {
 		if (value != null && !value.equals("")) {
 			return true;
