@@ -694,6 +694,22 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 				PatientAppointmentTbl.class, query);
 	}
 
+//	/**
+//	 * get past appointments
+//	 * 
+//	 * @return
+//	 */
+//	@Override
+//	public List<PatientAppointmentTbl> getPastAppointments(String patientId) {
+//		javax.persistence.Query query = em
+//				.createQuery(Query.GET_PAST_APPOINTMENTS);
+//		query.setParameter("param1", Integer.parseInt(patientId));
+//		query.setParameter("param2", getCurrentDate());
+//
+//		return (List<PatientAppointmentTbl>) executeQuery(
+//				PatientAppointmentTbl.class, query);
+//	}
+
 	/**
 	 * get past appointments
 	 * 
@@ -702,14 +718,25 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 	@Override
 	public List<PatientAppointmentTbl> getPastAppointments(String patientId) {
 		javax.persistence.Query query = em
-				.createQuery(Query.GET_PAST_APPOINTMENTS);
+				.createQuery(Query.GET_PAST_APPOINTMENTS_BY_TIME);
 		query.setParameter("param1", Integer.parseInt(patientId));
-		query.setParameter("param2", getCurrentDate());
+		query.setParameter("param2", getCurrentDateByTime());
 
 		return (List<PatientAppointmentTbl>) executeQuery(
 				PatientAppointmentTbl.class, query);
 	}
-
+	private Date getCurrentDateByTime() {
+		DateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		Date newDate = null;
+		try {
+			newDate = sdf.parse(sdf.format(new Date()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return newDate;
+	}
 	private Date getCurrentDate() {
 
 		Date newDate = null;
