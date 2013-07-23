@@ -8,9 +8,7 @@
 package com.nv.youNeverWait.user.pl.dao;
 
 import java.util.Date;
-
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
-import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalScheduleResponseDTO;
 import com.nv.youNeverWait.rs.dto.ScheduleDetail;
 import com.nv.youNeverWait.rs.dto.ScheduleResponseDTO;
