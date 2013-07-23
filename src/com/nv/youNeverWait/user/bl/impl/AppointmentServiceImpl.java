@@ -50,9 +50,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 	private AppointmentValidator appointmentValidator;
 	private QueryBuilderFactory queryBuilderFactory;
 	private FilterFactory filterFactory;
-	
+
 	/**
-	 * Retrrieve appointments for  secondary device of a NetMd branch
+	 * Retrrieve appointments for secondary device of a NetMd branch
+	 * 
 	 * @param lastSyncTime
 	 * @param passPhrase
 	 * @param netMdBranchId
@@ -60,12 +61,16 @@ public class AppointmentServiceImpl implements AppointmentService {
 	 */
 	@Override
 	@Transactional
-	public RetrievalAppointmentResponseDTO retrieveAppointmentForSecondary(String lastSyncTime, String passPhrase, int netMdBranchId, Date currentSyncTime){
-		RetrievalAppointmentResponseDTO retrieveAppointmentObj= new RetrievalAppointmentResponseDTO();
-		retrieveAppointmentObj = appointmentDao.retrieveAppointmentForSecondary(lastSyncTime, passPhrase, netMdBranchId, currentSyncTime);
+	public RetrievalAppointmentResponseDTO retrieveAppointmentForSecondary(
+			String lastSyncTime, String passPhrase, int netMdBranchId,
+			Date currentSyncTime) {
+		RetrievalAppointmentResponseDTO retrieveAppointmentObj = new RetrievalAppointmentResponseDTO();
+		retrieveAppointmentObj = appointmentDao
+				.retrieveAppointmentForSecondary(lastSyncTime, passPhrase,
+						netMdBranchId, currentSyncTime);
 		return retrieveAppointmentObj;
 	}
-	
+
 	/**
 	 * List appointment groups such as current day's, Next week's and future
 	 * 
@@ -151,7 +156,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	 * @return response
 	 */
 	@Override
-	public AppointmentResponse createAppointmentFromNetMd(Appointment appointment) {
+	public AppointmentResponse createAppointmentFromNetMd(
+			Appointment appointment) {
 		AppointmentResponse response = new AppointmentResponse();
 		ErrorDTO error = appointmentValidator
 				.validateCreateAppointment(appointment);
@@ -171,7 +177,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	 * @return response
 	 */
 	@Override
-	public AppointmentResponse createAppointmentFromPortal(Appointment appointment) {
+	public AppointmentResponse createAppointmentFromPortal(
+			Appointment appointment) {
 		AppointmentResponse response = new AppointmentResponse();
 		ErrorDTO error = appointmentValidator
 				.validateCreateAppointment(appointment);
@@ -183,7 +190,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 		response = appointmentDao.createAppointmentFromPortal(appointment);
 		return response;
 	}
-	
+
 	/**
 	 * Update appointment from Netmd
 	 * 
@@ -191,7 +198,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	 * @return response
 	 */
 	@Override
-	public AppointmentResponse updateAppointmentFromNetMd(Appointment appointment) {
+	public AppointmentResponse updateAppointmentFromNetMd(
+			Appointment appointment) {
 		AppointmentResponse response = new AppointmentResponse();
 		ErrorDTO error = appointmentValidator
 				.validateCreateAppointment(appointment);
@@ -203,6 +211,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 		response = appointmentDao.updateAppointmentFromNetMd(appointment);
 		return response;
 	}
+
 	/**
 	 * Update appointment from portal
 	 * 
@@ -210,7 +219,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	 * @return response
 	 */
 	@Override
-	public AppointmentResponse updateAppointmentFromPortal(Appointment appointment) {
+	public AppointmentResponse updateAppointmentFromPortal(
+			Appointment appointment) {
 		AppointmentResponse response = new AppointmentResponse();
 		ErrorDTO error = appointmentValidator
 				.validateCreateAppointment(appointment);
@@ -251,63 +261,74 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.AppointmentService#retrieveAppointmentForPrimary(java.lang.String, java.lang.String, int, java.util.Date)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nv.youNeverWait.user.bl.service.AppointmentService#
+	 * retrieveAppointmentForPrimary(java.lang.String, java.lang.String, int,
+	 * java.util.Date)
 	 */
 	@Override
 	public RetrievalAppointmentResponseDTO retrieveAppointmentForPrimary(
 			String lastSyncTime, String passPhrase, int netMdBranchId,
 			Date currentSyncTime) {
-		RetrievalAppointmentResponseDTO retrieveAppointmentObj= new RetrievalAppointmentResponseDTO();
-		retrieveAppointmentObj = appointmentDao.retrieveAppointmentForPrimary(lastSyncTime, passPhrase, netMdBranchId, currentSyncTime);
+		RetrievalAppointmentResponseDTO retrieveAppointmentObj = new RetrievalAppointmentResponseDTO();
+		retrieveAppointmentObj = appointmentDao.retrieveAppointmentForPrimary(
+				lastSyncTime, passPhrase, netMdBranchId, currentSyncTime);
 		return retrieveAppointmentObj;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.AppointmentService#getPastAppointments(com.nv.youNeverWait.rs.dto.FilterDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.AppointmentService#getPastAppointments
+	 * (com.nv.youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
-	public PastAppointmentListResponseDTO getPastAppointments(FilterDTO filterDTO) {
-		
-		PastAppointmentListResponseDTO response= new PastAppointmentListResponseDTO();
-		
+	public PastAppointmentListResponseDTO getPastAppointments(
+			FilterDTO filterDTO) {
+
+		PastAppointmentListResponseDTO response = new PastAppointmentListResponseDTO();
+
 		// validate filterDTO to identify invalid expressions and if there is
-				// any,return result with appropriate error code
-				ErrorDTO error = appointmentValidator.validateAppointmentFilter(filterDTO);
-				if (error != null) {
-					response.setError(error);
-					response.setSuccess(false);
-					return response;
-				}
+		// any,return result with appropriate error code
+		ErrorDTO error = appointmentValidator
+				.validateAppointmentFilter(filterDTO);
+		if (error != null) {
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
 
-				// get queryBuilder for result from builder factory
-				QueryBuilder queryBuilder = queryBuilderFactory
-						.getQueryBuilder(Constants.APPOINTMENTS);
-				if (queryBuilder == null) {
-					return response;
-				}
-				for (ExpressionDTO exp : filterDTO.getExp()) {
+		// get queryBuilder for result from builder factory
+		QueryBuilder queryBuilder = queryBuilderFactory
+				.getQueryBuilder(Constants.APPOINTMENTS);
+		if (queryBuilder == null) {
+			return response;
+		}
+		for (ExpressionDTO exp : filterDTO.getExp()) {
 
-					// get filter from filter factory by setting expression name and
-					// value to filter
-					Filter filter = filterFactory.getFilter(exp);
-					queryBuilder.addFilter(filter);
-				}
-				// build query
-				TypedQuery<PatientAppointmentTbl> q = queryBuilder.buildQuery(
-						filterDTO.isAsc(), filterDTO.getFrom(), filterDTO.getCount());
+			// get filter from filter factory by setting expression name and
+			// value to filter
+			Filter filter = filterFactory.getFilter(exp);
+			queryBuilder.addFilter(filter);
+		}
+		// build query
+		TypedQuery<PatientAppointmentTbl> q = queryBuilder.buildQuery(
+				filterDTO.isAsc(), filterDTO.getFrom(), filterDTO.getCount());
 
-				// get count
-				Long count = queryBuilder.getCount();
+		// get count
+		Long count = queryBuilder.getCount();
 
-				// execute query
-				List<PatientAppointmentTbl> appointmnts = queryBuilder.executeQuery(q);
-				response = PastAppointmentList(appointmnts);
-				response.setCount(count);
-				response.setSuccess(true);
-				return response;
+		// execute query
+		List<PatientAppointmentTbl> appointmnts = queryBuilder.executeQuery(q);
+		response = PastAppointmentList(appointmnts);
+		response.setCount(count);
+		response.setSuccess(true);
+		return response;
 	}
-	
+
 	/**
 	 * To set response with details of appointments
 	 * 
@@ -323,11 +344,19 @@ public class AppointmentServiceImpl implements AppointmentService {
 		}
 		List<AppointmentsDTO> appointmentsDTO = new ArrayList<AppointmentsDTO>();
 		for (PatientAppointmentTbl appointmnt : appointments) {
-			
+
 			try {
-				Date CurrentDateTime=df.parse(df.format(new Date()));
-				if(appointmnt.getStartingTime().before(CurrentDateTime))
+				Date CurrentDateTime = df.parse(df.format(new Date()));
+				if (appointmnt.getDate().before(new Date())) {
 					appointmentsDTO.add(new AppointmentsDTO(appointmnt));
+				} else {
+					if (appointmnt.getDate().equals(new Date())) {
+						if (appointmnt.getStartingTime()
+								.before(CurrentDateTime))
+							appointmentsDTO
+									.add(new AppointmentsDTO(appointmnt));
+					}
+				}
 			} catch (ParseException e) {
 				e.printStackTrace();
 				ServiceException se = new ServiceException(
@@ -336,7 +365,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 				throw se;
 
 			}
-			
+
 		}
 		response.setPastAppointments(appointmentsDTO);
 		return response;
@@ -392,7 +421,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	/**
-	 * @param queryBuilderFactory the queryBuilderFactory to set
+	 * @param queryBuilderFactory
+	 *            the queryBuilderFactory to set
 	 */
 	public void setQueryBuilderFactory(QueryBuilderFactory queryBuilderFactory) {
 		this.queryBuilderFactory = queryBuilderFactory;
@@ -406,12 +436,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	/**
-	 * @param filterFactory the filterFactory to set
+	 * @param filterFactory
+	 *            the filterFactory to set
 	 */
 	public void setFilterFactory(FilterFactory filterFactory) {
 		this.filterFactory = filterFactory;
 	}
-
-	
 
 }
