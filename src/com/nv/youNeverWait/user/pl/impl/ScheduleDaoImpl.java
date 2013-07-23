@@ -28,7 +28,7 @@ import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
 import com.nv.youNeverWait.pl.entity.OccuranceTypeEnum;
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
-import com.nv.youNeverWait.pl.entity.RepeatEnum;
+import com.nv.youNeverWait.pl.entity.ScheduleRepeatEnum;
 import com.nv.youNeverWait.pl.entity.RepeatTypeEnum;
 import com.nv.youNeverWait.pl.entity.ScheduleStatusEnum;
 import com.nv.youNeverWait.pl.entity.SeriesTbl;
@@ -573,7 +573,7 @@ public class ScheduleDaoImpl extends GenericDaoHibernateImpl implements
 					}
 					viewScheduleDTO.setRepeat(seriesTbl.getScheduleRepeat());
 					if (seriesTbl.getScheduleRepeat().equals(
-							RepeatEnum.WEEKLY.getDisplayName())) {
+							ScheduleRepeatEnum.WEEKLY.getDisplayName())) {
 						if (seriesTbl.getWeeklyType() != null) {// weekly type
 							s = seriesTbl.getWeeklyType();
 							s = s.trim();
