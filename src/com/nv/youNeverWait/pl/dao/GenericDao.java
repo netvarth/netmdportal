@@ -1,6 +1,11 @@
 /**
- * 
- */
+ * GenericDao.java
+ *
+ * Sep 7, 2012
+ *
+ * @author Asha Chandran 
+ *
+ **/
 package com.nv.youNeverWait.pl.dao;
 
 import java.io.Serializable;
