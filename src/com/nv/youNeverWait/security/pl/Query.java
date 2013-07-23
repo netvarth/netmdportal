@@ -16,7 +16,8 @@ public class Query {
 	/* PatientAppointmentTbl */
 	public static final String GET_APPOINTMENT = "from PatientAppointmentTbl as appointment where appointment.doctorTbl.id=:param1 and appointment.date=:param2 and appointment.startingTime=:param3 and appointment.status='active'";
 	public static final String GET_APPOINTMENTLIST_BY_SCHEDULE = "from PatientAppointmentTbl as appointment where appointment.doctorScheduleTbl.id=:param1 and appointment.status='active'";
-	public static final String GET_PAST_APPOINTMENTS = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.date <:param2";
+	public static final String GET_PAST_APPOINTMENTS = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.date <:param2 order by appointment.date";
+	public static final String GET_PAST_APPOINTMENTS_BY_TIME = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.startingTime <:param2 order by appointment.date";
 	public static final String GET_FUTURE_APPOINTMENTS = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.date >=:param2 and appointment.status='active'";
 	public static final String GET_WAITINGFORAPPROVAL_APPOINTMENTS = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.appointmentStatus = 'Waiting for approval'";
 	public static final String GET_APPOINTMENTS_OF_CURRENTDAY = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.date=:param2 and appointment.status='active'";
