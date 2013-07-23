@@ -1,3 +1,6 @@
+/**
+ * BranchOrderCountResponseDTO.java
+ */
 package com.nv.youNeverWait.rs.dto;
 
 public class BranchOrderCountResponseDTO {

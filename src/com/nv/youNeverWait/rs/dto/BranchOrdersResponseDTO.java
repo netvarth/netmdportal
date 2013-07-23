@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author netvarth
+ * @author Luciya Jos
  *
  */
 public class BranchOrdersResponseDTO {
