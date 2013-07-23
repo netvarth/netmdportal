@@ -1320,8 +1320,7 @@ color:blue;
 /*#tabs-1>#tabs-nohdr .ui-tabs-nav li:first-child a { -moz-border-radius: 3px 0 0 0; -webkit-border-radius: 3px 0 0 0; border-radius: 3px 0 0 0; }*/
 #tabs-1>#tabs-nohdr .ui-tabs-nav li a { 
 	display: block; padding: 10px 20px; font-weight: bold;   
-	border: 3px solid #473C8B; border-radius: 15px ;
-}
+	}
 #tabs-1>#tabs-nohdr .ui-tabs-nav li a:hover { text-decoration: none; background: #BFEFFF; }
 #tabs-1>#tabs-nohdr .ui-tabs-nav li.ui-state-active a { background:#F8F8FF; color: #333; border-bottom: 1px solid #fff; }
 #tabs-1>#tabs-nohdr .ui-tabs-hide { display: none; }
