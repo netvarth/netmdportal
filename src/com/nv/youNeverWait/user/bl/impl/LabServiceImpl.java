@@ -34,10 +34,8 @@ import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabBranchRetrievalDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabRetrievalDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
@@ -54,7 +52,6 @@ import com.nv.youNeverWait.rs.dto.LabResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
-import com.nv.youNeverWait.rs.dto.ResultRetrievalDTO;
 import com.nv.youNeverWait.rs.dto.ResultRetrievalResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferResponseDTO;
@@ -64,7 +61,6 @@ import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
-import com.nv.youNeverWait.rs.dto.UserRetrievalDTO;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.validation.LabValidator;
@@ -85,6 +81,7 @@ public class LabServiceImpl implements LabService {
 	private FilterFactory filterFactory;
 	private SendEmailMsgWorkerThread mailThread;
 	private static final Log log = LogFactory.getLog(LabServiceImpl.class);
+
 	/**
 	 * Create user in Lab
 	 * 
@@ -121,8 +118,6 @@ public class LabServiceImpl implements LabService {
 			url = new URL("http://" + netlimsServerIpAddress
 					+ "/youNeverWait/EmailFormat/LabUserRegistration.html");
 			msgBody = createUserEmailBody(url, user, labName);
-			// EmailSender.sendEmail(user.getEmail(),
-			// mailFrom,Constants.USER_REGISTRATION, msgBody);
 			SendMailMsgObj obj = new SendMailMsgObj(
 					Constants.USER_REGISTRATION, msgBody, user.getEmail(),
 					mailFrom, 0, 0, null,
@@ -131,11 +126,6 @@ public class LabServiceImpl implements LabService {
 		} catch (IOException e) {
 			log.error("Error while sending Email to Lab user", e);
 			e.printStackTrace();
-			/*
-			 * ServiceException se = new ServiceException(
-			 * ErrorCodeEnum.EmailSendFailed); se.setDisplayErrMsg(true); throw
-			 * se;
-			 */
 		}
 	}
 
@@ -278,8 +268,8 @@ public class LabServiceImpl implements LabService {
 
 	/**
 	 * Method to send email for resetting password.It will perform the following
-	 * operations. 1.Take default email HTML template
-	 * 2.Create email body 3.Send email to the lab user/owner.
+	 * operations. 1.Take default email HTML template 2.Create email body 3.Send
+	 * email to the lab user/owner.
 	 */
 	private void sendEmailForResetPassword(String subject, UserCredentials user) {
 
@@ -296,13 +286,11 @@ public class LabServiceImpl implements LabService {
 					SendMsgCallbackEnum.LAB_RESET_PWD.getId(), null);
 			mailThread.addSendMsgObj(obj);
 		} catch (IOException e) {
-			log.error("Error while sending Email for resetting password in lab", e);
+			log.error(
+					"Error while sending Email for resetting password in lab",
+					e);
 			e.printStackTrace();
-			/*
-			 * ServiceException se = new ServiceException(
-			 * ErrorCodeEnum.EmailSendFailed); se.setDisplayErrMsg(true);
-			 * //throw se;
-			 */}
+		}
 	}
 
 	/**
@@ -451,19 +439,16 @@ public class LabServiceImpl implements LabService {
 			url = new URL("http://" + netlimsServerIpAddress
 					+ "/youNeverWait/EmailFormat/LabRegistration.html");
 			msgBody = createDefaultEmailBody(url, lab);
-			// EmailSender.sendEmail(emailId, mailFrom, subject, msgBody);
 			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody, emailId,
 					mailFrom, 0, 0, null,
 					SendMsgCallbackEnum.LAB_REGISTRATION.getId(), null);
 			mailThread.addSendMsgObj(obj);
 		} catch (IOException e) {
-			log.error("Error while sending lab registration email to the owner's email id ", e);
+			log.error(
+					"Error while sending lab registration email to the owner's email id ",
+					e);
 			e.printStackTrace();
-			/*
-			 * ServiceException se = new ServiceException(
-			 * ErrorCodeEnum.EmailSendFailed); se.setDisplayErrMsg(true); //
-			 * throw se;
-			 */}
+		}
 	}
 
 	/**
@@ -600,13 +585,9 @@ public class LabServiceImpl implements LabService {
 					SendMsgCallbackEnum.LAB_BRANCH_REGISTRATION.getId(), null);
 			mailThread.addSendMsgObj(obj);
 		} catch (IOException e) {
-			log.error("Error while sending  branch registration email to the owner's email id"+e);
+			log.error("Error while sending  branch registration email to the owner's email id"
+					+ e);
 			e.printStackTrace();
-			/*
-			 * ServiceException se = new ServiceException(
-			 * ErrorCodeEnum.EmailSendFailed); se.setDisplayErrMsg(true); throw
-			 * se;
-			 */
 		}
 	}
 
@@ -810,12 +791,12 @@ public class LabServiceImpl implements LabService {
 	 */
 	@Override
 	@Transactional
-	public ResultRetrievalResponseDTO getResult(
-			LabHeaderDTO header, String lastSyncTime,Date currentTime) {
+	public ResultRetrievalResponseDTO getResult(LabHeaderDTO header,
+			String lastSyncTime, Date currentTime) {
 
 		ResultRetrievalResponseDTO response = new ResultRetrievalResponseDTO();
-		//validator.validateLabDetails(resultRetrievalDTO);
-		response = labDao.getResult(header,lastSyncTime,currentTime);
+		// validator.validateLabDetails(resultRetrievalDTO);
+		response = labDao.getResult(header, lastSyncTime, currentTime);
 		return response;
 	}
 
@@ -827,11 +808,12 @@ public class LabServiceImpl implements LabService {
 	 */
 	@Override
 	@Transactional
-	public LabBranchListResponseDTO retrieveLabBranchList(
-			LabHeaderDTO header, String lastSyncTime,Date currentTime) {
+	public LabBranchListResponseDTO retrieveLabBranchList(LabHeaderDTO header,
+			String lastSyncTime, Date currentTime) {
 
 		LabBranchListResponseDTO response = new LabBranchListResponseDTO();
-		response = labDao.retrieveLabBranchList(header, lastSyncTime, currentTime);
+		response = labDao.retrieveLabBranchList(header, lastSyncTime,
+				currentTime);
 		return response;
 	}
 
@@ -843,11 +825,11 @@ public class LabServiceImpl implements LabService {
 	 */
 	@Override
 	@Transactional
-	public RetrieveLabListResponseDTO retrieveLabList(
-			LabHeaderDTO header, String lastSyncTm,Date currentTime) {
+	public RetrieveLabListResponseDTO retrieveLabList(LabHeaderDTO header,
+			String lastSyncTm, Date currentTime) {
 
 		RetrieveLabListResponseDTO response = new RetrieveLabListResponseDTO();
-		response = labDao.retrieveLabList(header,lastSyncTm,currentTime);
+		response = labDao.retrieveLabList(header, lastSyncTm, currentTime);
 		return response;
 	}
 
@@ -859,11 +841,11 @@ public class LabServiceImpl implements LabService {
 	 */
 	@Override
 	@Transactional
-	public RetrieveUserListResponseDTO retrieveUserList(
-			LabHeaderDTO header, String lastSyncTime,Date currentTime) {
+	public RetrieveUserListResponseDTO retrieveUserList(LabHeaderDTO header,
+			String lastSyncTime, Date currentTime) {
 
 		RetrieveUserListResponseDTO response = new RetrieveUserListResponseDTO();
-		response = labDao.retrieveUserList(header,lastSyncTime,currentTime);
+		response = labDao.retrieveUserList(header, lastSyncTime, currentTime);
 		return response;
 	}
 
@@ -875,12 +857,12 @@ public class LabServiceImpl implements LabService {
 	 */
 	@Override
 	@Transactional
-	public RetrieveNetmdListResponseDTO retrieveNetmdList(LabHeaderDTO header, String lastSyncTime,Date currentTime){
+	public RetrieveNetmdListResponseDTO retrieveNetmdList(LabHeaderDTO header,
+			String lastSyncTime, Date currentTime) {
 
 		RetrieveNetmdListResponseDTO response = new RetrieveNetmdListResponseDTO();
 		labDao.validateHeader(header);
-		response = netMdService
-				.retrieveNetmdList(lastSyncTime, currentTime);
+		response = netMdService.retrieveNetmdList(lastSyncTime, currentTime);
 		return response;
 	}
 
@@ -892,11 +874,13 @@ public class LabServiceImpl implements LabService {
 	 */
 	@Override
 	@Transactional
-	public RetrieveNetmdBranchListResponseDTO retrieveNetmdBranchList(LabHeaderDTO header, String lastSyncTime,Date currentTime) {
+	public RetrieveNetmdBranchListResponseDTO retrieveNetmdBranchList(
+			LabHeaderDTO header, String lastSyncTime, Date currentTime) {
 
 		RetrieveNetmdBranchListResponseDTO response = new RetrieveNetmdBranchListResponseDTO();
 		labDao.validateHeader(header);
-		response = netMdService.retrieveNetmdBranchList(lastSyncTime, currentTime);
+		response = netMdService.retrieveNetmdBranchList(lastSyncTime,
+				currentTime);
 		return response;
 	}
 
@@ -970,44 +954,53 @@ public class LabServiceImpl implements LabService {
 	}
 
 	/**
-	 * To show all the total orders and its related details of each branch in the lab
+	 * To show all the total orders and its related details of each branch in
+	 * the lab
 	 * 
 	 * @param globalId
 	 * @return BranchOrdersResponseDTO
 	 */
 	@Override
 	public BranchOrdersResponseDTO viewBranchOrders(int globalId) {
-		BranchOrdersResponseDTO response= new BranchOrdersResponseDTO();
-		if(globalId<=0){
+		BranchOrdersResponseDTO response = new BranchOrdersResponseDTO();
+		if (globalId <= 0) {
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidLab);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(globalId)));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response=labDao.viewBranchOrders(globalId);
+		response = labDao.viewBranchOrders(globalId);
 		return response;
 	}
 
+	/**
+	 * Show the list of orders for a given period
+	 */
 	@Override
 	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO) {
-		BranchOrdersResponseDTO response= new BranchOrdersResponseDTO();
+		BranchOrdersResponseDTO response = new BranchOrdersResponseDTO();
 		validator.validateOrderDate(orderDTO);
-		validator.validateLabBranchIds(orderDTO.getLabId(),orderDTO.getLabBranchId());
-		response= labDao.orderList(orderDTO);
+		validator.validateLabBranchIds(orderDTO.getLabId(),
+				orderDTO.getLabBranchId());
+		response = labDao.orderList(orderDTO);
 		return response;
 	}
-	
+
+	/**
+	 * Create total orders in a branch
+	 */
 	@Override
 	public BranchOrderCountResponseDTO createTotalOrders(LabHeaderDTO header,
 			BranchOrderDetail branchOrders) {
-		BranchOrderCountResponseDTO response= new BranchOrderCountResponseDTO();
+		BranchOrderCountResponseDTO response = new BranchOrderCountResponseDTO();
 		validator.validateHeaderDetails(header);
-		validator.validateLabBranchIds(header.getLabId(), header.getLabBranchId());
+		validator.validateLabBranchIds(header.getLabId(),
+				header.getLabBranchId());
 		validator.validateOrderDetails(branchOrders);
-		response= labDao.createTotalOrders(header, branchOrders);
+		response = labDao.createTotalOrders(header, branchOrders);
 		return response;
 	}
-	
+
 	/**
 	 * @return the labDao
 	 */
@@ -1127,11 +1120,5 @@ public class LabServiceImpl implements LabService {
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
 	}
-
-	
-
-
-
-
 
 }

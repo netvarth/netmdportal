@@ -41,7 +41,6 @@ import com.nv.youNeverWait.rs.dto.RetrievalDoctorResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalPatientResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalScheduleResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrieveLabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
 import com.nv.youNeverWait.rs.dto.ScheduleDetail;
@@ -196,7 +195,6 @@ public class SyncServiceImpl implements SyncService {
 
 		syncResponse.setRetrieveResults(retrieveResults);
 		syncResponse.setRetrievalPatientDTO(retrievalPatientDTO);
-		System.out.println(" last sync time giving to netmd is : "+df.format(currentSyncTime));
 		syncResponse.setLastSynctime(df.format(currentSyncTime));
 		syncResponse.setRetrievalUsersList(retrieveUsers);
 		syncResponse.setRetrievalDoctorList(retrieveDoctors);

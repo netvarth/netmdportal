@@ -1,5 +1,5 @@
 /**
- * 
+ * PatientServiceImpl.java
  */
 package com.nv.youNeverWait.user.bl.impl;
 
@@ -11,9 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.TypedQuery;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,11 +22,6 @@ import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
-import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
-import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
-import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
-import com.nv.youNeverWait.pl.entity.NetmdTbl;
-import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.rs.dto.Appointment;
@@ -41,9 +34,7 @@ import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
-import com.nv.youNeverWait.rs.dto.NetMdBranchDetail;
 import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.PastAppointmentListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
@@ -206,11 +197,7 @@ public class PatientServiceImpl implements PatientService {
 					"Error while sending Email when doing Netmd forgot password",
 					e);
 			e.printStackTrace();
-			/*
-			 * ServiceException se = new ServiceException(
-			 * ErrorCodeEnum.EmailSendFailed); se.setDisplayErrMsg(true);
-			 * //throw se;
-			 */}
+		}
 	}
 
 	/**
@@ -347,11 +334,7 @@ public class PatientServiceImpl implements PatientService {
 		} catch (IOException e) {
 			log.error("Error while sending Email for patient creation ", e);
 			e.printStackTrace();
-			/*
-			 * ServiceException se = new ServiceException(
-			 * ErrorCodeEnum.EmailSendFailed); se.setDisplayErrMsg(true); throw
-			 * thow se;
-			 */}
+		}
 	}
 
 	/**
@@ -404,14 +387,6 @@ public class PatientServiceImpl implements PatientService {
 	}
 
 	/**
-	 * @param patientDao
-	 *            the patientDao to set
-	 */
-	public void setPatientDao(PatientDao patientDao) {
-		this.patientDao = patientDao;
-	}
-
-	/**
 	 * Shows a list of all netmd branches
 	 * 
 	 * @param filter
@@ -435,7 +410,6 @@ public class PatientServiceImpl implements PatientService {
 			String patientId) {
 		AppointmentListResponseDTO response = new AppointmentListResponseDTO();
 		response = appointmentService.getAppointmentListsForPatient(patientId);
-		System.out.println("--------" + response.getFutureAppointment().size());
 		return response;
 	}
 
@@ -460,11 +434,14 @@ public class PatientServiceImpl implements PatientService {
 	 * @return AppointmentResponse
 	 */
 	@Override
-	public AppointmentResponse createAppointmentFromNetMd(Appointment appointment) {
+	public AppointmentResponse createAppointmentFromNetMd(
+			Appointment appointment) {
 		AppointmentResponse appointmentResponse = new AppointmentResponse();
-		appointmentResponse = appointmentService.createAppointmentFromNetMd(appointment);
+		appointmentResponse = appointmentService
+				.createAppointmentFromNetMd(appointment);
 		return appointmentResponse;
 	}
+
 	/**
 	 * Create appointment from Portal
 	 * 
@@ -472,9 +449,11 @@ public class PatientServiceImpl implements PatientService {
 	 * @return AppointmentResponse
 	 */
 	@Override
-	public AppointmentResponse createAppointmentFromPortal(Appointment appointment) {
+	public AppointmentResponse createAppointmentFromPortal(
+			Appointment appointment) {
 		AppointmentResponse appointmentResponse = new AppointmentResponse();
-		appointmentResponse = appointmentService.createAppointmentFromPortal(appointment);
+		appointmentResponse = appointmentService
+				.createAppointmentFromPortal(appointment);
 		return appointmentResponse;
 	}
 
@@ -485,9 +464,11 @@ public class PatientServiceImpl implements PatientService {
 	 * @return AppointmentResponse
 	 */
 	@Override
-	public AppointmentResponse updateAppointmentFromNetMd(Appointment appointment) {
+	public AppointmentResponse updateAppointmentFromNetMd(
+			Appointment appointment) {
 		AppointmentResponse appointmentResponse = new AppointmentResponse();
-		appointmentResponse = appointmentService.updateAppointmentFromNetMd(appointment);
+		appointmentResponse = appointmentService
+				.updateAppointmentFromNetMd(appointment);
 		return appointmentResponse;
 	}
 
@@ -498,9 +479,11 @@ public class PatientServiceImpl implements PatientService {
 	 * @return AppointmentResponse
 	 */
 	@Override
-	public AppointmentResponse updateAppointmentFromPortal(Appointment appointment) {
+	public AppointmentResponse updateAppointmentFromPortal(
+			Appointment appointment) {
 		AppointmentResponse appointmentResponse = new AppointmentResponse();
-		appointmentResponse = appointmentService.updateAppointmentFromPortal(appointment);
+		appointmentResponse = appointmentService
+				.updateAppointmentFromPortal(appointment);
 		return appointmentResponse;
 	}
 
@@ -552,7 +535,7 @@ public class PatientServiceImpl implements PatientService {
 	}
 
 	/**
-	 * To retrieve a  result corresponding to the orderId and patient given
+	 * To retrieve a result corresponding to the orderId and patient given
 	 * 
 	 * @param patient
 	 * @return ResultDTO
@@ -561,10 +544,10 @@ public class PatientServiceImpl implements PatientService {
 	public ResultDTO patientTestResult(PatientOrderDTO patient) {
 		ResultDTO response = new ResultDTO();
 		validator.validatePatientOrderDetails(patient);
-		response= patientDao.patientTestResult(patient);
+		response = patientDao.patientTestResult(patient);
 		return response;
 	}
-	
+
 	@Override
 	public ResultListResponseDTO getresultList(FilterDTO filterDTO) {
 		ResultListResponseDTO response = new ResultListResponseDTO();
@@ -592,8 +575,8 @@ public class PatientServiceImpl implements PatientService {
 			queryBuilder.addFilter(filter);
 		}
 		// build query
-		TypedQuery<ResultTbl> q = queryBuilder.buildQuery(
-				filterDTO.isAsc(), filterDTO.getFrom(), filterDTO.getCount());
+		TypedQuery<ResultTbl> q = queryBuilder.buildQuery(filterDTO.isAsc(),
+				filterDTO.getFrom(), filterDTO.getCount());
 
 		// get count
 		Long count = queryBuilder.getCount();
@@ -605,14 +588,14 @@ public class PatientServiceImpl implements PatientService {
 		response.setSuccess(true);
 		return response;
 	}
+
 	/**
 	 * To set response with details of results
 	 * 
 	 * @param results
 	 * @return ResultListResponseDTO
 	 */
-	private ResultListResponseDTO resultList(
-			List<ResultTbl> results) {
+	private ResultListResponseDTO resultList(List<ResultTbl> results) {
 		ResultListResponseDTO response = new ResultListResponseDTO();
 		if (results == null) {
 			return response;
@@ -625,9 +608,11 @@ public class PatientServiceImpl implements PatientService {
 		return response;
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.PatientService#deleteAppointmentFromPortal(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nv.youNeverWait.user.bl.service.PatientService#
+	 * deleteAppointmentFromPortal(int)
 	 */
 	@Override
 	public AppointmentResponse deleteAppointmentFromPortal(int id) {
@@ -636,8 +621,12 @@ public class PatientServiceImpl implements PatientService {
 		return response;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.PatientService#getPastAppointments(com.nv.youNeverWait.rs.dto.FilterDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.PatientService#getPastAppointments
+	 * (com.nv.youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
 	public PastAppointmentListResponseDTO getPastAppointments(FilterDTO filter) {
@@ -645,7 +634,7 @@ public class PatientServiceImpl implements PatientService {
 		response = appointmentService.getPastAppointments(filter);
 		return response;
 	}
-	
+
 	public QueryBuilderFactory getQueryBuilderFactory() {
 		return queryBuilderFactory;
 	}
@@ -704,6 +693,14 @@ public class PatientServiceImpl implements PatientService {
 		return patientDao;
 	}
 
+	/**
+	 * @param patientDao
+	 *            the patientDao to set
+	 */
+	public void setPatientDao(PatientDao patientDao) {
+		this.patientDao = patientDao;
+	}
+
 	public ScheduleService getScheduleService() {
 		return scheduleService;
 	}
@@ -744,5 +741,4 @@ public class PatientServiceImpl implements PatientService {
 	}
 
 	
-
 }

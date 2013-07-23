@@ -1,3 +1,6 @@
+/**
+ * AppointmentServiceImpl.java
+ */
 package com.nv.youNeverWait.user.bl.impl;
 
 import java.text.ParseException;
@@ -49,6 +52,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	private FilterFactory filterFactory;
 	
 	/**
+	 * Retrrieve appointments for  secondary device of a NetMd branch
 	 * @param lastSyncTime
 	 * @param passPhrase
 	 * @param netMdBranchId
@@ -322,7 +326,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 			
 			try {
 				Date CurrentDateTime=df.parse(df.format(new Date()));
-				System.out.println("current time "+df.parse(df.format(new Date())));
 				if(appointmnt.getStartingTime().before(CurrentDateTime))
 					appointmentsDTO.add(new AppointmentsDTO(appointmnt));
 			} catch (ParseException e) {

@@ -79,7 +79,8 @@ public class NetMdServiceImpl implements NetMdService {
 	 */
 	@Override
 	@Transactional
-	public RetrieveNetmdListResponseDTO retrieveNetmdList(String syncTime, Date currentTime) {
+	public RetrieveNetmdListResponseDTO retrieveNetmdList(String syncTime,
+			Date currentTime) {
 
 		RetrieveNetmdListResponseDTO response = new RetrieveNetmdListResponseDTO();
 		if (syncTime == null || syncTime.equals("")) {
@@ -91,7 +92,6 @@ public class NetMdServiceImpl implements NetMdService {
 		response = netMdDao.retrieveNetmdList(syncTime, currentTime);
 		return response;
 	}
-
 
 	/**
 	 * Retrieves all Netmd branch list after last synchronization time
@@ -226,13 +226,10 @@ public class NetMdServiceImpl implements NetMdService {
 			// /EmailSender.sendEmail(netMd.getOwnerEmail(), mailFrom, subject,
 			// msgBody);
 		} catch (IOException e) {
-			log.error("Error while sending netmd registration email to the owner's email id ", e);
+			log.error(
+					"Error while sending netmd registration email to the owner's email id ",
+					e);
 			e.printStackTrace();
-			/*
-			 * ServiceException se = new ServiceException(
-			 * ErrorCodeEnum.EmailSendFailed); se.setDisplayErrMsg(true); throw
-			 * se;
-			 */
 		}
 	}
 
@@ -307,21 +304,16 @@ public class NetMdServiceImpl implements NetMdService {
 			url = new URL("http://" + netMdServerIpAddress
 					+ "/youNeverWait/EmailFormat/NetMdBranchRegistration.html");
 			msgBody = createEmailBody(url, branchDetail);
-			// EmailSender.sendEmail(branchDetail.getOwnerEmail(), mailFrom,
-			// / subject, msgBody);
 			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,
 					branchDetail.getOwnerEmail(), mailFrom, 0, 0, null,
 					SendMsgCallbackEnum.NETMD_BRANCH_REGISTRATION.getId(), null);
 			mailThread.addSendMsgObj(obj);
 
 		} catch (IOException e) {
-			log.error(" error while sending branch registration email  to the owner's email id",e);
+			log.error(
+					" error while sending branch registration email  to the owner's email id",
+					e);
 			e.printStackTrace();
-			/*
-			 * ServiceException se = new ServiceException(
-			 * ErrorCodeEnum.EmailSendFailed); se.setDisplayErrMsg(true); throw
-			 * se;
-			 */
 		}
 	}
 
@@ -499,13 +491,14 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	public ResponseDTO createUser(HeaderDTO header,NetMdUserDetail user) {
+	public ResponseDTO createUser(HeaderDTO header, NetMdUserDetail user) {
 		ResponseDTO response = new ResponseDTO();
-		validator.validateUserDetails(header,user);
+		validator.validateUserDetails(header, user);
 		validator.validateNetMdUserLoginDetails(user);
-		response = netMdDao.createUser(header,user);
+		response = netMdDao.createUser(header, user);
 		String netMdName = netMdDao.getNetMdName(user.getNetMdId());
-		String netMdBranchName = netMdDao.getNetMdBranchName(user.getNetMdBranchId());
+		String netMdBranchName = netMdDao.getNetMdBranchName(user
+				.getNetMdBranchId());
 		sendEmailToUser(user, netMdName, netMdBranchName);
 		return response;
 	}
@@ -517,7 +510,7 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	public ResponseDTO updateUser(HeaderDTO header,NetMdUserDetail user) {
+	public ResponseDTO updateUser(HeaderDTO header, NetMdUserDetail user) {
 		ResponseDTO response = new ResponseDTO();
 		validator.validateUserDetails(header, user);
 		response = netMdDao.updateUser(header, user);
@@ -539,10 +532,12 @@ public class NetMdServiceImpl implements NetMdService {
 		return response;
 	}
 
-
+	/**
+	 * Method to make a device primary
+	 */
 	@Override
 	@Transactional
-	public ResponseDTO makePrimary(HeaderDTO header){
+	public ResponseDTO makePrimary(HeaderDTO header) {
 		ResponseDTO response = new ResponseDTO();
 		response = netMdDao.makePrimary(header);
 		return response;
@@ -670,13 +665,8 @@ public class NetMdServiceImpl implements NetMdService {
 			// EmailSender.sendEmail(user.getEmail(), mailFrom,
 			// Constants.USER_REGISTRATION, msgBody);
 		} catch (IOException e) {
-			log.error("Error while sending email to Netmd user",e);
+			log.error("Error while sending email to Netmd user", e);
 			e.printStackTrace();
-			/*
-			 * ServiceException se = new ServiceException(
-			 * ErrorCodeEnum.EmailSendFailed); se.setDisplayErrMsg(true); throw
-			 * se;
-			 */
 		}
 	}
 
@@ -791,13 +781,11 @@ public class NetMdServiceImpl implements NetMdService {
 					SendMsgCallbackEnum.NETMD_RESET_PWD.getId(), null);
 			mailThread.addSendMsgObj(obj);
 		} catch (IOException e) {
-			log.error("Error while sending Email when doing Netmd forgot password",e);
+			log.error(
+					"Error while sending Email when doing Netmd forgot password",
+					e);
 			e.printStackTrace();
-			/*
-			 * ServiceException se = new ServiceException(
-			 * ErrorCodeEnum.EmailSendFailed); se.setDisplayErrMsg(true);
-			 * //throw se;
-			 */}
+		}
 	}
 
 	/**
@@ -808,7 +796,7 @@ public class NetMdServiceImpl implements NetMdService {
 
 		StringBuffer msgBodyBfr = new StringBuffer();
 		String fullMsgBody = "";
-		
+
 		String encryptedUserName = StringEncoder.encryptWithStaticKey(user
 				.getUserName());
 		String resetPasswordLink = "http://" + netMdServerIpAddress
@@ -838,8 +826,8 @@ public class NetMdServiceImpl implements NetMdService {
 	}
 
 	/**
-	 * Method performed to retrieve created updated and deleted users list
-	 * from portal
+	 * Method performed to retrieve created updated and deleted users list from
+	 * portal
 	 * 
 	 * @param lastSyncTime
 	 * @param passPhrase
@@ -850,10 +838,9 @@ public class NetMdServiceImpl implements NetMdService {
 	public RetrievalUserResponseDTO retrieveUserList(String lastSyncTime,
 			String passPhrase, int netmdBranchId, Date currentSyncTime) {
 		RetrievalUserResponseDTO response = netMdDao.retrieveUserList(
-				lastSyncTime, passPhrase, netmdBranchId,currentSyncTime);
+				lastSyncTime, passPhrase, netmdBranchId, currentSyncTime);
 		return response;
 	}
-
 
 	/**
 	 * Method to reset password
@@ -883,6 +870,7 @@ public class NetMdServiceImpl implements NetMdService {
 		return response;
 
 	}
+
 	/**
 	 * @return the netMdDao
 	 */
@@ -987,8 +975,5 @@ public class NetMdServiceImpl implements NetMdService {
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
 	}
-
-
-
 
 }
