@@ -21,7 +21,6 @@ public class Constants {
 	public static final String SORT_BY ="sortBy";
 	public static final String DATE_FORMAT = "MM/dd/yyyy hh:mm";
 	public static final String DATE_FORMAT_DAY_FIRST = "dd/MM/yyyy hh:mm a";
-	//public static final String DATE_FORMAT_WITH_TIME_SECONDS = "yyyy-MM-dd hh:mm:ss";
 	public static final String DATE_FORMAT_WITH_TIME_SECONDS="yyyy-MM-dd HH:mm:ss";
 	public static final String YEAR="yyyy";
     public static final String DATE_FORMAT_WITH_NO_TIME = "MM/dd/yyyy";
@@ -86,6 +85,7 @@ public class Constants {
 	public static final String DELETE_PATIENT = "Delete patient";
 	public static final String NETMD_BRANCH_LIST = "Netmd branch list";
 	public static final String NETMD_DOWNLOAD = "Download netmd application";
+	
     /*NetRx*/
 	public static final String NETRX_REGISTER ="NetRx Registration";
 	public static final String NETRX ="netrx";
