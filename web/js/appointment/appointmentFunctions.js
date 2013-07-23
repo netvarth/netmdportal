@@ -130,15 +130,15 @@
 	$j('#AppointmentPTBContainer #btn_view_ptb_id').hide();
 	});	
 	
-	$j('.fc-agenda-slots tbody tr ').die('click').live("click",function() {	
+	$j('.fc-agenda-slots tbody tr td').die('click').live("click",function() {	
 		
-		var lengthDiv=$j(this).children('td').children('div').text().length; 
+		var lengthDiv=$j(this).children('div').text().length; 
 		//alert("length"+lengthDiv);
-		timeslot1=$j(this).children('td').closest('tr').children('th').text();
+		timeslot1=$j(this).closest('tr').children('th').text();
 		//alert("time"+timeslot1);
-		scheduleId=$j(this).children('td').children('div').attr('name');
+		scheduleId=$j(this).children('div').attr('name');
 		//alert("schedulreid"+scheduleId);
-		var slotdataText=$j(this).children('td').text();
+		var slotdataText=$j(this).text();
 		if(slotdataText=="Take Your Appointment"){
 		//if(lengthDiv<2){
 			var selecteddate=$j('.fc-header-title h2').text();
@@ -151,20 +151,58 @@
 			$j("#newpatintAppointmentForm #Patientappointmenttime").text(timeslot1);
 			}
 		if(slotdataText=="Your Appointment"){
-		  	if($j(this).children('td').attr('selected')) {
-				$j(this).children('td').removeAttr('selected');
-				$j(this).children('td').removeAttr('style');
+		  	if($j(this).attr('selected')) {
+				$j(this).removeAttr('selected');
+				$j(this).removeAttr('style');
 			} 
 			else {	
-			$j(this).children('td').attr('selected','selected');
-			$j(this).children('td').attr('style','background:#DCDCDC;');
-			$j('#AppointmentPTBContainer #btn_view_ptb_id').trigger('click'); 
+			$j(this).attr('selected','selected');
+			$j(this).attr('style','background:#DCDCDC;');
+			//$j('#AppointmentPTBContainer #btn_view_ptb_id').trigger('click'); 
 			}
 				removeErrors();
 		}
 			
 				
 	 });
+	 
+	 $j('.fc-agenda-slots tbody tr th').die('click').live("click",function() {	
+		
+		var lengthDiv=$j(this).next('td').children('div').text().length; 
+		//alert("length"+lengthDiv);
+		timeslot1=$j(this).closest('tr').children('th').text();
+		//alert("time"+timeslot1);
+		scheduleId=$j(this).next('td').children('div').attr('name');
+		//alert("schedulreid"+scheduleId);
+		var slotdataText=$j(this).next('td').text();
+		//alert(slotdataText);
+		/* if(slotdataText=="Take Your Appointment"){
+		/*if(lengthDiv<2){
+			var selecteddate=$j('.fc-header-title h2').text();
+			var datesplit=selecteddate.split(',');
+			var date=datesplit[1];
+			var obj1=$j(this);	
+			createModal(constants_newappointmentJson,'appointmentModal');		
+			openModalBox(obj1,'appointmentModal');
+			$j("#newpatintAppointmentForm #Patientappointment").text(date);
+			$j("#newpatintAppointmentForm #Patientappointmenttime").text(timeslot1);
+			}*/
+		if(slotdataText=="Your Appointment"){
+		  	if($j(this).next('td').attr('selected')) {
+				$j(this).next('td').removeAttr('selected');
+				$j(this).next('td').removeAttr('style');
+			} 
+			else {	
+			$j(this).next('td').attr('selected','selected');
+			$j(this).next('td').attr('style','background:#DCDCDC;');
+			$j('#AppointmentPTBContainer #btn_view_ptb_id').trigger('click'); 
+			}
+				removeErrors();
+		} 
+			
+				
+	 });
+	 
 	 
 	 $j('#newpatintAppointmentForm #btnDone').die('click').live("click",function() {	
 		//alert("ok");
@@ -206,6 +244,8 @@
 	 $j('#AppointmentPTBContainer #btn_delete_ptb_id').die('click').live('click',function(){
 		var pgTableName=".fc-agenda-slots";
 		removeErrors();
+	    var textlen=$j('tr td[selected] div').text();
+		if(textlen!=""){
 		var appointmentId = getSelectedappointmentId(pgTableName);
 		//alert(appointmentId);
 		if(appointmentId!="") {
@@ -222,7 +262,7 @@
 			}	
 			else
 				updateTipsNew(getErrorName(response.error),$j('#errorDivData'),$j('#errorDivHeader'));
-		}
+		}}
 	 
 		});
 		
@@ -230,6 +270,8 @@
 				var obj1=$j(this);	
 				var pgTableName=".fc-agenda-slots";
 				removeErrors();
+				var textlen=$j('tr td[selected] div').text();
+		if(textlen!=""){
 				var appointmentId = getSelectedappointmentId(pgTableName);
 				if(appointmentId!=""){
 				var time=$j('tr td[selected]').closest('tr').children('th').text();
@@ -243,7 +285,7 @@
 				var date1=datesplit[1];
 				var date=$j("#viewpatintAppointmentForm #Startdate").val(date1);
 				filltimeList("#from",date1);
-				}
+				}}
 		});
 		
 		$j('#viewpatintAppointmentForm #btnEdit').die('click').live('click',function(){
