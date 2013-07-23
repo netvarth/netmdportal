@@ -1,3 +1,6 @@
+/**
+ * User.java
+ */
 package com.nv.youNeverWait.security;
 
 import java.util.Date;
