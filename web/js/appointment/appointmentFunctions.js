@@ -44,11 +44,7 @@
 					
 			});
 			 			
-			/* $j('.fc-agenda-slots tbody tr').each(function() {     
-						//$j(this).not('.appointment').hide();
-						$j(this).not('.appointment').css('visibility', 'hidden');
-					
-					}); */
+			
 					
 			$j(response.appointment).each(function(index,appinterval) {
 							var apptime=appinterval.startTime;
@@ -60,22 +56,21 @@
 							var appopatientid=appinterval.patientId;
 							
 						$j('.fc-agenda-slots tr th').each(function() {
-						var timeslotapp=$j(this).text();
-						
+							var timeslotapp=$j(this).text();
 						
 							if(timeslotapp==realapptime&&date.trim()==currentdate){
 								if(appopatientid==Idpatient){
 									$j(this).nextAll('td:first').children('div').text("Your Appointment");
 									$j(this).nextAll('td:first').attr('value',appointId);
+									$j(this).nextAll('td:first').attr('style','background:#ADDFFF;');
 									}
 								else{
 								    $j(this).nextAll('td:first').children('div').text("Reserved");
 									}
 								$j(this).nextAll('td:first').children('div').attr('style','font-size:150%;margin: 10px 0px 0px 300px;');
-								$j(this).nextAll('td:first').attr('style','background:#ADDFFF;');
 								}
-							});
-							});		
+						});
+			});		
 			
 	});
 	
@@ -154,6 +149,7 @@
 		  	if($j(this).attr('selected')) {
 				$j(this).removeAttr('selected');
 				$j(this).removeAttr('style');
+				$j(this).attr('style','background:#ADDFFF;');
 			} 
 			else {	
 			$j(this).attr('selected','selected');
@@ -176,21 +172,12 @@
 		//alert("schedulreid"+scheduleId);
 		var slotdataText=$j(this).next('td').text();
 		//alert(slotdataText);
-		/* if(slotdataText=="Take Your Appointment"){
-		/*if(lengthDiv<2){
-			var selecteddate=$j('.fc-header-title h2').text();
-			var datesplit=selecteddate.split(',');
-			var date=datesplit[1];
-			var obj1=$j(this);	
-			createModal(constants_newappointmentJson,'appointmentModal');		
-			openModalBox(obj1,'appointmentModal');
-			$j("#newpatintAppointmentForm #Patientappointment").text(date);
-			$j("#newpatintAppointmentForm #Patientappointmenttime").text(timeslot1);
-			}*/
+		
 		if(slotdataText=="Your Appointment"){
 		  	if($j(this).next('td').attr('selected')) {
 				$j(this).next('td').removeAttr('selected');
 				$j(this).next('td').removeAttr('style');
+				$j(this).next('td').attr('style','background:#ADDFFF;');
 			} 
 			else {	
 			$j(this).next('td').attr('selected','selected');
@@ -216,19 +203,18 @@
 			//alert(JSON.stringify(appointmentResponse));		
 	    if(appointmentResponse.success==true){
 			$j('.fc-agenda-slots tr th').each(function() {
-			var timeslotapp=$j(this).text();
-			
-			var appId=appointmentResponse.globalId;
-			
-			if(timeslotapp==timeslot1){
-				$j(this).nextAll('td:first').children('div').text(patient);
-				$j(this).nextAll('td:first').children('div').attr('style','font-size:150%;margin: 10px 0px 0px 300px;');
-				$j(this).nextAll('td:first').attr('style','background:#ADDFFF;');
-				$j(this).nextAll('td:first').attr('value',appId);
-				}
+				var timeslotapp=$j(this).text();
+				var appId=appointmentResponse.globalId;
+				
+				if(timeslotapp==timeslot1){
+					$j(this).nextAll('td:first').children('div').text(patient);
+					$j(this).nextAll('td:first').children('div').attr('style','font-size:150%;margin: 10px 0px 0px 300px;');
+					$j(this).nextAll('td:first').attr('style','background:#ADDFFF;');
+					$j(this).nextAll('td:first').attr('value',appId);
+					}
 			});
 			$j("#newpatintAppointmentForm").trigger('reveal:close');
-			 }
+		}
 			
 	else {
 			updateTipsNew(getErrorName(appointmentResponse.error),$j('#error'));
