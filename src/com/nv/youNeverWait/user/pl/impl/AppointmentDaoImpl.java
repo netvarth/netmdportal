@@ -179,6 +179,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 	 * (int)
 	 */
 	@Override
+	@Transactional
 	public AppointmentResponse deleteAppointmentFromPortal(int id) {
 
 		PatientAppointmentTbl appointmentTbl = (PatientAppointmentTbl) getById(

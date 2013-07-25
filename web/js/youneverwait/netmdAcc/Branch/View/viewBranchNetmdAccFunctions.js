@@ -1,5 +1,5 @@
 	
-	function viewNetmdAccBranch(branchId)
+	function viewNetmdAccBranch(branchId,tableObj,tableObj1)
 	 {
 		$j('#pageTitle').html(constant_BranchNetmdAccView_Msg);
 		$j('#filter').hide();
@@ -15,10 +15,11 @@
 		var viewdata = getRequestData('/youNeverWait/json/view/viewNetmdAccBranchDetails.json');
 		var contentForm = new form(viewdata);
 		$j('#tabs-1').html(contentForm.result);	
-		viewNetmdAccBranchInfo(branchId);
+		viewNetmdAccBranchInfo(branchId,tableObj,tableObj1);
 	 }
 	 
-	function viewNetmdAccBranchInfo(netmdbranchId) {
+	function viewNetmdAccBranchInfo(netmdbranchId,tableObj,tableObj1) {
+		
 		var branchInfo = getNetMdBranchAccData(netmdbranchId);
 		//alert(JSON.stringify(branchInfo));
 		if(branchInfo.branch.globalId)
@@ -66,9 +67,9 @@
 			$j("#netmdAccbranchViewForm #macId").val(branchInfo.branch.macId);
 		else 
 			$j("#netmdAccbranchViewForm #macId").val('Nil');	*/	
-		//makeDataTable('#passphraseViewTable'); 
-		//makeDataTable('#passphrasePrimaryViewTable'); 
-		//viewPassPhraseTable(branchInfo,tableObj,tableObj1);		
+		makeDataTable('#passphraseViewTableAcc'); 
+		makeDataTable('#passphrasePrimaryViewTableAcc'); 
+		viewPassPhraseTableAcc(branchInfo,tableObj,tableObj1);		
 
 	}
 	
@@ -97,22 +98,24 @@
 		return submitdata;
 	}
 
-	/*function viewPassPhraseTable(branchInfo,tableObj,tableObj1) {
+	function viewPassPhraseTableAcc(branchInfo,tableObj,tableObj1) {
 		$j(tableObj).dataTable().fnClearTable();
 		$j(tableObj1).dataTable().fnClearTable();
+		//alert(JSON.stringify(branchInfo));
 		$j(branchInfo.branch).each(function (index,branchInfo) {
-		var myData='<a href="#"><img width="60" height="25" style="margin:0 0 0 5px;" class="delete tohide" src="/youNeverWait/images/clear.jpeg"></a>';
+		
+		//var myData='<a href="#"><img width="60" height="25" style="margin:0 0 0 5px;" class="delete tohide" src="/youNeverWait/images/clear.jpeg"></a>';
 			$j(branchInfo.passPhrase).each(function (index,passPhrase) {
 			if(passPhrase.primary==true)
 			{
 			if(passPhrase.macId==null)
-			{		var rowData=$j(tableObj1).dataTable().fnAddData([passPhrase.passPhrase,'Nil',myData]);
+			{		var rowData=$j(tableObj1).dataTable().fnAddData([passPhrase.passPhrase,'Nil']);
 				var row=$j(tableObj1).dataTable().fnSettings().aoData[rowData].nTr;
 				$j(row).children("td:nth-child(2)").attr("class","nilstyle");
 			}
 			else
 			{
-			var rowData=$j(tableObj1).dataTable().fnAddData([passPhrase.passPhrase,passPhrase.macId,myData]);
+			var rowData=$j(tableObj1).dataTable().fnAddData([passPhrase.passPhrase,passPhrase.macId]);
 			var row=$j(tableObj1).dataTable().fnSettings().aoData[rowData].nTr;
 			$j(row).children("td:nth-child(2)").attr("class","nilstyle");
 			}
@@ -122,19 +125,18 @@
 			{
 			if(passPhrase.macId==null)
 			{		
-			var rowData=$j(tableObj).dataTable().fnAddData([passPhrase.passPhrase,'Nil',myData]);
+			var rowData=$j(tableObj).dataTable().fnAddData([passPhrase.passPhrase,'Nil']);
 			var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr
 			$j(row).children("td:nth-child(2)").attr("class","nilstyle");
 			}
 			else
 			{
-			var rowData=$j(tableObj).dataTable().fnAddData([passPhrase.passPhrase,passPhrase.macId,myData]);
+			var rowData=$j(tableObj).dataTable().fnAddData([passPhrase.passPhrase,passPhrase.macId]);
 			var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr; 
 			$j(row).children("td:nth-child(2)").attr("class","nilstyle");
 			}
 			}
-			//$j(row).attr('id',id);	
-				//fillViewTestDiscountTable(passPhrase.passPhrase,passPhrase.macId,"");			
+				
 			});	
 		});
 }
@@ -149,7 +151,7 @@ function makeDataTable(tableObj) {
 		"bAutoWidth": false,
 		"sDom": '<"top"Hip>'
 	});
-}*/
+}
 /* function to get the  previous netmdid from the netmdlist json */
 function getpreviousBranchId(branchid, branchResult) {
 	var brnchId;
