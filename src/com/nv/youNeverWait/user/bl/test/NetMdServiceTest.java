@@ -289,10 +289,10 @@ public class NetMdServiceTest {
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
 		HeaderDTO header = new HeaderDTO();
-		//header.setNetMdBranchId(5);
-		//header.setNetMdId(3);
-		header.setMacId("08-00-27-00-18-1C");
-		header.setPassPhrase("V4WueKvId5iyYsvi8gtPYA==");
+		header.setNetMdBranchId(5);
+		header.setNetMdId(3);
+		header.setMacId("00-80-48-6E-E1-E2");
+		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 		try {
 			service.activateNetMd(header);
 		} catch (ServiceException e) {
