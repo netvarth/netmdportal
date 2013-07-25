@@ -45,6 +45,7 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 	 * Get patient results
 	 */
 	@Override
+	@Transactional
 	public List<RetrieveResultsResponseDTO> getPatientResults(
 			String syncTime, String passPhrase, int netmdBranchId,
 			Date currentSyncTime) {
