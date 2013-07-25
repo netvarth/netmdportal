@@ -140,7 +140,7 @@ public class SyncServiceImpl implements SyncService {
 					sync.getUpdateUserList(), sync.getDeleteUserList());
 			syncResponse.setUserResponse(userResponseList);
 
-			/* Synchronizing appointments back to netMD */
+			/* Retrieving appointments for primary device */
 			RetrievalAppointmentResponseDTO retrievalAppointmentDTOForPrimary = appointmentService
 					.retrieveAppointmentForPrimary(sync.getLastSyncTime(), sync
 							.getHeader().getPassPhrase(), sync.getHeader()
@@ -151,7 +151,7 @@ public class SyncServiceImpl implements SyncService {
 
 		/*Retrieve appointments for secondary devices*/
 		if(!headerResponse.isPrimaryDevice()){
-			/* Synchronizing appointments back to netMD */
+			/* Retrieving appointments for Secondary device */
 			RetrievalAppointmentResponseDTO retrievalAppointmentDTO = appointmentService
 					.retrieveAppointmentForSecondary(sync.getLastSyncTime(), sync
 							.getHeader().getPassPhrase(), sync.getHeader()
