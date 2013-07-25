@@ -35,6 +35,8 @@ import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.StatusEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
+import com.nv.youNeverWait.rs.dto.AppointmentDTO;
+import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetMdActivationResponseDTO;
@@ -47,10 +49,16 @@ import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PassPhraseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
+import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrievalDoctorResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrievalPatientResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrievalScheduleResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
+import com.nv.youNeverWait.rs.dto.ScheduleDetail;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.NetMdDao;
@@ -653,7 +661,68 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				se.setDisplayErrMsg(true);
 				throw se;
 			}
+			/*
+			 * Retrieve all the details to the primary device after the device
+			 * is crashed
+			 */
+			else if (netmdpassPhrase.isPrimaryDevice()) {
+
+				Date currentSyncTime = new Date(); // setting current date time
+				Date firstSyncTime = new Date(0);
+
+				/* Retrieving Doctor List */
+				List<DoctorDetail> retrievedDoctors = new ArrayList<DoctorDetail>();
+
+				/* Getting doctors list from doctor tbl */
+				List<DoctorTbl> DoctorsList = getDoctors(firstSyncTime,
+						netmdpassPhrase.getId(), netmdpassPhrase
+								.getNetmdBranchTbl().getId(), currentSyncTime);
+				for (DoctorTbl doctor : DoctorsList) {
+
+					retrievedDoctors.add(new DoctorDetail(doctor));
+				}
+				response.setRetrieveDoctorsList(retrievedDoctors);
+
+				/* Retrieving Patient list */
+
+				List<PatientDetail> retrievedPatients = new ArrayList<PatientDetail>();
+
+				/* Getting patients list from patient tbl */
+				List<PatientTbl> patients = getPatients(firstSyncTime,
+						netmdpassPhrase.getId(), netmdpassPhrase
+								.getNetmdBranchTbl().getId(), currentSyncTime);
+				for (PatientTbl patientObj : patients) {
+					PatientDetail patientDetail = new PatientDetail(patientObj);
+					retrievedPatients.add(patientDetail);
+				}
+
+				response.setRetrievePatients(retrievedPatients);
+
+				/* Retrieving Schedule List */
+
+				List<ScheduleDetail> retrievedSchedules = new ArrayList<ScheduleDetail>();
+				/* Getting users list */
+				List<DoctorScheduleTbl> scheduleList = getSchedules(
+						firstSyncTime, netmdpassPhrase.getId(), netmdpassPhrase
+								.getNetmdBranchTbl().getId(), currentSyncTime);
+				for (DoctorScheduleTbl schedule : scheduleList) {
+					retrievedSchedules.add(new ScheduleDetail(schedule));
+				}
+				response.setRetrieveScheduleList(retrievedSchedules);
+				
+				/*Retrieve all appointments created by primary device*/
+				List<AppointmentDTO> retrieveAppointments = new ArrayList<AppointmentDTO>();
+				/*get appointment list from table*/
+				List<PatientAppointmentTbl> appointmentList = getAppointments(firstSyncTime, netmdpassPhrase.getId(), netmdpassPhrase
+						.getNetmdBranchTbl().getId(), currentSyncTime);
+				
+				for (PatientAppointmentTbl  appointmnets : appointmentList) {
+					retrieveAppointments.add(new AppointmentDTO(appointmnets));
+				}
+				response.setRetrieveAppointments(retrieveAppointments);
+			} // End of else if loop
 		}
+		
 		netmdpassPhrase.setMacId(header.getMacId());
 		update(netmdpassPhrase);
 
@@ -667,7 +736,6 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		}
 
 		// setting whether it's primary or not
-
 		if (netmdpassPhrase.isPrimaryDevice()) {
 			response.setPrimary(true);
 		} else {
@@ -730,19 +798,6 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		response.setUser(userList);
 		response.setSuccess(true);
 		return response;
-	}
-
-	/**
-	 * To retreive users in netmd branch by giving branchId
-	 * 
-	 * @param netMdBranchId
-	 * @return NetmdUserTbl
-	 */
-	private List<NetmdUserTbl> getNetMdUsersByBranchId(int netMdBranchId) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_NETMD_USRS_BY_NETMD_BRANCH);
-		query.setParameter("param1", netMdBranchId);
-		return (List<NetmdUserTbl>) executeQuery(NetmdUserTbl.class, query);
 	}
 
 	/**
@@ -1023,10 +1078,6 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			String passPhrase, int netmdBranchId, Date currentSyncTime) {
 		RetrievalUserResponseDTO response = new RetrievalUserResponseDTO();
 		List<NetMdUserDetail> retrieveUsers = new ArrayList<NetMdUserDetail>();
-		// List<NetMdUserDetail> retrieveUpdatedUsers = new
-		// ArrayList<NetMdUserDetail>();
-		// List<NetMdUserDetail> retrieveDeletedUsers = new
-		// ArrayList<NetMdUserDetail>();
 		Date lastSyncTime = null;
 		DateFormat df = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
@@ -1055,24 +1106,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			retrieveUsers.add(new NetMdUserDetail(user));
 		}
 
-		// /* Getting updated users */
-		// List<NetmdUserTbl> updatedUsersList = getUpdatedUsers(lastSyncTime,
-		// netmdPassphraseId, netmdBranchId, currentSyncTime);
-		// for (NetmdUserTbl updatedUser : updatedUsersList) {
-		// retrieveUpdatedUsers.add(new NetMdUserDetail(updatedUser));
-		// }
-		//
-		// /* Getting deleted users */
-		// List<NetmdUserTbl> deletedUsersList = getDeletedUsers(lastSyncTime,
-		// netmdPassphraseId, netmdBranchId, currentSyncTime);
-		// for (NetmdUserTbl deletedUsers : deletedUsersList) {
-		// retrieveDeletedUsers.add(new NetMdUserDetail(deletedUsers));
-		//
-		// }
-
 		response.setRetrieveUsersList(retrieveUsers);
-		// response.setRetrieveUpdatedUsers(retrieveUpdatedUsers);
-		// response.setRetrieveDeletedUsers(retrieveDeletedUsers);
 		response.setSuccess(true);
 		return response;
 	}
@@ -1269,26 +1303,6 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		return executeUniqueQuery(NetmdPassphraseTbl.class, query);
 	}
 
-	// /**
-	// * Method for retrieving all deleted users after last sync time
-	// *
-	// * @param lastSyncTime
-	// * @param netmdPassphraseId
-	// * @param netmdBranchId
-	// * @return NetmdUserTbl
-	// */
-	// private List<NetmdUserTbl> getDeletedUsers(Date lastSyncTime,
-	// int netmdPassphraseId, int netmdBranchId, Date currentSyncTime) {
-	// javax.persistence.Query query = em
-	// .createQuery(Query.GET_DELETED_NETMD_USERS);
-	// query.setParameter("param1", lastSyncTime);
-	// query.setParameter("param2", netmdPassphraseId);
-	// query.setParameter("param3", netmdBranchId);
-	// query.setParameter("param4", currentSyncTime);
-	// return executeQuery(NetmdUserTbl.class, query);
-	//
-	// }
-
 	/**
 	 * Method for retrieving all created updated and deleted users after last
 	 * sync time
@@ -1309,26 +1323,6 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		return executeQuery(NetmdUserTbl.class, query);
 
 	}
-
-	// /**
-	// * Method for retrieving all updated users after last sync time
-	// *
-	// * @param lastSyncTime
-	// * @param netmdPassphraseId
-	// * @param netmdBranchId
-	// * @return NetmdUserTbl
-	// */
-	// private List<NetmdUserTbl> getUpdatedUsers(Date lastSyncTime,
-	// int netmdPassphraseId, int netmdBranchId, Date currentSyncTime) {
-	// javax.persistence.Query query = em
-	// .createQuery(Query.GET_UPDATED_NETMD_USERS);
-	// query.setParameter("param1", lastSyncTime);
-	// query.setParameter("param2", netmdPassphraseId);
-	// query.setParameter("param3", netmdBranchId);
-	// query.setParameter("param4", currentSyncTime);
-	// return executeQuery(NetmdUserTbl.class, query);
-	//
-	// }
 
 	/**
 	 * 
@@ -1583,6 +1577,94 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		return executeQuery(NetmdBranchTbl.class, query);
 	}
 
+	/**
+	 * @param firstSyncTime
+	 * @param passPhraseId
+	 * @param netMdBranchId
+	 * @param currentSyncTime
+	 * @return
+	 */
+	private List<PatientTbl> getPatients(Date firstSyncTime, int passPhraseId,
+			int netMdBranchId, Date currentSyncTime) {
+		javax.persistence.Query query = em
+				.createQuery(Query.RETRIEVE_PATIENTS_FOR_PRIMARY);
+		query.setParameter("param1", firstSyncTime);
+		query.setParameter("param2", passPhraseId);
+		query.setParameter("param3", netMdBranchId);
+		query.setParameter("param4", currentSyncTime);
+		return executeQuery(PatientTbl.class, query);
+	}
+
+	/**
+	 * @param firstSyncTime
+	 * @param passPhraseId
+	 * @param id
+	 * @param currentSyncTime
+	 * @return
+	 */
+	private List<DoctorTbl> getDoctors(Date firstSyncTime, int passPhraseId,
+			int netmdBranchId, Date currentSyncTime) {
+
+		javax.persistence.Query query = em
+				.createQuery(Query.RETRIEVE_DOCTORS_FOR_PRIMARY);
+		query.setParameter("param1", firstSyncTime);
+		query.setParameter("param2", passPhraseId);
+		query.setParameter("param3", netmdBranchId);
+		query.setParameter("param4", currentSyncTime);
+		return executeQuery(DoctorTbl.class, query);
+	}
+
+	/**
+	 * To retreive users in netmd branch by giving branchId
+	 * 
+	 * @param netMdBranchId
+	 * @return NetmdUserTbl
+	 */
+	private List<NetmdUserTbl> getNetMdUsersByBranchId(int netMdBranchId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_USRS_BY_NETMD_BRANCH);
+		query.setParameter("param1", netMdBranchId);
+		return (List<NetmdUserTbl>) executeQuery(NetmdUserTbl.class, query);
+	}
+
+
+	/**
+	 * @param firstSyncTime
+	 * @param id
+	 * @param id2
+	 * @param currentSyncTime
+	 * @return
+	 */
+	private List<PatientAppointmentTbl> getAppointments(Date firstSyncTime,
+			int netmdPassphraseId, int netmdBranchId, Date currentSyncTime) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_APPOINTMENTS);
+		query.setParameter("param1",firstSyncTime);
+		query.setParameter("param2",netmdPassphraseId);
+		query.setParameter("param3",netmdBranchId);
+		query.setParameter("param4",currentSyncTime);
+		return executeQuery(PatientAppointmentTbl.class, query);
+	}
+
+	/**
+	 * @param firstSyncTime
+	 * @param id
+	 * @param id2
+	 * @param currentSyncTime
+	 * @return
+	 */
+	private List<DoctorScheduleTbl> getSchedules(Date firstSyncTime,
+			int netmdPassphraseId, int netmdBranchId, Date currentSyncTime) {
+		javax.persistence.Query query = em
+				.createQuery(Query.RETRIEVE_SCHEDULES_FOR_PRIMARY);
+		query.setParameter("param1", firstSyncTime);
+		query.setParameter("param2", netmdPassphraseId);
+		query.setParameter("param3", netmdBranchId);
+		query.setParameter("param4", currentSyncTime);
+		return executeQuery(DoctorScheduleTbl.class, query);
+	}
+
+	
 	/**
 	 * @return the em
 	 */
