@@ -1,5 +1,5 @@
 /**
- * 
+ * AppointmentDetailsDTO.java
  */
 package com.nv.youNeverWait.rs.dto;
 
@@ -49,7 +49,7 @@ public class AppointmentDetailsDTO {
 		this.scheduleId = patientAppointmentTblObj.getDoctorScheduleTbl().getId();
 		this.startDate = sdf.format(patientAppointmentTblObj.getDate());
 		this.startTime = sdf2.format(patientAppointmentTblObj.getStartingTime());
-		this.patientName = patientAppointmentTblObj.getPatientTbl().getFirstName();
+		this.patientName = patientAppointmentTblObj.getPatientTbl().getFirstName()+" "+patientAppointmentTblObj.getPatientTbl().getLastName();
 	}
 	public int getGlobalId() {
 		return globalId;

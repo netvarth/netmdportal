@@ -1,42 +1,33 @@
 /**
- * 
+ * PatientServiceTest.java
  */
 package com.nv.youNeverWait.user.bl.test;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
 import com.nv.youNeverWait.rs.dto.Appointment;
-import com.nv.youNeverWait.rs.dto.AppointmentDTO;
 import com.nv.youNeverWait.rs.dto.AppointmentDetailsDTO;
+import com.nv.youNeverWait.rs.dto.AppointmentsDTO;
 import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
-import com.nv.youNeverWait.rs.dto.NetMdBranchDetail;
-import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.PastAppointmentListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PatientDTO;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientOrderDTO;
-import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
-import com.nv.youNeverWait.rs.dto.ViewScheduleListDTO;
-import com.nv.youNeverWait.user.bl.service.DoctorService;
-import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.service.PatientService;
 
 /**
@@ -84,7 +75,7 @@ public class PatientServiceTest {
 		PatientService service = (PatientService) applicationContext
 				.getBean("patient.service");
 		try {
-			service.deleteAppointment(2);
+			service.deleteAppointmentFromPortal(2);
 		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
@@ -98,7 +89,7 @@ public class PatientServiceTest {
 		PatientService service = (PatientService) applicationContext
 				.getBean("patient.service");
 		try {
-			service.deleteAppointment(3);
+			service.deleteAppointmentFromPortal(3);
 		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
@@ -247,12 +238,12 @@ public class PatientServiceTest {
 		Appointment appointment = new Appointment();
 		AppointmentDetailsDTO details = new AppointmentDetailsDTO();
 		HeaderDTO header = new HeaderDTO();
-		details.setScheduleId(53);
-		details.setDoctorId(27);
-		details.setPatientId(61);
-		details.setPatientName("jayaram");
-		details.setStartDate("2013-05-07");
-		details.setStartTime("10:00 am");
+		details.setScheduleId(166);
+		details.setDoctorId(29);
+		details.setPatientId(5);
+		details.setPatientName("asha");
+		details.setStartDate("2013-10-11");
+		details.setStartTime("11:12 am");
 		appointment.setAppointmentDetails(details);		
 		header.setNetMdId(3);
 		header.setNetMdBranchId(5);
@@ -260,7 +251,7 @@ public class PatientServiceTest {
 		header.setMacId("00-80-48-6E-E1-E2");
 		appointment.setHeader(header);
 		try {
-			service.createAppointment(appointment);
+			service.createAppointmentFromPortal(appointment);
 		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
@@ -655,4 +646,32 @@ public class PatientServiceTest {
 			System.out.println(e.getParamList());
 		}
 	}
+	@Test
+	public void filterpatientPastAppointments() {
+		PatientService service = (PatientService) applicationContext
+				.getBean("patient.service");
+		try {
+			FilterDTO filter = new FilterDTO();
+			ExpressionDTO exp = new ExpressionDTO();
+			exp.setName("patientId");
+			exp.setOperator("eq");
+			exp.setValue("5");
+			List<ExpressionDTO> exps = new ArrayList<ExpressionDTO>();
+			exps.add(exp);
+			filter.setExp(exps);
+			filter.setCount(10);
+			filter.setFrom(0);
+			filter.setAsc(true);
+			PastAppointmentListResponseDTO response = service.getPastAppointments(filter);
+			for (AppointmentsDTO b : response.getPastAppointments()) {
+				System.out.println(b.getDoctorFirstName());
+			}
+		} catch (ServiceException e) {
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	
 }

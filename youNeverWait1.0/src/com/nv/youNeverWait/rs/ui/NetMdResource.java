@@ -59,6 +59,11 @@ public class NetMdResource {
 		return "netMdIndex";
 	}
 	
+	/**
+	 * To show login page for netMd user/owner
+	 * 
+	 * @return netMdLoginPage.html
+	 */
 	@RequestMapping(value = "mForm", method = RequestMethod.GET)
 	public String mForm() {
 		return "netMdLoginPage";

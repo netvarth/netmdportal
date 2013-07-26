@@ -56,11 +56,21 @@ public class PatientResource {
 	private PatientService service;
 	private LogService logService;
 
+	/**
+	 * To show login page for patient
+	 * 
+	 * @return patientLogin.html
+	 */
 	@RequestMapping(value = "pForm", method = RequestMethod.GET)
 	public String pForm() {
 		return "patientLogin";
 	}
 	
+	/**
+	 * To show patient index page
+	 * 
+	 * @return patientindex.html
+	 */
 	@RequestMapping(value = "startUp", method = RequestMethod.GET)
 	public String check() {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
@@ -199,7 +209,6 @@ public class PatientResource {
 		PatientListResponseDTO response = new PatientListResponseDTO();
 		try {
 			response = service.patientListOnLogin(patient.getEmail());
-			System.out.println("--------->"+response.getPatientList().size());
 			
 		} catch (ServiceException e) {
 
@@ -284,18 +293,18 @@ public class PatientResource {
 	}
 	
 	/**
-	 * create appointment
+	 * create appointment from NetMd
 	 * 
 	 * @param appointment
 	 * @return AppointmentResponse
 	 */
-	@RequestMapping(value = "createAppointment", method = RequestMethod.POST)
+	@RequestMapping(value = "createAppointmentFromNetMd", method = RequestMethod.POST)
 	@ResponseBody
-	private AppointmentResponse createAppointment(
+	public AppointmentResponse createAppointmentFromNetMd(
 			@RequestBody Appointment appointment) {
 		AppointmentResponse response = new AppointmentResponse();
 		try {
-			response = service.createAppointment(appointment);
+			response = service.createAppointmentFromNetMd(appointment);
 		} catch (ServiceException e) {
 
 			List<Parameter> parameters = e.getParamList();
@@ -320,19 +329,58 @@ public class PatientResource {
 		return response;
 
 	}
+	
 	/**
-	 * update appointment
+	 * Create appointment from Portal
 	 * 
 	 * @param appointment
 	 * @return AppointmentResponse
 	 */
-	@RequestMapping(value = "updateAppointment", method = RequestMethod.POST)
+	@RequestMapping(value = "createAppointmentFromPortal", method = RequestMethod.POST)
 	@ResponseBody
-	private AppointmentResponse updateAppointment(
+	public AppointmentResponse createAppointmentFromPortal(
 			@RequestBody Appointment appointment) {
 		AppointmentResponse response = new AppointmentResponse();
 		try {
-			response = service.updateAppointment(appointment);
+			response = service.createAppointmentFromPortal(appointment);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		User user = (User) request.getSession().getAttribute("user");
+		if (user != null) {
+			logService.saveUserDetails(request.getRemoteAddr(), user.getName(),
+					user.getUserType(), user.getLoginTime(), null,
+					ApplicationNameEnum.Patient.getDisplayName(),
+					Constants.CREATE_APPOINTMENT);
+		}
+		return response;
+
+	}
+	
+	/**
+	 * update appointment from Netmd
+	 * 
+	 * @param appointment
+	 * @return AppointmentResponse
+	 */
+	@RequestMapping(value = "updateAppointmentFromNetMd", method = RequestMethod.POST)
+	@ResponseBody
+	public AppointmentResponse updateAppointmentFromNetMd(
+			@RequestBody Appointment appointment) {
+		AppointmentResponse response = new AppointmentResponse();
+		try {
+			response = service.updateAppointmentFromNetMd(appointment);
 		} catch (ServiceException e) {
 
 			List<Parameter> parameters = e.getParamList();
@@ -359,6 +407,44 @@ public class PatientResource {
 
 	}
 
+	/**
+	 * update appointment from portal
+	 * 
+	 * @param appointment
+	 * @return AppointmentResponse
+	 */
+	@RequestMapping(value = "updateAppointmentFromPortal", method = RequestMethod.POST)
+	@ResponseBody
+	public AppointmentResponse updateAppointmentFromPortal(
+			@RequestBody Appointment appointment) {
+		AppointmentResponse response = new AppointmentResponse();
+		try {
+			response = service.updateAppointmentFromPortal(appointment);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+
+			return response;
+		}
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		User user = (User) request.getSession().getAttribute("user");
+		if (user != null) {
+			logService.saveUserDetails(request.getRemoteAddr(), user.getName(),
+					user.getUserType(), user.getLoginTime(), null,
+					ApplicationNameEnum.Patient.getDisplayName(),
+					Constants.UPDATE_APPOINTMENT);
+		}
+		return response;
+
+	}
 	/**
 	 * list of appointments for a patient
 	 * 
@@ -438,12 +524,12 @@ public class PatientResource {
 	 * @param id
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "deleteAppointmentFromNetmd/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	private AppointmentResponse deleteAppointment(@PathVariable int id) {
+	public AppointmentResponse deleteAppointmentFromNetmd(@PathVariable int id) {
 		AppointmentResponse response = new AppointmentResponse();
 		try {
-			response = service.deleteAppointment(id);
+			response = service.deleteAppointmentFromNetmd(id);
 		} catch (ServiceException e) {
 
 			List<Parameter> parameters = e.getParamList();
@@ -470,6 +556,45 @@ public class PatientResource {
 
 	}
 
+	/**
+	 * delete appointment from portal
+	 * 
+	 * @param id
+	 * @return AppointmentResponse
+	 */
+	@RequestMapping(value = "deleteAppointmentFromPortal/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public AppointmentResponse deleteAppointmentFromPortal(@PathVariable int id) {
+		AppointmentResponse response = new AppointmentResponse();
+		try {
+			response = service.deleteAppointmentFromPortal(id);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+
+			return response;
+		}
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		User user = (User) request.getSession().getAttribute("user");
+		if (user != null) {
+			logService.saveUserDetails(request.getRemoteAddr(), user.getName(),
+					user.getUserType(), user.getLoginTime(), null,
+					ApplicationNameEnum.Patient.getDisplayName(),
+					Constants.DELETE_APPOINTMENT);
+		}
+		return response;
+
+	}
+
+	
 	/**
 	 * view details of a patient
 	 * 
@@ -652,6 +777,44 @@ public class PatientResource {
 		return response;
 	}
 	/**
+	 * To retrieve a list of past appointments which satisfy all filter conditions
+	 * 
+	 * @param filter
+	 * @return ResultListResponseDTO
+	 */
+	@RequestMapping(value = "getPastAppointments", method = RequestMethod.POST)
+	@ResponseBody
+	public PastAppointmentListResponseDTO getPastAppointments(
+			@RequestBody FilterDTO filter) {
+		PastAppointmentListResponseDTO response = new PastAppointmentListResponseDTO();
+		try {
+			response = service.getPastAppointments(filter);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		User userObj = (User) request.getSession().getAttribute("user");
+		if (userObj != null) {
+			logService.saveUserDetails(request.getRemoteAddr(),
+					userObj.getName(), userObj.getUserType(),
+					userObj.getLoginTime(), null,
+					ApplicationNameEnum.NetMd.getDisplayName(),
+					Constants.PAST_APPOINTMENTS);
+		}
+		return response;
+	}
+	
+	/**
 	 * To retrieve a list of results which satisfy all filter conditions
 	 * 
 	 * @param filter
@@ -684,11 +847,10 @@ public class PatientResource {
 					userObj.getName(), userObj.getUserType(),
 					userObj.getLoginTime(), null,
 					ApplicationNameEnum.NetMd.getDisplayName(),
-					Constants.BRANCH_LIST);
+					Constants.RESULT_LIST);
 		}
 		return response;
 	}
-	
 	/**
 	 * To retrieve a  result corresponding to the orderId and patient given
 	 * 

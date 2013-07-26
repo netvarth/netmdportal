@@ -9,9 +9,7 @@ package com.nv.youNeverWait.rs.ui;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
@@ -29,15 +26,12 @@ import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabBranchRetrievalDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabRetrievalDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
@@ -45,16 +39,9 @@ import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
-import com.nv.youNeverWait.rs.dto.ResultRetrievalDTO;
-import com.nv.youNeverWait.rs.dto.ResultRetrievalResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrieveLabListResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
-import com.nv.youNeverWait.rs.dto.UserRetrievalDTO;
 import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.LogService;
@@ -65,6 +52,79 @@ public class LabResource {
 	private LabService labService;
 	private LogService logService;
 
+	/**
+	 * Shows NetLims Detail page
+	 * @return aboutNetLims html
+	 */
+	@RequestMapping(value = "aboutNetLims", method = RequestMethod.GET)
+	public String aboutNetLims() {
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		logService
+				.saveUserDetails(request.getRemoteAddr(), null,
+						LogUserTypeEnum.Nil.getDisplayName(), null, null,
+						ApplicationNameEnum.NetLims.getDisplayName(),
+						Constants.ABOUT_NETLIMS);
+
+		return "aboutNetLims";
+	}
+
+	/**
+	 * Shows NetLims Contact Details
+	 * @return contactUs html
+	 */
+	@RequestMapping(value = "contactUs", method = RequestMethod.GET)
+	public String contactUs() {
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		logService
+				.saveUserDetails(request.getRemoteAddr(), null,
+						LogUserTypeEnum.Nil.getDisplayName(), null, null,
+						ApplicationNameEnum.NetLims.getDisplayName(),
+						Constants.CONTACT_US);
+
+		return "contactUs";
+	}
+	
+	/**
+	 * Shows Pricing Details
+	 * @return pricing html
+	 */
+	@RequestMapping(value = "pricing", method = RequestMethod.GET)
+	public String pricing() {
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		logService
+				.saveUserDetails(request.getRemoteAddr(), null,
+						LogUserTypeEnum.Nil.getDisplayName(), null, null,
+						ApplicationNameEnum.NetLims.getDisplayName(),
+						Constants.PRICING);
+
+		return "pricing";
+	}
+	
+	/**
+	 * Shows Privacy and policy details
+	 * @return pricing html
+	 */
+	@RequestMapping(value = "privacyPolicy", method = RequestMethod.GET)
+	public String privacyPolicy() {
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		logService
+				.saveUserDetails(request.getRemoteAddr(), null,
+						LogUserTypeEnum.Nil.getDisplayName(), null, null,
+						ApplicationNameEnum.NetLims.getDisplayName(),
+						Constants.POLICY);
+
+		return "privacyPolicy";
+	}
+	
+	
 	/**
 	 * Method performed for session logout
 	 * 
@@ -134,10 +194,11 @@ public class LabResource {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
-		logService.saveUserDetails(request.getRemoteAddr(), null,
-				LogUserTypeEnum.Nil.getDisplayName(), null, null,
-				ApplicationNameEnum.NetLims.getDisplayName(),
-				Constants.STARTUP);
+		logService
+				.saveUserDetails(request.getRemoteAddr(), null,
+						LogUserTypeEnum.Nil.getDisplayName(), null, null,
+						ApplicationNameEnum.NetLims.getDisplayName(),
+						Constants.STARTUP);
 
 		return "netlimsIndex";
 	}
@@ -329,10 +390,10 @@ public class LabResource {
 	@RequestMapping(value = "viewBranchOrders/{globalId}", method = RequestMethod.GET)
 	@ResponseBody
 	public BranchOrdersResponseDTO viewBranchOrders(@PathVariable int globalId) {
-		BranchOrdersResponseDTO response= new BranchOrdersResponseDTO();
-		try{
-			response=labService.viewBranchOrders(globalId);
-		}catch (ServiceException e) {
+		BranchOrdersResponseDTO response = new BranchOrdersResponseDTO();
+		try {
+			response = labService.viewBranchOrders(globalId);
+		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();
 			error.setErrCode(e.getError().getErrCode());
@@ -356,7 +417,6 @@ public class LabResource {
 		return response;
 	}
 
-	
 	/**
 	 * Method which performs password changing
 	 * 
@@ -762,22 +822,22 @@ public class LabResource {
 		return response;
 	}
 
-	@RequestMapping(value = "orderList", method = RequestMethod.POST)
-	@ResponseBody
 	/**
 	 * List all recorde of Report Tbl for given From and To date
 	 * @param report
 	 * @return ReportResponseDTO
 	 */
-	public BranchOrdersResponseDTO orderList(@RequestBody BranchOrderDTO orderDTO) {
+	@RequestMapping(value = "orderList", method = RequestMethod.POST)
+	@ResponseBody
+	public BranchOrdersResponseDTO orderList(
+			@RequestBody BranchOrderDTO orderDTO) {
 
-		BranchOrdersResponseDTO response=	new BranchOrdersResponseDTO();	
-		try{
-			response=labService.orderList(orderDTO);	
-		}
-		catch(ServiceException e){
-			List<Parameter> parameters =e.getParamList();
-			ErrorDTO error=new ErrorDTO();
+		BranchOrdersResponseDTO response = new BranchOrdersResponseDTO();
+		try {
+			response = labService.orderList(orderDTO);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
 			error.setErrCode(e.getError().getErrCode());
 			error.setParams(parameters);
 			error.setDisplayErrMsg(e.isDisplayErrMsg());
@@ -786,6 +846,7 @@ public class LabResource {
 		}
 		return response;
 	}
+
 	/**
 	 * @return the labService
 	 */

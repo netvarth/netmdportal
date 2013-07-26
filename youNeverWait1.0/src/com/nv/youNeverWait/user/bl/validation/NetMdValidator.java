@@ -16,7 +16,6 @@ import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
-import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.NetMdDTO;
@@ -364,6 +363,10 @@ public class NetMdValidator extends FilterValidator {
 		}
 		
 	}
+	/**
+	 * Validate Netmd id
+	 * @param netMdId
+	 */
 	public void validateNetmdId(int netMdId) {
 		if(netMdId<=0){
 			ServiceException se = new ServiceException(

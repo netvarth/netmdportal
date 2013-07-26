@@ -18,10 +18,10 @@ PatientResultVw.prototype.viewresult= function(url,parent) {
 	$j(parent).html(new resultpatient(tabdata).result); */
 	
 	
-	var pgNetLimsList;
+	var pgNetlimsList;
 	var exp=[]; //For storing the filter expressions
 	var pgTableName = "#labTable"; // Table showing netlims list
-	pgTableContainer = "#labTableCont"; // Parent container of the netlims list table
+	var pgTableContainer = "#labResultTableCont"; // Parent container of the netlims list table
 	var maxRecords=0; // Total number of records
 	var maxPages = 0; // Total number of pages
 	var interval = 8;// Interval between pages

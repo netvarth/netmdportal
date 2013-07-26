@@ -1,5 +1,5 @@
 /**
- * 
+ * LabUserDetail.java
  */
 package com.nv.youNeverWait.rs.dto;
 

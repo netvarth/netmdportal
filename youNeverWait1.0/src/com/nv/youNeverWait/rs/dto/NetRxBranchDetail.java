@@ -12,7 +12,7 @@ import java.util.List;
 import com.nv.youNeverWait.pl.entity.NetrxBranchTbl;
 
 /**
- * @author netvarth
+ * @author Luciya
  *
  */
 public class NetRxBranchDetail {

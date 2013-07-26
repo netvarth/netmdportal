@@ -1,12 +1,12 @@
 /**
- * 
+ * PatientInfoDetail.java
  */
 package com.nv.youNeverWait.rs.dto;
 
 import java.util.List;
 
 /**
- * @author netvarth
+ * @author Asha Chandran
  *
  */
 public class PatientInfoDetail {

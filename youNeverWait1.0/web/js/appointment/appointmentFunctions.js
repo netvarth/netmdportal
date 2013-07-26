@@ -33,6 +33,7 @@
 							$j(this).nextAll('td').children('div').text("Take Your Appointment");
 							$j(this).nextAll('td:first').children('div').attr('style','font-size:150%;margin: 10px 0px 0px 300px;');
 							$j(this).nextAll('td:first').children('div').attr('name',nameid);
+							$j(this).nextAll('td:first').attr('style','background:#52F3FF;');
 							$j(this).parents('.fc-agenda-slots tr').addClass('appointment');
 							//$j(this).nextAll('td:first').children('div').attr('value',srisid);
 							conversion=addTime(conversion,end,frmat);
@@ -43,11 +44,7 @@
 					
 			});
 			 			
-			/* $j('.fc-agenda-slots tbody tr').each(function() {     
-						//$j(this).not('.appointment').hide();
-						$j(this).not('.appointment').css('visibility', 'hidden');
-					
-					}); */
+			
 					
 			$j(response.appointment).each(function(index,appinterval) {
 							var apptime=appinterval.startTime;
@@ -59,22 +56,21 @@
 							var appopatientid=appinterval.patientId;
 							
 						$j('.fc-agenda-slots tr th').each(function() {
-						var timeslotapp=$j(this).text();
-						
+							var timeslotapp=$j(this).text();
 						
 							if(timeslotapp==realapptime&&date.trim()==currentdate){
 								if(appopatientid==Idpatient){
 									$j(this).nextAll('td:first').children('div').text("Your Appointment");
 									$j(this).nextAll('td:first').attr('value',appointId);
+									$j(this).nextAll('td:first').attr('style','background:#ADDFFF;');
 									}
 								else{
 								    $j(this).nextAll('td:first').children('div').text("Reserved");
 									}
 								$j(this).nextAll('td:first').children('div').attr('style','font-size:150%;margin: 10px 0px 0px 300px;');
-								
 								}
-							});
-							});		
+						});
+			});		
 			
 	});
 	
@@ -85,6 +81,8 @@
 		//$j('.fc-agenda-slots').show();
 		$j('.fc-agenda-slots tr th').nextAll('td').children('div').text("");
 		$j('.fc-agenda-slots tr th').nextAll('td').children('div').removeAttr('style');
+		$j('.fc-agenda-slots tr th').nextAll('td').removeAttr('style');
+		$j('.fc-agenda-slots tr th').nextAll('td').removeAttr('selected');
 		$j('.fc-agenda-slots tr th').parents('.fc-agenda-slots tr').removeClass('appointment');
 		$j('.fc-agenda-slots tr th').parents('.fc-agenda-slots tr').css('visibility', 'visible');
 		//$j('.fc-agenda-slots tr th').parents('.fc-agenda-slots tr').show();
@@ -97,6 +95,8 @@
 		$j('#AppointmentPTBContainer #btn_view_ptb_id').show();
 		$j('.fc-agenda-slots tr th').nextAll('td').children('div').text("");
 		$j('.fc-agenda-slots tr th').nextAll('td').children('div').removeAttr('style');
+		$j('.fc-agenda-slots tr th').nextAll('td').removeAttr('style');
+		$j('.fc-agenda-slots tr th').nextAll('td').removeAttr('selected');
 		$j('.fc-agenda-slots tr th').parents('.fc-agenda-slots tr').removeClass('appointment');
 		$j('.fc-agenda-slots tr th').parents('.fc-agenda-slots tr').css('visibility', 'visible');
 		//$j('.fc-agenda-slots tr th').parents('.fc-agenda-slots tr').show();
@@ -109,6 +109,8 @@
 		$j('#AppointmentPTBContainer #btn_view_ptb_id').show();
 		$j('.fc-agenda-slots tr th').nextAll('td').children('div').text("");
 		$j('.fc-agenda-slots tr th').nextAll('td').children('div').removeAttr('style');
+		$j('.fc-agenda-slots tr th').nextAll('td').removeAttr('style');
+		$j('.fc-agenda-slots tr th').nextAll('td').removeAttr('selected');
 		$j('.fc-agenda-slots tr th').parents('.fc-agenda-slots tr').removeClass('appointment');
 		$j('.fc-agenda-slots tr th').parents('.fc-agenda-slots tr').css('visibility', 'visible');
 		//$j('.fc-agenda-slots tr th').parents('.fc-agenda-slots tr').show();
@@ -123,10 +125,14 @@
 	$j('#AppointmentPTBContainer #btn_view_ptb_id').hide();
 	});	
 	
-	$j('.fc-agenda-slots tbody tr td ').die('click').live("click",function() {	
+	$j('.fc-agenda-slots tbody tr td').die('click').live("click",function() {	
+		
 		var lengthDiv=$j(this).children('div').text().length; 
+		//alert("length"+lengthDiv);
 		timeslot1=$j(this).closest('tr').children('th').text();
+		//alert("time"+timeslot1);
 		scheduleId=$j(this).children('div').attr('name');
+		//alert("schedulreid"+scheduleId);
 		var slotdataText=$j(this).text();
 		if(slotdataText=="Take Your Appointment"){
 		//if(lengthDiv<2){
@@ -139,20 +145,51 @@
 			$j("#newpatintAppointmentForm #Patientappointment").text(date);
 			$j("#newpatintAppointmentForm #Patientappointmenttime").text(timeslot1);
 			}
-			else{
+		if(slotdataText=="Your Appointment"){
 		  	if($j(this).attr('selected')) {
 				$j(this).removeAttr('selected');
 				$j(this).removeAttr('style');
+				$j(this).attr('style','background:#ADDFFF;');
 			} 
 			else {	
 			$j(this).attr('selected','selected');
 			$j(this).attr('style','background:#DCDCDC;');
+			//$j('#AppointmentPTBContainer #btn_view_ptb_id').trigger('click'); 
 			}
 				removeErrors();
 		}
 			
 				
 	 });
+	 
+	 $j('.fc-agenda-slots tbody tr th').die('click').live("click",function() {	
+		
+		var lengthDiv=$j(this).next('td').children('div').text().length; 
+		//alert("length"+lengthDiv);
+		timeslot1=$j(this).closest('tr').children('th').text();
+		//alert("time"+timeslot1);
+		scheduleId=$j(this).next('td').children('div').attr('name');
+		//alert("schedulreid"+scheduleId);
+		var slotdataText=$j(this).next('td').text();
+		//alert(slotdataText);
+		
+		if(slotdataText=="Your Appointment"){
+		  	if($j(this).next('td').attr('selected')) {
+				$j(this).next('td').removeAttr('selected');
+				$j(this).next('td').removeAttr('style');
+				$j(this).next('td').attr('style','background:#ADDFFF;');
+			} 
+			else {	
+			$j(this).next('td').attr('selected','selected');
+			$j(this).next('td').attr('style','background:#DCDCDC;');
+			$j('#AppointmentPTBContainer #btn_view_ptb_id').trigger('click'); 
+			}
+				removeErrors();
+		} 
+			
+				
+	 });
+	 
 	 
 	 $j('#newpatintAppointmentForm #btnDone').die('click').live("click",function() {	
 		//alert("ok");
@@ -162,22 +199,22 @@
 			var appointmentJson='{"header"'+":"+headerdetal+",";
 			appointmentJson+='"appointmentDetails"'+":"+patientapp+"}";
 			//alert(appointmentJson);
-			var appointmentResponse=postdataToServer("/youNeverWait/ws/ui/patient/createAppointment",appointmentJson);	
+			var appointmentResponse=postdataToServer("/youNeverWait/ws/ui/patient/createAppointmentFromPortal",appointmentJson);	
 			//alert(JSON.stringify(appointmentResponse));		
 	    if(appointmentResponse.success==true){
 			$j('.fc-agenda-slots tr th').each(function() {
-			var timeslotapp=$j(this).text();
-			
-			var appId=appointmentResponse.globalId;
-			
-			if(timeslotapp==timeslot1){
-				$j(this).nextAll('td:first').children('div').text(patient);
-				$j(this).nextAll('td:first').children('div').attr('style','font-size:150%;margin: 10px 0px 0px 300px;');
-				$j(this).nextAll('td:first').attr('value',appId);
-				}
+				var timeslotapp=$j(this).text();
+				var appId=appointmentResponse.globalId;
+				
+				if(timeslotapp==timeslot1){
+					$j(this).nextAll('td:first').children('div').text(patient);
+					$j(this).nextAll('td:first').children('div').attr('style','font-size:150%;margin: 10px 0px 0px 300px;');
+					$j(this).nextAll('td:first').attr('style','background:#ADDFFF;');
+					$j(this).nextAll('td:first').attr('value',appId);
+					}
 			});
 			$j("#newpatintAppointmentForm").trigger('reveal:close');
-			 }
+		}
 			
 	else {
 			updateTipsNew(getErrorName(appointmentResponse.error),$j('#error'));
@@ -193,22 +230,25 @@
 	 $j('#AppointmentPTBContainer #btn_delete_ptb_id').die('click').live('click',function(){
 		var pgTableName=".fc-agenda-slots";
 		removeErrors();
+	    var textlen=$j('tr td[selected] div').text();
+		if(textlen!=""){
 		var appointmentId = getSelectedappointmentId(pgTableName);
 		//alert(appointmentId);
 		if(appointmentId!="") {
-			var response = getRequestData('/youNeverWait/ws/ui/patient/delete/'+ appointmentId);
+			var response = getRequestData('/youNeverWait/ws/ui/patient/deleteAppointmentFromPortal/'+ appointmentId);
+			//alert(JSON.stringify(response));
 			if(response.success==true){
 				var appid=response.id;
 				//$j(pgTableName).dataTable().fnDeleteRow($j('#'+facilityId).closest('tr')[0]);	
 				showTip("Appointment deleted Successfully");
 				$j('tr td[selected] div').text("Take Your Appointment");
-				$j('tr td[selected]').removeAttr('style');
+				$j('tr td[selected]').attr('style','background:#52F3FF;');
 				$j('tr td').removeAttr('selected');
 				//defaultData=getDefaultData();
 			}	
 			else
 				updateTipsNew(getErrorName(response.error),$j('#errorDivData'),$j('#errorDivHeader'));
-		}
+		}}
 	 
 		});
 		
@@ -216,6 +256,8 @@
 				var obj1=$j(this);	
 				var pgTableName=".fc-agenda-slots";
 				removeErrors();
+				var textlen=$j('tr td[selected] div').text();
+		if(textlen!=""){
 				var appointmentId = getSelectedappointmentId(pgTableName);
 				if(appointmentId!=""){
 				var time=$j('tr td[selected]').closest('tr').children('th').text();
@@ -229,7 +271,7 @@
 				var date1=datesplit[1];
 				var date=$j("#viewpatintAppointmentForm #Startdate").val(date1);
 				filltimeList("#from",date1);
-				}
+				}}
 		});
 		
 		$j('#viewpatintAppointmentForm #btnEdit').die('click').live('click',function(){
@@ -249,7 +291,7 @@
 			var headerdetal=patientAppointment()
 			var appointmentJson='{"header"'+":"+headerdetal+",";
 			appointmentJson+='"appointmentDetails"'+":"+patientapp+"}";
-			var appointmentResponse=postdataToServer("/youNeverWait/ws/ui/patient/updateAppointment",appointmentJson);	
+			var appointmentResponse=postdataToServer("/youNeverWait/ws/ui/patient/updateAppointmentFromPortal",appointmentJson);	
 			//alert(JSON.stringify(appointmentResponse));				
 	    if(appointmentResponse.success==true){
 			$j('.fc-agenda-slots tr th').each(function() {
@@ -260,9 +302,10 @@
 			if(timeslotapp==realTime){
 				$j(this).nextAll('td:first').children('div').text(patient);
 				$j(this).nextAll('td:first').children('div').attr('style','font-size:150%;margin: 10px 0px 0px 300px;');
+				$j(this).nextAll('td:first').attr('style','background:#ADDFFF;');
 				$j(this).nextAll('td:first').attr('value',appId);
-				$j('tr td[selected] div').text("");
-				$j('tr td[selected]').removeAttr('style');
+				$j('tr td[selected] div').text("Take Your Appointment");
+				$j('tr td[selected]').attr('style','background:#52F3FF;');
 				$j('tr td').removeAttr('selected');
 				}
 			});

@@ -337,13 +337,14 @@ public class EmailSender {
 
 	public static void sendEmail(String mailHost, String[] to, String from,
 			String subject, String message) throws MessagingException {
+		String mHost="";
 		if (StringUtil.isBlank(mailHost)) {
-			mailHost = DEFAULT_MAIL_HOST;
+			mHost = DEFAULT_MAIL_HOST;
 		}
 
 		// Set up the connection parameters
 		Properties props = new Properties();
-		props.put(DEF_MAIL_HOST, mailHost);
+		props.put(DEF_MAIL_HOST, mHost);
 
 		Session mailSession = Session.getDefaultInstance(props, null);
 
@@ -430,13 +431,14 @@ public class EmailSender {
 	 */
 	public static void sendEmail(String mailHost, String to, String from,
 			String subject, String message) throws MessagingException {
+		String mHost="";
 		if (StringUtil.isBlank(mailHost)) {
-			mailHost = DEFAULT_MAIL_HOST;
+			mHost = DEFAULT_MAIL_HOST;
 		}
 
 		// Set up the connection parameters
 		Properties props = new Properties();
-		props.put(DEF_MAIL_HOST, mailHost);
+		props.put(DEF_MAIL_HOST, mHost);
 		Session mailSession = Session.getDefaultInstance(props, null);
 
 		// Create the message

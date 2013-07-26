@@ -1,5 +1,9 @@
 /**
- * 
+ * ActionNameEnum.java
+ *
+ * Dec 19, 2012
+ *
+ * @author Luciya Jose
  */
 package com.nv.youNeverWait.pl.entity;
 

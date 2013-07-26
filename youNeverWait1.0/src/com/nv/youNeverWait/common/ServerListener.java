@@ -6,17 +6,13 @@
  * Mar 27, 2013
  */
 package com.nv.youNeverWait.common;
-import java.util.Date;
-import java.util.TimeZone;
-import java.util.Timer;
+
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 
 

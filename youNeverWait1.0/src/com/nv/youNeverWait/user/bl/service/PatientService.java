@@ -1,5 +1,5 @@
 /**
- * 
+ * PatientService.java
  */
 package com.nv.youNeverWait.user.bl.service;
 
@@ -23,7 +23,7 @@ import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalPatientResponseDTO;
-import com.nv.youNeverWait.rs.dto.UserCredentials;
+
 
 
 
@@ -41,15 +41,55 @@ public interface PatientService {
 	public AppointmentListResponseDTO listAppointmentsForPatient(String patientId);
 	public PatientListResponseDTO patientListOnLogin(String patientEmailId);
 	public PastAppointmentListResponseDTO getPastAppointmentList(String patientId);
-	public AppointmentResponse createAppointment(Appointment appointment);
-	public AppointmentResponse deleteAppointment(int id);
+	//public AppointmentResponse createAppointment(Appointment appointment);
+	//public AppointmentResponse deleteAppointment(int id);
 	public ResponseDTO changePassword(PasswordDTO passwords);
 	public ResponseDTO createPassword(CreatePasswordDTO passwords);
-	public AppointmentResponse updateAppointment(Appointment appointment);
+	//public AppointmentResponse updateAppointment(Appointment appointment);
 	public RetrievalPatientResponseDTO retrievePatientsForNetMd(String lastSyncTime, String passPhrase, int netMdBranchId, Date currentSyncTime);
 	public ResponseDTO forgotPassword(LoginDTO login);
 	public ResponseDTO resetPassword(LoginDTO login) ;
 	public ResultListResponseDTO getresultList(FilterDTO filter);
 	public ResultDTO patientTestResult(PatientOrderDTO patient);
+	/**
+	 * @param id
+	 * @return
+	 */
+	public AppointmentResponse deleteAppointmentFromPortal(int id);
+	/**
+	 * @param appointment
+	 * @return
+	 */
+	public AppointmentResponse createAppointmentFromNetMd(
+			Appointment appointment);
+	/**
+	 * @param appointment
+	 * @return
+	 */
+	public AppointmentResponse createAppointmentFromPortal(
+			Appointment appointment);
+	/**
+	 * @param appointment
+	 * @return
+	 */
+	public AppointmentResponse updateAppointmentFromNetMd(
+			Appointment appointment);
+	/**
+	 * @param appointment
+	 * @return
+	 */
+	public AppointmentResponse updateAppointmentFromPortal(
+			Appointment appointment);
+	/**
+	 * @param id
+	 * @return
+	 */
+	public AppointmentResponse deleteAppointmentFromNetmd(int id);
+	/**
+	 * @param filter
+	 * @return
+	 */
+	public PastAppointmentListResponseDTO getPastAppointments(FilterDTO filter);
+	
 	
 	}

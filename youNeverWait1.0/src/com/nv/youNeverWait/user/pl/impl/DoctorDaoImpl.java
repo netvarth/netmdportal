@@ -86,17 +86,17 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 				.getUserName());
 		/* Checking userName and password existing or not */
 		NetmdLoginTbl netmdLogin = getLoginByUserNameAndUserType(
-				decrypedUserName,NetmdUserTypeEnum.Doctor.getDisplayName());
-		
+				decrypedUserName, NetmdUserTypeEnum.Doctor.getDisplayName());
+
 		if (netmdLogin == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidUserName);
 			se.setDisplayErrMsg(true);
 			throw se;
-		} 
+		}
 		netmdLogin.setPassword(newPassword);
-		update(netmdLogin);	
-		
+		update(netmdLogin);
+
 		List<DoctorTbl> doctorList = getDoctorByLoginId(netmdLogin.getId());
 		if (doctorList.isEmpty()) {
 			ServiceException se = new ServiceException(
@@ -110,43 +110,6 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 			doctr.setUpdateDateTime(new Date());
 			update(doctr);
 		}
-		// List<NetmdLoginTbl> netmdLoginList =
-		// getLoginByUserName(decrypedUserName);
-		// if (netmdLoginList.isEmpty()) {
-		// ServiceException se = new ServiceException(
-		// ErrorCodeEnum.InvalidUserName);
-		// se.setDisplayErrMsg(true);
-		// throw se;
-		// }
-		// int count = 0;
-		// for (NetmdLoginTbl netmdLogin : netmdLoginList) {
-		// count++;
-		// if (netmdLogin.getUserType().equals(
-		// NetmdUserTypeEnum.Doctor.getDisplayName())) {
-		// netmdLogin.setPassword(newPassword);
-		// update(netmdLogin);
-		// List<DoctorTbl> doctorList = getDoctorByLoginId(netmdLogin
-		// .getId());
-		// if (doctorList.isEmpty()) {
-		// ServiceException se = new ServiceException(
-		// ErrorCodeEnum.InvalidDoctorLogin);
-		// se.addParam(new Parameter(Constants.ID, Integer
-		// .toString(netmdLogin.getId())));
-		// se.setDisplayErrMsg(true);
-		// throw se;
-		// }
-		// for (DoctorTbl doctr : doctorList) {
-		// doctr.setUpdateDateTime(new Date());
-		// update(doctr);
-		// }
-		// } else if (count == netmdLoginList.size()) {
-		// ServiceException se = new ServiceException(
-		// ErrorCodeEnum.InvalidUserName);
-		// se.setDisplayErrMsg(true);
-		// throw se;
-		// }
-		// }
-
 		response.setSuccess(true);
 		return response;
 	}
@@ -260,7 +223,6 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 				String olddate = df.format(doctorUpdatedTime); // converting
 																// date to
 																// string
-				System.out.println("old Date: " + doctorUpdatedTime);
 				long oldDateInMillis = 0;
 				try {
 					oldDateInMillis = df.parse(olddate).getTime(); // getting
@@ -277,7 +239,6 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 				Date newUpdatedTime;
 				try {
 					newUpdatedTime = df.parse(newDateAdds);
-					System.out.println("new Date: " + newUpdatedTime);
 					newDoctor.setUpdateDateTime(newUpdatedTime);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
@@ -926,10 +887,6 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 			String passPhrase, int netmdBranchId, Date currentSyncTime) {
 		RetrievalDoctorResponseDTO response = new RetrievalDoctorResponseDTO();
 		List<DoctorDetail> retrieveDoctorsList = new ArrayList<DoctorDetail>();
-		// List<DoctorDetail> retrieveUpdatedDoctors = new
-		// ArrayList<DoctorDetail>();
-		// List<DoctorDetail> retrieveDeletedDoctors = new
-		// ArrayList<DoctorDetail>();
 		Date lastSyncTime = null;
 		DateFormat df = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
@@ -959,47 +916,11 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 			retrieveDoctorsList.add(new DoctorDetail(doctor));
 		}
 
-		// /* Getting updated doctors */
-		// List<DoctorTbl> updatedDoctorsList = getUpdatedDoctors(lastSyncTime,
-		// netmdPassphraseId, netmdBranchId,currentSyncTime);
-		// for (DoctorTbl updatedDoctor : updatedDoctorsList) {
-		// retrieveUpdatedDoctors.add(new DoctorDetail(updatedDoctor));
-		// }
-		//
-		// /* Getting deleted doctors */
-		// List<DoctorTbl> deletedDoctorsList = getDeletedDoctors(lastSyncTime,
-		// netmdPassphraseId, netmdBranchId,currentSyncTime);
-		// for (DoctorTbl deletedDoctor : deletedDoctorsList) {
-		// retrieveDeletedDoctors.add(new DoctorDetail(deletedDoctor));
-		// }
-
 		response.setRetrieveDoctorsList(retrieveDoctorsList);
-		// response.setRetrieveUpdatedDoctors(retrieveUpdatedDoctors);
-		// response.setRetrieveDeletedDoctors(retrieveDeletedDoctors);
 		response.setSuccess(true);
 		return response;
 	}
-
-	// /**
-	// * Method for retrieving all deleted doctors after last sync time
-	// *
-	// * @param lastSyncTime
-	// * @param netmdPassphraseId
-	// * @param netmdBranchId
-	// * @return DoctorTbl
-	// */
-	// private List<DoctorTbl> getDeletedDoctors(Date lastSyncTime,
-	// int netmdPassphraseId, int netmdBranchId,Date currentSyncTime) {
-	// javax.persistence.Query query = em
-	// .createQuery(Query.GET_DELETED_DOCTORS);
-	// query.setParameter("param1", lastSyncTime);
-	// query.setParameter("param2", netmdPassphraseId);
-	// query.setParameter("param3", netmdBranchId);
-	// query.setParameter("param4", currentSyncTime);
-	// return executeQuery(DoctorTbl.class, query);
-	//
-	// }
-
+	
 	/**
 	 * Method for retrieving all newly created doctors after last sync time
 	 * 
@@ -1051,26 +972,6 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 		query.setParameter("param1", loginId);
 		return executeQuery(DoctorTbl.class, query);
 	}
-
-	// /**
-	// * Method for retrieving all updated doctors after last sync time
-	// *
-	// * @param lastSyncTime
-	// * @param netmdPassphraseId
-	// * @param netmdBranchId
-	// * @return DoctorTbl
-	// */
-	// private List<DoctorTbl> getUpdatedDoctors(Date lastSyncTime,
-	// int netmdPassphraseId, int netmdBranchId,Date currentSyncTime) {
-	// javax.persistence.Query query = em
-	// .createQuery(Query.GET_UPDATED_DOCTORS);
-	// query.setParameter("param1", lastSyncTime);
-	// query.setParameter("param2", netmdPassphraseId);
-	// query.setParameter("param3", netmdBranchId);
-	// query.setParameter("param4", currentSyncTime);
-	// return executeQuery(DoctorTbl.class, query);
-	//
-	// }
 
 	/**
 	 * Method for getting netmd passphrase id

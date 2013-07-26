@@ -1,7 +1,7 @@
 /**
  * NetRxUserTypeEnum.java
  * 
- * @author Asha chandran
+ * @author Luciya Jose
  * 
  * May 08,2013
  */

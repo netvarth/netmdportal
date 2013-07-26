@@ -1,11 +1,11 @@
+/**
+ * AppointmentsDTO.java
+ */
 package com.nv.youNeverWait.rs.dto;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import com.nv.youNeverWait.common.Constants;
-import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
 
 public class AppointmentsDTO {

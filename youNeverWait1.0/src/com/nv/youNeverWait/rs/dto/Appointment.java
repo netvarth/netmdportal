@@ -1,5 +1,5 @@
 /**
- * 
+ * Appointment
  */
 package com.nv.youNeverWait.rs.dto;
 

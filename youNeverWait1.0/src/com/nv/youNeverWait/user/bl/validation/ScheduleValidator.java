@@ -11,13 +11,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
-import com.nv.youNeverWait.rs.dto.ScheduleDTO;
 import com.nv.youNeverWait.rs.dto.ScheduleDetail;
 import com.nv.youNeverWait.rs.dto.SeriesDTO;
 
@@ -153,19 +151,19 @@ public class ScheduleValidator {
 	public void validateScheduleSeriesDetails(SeriesDTO series) {
 		if (series.getSeriesId() <= 0) {
 			ServiceException se = new ServiceException(
-					ErrorCodeEnum.OccuranceTypeNull);
+					ErrorCodeEnum.InvalidSeriesId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
 		if (series.getOccuranceType() == null
-				|| series.getOccuranceType().equals("")) {
+				&& series.getOccuranceType().equals("")) {
 
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.OccuranceTypeNull);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (series.getRepeat() == null || series.getRepeat().equals("")) {
+		if (series.getRepeat() == null && series.getRepeat().equals("")) {
 
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.RepeatTypeNull);

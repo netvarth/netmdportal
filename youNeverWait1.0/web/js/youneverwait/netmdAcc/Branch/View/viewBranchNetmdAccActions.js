@@ -3,7 +3,7 @@
 		removeErrors();
 		var curBranchId = $j("#netmdAccbranchViewForm #branchid").val();
 		var branchIdforView = getpreviousBranchId(curBranchId,pgBranchList);
-		viewNetmdAccBranchInfo(branchIdforView);
+		viewNetmdAccBranchInfo(branchIdforView,'#passphraseViewTableAcc','#passphrasePrimaryViewTableAcc');
 		//viewbranchInfo(branchIdforView);
 	});
 //down button click action
@@ -11,7 +11,7 @@
 		removeErrors();
 		var curBranchId = $j("#netmdAccbranchViewForm #branchid").val();
 		var branchIdforView = getnextBranchId(curBranchId,pgBranchList);
-		viewNetmdAccBranchInfo(branchIdforView);
+		viewNetmdAccBranchInfo(branchIdforView,'#passphraseViewTableAcc','#passphrasePrimaryViewTableAcc');
 		//viewbranchInfo(branchIdforView);	
 	}); 
 
@@ -56,7 +56,7 @@
 		$j('#GeneralPTBContainer #btn_down_ptb_id ').show();
 		$j('#GeneralPTBContainer #btn_back_ptb_id ').show();
 		var branchid = $j("#netmdAccbranchViewForm #branchid").val();
-		viewNetmdAccBranchInfo(branchid);
+		viewNetmdAccBranchInfo(branchid,'#passphraseViewTableAcc','#passphrasePrimaryViewTableAcc');
 		$j('#viewNetmdAccBranchHeader input[type=text],#viewNetmdAccBranchHeader textarea').addClass('newBox');
 		$j('#viewNetmdAccBranchHeader input[type=text],#viewNetmdAccBranchHeader textarea').attr('readonly','readonly');	
 
@@ -77,7 +77,7 @@
 		{
 			var response = submitNetmdAccBranchInfo();
 			if(response.success==true) {
-				viewNetmdAccBranchInfo(branchId);
+				viewNetmdAccBranchInfo(branchId,'#passphraseViewTableAcc','#passphrasePrimaryViewTableAcc');
 				$j('#viewNetmdAccBranchHeader input[type=text],#viewNetmdAccBranchHeader textarea').addClass('newBox');
 				$j('#viewNetmdAccBranchHeader input[type=text],#viewNetmdAccBranchHeader textarea').attr('readonly','readonly');	
 				$j('#netmdAccbranchViewForm #netmdAccbranchvwbtnDone').hide();

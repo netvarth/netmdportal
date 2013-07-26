@@ -30,7 +30,7 @@ public class LogDaoImpl extends GenericDaoHibernateImpl implements LogDao {
 	private EntityManager em;
 
 	/**
-	 * 
+	 * Save user details
 	 */
 	@Override
 	@Transactional

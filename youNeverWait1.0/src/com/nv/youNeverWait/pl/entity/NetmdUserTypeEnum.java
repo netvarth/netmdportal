@@ -1,5 +1,5 @@
 /**
- * 
+ * NetmdUserTypeEnum.java
  */
 package com.nv.youNeverWait.pl.entity;
 

@@ -173,13 +173,13 @@ public class SuperAdminResource {
 		return response;
 	}
 
-	@RequestMapping(value = "orderList", method = RequestMethod.POST)
-	@ResponseBody
 	/**
-	 * List all recorde of Report Tbl for given From and To date
+	 * List all records of Report Tbl for given From and To date
 	 * @param report
 	 * @return ReportResponseDTO
 	 */
+	@RequestMapping(value = "orderList", method = RequestMethod.POST)
+	@ResponseBody
 	public BranchOrdersResponseDTO orderList(@RequestBody BranchOrderDTO orderDTO) {
 
 		BranchOrdersResponseDTO response=	new BranchOrdersResponseDTO();	
@@ -366,6 +366,11 @@ public class SuperAdminResource {
 		return response;
 	}
 
+	/**
+	 * Creates a NetMd account
+	 * @param netMd
+	 * @return
+	 */
 	@RequestMapping(value = "createNetMd", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseDTO createNetMd(@RequestBody NetMdDTO netMd) {

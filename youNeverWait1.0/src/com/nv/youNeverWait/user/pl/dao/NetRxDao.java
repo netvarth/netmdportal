@@ -8,8 +8,6 @@ package com.nv.youNeverWait.user.pl.dao;
 
 
 import org.springframework.web.bind.annotation.RequestBody;
-
-import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchDetail;
 import com.nv.youNeverWait.rs.dto.NetRxBranchOwnerDetails;

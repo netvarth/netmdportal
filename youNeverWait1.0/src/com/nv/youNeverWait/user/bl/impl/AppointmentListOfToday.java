@@ -1,10 +1,10 @@
+/**
+ * AppointmentListOfToday.java
+ */
 package com.nv.youNeverWait.user.bl.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.transaction.annotation.Transactional;
-
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
 import com.nv.youNeverWait.rs.dto.AppointmentsDTO;
 import com.nv.youNeverWait.user.bl.service.AppointmentGroup;

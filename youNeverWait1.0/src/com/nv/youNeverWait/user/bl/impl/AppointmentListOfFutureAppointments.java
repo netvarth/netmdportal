@@ -1,5 +1,5 @@
 /**
- * 
+ * AppointmentListOfFutureAppointments.java
  */
 
 package com.nv.youNeverWait.user.bl.impl;
@@ -20,6 +20,9 @@ import com.nv.youNeverWait.user.pl.dao.AppointmentDao;
 public class AppointmentListOfFutureAppointments implements AppointmentGroup{
 	private AppointmentDao appointmentDao;
 	
+	/**
+	 * 
+	 */
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub

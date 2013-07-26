@@ -1,10 +1,10 @@
 /**
- * 
+ * UserRetrievalDTO.java
  */
 package com.nv.youNeverWait.rs.dto;
 
 /**
- * @author netvarth
+ * @author Luciya
  *
  */
 public class UserRetrievalDTO {

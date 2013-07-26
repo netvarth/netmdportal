@@ -100,14 +100,6 @@ public class DoctorValidator {
 				throw se;
 			}
 		}
-//		/*Validating doctor login info*/
-//		if(doctor.getLogin()==null){
-//			ServiceException se = new ServiceException(
-//					ErrorCodeEnum.LoginNotNull);
-//			se.setDisplayErrMsg(true);
-//			throw se;
-//		}
-//		validateCreateUser(doctor.getLogin());
 		
 		if (doctor.getDateOfBirth() != null) {
 			if (!doctor.getDateOfBirth().matches("\\d{4}-\\d{2}-\\d{2}")) {

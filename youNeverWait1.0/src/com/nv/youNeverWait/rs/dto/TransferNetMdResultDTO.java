@@ -1,5 +1,5 @@
 /**
- * 
+ * TransferNetMdResultDTO.java
  */
 package com.nv.youNeverWait.rs.dto;
 
@@ -11,8 +11,6 @@ public class TransferNetMdResultDTO {
 	private LabHeaderDTO header;
 	private int sourceLabId;
 	private int sourceLabBranchId;
-//	private int destinationNetMdId;
-//	private int destinationNetMdBranchId;
 	private String doctorEmail;
 	private String result;
 	private String orderUid;
@@ -93,30 +91,6 @@ public class TransferNetMdResultDTO {
 	public void setSourceLabBranchId(int sourceLabBranchId) {
 		this.sourceLabBranchId = sourceLabBranchId;
 	}
-//	/**
-//	 * @return the destinationNetMdId
-//	 */
-//	public int getDestinationNetMdId() {
-//		return destinationNetMdId;
-//	}
-//	/**
-//	 * @param destinationNetMdId the destinationNetMdId to set
-//	 */
-//	public void setDestinationNetMdId(int destinationNetMdId) {
-//		this.destinationNetMdId = destinationNetMdId;
-//	}
-//	/**
-//	 * @return the destinationNetMdBranchId
-//	 */
-//	public int getDestinationNetMdBranchId() {
-//		return destinationNetMdBranchId;
-//	}
-//	/**
-//	 * @param destinationNetMdBranchId the destinationNetMdBranchId to set
-//	 */
-//	public void setDestinationNetMdBranchId(int destinationNetMdBranchId) {
-//		this.destinationNetMdBranchId = destinationNetMdBranchId;
-//	}
 	/**
 	 * @return the result
 	 */

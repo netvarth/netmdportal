@@ -14,20 +14,22 @@ package com.nv.youNeverWait.user.bl.validation;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.rs.dto.Appointment;
 import com.nv.youNeverWait.rs.dto.AppointmentDetailsDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
-import com.nv.youNeverWait.rs.dto.Parameter;
+import com.nv.youNeverWait.rs.dto.ExpressionDTO;
+import com.nv.youNeverWait.rs.dto.FilterDTO;
+import com.nv.youNeverWait.util.filter.core.Property;
+import com.nv.youNeverWait.util.filter.queryBuilder.AppointmentPropertyEnum;
+import com.nv.youNeverWait.util.filter.validation.FilterValidator;
 
 /**
  * 
  */
-public class AppointmentValidator {
+public class AppointmentValidator  extends FilterValidator{
 	// validate appointment creation
 	public ErrorDTO validateCreateAppointment(Appointment appointment) {
 		ErrorDTO error = new ErrorDTO();
@@ -126,6 +128,29 @@ public class AppointmentValidator {
 			return error;
 		}
 
+		return null;
+	}
+	/**
+	 * Validate appointments filter
+	 * 
+	 * @param filter
+	 * @return ErrorDTO
+	 */
+	public ErrorDTO validateAppointmentFilter(FilterDTO filter) {
+		ErrorDTO error = new ErrorDTO();
+		for (ExpressionDTO exp : filter.getExp()) {
+			Property property = null;
+			try {
+				property = AppointmentPropertyEnum.valueOf(exp.getName());
+			} catch (IllegalArgumentException e) {
+				error = getInvalidExpNameError(exp);
+				return error;
+			}
+			error = validateExp(exp, property);
+			if (error != null) {
+				return error;
+			}
+		}
 		return null;
 	}
 }

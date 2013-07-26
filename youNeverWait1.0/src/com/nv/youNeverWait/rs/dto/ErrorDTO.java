@@ -7,7 +7,6 @@
  */
 package com.nv.youNeverWait.rs.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

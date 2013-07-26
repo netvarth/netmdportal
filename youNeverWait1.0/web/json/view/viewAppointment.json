@@ -89,7 +89,7 @@
                                                 "title": "Cancel",
                                                 "type": "button",
                                                 "className": "stdbtn",
-                                                "style": "opacity:1; margin:-35px 0px 0px 60px;"
+                                                "style": "opacity:1; "
                                             }
                                         ]
                                     }

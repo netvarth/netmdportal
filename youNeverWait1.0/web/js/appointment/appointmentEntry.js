@@ -1,4 +1,5 @@
 var doctorid="";
+var parentid="";
 $j('.createAppointment').die('click').live('click',function(){
 	var docname=$j(this).parents('div.appDetail1 ').children('div.doc').children('div.docname').text();
 	$j('#pageTitle').html("Create Appointment with "+docname);
@@ -12,7 +13,7 @@ $j('.createAppointment').die('click').live('click',function(){
 		$j('.clinicsInfoTab').hide(); */
 	    doctorid=$j(this).attr('id');
 		//alert(doctorid);
-	    var parentid=$j(this).parents('div.view').attr('id');
+	    parentid=$j(this).parents('div.view').attr('id');
 		//alert(parentid);
 	    var newappointmentVar=$j('<div/>');
 		newappointmentVar.attr('id','calendar');
@@ -34,7 +35,7 @@ $j('.createAppointment').die('click').live('click',function(){
 		});
 		
 		
-	monthlyviewSchedule(doctorid);	
+	monthlyviewSchedule(doctorid,parentid);	
 		
 	
 	
@@ -46,11 +47,11 @@ $j('.createAppointment').die('click').live('click',function(){
 		$j('#AppointmentPTBContainer #btn_view_ptb_id').hide();
 		$j('.fc-border-separate tr td ').removeAttr('style');
 		$j('.fc-border-separate tr td .fc-day-number').nextAll('div.fc-day-content').text("");
-		monthlyviewSchedule(doctorid);	
+		monthlyviewSchedule(doctorid,parentid);	
 		
 	});
 	
-	function monthlyviewSchedule(doctorid){
+	function monthlyviewSchedule(doctorid,parentid){
 	
 	var selectedmonyr=$j('.fc-header-title h2').text();
 	var monyersplit=selectedmonyr.split(' ');
@@ -58,8 +59,7 @@ var month=monyersplit[0];
 var realmonth=convertToIntMonth(month);
 if(realmonth<10){realmonth="0"+realmonth;}
 var yer=monyersplit[1];
-	var branchId=$j("#select").val();
-		branchId=branchId.split("_")[2];
+	 var branchId=parentid.split("_")[0];
 	 var startdate=getLastDateOfMonth(yer,realmonth);
 	 var currentstartdate=startdate.getDate();
 	 var CurntMonthlastDate=yer+'-'+realmonth+'-'+currentstartdate;
@@ -81,15 +81,19 @@ var yer=monyersplit[1];
 						var dayofschedule=$j(this).text();
 								if(dayvalue==dayofschedule){
 									if(patntName==patientName){
+									alert("in ur appoint");
 									$j(this).nextAll('div.fc-day-content').text("Your Appointment");
 									}
-								}
-								var len=$j(this).next('div .fc-day-content').text();
+								
+								/* var len=$j(this).next('div .fc-day-content').text();
 									if(len=="Your Appointment"){
+										alert("ur patnt colr");
 										$j(this).parent('div').parent('td').not('.fc-other-month').attr('style','background:#ADDFFF;');
 									}
 									else{
+									alert("else");
 										$j(this).parent('div').parent('td').not('.fc-other-month').attr('style','background:#52F3FF;');	
+									} */
 									}
 				});
 										

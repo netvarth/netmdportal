@@ -1,3 +1,6 @@
+/**
+ * ScheduleServiceTest.java
+ */
 package com.nv.youNeverWait.user.bl.test;
 
 
@@ -54,7 +57,7 @@ public class ScheduleServiceTest {
 		ScheduleDTO schedule = new ScheduleDTO();
 		HeaderDTO header = new HeaderDTO();
 		
-		header.setMacId("00-19-DB-E0-7C-E1");
+		header.setMacId("00-80-48-6E-E1-E2");
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 		header.setNetMdBranchId(5);
 		header.setNetMdId(3);
@@ -65,6 +68,7 @@ public class ScheduleServiceTest {
 		series.setOccuranceType("None");
 		series.setRepeat("Daily");
 		series.setEndDate("2014-10-11");
+		series.setSeriesId(1);
 		scheduleDetail.setSeries(series);
 		scheduleDetail.setDoctorGlobalId(1);
 		scheduleDetail.setScheduleStatus("Vacation");

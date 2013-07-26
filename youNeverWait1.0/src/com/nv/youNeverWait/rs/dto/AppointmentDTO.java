@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.nv.youNeverWait.common.Constants;
+import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
 
 /**
  * 
@@ -71,6 +72,28 @@ public class AppointmentDTO {
 		this.patientName = patientName;
 		this.appointmentStatus = appointmentStatus;
 		this.status = status;
+	}
+
+	/**
+	 * @param appointmnets
+	 */
+	public AppointmentDTO(PatientAppointmentTbl appointmnets) {
+		SimpleDateFormat df = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITHOUT_TIME);
+		SimpleDateFormat df1 = new SimpleDateFormat(Constants.TIMEWITHFORMAT);
+		SimpleDateFormat df2 = new SimpleDateFormat(Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		
+		this.globalId = appointmnets.getId();
+		this.patientId = appointmnets.getPatientTbl().getId();
+		this.doctorId = appointmnets.getDoctorTbl().getId();
+		this.scheduleId = appointmnets.getDoctorScheduleTbl().getId();
+		this.startDate = df.format(appointmnets.getDate());
+		this.startTime = df1.format(appointmnets.getStartingTime());
+		this.createdDateTime = df2.format(appointmnets.getCreateDateTime());
+		this.updatedDateTime = df2.format(appointmnets.getUpdateDateTime());
+		this.patientName = appointmnets.getPatientTbl().getFirstName();
+		this.appointmentStatus = appointmnets.getAppointmentStatus();
+		this.status = appointmnets.getStatus();
 	}
 
 	/**

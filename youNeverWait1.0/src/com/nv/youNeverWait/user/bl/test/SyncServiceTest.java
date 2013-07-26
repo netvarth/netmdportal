@@ -17,10 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.AppointmentDetailsDTO;
-import com.nv.youNeverWait.rs.dto.DoctorAchievementDTO;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
-import com.nv.youNeverWait.rs.dto.DoctorExperienceDTO;
-import com.nv.youNeverWait.rs.dto.DoctorExpertiseDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
@@ -31,7 +28,6 @@ import com.nv.youNeverWait.rs.dto.ScheduleDetail;
 import com.nv.youNeverWait.rs.dto.SeriesDTO;
 import com.nv.youNeverWait.rs.dto.SyncDTO;
 import com.nv.youNeverWait.user.bl.service.SyncService;
-import com.nv.youNeverWait.rs.dto.AppointmentDTO;
 
 /**
  * @author Luciya Jose
@@ -632,10 +628,10 @@ private ApplicationContext applicationContext;
 		SyncDTO sync = new SyncDTO();
 		//sync.setLastSyncTime("2013-03-11 16:15:54");
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(67);
-		header.setPassPhrase("fghG0rYndr+acqcvoh5ZvQ==");
-		header.setMacId("00-19-DB-E0-7C-E1");
-		header.setNetMdBranchId(51);
+		header.setNetMdId(3);
+		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
+		header.setMacId("00-80-48-6E-E1-E2");
+		header.setNetMdBranchId(5);
 		sync.setHeader(header);
 		try {
 			service.syncData(sync);
@@ -661,6 +657,29 @@ private ApplicationContext applicationContext;
 		sync.setHeader(header);
 		try {
 			service.syncNetLimsData(sync);
+		} catch (ServiceException e) {
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void retrieveAppointmentsForPrimary()
+	{
+		System.out.println("########## Sync retrieve appointments for primary... ################ ");
+		SyncService service = (SyncService) applicationContext
+				.getBean("sync.service");
+		SyncDTO sync = new SyncDTO();
+		sync.setLastSyncTime(null);
+		HeaderDTO header = new HeaderDTO();
+		header.setNetMdId(83);
+		header.setPassPhrase("cT4GAum1sOK/bqOp8h2x4Q==");
+		header.setMacId("20-CF-30-D9-9C-04");
+		header.setNetMdBranchId(81);
+		sync.setHeader(header);
+		try {
+			service.syncData(sync);
 		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());

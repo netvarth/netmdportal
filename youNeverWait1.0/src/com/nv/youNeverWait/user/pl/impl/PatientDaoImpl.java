@@ -1,5 +1,5 @@
 /**
- * 
+ * PatientDaoImpl.java
  */
 package com.nv.youNeverWait.user.pl.impl;
 
@@ -17,13 +17,11 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
-import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
-import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.pl.entity.UserTypeEnum;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
@@ -51,6 +49,9 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 	@PersistenceContext()
 	private EntityManager em;
 
+	/**
+	 * Retrieve patients for NetMd
+	 */
 	public RetrievalPatientResponseDTO retrievePatientsForNetMd(
 			String lastTime, String passPhrase, int netMdBranchId,
 			Date currentSyncTime) {
@@ -539,38 +540,6 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		return response;
 	}
 
-	// /**
-	// * list netmdbranches
-	// * @param userName
-	// * @return PatientDTO
-	// */
-	// public PatientDetail listNetMdBranches(String userName){
-	// PatientDetail response= new PatientDetail();
-	// PatientTbl patientTbl=(PatientTbl)getById(PatientTbl.class, userName);
-	// if(patientTbl==null)
-	// {
-	// ServiceException se =new ServiceException(ErrorCodeEnum.InvalidGlobalId);
-	// se.setDisplayErrMsg(true);
-	// throw se;
-	// }
-	//
-	// LoginDTO login = new LoginDTO();
-	// login.setUserName(patientTbl.getNetmdLoginTbl().getUserName());
-	// login.setPassword(patientTbl.getNetmdLoginTbl().getPassword());
-	// login.setUserType(patientTbl.getNetmdLoginTbl().getUserType());
-	// response.setLogin(login);
-	// response.setFirstName(patientTbl.getFirstName());
-	// response.setLastName(patientTbl.getLastName());
-	// response.setGender(patientTbl.getGender());
-	// response.setAge(patientTbl.getAge());
-	// response.setAddress(patientTbl.getAddress());
-	// response.setPhone(patientTbl.getPhone());
-	// response.setMobile(patientTbl.getMobile());
-	// response.setEmail(patientTbl.getEmail());
-	// response.setSuccess(true);
-	// return response;
-	// }
-
 	/**
 	 * deletes patient
 	 * 
@@ -612,16 +581,6 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		response.setSuccess(true);
 		return response;
 	}
-
-	// @Transactional(readOnly=false)
-	// @Override
-	// public NetmdPatientBranchTbl deleteBranchByPatientId( int patientId)
-	// {
-	// javax.persistence.Query
-	// query=em.createQuery(Query.DELETE_BRANCH_BY_PATIENT);
-	// query.setParameter("param1",patientId);
-	// return executeUniqueQuery(NetmdPatientBranchTbl.class, query);
-	// }
 
 	private ResultTbl getPatientResultsByPatientOrderId(int patientId, String orderId) {
 		javax.persistence.Query query = em

@@ -41,7 +41,6 @@ import com.nv.youNeverWait.rs.dto.RetrievalDoctorResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalPatientResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalScheduleResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrieveLabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
 import com.nv.youNeverWait.rs.dto.ScheduleDetail;
@@ -141,9 +140,25 @@ public class SyncServiceImpl implements SyncService {
 					sync.getUpdateUserList(), sync.getDeleteUserList());
 			syncResponse.setUserResponse(userResponseList);
 
+			/* Retrieving appointments for primary device */
+			RetrievalAppointmentResponseDTO retrievalAppointmentDTOForPrimary = appointmentService
+					.retrieveAppointmentForPrimary(sync.getLastSyncTime(), sync
+							.getHeader().getPassPhrase(), sync.getHeader()
+							.getNetMdBranchId(), currentSyncTime);
+			syncResponse.setRetrievalAppointmentListForPrimary(retrievalAppointmentDTOForPrimary);
 
 		}// end of if loop
 
+		/*Retrieve appointments for secondary devices*/
+		if(!headerResponse.isPrimaryDevice()){
+			/* Retrieving appointments for Secondary device */
+			RetrievalAppointmentResponseDTO retrievalAppointmentDTO = appointmentService
+					.retrieveAppointmentForSecondary(sync.getLastSyncTime(), sync
+							.getHeader().getPassPhrase(), sync.getHeader()
+							.getNetMdBranchId(), currentSyncTime);
+			syncResponse.setRetrievalAppointmentList(retrievalAppointmentDTO);
+
+		}
 		/* Retrieving Doctor Password List */
 		List<DoctorLoginDTO> doctorPasswordList = doctorService
 				.DoctorPasswordList(sync.getLastSyncTime(), sync.getHeader()
@@ -172,12 +187,7 @@ public class SyncServiceImpl implements SyncService {
 						.getHeader().getPassPhrase(), sync.getHeader()
 						.getNetMdBranchId(), currentSyncTime);
 
-		/* Synchronizing appointments back to netMD */
-		RetrievalAppointmentResponseDTO retrievalAppointmentDTO = appointmentService
-				.retrieveAppointmentForNetMd(sync.getLastSyncTime(), sync
-						.getHeader().getPassPhrase(), sync.getHeader()
-						.getNetMdBranchId(), currentSyncTime);
-
+		
 		/* Retrieving Schedule List */
 		RetrievalScheduleResponseDTO retrieveSchedules = scheduleService.retrieveScheduleList(
 				sync.getLastSyncTime(), sync.getHeader().getPassPhrase(), sync
@@ -185,8 +195,6 @@ public class SyncServiceImpl implements SyncService {
 
 		syncResponse.setRetrieveResults(retrieveResults);
 		syncResponse.setRetrievalPatientDTO(retrievalPatientDTO);
-		syncResponse.setRetrievalAppointmentList(retrievalAppointmentDTO);
-		System.out.println(" last sync time giving to netmd is : "+df.format(currentSyncTime));
 		syncResponse.setLastSynctime(df.format(currentSyncTime));
 		syncResponse.setRetrievalUsersList(retrieveUsers);
 		syncResponse.setRetrievalDoctorList(retrieveDoctors);
@@ -321,7 +329,7 @@ public class SyncServiceImpl implements SyncService {
 				appointmentDto.setAppointmentDetails(appointment);
 				appointmentDto.setHeader(header);
 				AppointmentResponse response = appointmentService
-						.createAppointment(appointmentDto);
+						.createAppointmentFromNetMd(appointmentDto);
 				response.setActionName(ActionNameEnum.ADD.getDisplayName());
 				newAppointmentResponseList.add(response);
 			} catch (ServiceException se) {
@@ -359,7 +367,7 @@ public class SyncServiceImpl implements SyncService {
 				appointmentDto.setAppointmentDetails(appointment);
 				appointmentDto.setHeader(header);
 				AppointmentResponse response = appointmentService
-						.updateAppointment(appointmentDto);
+						.updateAppointmentFromNetMd(appointmentDto);
 				response.setActionName(ActionNameEnum.UPDATE.getDisplayName());
 				updatedAppointmentResponseList.add(response);
 			} catch (ServiceException se) {
@@ -397,7 +405,7 @@ public class SyncServiceImpl implements SyncService {
 				appointmentDto.setAppointmentDetails(deletedAppointment);
 				appointmentDto.setHeader(header);
 				AppointmentResponse response = appointmentService
-						.deleteAppointment(appointmentDto
+						.deleteAppointmentFromNetMd(appointmentDto
 								.getAppointmentDetails().getGlobalId());
 				response.setActionName(ActionNameEnum.DELETE.getDisplayName());
 				deletedAppointmentResponseList.add(response);

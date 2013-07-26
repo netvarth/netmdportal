@@ -105,7 +105,7 @@ $j(document).ready(function() {
 	    var branchId= $j(this).parent().attr('id');
 		if(branchId!="") {
 			$j.cachedScript(constants_ViewNetmdAccBranchEntryPoint).done(function(script, textStatus) {
-			viewNetmdAccBranch(branchId,'#passphraseViewTable','#passphrasePrimaryViewTable');
+			viewNetmdAccBranch(branchId,'#passphraseViewTableAcc','#passphrasePrimaryViewTableAcc');
 			//viewbranchNetmdAccMacInfo(branchId);
 			})
 		}	
@@ -116,7 +116,7 @@ $j(document).ready(function() {
 		var branchId = getSelectedBranchId(pgTableName);
 		if(branchId!="") {
 			$j.cachedScript(constants_ViewNetmdAccBranchEntryPoint).done(function(script, textStatus) {
-			viewNetmdAccBranch(branchId,'#passphraseViewTable','#passphrasePrimaryViewTable');
+			viewNetmdAccBranch(branchId,'#passphraseViewTableAcc','#passphrasePrimaryViewTableAcc');
 			//viewbranchNetmdAccMacInfo(branchId);
 			})
 		}

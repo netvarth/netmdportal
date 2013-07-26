@@ -8,9 +8,7 @@ package com.nv.youNeverWait.user.bl.service;
 
 
 import com.nv.youNeverWait.rs.dto.FilterDTO;
-import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
-import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchDetail;
 import com.nv.youNeverWait.rs.dto.NetRxBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchResponseDTO;

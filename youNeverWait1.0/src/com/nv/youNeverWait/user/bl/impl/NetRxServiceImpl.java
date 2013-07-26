@@ -58,9 +58,9 @@ import com.nv.youNeverWait.util.filter.core.QueryBuilderFactory;
 
 /**
  * @author netvarth
- *
+ * 
  */
-public class NetRxServiceImpl implements NetRxService{
+public class NetRxServiceImpl implements NetRxService {
 	private NetRxDao netRxDao;
 	private NetRxValidator validator;
 	private String netRxServerIpAddress;
@@ -69,8 +69,7 @@ public class NetRxServiceImpl implements NetRxService{
 	private String mailFrom;
 	private SendEmailMsgWorkerThread mailThread;
 	private static final Log log = LogFactory.getLog(NetRxServiceImpl.class);
-	
-	
+
 	/**
 	 * Creates a netrx account
 	 * 
@@ -87,6 +86,7 @@ public class NetRxServiceImpl implements NetRxService{
 		sendEmailToNetRxOwner(Constants.NETRX_REGISTER, netRx);
 		return response;
 	}
+
 	/**
 	 * Method which clears mac Id
 	 * 
@@ -116,6 +116,7 @@ public class NetRxServiceImpl implements NetRxService{
 		return response;
 
 	}
+
 	/**
 	 * Creates a netrx account
 	 * 
@@ -129,6 +130,7 @@ public class NetRxServiceImpl implements NetRxService{
 		response = netRxDao.update(netRx);
 		return response;
 	}
+
 	/**
 	 * Creates netrx user
 	 * 
@@ -136,13 +138,14 @@ public class NetRxServiceImpl implements NetRxService{
 	 * @return ResponseDTO
 	 */
 	@Override
-	public ResponseDTO createUser(NetRxHeaderDTO header,NetRxUserDetail user) {
+	public ResponseDTO createUser(NetRxHeaderDTO header, NetRxUserDetail user) {
 		ResponseDTO response = new ResponseDTO();
-		validator.validateUserDetails(header,user);
+		validator.validateUserDetails(header, user);
 		validator.validateNetRxUserCreation(user);
-		response = netRxDao.createUser(header,user);
+		response = netRxDao.createUser(header, user);
 		String netRxName = netRxDao.getNetRxName(user.getNetRxId());
-		String netRxBranchName = netRxDao.getNetRxBranchName(user.getNetRxBranchId());
+		String netRxBranchName = netRxDao.getNetRxBranchName(user
+				.getNetRxBranchId());
 		sendEmailToUser(user, netRxName, netRxBranchName);
 		return response;
 	}
@@ -154,13 +157,12 @@ public class NetRxServiceImpl implements NetRxService{
 	 * @return ResponseDTO
 	 */
 	@Override
-	public ResponseDTO updateUser(NetRxHeaderDTO header,NetRxUserDetail user) {
+	public ResponseDTO updateUser(NetRxHeaderDTO header, NetRxUserDetail user) {
 		ResponseDTO response = new ResponseDTO();
 		validator.validateUserDetails(header, user);
 		response = netRxDao.updateUser(header, user);
 		return response;
 	}
-
 
 	/**
 	 * Method to perform mail sending
@@ -219,7 +221,7 @@ public class NetRxServiceImpl implements NetRxService{
 		} else {
 			fullMsgBody = fullMsgBody.replace("{lastName}", user.getLastName());
 		}
-		// fullMsgBody = fullMsgBody.replace("{netMdName}", netMdName);
+
 		fullMsgBody = fullMsgBody.replace("{branchName}", netrxBranchName);
 		fullMsgBody = fullMsgBody.replace("{userid}", user.getUserName());
 		fullMsgBody = fullMsgBody.replace("{password}", user.getPassword());
@@ -243,6 +245,7 @@ public class NetRxServiceImpl implements NetRxService{
 		response = netRxDao.deleteUser(globalId);
 		return response;
 	}
+
 	/**
 	 * To retrieve a list of netrx which satisfy all filter conditions
 	 * 
@@ -278,8 +281,8 @@ public class NetRxServiceImpl implements NetRxService{
 			queryBuilder.addFilter(filter);
 		}
 		// build query
-		TypedQuery<NetrxTbl> q = queryBuilder.buildQuery(
-				filterDTO.isAsc(), filterDTO.getFrom(), filterDTO.getCount());
+		TypedQuery<NetrxTbl> q = queryBuilder.buildQuery(filterDTO.isAsc(),
+				filterDTO.getFrom(), filterDTO.getCount());
 
 		// get count
 		Long count = queryBuilder.getCount();
@@ -298,8 +301,7 @@ public class NetRxServiceImpl implements NetRxService{
 	 * @param netrxList
 	 * @return NetRxListResponseDTO
 	 */
-	private NetRxListResponseDTO getNetRxList(
-			List<NetrxTbl> netrxList) {
+	private NetRxListResponseDTO getNetRxList(List<NetrxTbl> netrxList) {
 		NetRxListResponseDTO response = new NetRxListResponseDTO();
 		if (netrxList == null) {
 			return response;
@@ -311,8 +313,6 @@ public class NetRxServiceImpl implements NetRxService{
 		response.setNetRx(netRxDetails);
 		return response;
 	}
-
-	
 
 	/**
 	 * To retrieve a list of NetRx branches which satisfy all filter conditions
@@ -382,11 +382,11 @@ public class NetRxServiceImpl implements NetRxService{
 		response.setNetRxBranch(netRxBranchDetails);
 		return response;
 	}
-	
+
 	/**
 	 * To send netrx registration email to the owner's email id It will perform
-	 * the following operations. 1.Take default email HTML template 
-	 * 2.Create email body 3.Send email to the lab owner.
+	 * the following operations. 1.Take default email HTML template 2.Create
+	 * email body 3.Send email to the lab owner.
 	 * 
 	 * @param subject
 	 * @param netRx
@@ -406,7 +406,9 @@ public class NetRxServiceImpl implements NetRxService{
 			mailThread.addSendMsgObj(obj);
 
 		} catch (IOException e) {
-			log.error("Error while sending NetRxRegistration email to Owner's Id ", e);
+			log.error(
+					"Error while sending NetRxRegistration email to Owner's Id ",
+					e);
 			e.printStackTrace();
 		}
 	}
@@ -451,7 +453,7 @@ public class NetRxServiceImpl implements NetRxService{
 	}
 
 	/**
-	 * Deletes a netRx 
+	 * Deletes a netRx
 	 * 
 	 * @param netRxId
 	 * @return ResponseDTO
@@ -462,6 +464,7 @@ public class NetRxServiceImpl implements NetRxService{
 		response = netRxDao.deleteNetRx(netRxId);
 		return response;
 	}
+
 	/**
 	 * View netrx user
 	 * 
@@ -476,10 +479,13 @@ public class NetRxServiceImpl implements NetRxService{
 		response = netRxDao.viewUser(globalId);
 		return response;
 	}
-	
+
+	/**
+	 * Method to list NetRx users
+	 */
 	@Override
 	@Transactional
-	public NetRxUserListResponseDTO listNetRxUser(FilterDTO filterDTO){
+	public NetRxUserListResponseDTO listNetRxUser(FilterDTO filterDTO) {
 		NetRxUserListResponseDTO response = new NetRxUserListResponseDTO();
 		ErrorDTO error = validator.validateNetRxUserFilter(filterDTO);
 		if (error != null) {
@@ -502,8 +508,8 @@ public class NetRxServiceImpl implements NetRxService{
 			queryBuilder.addFilter(filter);
 		}
 		// build query
-		TypedQuery<NetrxUserTbl> q = queryBuilder.buildQuery(
-				filterDTO.isAsc(), filterDTO.getFrom(), filterDTO.getCount());
+		TypedQuery<NetrxUserTbl> q = queryBuilder.buildQuery(filterDTO.isAsc(),
+				filterDTO.getFrom(), filterDTO.getCount());
 
 		// get count
 		Long count = queryBuilder.getCount();
@@ -515,15 +521,14 @@ public class NetRxServiceImpl implements NetRxService{
 		response.setSuccess(true);
 		return response;
 	}
-	
+
 	/**
 	 * To set response with details of branches
 	 * 
 	 * @param branches
 	 * @return NetMdBranchListResponseDTO
 	 */
-	private NetRxUserListResponseDTO getNetRxUserList(
-			List<NetrxUserTbl> users) {
+	private NetRxUserListResponseDTO getNetRxUserList(List<NetrxUserTbl> users) {
 		NetRxUserListResponseDTO response = new NetRxUserListResponseDTO();
 		if (users == null) {
 			return response;
@@ -544,18 +549,18 @@ public class NetRxServiceImpl implements NetRxService{
 	 */
 	@Override
 	public NetRxViewResponseDTO viewNetRx(int netRxId) {
-		NetRxViewResponseDTO response= new NetRxViewResponseDTO();
-		if(netRxId<=0){
+		NetRxViewResponseDTO response = new NetRxViewResponseDTO();
+		if (netRxId <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetRx);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(netRxId)));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response= netRxDao.viewNetRx(netRxId);
+		response = netRxDao.viewNetRx(netRxId);
 		return response;
 	}
-	
+
 	/**
 	 * Creates a netRx branch
 	 * 
@@ -564,15 +569,15 @@ public class NetRxServiceImpl implements NetRxService{
 	 */
 	@Override
 	public ResponseDTO createBranch(NetRxBranchDetail branch) {
-		ResponseDTO response= new ResponseDTO();
+		ResponseDTO response = new ResponseDTO();
 		validator.validateBranchDetails(branch);
-		response= netRxDao.createBranch(branch);
+		response = netRxDao.createBranch(branch);
 		NetRxBranchOwnerDetails branchDetail = netRxDao
 				.getBranchOwners(response.getGlobalId());
 		sendEmailToNetRxOwner(Constants.NETRX_BRANCH_REGISTER, branchDetail);
 		return response;
 	}
-	
+
 	/**
 	 * Method to send branch registration email to the owner's email id It will
 	 * perform the following operations. 1.Take default email HTML template from
@@ -587,8 +592,6 @@ public class NetRxServiceImpl implements NetRxService{
 			url = new URL("http://" + netRxServerIpAddress
 					+ "/youNeverWait/EmailFormat/NetRxBranchRegistration.html");
 			msgBody = createEmailBody(url, branchDetail);
-			// EmailSender.sendEmail(branchDetail.getOwnerEmail(), mailFrom,
-			// / subject, msgBody);
 			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,
 					branchDetail.getOwnerEmail(), mailFrom, 0, 0, null,
 					SendMsgCallbackEnum.NETRX_BRANCH_REGISTRATION.getId(), null);
@@ -597,11 +600,6 @@ public class NetRxServiceImpl implements NetRxService{
 		} catch (IOException e) {
 			log.error("Error while sending Email to NetRx Owner ", e);
 			e.printStackTrace();
-			/*
-			 * ServiceException se = new ServiceException(
-			 * ErrorCodeEnum.EmailSendFailed); se.setDisplayErrMsg(true); throw
-			 * se;
-			 */
 		}
 	}
 
@@ -665,14 +663,15 @@ public class NetRxServiceImpl implements NetRxService{
 	@Override
 	public NetRxBranchResponseDTO viewBranch(int netrxBranchId) {
 		NetRxBranchResponseDTO response = new NetRxBranchResponseDTO();
-		if(netrxBranchId<=0){
+		if (netrxBranchId <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidBranch);
-			se.addParam(new Parameter(Constants.ID, Integer.toString(netrxBranchId)));
+			se.addParam(new Parameter(Constants.ID, Integer
+					.toString(netrxBranchId)));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response= netRxDao.viewBranch(netrxBranchId);
+		response = netRxDao.viewBranch(netrxBranchId);
 		return response;
 	}
 
@@ -685,17 +684,17 @@ public class NetRxServiceImpl implements NetRxService{
 	@Override
 	public ResponseDTO deleteBranch(int globalId) {
 		ResponseDTO response = new ResponseDTO();
-		if(globalId<=0){
+		if (globalId <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidBranch);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(globalId)));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response= netRxDao.deleteBranch(globalId);
+		response = netRxDao.deleteBranch(globalId);
 		return response;
 	}
-	
+
 	/**
 	 * Updates netRx branch details
 	 * 
@@ -704,12 +703,12 @@ public class NetRxServiceImpl implements NetRxService{
 	 */
 	@Override
 	public ResponseDTO updateNetRxBranch(NetRxBranchDetail branch) {
-		ResponseDTO response= new ResponseDTO();
+		ResponseDTO response = new ResponseDTO();
 		validator.validateUpdateBranchDetails(branch);
-		response= netRxDao.updateNetRxBranch(branch);
+		response = netRxDao.updateNetRxBranch(branch);
 		return response;
 	}
-	
+
 	/**
 	 * Method performed when password forgotten
 	 * 
@@ -737,6 +736,7 @@ public class NetRxServiceImpl implements NetRxService{
 		response.setSuccess(true);
 		return response;
 	}
+
 	/**
 	 * Method to send email for resetting password.It will perform the following
 	 * operations. 1.Take default email HTML template from Apache folder
@@ -750,21 +750,19 @@ public class NetRxServiceImpl implements NetRxService{
 			url = new URL("http://" + netRxServerIpAddress
 					+ "/youNeverWait/EmailFormat/NetRxForgotPassword.html");
 			msgBody = createDefaultEmailBody(url, user);
-			// EmailSender.sendEmail(emailId, mailFrom, subject, msgBody);
 
 			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,
 					user.getEmailId(), mailFrom, 0, 0, null,
 					SendMsgCallbackEnum.NETRX_RESET_PWD.getId(), null);
 			mailThread.addSendMsgObj(obj);
 		} catch (IOException e) {
-			log.error("Error while sending Email when doing NetRx forgot password",e);
+			log.error(
+					"Error while sending Email when doing NetRx forgot password",
+					e);
 			e.printStackTrace();
-			/*
-			 * ServiceException se = new ServiceException(
-			 * ErrorCodeEnum.EmailSendFailed); se.setDisplayErrMsg(true);
-			 * //throw se;
-			 */}
+		}
 	}
+
 	/**
 	 * Method to create email body for Reset Password
 	 */
@@ -814,6 +812,7 @@ public class NetRxServiceImpl implements NetRxService{
 		ResponseDTO response = netRxDao.resetPassword(login);
 		return response;
 	}
+
 	/**
 	 * @return the netRxDao
 	 */
@@ -822,7 +821,8 @@ public class NetRxServiceImpl implements NetRxService{
 	}
 
 	/**
-	 * @param netRxDao the netRxDao to set
+	 * @param netRxDao
+	 *            the netRxDao to set
 	 */
 	public void setNetRxDao(NetRxDao netRxDao) {
 		this.netRxDao = netRxDao;
@@ -836,7 +836,8 @@ public class NetRxServiceImpl implements NetRxService{
 	}
 
 	/**
-	 * @param validator the validator to set
+	 * @param validator
+	 *            the validator to set
 	 */
 	public void setValidator(NetRxValidator validator) {
 		this.validator = validator;
@@ -850,7 +851,8 @@ public class NetRxServiceImpl implements NetRxService{
 	}
 
 	/**
-	 * @param netRxServerIpAddress the netRxServerIpAddress to set
+	 * @param netRxServerIpAddress
+	 *            the netRxServerIpAddress to set
 	 */
 	public void setNetRxServerIpAddress(String netRxServerIpAddress) {
 		this.netRxServerIpAddress = netRxServerIpAddress;
@@ -864,7 +866,8 @@ public class NetRxServiceImpl implements NetRxService{
 	}
 
 	/**
-	 * @param queryBuilderFactory the queryBuilderFactory to set
+	 * @param queryBuilderFactory
+	 *            the queryBuilderFactory to set
 	 */
 	public void setQueryBuilderFactory(QueryBuilderFactory queryBuilderFactory) {
 		this.queryBuilderFactory = queryBuilderFactory;
@@ -878,7 +881,8 @@ public class NetRxServiceImpl implements NetRxService{
 	}
 
 	/**
-	 * @param filterFactory the filterFactory to set
+	 * @param filterFactory
+	 *            the filterFactory to set
 	 */
 	public void setFilterFactory(FilterFactory filterFactory) {
 		this.filterFactory = filterFactory;
@@ -892,7 +896,8 @@ public class NetRxServiceImpl implements NetRxService{
 	}
 
 	/**
-	 * @param mailFrom the mailFrom to set
+	 * @param mailFrom
+	 *            the mailFrom to set
 	 */
 	public void setMailFrom(String mailFrom) {
 		this.mailFrom = mailFrom;
@@ -906,14 +911,11 @@ public class NetRxServiceImpl implements NetRxService{
 	}
 
 	/**
-	 * @param mailThread the mailThread to set
+	 * @param mailThread
+	 *            the mailThread to set
 	 */
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
 	}
-
-	
-
-	
 
 }

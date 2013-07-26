@@ -8,7 +8,7 @@
 			
 	$j('#changepatientPasswordForm #btnChangepatientPwdSubmit').die('click').live('click',function(){
 	removeErrors();	
-	if(validateAdminChangePassword())
+	if(validatePatientChangePassword())
 	{
 		var response = submitChangePasswordInfo();
 			if(response.success==true){
@@ -30,20 +30,20 @@ function submitChangePasswordInfo(){
 
 function createSubmitJson(){
 	var username=getRequestData('/youNeverWait/ws/ui/auth/getCurrentUser');
-    var changepwdDetails = '{"oldPassword":"'+$j('#oldpatientpassword').val()  +'",';
+    var changepwdDetails = '{"oldPassword":"'+$j('#changepatientPasswordForm #oldpatientpassword').val()  +'",';
 		changepwdDetails += '"username":"'+ username +'",';
-		changepwdDetails +='"newPassword":"' + $j('#newpatientpassword').val() + '"}';
+		changepwdDetails +='"newPassword":"' + $j('#changepatientPasswordForm #newpatientpassword').val() + '"}';
 	return changepwdDetails;
 }
 
 
-function validateAdminChangePassword(){
+function validatePatientChangePassword(){
 	//var userName=$j('#patientusername');
-	var oldPassword=$j('#oldpatientpassword');
-	var newPassword=$j('#newpatientpassword');
-	var confirmPassword=$j('#confirmpatientpassword');
-	var newPassword1=$j('#newpatientpassword').val();
-	var confirmPassword1=$j('#confirmpatientpassword').val();
+	var oldPassword=$j('#changepatientPasswordForm #oldpatientpassword');
+	var newPassword=$j('#changepatientPasswordForm #newpatientpassword');
+	var confirmPassword=$j('#changepatientPasswordForm #confirmpatientpassword');
+	var newPassword1=$j('#changepatientPasswordForm #newpatientpassword').val();
+	var confirmPassword1=$j('#changepatientPasswordForm #confirmpatientpassword').val();
 
 	
 	var bValid=true,userNameValid=true,oldPasswordValid=true,newPasswordValid=true,confirmPasswordValid=true,userNameregValid=true,PwdCompValid=true;
@@ -64,7 +64,7 @@ function validateAdminChangePassword(){
 		createError(constants_passwordMismatch,newPassword);
 		PwdCompValid=false;
 	}
-	PwdCompValid=PwdCompValid&&userNameregValid;
+	PwdCompValid=PwdCompValid&&confirmPassword;
 	
 	bValid=bValid && PwdCompValid;
 	return bValid;

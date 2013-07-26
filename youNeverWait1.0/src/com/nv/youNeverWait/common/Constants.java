@@ -21,7 +21,6 @@ public class Constants {
 	public static final String SORT_BY ="sortBy";
 	public static final String DATE_FORMAT = "MM/dd/yyyy hh:mm";
 	public static final String DATE_FORMAT_DAY_FIRST = "dd/MM/yyyy hh:mm a";
-	//public static final String DATE_FORMAT_WITH_TIME_SECONDS = "yyyy-MM-dd hh:mm:ss";
 	public static final String DATE_FORMAT_WITH_TIME_SECONDS="yyyy-MM-dd HH:mm:ss";
 	public static final String YEAR="yyyy";
     public static final String DATE_FORMAT_WITH_NO_TIME = "MM/dd/yyyy";
@@ -50,6 +49,13 @@ public class Constants {
 	public static final String PATIENT_REGISTRATION = "Patient Registration";
 	public static final String DOCTOR_REGISTER ="Doctor Registration";
 	public static final String DATE ="date";
+	public static final String RESULT = "result";
+	public static final String DOCTOR_CREDENTIALS = "Doctor Credentials";
+	public static final String DOCTOR_REMAINDER = "Doctor Password Set";
+	public static final String PAST_APPOINTMENTS = "Past Appointments";
+	public static final String RESULT_LIST = "Result List";
+	public static final String APPOINTMENTS = "appointments";
+	
 	/* Log */
 	public static final String STARTUP = "Show login page";
 	public static final String RESET_PSWD = "Reset password";
@@ -79,13 +85,18 @@ public class Constants {
 	public static final String DELETE_PATIENT = "Delete patient";
 	public static final String NETMD_BRANCH_LIST = "Netmd branch list";
 	public static final String NETMD_DOWNLOAD = "Download netmd application";
+	
     /*NetRx*/
 	public static final String NETRX_REGISTER ="NetRx Registration";
 	public static final String NETRX ="netrx";
 	public static final String NETRX_BRANCH ="netrxBranch";
 	public static final String NETRX_BRANCH_REGISTER ="NetRx Branch Registration";
 	public static final String NETRX_DOWNLOAD = "Download netRX application";
-	public static final String RESULT = "result";
-	public static final String DOCTOR_CREDENTIALS = "Doctor Credentials";
-	public static final String DOCTOR_REMAINDER = "Doctor Password Set";
+	
+	/*NetLims*/
+	public static final String ABOUT_NETLIMS = "Show NetLims Details Page";
+	public static final String CONTACT_US = "Show Contact Page";
+	public static final String PRICING = "Shows NetLims Pricing Page";
+	public static final String POLICY = "Shows NetLims privacyPolicy page";
+	
 }

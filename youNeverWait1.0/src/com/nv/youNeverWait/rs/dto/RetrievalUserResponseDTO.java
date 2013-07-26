@@ -16,8 +16,6 @@ import java.util.List;
  */
 public class RetrievalUserResponseDTO {
 	private List<NetMdUserDetail> retrieveUsersList= new ArrayList<NetMdUserDetail>();
-//	private List<NetMdUserDetail> retrieveUpdatedUsers= new ArrayList<NetMdUserDetail>();
-//	private List<NetMdUserDetail> retrieveDeletedUsers= new ArrayList<NetMdUserDetail>();
 	private ErrorDTO error;
 	private boolean success;
 	
@@ -34,18 +32,7 @@ public class RetrievalUserResponseDTO {
 	public void setRetrieveUsersList(List<NetMdUserDetail> retrieveUsersList) {
 		this.retrieveUsersList = retrieveUsersList;
 	}
-	//	/**
-//	 * @return the retrieveDeletedUsers
-//	 */
-//	public List<NetMdUserDetail> getRetrieveDeletedUsers() {
-//		return retrieveDeletedUsers;
-//	}
-//	/**
-//	 * @param retrieveDeletedUsers the retrieveDeletedUsers to set
-//	 */
-//	public void setRetrieveDeletedUsers(List<NetMdUserDetail> retrieveDeletedUsers) {
-//		this.retrieveDeletedUsers = retrieveDeletedUsers;
-//	}
+
 	/**
 	 * @return the error
 	 */

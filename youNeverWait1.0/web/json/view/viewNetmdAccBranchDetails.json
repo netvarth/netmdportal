@@ -161,39 +161,125 @@
                         }
                     ]
                 },
-				{
-            "className": "sep-div",
+                {
+                    "className": "sep-div",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "elements": [
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                            {
+                                                "name": "netmdAccbranchvwbtnEdit",
+                                                "id": "netmdAccbranchvwbtnEdit",
+                                                "title": "Edit",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;margin:4px"
+                                            },
+                                            {
+                                                "name": "netmdAccbranchvwbtnDone",
+                                                "id": "netmdAccbranchvwbtnDone",
+                                                "title": "Done",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;display:none;margin-top: 4px;"
+                                            },
+                                            {
+                                                "name": "netmdAccbranchvwbtnCancel",
+                                                "id": "netmdAccbranchvwbtnCancel",
+                                                "title": "Cancel",
+                                                "type": "button",
+                                                "className": "stdbtn",
+                                                "style": "opacity:1;display:none;margin-top: 4px;"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "className": "sep-div-view",
+            "id": "viewBranchHeaderaccbrch",
             "data": [
                 {
                     "className": "five_sixth",
                     "elements": [
                         {
-                            "type": "button",
+                            "type": "label",
+                            "title": "Primary Device",
+                            "spanstyle": "font-size:15px;"
+                        }
+                    ]
+                },
+                {
+                    "className": "five_sixth",
+                    "elements": [
+                        {
+                            "type": "table",
                             "content": {
-                                "buttons": [
+                                "name": "passphrasePrimaryViewTableAcc",
+                                "idProperty": "passphrasePrimaryViewTableAcc",
+                                "className": "stdtable stdtablecb",
+                                "style": "border-spacing:0;border-collapse:collapse; border:0;",
+                                "colHeaders": [
                                     {
-                                        "name": "netmdAccbranchvwbtnEdit",
-                                        "id": "netmdAccbranchvwbtnEdit",
-                                        "title": "Edit",
-                                        "type": "button",
-                                        "className": "stdbtn btn_black",
-                                        "style": "opacity:1;margin:4px"
+                                        "className": "head0",
+                                        "name": "Pass Phrase",
+                                        "style": "width:45%"
                                     },
                                     {
-                                        "name": "netmdAccbranchvwbtnDone",
-                                        "id": "netmdAccbranchvwbtnDone",
-                                        "title": "Done",
-                                        "type": "button",
-                                        "className": "stdbtn btn_black",
-                                        "style": "opacity:1;display:none;margin-top: 4px;"
+                                        "className": "head1",
+                                        "name": "Mac Id",
+                                        "style": "width:40%"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "className": "sep-div-view",
+            "id": "viewBranchHeaderacc",
+            "data": [
+                {
+                    "className": "five_sixth",
+                    "elements": [
+                        {
+                            "type": "label",
+                            "title": "Other Devices",
+                            "spanstyle": "font-size:15px;"
+                        }
+                    ]
+                },
+                {
+                    "className": "five_sixth",
+                    "elements": [
+                        {
+                            "type": "table",
+                            "content": {
+                                "name": "passphraseViewTableAcc",
+                                "idProperty": "passphraseViewTableAcc",
+                                "className": "stdtable stdtablecb",
+                                "style": "border-spacing:0;border-collapse:collapse; border:0;",
+                                "colHeaders": [
+                                    {
+                                        "className": "head0",
+                                        "name": "Pass Phrase",
+                                        "style": "width:40%"
                                     },
                                     {
-                                        "name": "netmdAccbranchvwbtnCancel",
-                                        "id": "netmdAccbranchvwbtnCancel",
-                                        "title": "Cancel",
-                                        "type": "button",
-                                        "className": "stdbtn",
-                                        "style": "opacity:1;display:none;margin-top: 4px;"
+                                        "className": "head1",
+                                        "name": "Mac Id",
+                                        "style": "width:30%"
                                     }
                                 ]
                             }
@@ -202,9 +288,5 @@
                 }
             ]
         }
-            ]
-        }
-        
-        
     ]
 }

@@ -1,11 +1,8 @@
 /**
+ * LabBranchRetrievalDTO.java
  * @author Asha Chandran
  */
 package com.nv.youNeverWait.rs.dto;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class LabBranchRetrievalDTO {
 

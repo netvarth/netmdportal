@@ -6,8 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +24,7 @@ import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.Appointment;
 import com.nv.youNeverWait.rs.dto.AppointmentDTO;
 import com.nv.youNeverWait.rs.dto.AppointmentResponse;
-import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
-import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalAppointmentResponseDTO;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.AppointmentDao;
@@ -49,7 +45,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 	 */
 	@Override
 	@Transactional
-	public RetrievalAppointmentResponseDTO retrieveAppointmentForNetMd(
+	public RetrievalAppointmentResponseDTO retrieveAppointmentForSecondary(
 			String syncTime, String passPhrase, int netMdBranchId,
 			Date currentSyncTime) {
 		RetrievalAppointmentResponseDTO retrieveAppointmentObj = new RetrievalAppointmentResponseDTO();
@@ -100,165 +96,205 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 	}
 
 	/**
+	 * Retrieve appointment
 	 * 
-	 * @param lastSyncTime
-	 * @param netmdBranchId
-	 * @param currentSyncTime
-	 * @return
-	 */
-	private List<PatientAppointmentTbl> retrieveAppointments(Date lastSyncTime,
-			int netmdBranchId, Date currentSyncTime, int netmdPassphraseId) {
-		javax.persistence.Query query = em
-				.createQuery(Query.RETRIEVE_APPOINTMENTS);
-		query.setParameter("param1", lastSyncTime);
-		query.setParameter("param2", currentSyncTime);
-		query.setParameter("param3", netmdBranchId);
-		query.setParameter("param4", netmdPassphraseId);
-		return executeQuery(PatientAppointmentTbl.class, query);
-
-	}
-	/**
-	 * 
-	 * @param lastSyncTime
-	 * @param netmdBranchId
-	 * @param currentSyncTime
-	 * @return
-	 */
-	private List<PatientAppointmentTbl> retrieveAppointmentsCreatedInPortal(Date lastSyncTime,
-			int netmdBranchId, Date currentSyncTime) {
-		javax.persistence.Query query = em
-				.createQuery(Query.RETRIEVE_APPOINTMENTS_CREATED_IN_PORTAL);
-		query.setParameter("param1", lastSyncTime);
-		query.setParameter("param2", currentSyncTime);
-		query.setParameter("param3", netmdBranchId);
-		
-		return executeQuery(PatientAppointmentTbl.class, query);
-
-	}
-
-	/**
-	 * Method for getting netmd passphrase id
-	 * 
+	 * @param syncTime
 	 * @param passPhrase
-	 * @param netmdBranchId
-	 * @return netmd passphrase id
-	 */
-	public Integer getNetmdPassphrase(String passPhrase, int netmdBranchId) {
-		int count = 0;
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_NETMD_PASSPHRASE_ID);
-		query.setParameter("param1", passPhrase);
-		query.setParameter("param2", netmdBranchId);
-		count = (Integer) query.getSingleResult();
-		return count;
-	}
-
-	/**
-	 * Get confirmed appointment list for a patient for the current day
-	 * 
-	 * @param patientId
-	 * @return List<PatientAppointmentTbl>
+	 * @param netMdBranchId
 	 */
 	@Override
-	public List<PatientAppointmentTbl> getAppointmentsForTheDay(String patientId) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_APPOINTMENTS_OF_CURRENTDAY);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
-		Date newDate = null;
+	@Transactional
+	public RetrievalAppointmentResponseDTO retrieveAppointmentForPrimary(
+			String syncTime, String passPhrase, int netMdBranchId,
+			Date currentSyncTime) {
+		RetrievalAppointmentResponseDTO retrieveAppointmentObj = new RetrievalAppointmentResponseDTO();
+		List<AppointmentDTO> createdAppointments = new ArrayList<AppointmentDTO>();
+		Date lastSyncTime = null;
+		DateFormat df = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		try {
-			newDate = sdf.parse(sdf.format(new Date()));
+			lastSyncTime = df.parse(syncTime);
+
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidSyncTime);
+			se.setDisplayErrMsg(true);
+			throw se;
 		}
-		query.setParameter("param1", Integer.parseInt(patientId));
-		query.setParameter("param2", newDate);
-		return (List<PatientAppointmentTbl>) executeQuery(
-				PatientAppointmentTbl.class, query);
-	}
-
-	/**
-	 * get confirmed appointment list for a patient for the next one week from
-	 * the current day.
-	 */
-	@Override
-	public List<PatientAppointmentTbl> getAppointmentsForTheWeek(
-			String patientId) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_APPOINTMENTS_OF_THE_WEEK);
-		query.setParameter("param1", Integer.parseInt(patientId));
-		query.setParameter("param2", getCurrentDate());
-		Date date = new Date();
-		long DAY_IN_MS = 1000 * 60 * 60 * 24;
-		try {
-			query.setParameter(
-					"param3",
-					df.parse(df.format(new Date(date.getTime()
-							+ (7 * DAY_IN_MS)))));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		int netmdPassphraseId = getNetmdPassphrase(passPhrase, netMdBranchId);
+		if (netmdPassphraseId == 0) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMdAccount);
+			se.setDisplayErrMsg(true);
+			throw se;
 		}
-		return (List<PatientAppointmentTbl>) executeQuery(
-				PatientAppointmentTbl.class, query);
+		List<PatientAppointmentTbl> appointmentList = retrieveAppointmentsForPrimary(
+				lastSyncTime, netMdBranchId, currentSyncTime);
+//		List<PatientAppointmentTbl> appointmentListPortal = retrieveAppointmentsCreatedInPortal(
+//				lastSyncTime, netMdBranchId, currentSyncTime);
+//		appointmentList.addAll(appointmentListPortal);
+		for (PatientAppointmentTbl appointmentTbl : appointmentList) {
+			AppointmentDTO appointmentDto = new AppointmentDTO(
+					appointmentTbl.getId(), appointmentTbl.getId(),
+					appointmentTbl.getPatientTbl().getId(), appointmentTbl
+							.getDoctorTbl().getId(), appointmentTbl
+							.getDoctorScheduleTbl().getId(),
+					appointmentTbl.getDate(), appointmentTbl.getStartingTime(),
+					appointmentTbl.getCreateDateTime(),
+					appointmentTbl.getUpdateDateTime(), appointmentTbl
+							.getPatientTbl().getFirstName(),
+					appointmentTbl.getAppointmentStatus(),
+					appointmentTbl.getStatus());
+			createdAppointments.add(appointmentDto);
+
+		}
+		retrieveAppointmentObj.setRetrieveAppointments(createdAppointments);
+		retrieveAppointmentObj.setSuccess(true);
+		return retrieveAppointmentObj;
 	}
 
 	/**
-	 * get future appointment list for a patient
-	 */
-	@Override
-	public List<PatientAppointmentTbl> getFutureAppointments(String patientId) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_FUTURE_APPOINTMENTS);
-		query.setParameter("param1", Integer.parseInt(patientId));
-		query.setParameter("param2", new Date());
-
-		return (List<PatientAppointmentTbl>) executeQuery(
-				PatientAppointmentTbl.class, query);
-	}
-
-	/**
-	 * get past appointments
-	 * 
+	 * @param lastSyncTime
+	 * @param netMdBranchId
+	 * @param currentSyncTime
 	 * @return
 	 */
-	@Override
-	public List<PatientAppointmentTbl> getPastAppointments(String patientId) {
+	private List<PatientAppointmentTbl> retrieveAppointmentsForPrimary(
+			Date lastSyncTime, int netMdBranchId, Date currentSyncTime) {
 		javax.persistence.Query query = em
-				.createQuery(Query.GET_PAST_APPOINTMENTS);
-		query.setParameter("param1", Integer.parseInt(patientId));
-		query.setParameter("param2", getCurrentDate());
-
-		return (List<PatientAppointmentTbl>) executeQuery(
-				PatientAppointmentTbl.class, query);
+				.createQuery(Query.RETRIEVE_APPOINTMENTS_FOR_PRIMARY);
+		query.setParameter("param1", lastSyncTime);
+		query.setParameter("param2", currentSyncTime);
+		query.setParameter("param3", netMdBranchId);
+		return executeQuery(PatientAppointmentTbl.class, query);
+		
 	}
 
-	private Date getCurrentDate() {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.pl.dao.AppointmentDao#deleteAppointmentFromPortal
+	 * (int)
+	 */
+	@Override
+	@Transactional
+	public AppointmentResponse deleteAppointmentFromPortal(int id) {
 
-		Date newDate = null;
-		try {
-			newDate = df.parse(df.format(new Date()));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		PatientAppointmentTbl appointmentTbl = (PatientAppointmentTbl) getById(
+				PatientAppointmentTbl.class, id);
+		if (appointmentTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.NoAppointmentFound);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(id)));
+			se.setDisplayErrMsg(true);
+			throw se;
 		}
-		return newDate;
+		appointmentTbl.setAppointmnetLevel(true);
+		AppointmentResponse response = deleteAppointment(id, appointmentTbl);
+		return response;
 	}
 
 	/**
-	 * create an appointment
+	 * delete appointment from NetMd
+	 * 
+	 * @param id
+	 * @return AppointmentResponse
+	 */
+	@Override
+	@Transactional(readOnly = false)
+	public AppointmentResponse deleteAppointmentFromNetMd(int id) {
+
+		PatientAppointmentTbl appointmentTbl = (PatientAppointmentTbl) getById(
+				PatientAppointmentTbl.class, id);
+		if (appointmentTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.NoAppointmentFound);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(id)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		appointmentTbl.setAppointmnetLevel(false);
+		AppointmentResponse response = deleteAppointment(id, appointmentTbl);
+		return response;
+	}
+
+	/**
+	 * delete appointment 
+	 * 
+	 * @param id
+	 * @return ResponseDTO
+	 */
+	@Transactional(readOnly = false)
+	private AppointmentResponse deleteAppointment(int id,
+			PatientAppointmentTbl appointmentTbl) {
+		AppointmentResponse response = new AppointmentResponse();
+
+		appointmentTbl.setStatus(StatusEnum.InActive.getDisplayName());
+		appointmentTbl.setUpdateDateTime(new Date());
+		update(appointmentTbl);
+		response.setError(null);
+		response.setSuccess(true);
+		response.setId(id);
+		response.setGlobalId(appointmentTbl.getId());
+		return response;
+	}
+
+	/**
+	 * create an appointment from Portal
 	 * 
 	 * @param Appointment
 	 * @return AppointmentResponse
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public AppointmentResponse createAppointment(Appointment appointment) {
+	public AppointmentResponse createAppointmentFromPortal(
+			Appointment appointment) {
+
+		PatientAppointmentTbl appointmentTbl = new PatientAppointmentTbl();
+		appointmentTbl.setAppointmnetLevel(true);
+		AppointmentResponse response = createAppointment(appointment,
+				appointmentTbl);
+		return response;
+
+	}
+
+	/**
+	 * create an appointment from Netmd
+	 * 
+	 * @param Appointment
+	 * @return AppointmentResponse
+	 */
+	@Override
+	@Transactional(readOnly = false)
+	public AppointmentResponse createAppointmentFromNetMd(
+			Appointment appointment) {
+
+		PatientAppointmentTbl appointmentTbl = new PatientAppointmentTbl();
+		appointmentTbl.setAppointmnetLevel(false);
+		AppointmentResponse response = createAppointment(appointment,
+				appointmentTbl);
+		return response;
+	}
+
+	/**
+	 * create an appointment
+	 * 
+	 * @param appointmentTbl
+	 * 
+	 * @param Appointment
+	 * @return AppointmentResponse
+	 */
+
+	@Transactional(readOnly = false)
+	private AppointmentResponse createAppointment(Appointment appointment,
+			PatientAppointmentTbl appointmentTbl) {
 
 		AppointmentResponse response = new AppointmentResponse();
 		DoctorScheduleTbl schedule = new DoctorScheduleTbl();
 		int test = 0;
-		PatientAppointmentTbl appointmentTbl = new PatientAppointmentTbl();
+
 		// If the request have macid and passphrase check if they match with
 		// table entry to check if it's a request from a valid netmd
 		if (appointment.getHeader().getMacId() != null
@@ -418,14 +454,42 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 	}
 
 	/**
-	 * update appointment
+	 * update appointment from Portal
 	 * 
 	 * @param Appointment
 	 * @return AppointmentResponse
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public AppointmentResponse update(Appointment appointment) {
+	public AppointmentResponse updateAppointmentFromPortal(
+			Appointment appointment) {
+		AppointmentResponse response = update(appointment, true);
+		return response;
+	}
+
+	/**
+	 * update appointment from Netmd
+	 * 
+	 * @param Appointment
+	 * @return AppointmentResponse
+	 */
+	@Override
+	@Transactional(readOnly = false)
+	public AppointmentResponse updateAppointmentFromNetMd(
+			Appointment appointment) {
+		AppointmentResponse response = update(appointment, false);
+		return response;
+	}
+
+	/**
+	 * update appointment
+	 * 
+	 * @param Appointment
+	 * @return AppointmentResponse
+	 */
+
+	@Transactional(readOnly = false)
+	private AppointmentResponse update(Appointment appointment, boolean flag) {
 		AppointmentResponse response = new AppointmentResponse();
 		DateFormat df1 = new SimpleDateFormat(Constants.TIMEWITHFORMAT);
 		SimpleDateFormat df = new SimpleDateFormat(
@@ -497,6 +561,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 			e.printStackTrace();
 		}
 		patientAppointmentTbl.setUpdateDateTime(new Date());
+		patientAppointmentTbl.setAppointmnetLevel(flag);
 		update(patientAppointmentTbl);
 		response.setStartTime(df1.format(patientAppointmentTbl
 				.getStartingTime()));
@@ -508,6 +573,181 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 		response.setUpdateDateTime(s.format(patientAppointmentTbl
 				.getUpdateDateTime()));
 		return response;
+	}
+
+	/**
+	 * 
+	 * @param lastSyncTime
+	 * @param netmdBranchId
+	 * @param currentSyncTime
+	 * @return
+	 */
+	private List<PatientAppointmentTbl> retrieveAppointments(
+			Date lastSyncTime, int netmdBranchId, Date currentSyncTime,
+			int netmdPassphraseId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.RETRIEVE_APPOINTMENTS);
+		query.setParameter("param1", lastSyncTime);
+		query.setParameter("param2", currentSyncTime);
+		query.setParameter("param3", netmdBranchId);
+		query.setParameter("param4", netmdPassphraseId);
+		return executeQuery(PatientAppointmentTbl.class, query);
+
+	}
+
+	/**
+	 * 
+	 * @param lastSyncTime
+	 * @param netmdBranchId
+	 * @param currentSyncTime
+	 * @return
+	 */
+	private List<PatientAppointmentTbl> retrieveAppointmentsCreatedInPortal(
+			Date lastSyncTime, int netmdBranchId, Date currentSyncTime) {
+		javax.persistence.Query query = em
+				.createQuery(Query.RETRIEVE_APPOINTMENTS_CREATED_IN_PORTAL);
+		query.setParameter("param1", lastSyncTime);
+		query.setParameter("param2", currentSyncTime);
+		query.setParameter("param3", netmdBranchId);
+
+		return executeQuery(PatientAppointmentTbl.class, query);
+
+	}
+
+	/**
+	 * Method for getting netmd passphrase id
+	 * 
+	 * @param passPhrase
+	 * @param netmdBranchId
+	 * @return netmd passphrase id
+	 */
+	public Integer getNetmdPassphrase(String passPhrase, int netmdBranchId) {
+		int count = 0;
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_PASSPHRASE_ID);
+		query.setParameter("param1", passPhrase);
+		query.setParameter("param2", netmdBranchId);
+		count = (Integer) query.getSingleResult();
+		return count;
+	}
+
+	/**
+	 * Get confirmed appointment list for a patient for the current day
+	 * 
+	 * @param patientId
+	 * @return List<PatientAppointmentTbl>
+	 */
+	@Override
+	public List<PatientAppointmentTbl> getAppointmentsForTheDay(String patientId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_APPOINTMENTS_OF_CURRENTDAY);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+		Date newDate = null;
+		try {
+			newDate = sdf.parse(sdf.format(new Date()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		query.setParameter("param1", Integer.parseInt(patientId));
+		query.setParameter("param2", newDate);
+		return (List<PatientAppointmentTbl>) executeQuery(
+				PatientAppointmentTbl.class, query);
+	}
+
+	/**
+	 * get confirmed appointment list for a patient for the next one week from
+	 * the current day.
+	 */
+	@Override
+	public List<PatientAppointmentTbl> getAppointmentsForTheWeek(
+			String patientId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_APPOINTMENTS_OF_THE_WEEK);
+		query.setParameter("param1", Integer.parseInt(patientId));
+		query.setParameter("param2", getCurrentDate());
+		Date date = new Date();
+		long DAY_IN_MS = 1000 * 60 * 60 * 24;
+		try {
+			query.setParameter(
+					"param3",
+					df.parse(df.format(new Date(date.getTime()
+							+ (7 * DAY_IN_MS)))));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return (List<PatientAppointmentTbl>) executeQuery(
+				PatientAppointmentTbl.class, query);
+	}
+
+	/**
+	 * get future appointment list for a patient
+	 */
+	@Override
+	public List<PatientAppointmentTbl> getFutureAppointments(String patientId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_FUTURE_APPOINTMENTS);
+		query.setParameter("param1", Integer.parseInt(patientId));
+		query.setParameter("param2", new Date());
+
+		return (List<PatientAppointmentTbl>) executeQuery(
+				PatientAppointmentTbl.class, query);
+	}
+
+//	/**
+//	 * get past appointments
+//	 * 
+//	 * @return
+//	 */
+//	@Override
+//	public List<PatientAppointmentTbl> getPastAppointments(String patientId) {
+//		javax.persistence.Query query = em
+//				.createQuery(Query.GET_PAST_APPOINTMENTS);
+//		query.setParameter("param1", Integer.parseInt(patientId));
+//		query.setParameter("param2", getCurrentDate());
+//
+//		return (List<PatientAppointmentTbl>) executeQuery(
+//				PatientAppointmentTbl.class, query);
+//	}
+
+	/**
+	 * get past appointments
+	 * 
+	 * @return
+	 */
+	@Override
+	public List<PatientAppointmentTbl> getPastAppointments(String patientId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_PAST_APPOINTMENTS_BY_TIME);
+		query.setParameter("param1", Integer.parseInt(patientId));
+		query.setParameter("param2", getCurrentDateByTime());
+
+		return (List<PatientAppointmentTbl>) executeQuery(
+				PatientAppointmentTbl.class, query);
+	}
+	private Date getCurrentDateByTime() {
+		DateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		Date newDate = null;
+		try {
+			newDate = sdf.parse(sdf.format(new Date()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return newDate;
+	}
+	private Date getCurrentDate() {
+
+		Date newDate = null;
+		try {
+			newDate = df.parse(df.format(new Date()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return newDate;
 	}
 
 	/**
@@ -552,35 +792,6 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 		query.setParameter("param2", startDate);
 		query.setParameter("param3", startTime);
 		return executeUniqueQuery(PatientAppointmentTbl.class, query);
-	}
-
-	/**
-	 * delete appointment
-	 * 
-	 * @param id
-	 * @return ResponseDTO
-	 */
-	@Override
-	@Transactional(readOnly = false)
-	public AppointmentResponse deleteAppointment(int id) {
-		AppointmentResponse response = new AppointmentResponse();
-		PatientAppointmentTbl appointmentTbl = (PatientAppointmentTbl) getById(
-				PatientAppointmentTbl.class, id);
-		if (appointmentTbl == null) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.NoAppointmentFound);
-			se.addParam(new Parameter(Constants.ID, Integer.toString(id)));
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		appointmentTbl.setStatus(StatusEnum.InActive.getDisplayName());
-		appointmentTbl.setUpdateDateTime(new Date());
-		update(appointmentTbl);
-		response.setError(null);
-		response.setSuccess(true);
-		response.setId(id);
-		response.setGlobalId(appointmentTbl.getId());
-		return response;
 	}
 
 	/**

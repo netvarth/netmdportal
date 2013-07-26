@@ -8,21 +8,16 @@ package com.nv.youNeverWait.user.bl.test;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
-import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
-import com.nv.youNeverWait.rs.dto.NetMdDetail;
-import com.nv.youNeverWait.rs.dto.NetMdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchDetail;
 import com.nv.youNeverWait.rs.dto.NetRxBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxDetail;
@@ -30,7 +25,7 @@ import com.nv.youNeverWait.rs.dto.NetRxHeaderDTO;
 import com.nv.youNeverWait.rs.dto.NetRxListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxUserDetail;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
-import com.nv.youNeverWait.user.bl.service.LabService;
+
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.service.NetRxService;
 

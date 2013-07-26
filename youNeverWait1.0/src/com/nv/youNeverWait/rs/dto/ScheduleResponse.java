@@ -1,3 +1,6 @@
+/**
+ * ScheduleResponse.java
+ */
 package com.nv.youNeverWait.rs.dto;
 
 public class ScheduleResponse {

@@ -9,7 +9,7 @@ package com.nv.youNeverWait.rs.dto;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 
 /**
- * @author netvarth
+ * @author Luciya Jos
  *
  */
 public class DoctorLoginDTO {

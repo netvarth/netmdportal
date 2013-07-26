@@ -87,7 +87,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	private QueryBuilderFactory queryBuilderFactory;
 	private FilterFactory filterFactory;
 	private NetRxService netRxService;
-	private static final Log log = LogFactory.getLog(SuperAdminServiceImpl.class);
+	private static final Log log = LogFactory
+			.getLog(SuperAdminServiceImpl.class);
+
 	/**
 	 * Shows a list of all Netlims App
 	 * 
@@ -105,17 +107,18 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 
 	/**
 	 * Make a device primary
+	 * 
 	 * @param header
 	 * @return ResponseDTO
 	 */
 	@Transactional
-	@Override 
-	public ResponseDTO makePrimary(HeaderDTO header){
+	@Override
+	public ResponseDTO makePrimary(HeaderDTO header) {
 		ResponseDTO response = new ResponseDTO();
 		response = netMdService.makePrimary(header);
 		return response;
 	}
-	
+
 	/**
 	 * Creates a branch for a lab
 	 * 
@@ -253,13 +256,10 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 					SendMsgCallbackEnum.SUPERADMIN_RESET_PWD.getId(), null);
 			mailThread.addSendMsgObj(obj);
 		} catch (IOException e) {
-			log.error("Error while sending forgot password mail to SuperAdmin ", e);
+			log.error(
+					"Error while sending forgot password mail to SuperAdmin ",
+					e);
 			e.printStackTrace();
-			/*
-			 * ServiceException se = new ServiceException(
-			 * ErrorCodeEnum.EmailSendFailed); se.setDisplayErrMsg(true); throw
-			 * se;
-			 */
 		}
 	}
 
@@ -338,6 +338,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return response;
 	}
 
+	/**
+	 * Method to delete a NetMd account
+	 */
 	@Transactional
 	@Override
 	public ResponseDTO deleteNetMd(int netMdId) {
@@ -345,6 +348,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return response;
 	}
 
+	/**
+	 * Method to create a lab
+	 */
 	@Transactional
 	@Override
 	public ResponseDTO createLab(LabDTO lab) {
@@ -352,6 +358,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return response;
 	}
 
+	/**
+	 * Update a lab
+	 */
 	@Transactional
 	@Override
 	public ResponseDTO updateLab(LabDTO lab) {
@@ -359,6 +368,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return response;
 	}
 
+	/**
+	 * Method to delete a lab
+	 */
 	@Transactional
 	@Override
 	public ResponseDTO deleteLab(int labId) {
@@ -366,12 +378,16 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return response;
 	}
 
+	/**
+	 * Method to view a lab
+	 */
 	@Transactional
 	@Override
 	public LabResponseDTO viewLab(int labId) {
 		LabResponseDTO response = labService.view(labId);
 		return response;
 	}
+
 	/**
 	 * Create netrx account
 	 * 
@@ -384,6 +400,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		ResponseDTO response = netRxService.create(netRx);
 		return response;
 	}
+
 	/**
 	 * Update netrx account
 	 * 
@@ -396,7 +413,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		ResponseDTO response = netRxService.update(netRx);
 		return response;
 	}
-	
+
 	/**
 	 * To retrieve netrx list
 	 * 
@@ -409,6 +426,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		response = netRxService.list(filter);
 		return response;
 	}
+
 	/**
 	 * Checks for the authentication of super admin
 	 * 
@@ -427,7 +445,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		}
 		String userName = login.getUserName().trim();
 		login.setUserName(userName);
-		String encPassword = StringEncoder.encryptWithKey(login.getPassword().trim());
+		String encPassword = StringEncoder.encryptWithKey(login.getPassword()
+				.trim());
 		login.setPassword(encPassword);
 		System.out.println("Password" + encPassword);
 		response = superAdminDao.login(login);
@@ -546,7 +565,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	@Override
 	public ResponseDTO updateNetMdUser(NetMdUserDTO netMdUser) {
 		ResponseDTO response = new ResponseDTO();
-		response = netMdService.updateUser(netMdUser.getHeader(),netMdUser.getUser());
+		response = netMdService.updateUser(netMdUser.getHeader(),
+				netMdUser.getUser());
 		return response;
 	}
 
@@ -557,13 +577,17 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @response ResponseDTO
 	 */
 	@Override
-	public ResponseDTO enableLog(LogDTO log,HttpServletRequest request) {
+	public ResponseDTO enableLog(LogDTO log, HttpServletRequest request) {
 		ResponseDTO response = superAdminDao.enableLog(log, request);
 		return response;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#userLogList(com.nv.youNeverWait.rs.dto.FilterDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#userLogList(com
+	 * .nv.youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
 	public UserLogListResponseDTO userLogList(FilterDTO filterDTO) {
@@ -606,6 +630,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		response.setSuccess(true);
 		return response;
 	}
+
 	/**
 	 * Get Lab list
 	 * 
@@ -620,26 +645,29 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		}
 		List<LogDetail> logDetails = new ArrayList<LogDetail>();
 		for (LogTbl logTbl : logs) {
-			String logOutTime =null;
-			String loginTime=null;
-			String actionDate=null;
-			SimpleDateFormat df =new SimpleDateFormat(Constants.DATE_FORMAT_DAY_FIRST);
-			if(logTbl.getLoginTime()!=null){
+			String logOutTime = null;
+			String loginTime = null;
+			String actionDate = null;
+			SimpleDateFormat df = new SimpleDateFormat(
+					Constants.DATE_FORMAT_DAY_FIRST);
+			if (logTbl.getLoginTime() != null) {
 				loginTime = df.format(logTbl.getLoginTime());
 			}
-			if(logTbl.getLogoutTime()!=null){
+			if (logTbl.getLogoutTime() != null) {
 				logOutTime = df.format(logTbl.getLogoutTime());
 			}
-			if(logTbl.getActionDate()!=null){
+			if (logTbl.getActionDate() != null) {
 				actionDate = df.format(logTbl.getActionDate());
 			}
-			logDetails.add(new LogDetail(logTbl,loginTime,logOutTime,actionDate));
+			logDetails.add(new LogDetail(logTbl, loginTime, logOutTime,
+					actionDate));
 		}
 		response.setLog(logDetails);
 		return response;
 	}
+
 	/**
-	 * Method which clears  NetMd mac Id
+	 * Method which clears NetMd mac Id
 	 * 
 	 * @param header
 	 * @return ResponseDTO
@@ -647,7 +675,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	@Override
 	public ResponseDTO clearNetMdMacId(HeaderDTO header) {
 		ResponseDTO response = new ResponseDTO();
-		response=netMdService.clearMacId(header);
+		response = netMdService.clearMacId(header);
 		return response;
 	}
 
@@ -660,12 +688,12 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	@Override
 	public ResponseDTO clearNetlimsMacId(LabBranchDTO branch) {
 		ResponseDTO response = new ResponseDTO();
-		response=labService.clearMacId(branch);
+		response = labService.clearMacId(branch);
 		return response;
 	}
-	
+
 	/**
-	 * Deletes a netRx 
+	 * Deletes a netRx
 	 * 
 	 * @param netRxId
 	 * @return ResponseDTO
@@ -673,10 +701,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	@Override
 	public ResponseDTO deleteNetRx(int netRxId) {
 		ResponseDTO response = new ResponseDTO();
-		response=netRxService.deleteNetRx(netRxId);
+		response = netRxService.deleteNetRx(netRxId);
 		return response;
 	}
-
 
 	/**
 	 * To retrieve a list of netRx branches which satisfy all filter conditions
@@ -686,11 +713,11 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public NetRxBranchListResponseDTO getNetRxBranchList(FilterDTO filter) {
-		NetRxBranchListResponseDTO response= new NetRxBranchListResponseDTO();
-		response=netRxService.getNetRxBranchList(filter);
+		NetRxBranchListResponseDTO response = new NetRxBranchListResponseDTO();
+		response = netRxService.getNetRxBranchList(filter);
 		return response;
 	}
-	
+
 	/**
 	 * Creates a netRx branch
 	 * 
@@ -699,8 +726,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public ResponseDTO createNetRxBranch(NetRxBranchDetail branch) {
-		ResponseDTO response= new ResponseDTO();
-		response=netRxService.createBranch(branch);
+		ResponseDTO response = new ResponseDTO();
+		response = netRxService.createBranch(branch);
 		return response;
 	}
 
@@ -712,13 +739,13 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public ResponseDTO deleteNetRxBranch(int globalId) {
-		ResponseDTO response= new ResponseDTO();
-		response= netRxService.deleteBranch(globalId);
+		ResponseDTO response = new ResponseDTO();
+		response = netRxService.deleteBranch(globalId);
 		return response;
 	}
-	
-	/**
 
+	/**
+	 * 
 	 * View netRx account
 	 * 
 	 * @param netRxId
@@ -726,14 +753,14 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public NetRxViewResponseDTO viewNetRx(int netRxId) {
-		NetRxViewResponseDTO response= new NetRxViewResponseDTO();
-		response= netRxService.viewNetRx(netRxId);
+		NetRxViewResponseDTO response = new NetRxViewResponseDTO();
+		response = netRxService.viewNetRx(netRxId);
 		return response;
 	}
-	
-	/**
 
-	 * View netRx  branch account
+	/**
+	 * 
+	 * View netRx branch account
 	 * 
 	 * @param netrxBranchId
 	 * @return NetRxBranchResponseDTO
@@ -741,7 +768,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	@Override
 	public NetRxBranchResponseDTO viewNetRxBranch(int netrxBranchId) {
 		NetRxBranchResponseDTO response = new NetRxBranchResponseDTO();
-		response= netRxService.viewBranch(netrxBranchId);
+		response = netRxService.viewBranch(netrxBranchId);
 		return response;
 	}
 
@@ -753,41 +780,42 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public ResponseDTO updateNetRxBranch(NetRxBranchDetail branch) {
-		ResponseDTO response= new ResponseDTO();
+		ResponseDTO response = new ResponseDTO();
 		response = netRxService.updateNetRxBranch(branch);
 		return response;
 	}
-	
+
 	/**
 	 * To get the status of user enable log
 	 * 
 	 */
 	@Override
 	public EnableLogStatusResponseDTO enableLogStatus() {
-		EnableLogStatusResponseDTO  response= superAdminDao.enableLogStatus();
+		EnableLogStatusResponseDTO response = superAdminDao.enableLogStatus();
 		return response;
 	}
 
 	/**
-	 * To show all the total orders and its related details of each branch in the lab
+	 * To show all the total orders and its related details of each branch in
+	 * the lab
 	 * 
 	 * @param globalId
 	 * @return BranchOrdersResponseDTO
 	 */
 	@Override
 	public BranchOrdersResponseDTO viewBranchOrders(int globalId) {
-		BranchOrdersResponseDTO response= new BranchOrdersResponseDTO();
-		response=labService.viewBranchOrders(globalId);
-		return response;
-	}
-	@Override
-	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO) {
-		BranchOrdersResponseDTO response= new BranchOrdersResponseDTO();
-		response= labService.orderList(orderDTO);
+		BranchOrdersResponseDTO response = new BranchOrdersResponseDTO();
+		response = labService.viewBranchOrders(globalId);
 		return response;
 	}
 
-	
+	@Override
+	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO) {
+		BranchOrdersResponseDTO response = new BranchOrdersResponseDTO();
+		response = labService.orderList(orderDTO);
+		return response;
+	}
+
 	/**
 	 * @return the netMdService
 	 */
@@ -847,7 +875,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public void setLabService(LabService labService) {
 		this.labService = labService;
 	}
-	
+
 	/**
 	 * @return the mailFrom
 	 */
@@ -863,7 +891,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	}
 
 	/**
-	 * @param netlimsServerIpAddress the netlimsServerIpAddress to set
+	 * @param netlimsServerIpAddress
+	 *            the netlimsServerIpAddress to set
 	 */
 	public void setNetlimsServerIpAddress(String netlimsServerIpAddress) {
 		this.netlimsServerIpAddress = netlimsServerIpAddress;
@@ -900,7 +929,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	}
 
 	/**
-	 * @param queryBuilderFactory the queryBuilderFactory to set
+	 * @param queryBuilderFactory
+	 *            the queryBuilderFactory to set
 	 */
 	public void setQueryBuilderFactory(QueryBuilderFactory queryBuilderFactory) {
 		this.queryBuilderFactory = queryBuilderFactory;
@@ -914,7 +944,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	}
 
 	/**
-	 * @param filterFactory the filterFactory to set
+	 * @param filterFactory
+	 *            the filterFactory to set
 	 */
 	public void setFilterFactory(FilterFactory filterFactory) {
 		this.filterFactory = filterFactory;
@@ -928,12 +959,11 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	}
 
 	/**
-	 * @param netRxService the netRxService to set
+	 * @param netRxService
+	 *            the netRxService to set
 	 */
 	public void setNetRxService(NetRxService netRxService) {
 		this.netRxService = netRxService;
 	}
 
-
-	
 }

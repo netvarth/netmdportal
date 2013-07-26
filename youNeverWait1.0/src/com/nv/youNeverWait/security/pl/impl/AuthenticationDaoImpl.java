@@ -31,7 +31,6 @@ import com.nv.youNeverWait.pl.entity.NetrxTbl;
 import com.nv.youNeverWait.pl.entity.NetrxUserTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
-import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
@@ -82,16 +81,6 @@ AuthenticationDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		/*	if (loginDetails != null) {
-			login.setSuccess(true);
-		} else {
-			ErrorDTO error = new ErrorDTO();
-			error.setErrCode(ErrorCodeEnum.UserNull.getErrCode());
-			error.setDisplayErrMsg(true);
-			login.setError(error);
-			login.setSuccess(false);
-			return login;
-		}*/
 		login.setSuccess(true);
 		return login;
 
@@ -116,16 +105,6 @@ AuthenticationDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		/*if (loginDetails != null) {
-			login.setSuccess(true);
-		} else {
-			ErrorDTO error = new ErrorDTO();
-			error.setErrCode(ErrorCodeEnum.UserNull.getErrCode());
-			error.setDisplayErrMsg(true);
-			login.setError(error);
-			login.setSuccess(false);
-			return login;
-		}*/
 		login.setSuccess(true);
 		return login;
 	}
@@ -171,16 +150,6 @@ AuthenticationDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		/*if (loginDetails != null) {
-			login.setSuccess(true);
-		} else {
-			ErrorDTO error = new ErrorDTO();
-			error.setErrCode(ErrorCodeEnum.UserNull.getErrCode());
-			error.setDisplayErrMsg(true);
-			login.setError(error);
-			login.setSuccess(false);
-			return login;
-		}*/
 		login.setSuccess(true);
 		return login;
 	}

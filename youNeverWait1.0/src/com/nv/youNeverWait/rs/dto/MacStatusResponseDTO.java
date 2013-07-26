@@ -1,3 +1,10 @@
+
+/**
+ * 
+ * MacStatusResponseDTO.java
+ *
+ * @author Luciya Jose
+ */
 package com.nv.youNeverWait.rs.dto;
 
 public class MacStatusResponseDTO {

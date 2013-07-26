@@ -334,9 +334,9 @@ border-radius: 6px;
 	border-bottom: solid #0a63bd 1px;
 	border-left: solid #0a63bd 1px;
 	border-right: solid #0a63bd 1px;
-	margin-left: 4%;
-	margin-right: 4%;
-	margin-top: -2%;
+	margin-left: 60px;
+	margin-right: 60px;
+	margin-top: -15px;
     border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
 	} 
@@ -1288,7 +1288,7 @@ color:blue;
 	
 #tabs-1>#tabs-nohdr .ui-tabs-nav { 
 	list-style: none; 
-	background: #33A1DE;
+	background: whitesmoke;
 	border-bottom: 1px solid #ddd; 
 	padding:0 10px 0 0;
 
@@ -1317,13 +1317,12 @@ color:blue;
 	margin:5px 8px 0 0;
 }
 #tabs-1>#tabs-nohdr .ui-tabs-nav li { display: inline-block;}
-#tabs-1>#tabs-nohdr .ui-tabs-nav li:first-child a { -moz-border-radius: 3px 0 0 0; -webkit-border-radius: 3px 0 0 0; border-radius: 3px 0 0 0; }
+/*#tabs-1>#tabs-nohdr .ui-tabs-nav li:first-child a { -moz-border-radius: 3px 0 0 0; -webkit-border-radius: 3px 0 0 0; border-radius: 3px 0 0 0; }*/
 #tabs-1>#tabs-nohdr .ui-tabs-nav li a { 
 	display: block; padding: 10px 20px; font-weight: bold;   
-	border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; 
-}
+	}
 #tabs-1>#tabs-nohdr .ui-tabs-nav li a:hover { text-decoration: none; background: #BFEFFF; }
-#tabs-1>#tabs-nohdr .ui-tabs-nav li.ui-state-active a { background: #87CEEB; color: #333; border-bottom: 1px solid #fff; }
+#tabs-1>#tabs-nohdr .ui-tabs-nav li.ui-state-active a { background:#F8F8FF; color: #333; border-bottom: 1px solid #fff; }
 #tabs-1>#tabs-nohdr .ui-tabs-hide { display: none; }
 #tabs-1>#tabs-nohdr .ui-tabs-panel { padding: 15px; background: #fff; }
 #tabs-1>#tabs-nohdr .ui-tabs-panel ul { margin: 10px;}

@@ -1,5 +1,5 @@
 /**
- * 
+ * ResultRetrievalResponseDTO.java
  */
 package com.nv.youNeverWait.rs.dto;
 

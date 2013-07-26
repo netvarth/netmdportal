@@ -12,49 +12,9 @@ import java.util.List;
 
 public class RetrievalDoctorResponseDTO {
 	private List<DoctorDetail> retrieveDoctorsList = new ArrayList<DoctorDetail>();
-//	private List<DoctorDetail> retrieveUpdatedDoctors = new ArrayList<DoctorDetail>();
-//	private List<DoctorDetail> retrieveDeletedDoctors = new ArrayList<DoctorDetail>();
 	private ErrorDTO error;
 	private boolean success;
-//	/**
-//	 * @return the retrieveCreatedDoctors
-//	 */
-//	public List<DoctorDetail> getRetrieveCreatedDoctors() {
-//		return retrieveCreatedDoctors;
-//	}
-//	/**
-//	 * @param retrieveCreatedDoctors the retrieveCreatedDoctors to set
-//	 */
-//	public void setRetrieveCreatedDoctors(List<DoctorDetail> retrieveCreatedDoctors) {
-//		this.retrieveCreatedDoctors = retrieveCreatedDoctors;
-//	}
-//	
-//	/**
-//	 * @return the retrieveUpdatedDoctors
-//	 */
-//	public List<DoctorDetail> getRetrieveUpdatedDoctors() {
-//		return retrieveUpdatedDoctors;
-//	}
-//	/**
-//	 * @param retrieveUpdatedDoctors the retrieveUpdatedDoctors to set
-//	 */
-//	public void setRetrieveUpdatedDoctors(List<DoctorDetail> retrieveUpdatedDoctors) {
-//		this.retrieveUpdatedDoctors = retrieveUpdatedDoctors;
-//	}
-//	/**
-//	 * @return the retrieveDeletedDoctors
-//	 */
-//	public List<DoctorDetail> getRetrieveDeletedDoctors() {
-//		return retrieveDeletedDoctors;
-//	}
-//	/**
-//	 * @param retrieveDeletedDoctors the retrieveDeletedDoctors to set
-//	 */
-//	public void setRetrieveDeletedDoctors(List<DoctorDetail> retrieveDeletedDoctors) {
-//		this.retrieveDeletedDoctors = retrieveDeletedDoctors;
-//	}
 
-	
 	/**
 	 * @return the error
 	 */

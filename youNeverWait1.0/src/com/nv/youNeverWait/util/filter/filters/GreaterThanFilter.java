@@ -73,6 +73,7 @@ public class GreaterThanFilter implements Filter{
 	 *
 	 */
 	public Predicate createPredicate(QueryBuilder queryBuilder,Path<?> path,Class<?> type, String value){
+		String value1="";
 		Predicate predicate = null;
 		if(type.getSimpleName().equals("Integer")){
 			Path<Integer> pathInt = (Path<Integer>) path;
@@ -88,10 +89,11 @@ public class GreaterThanFilter implements Filter{
 			Path<Date> pathDate = (Path<Date>) path;
 			SimpleDateFormat df =new SimpleDateFormat(Constants.DATE_FORMAT_WITH_TIME);
 			Date date =null;
+			
 			try {
-				value = value.concat(" 23:59:59");
-				System.out.println(value);
-				date = df.parse(value);
+				value1 = value.concat(" 23:59:59");
+				System.out.println(value1);
+				date = df.parse(value1);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}

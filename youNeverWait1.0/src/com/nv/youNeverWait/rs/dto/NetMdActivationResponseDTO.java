@@ -17,8 +17,61 @@ public class NetMdActivationResponseDTO {
 	private NetMdBranchDTO branch;
 	private NetMdDTO netmd;
 	private List<NetMdUserDetail> user = new ArrayList<NetMdUserDetail>();
+	private List<DoctorDetail> retrieveDoctorsList = new ArrayList<DoctorDetail>();
+	private List<PatientDetail> retrievePatients = new ArrayList<PatientDetail>();
+	private List<ScheduleDetail> retrieveScheduleList= new ArrayList<ScheduleDetail>();
+	private List<AppointmentDTO> retrieveAppointments = new ArrayList<AppointmentDTO>();
 	private boolean primary;
 	
+	
+	/**
+	 * @return the retrieveAppointments
+	 */
+	public List<AppointmentDTO> getRetrieveAppointments() {
+		return retrieveAppointments;
+	}
+	/**
+	 * @param retrieveAppointments the retrieveAppointments to set
+	 */
+	public void setRetrieveAppointments(List<AppointmentDTO> retrieveAppointments) {
+		this.retrieveAppointments = retrieveAppointments;
+	}
+	/**
+	 * @return the retrieveDoctorsList
+	 */
+	public List<DoctorDetail> getRetrieveDoctorsList() {
+		return retrieveDoctorsList;
+	}
+	/**
+	 * @param retrieveDoctorsList the retrieveDoctorsList to set
+	 */
+	public void setRetrieveDoctorsList(List<DoctorDetail> retrieveDoctorsList) {
+		this.retrieveDoctorsList = retrieveDoctorsList;
+	}
+	/**
+	 * @return the retrievePatients
+	 */
+	public List<PatientDetail> getRetrievePatients() {
+		return retrievePatients;
+	}
+	/**
+	 * @param retrievePatients the retrievePatients to set
+	 */
+	public void setRetrievePatients(List<PatientDetail> retrievePatients) {
+		this.retrievePatients = retrievePatients;
+	}
+	/**
+	 * @return the retrieveScheduleList
+	 */
+	public List<ScheduleDetail> getRetrieveScheduleList() {
+		return retrieveScheduleList;
+	}
+	/**
+	 * @param retrieveScheduleList the retrieveScheduleList to set
+	 */
+	public void setRetrieveScheduleList(List<ScheduleDetail> retrieveScheduleList) {
+		this.retrieveScheduleList = retrieveScheduleList;
+	}
 	/**
 	 * @return the primary
 	 */

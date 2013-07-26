@@ -28,12 +28,26 @@ public class SyncResponseDTO {
 	private RetrievalPatientResponseDTO retrievalPatientDTO = new RetrievalPatientResponseDTO();
 	private RetrievalScheduleResponseDTO retrievalScheduleList= new RetrievalScheduleResponseDTO();
 	private List<RetrieveResultsResponseDTO> retrieveResults= new ArrayList<RetrieveResultsResponseDTO>();
+	private RetrievalAppointmentResponseDTO retrievalAppointmentListForPrimary = new RetrievalAppointmentResponseDTO();
 	private String lastSynctime;
 	private ErrorDTO error;
 	private boolean success;
 	
 	
 	
+	/**
+	 * @return the retrievalAppointmentListForPrimary
+	 */
+	public RetrievalAppointmentResponseDTO getRetrievalAppointmentListForPrimary() {
+		return retrievalAppointmentListForPrimary;
+	}
+	/**
+	 * @param retrievalAppointmentListForPrimary the retrievalAppointmentListForPrimary to set
+	 */
+	public void setRetrievalAppointmentListForPrimary(
+			RetrievalAppointmentResponseDTO retrievalAppointmentListForPrimary) {
+		this.retrievalAppointmentListForPrimary = retrievalAppointmentListForPrimary;
+	}
 	/**
 	 * @return the retrieveResults
 	 */
