@@ -151,19 +151,19 @@ public class ScheduleValidator {
 	public void validateScheduleSeriesDetails(SeriesDTO series) {
 		if (series.getSeriesId() <= 0) {
 			ServiceException se = new ServiceException(
-					ErrorCodeEnum.OccuranceTypeNull);
+					ErrorCodeEnum.InvalidSeriesId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
 		if (series.getOccuranceType() == null
-				|| series.getOccuranceType().equals("")) {
+				&& series.getOccuranceType().equals("")) {
 
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.OccuranceTypeNull);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (series.getRepeat() == null || series.getRepeat().equals("")) {
+		if (series.getRepeat() == null && series.getRepeat().equals("")) {
 
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.RepeatTypeNull);
