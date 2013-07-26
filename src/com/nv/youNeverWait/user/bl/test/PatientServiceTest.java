@@ -238,12 +238,12 @@ public class PatientServiceTest {
 		Appointment appointment = new Appointment();
 		AppointmentDetailsDTO details = new AppointmentDetailsDTO();
 		HeaderDTO header = new HeaderDTO();
-		details.setScheduleId(53);
-		details.setDoctorId(27);
-		details.setPatientId(61);
-		details.setPatientName("jayaram");
-		details.setStartDate("2013-05-07");
-		details.setStartTime("10:00 am");
+		details.setScheduleId(166);
+		details.setDoctorId(29);
+		details.setPatientId(5);
+		details.setPatientName("asha");
+		details.setStartDate("2013-10-11");
+		details.setStartTime("11:12 am");
 		appointment.setAppointmentDetails(details);		
 		header.setNetMdId(3);
 		header.setNetMdBranchId(5);
