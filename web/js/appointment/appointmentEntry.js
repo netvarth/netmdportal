@@ -81,7 +81,7 @@ var yer=monyersplit[1];
 						var dayofschedule=$j(this).text();
 								if(dayvalue==dayofschedule){
 									if(patntName==patientName){
-									alert("in ur appoint");
+									//alert("in ur appoint");
 									$j(this).nextAll('div.fc-day-content').text("Your Appointment");
 									}
 								
