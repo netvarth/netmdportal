@@ -80,7 +80,7 @@ function validateNewNetmdAccBranch(){
 	
 	if((isEmpty(organizationName)))
 	OrgNregValid =  checkRegexp(organizationName, /^[a-zA-Z]'?([a-zA-Z]|\.| |-)+$/, constants_organizationnameInvalidMessage ,$j('#errorDivNewNetmdData'));
-	OrgNregValid=OrgNregValid&&MobValid;
+	OrgNregValid=OrgNregValid&&NoDevices;
 	
 	if((isEmpty(phone)))
 	OrgPhregValid= checkRegexp(phone,/^[0-10]\d{10}$/,constants_phoneInvalid,$j('#errorDivNewNetmdData'));
