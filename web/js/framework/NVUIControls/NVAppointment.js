@@ -24,7 +24,7 @@ this.result =function(){
           div.append(subdiv);			
 		 }
 		 else{div.append(todaydiv);
-			var subdiv=$j('<div style="font-weight: bold;" align="center">There are no appointments</div>');
+			var subdiv=$j('<div style="font-weight: bold; margin-top:-2%" align="center">There are no appointments</div>');
 				div.append(subdiv);	
 		 }
 		 if((contents.currentWeeksAppointment)!=""){
@@ -45,7 +45,7 @@ this.result =function(){
 		 div.append(subdivcurr);
 		 }
 		 else{div.append(currweekdiv);
-		 var subdiv=$j('<div style="font-weight: bold;" align="center">There are no appointments</div>');
+		 var subdiv=$j('<div style="font-weight: bold;margin-top:-2%" align="center">There are no appointments</div>');
 				div.append(subdiv);	
 		 }
 		
@@ -67,7 +67,7 @@ this.result =function(){
 		 div.append(subdivfutur);
 		 }
 		 else{div.append(futurediv);
-		 var subdiv=$j('<div style="font-weight: bold;" align="center">There are no appointments</div>');
+		 var subdiv=$j('<div style="font-weight: bold;margin-top:-2%" align="center">There are no appointments</div>');
 				div.append(subdiv);	
 		 }
 		

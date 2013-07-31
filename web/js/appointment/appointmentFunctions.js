@@ -123,6 +123,8 @@
 	$j('.fc-header-left .fc-button-agendaWeek ').die('click').live("click",function() {	
 	$j('#AppointmentPTBContainer #btn_delete_ptb_id').hide();
 	$j('#AppointmentPTBContainer #btn_view_ptb_id').hide();
+	$j('.fc-agenda-slots tr th').nextAll('td').children('div').text("");
+	$j('.fc-agenda-slots tr th').nextAll('td').removeAttr('style');
 	});	
 	
 	$j('.fc-agenda-slots tbody tr td').die('click').live("click",function() {	
