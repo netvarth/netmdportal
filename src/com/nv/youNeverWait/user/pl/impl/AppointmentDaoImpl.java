@@ -368,6 +368,8 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 				Constants.DATE_FORMAT_WITHOUT_TIME);
 		DateFormat df3 = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		DateFormat df4 = new SimpleDateFormat(
+				Constants.NEWTIME_FORMAT_FOR_APPOINTMENT);
 		Date startsDate;
 		Date startTime;
 
@@ -431,11 +433,12 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 			throw se;
 
 		}
+		
 		/**
 		 * combining appointmnet date and starting time to fill the appointment
 		 * time field in patient appointmnet tbl
 		 **/
-		String newAppointmentDateTime = startsDate + "" + startTime;
+		String newAppointmentDateTime = appointment.getAppointmentDetails().getStartDate() + " " + df4.format(startTime);
 		Date newAppointmentTime = null;
 		try {
 			newAppointmentTime = df3.parse(newAppointmentDateTime);
@@ -511,6 +514,8 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 				Constants.DATE_FORMAT_WITHOUT_TIME);
 		DateFormat df3 = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		DateFormat df4 = new SimpleDateFormat(
+				Constants.NEWTIME_FORMAT_FOR_APPOINTMENT);
 		Date newAppointmentTime = null;
 		PatientAppointmentTbl patientAppointmentTbl;
 		if (appointment.getHeader().getMacId() != null
@@ -578,7 +583,8 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 			 * combining appointmnet date and starting time to fill the appointment
 			 * time field in patient appointmnet tbl
 			 **/
-			String newAppointmentDateTime = df.parse(appointment.getAppointmentDetails().getStartDate()) + "" + df1.parse(appointment.getAppointmentDetails().getStartTime());
+			String newAppointmentDateTime = appointment.getAppointmentDetails().getStartDate() + " " + df4.format(df1.parse(appointment.getAppointmentDetails()
+					.getStartTime()));
 			newAppointmentTime = df3.parse(newAppointmentDateTime);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
