@@ -9,6 +9,7 @@ package com.nv.youNeverWait.common;
 
 
 public class Constants {
+	public static final String NEWTIME_FORMAT_FOR_APPOINTMENT ="HH:mm:ss";
 	public static final String NEWDATE_FORMAT_FOR_APPOINTMENT ="E dd/MMM/yyyy";
 	public static final String DATE_FORMAT_WITH_TIME = "hh:mm a";
 	public static final String TIME="HH:mm";
