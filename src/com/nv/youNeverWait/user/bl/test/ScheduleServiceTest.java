@@ -67,13 +67,13 @@ public class ScheduleServiceTest {
 		SeriesDTO series = new SeriesDTO();
 		series.setOccuranceType("None");
 		series.setRepeat("Daily");
-		series.setEndDate("2014-10-11");
+		series.setEndDate("2015-10-11");
 		series.setSeriesId(1);
 		scheduleDetail.setSeries(series);
 		scheduleDetail.setDoctorGlobalId(1);
 		scheduleDetail.setScheduleStatus("Vacation");
 		scheduleDetail.setEndTime("02:10 pm");
-		scheduleDetail.setStartDate("2013-10-11");
+		scheduleDetail.setStartDate("2014-10-11");
 		scheduleDetail.setStartTime("11:12 am");
 		scheduleDetail.setScheduleStatus("Vacation");
 		schedule.setScheduleDetail(scheduleDetail);
