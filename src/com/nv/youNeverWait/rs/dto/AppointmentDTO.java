@@ -87,7 +87,7 @@ public class AppointmentDTO {
 		this.patientId = appointmnets.getPatientTbl().getId();
 		this.doctorId = appointmnets.getDoctorTbl().getId();
 		this.scheduleId = appointmnets.getDoctorScheduleTbl().getId();
-		this.startDate = df.format(appointmnets.getDate());
+		this.startDate = df.format(appointmnets.getAppointmentDate());
 		this.startTime = df1.format(appointmnets.getStartingTime());
 		this.createdDateTime = df2.format(appointmnets.getCreateDateTime());
 		this.updatedDateTime = df2.format(appointmnets.getUpdateDateTime());

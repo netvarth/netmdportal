@@ -344,29 +344,30 @@ public class AppointmentServiceImpl implements AppointmentService {
 		}
 		List<AppointmentsDTO> appointmentsDTO = new ArrayList<AppointmentsDTO>();
 		for (PatientAppointmentTbl appointmnt : appointments) {
-
-			try {
-				Date CurrentDateTime = df.parse(df.format(new Date()));
-				if (appointmnt.getDate().before(new Date())) {
-					appointmentsDTO.add(new AppointmentsDTO(appointmnt));
-				} else {
-					if (appointmnt.getDate().equals(new Date())) {
-						if (appointmnt.getStartingTime()
-								.before(CurrentDateTime))
-							appointmentsDTO
-									.add(new AppointmentsDTO(appointmnt));
-					}
-				}
-			} catch (ParseException e) {
-				e.printStackTrace();
-				ServiceException se = new ServiceException(
-						ErrorCodeEnum.InvalidDateFormat);
-				se.setDisplayErrMsg(true);
-				throw se;
-
-			}
+			appointmentsDTO.add(new AppointmentsDTO(appointmnt));
+//			try {
+//				Date CurrentDateTime = df.parse(df.format(new Date()));
+//				if (appointmnt.getAppointmentDate().before(new Date())) {
+//					appointmentsDTO.add(new AppointmentsDTO(appointmnt));
+//				} else {
+//					if (appointmnt.getDate().equals(new Date())) {
+//						if (appointmnt.getStartingTime()
+//								.before(CurrentDateTime))
+//							appointmentsDTO
+//									.add(new AppointmentsDTO(appointmnt));
+//					}
+//				}
+//			} catch (ParseException e) {
+//				e.printStackTrace();
+//				ServiceException se = new ServiceException(
+//						ErrorCodeEnum.InvalidDateFormat);
+//				se.setDisplayErrMsg(true);
+//				throw se;
+//
+//			}
 
 		}
+		
 		response.setPastAppointments(appointmentsDTO);
 		return response;
 	}
