@@ -28,7 +28,8 @@ public class Query {
 	public static final String RETRIEVE_APPOINTMENTS = "from PatientAppointmentTbl as appointment where appointment.updateDateTime>:param1 and appointment.updateDateTime<=:param2 and appointment.netmdBranchTbl.id=:param3 and appointment.netmdPassphraseTbl.id!=:param4";
 	public static final String RETRIEVE_APPOINTMENTS_CREATED_IN_PORTAL = "from PatientAppointmentTbl as appointment where appointment.updateDateTime>:param1 and appointment.updateDateTime<=:param2 and appointment.netmdBranchTbl.id=:param3 and appointment.netmdPassphraseTbl.id is null";
 	public static final String RETRIEVE_APPOINTMENTS_FOR_PRIMARY ="from PatientAppointmentTbl as appointment where appointment.updateDateTime>:param1 and appointment.updateDateTime<=:param2 and appointment.netmdBranchTbl.id=:param3 and appointment.appointmnetLevel=true";
-	public static final String GET_APPOINTMENTS = "from PatientAppointmentTbl as appointment where appointment.updateDateTime>=:param1 and appointment.netmdPassphraseTbl.id=:param2 and appointment.netmdBranchTbl.id=:param3 and appointment.updateDateTime<=:param4 order by updateDateTime";
+	public static final String GET_APPOINTMENTS = "from PatientAppointmentTbl as appointment where appointment.updateDateTime>=:param1 and appointment.netmdPassphraseTbl.id=:param2 and appointment.netmdBranchTbl.id=:param3 and appointment.updateDateTime<=:param4 and appointment.appointmnetLevel=false order by updateDateTime";
+	
 	
 	/* NetmdUserTbl */
 	public static final String GET_USER = "from NetmdUserTbl as user where user.netmdLoginTbl.id= :param1";
