@@ -63,12 +63,12 @@ function validateNetlimsAccChangePassword(){
 	/*if((isEmpty(userName)))
 	userNameregValid =  checkRegexp(userName, /^[a-zA-Z]'?([a-zA-Z]|\.| |-)+$/, constants_userNameInvalidMessage ,$j('#errorDivNewNetlimsData'));
 	userNameregValid=userNameregValid&&confirmPassword;*/
-	
+	if((newPassword1!="")&&(confirmPassword1!="")){
 	if(newPassword1!=confirmPassword1)
 	{
 		createError(constants_passwordMismatch,newPassword);
 		PwdCompValid=false;
-	}
+	}}
 	PwdCompValid=PwdCompValid&&confirmPassword;
 	
 	bValid=bValid && PwdCompValid;
