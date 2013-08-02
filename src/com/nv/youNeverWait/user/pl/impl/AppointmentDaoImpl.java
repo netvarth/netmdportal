@@ -130,8 +130,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		List<PatientAppointmentTbl> appointmentList = retrieveAppointmentsForPrimary(
-				lastSyncTime, netMdBranchId, currentSyncTime);
+		List<PatientAppointmentTbl> appointmentList = retrieveAppointmentsForPrimary(lastSyncTime, netMdBranchId, currentSyncTime);
 		// List<PatientAppointmentTbl> appointmentListPortal =
 		// retrieveAppointmentsCreatedInPortal(
 		// lastSyncTime, netMdBranchId, currentSyncTime);
