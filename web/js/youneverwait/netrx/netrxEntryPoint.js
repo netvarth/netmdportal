@@ -21,7 +21,7 @@ $j(document).ready(function() {
 			maxPages = parseInt(maxRecords/interval) + 1;
 		else
 			maxPages = parseInt(maxRecords/interval);	
-			
+		setPaginationFields(curPage, maxPages, pgTableContainer);	
 			
 				
 	$j('#netrxPTBContainer #btn_new_ptb_id').die('click').live("click",function() {
