@@ -219,7 +219,7 @@
 		}
 			
 	else {
-			updateTipsNew(getErrorName(appointmentResponse.error),$j('#error'));
+			showTip(getErrorName(appointmentResponse.error));
 		  		   $j("#error").delay(1100).fadeOut(1100);
 		}		
 	 
