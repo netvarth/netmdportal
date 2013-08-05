@@ -50,6 +50,24 @@ public class NetMdResource {
 	private LogService logService;
 
 	/**
+	 * Shows Privacy and policy details
+	 * @return pricing html
+	 */
+	@RequestMapping(value = "privacyPolicy", method = RequestMethod.GET)
+	public String privacyPolicy() {
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		logService
+				.saveUserDetails(request.getRemoteAddr(), null,
+						LogUserTypeEnum.Nil.getDisplayName(), null, null,
+						ApplicationNameEnum.NetMd.getDisplayName(),
+						Constants.NETMD_POLICY);
+
+		return "NetmdPrivacyPolicy";
+	}
+	
+	/**
 	 * To show login page for netmd user
 	 * 
 	 * @return netMdLoginPage.html
