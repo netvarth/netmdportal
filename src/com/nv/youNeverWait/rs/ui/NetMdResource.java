@@ -64,7 +64,7 @@ public class NetMdResource {
 						ApplicationNameEnum.NetMd.getDisplayName(),
 						Constants.NETMD_POLICY);
 
-		return "NetmdPrivacyPolicy";
+		return "privacyPolicynetMd";
 	}
 	
 	/**
