@@ -99,5 +99,6 @@ public class Constants {
 	public static final String CONTACT_US = "Show Contact Page";
 	public static final String PRICING = "Shows NetLims Pricing Page";
 	public static final String POLICY = "Shows NetLims privacyPolicy page";
+	public static final String NETMD_POLICY = "Shows NetMd privacyPolicy page";
 	
 }
