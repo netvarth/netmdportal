@@ -76,7 +76,7 @@ public class Query {
 	/* DoctorScheduleTbl */
 	public static final String GET_SCHEDULE_BY_DOCTORID = "  from DoctorScheduleTbl as schedule where schedule.doctorTbl.id= :param1";
 	public static final String GET_SCHEDULE_BY_DATE_DOC = "from DoctorScheduleTbl as schedule where schedule.date=:param1 and schedule.doctorTbl.id=:param2 and schedule.status='active' ";
-	public static final String GET_SCHEDULE_BY_DATE_DOC_BRANCH = "from DoctorScheduleTbl as schedule where schedule.date=:param1 and schedule.netmdBranchTbl.id=:param2 and schedule.doctorTbl.id=:param3";
+	public static final String GET_SCHEDULE_BY_DATE_DOC_BRANCH = "from DoctorScheduleTbl as schedule where schedule.date=:param1 and schedule.netmdBranchTbl.id=:param2 and schedule.doctorTbl.id=:param3 and schedule.status='active'";
 	public static final String GET_SCHEDULE = "from DoctorScheduleTbl as schedule where schedule.doctorTbl.id=:param1 and schedule.date=:param2 and schedule.status='active'";
 	public static final String GET_SCHEDULE_BY_NETMD_BRANCH = "from DoctorScheduleTbl as schedule where schedule.netmdBranchTbl.id=:param1";
 	public static final String RETRIEVE_SCHEDULES = "from DoctorScheduleTbl as schedule where  schedule.updateDateTime>:param1 and schedule.netmdPassphraseTbl.id!=:param2 and schedule.netmdBranchTbl.id=:param3 and schedule.updateDateTime<:param4 order by updateDateTime";
