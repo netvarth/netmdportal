@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
-import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ScheduleDTO;
 import com.nv.youNeverWait.rs.dto.ScheduleListDTO;
 import com.nv.youNeverWait.rs.dto.ScheduleResponseDTO;
