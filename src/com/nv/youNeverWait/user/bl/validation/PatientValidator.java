@@ -24,41 +24,45 @@ import com.nv.youNeverWait.util.filter.validation.FilterValidator;
  *
  */
 public class PatientValidator extends FilterValidator{
-	public ErrorDTO validateCreatePatient(PatientDetail patient, HeaderDTO header){
+	public void validateCreatePatient(PatientDetail patient, HeaderDTO header){
 
-		ErrorDTO error=new ErrorDTO();
-		ValidateHeaderDetails(header);
-
+		ValidateHeaderDetails(header);  // validates header info
 		if(!isValidName(patient.getFirstName())){
-			error.setErrCode(ErrorCodeEnum.InvalidName.getErrCode());
-			error.setDisplayErrMsg(true);
-			return error;
+			
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidName);
+			se.setDisplayErrMsg(true);
+			throw se;
 		}
 
 		if(patient.getEmail()!=null && !patient.getEmail().equals("")){
 			if(!patient.getEmail().matches("[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})")){
 
-				error.setErrCode(ErrorCodeEnum.InvalidMailId.getErrCode());
-				error.setDisplayErrMsg(true);
-				return error;
+				
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidMailId);
+				se.setDisplayErrMsg(true);
+				throw se;
 			}
 		}
 		if(patient.getPhone()!=null && !patient.getPhone().equals("")){
 			if(!patient.getPhone().matches("^0?[1-9]{1}[0-9]{9}$")){
-				error.setErrCode(ErrorCodeEnum.InvalidPhoneFormat.getErrCode());
-				error.setDisplayErrMsg(false);
-				return error;
+				
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidPhoneFormat);
+				se.setDisplayErrMsg(true);
+				throw se;
 			}
 		}
 		if(patient.getMobile()!=null && !patient.getMobile().equals("")){
 			if(!patient.getMobile().matches("\\d{10}")){
-				error.setErrCode(ErrorCodeEnum.InvalidMobileFormat.getErrCode());
-				error.setDisplayErrMsg(false);
-				return error;
+				
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidMobileFormat);
+				se.setDisplayErrMsg(true);
+				throw se;
 			}
 		}
-
-		return null;
 	}
 	/**
 	 * Validate login details
@@ -145,38 +149,46 @@ public class PatientValidator extends FilterValidator{
 	 * @param header
 	 * @return
 	 */
-	public ErrorDTO validateUpdatePatient(PatientDetail patient, HeaderDTO header){
-		ErrorDTO error=new ErrorDTO();
+	public void validateUpdatePatient(PatientDetail patient, HeaderDTO header){
+	
 		ValidateGlobalId(patient.getGlobalId(), header);
 
 		if(!isValidName(patient.getFirstName())){
-			error.setErrCode(ErrorCodeEnum.InvalidName.getErrCode());
-			error.setDisplayErrMsg(true);
-			return error;
+			
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidName);
+			se.setDisplayErrMsg(true);
+			throw se;
 		}
 		if(patient.getEmail()!=null && !patient.getEmail().equals("")){
 			if(!patient.getEmail().matches("[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})")){
 
-				error.setErrCode(ErrorCodeEnum.InvalidMailId.getErrCode());
-				error.setDisplayErrMsg(true);
-				return error;
+				
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidMailId);
+				se.setDisplayErrMsg(true);
+				throw se;
 			}
 		}
 		if(patient.getPhone()!=null && !patient.getPhone().equals("")){
 			if(!patient.getPhone().matches("^0?[1-9]{1}[0-9]{9}$")){
-				error.setErrCode(ErrorCodeEnum.InvalidPhoneFormat.getErrCode());
-				error.setDisplayErrMsg(false);
-				return error;
+				
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidPhoneFormat);
+				se.setDisplayErrMsg(true);
+				throw se;
 			}
 		}
 		if(patient.getMobile()!=null && !patient.getMobile().equals("")){
 			if(!patient.getMobile().matches("\\d{10}")){
-				error.setErrCode(ErrorCodeEnum.InvalidMobileFormat.getErrCode());
-				error.setDisplayErrMsg(false);
-				return error;
+				
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidMobileFormat);
+				se.setDisplayErrMsg(true);
+				throw se;
 			}
 		}
-		return null;
+		
 	}
 
 	private boolean isValidName(String value) {

@@ -47,20 +47,20 @@ public class SuperAdminValidator extends FilterValidator {
 	 * @param login
 	 * @return ErrorDTO
 	 */
-	public ErrorDTO validateLogin(LoginDTO login){
-		ErrorDTO error=new ErrorDTO();
+	public void validateLogin(LoginDTO login){
+		
 		if(!isValidExpValue(login.getUserName())){
-			error.setErrCode(ErrorCodeEnum.UserNameNull.getErrCode());
-			error.setDisplayErrMsg(true);
-			return error;
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.UserNameNull);
+			se.setDisplayErrMsg(true);
+			throw se;
 		}
 		if(!isValidExpValue(login.getPassword())){
-			error.setErrCode(ErrorCodeEnum.PasswordNull.getErrCode());
-			error.setDisplayErrMsg(true);
-			return error;
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.PasswordNull);
+			se.setDisplayErrMsg(true);
+			throw se;
 		}
-
-		return null;
 	}
 	/**
 	 * Check validity of expression value

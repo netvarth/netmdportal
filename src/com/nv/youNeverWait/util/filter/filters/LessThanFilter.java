@@ -83,7 +83,8 @@ public class LessThanFilter implements Filter{
 		}
 		if(type.getSimpleName().equals("Date")){
 			Path<Date> pathDate = (Path<Date>) path;
-			SimpleDateFormat df =new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
+		//	SimpleDateFormat df =new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
+			SimpleDateFormat df =new SimpleDateFormat(Constants.DATE_FORMAT_WITH_TIME_SECONDS);  // Used for showing appointments before current time
 			Date date =null;
 			try {
 				date = df.parse(value);
