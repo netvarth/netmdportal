@@ -36,8 +36,7 @@ public class ResultServiceImpl implements ResultService{
 	 */
 	@Override
 	public ResultListResponseDTO listResult(String patientId) {
-		ResultListResponseDTO response=new ResultListResponseDTO();
-		response =resultDao.listResult(patientId);
+		ResultListResponseDTO response =resultDao.listResult(patientId);
 		return response;
 
 	}

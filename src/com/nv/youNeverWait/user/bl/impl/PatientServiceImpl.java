@@ -14,7 +14,6 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.transaction.annotation.Transactional;
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
 import com.nv.framework.sendmsg.email.SendMailMsgObj;
@@ -82,17 +81,11 @@ public class PatientServiceImpl implements PatientService {
 	 * @param patient
 	 * @return ResponseDTO
 	 */
+	@Override
 	public ResponseDTO createPatient(PatientDetail patient, HeaderDTO header) {
 
-		ResponseDTO response = new ResponseDTO();
-
-		ErrorDTO error = validator.validateCreatePatient(patient, header);
-		if (error != null) {
-			response.setError(error);
-			response.setSuccess(false);
-			return response;
-		}
-		response = patientDao.createPatient(patient, header);
+		validator.validateCreatePatient(patient, header);
+		ResponseDTO response = patientDao.createPatient(patient, header);
 		String branchName = patientDao.getBranch(header.getNetMdBranchId());
 
 		// send login details and password creation link to the user
@@ -107,16 +100,12 @@ public class PatientServiceImpl implements PatientService {
 	 * @param patient
 	 * @return ResponseDTO
 	 */
+	@Override
 	public ResponseDTO updatePatient(PatientDetail patient, HeaderDTO header) {
 
-		ResponseDTO response = new ResponseDTO();
-		ErrorDTO error = validator.validateUpdatePatient(patient, header);
-		if (error != null) {
-			response.setError(error);
-			response.setSuccess(false);
-			return response;
-		}
-		response = patientDao.updatePatient(patient, header);
+		validator.validateUpdatePatient(patient, header);
+
+		ResponseDTO response = patientDao.updatePatient(patient, header);
 		return response;
 	}
 
@@ -126,9 +115,9 @@ public class PatientServiceImpl implements PatientService {
 	 * @param globalId
 	 * @return PatientDTO
 	 */
+	@Override
 	public PatientDetail viewPatient(int globalId) {
-		PatientDetail response = new PatientDetail();
-		response = patientDao.viewPatient(globalId);
+		PatientDetail response = patientDao.viewPatient(globalId);
 		return response;
 	}
 
@@ -138,6 +127,7 @@ public class PatientServiceImpl implements PatientService {
 	 * @param globalId
 	 * @return ResponseDTO
 	 */
+	@Override
 	public ResponseDTO deletePatient(int globalId) {
 		ResponseDTO response = patientDao.deletePatient(globalId);
 		return response;
@@ -258,9 +248,10 @@ public class PatientServiceImpl implements PatientService {
 	public RetrievalPatientResponseDTO retrievePatientsForNetMd(
 			String lastSyncTime, String passPhrase, int netMdBranchId,
 			Date currentSyncTime) {
-		RetrievalPatientResponseDTO retrievalPatientResponseDTO = new RetrievalPatientResponseDTO();
-		retrievalPatientResponseDTO = patientDao.retrievePatientsForNetMd(
-				lastSyncTime, passPhrase, netMdBranchId, currentSyncTime);
+
+		RetrievalPatientResponseDTO retrievalPatientResponseDTO = patientDao
+				.retrievePatientsForNetMd(lastSyncTime, passPhrase,
+						netMdBranchId, currentSyncTime);
 		return retrievalPatientResponseDTO;
 	}
 
@@ -408,8 +399,8 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public AppointmentListResponseDTO listAppointmentsForPatient(
 			String patientId) {
-		AppointmentListResponseDTO response = new AppointmentListResponseDTO();
-		response = appointmentService.getAppointmentListsForPatient(patientId);
+		AppointmentListResponseDTO response = appointmentService
+				.getAppointmentListsForPatient(patientId);
 		return response;
 	}
 
@@ -422,8 +413,8 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public PastAppointmentListResponseDTO getPastAppointmentList(
 			String patientId) {
-		PastAppointmentListResponseDTO response = new PastAppointmentListResponseDTO();
-		response = appointmentService.getPastAppointmentList(patientId);
+		PastAppointmentListResponseDTO response = appointmentService
+				.getPastAppointmentList(patientId);
 		return response;
 	}
 
@@ -436,8 +427,7 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public AppointmentResponse createAppointmentFromNetMd(
 			Appointment appointment) {
-		AppointmentResponse appointmentResponse = new AppointmentResponse();
-		appointmentResponse = appointmentService
+		AppointmentResponse appointmentResponse = appointmentService
 				.createAppointmentFromNetMd(appointment);
 		return appointmentResponse;
 	}
@@ -451,8 +441,7 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public AppointmentResponse createAppointmentFromPortal(
 			Appointment appointment) {
-		AppointmentResponse appointmentResponse = new AppointmentResponse();
-		appointmentResponse = appointmentService
+		AppointmentResponse appointmentResponse = appointmentService
 				.createAppointmentFromPortal(appointment);
 		return appointmentResponse;
 	}
@@ -466,8 +455,7 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public AppointmentResponse updateAppointmentFromNetMd(
 			Appointment appointment) {
-		AppointmentResponse appointmentResponse = new AppointmentResponse();
-		appointmentResponse = appointmentService
+		AppointmentResponse appointmentResponse = appointmentService
 				.updateAppointmentFromNetMd(appointment);
 		return appointmentResponse;
 	}
@@ -481,9 +469,9 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public AppointmentResponse updateAppointmentFromPortal(
 			Appointment appointment) {
-		AppointmentResponse appointmentResponse = new AppointmentResponse();
-		appointmentResponse = appointmentService
+		AppointmentResponse appointmentResponse = appointmentService
 				.updateAppointmentFromPortal(appointment);
+
 		return appointmentResponse;
 	}
 
@@ -495,8 +483,8 @@ public class PatientServiceImpl implements PatientService {
 	 */
 	@Override
 	public AppointmentResponse deleteAppointmentFromNetmd(int id) {
-		AppointmentResponse response = new AppointmentResponse();
-		response = appointmentService.deleteAppointmentFromNetMd(id);
+		AppointmentResponse response = appointmentService
+				.deleteAppointmentFromNetMd(id);
 		return response;
 
 	}
@@ -519,7 +507,6 @@ public class PatientServiceImpl implements PatientService {
 	 * @param passwords
 	 * @return ResponseDTO
 	 */
-	@Transactional
 	@Override
 	public ResponseDTO changePassword(PasswordDTO passwords) {
 
@@ -528,6 +515,7 @@ public class PatientServiceImpl implements PatientService {
 		return response;
 	}
 
+	@Override
 	public ResponseDTO createPassword(CreatePasswordDTO passwords) {
 		validator.validatePasswordsForCreatePassword(passwords);
 		ResponseDTO response = patientDao.createPassword(passwords);
@@ -542,9 +530,9 @@ public class PatientServiceImpl implements PatientService {
 	 */
 	@Override
 	public ResultDTO patientTestResult(PatientOrderDTO patient) {
-		ResultDTO response = new ResultDTO();
+		
 		validator.validatePatientOrderDetails(patient);
-		response = patientDao.patientTestResult(patient);
+		ResultDTO response = patientDao.patientTestResult(patient);
 		return response;
 	}
 
@@ -740,5 +728,4 @@ public class PatientServiceImpl implements PatientService {
 		this.mailThread = mailThread;
 	}
 
-	
 }

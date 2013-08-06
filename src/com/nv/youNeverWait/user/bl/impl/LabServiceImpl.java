@@ -177,7 +177,6 @@ public class LabServiceImpl implements LabService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ResponseDTO updateUser(LabUserDTO user) {
 
 		ResponseDTO response = new ResponseDTO();
@@ -198,11 +197,9 @@ public class LabServiceImpl implements LabService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public LabUserDTO viewUser(int globalId) {
 
-		LabUserDTO response = new LabUserDTO();
-		response = labDao.viewUser(globalId);
+		LabUserDTO response = labDao.viewUser(globalId);
 		return response;
 	}
 
@@ -213,7 +210,6 @@ public class LabServiceImpl implements LabService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ResponseDTO deleteUser(int id) {
 
 		ResponseDTO response = labDao.deleteUser(id);
@@ -226,7 +222,6 @@ public class LabServiceImpl implements LabService {
 	 * @param passwords
 	 * @return ResponseDTO
 	 */
-	@Transactional
 	@Override
 	public ResponseDTO changePassword(PasswordDTO passwords) {
 
@@ -241,7 +236,7 @@ public class LabServiceImpl implements LabService {
 	 * @param login
 	 * @return ResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO forgotPassword(LoginDTO login) {
 
@@ -337,7 +332,6 @@ public class LabServiceImpl implements LabService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ResponseDTO resetPassword(LoginDTO login) {
 
 		validator.validateUserNameAndPassword(login.getUserName(),
@@ -352,7 +346,7 @@ public class LabServiceImpl implements LabService {
 	 * @param branch
 	 * @return ResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO clearMacId(LabBranchDTO branch) {
 
@@ -368,7 +362,7 @@ public class LabServiceImpl implements LabService {
 	 * @param passPhrase
 	 * @return ResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public MacStatusResponseDTO getMacStatus(String passPhrase) {
 
@@ -397,7 +391,7 @@ public class LabServiceImpl implements LabService {
 	 * @param header
 	 * @return LabActivationResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public LabActivationResponseDTO activateLab(LabHeaderDTO header) {
 
@@ -493,7 +487,7 @@ public class LabServiceImpl implements LabService {
 	 * @param lab
 	 * @return ResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO update(LabDTO lab) {
 
@@ -509,7 +503,7 @@ public class LabServiceImpl implements LabService {
 	 * @param lab
 	 * @return ResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO delete(int labId) {
 
@@ -530,7 +524,7 @@ public class LabServiceImpl implements LabService {
 	 * @param labId
 	 * @return LabResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public LabResponseDTO view(int labId) {
 
@@ -637,7 +631,7 @@ public class LabServiceImpl implements LabService {
 	 * @param branch
 	 * @return ResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO updateBranch(LabBranchDTO branch) {
 
@@ -654,7 +648,7 @@ public class LabServiceImpl implements LabService {
 	 * @param globalId
 	 * @return BranchResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public LabBranchResponseDTO viewBranch(int globalId) {
 
@@ -669,7 +663,7 @@ public class LabServiceImpl implements LabService {
 	 * @param branch
 	 * @return ResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO deleteBranch(LabBranchDTO branch) {
 
@@ -685,7 +679,7 @@ public class LabServiceImpl implements LabService {
 	 * @param filter
 	 * @return BranchListResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public BranchListResponseDTO branchList(FilterDTO filterDTO) {
 
@@ -755,13 +749,10 @@ public class LabServiceImpl implements LabService {
 	 * @return ResultTransferResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ResultTransferResponseDTO transferResultToNetMd(
 			TransferNetMdResultDTO resultTranfer) {
-
-		ResultTransferResponseDTO response = new ResultTransferResponseDTO();
 		validator.validateNetMdResultDetails(resultTranfer);
-		response = labDao.transferResultToNetMd(resultTranfer);
+		ResultTransferResponseDTO response = labDao.transferResultToNetMd(resultTranfer);
 		return response;
 
 	}
@@ -772,14 +763,13 @@ public class LabServiceImpl implements LabService {
 	 * @param ResultTransferDTO
 	 * @return ResultTransferResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public ResultTransferResponseDTO transferResult(
 			ResultTransferDTO resultTranferDto) {
 
-		ResultTransferResponseDTO response = new ResultTransferResponseDTO();
 		validator.validateResultDetails(resultTranferDto);
-		response = labDao.transferResult(resultTranferDto);
+		ResultTransferResponseDTO response =  labDao.transferResult(resultTranferDto);
 		return response;
 	}
 
@@ -790,13 +780,10 @@ public class LabServiceImpl implements LabService {
 	 * @return ResultTransferResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ResultRetrievalResponseDTO getResult(LabHeaderDTO header,
 			String lastSyncTime, Date currentTime) {
-
-		ResultRetrievalResponseDTO response = new ResultRetrievalResponseDTO();
 		// validator.validateLabDetails(resultRetrievalDTO);
-		response = labDao.getResult(header, lastSyncTime, currentTime);
+		ResultRetrievalResponseDTO response = labDao.getResult(header, lastSyncTime, currentTime);
 		return response;
 	}
 
@@ -807,12 +794,9 @@ public class LabServiceImpl implements LabService {
 	 * @return LabBranchListResponseDTO
 	 */
 	@Override
-	@Transactional
 	public LabBranchListResponseDTO retrieveLabBranchList(LabHeaderDTO header,
 			String lastSyncTime, Date currentTime) {
-
-		LabBranchListResponseDTO response = new LabBranchListResponseDTO();
-		response = labDao.retrieveLabBranchList(header, lastSyncTime,
+		 LabBranchListResponseDTO response = labDao.retrieveLabBranchList(header, lastSyncTime,
 				currentTime);
 		return response;
 	}
@@ -824,12 +808,10 @@ public class LabServiceImpl implements LabService {
 	 * @return RetrieveLabListResponseDTO
 	 */
 	@Override
-	@Transactional
 	public RetrieveLabListResponseDTO retrieveLabList(LabHeaderDTO header,
 			String lastSyncTm, Date currentTime) {
 
-		RetrieveLabListResponseDTO response = new RetrieveLabListResponseDTO();
-		response = labDao.retrieveLabList(header, lastSyncTm, currentTime);
+		 RetrieveLabListResponseDTO response = labDao.retrieveLabList(header, lastSyncTm, currentTime);
 		return response;
 	}
 
@@ -840,12 +822,10 @@ public class LabServiceImpl implements LabService {
 	 * @return RetrieveUserListResponseDTO
 	 */
 	@Override
-	@Transactional
 	public RetrieveUserListResponseDTO retrieveUserList(LabHeaderDTO header,
 			String lastSyncTime, Date currentTime) {
 
-		RetrieveUserListResponseDTO response = new RetrieveUserListResponseDTO();
-		response = labDao.retrieveUserList(header, lastSyncTime, currentTime);
+		 RetrieveUserListResponseDTO response =labDao.retrieveUserList(header, lastSyncTime, currentTime);
 		return response;
 	}
 
@@ -856,13 +836,12 @@ public class LabServiceImpl implements LabService {
 	 * @return RetrieveNetmdListResponseDTO
 	 */
 	@Override
-	@Transactional
 	public RetrieveNetmdListResponseDTO retrieveNetmdList(LabHeaderDTO header,
 			String lastSyncTime, Date currentTime) {
 
-		RetrieveNetmdListResponseDTO response = new RetrieveNetmdListResponseDTO();
 		labDao.validateHeader(header);
-		response = netMdService.retrieveNetmdList(lastSyncTime, currentTime);
+		RetrieveNetmdListResponseDTO response = netMdService.retrieveNetmdList(
+				lastSyncTime, currentTime);
 		return response;
 	}
 
@@ -873,14 +852,12 @@ public class LabServiceImpl implements LabService {
 	 * @return RetrieveNetmdBranchListResponseDTO
 	 */
 	@Override
-	@Transactional
 	public RetrieveNetmdBranchListResponseDTO retrieveNetmdBranchList(
 			LabHeaderDTO header, String lastSyncTime, Date currentTime) {
 
-		RetrieveNetmdBranchListResponseDTO response = new RetrieveNetmdBranchListResponseDTO();
 		labDao.validateHeader(header);
-		response = netMdService.retrieveNetmdBranchList(lastSyncTime,
-				currentTime);
+		RetrieveNetmdBranchListResponseDTO response = netMdService
+				.retrieveNetmdBranchList(lastSyncTime, currentTime);
 		return response;
 	}
 
@@ -891,7 +868,6 @@ public class LabServiceImpl implements LabService {
 	 * @return LabListResponseDTO
 	 */
 	@Override
-	@Transactional
 	public LabListResponseDTO list(FilterDTO filterDTO) {
 
 		LabListResponseDTO response = new LabListResponseDTO();

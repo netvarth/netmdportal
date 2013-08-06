@@ -78,18 +78,16 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return RetrieveNetmdListResponseDTO
 	 */
 	@Override
-	@Transactional
 	public RetrieveNetmdListResponseDTO retrieveNetmdList(String syncTime,
 			Date currentTime) {
 
-		RetrieveNetmdListResponseDTO response = new RetrieveNetmdListResponseDTO();
 		if (syncTime == null || syncTime.equals("")) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidSyncTime);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response = netMdDao.retrieveNetmdList(syncTime, currentTime);
+		RetrieveNetmdListResponseDTO response = netMdDao.retrieveNetmdList(syncTime, currentTime);
 		return response;
 	}
 
@@ -100,18 +98,16 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return RetrieveNetmdBranchListResponseDTO
 	 */
 	@Override
-	@Transactional
 	public RetrieveNetmdBranchListResponseDTO retrieveNetmdBranchList(
 			String syncTime, Date currentTime) {
 
-		RetrieveNetmdBranchListResponseDTO response = new RetrieveNetmdBranchListResponseDTO();
 		if (syncTime == null || syncTime.equals("")) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidSyncTime);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response = netMdDao.retrieveNetmdBranchList(syncTime, currentTime);
+		RetrieveNetmdBranchListResponseDTO response = netMdDao.retrieveNetmdBranchList(syncTime, currentTime);
 		return response;
 	}
 
@@ -122,7 +118,6 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return NetMdBranchListResponseDTO
 	 */
 	@Override
-	@Transactional
 	public NetMdBranchListResponseDTO getBranchList(FilterDTO filterDTO) {
 
 		NetMdBranchListResponseDTO response = new NetMdBranchListResponseDTO();
@@ -193,11 +188,10 @@ public class NetMdServiceImpl implements NetMdService {
 
 	@Override
 	public ResponseDTO createNetMd(NetMdDTO netMd) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateNetMdAccount(netMd);
 		validator.validateUserNameAndPassword(netMd.getUserName(),
 				netMd.getPassword());
-		response = netMdDao.create(netMd);
+		ResponseDTO response = netMdDao.create(netMd);
 		sendEmailToNetMdOwner(Constants.NETMD_REGISTER, netMd);
 		return response;
 	}
@@ -281,9 +275,8 @@ public class NetMdServiceImpl implements NetMdService {
 
 	@Override
 	public ResponseDTO createBranch(NetMdBranchDTO branch) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateBranchDetails(branch);
-		response = netMdDao.createBranch(branch);
+		ResponseDTO response =  netMdDao.createBranch(branch);
 		NetMdBranchOwnerDetails branchDetail = netMdDao
 				.getBranchOwners(response.getGlobalId());
 		sendEmailToNetMdOwner(Constants.NETMD_BRANCH_REGISTER, branchDetail);
@@ -374,13 +367,11 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param branch
 	 * @return ResponseDTO
 	 */
-	@Transactional
 	@Override
 	public ResponseDTO updateBranch(NetMdBranchDTO branch) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateBranchDetails(branch);
 		validator.validateBranchId(branch);
-		response = netMdDao.updateBranch(branch);
+		ResponseDTO response = netMdDao.updateBranch(branch);
 		return response;
 	}
 
@@ -390,11 +381,9 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param globalId
 	 * @return BranchResponseDTO
 	 */
-	@Transactional
 	@Override
 	public NetMdBranchResponseDTO viewBranch(int globalId) {
-		NetMdBranchResponseDTO response = new NetMdBranchResponseDTO();
-		response = netMdDao.viewBranch(globalId);
+	NetMdBranchResponseDTO response =  netMdDao.viewBranch(globalId);
 		return response;
 	}
 
@@ -404,11 +393,10 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param branch
 	 * @return ResponseDTO
 	 */
-	@Transactional
+	
 	@Override
 	public ResponseDTO deleteBranch(int globalId) {
-		ResponseDTO response = new ResponseDTO();
-		response = netMdDao.deleteBranch(globalId);
+		ResponseDTO response =  netMdDao.deleteBranch(globalId);
 		return response;
 	}
 
@@ -419,7 +407,6 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param passPhrase
 	 * @return ResponseDTO
 	 */
-	@Transactional(readOnly = false)
 	@Override
 	public NetMdResponseDTO getMacStatus(String passPhrase) {
 		NetMdResponseDTO response = new NetMdResponseDTO();
@@ -447,12 +434,10 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param header
 	 * @return
 	 */
-	@Transactional
 	@Override
 	public NetMdActivationResponseDTO activateNetMd(HeaderDTO header) {
-		NetMdActivationResponseDTO response = new NetMdActivationResponseDTO();
 		validator.validateHeaderDetails(header);
-		response = netMdDao.activateNetMd(header);
+		NetMdActivationResponseDTO response = netMdDao.activateNetMd(header);
 		return response;
 	}
 
@@ -463,11 +448,9 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ResponseDTO updateNetMd(NetMdDTO netMd) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateNetMdAccount(netMd);
-		response = netMdDao.update(netMd);
+		ResponseDTO response = netMdDao.update(netMd);
 		return response;
 	}
 
@@ -479,8 +462,7 @@ public class NetMdServiceImpl implements NetMdService {
 	 */
 	@Override
 	public ResponseDTO deleteNetMd(int netMdId) {
-		ResponseDTO response = new ResponseDTO();
-		response = netMdDao.delete(netMdId);
+		 ResponseDTO response = netMdDao.delete(netMdId);
 		return response;
 	}
 
@@ -492,10 +474,9 @@ public class NetMdServiceImpl implements NetMdService {
 	 */
 	@Override
 	public ResponseDTO createUser(HeaderDTO header, NetMdUserDetail user) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateUserDetails(header, user);
 		validator.validateNetMdUserLoginDetails(user);
-		response = netMdDao.createUser(header, user);
+		ResponseDTO response = netMdDao.createUser(header, user);
 		String netMdName = netMdDao.getNetMdName(user.getNetMdId());
 		String netMdBranchName = netMdDao.getNetMdBranchName(user
 				.getNetMdBranchId());
@@ -511,9 +492,8 @@ public class NetMdServiceImpl implements NetMdService {
 	 */
 	@Override
 	public ResponseDTO updateUser(HeaderDTO header, NetMdUserDetail user) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateUserDetails(header, user);
-		response = netMdDao.updateUser(header, user);
+		ResponseDTO response =  netMdDao.updateUser(header, user);
 		return response;
 	}
 
@@ -524,11 +504,9 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ResponseDTO deleteUser(int globalId) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateGlobalId(globalId);
-		response = netMdDao.deleteUser(globalId);
+		ResponseDTO response = netMdDao.deleteUser(globalId);
 		return response;
 	}
 
@@ -536,10 +514,8 @@ public class NetMdServiceImpl implements NetMdService {
 	 * Method to make a device primary
 	 */
 	@Override
-	@Transactional
 	public ResponseDTO makePrimary(HeaderDTO header) {
-		ResponseDTO response = new ResponseDTO();
-		response = netMdDao.makePrimary(header);
+		 ResponseDTO response = netMdDao.makePrimary(header);
 		return response;
 	}
 
@@ -549,13 +525,10 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param header
 	 * @return ResponseDTO
 	 */
-	@Transactional
 	@Override
 	public ResponseDTO clearMacId(HeaderDTO header) {
-
-		ResponseDTO response = new ResponseDTO();
 		validator.validateHeader(header);
-		response = netMdDao.clearMacId(header);
+		ResponseDTO response = netMdDao.clearMacId(header);
 		return response;
 	}
 
@@ -566,11 +539,9 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public NetMdUserDTO viewUser(int globalId) {
-		NetMdUserDTO response = new NetMdUserDTO();
 		validator.validateGlobalId(globalId);
-		response = netMdDao.viewUser(globalId);
+		NetMdUserDTO response =  netMdDao.viewUser(globalId);
 		return response;
 	}
 
@@ -580,7 +551,6 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param filterDTO
 	 * @return NetMdListResponseDTO
 	 */
-	@Transactional
 	@Override
 	public NetMdListResponseDTO getNetMdList(FilterDTO filterDTO) {
 		NetMdListResponseDTO response = new NetMdListResponseDTO();
@@ -630,7 +600,7 @@ public class NetMdServiceImpl implements NetMdService {
 	 */
 	private NetMdListResponseDTO getNetmdList(List<NetmdTbl> netmdList) {
 		NetMdListResponseDTO response = new NetMdListResponseDTO();
-		if (netmdList == null) {
+		if (netmdList.isEmpty()) {
 			return response;
 		}
 		List<NetMdDetail> netMdDetails = new ArrayList<NetMdDetail>();
@@ -717,16 +687,14 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return NetMdViewResponseDTO
 	 */
 	@Override
-	@Transactional
 	public NetMdViewResponseDTO viewNetMd(int netMdId) {
-		NetMdViewResponseDTO response = new NetMdViewResponseDTO();
 		if (netMdId <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetMdId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response = netMdDao.view(netMdId);
+		NetMdViewResponseDTO response = netMdDao.view(netMdId);
 		return response;
 	}
 
@@ -736,7 +704,6 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param login
 	 * @return ResponseDTO
 	 */
-	@Transactional
 	@Override
 	public ResponseDTO forgotPassword(LoginDTO login) {
 

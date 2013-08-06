@@ -3,19 +3,13 @@
  */
 package com.nv.youNeverWait.user.bl.impl;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.TypedQuery;
-
 import org.springframework.transaction.annotation.Transactional;
-
 import com.nv.youNeverWait.common.Constants;
-import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
 import com.nv.youNeverWait.rs.dto.Appointment;
 import com.nv.youNeverWait.rs.dto.AppointmentListResponseDTO;
@@ -60,7 +54,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	 * @return retrieveAppointmentObj
 	 */
 	@Override
-	@Transactional
+	
 	public RetrievalAppointmentResponseDTO retrieveAppointmentForSecondary(
 			String lastSyncTime, String passPhrase, int netMdBranchId,
 			Date currentSyncTime) {
@@ -78,7 +72,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 	 * @return response
 	 */
 	@Override
-	@Transactional
 	public AppointmentListResponseDTO getAppointmentListsForPatient(
 			String patientId) {
 		AppointmentListResponseDTO response = new AppointmentListResponseDTO();
@@ -119,11 +112,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	public PastAppointmentListResponseDTO getPastAppointmentList(
 			String patientId) {
-		PastAppointmentListResponseDTO response = new PastAppointmentListResponseDTO();
+		
 		List<PatientAppointmentTbl> patientAppointmentTblList = appointmentDao
 				.getPastAppointments(patientId);// returns list of patient
 												// appointment objects
-		response = getPastAppointmentDTOList(patientAppointmentTblList);
+		PastAppointmentListResponseDTO response = getPastAppointmentDTOList(patientAppointmentTblList);
 		response.setError(null);
 		response.setSuccess(true);
 		return response;

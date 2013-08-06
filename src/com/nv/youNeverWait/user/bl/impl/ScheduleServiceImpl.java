@@ -69,7 +69,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ScheduleResponseDTO update(HeaderDTO header, ScheduleDetail scheduleDetail) {
 
 		validator.validateScheduleDetails(header, scheduleDetail);
@@ -95,7 +94,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 	 * @return ScheduleViewResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ScheduleViewResponseDTO view(int globalId) {
 		
 		validator.validateGlobalId(globalId);
@@ -110,7 +108,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ScheduleResponseDTO delete(int globalId) {
 		
 		validator.validateGlobalId(globalId);
@@ -189,7 +186,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 	 * @return ScheduleListDTO
 	 */
 	@Override
-	@Transactional
 	public ScheduleListDTO monthlyView(int netMdBranchId, int doctorId,
 			String startDate, String endDate) {
 

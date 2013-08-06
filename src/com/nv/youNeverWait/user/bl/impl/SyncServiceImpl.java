@@ -954,7 +954,7 @@ public class SyncServiceImpl implements SyncService {
 		List<UserResponse> deleteUserResponseList = new ArrayList<UserResponse>();
 		for (NetMdUserDetail deletedUser : deleteUsers) {
 			try {
-				ResponseDTO response = netMdService.deleteUser(deletedUser
+				 netMdService.deleteUser(deletedUser
 						.getGlobalId());
 				UserResponse userResponse = new UserResponse();
 				userResponse.setActionName(ActionNameEnum.DELETE

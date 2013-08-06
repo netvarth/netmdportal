@@ -15,11 +15,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
 import com.nv.framework.sendmsg.email.SendMailMsgObj;
@@ -28,7 +25,6 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
-import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.DoctorDetailsForPatient;
@@ -39,7 +35,6 @@ import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalDoctorResponseDTO;
-import com.nv.youNeverWait.security.bl.impl.AuthenticationServiceimpl;
 import com.nv.youNeverWait.user.bl.service.DoctorService;
 import com.nv.youNeverWait.user.bl.validation.DoctorValidator;
 import com.nv.youNeverWait.user.pl.dao.DoctorDao;
@@ -62,7 +57,6 @@ public class DoctorServiceImpl implements DoctorService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ResponseDTO resetPassword(LoginDTO login) {
 
 		validator.validateUserNameAndPassword(login.getUserName(),
@@ -78,7 +72,6 @@ public class DoctorServiceImpl implements DoctorService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ResponseDTO create(DoctorDetail doctor, HeaderDTO header) {
 
 		validator.validateCreateDoctor(doctor, header);
@@ -90,7 +83,8 @@ public class DoctorServiceImpl implements DoctorService {
 		if (netmdLogin == null) {
 			sendEmailToDoctor(Constants.DOCTOR_REGISTER, doctor);
 		} else {
-			if (netmdLogin.getPassword() != null && !netmdLogin.getPassword().equals("") ) {
+			if (netmdLogin.getPassword() != null
+					&& !netmdLogin.getPassword().equals("")) {
 				sendCredentialsMailToDoctor(Constants.DOCTOR_CREDENTIALS,
 						doctor, netmdLogin.getPassword(), netmdBranch.getName());
 			} else {
@@ -128,7 +122,6 @@ public class DoctorServiceImpl implements DoctorService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ResponseDTO update(DoctorDetail doctor, HeaderDTO header) {
 
 		validator.validateUpdateDoctor(doctor, header);
@@ -143,7 +136,6 @@ public class DoctorServiceImpl implements DoctorService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ResponseDTO delete(int globalId) {
 
 		validator.validateGlobalId(globalId);
@@ -160,8 +152,7 @@ public class DoctorServiceImpl implements DoctorService {
 	@Override
 	public DoctorViewResponseDTO view(int id) {
 
-		DoctorViewResponseDTO response = new DoctorViewResponseDTO();
-		response = doctorDao.view(id);
+		DoctorViewResponseDTO response = doctorDao.view(id);
 		return response;
 	}
 
@@ -241,10 +232,8 @@ public class DoctorServiceImpl implements DoctorService {
 	@Override
 	public DoctorListResponseDTO listDoctors(String clinicId) {
 
-		DoctorListResponseDTO response = new DoctorListResponseDTO();
-		List<DoctorTbl> doctorsList = new ArrayList<DoctorTbl>();
-		doctorsList = doctorDao.listDoctors(clinicId);
-		response = getDoctorList(doctorsList);
+		List<DoctorTbl> doctorsList = doctorDao.listDoctors(clinicId);
+		DoctorListResponseDTO response = getDoctorList(doctorsList);
 		response.setError(null);
 		response.setSuccess(true);
 		return response;
@@ -361,7 +350,7 @@ public class DoctorServiceImpl implements DoctorService {
 		fullMsgBody = fullMsgBody.replace("{userName}", doctor.getEmail()
 				.trim());
 		fullMsgBody = fullMsgBody.replace("{password}", password);
-		fullMsgBody = fullMsgBody.replace("{NetmdBranch}",netmdName);
+		fullMsgBody = fullMsgBody.replace("{NetmdBranch}", netmdName);
 		fullMsgBody = fullMsgBody.replace("{ResetLink}", resetPasswordLink);
 		fullMsgBody = fullMsgBody.replace("{serverIpAddress}",
 				netMdServerIpAddress);

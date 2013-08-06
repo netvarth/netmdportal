@@ -97,11 +97,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @return LabListResponseDTO
 	 */
 	@Override
-	@Transactional
 	public LabListResponseDTO labList(FilterDTO filterDTO) {
 
-		LabListResponseDTO response = new LabListResponseDTO();
-		response = labService.list(filterDTO);
+		LabListResponseDTO response = labService.list(filterDTO);
 		return response;
 	}
 
@@ -111,11 +109,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @param header
 	 * @return ResponseDTO
 	 */
-	@Transactional
 	@Override
 	public ResponseDTO makePrimary(HeaderDTO header) {
-		ResponseDTO response = new ResponseDTO();
-		response = netMdService.makePrimary(header);
+		ResponseDTO response = netMdService.makePrimary(header);
 		return response;
 	}
 
@@ -125,12 +121,11 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @param branch
 	 * @return ResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO createBranch(LabBranchDTO branch) {
 
-		ResponseDTO response = new ResponseDTO();
-		response = labService.createBranch(branch);
+		ResponseDTO response = labService.createBranch(branch);
 		return response;
 	}
 
@@ -140,12 +135,11 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @param globalId
 	 * @return BranchResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public LabBranchResponseDTO viewBranch(int globalId) {
 
-		LabBranchResponseDTO response = new LabBranchResponseDTO();
-		response = labService.viewBranch(globalId);
+		LabBranchResponseDTO response = labService.viewBranch(globalId);
 		return response;
 	}
 
@@ -155,11 +149,10 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @param branch
 	 * @return ResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO deleteBranch(LabBranchDTO branch) {
-		ResponseDTO response = new ResponseDTO();
-		response = labService.deleteBranch(branch);
+		ResponseDTO response = labService.deleteBranch(branch);
 		return response;
 	}
 
@@ -169,12 +162,11 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @param branch
 	 * @return ResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO updateBranch(LabBranchDTO branch) {
 
-		ResponseDTO response = new ResponseDTO();
-		response = labService.updateBranch(branch);
+		ResponseDTO response = labService.updateBranch(branch);
 		return response;
 	}
 
@@ -184,12 +176,11 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @param filter
 	 * @return BranchListResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public BranchListResponseDTO branchList(FilterDTO filterDTO) {
 
-		BranchListResponseDTO response = new BranchListResponseDTO();
-		response = labService.branchList(filterDTO);
+		BranchListResponseDTO response = labService.branchList(filterDTO);
 		return response;
 	}
 
@@ -200,7 +191,6 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ResponseDTO resetPassword(LoginDTO login) {
 
 		validator.validateLogin(login);
@@ -214,7 +204,6 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @param login
 	 * @return ResponseDTO
 	 */
-	@Transactional
 	@Override
 	public ResponseDTO forgotPassword(LoginDTO login) {
 		ResponseDTO response = new ResponseDTO();
@@ -306,6 +295,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @param passwords
 	 * @return ResponseDTO
 	 */
+	@Override
 	public ResponseDTO changePassword(@RequestBody PasswordDTO passwords) {
 		validator.validatePasswords(passwords);
 		ResponseDTO response = superAdminDao.changePassword(passwords);
@@ -318,7 +308,6 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @param netMd
 	 * @return ResponseDTO
 	 */
-	@Transactional
 	@Override
 	public ResponseDTO createNetMd(NetMdDTO netMd) {
 		ResponseDTO response = netMdService.createNetMd(netMd);
@@ -331,7 +320,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @param netMd
 	 * @return ResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO updateNetMd(NetMdDTO netMd) {
 		ResponseDTO response = netMdService.updateNetMd(netMd);
@@ -341,7 +330,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	/**
 	 * Method to delete a NetMd account
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO deleteNetMd(int netMdId) {
 		ResponseDTO response = netMdService.deleteNetMd(netMdId);
@@ -351,7 +340,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	/**
 	 * Method to create a lab
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO createLab(LabDTO lab) {
 		ResponseDTO response = labService.create(lab);
@@ -361,7 +350,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	/**
 	 * Update a lab
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO updateLab(LabDTO lab) {
 		ResponseDTO response = labService.update(lab);
@@ -371,7 +360,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	/**
 	 * Method to delete a lab
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO deleteLab(int labId) {
 		ResponseDTO response = labService.delete(labId);
@@ -381,7 +370,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	/**
 	 * Method to view a lab
 	 */
-	@Transactional
+
 	@Override
 	public LabResponseDTO viewLab(int labId) {
 		LabResponseDTO response = labService.view(labId);
@@ -394,7 +383,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @param netRx
 	 * @return ResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO createNetRx(NetRxDTO netRx) {
 		ResponseDTO response = netRxService.create(netRx);
@@ -407,7 +396,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @param netrx
 	 * @return ResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO updateNetRx(NetRxDTO netRx) {
 		ResponseDTO response = netRxService.update(netRx);
@@ -422,8 +411,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public NetRxListResponseDTO getNetRxList(FilterDTO filter) {
-		NetRxListResponseDTO response = new NetRxListResponseDTO();
-		response = netRxService.list(filter);
+		NetRxListResponseDTO response = netRxService.list(filter);
 		return response;
 	}
 
@@ -434,23 +422,15 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @return LoginResponseDTO
 	 */
 	@Override
-	@Transactional
 	public LoginResponseDTO login(LoginDTO login) {
 		LoginResponseDTO response = new LoginResponseDTO();
-		ErrorDTO error = validator.validateLogin(login);
-		if (error != null) {
-			response.setError(error);
-			response.setSuccess(false);
-			return response;
-		}
+		validator.validateLogin(login);
 		String userName = login.getUserName().trim();
 		login.setUserName(userName);
 		String encPassword = StringEncoder.encryptWithKey(login.getPassword()
 				.trim());
 		login.setPassword(encPassword);
-		System.out.println("Password" + encPassword);
 		response = superAdminDao.login(login);
-
 		return response;
 	}
 
@@ -458,10 +438,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * Super Admin details
 	 */
 	@Override
-	@Transactional
 	public UserDetails getUser(String userName) {
-		UserDetails user = new UserDetails();
-		user = superAdminDao.getUser(userName);
+		UserDetails user = superAdminDao.getUser(userName);
 		return user;
 	}
 
@@ -473,8 +451,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public NetMdListResponseDTO getNetMdList(FilterDTO filter) {
-		NetMdListResponseDTO response = new NetMdListResponseDTO();
-		response = netMdService.getNetMdList(filter);
+		NetMdListResponseDTO response = netMdService.getNetMdList(filter);
 		return response;
 	}
 
@@ -486,8 +463,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public NetMdBranchListResponseDTO getBranchList(FilterDTO filter) {
-		NetMdBranchListResponseDTO response = new NetMdBranchListResponseDTO();
-		response = netMdService.getBranchList(filter);
+		NetMdBranchListResponseDTO response = netMdService.getBranchList(filter);
 		return response;
 	}
 
@@ -499,8 +475,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public NetMdViewResponseDTO viewNetMd(int netMdId) {
-		NetMdViewResponseDTO response = new NetMdViewResponseDTO();
-		response = netMdService.viewNetMd(netMdId);
+		NetMdViewResponseDTO response = netMdService.viewNetMd(netMdId);
 		return response;
 	}
 
@@ -512,8 +487,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public ResponseDTO createNetMdBranch(NetMdBranchDTO branch) {
-		ResponseDTO response = new ResponseDTO();
-		response = netMdService.createBranch(branch);
+		ResponseDTO response = netMdService.createBranch(branch);
 		return response;
 	}
 
@@ -525,8 +499,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public NetMdBranchResponseDTO viewNetMdBranch(int netMdBranchId) {
-		NetMdBranchResponseDTO response = new NetMdBranchResponseDTO();
-		response = netMdService.viewBranch(netMdBranchId);
+		NetMdBranchResponseDTO response = netMdService
+				.viewBranch(netMdBranchId);
 		return response;
 	}
 
@@ -538,8 +512,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public ResponseDTO deleteNetMdBranch(int netMdBranchId) {
-		ResponseDTO response = new ResponseDTO();
-		response = netMdService.deleteBranch(netMdBranchId);
+		ResponseDTO response = netMdService.deleteBranch(netMdBranchId);
 		return response;
 	}
 
@@ -551,8 +524,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public ResponseDTO updateNetMdBranch(NetMdBranchDTO branch) {
-		ResponseDTO response = new ResponseDTO();
-		response = netMdService.updateBranch(branch);
+		ResponseDTO response = netMdService.updateBranch(branch);
 		return response;
 	}
 
@@ -564,8 +536,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public ResponseDTO updateNetMdUser(NetMdUserDTO netMdUser) {
-		ResponseDTO response = new ResponseDTO();
-		response = netMdService.updateUser(netMdUser.getHeader(),
+		ResponseDTO response = netMdService.updateUser(netMdUser.getHeader(),
 				netMdUser.getUser());
 		return response;
 	}
@@ -674,8 +645,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public ResponseDTO clearNetMdMacId(HeaderDTO header) {
-		ResponseDTO response = new ResponseDTO();
-		response = netMdService.clearMacId(header);
+		ResponseDTO response = netMdService.clearMacId(header);
 		return response;
 	}
 
@@ -687,8 +657,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public ResponseDTO clearNetlimsMacId(LabBranchDTO branch) {
-		ResponseDTO response = new ResponseDTO();
-		response = labService.clearMacId(branch);
+		ResponseDTO response = labService.clearMacId(branch);
 		return response;
 	}
 
@@ -700,8 +669,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public ResponseDTO deleteNetRx(int netRxId) {
-		ResponseDTO response = new ResponseDTO();
-		response = netRxService.deleteNetRx(netRxId);
+		ResponseDTO response = netRxService.deleteNetRx(netRxId);
 		return response;
 	}
 
@@ -713,8 +681,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public NetRxBranchListResponseDTO getNetRxBranchList(FilterDTO filter) {
-		NetRxBranchListResponseDTO response = new NetRxBranchListResponseDTO();
-		response = netRxService.getNetRxBranchList(filter);
+		NetRxBranchListResponseDTO response = netRxService
+				.getNetRxBranchList(filter);
 		return response;
 	}
 
@@ -726,8 +694,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public ResponseDTO createNetRxBranch(NetRxBranchDetail branch) {
-		ResponseDTO response = new ResponseDTO();
-		response = netRxService.createBranch(branch);
+		ResponseDTO response = netRxService.createBranch(branch);
 		return response;
 	}
 
@@ -739,8 +706,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public ResponseDTO deleteNetRxBranch(int globalId) {
-		ResponseDTO response = new ResponseDTO();
-		response = netRxService.deleteBranch(globalId);
+		ResponseDTO response = netRxService.deleteBranch(globalId);
 		return response;
 	}
 
@@ -753,8 +719,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public NetRxViewResponseDTO viewNetRx(int netRxId) {
-		NetRxViewResponseDTO response = new NetRxViewResponseDTO();
-		response = netRxService.viewNetRx(netRxId);
+		NetRxViewResponseDTO response = netRxService.viewNetRx(netRxId);
 		return response;
 	}
 
@@ -767,8 +732,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public NetRxBranchResponseDTO viewNetRxBranch(int netrxBranchId) {
-		NetRxBranchResponseDTO response = new NetRxBranchResponseDTO();
-		response = netRxService.viewBranch(netrxBranchId);
+		NetRxBranchResponseDTO response = netRxService
+				.viewBranch(netrxBranchId);
 		return response;
 	}
 
@@ -780,8 +745,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public ResponseDTO updateNetRxBranch(NetRxBranchDetail branch) {
-		ResponseDTO response = new ResponseDTO();
-		response = netRxService.updateNetRxBranch(branch);
+		ResponseDTO response = netRxService.updateNetRxBranch(branch);
 		return response;
 	}
 
@@ -804,15 +768,14 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public BranchOrdersResponseDTO viewBranchOrders(int globalId) {
-		BranchOrdersResponseDTO response = new BranchOrdersResponseDTO();
-		response = labService.viewBranchOrders(globalId);
+		BranchOrdersResponseDTO response = labService
+				.viewBranchOrders(globalId);
 		return response;
 	}
 
 	@Override
 	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO) {
-		BranchOrdersResponseDTO response = new BranchOrdersResponseDTO();
-		response = labService.orderList(orderDTO);
+		BranchOrdersResponseDTO response = labService.orderList(orderDTO);
 		return response;
 	}
 
