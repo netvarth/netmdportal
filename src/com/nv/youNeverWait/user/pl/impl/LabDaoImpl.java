@@ -24,6 +24,8 @@ import com.nv.youNeverWait.pl.entity.ActionNameEnum;
 import com.nv.youNeverWait.pl.entity.BranchStatusEnum;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.pl.entity.FrequencyEnum;
+import com.nv.youNeverWait.pl.entity.HealthMonitorTbl;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
 import com.nv.youNeverWait.pl.entity.LabLoginTbl;
 import com.nv.youNeverWait.pl.entity.LabPassphraseTbl;
@@ -45,6 +47,7 @@ import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
+import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
@@ -62,6 +65,7 @@ import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveLabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserBranchDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
@@ -1774,6 +1778,80 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			response.setGlobalId(branchOrdrs.getId());
 		}
 		response.setId(branchOrders.getId());
+		response.setSuccess(true);
+		return response;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.security.pl.dao.AuthenticationDao#getHealthMonitor
+	 * (com.nv.youNeverWait.rs.dto.SystemHealthDetails)
+	 */
+	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.security.pl.dao.AuthenticationDao#getHealthMonitor
+	 * (com.nv.youNeverWait.rs.dto.SystemHealthDetails)
+	 */
+	@Override
+	@Transactional
+	public HealthMonitorResponse healthMonitorResponse(
+			SystemHealthDetails systemHealthDetails) {
+		HealthMonitorResponse response = new HealthMonitorResponse();
+		HealthMonitorTbl healthMonitor= new HealthMonitorTbl();
+		validateHeader(systemHealthDetails.getHeader());   /// validates header details
+		LabBranchTbl labBranch = getById(LabBranchTbl.class, systemHealthDetails.getHeader().getLabBranchId());
+		if(labBranch==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		int cpuUsage=Integer.parseInt(systemHealthDetails.getCpuUsage());
+		int memoryUsed=Integer.parseInt(systemHealthDetails.getMemoryUsed());
+		int hardDiskUsed=Integer.parseInt(systemHealthDetails.getHardDiskUsed());
+		int intervalTym=Integer.parseInt(systemHealthDetails.getIntervalTime());
+		String frequencyPrd=systemHealthDetails.getFreqPeriod();
+		boolean criticalFlag =false;
+		Date newDate= new Date();
+		
+		/*Checking whether system is in critical condition*/
+		if (hardDiskUsed > 6) {
+			criticalFlag=true;
+			intervalTym=1;
+			frequencyPrd=FrequencyEnum.Hourly.getDisplayName();
+		}
+		
+		if (cpuUsage > 6) {
+			criticalFlag=true;
+			intervalTym=1;
+			frequencyPrd=FrequencyEnum.Hourly.getDisplayName();
+		}
+		if (memoryUsed > 75) {
+			criticalFlag=true;
+			intervalTym=1;
+			frequencyPrd=FrequencyEnum.Hourly.getDisplayName();
+		}
+
+		/*Saving system details in health monitor tbl*/
+		healthMonitor.setLabBranchTbl(labBranch);
+		healthMonitor.setHardDiskUsed(hardDiskUsed);
+		healthMonitor.setCpuUsage(cpuUsage);
+		healthMonitor.setMemoryUsed(memoryUsed);
+		healthMonitor.setFreqPeriod(frequencyPrd);
+		healthMonitor.setIntervalTime(intervalTym);
+		healthMonitor.setCreateDateTime(newDate);
+		healthMonitor.setUpdateDateTime(newDate);
+		save(healthMonitor);
+		
+		response.setIntervalTime(Integer.toString(intervalTym));
+		response.setFreqPeriod(frequencyPrd);
+		response.setCritical(criticalFlag);
 		response.setSuccess(true);
 		return response;
 	}
