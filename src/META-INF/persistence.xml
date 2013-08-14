@@ -30,15 +30,16 @@
 		<class>com.nv.youNeverWait.pl.entity.PatientTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.ResultTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.SeriesTbl</class>
-		<class>com.nv.youNeverWait.pl.entity.SuperAdminTbl</class>	
-		<class>com.nv.youNeverWait.pl.entity.PendingMessageTbl</class>	
-		<class>com.nv.youNeverWait.pl.entity.LogTbl</class>		
+		<class>com.nv.youNeverWait.pl.entity.SuperAdminTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.PendingMessageTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.LogTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetrxBranchTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetrxLoginTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetrxPassphraseTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetrxTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetrxUserTbl</class>
-			<class>com.nv.youNeverWait.pl.entity.OrderAmountTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.OrderAmountTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.HealthMonitorTbl</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 		</properties>
