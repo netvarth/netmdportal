@@ -116,6 +116,13 @@ public enum ErrorCodeEnum {
 	FromDateNull("531","From date is not selected"),
 	ToDateNull("532","To date is not selected"),
 	OrderedTimeNull("533","Pease give last ordered time"),
+	HardDiskSizeNull("534","Hard disk space used is not given"), 
+	MemorySizeNull("535","Memory space used is not given"),
+	CpuUsageNull("536","CPU usage is not given"), 
+	FrequencyNull("537","Frequency is not given"),
+	IntervalTimeNull("538","Interval time is not given"),
+	InvaliFrequencyType("539","Invalid frequency type"),
+	
 	/*
 	 * netMd Errors 
 	 */
