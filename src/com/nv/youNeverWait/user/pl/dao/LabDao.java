@@ -14,6 +14,7 @@ import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
+import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
@@ -30,6 +31,7 @@ import com.nv.youNeverWait.rs.dto.ResultTransferResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveLabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.pl.impl.BranchOwnerDetails;
@@ -70,6 +72,12 @@ public interface LabDao {
 	public BranchOrderCountResponseDTO createTotalOrders(LabHeaderDTO header,
 			BranchOrderDetail branchOrders);
 	
+	/**
+	 * @param systemHealthDetails
+	 * @return
+	 */
+	 public HealthMonitorResponse healthMonitorResponse(
+			SystemHealthDetails systemHealthDetails);
 	
 	
 }
