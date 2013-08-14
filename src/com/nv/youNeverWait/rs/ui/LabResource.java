@@ -24,6 +24,7 @@ import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
+import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
@@ -41,6 +42,7 @@ import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferResponseDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.LabService;
@@ -847,6 +849,30 @@ public class LabResource {
 		return response;
 	}
 
+	/**
+	 * Method performed to get Health Monitor
+	 * 
+	 * @return HealthMonitorResponse
+	 */
+	@RequestMapping(value = "getHealthMonitor", method = RequestMethod.POST)
+	@ResponseBody
+	public HealthMonitorResponse getHealthMonitor(@RequestBody SystemHealthDetails systemHealthDetails) {
+
+		HealthMonitorResponse response = new HealthMonitorResponse();
+		try {
+			response = labService.getHealthMonitor(systemHealthDetails);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
 	/**
 	 * @return the labService
 	 */
