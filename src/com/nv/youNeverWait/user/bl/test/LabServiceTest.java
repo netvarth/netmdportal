@@ -32,8 +32,10 @@ import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.PatientInfoDetail;
 import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserBranchDTO;
+import com.nv.youNeverWait.security.bl.service.AuthenticationService;
 import com.nv.youNeverWait.user.bl.service.LabService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -2402,6 +2404,30 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		}
 		catch(ServiceException e){
 
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void systemHealthMonitor(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(192);
+		header.setLabBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("80");
+		systemResponse.setHardDiskUsed("8");
+		systemResponse.setMemoryUsed("9");
+		systemResponse.setFreqPeriod("hr");
+		systemResponse.setIntervalTime("5");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
