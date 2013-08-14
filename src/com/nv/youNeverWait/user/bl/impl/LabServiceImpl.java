@@ -32,6 +32,7 @@ import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
+import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
@@ -59,6 +60,7 @@ import com.nv.youNeverWait.rs.dto.RetrieveLabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.bl.service.LabService;
@@ -977,6 +979,108 @@ public class LabServiceImpl implements LabService {
 		return response;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nv.youNeverWait.security.bl.service.AuthenticationService#
+	 * getHealthMonitor()
+	 */
+	@Override
+	public HealthMonitorResponse getHealthMonitor(SystemHealthDetails systemHealthDetails) {
+		validator.validateHeaderDetails(systemHealthDetails.getHeader());
+		validator.validateSystemHealthDetails(systemHealthDetails);
+		
+		System.out.println(" getting health monitoring details......");
+		/*Checking whether system is in critical condition*/
+		HealthMonitorResponse response= labDao.healthMonitorResponse(systemHealthDetails);
+		if(response.isCritical()){
+			BranchOwnerDetails branchOwnerDetails=labDao.getBranchOwners(systemHealthDetails.getHeader().getLabId());
+			sendEmailToLabOwner(branchOwnerDetails, Constants.LAB_SYSTEM_FAILURE,
+					response,systemHealthDetails);
+		
+		}
+		return response;
+	}
+
+	/**
+	 * @param branchOwnerDetails
+	 * @param labSystemFailure
+	 * @param response
+	 * @param systemHealthDetails
+	 */
+	private void sendEmailToLabOwner(BranchOwnerDetails branchOwnerDetails,
+			String subject, HealthMonitorResponse response,
+			SystemHealthDetails systemHealthDetails) {
+		String msgBody = "";
+		URL url = null;
+		try {
+			url = new URL("http://" + netlimsServerIpAddress
+					+ "/youNeverWait/EmailFormat/LabBranchHealthMonitor.html");
+			msgBody = createEmailBody(url, branchOwnerDetails, response,
+					systemHealthDetails);
+			// EmailSender.sendEmail(branchDetail.getOwnerEmail(), mailFrom,
+			// subject, msgBody);
+			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,
+					branchOwnerDetails.getOwnerEmail(), mailFrom, 0, 0, null,
+					SendMsgCallbackEnum.LAB_FAILURE_ALERT.getId(), null);
+			mailThread.addSendMsgObj(obj);
+		} catch (IOException e) {
+			log.error("Error while sending  branch registration email to the owner's email id"
+					+ e);
+			e.printStackTrace();
+		}
+
+	}
+
+
+	
+	/**
+	 * @param url
+	 * @param branchOwnerDetails
+	 * @param response.getIntervalTime()
+	 * @param systemHealthDetails
+	 * @return
+	 */
+	private String createEmailBody(URL url,
+			BranchOwnerDetails branchOwnerDetails, HealthMonitorResponse response,
+			SystemHealthDetails systemHealthDetails) throws IOException {
+		StringBuffer msgBodyBfr = new StringBuffer();
+		String fullMsgBody = "";
+
+		java.net.URLConnection openConnection = url.openConnection();
+		InputStream inputStream = openConnection.getInputStream();
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				inputStream));
+		String readLine = "";
+		while ((readLine = in.readLine()) != null) {
+			msgBodyBfr.append(readLine).append("\n");
+		}
+		in.close();
+		fullMsgBody = msgBodyBfr.toString();
+		fullMsgBody = fullMsgBody.replace("{firstName}",
+				branchOwnerDetails.getOwnerFirstName());
+		if (branchOwnerDetails.getOwnerLastName() == null) {
+			fullMsgBody = fullMsgBody.replace("{lastName}", "");
+		} else {
+			fullMsgBody = fullMsgBody.replace("{lastName}",
+					branchOwnerDetails.getOwnerLastName());
+		}
+		fullMsgBody = fullMsgBody.replace("{labName}",
+				branchOwnerDetails.getLabName());
+		fullMsgBody = fullMsgBody.replace("{branchName}",
+				branchOwnerDetails.getBranchName());
+		fullMsgBody = fullMsgBody.replace("{hardDiskSpace}",
+				systemHealthDetails.getHardDiskUsed());
+		fullMsgBody = fullMsgBody.replace("{memoryDiskSpace}",
+				systemHealthDetails.getMemoryUsed());
+		fullMsgBody = fullMsgBody.replace("{cpuUsage}",
+				systemHealthDetails.getCpuUsage());
+		fullMsgBody = fullMsgBody.replace("{intervalTime}", response.getIntervalTime());
+		fullMsgBody = fullMsgBody.replace("{frequencyPeriod}", response.getFreqPeriod());
+		return fullMsgBody;
+	}
+
+	
 	/**
 	 * @return the labDao
 	 */
