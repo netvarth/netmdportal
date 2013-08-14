@@ -19,6 +19,7 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ActionNameEnum;
 import com.nv.youNeverWait.pl.entity.BranchStatusEnum;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.pl.entity.FrequencyEnum;
 import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
@@ -33,6 +34,7 @@ import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResultRetrievalDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserBranchDTO;
 import com.nv.youNeverWait.util.filter.core.Property;
@@ -311,6 +313,50 @@ public class LabValidator extends FilterValidator {
 		}
 	}
 
+
+	/**
+	 * @param systemHealthDetails
+	 */
+	public void validateSystemHealthDetails(
+			SystemHealthDetails systemHealthDetails) {
+		if (systemHealthDetails.getHardDiskUsed() == null
+				|| systemHealthDetails.getHardDiskUsed().isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.HardDiskSizeNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (systemHealthDetails.getMemoryUsed() == null
+				||systemHealthDetails.getMemoryUsed().isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.MemorySizeNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (systemHealthDetails.getCpuUsage() == null
+				||systemHealthDetails.getCpuUsage().isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.CpuUsageNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (systemHealthDetails.getFreqPeriod()== null
+				||systemHealthDetails.getCpuUsage().isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.FrequencyNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (systemHealthDetails.getIntervalTime() == null
+				||systemHealthDetails.getCpuUsage().isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.IntervalTimeNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
+		FrequencyEnum freq= FrequencyEnum.getEnum(systemHealthDetails.getFreqPeriod());
+	}
 	/**
 	 * Method which return false if value is null/empty
 	 * @param value
