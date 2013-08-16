@@ -1,11 +1,4 @@
-{
-    "className": "sep-div",
-    "id": "patientPersonalDiv",
-    "data": [
-        {
-            "className": "sep-div",
-            "id": "patientResultToolbarDiv"
-        },
+
         {
             "className": "sep-div",
             "data": [
@@ -52,5 +45,4 @@
                 }
             ]
         }
-    ]
-}
+   
