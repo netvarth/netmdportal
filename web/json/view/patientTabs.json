@@ -13,7 +13,7 @@
 	{
         "name": "PersonalInfo",
         "title": "CLINICS",
-        "style":"margin-left:10px",
+        "style":"margin-left:5px",
         "image":"/youNeverWait/images/clinics.png",
         "id": "clinicsInfoTab",
 		
@@ -24,7 +24,7 @@
     {
         "name": "Visits",
         "title": "RESULTS",
-         "style":"margin-left:10px",
+         "style":"margin-left:5px",
          "image":"/youNeverWait/images/result.png",
         "id": "resultsInfoTab",
         "content": [

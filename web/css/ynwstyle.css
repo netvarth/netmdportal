@@ -299,7 +299,10 @@ border-radius: 6px;
 .pPhone{background:  url(/youNeverWait/images/phone.png)  no-repeat  ;margin-left: -4px;}
 .pMobile p{margin-left: 18px;}
 .pPhone p{margin-left: 18px;}
-
+.headerPatient{width: 100%;
+height: 52px;
+position: relative;
+background:  linear-gradient(to bottom, rgba(189,224,239,1) 0%, rgba(91,201,235,1) 50%, rgba(202,230,242,1) 100%);}
 .todaysapp{
 				-moz-border-radius: 6px;
 				-webkit-border-radius:6px;
@@ -310,13 +313,16 @@ border-radius: 6px;
 				padding:9px;
 				height: 2%;
 				background: radial-gradient(ellipse at center, rgba(222,240,247,1) 0%, rgba(61,190,230,1) 0%, rgba(222,240,247,1) 0%, rgba(177,226,245,1) 62%, rgba(149,218,243,1) 100%);			}
+
+.todaysapp:hover
+{background: linear-gradient(to bottom, rgba(163,218,239,1) 0%, rgba(92,208,250,1) 0%, rgba(135,210,237,1) 100%);}
 .todaysapp label{}
-/*.todaysapp:hover
-	{
-	background: url(/youNeverWait/images/bluebar.png) no-repeat ;
-		background-size: 100%;
-	
-	}*/
+.nextprev{border-radius: 6px;
+				border: 1px solid #29b8e5;
+				background:   radial-gradient(ellipse at center, rgba(179,229,245,1) 0%, rgba(179,229,245,1) 1%, rgba(179,229,245,1) 54%, rgba(240,250,253,1) 90%, rgba(255,255,255,1) 99%, rgba(255,255,255,1) 99%);
+			}
+			#pastappointment{background: #e8f9fa;}
+			#labTable{background: #e8f9fa;}
 .realTable{
 	
 	width:90%;
@@ -339,10 +345,9 @@ border-radius: 6px;
     border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
 	} 
-	.backstyle{background:#f0f5f5;height: 8%;}
+	.backstyle{background:#e8f9fa;height: 8%;}
 .appDetail{
-	background: white url(/youNeverWait/images/list_item_back.png)no-repeat  ;
-	background-size: 100%;
+	background: #e8f9fa;
 	}
 .prevbtn{ 
 	background: white url(/youNeverWait/images/prev.jpg) no-repeat top;
@@ -372,16 +377,16 @@ border-radius: 6px;
 	margin-left:-35%}*/
 	.aTagappointmentInfoTab{
     height: 40px;
-    width: 85px;
+    width: 95px;
     
 	 }
 	.aTagclinicsInfoTab{
 	height: 40px;
-	 width: 75px;
+	 width: 95px;
    }
 	.aTagresultsInfoTab{
 	height: 40px;
-	 width: 75px;
+	 width: 95px;
     }
     .aTagappointmentInfoTab .imagediv{
     	background: url(/youNeverWait/images/appoint.png); 
@@ -421,6 +426,7 @@ margin-top: 7px;}
 *zoom: 1;
 font-weight: 400;
 float:left;
+margin: -5px 0px 0px 0px;
 }
 
 .wrapper-demo:after {
@@ -935,7 +941,7 @@ margin: 0 auto;
 padding: 12px 15px;
 
 /* Styles */
-background: rgb(163, 165, 165);
+background: linear-gradient(135deg, rgba(203,223,236,1) 0%, rgba(199,215,219,1) 47%, rgba(203,223,236,1) 99%, rgba(203,223,236,1) 100%);
 border-radius: 5px;
 box-shadow: 0 1px 0 rgba(0,0,0,0.2);
 cursor: pointer;
@@ -1358,7 +1364,7 @@ color:blue;
 #tabs-1>#tabs-nohdr .ui-tabs-nav li a:hover { text-decoration: none;  }
 #tabs-1>#tabs-nohdr .ui-tabs-nav li.ui-state-active a { background:   linear-gradient(to bottom, rgba(163,218,239,1) 0%, rgba(92,208,250,1) 0%, rgba(135,210,237,1) 100%);color: #333; border-bottom: 1px solid #fff; }
 #tabs-1>#tabs-nohdr .ui-tabs-hide { display: none; }
-#tabs-1>#tabs-nohdr .ui-tabs-panel { padding: 15px; background:  linear-gradient(135deg, rgba(251,253,254,1) 0%, rgba(83,198,233,1) 51%, rgba(251,253,254,1) 100%);border: 2px solid #71ceef;
+#tabs-1>#tabs-nohdr .ui-tabs-panel { padding: 15px; background:  linear-gradient(135deg, rgba(235,242,245,1) 0%, rgba(113,206,239,1) 99%, rgba(183,222,237,1) 100%);
 border-radius: 20px;
 margin: 0px 5px 5px 5px;
 

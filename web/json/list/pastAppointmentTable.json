@@ -9,7 +9,7 @@
                         "name" : "pastappointment",
 						"idProperty" : "pastappointment",
 						"className" :"stdtable stdtablecb",
-						"style":"border-spacing:0;border-collapse:collapse; border:0;",
+						"style":"border-spacing:0;border-collapse:collapse; border:0;font-size:12px;",
 						"colHeaders" : [
 							{ "className" : "head1",	"name" : "Doctor", "style":"width:15%"},
 							{ "className" : "head0",	"name" : "Time Slot", "style":"width:15%"}
