@@ -4,13 +4,13 @@
 			"name" 	: 	"back",
 			"id"    :   "back",
 			"title"	:	"back",
-			"style" :"margin-top: -20px;"
+			"style" :"margin-top: -25px;"
 		},
 		{
 			"name" 	: 	"delete",
 			"title"	:	"Delete",
 			"id"	:	"delete",
-			"style" :"margin: -33px 0px 0px -35px;"
+			"style" :"margin: -32px 0px 0px -35px;"
 		},
 		{
 			"name" 	: 	"view",

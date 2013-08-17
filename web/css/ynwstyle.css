@@ -151,7 +151,7 @@ input.readonlybox {
 	
 }
 .select { 
-	border: 1px solid #ccc; background: #fcfcfc; -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; 
+	border: 1px solid #ccc; background: #dbedf5; -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; 
 	-moz-box-shadow: inset 1px 1px 2px #ddd; -webkit-box-shadow: inset 1px 1px 2px #ddd; box-shadow: inset 1px 1px 2px #ddd; color: #000;
 	height:30px;
 	margin:3px 5px 0 0px;
@@ -246,11 +246,16 @@ input.readonlybox {
 width:100%;
 font-size:11pt;
  height: 18%;
+
 }
 .boldtabledoc{font-size:11pt;
 border-radius: 6px;
  border:1px solid #ccc;
- margin-top: -2%;}
+ margin-top: -2%;
+  background: url(/youNeverWait/images/centr.png) ;
+}
+ .appDetail{		}
+
 .clinicCentr{
 		background:  url(/youNeverWait/images/centr.png) repeat-x ;
 		float : left;
@@ -302,7 +307,7 @@ border-radius: 6px;
 .headerPatient{width: 100%;
 height: 52px;
 position: relative;
-background:  linear-gradient(to bottom, rgba(189,224,239,1) 0%, rgba(91,201,235,1) 50%, rgba(202,230,242,1) 100%);}
+background:linear-gradient(to bottom, rgba(219,237,245,1) 0%, rgba(219,237,245,1) 5%, rgba(173,227,240,1) 5%, rgba(218,238,245,1) 50%, rgba(177,233,246,1) 100%); }
 .todaysapp{
 				-moz-border-radius: 6px;
 				-webkit-border-radius:6px;
@@ -319,7 +324,8 @@ background:  linear-gradient(to bottom, rgba(189,224,239,1) 0%, rgba(91,201,235,
 .todaysapp label{}
 .nextprev{border-radius: 6px;
 				border: 1px solid #29b8e5;
-				background:   radial-gradient(ellipse at center, rgba(179,229,245,1) 0%, rgba(179,229,245,1) 1%, rgba(179,229,245,1) 54%, rgba(240,250,253,1) 90%, rgba(255,255,255,1) 99%, rgba(255,255,255,1) 99%);
+				background: url(/youNeverWait/images/centr.png);
+			height: 6%;
 			}
 			#pastappointment{background: #e8f9fa;}
 			#labTable{background: #e8f9fa;}
@@ -333,7 +339,7 @@ background:  linear-gradient(to bottom, rgba(189,224,239,1) 0%, rgba(91,201,235,
        
      
 }
-.common{margin-left: 10%;margin-right: 10%;}
+.common{margin-left: 3%;margin-right: 3%;}
 .realTable tbody tr td{ border-bottom:solid black 1px;padding:0px;margin:0px;}
 .list{
 	border-bottom: solid #0a63bd 1px;
@@ -346,9 +352,7 @@ background:  linear-gradient(to bottom, rgba(189,224,239,1) 0%, rgba(91,201,235,
 	border-bottom-right-radius: 6px;
 	} 
 	.backstyle{background:#e8f9fa;height: 8%;}
-.appDetail{
-	background: #e8f9fa;
-	}
+
 .prevbtn{ 
 	background: white url(/youNeverWait/images/prev.jpg) no-repeat top;
 	width:25%;
@@ -413,7 +417,8 @@ background:  linear-gradient(to bottom, rgba(189,224,239,1) 0%, rgba(91,201,235,
  .creteapp{
 width: 100%;
 background:#eee url(../../images/tab-head.png) repeat-x top left;
-height: 5%;
+border-radius: 6px;
+border: 1px solid #29b8e5;
 }
 .creteapp div{float: right;}
 .creteapp h1{font-size: 12pt;
@@ -941,7 +946,8 @@ margin: 0 auto;
 padding: 12px 15px;
 
 /* Styles */
-background: linear-gradient(135deg, rgba(203,223,236,1) 0%, rgba(199,215,219,1) 47%, rgba(203,223,236,1) 99%, rgba(203,223,236,1) 100%);
+background: #84c7e0;
+border: 2px solid #b3dced;
 border-radius: 5px;
 box-shadow: 0 1px 0 rgba(0,0,0,0.2);
 cursor: pointer;
@@ -1364,7 +1370,7 @@ color:blue;
 #tabs-1>#tabs-nohdr .ui-tabs-nav li a:hover { text-decoration: none;  }
 #tabs-1>#tabs-nohdr .ui-tabs-nav li.ui-state-active a { background:   linear-gradient(to bottom, rgba(163,218,239,1) 0%, rgba(92,208,250,1) 0%, rgba(135,210,237,1) 100%);color: #333; border-bottom: 1px solid #fff; }
 #tabs-1>#tabs-nohdr .ui-tabs-hide { display: none; }
-#tabs-1>#tabs-nohdr .ui-tabs-panel { padding: 15px; background:  linear-gradient(135deg, rgba(235,242,245,1) 0%, rgba(113,206,239,1) 99%, rgba(183,222,237,1) 100%);
+#tabs-1>#tabs-nohdr .ui-tabs-panel { padding: 15px; background:   linear-gradient(to bottom, rgba(206,232,243,1) 0%, rgba(105,206,236,1) 50%, rgba(218,238,246,1) 100%);
 border-radius: 20px;
 margin: 0px 5px 5px 5px;
 
