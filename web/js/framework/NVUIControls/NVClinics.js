@@ -29,7 +29,7 @@ this.result =function(){
 				 newrow.append(divcenter);
 				 newrow.append(divright);
 				common.append(newrow);
-				subdivcurr=$j('<div id="'+netmd.globalId+'_'+netmd.netmdId+'" class="view boldtabledoc"style="display:none;width: 75%;margin-left: 10%;"></div>');	
+				subdivcurr=$j('<div id="'+netmd.globalId+'_'+netmd.netmdId+'" class="view boldtabledoc"style="display:none;width: 85%;margin-left: 5%;"></div>');	
 				common.append(subdivcurr);
 				table.append(common);		
 		 });
