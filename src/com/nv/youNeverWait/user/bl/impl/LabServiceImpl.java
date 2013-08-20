@@ -35,6 +35,7 @@ import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabBranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
@@ -994,7 +995,7 @@ public class LabServiceImpl implements LabService {
 		/*Checking whether system is in critical condition*/
 		HealthMonitorResponse response= labDao.healthMonitorResponse(systemHealthDetails);
 		if(response.isCritical()){
-			BranchOwnerDetails branchOwnerDetails=labDao.getBranchOwners(systemHealthDetails.getHeader().getLabId());
+			BranchOwnerDetails branchOwnerDetails=labDao.getBranchOwners(systemHealthDetails.getHeader().getLabBranchId());
 			sendEmailToLabOwner(branchOwnerDetails, Constants.LAB_SYSTEM_FAILURE,
 					response,systemHealthDetails);
 		
@@ -1080,6 +1081,18 @@ public class LabServiceImpl implements LabService {
 		return fullMsgBody;
 	}
 
+	@Override
+	public LabBranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId) {
+		if(branchId<=0){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranch);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(branchId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		LabBranchSystemInfoDetails response=labDao.viewBranchsystemInfoDetails(branchId);
+		return response;
+	}
 	
 	/**
 	 * @return the labDao
@@ -1200,5 +1213,7 @@ public class LabServiceImpl implements LabService {
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
 	}
+
+	
 
 }
