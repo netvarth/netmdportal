@@ -80,6 +80,9 @@ public interface LabDao {
 	 public HealthMonitorResponse healthMonitorResponse(
 			SystemHealthDetails systemHealthDetails);
 	public LabBranchSystemInfoDetails viewBranchsystemInfoDetails(int branchId);
+	public ResponseDTO updateLabBranchSystemInfo(
+			LabBranchSystemInfoDetails details);
+	
 	
 	
 }
