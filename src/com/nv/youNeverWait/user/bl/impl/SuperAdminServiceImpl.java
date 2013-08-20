@@ -786,6 +786,13 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	return response;
 	}
 	
+	@Override
+	public ResponseDTO updateLabBranchSystemInfo(
+			LabBranchSystemInfoDetails details) {
+		ResponseDTO response= labService.updateLabBranchSystemInfo(details);
+		return response;
+	}
+	
 	/**
 	 * @return the netMdService
 	 */
@@ -935,6 +942,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public void setNetRxService(NetRxService netRxService) {
 		this.netRxService = netRxService;
 	}
+
+	
 
 
 
