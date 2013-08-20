@@ -127,6 +127,9 @@ public enum ErrorCodeEnum {
 	CpuSpaceNull("542","Total cpu space is not given"), 
 	BranchSystemInfoNull("543","Default system information for the branch id {id} does not exist"),
 	SystemMonitorDetailsNull("545","There is no system health monitor details"),
+	CriticalCpuLevelNull("546","Critical CPU level is not given"),
+	CriticalHardDiskSPaceLevelNull("547","Critical hard disk space level is not given"),
+	CriticalMemoryLevelNull("548","Critical memory level not given"),
 	
 	/*
 	 * netMd Errors 
