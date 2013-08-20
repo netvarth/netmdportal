@@ -21,9 +21,17 @@ public class LabBranchSystemInfoDetails {
 	String currentCpuUsage;
 	String currentHardDiskSpace;
 	String currentMemorySpace;
+	int branchId;
 	boolean success;
 	ErrorDTO error;
 	
+	
+	public int getBranchId() {
+		return branchId;
+	}
+	public void setBranchId(int branchId) {
+		this.branchId = branchId;
+	}
 	public boolean isSuccess() {
 		return success;
 	}
