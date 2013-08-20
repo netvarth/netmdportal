@@ -1194,6 +1194,33 @@ public LabBranchSystemInfoDetails viewBranchsystemInfo(@PathVariable int branchI
 		
 	}
 	
+
+	/**
+	 * Updates netmd branch details
+	 * 
+	 * @param branch
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "updateLabBranchSystemInfo", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO updateLabBranchSystemInfo(@RequestBody LabBranchSystemInfoDetails details) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = service.updateLabBranchSystemInfo(details);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+
+		return response;
+	}
+
 	/**
 	 * @return the service
 	 */
