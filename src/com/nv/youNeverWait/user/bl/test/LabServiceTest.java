@@ -2410,7 +2410,360 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		}
 	}
 	@Test
-	public void systemHealthMonitor(){	
+	public void systemHealthMonitorFreqTypeNullOrEmpty(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(192);
+		header.setLabBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("8");
+		systemResponse.setHardDiskUsed("8");
+		systemResponse.setMemoryUsed("9");
+		systemResponse.setFreqType(null);
+		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("80");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void systemHealthMonitorWrongFreqType(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(192);
+		header.setLabBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("8");
+		systemResponse.setHardDiskUsed("8");
+		systemResponse.setMemoryUsed("9");
+		systemResponse.setFreqType("hr");
+		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("80");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	
+	@Test
+	public void systemHealthMonitorWrongPassphrase(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(192);
+		header.setLabBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==abcd");
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("8");
+		systemResponse.setHardDiskUsed("8");
+		systemResponse.setMemoryUsed("9");
+		systemResponse.setFreqType("hourly");
+		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("80");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void systemHealthMonitorNullPassPhraseOrEmpty(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(192);
+		header.setLabBranchId(122);
+		header.setPassPhrase(null);
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("8");
+		systemResponse.setHardDiskUsed("8");
+		systemResponse.setMemoryUsed("9");
+		systemResponse.setFreqType("hourly");
+		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("80");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void systemHealthMonitorWrongMacId(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(192);
+		header.setLabBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7Beeeeeeeeeeee");
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("8");
+		systemResponse.setHardDiskUsed("8");
+		systemResponse.setMemoryUsed("9");
+		systemResponse.setFreqType("hourly");
+		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("80");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void systemHealthMonitorNullMacIdOrEmpty(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(192);
+		header.setLabBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId(null);
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("8");
+		systemResponse.setHardDiskUsed("8");
+		systemResponse.setMemoryUsed("9");
+		systemResponse.setFreqType("hourly");
+		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("80");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void systemHealthMonitorWrongLabId(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(192);
+		header.setLabBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("8");
+		systemResponse.setHardDiskUsed("8");
+		systemResponse.setMemoryUsed("9");
+		systemResponse.setFreqType("hourly");
+		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("80");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void systemHealthMonitorLabIdNegativeOrZero(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(0);
+		header.setLabBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("8");
+		systemResponse.setHardDiskUsed("8");
+		systemResponse.setMemoryUsed("9");
+		systemResponse.setFreqType("hourly");
+		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("80");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void systemHealthMonitorWrongLabBranchId(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(192);
+		header.setLabBranchId(1022);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("8");
+		systemResponse.setHardDiskUsed("8");
+		systemResponse.setMemoryUsed("9");
+		systemResponse.setFreqType("hourly");
+		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("80");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void systemHealthMonitorLabBranchIdZeroOegative(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(192);
+		header.setLabBranchId(-1);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("8");
+		systemResponse.setHardDiskUsed("8");
+		systemResponse.setMemoryUsed("9");
+		systemResponse.setFreqType("hourly");
+		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("80");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void systemHealthMonitorWrongCpuUsage(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(192);
+		header.setLabBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("wert");
+		systemResponse.setHardDiskUsed("8");
+		systemResponse.setMemoryUsed("9");
+		systemResponse.setFreqType("hourly");
+		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("80");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void systemHealthMonitorWrongHardDiskUsage(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(192);
+		header.setLabBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("8");
+		systemResponse.setHardDiskUsed("we8");
+		systemResponse.setMemoryUsed("9");
+		systemResponse.setFreqType("hourly");
+		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("80");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void systemHealthMonitorWrongMemoryusage(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(192);
+		header.setLabBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("8");
+		systemResponse.setHardDiskUsed("8");
+		systemResponse.setMemoryUsed("1qw9");
+		systemResponse.setFreqType("hourly");
+		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("80");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	
+	@Test
+	public void systemHealthMonitorTotalCpuUsageMissMatch(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
 		LabHeaderDTO header= new LabHeaderDTO();
@@ -2422,8 +2775,65 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setCpuUsage("80");
 		systemResponse.setHardDiskUsed("8");
 		systemResponse.setMemoryUsed("9");
-		systemResponse.setFreqPeriod("hr");
+		systemResponse.setFreqType("hourly");
 		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("80");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void systemHealthMonitorTotalMemoryMissMatch(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(192);
+		header.setLabBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("8");
+		systemResponse.setHardDiskUsed("8");
+		systemResponse.setMemoryUsed("80");
+		systemResponse.setFreqType("hourly");
+		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("80");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
+		try{
+			service.getHealthMonitor(systemResponse);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void systemHealthMonitorTotalHardDiskSpaceMissMatch(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		SystemHealthDetails systemResponse= new SystemHealthDetails();
+		LabHeaderDTO header= new LabHeaderDTO();
+		header.setLabId(192);
+		header.setLabBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		systemResponse.setHeader(header);
+		systemResponse.setCpuUsage("8");
+		systemResponse.setHardDiskUsed("80");
+		systemResponse.setMemoryUsed("9");
+		systemResponse.setFreqType("hourly");
+		systemResponse.setIntervalTime("5");
+		systemResponse.setTotalCpuSpace("4");
+		systemResponse.setTotalHardDiskSpace("80");
+		systemResponse.setTotalMemorySpace("80");
 		try{
 			service.getHealthMonitor(systemResponse);
 		}
@@ -2434,3 +2844,4 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		}
 	}
 }
+
