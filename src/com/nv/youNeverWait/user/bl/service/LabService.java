@@ -80,5 +80,8 @@ public interface LabService {
 			BranchOrderDetail branchOrders);
 	public HealthMonitorResponse getHealthMonitor(SystemHealthDetails systemHealthDetails);
 	public LabBranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId);
+	public ResponseDTO updateLabBranchSystemInfo(
+			LabBranchSystemInfoDetails details);
+	
 
 }
