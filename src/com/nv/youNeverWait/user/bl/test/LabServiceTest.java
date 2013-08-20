@@ -26,6 +26,7 @@ import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabBranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
@@ -2842,6 +2843,27 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
 		}
+	}
+	@Test
+	public void updateBranchSystemDefaultInfo(){
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		LabBranchSystemInfoDetails details = new LabBranchSystemInfoDetails();
+		details.setBranchId(122);
+		details.setCriticalCpuLevel("1");
+		details.setCriticalHardDiskSpaceLevel("3");
+		details.setCriticalMemoryLevel("2");
+		details.setFreqType("daily");
+		details.setIntervalTime("2");
+		try{
+		
+			service.updateLabBranchSystemInfo(details);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+		
 	}
 }
 
