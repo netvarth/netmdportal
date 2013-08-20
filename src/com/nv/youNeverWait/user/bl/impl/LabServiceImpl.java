@@ -1094,6 +1094,14 @@ public class LabServiceImpl implements LabService {
 		return response;
 	}
 	
+	@Override
+	public ResponseDTO updateLabBranchSystemInfo(
+			LabBranchSystemInfoDetails details) {
+		validator.validateSystemDefaultDetails(details);
+		ResponseDTO response =labDao.updateLabBranchSystemInfo(details);
+		return response;
+	}
+	
 	/**
 	 * @return the labDao
 	 */
@@ -1213,6 +1221,8 @@ public class LabServiceImpl implements LabService {
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
 	}
+
+	
 
 	
 
