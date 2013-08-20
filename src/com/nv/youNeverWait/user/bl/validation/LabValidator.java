@@ -24,6 +24,7 @@ import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
+import com.nv.youNeverWait.rs.dto.LabBranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
@@ -719,5 +720,49 @@ public class LabValidator extends FilterValidator {
 			throw se;
 		}
 		
+	}
+
+	public void validateSystemDefaultDetails(LabBranchSystemInfoDetails details) {
+		if(details.getBranchId()<=0){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranch);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(details.getBranchId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if(details.getCriticalCpuLevel()==null && details.getCriticalCpuLevel().equals("")){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.CriticalCpuLevelNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+			
+		}
+		if(details.getCriticalHardDiskSpaceLevel()== null && details.getCriticalHardDiskSpaceLevel().equals("")){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.CriticalHardDiskSPaceLevelNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+			
+		}
+		if(details.getCriticalMemoryLevel()==null && details.getCriticalMemoryLevel().equals("")){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.CriticalMemoryLevelNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+			
+		}
+		if(details.getFreqType()==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.FrequencyNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+			
+		}
+		if(details.getIntervalTime()==null && details.getIntervalTime().equals("")){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.IntervalTimeNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
 	}
 }
