@@ -31,6 +31,7 @@ import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabBranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LogDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
@@ -1173,6 +1174,25 @@ public class SuperAdminResource {
 		return response;
 	}
 
+	@RequestMapping (value="viewBranchSystemInfo/{branchId}", method=RequestMethod.GET)
+@ResponseBody
+public LabBranchSystemInfoDetails viewBranchsystemInfo(@PathVariable int branchId){
+		LabBranchSystemInfoDetails details= new LabBranchSystemInfoDetails();
+		try{
+			details= service.viewBranchSystemInfo(branchId);
+		}
+		catch(ServiceException e){
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			details.setError(error);
+			details.setSuccess(false);
+		}
+		return details;
+		
+	}
 	
 	/**
 	 * @return the service
