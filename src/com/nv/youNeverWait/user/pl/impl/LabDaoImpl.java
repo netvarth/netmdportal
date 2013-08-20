@@ -1934,6 +1934,37 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	}
 
 
+	@Override
+	@Transactional
+	public ResponseDTO updateLabBranchSystemInfo(
+			LabBranchSystemInfoDetails details) {
+		ResponseDTO response =new ResponseDTO();
+		LabBranchTbl labBranch = getById(LabBranchTbl.class,details.getBranchId());
+		if (labBranch == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		LabBranchSystemTbl systemInfo= getSystemDetailsByBranchId(labBranch.getId());
+		if(systemInfo==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.BranchSystemInfoNull);
+			se.addParam(new Parameter(Constants.ID,Integer.toString(labBranch.getId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		systemInfo.setCriticaHardDiskSpaceLevel(Integer.parseInt(details.getCriticalHardDiskSpaceLevel()));
+		systemInfo.setCriticalCpuLevel(Integer.parseInt(details.getCriticalCpuLevel()));
+		systemInfo.setCriticalMemoryLevel(Integer.parseInt(details.getCriticalMemoryLevel()));
+		systemInfo.setFreqType(details.getFreqType());
+		systemInfo.setIntervalTime(Integer.parseInt(details.getIntervalTime()));
+		update(systemInfo);
+		response.setSuccess(true);
+		return response;
+	}
+	
 	private HealthMonitorTbl getMonitorDetailsByBranchId(int branchId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_MONITORING_DETAILS_BY_BRANCH_ID);
@@ -2468,6 +2499,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	public void setNetlimsServerIpAddress(String netlimsServerIpAddress) {
 		this.netlimsServerIpAddress = netlimsServerIpAddress;
 	}
+
+	
 
 
 
