@@ -40,6 +40,7 @@ import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabBranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
@@ -779,6 +780,12 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return response;
 	}
 
+	@Override
+	public LabBranchSystemInfoDetails viewBranchSystemInfo(int branchId) {
+		LabBranchSystemInfoDetails response= labService.viewBranchSystemInfoDetails(branchId);
+	return response;
+	}
+	
 	/**
 	 * @return the netMdService
 	 */
@@ -928,5 +935,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public void setNetRxService(NetRxService netRxService) {
 		this.netRxService = netRxService;
 	}
+
+
 
 }
