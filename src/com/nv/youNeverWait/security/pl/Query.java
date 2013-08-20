@@ -203,6 +203,11 @@ public class Query {
 	public static final String GET_BRANCH_ORDERS_BY_DATE = "from OrderAmountTbl as orders where orders.orderDate>=:param1 and orders.orderDate<=:param2 and orders.labTbl.id=:param3 and orders.labBranchTbl.id=:param4 ";
 	public static final String GET_BRANCH_ORDERS_BY_LAB ="from OrderAmountTbl as orders where orders.labTbl.id=:param1 and orders.labBranchTbl.id=:param2 and orders.orderDate=:param3";
 	
+	/*LabBranchSystemTbl*/
+	public static final String GET_SYSTEM_DETAILS_BY_BRANCH_ID = " from LabBranchSystemTbl as details where details.labBranchTbl.id=:param1";
+
+	/*HealthMonitorTbl*/
+	public static final String GET_MONITORING_DETAILS_BY_BRANCH_ID = "from HealthMonitorTbl as hMonitor where hMonitor.labBranchTbl.id =:param1 and hMonitor.id=(select max(h1Monitor.id) from HealthMonitorTbl as h1Monitor)";
 	/********** Email *******/
 	public static final String GET_INQUEUE_FROM_TABLE = "from PendingMessageTbl as msg where msg.status=:param3 and msg.communicationType=:param1 and msg.applicationSpecifier=:param2 ORDER BY lastAttemptOn ASC";
 	public static final String GET_COUNT_NEW_FROM_TABLE = "from PendingMessageTbl as msg where msg.status=:param3 and msg.communicationType=:param1  and msg.applicationSpecifier=:param2";
@@ -230,6 +235,9 @@ public class Query {
 	public static final String GET_NETRX_LOGIN_BY_USERNAME = "from NetrxLoginTbl as login where login.userName=:param1";
 	public static final String GET_NETRX_USER_BY_USERNAME_PASSWORD = "from NetrxLoginTbl as login  where login.password =:param1 and login.userName =:param2";
 	public static final String GET_NETRX_PASSPHRASE_BY_BRANCH_ID = "from NetrxPassphraseTbl as branchPassphrase where branchPassphrase.netrxBranchTbl.id=:param1 and branchPassphrase.passPhrase=:param2";
+
+	
+	
 	
 
 
