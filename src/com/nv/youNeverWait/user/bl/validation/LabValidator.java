@@ -340,7 +340,7 @@ public class LabValidator extends FilterValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (systemHealthDetails.getFreqPeriod()== null
+		if (systemHealthDetails.getFreqType()== null
 				||systemHealthDetails.getCpuUsage().isEmpty()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.FrequencyNull);
@@ -354,8 +354,30 @@ public class LabValidator extends FilterValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
+		if (systemHealthDetails.getTotalHardDiskSpace()== null
+				|| systemHealthDetails.getHardDiskUsed().isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.HardDiskSpaceNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (systemHealthDetails.getTotalMemorySpace() == null
+				||systemHealthDetails.getMemoryUsed().isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.MemorySpaceNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
 		
-		FrequencyEnum freq= FrequencyEnum.getEnum(systemHealthDetails.getFreqPeriod());
+		if (systemHealthDetails.getTotalCpuSpace() == null
+				||systemHealthDetails.getMemoryUsed().isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.CpuSpaceNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
+		FrequencyEnum freq= FrequencyEnum.getEnum(systemHealthDetails.getFreqType());
 	}
 	/**
 	 * Method which return false if value is null/empty
