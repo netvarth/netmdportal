@@ -92,5 +92,8 @@ public interface SuperAdminService {
 	public BranchOrdersResponseDTO viewBranchOrders(int globalId);
 	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO);
 	public LabBranchSystemInfoDetails viewBranchSystemInfo(int branchId);
+	public ResponseDTO updateLabBranchSystemInfo(
+			LabBranchSystemInfoDetails details);
+	
 
 }
