@@ -122,6 +122,11 @@ public enum ErrorCodeEnum {
 	FrequencyNull("537","Frequency is not given"),
 	IntervalTimeNull("538","Interval time is not given"),
 	InvaliFrequencyType("539","Invalid frequency type"),
+	HardDiskSpaceNull("540","Total hard disk space is not given"), 
+	MemorySpaceNull("541","total memory space is not given"), 
+	CpuSpaceNull("542","Total cpu space is not given"), 
+	BranchSystemInfoNull("543","Default system information for the branch id {id} does not exist"),
+	SystemMonitorDetailsNull("545","There is no system health monitor details"),
 	
 	/*
 	 * netMd Errors 
@@ -203,7 +208,7 @@ public enum ErrorCodeEnum {
 	InvalidNetRxBranchId("2012","Given netRx branch id is invalid"),
 	InvalidNetRxUser("2013","User with id {id} does not exists in this netrx branch"),
 	InvalidNetRxUserName("2014","Please enter valid user name"),
-	NetRxIdNull("2015","Netrx Id should not be null"), 
+	NetRxIdNull("2015","Netrx Id should not be null")
 	;
 	private String errCode;
 	private String errMsg;
