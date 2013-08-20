@@ -20,21 +20,38 @@ public class SystemHealthDetails {
 	String hardDiskUsed;
 	String memoryUsed;
 	String cpuUsage;
-	String freqPeriod;
+	String freqType;
 	String intervalTime;
+	String totalHardDiskSpace;
+	String totalMemorySpace;
+	String totalCpuSpace;
+	
 
 	
-	/**
-	 * @return the freqPeriod
-	 */
-	public String getFreqPeriod() {
-		return freqPeriod;
+	public String getTotalCpuSpace() {
+		return totalCpuSpace;
 	}
-	/**
-	 * @param freqPeriod the freqPeriod to set
-	 */
-	public void setFreqPeriod(String freqPeriod) {
-		this.freqPeriod = freqPeriod;
+	public void setTotalCpuSpace(String totalCpuSpace) {
+		this.totalCpuSpace = totalCpuSpace;
+	}
+	public String getTotalHardDiskSpace() {
+		return totalHardDiskSpace;
+	}
+	public void setTotalHardDiskSpace(String totalHardDiskSpace) {
+		this.totalHardDiskSpace = totalHardDiskSpace;
+	}
+	public String getTotalMemorySpace() {
+		return totalMemorySpace;
+	}
+	public void setTotalMemorySpace(String totalMemorySpace) {
+		this.totalMemorySpace = totalMemorySpace;
+	}
+	
+	public String getFreqType() {
+		return freqType;
+	}
+	public void setFreqType(String freqType) {
+		this.freqType = freqType;
 	}
 	/**
 	 * @return the intervalTime
