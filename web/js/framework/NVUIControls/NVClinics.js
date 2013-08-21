@@ -1,6 +1,6 @@
 function clinics(contents) {
 this.result =function(){ 
-		var content =$j('<div></div>');
+		var content =$j('<div id="contentclinic"></div>');
 		var calenderui=$j('<ul class="creteapp" style="margin-left: -1px;display:none;height:6%;"><h1 id="pageTitle"></h1><div id="pageToolBar-Container"></div></ul>');
 		content.append(calenderui);
 		
