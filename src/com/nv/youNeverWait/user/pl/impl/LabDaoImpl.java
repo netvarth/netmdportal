@@ -1828,9 +1828,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		int memoryUsed = Integer.parseInt(systemHealthDetails.getMemoryUsed());
 		int hardDiskUsed = Integer.parseInt(systemHealthDetails
 				.getHardDiskUsed());
-		int intervalTym = Integer.parseInt(systemHealthDetails
-				.getIntervalTime());
-		String frequencyType = systemHealthDetails.getFreqType();
+		int intervalTym = 0;
+		String frequencyType = null;
 		boolean criticalFlag = false;
 		Date newDate = new Date();
 
