@@ -20,8 +20,6 @@ public class SystemHealthDetails {
 	String hardDiskUsed;
 	String memoryUsed;
 	String cpuUsage;
-	String freqType;
-	String intervalTime;
 	String totalHardDiskSpace;
 	String totalMemorySpace;
 	String totalCpuSpace;
@@ -47,24 +45,6 @@ public class SystemHealthDetails {
 		this.totalMemorySpace = totalMemorySpace;
 	}
 	
-	public String getFreqType() {
-		return freqType;
-	}
-	public void setFreqType(String freqType) {
-		this.freqType = freqType;
-	}
-	/**
-	 * @return the intervalTime
-	 */
-	public String getIntervalTime() {
-		return intervalTime;
-	}
-	/**
-	 * @param intervalTime the intervalTime to set
-	 */
-	public void setIntervalTime(String intervalTime) {
-		this.intervalTime = intervalTime;
-	}
 	/**
 	 * @return the cpuUsage
 	 */
