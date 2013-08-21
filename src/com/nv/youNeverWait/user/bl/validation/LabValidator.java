@@ -341,20 +341,8 @@ public class LabValidator extends FilterValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (systemHealthDetails.getFreqType()== null
-				||systemHealthDetails.getCpuUsage().isEmpty()) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.FrequencyNull);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		if (systemHealthDetails.getIntervalTime() == null
-				||systemHealthDetails.getCpuUsage().isEmpty()) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.IntervalTimeNull);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
+		
+		
 		if (systemHealthDetails.getTotalHardDiskSpace()== null
 				|| systemHealthDetails.getHardDiskUsed().isEmpty()) {
 			ServiceException se = new ServiceException(
@@ -378,7 +366,6 @@ public class LabValidator extends FilterValidator {
 			throw se;
 		}
 		
-		FrequencyEnum freq= FrequencyEnum.getEnum(systemHealthDetails.getFreqType());
 	}
 	/**
 	 * Method which return false if value is null/empty
