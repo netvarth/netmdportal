@@ -78,7 +78,7 @@ public interface LabService {
 	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO);
 	public BranchOrderCountResponseDTO createTotalOrders(LabHeaderDTO header,
 			BranchOrderDetail branchOrders);
-	public HealthMonitorResponse getHealthMonitor(SystemHealthDetails systemHealthDetails);
+	public HealthMonitorResponse checkSystemHealth(SystemHealthDetails systemHealthDetails);
 	public LabBranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId);
 	public ResponseDTO updateLabBranchSystemInfo(
 			LabBranchSystemInfoDetails details);

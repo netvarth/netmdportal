@@ -2427,7 +2427,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
@@ -2452,7 +2452,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
@@ -2478,7 +2478,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
@@ -2503,7 +2503,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
@@ -2528,7 +2528,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
@@ -2553,7 +2553,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
@@ -2578,7 +2578,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
@@ -2603,7 +2603,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
@@ -2628,7 +2628,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
@@ -2653,7 +2653,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
@@ -2678,7 +2678,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
@@ -2703,7 +2703,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
@@ -2728,7 +2728,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
@@ -2754,7 +2754,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
@@ -2779,7 +2779,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
@@ -2804,7 +2804,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		systemResponse.setTotalHardDiskSpace("80");
 		systemResponse.setTotalMemorySpace("80");
 		try{
-			service.getHealthMonitor(systemResponse);
+			service.checkSystemHealth(systemResponse);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());
