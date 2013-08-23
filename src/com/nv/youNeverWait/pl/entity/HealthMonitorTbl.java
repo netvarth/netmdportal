@@ -22,11 +22,11 @@ public class HealthMonitorTbl implements Serializable {
 	@Column(name = "cpu_usage", nullable = false)
 	private int cpuUsage;
 
-	@Column(name = "freq_period", nullable = false)
-	private String freqPeriod;
+	@Column(name = "freq_type", nullable = false)
+	private String freqType;
 
-	@Column(name = "hard_disk_used", nullable = false)
-	private int hardDiskUsed;
+	@Column(name = "hard_disk_usage", nullable = false)
+	private int hardDiskUsage;
 
 	@Column(name = "interval_time", nullable = false)
 	private int intervalTime;
@@ -36,8 +36,8 @@ public class HealthMonitorTbl implements Serializable {
 	@JoinColumn(name = "lab_branch_id", nullable = false)
 	private LabBranchTbl labBranchTbl;
 
-	@Column(name = "memory_used", nullable = false)
-	private int memoryUsed;
+	@Column(name = "memory_usage", nullable = false)
+	private int memoryUsage;
 
 	@Temporal( TemporalType.TIMESTAMP)
 	@Column(name="created_date_time", nullable=false)
@@ -96,22 +96,21 @@ public class HealthMonitorTbl implements Serializable {
 		this.cpuUsage = cpuUsage;
 	}
 
-	public String getFreqPeriod() {
-		return this.freqPeriod;
+	public String getFreqType() {
+		return this.freqType;
 	}
 
-	public void setFreqPeriod(String freqPeriod) {
-		this.freqPeriod = freqPeriod;
+	public void setFreqType(String freqType) {
+		this.freqType = freqType;
 	}
 
-	public int getHardDiskUsed() {
-		return this.hardDiskUsed;
+	public int getHardDiskUsage() {
+		return this.hardDiskUsage;
 	}
 
-	public void setHardDiskUsed(int hardDiskUsed) {
-		this.hardDiskUsed = hardDiskUsed;
+	public void setHardDiskUsage(int hardDiskUsage) {
+		this.hardDiskUsage = hardDiskUsage;
 	}
-
 	public int getIntervalTime() {
 		return this.intervalTime;
 	}
@@ -128,12 +127,12 @@ public class HealthMonitorTbl implements Serializable {
 		this.labBranchTbl = labBranchTbl;
 	}
 
-	public int getMemoryUsed() {
-		return this.memoryUsed;
+	public int getMemoryUsage() {
+		return this.memoryUsage;
 	}
 
-	public void setMemoryUsed(int memoryUsed) {
-		this.memoryUsed = memoryUsed;
+	public void setMemoryUsage(int memoryUsage) {
+		this.memoryUsage = memoryUsage;
 	}
 
 }

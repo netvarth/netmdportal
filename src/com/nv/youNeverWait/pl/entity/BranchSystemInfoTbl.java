@@ -9,8 +9,8 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="lab_branch_system_tbl")
-public class LabBranchSystemTbl implements Serializable {
+@Table(name="branch_system_info_tbl")
+public class BranchSystemInfoTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -18,8 +18,8 @@ public class LabBranchSystemTbl implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int id;
 
-	@Column(name="critica_hard_disk_space_level",nullable=false)
-	private int criticaHardDiskSpaceLevel;
+	@Column(name="critical_hard_disk_space_level",nullable=false)
+	private int criticalHardDiskSpaceLevel;
 
 	@Column(name="critical_cpu_level",nullable=false)
 	private int criticalCpuLevel;
@@ -38,7 +38,7 @@ public class LabBranchSystemTbl implements Serializable {
 	@JoinColumn(name="branch_id",nullable=false)
 	private LabBranchTbl labBranchTbl;
 
-	public LabBranchSystemTbl() {
+	public BranchSystemInfoTbl() {
 	}
 
 	public int getId() {
@@ -49,14 +49,14 @@ public class LabBranchSystemTbl implements Serializable {
 		this.id = id;
 	}
 
-	public int getCriticaHardDiskSpaceLevel() {
-		return this.criticaHardDiskSpaceLevel;
+	public int getCriticalHardDiskSpaceLevel() {
+		return this.criticalHardDiskSpaceLevel;
 	}
 
-	public void setCriticaHardDiskSpaceLevel(int criticaHardDiskSpaceLevel) {
-		this.criticaHardDiskSpaceLevel = criticaHardDiskSpaceLevel;
+	public void setCriticalHardDiskSpaceLevel(int criticalHardDiskSpaceLevel) {
+		this.criticalHardDiskSpaceLevel = criticalHardDiskSpaceLevel;
 	}
-
+	
 	public int getCriticalCpuLevel() {
 		return this.criticalCpuLevel;
 	}
