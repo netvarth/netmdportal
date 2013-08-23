@@ -10,6 +10,9 @@
  */
 package com.nv.youNeverWait.rs.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LabBranchSystemInfoDetails {
 
 	String criticalCpuLevel;
@@ -18,9 +21,7 @@ public class LabBranchSystemInfoDetails {
 	String freqType;
 	String intervalTime;
 	String branchName;
-	String currentCpuUsage;
-	String currentHardDiskSpace;
-	String currentMemorySpace;
+	List<SystemHealthMonitorDetailList> healthMonitorList= new ArrayList<SystemHealthMonitorDetailList>();
 	int branchId;
 	boolean success;
 	ErrorDTO error;
@@ -80,23 +81,19 @@ public class LabBranchSystemInfoDetails {
 	public void setBranchName(String branchName) {
 		this.branchName = branchName;
 	}
-	public String getCurrentCpuUsage() {
-		return currentCpuUsage;
+	/**
+	 * @return the healthMonitorList
+	 */
+	public List<SystemHealthMonitorDetailList> getHealthMonitorList() {
+		return healthMonitorList;
 	}
-	public void setCurrentCpuUsage(String currentCpuUsage) {
-		this.currentCpuUsage = currentCpuUsage;
+	/**
+	 * @param healthMonitorList the healthMonitorList to set
+	 */
+	public void setHealthMonitorList(
+			List<SystemHealthMonitorDetailList> healthMonitorList) {
+		this.healthMonitorList = healthMonitorList;
 	}
-	public String getCurrentHardDiskSpace() {
-		return currentHardDiskSpace;
-	}
-	public void setCurrentHardDiskSpace(String currentHardDiskSpace) {
-		this.currentHardDiskSpace = currentHardDiskSpace;
-	}
-	public String getCurrentMemorySpace() {
-		return currentMemorySpace;
-	}
-	public void setCurrentMemorySpace(String currentMemorySpace) {
-		this.currentMemorySpace = currentMemorySpace;
-	}
+	
 	
 }
