@@ -40,7 +40,7 @@
 		<class>com.nv.youNeverWait.pl.entity.NetrxUserTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.OrderAmountTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.HealthMonitorTbl</class>
-		<class>com.nv.youNeverWait.pl.entity.LabBranchSystemTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.BranchSystemInfoTbl</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 		</properties>
