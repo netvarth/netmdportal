@@ -13,13 +13,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ActionNameEnum;
 import com.nv.youNeverWait.pl.entity.BranchStatusEnum;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
-import com.nv.youNeverWait.pl.entity.FrequencyEnum;
 import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
@@ -316,6 +314,7 @@ public class LabValidator extends FilterValidator {
 
 
 	/**
+	 * Validating system health monitoring details
 	 * @param systemHealthDetails
 	 */
 	public void validateSystemHealthDetails(
@@ -478,22 +477,7 @@ public class LabValidator extends FilterValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		//		if (resultTranfer.getDestinationNetMdId() <= 0) {
-		//			ServiceException se = new ServiceException(
-		//					ErrorCodeEnum.InvalidDestinationNetMd);
-		//			se.addParam(new Parameter(Constants.ID, Integer
-		//					.toString(resultTranfer.getDestinationNetMdId())));
-		//			se.setDisplayErrMsg(true);
-		//			throw se;
-		//		}
-		//		if (resultTranfer.getDestinationNetMdBranchId() <= 0) {
-		//			ServiceException se = new ServiceException(
-		//					ErrorCodeEnum.InvalidDestinationNetMdBranch);
-		//			se.addParam(new Parameter(Constants.ID, Integer
-		//					.toString(resultTranfer.getDestinationNetMdBranchId())));
-		//			se.setDisplayErrMsg(true);
-		//			throw se;
-		//		}
+	
 		if(resultTranfer.getDoctorEmail()==null ||resultTranfer.getDoctorEmail().isEmpty()){
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.DoctorEmailNull);
@@ -560,6 +544,10 @@ public class LabValidator extends FilterValidator {
 				resultTranfer.getHeader().getLabBranchId());
 	}
 
+	/**
+	 * Validating lab header details
+	 * @param header
+	 */
 	public void validateHeaderDetails(LabHeaderDTO header) {
 
 		if (header.getMacId() == null || header.getMacId().equals("")) {

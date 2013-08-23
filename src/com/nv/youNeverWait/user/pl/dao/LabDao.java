@@ -72,14 +72,9 @@ public interface LabDao {
 	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO);
 	public BranchOrderCountResponseDTO createTotalOrders(LabHeaderDTO header,
 			BranchOrderDetail branchOrders);
-	
-	/**
-	 * @param systemHealthDetails
-	 * @return
-	 */
-	 public HealthMonitorResponse healthMonitorResponse(
+	public HealthMonitorResponse checkSystemHealth(
 			SystemHealthDetails systemHealthDetails);
-	public LabBranchSystemInfoDetails viewBranchsystemInfoDetails(int branchId);
+	public LabBranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId);
 	public ResponseDTO updateLabBranchSystemInfo(
 			LabBranchSystemInfoDetails details);
 	
