@@ -553,7 +553,7 @@ public class SuperAdminResource {
 	@RequestMapping(value = "createLab", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseDTO createLab(@RequestBody LabDTO lab) {
-		System.out.println("createNetLims....");
+
 		ResponseDTO response = new ResponseDTO();
 		try {
 			response = service.createLab(lab);
@@ -1174,9 +1174,14 @@ public class SuperAdminResource {
 		return response;
 	}
 
+	/**
+	 * Method for viewing branch default system details
+	 * @param branchId
+	 * @return
+	 */
 	@RequestMapping (value="viewBranchSystemInfo/{branchId}", method=RequestMethod.GET)
-@ResponseBody
-public LabBranchSystemInfoDetails viewBranchsystemInfo(@PathVariable int branchId){
+	@ResponseBody
+	public LabBranchSystemInfoDetails viewBranchSystemInfo(@PathVariable int branchId){
 		LabBranchSystemInfoDetails details= new LabBranchSystemInfoDetails();
 		try{
 			details= service.viewBranchSystemInfo(branchId);
@@ -1196,11 +1201,10 @@ public LabBranchSystemInfoDetails viewBranchsystemInfo(@PathVariable int branchI
 	
 
 	/**
-	 * Updates netmd branch details
-	 * 
-	 * @param branch
-	 * @return ResponseDTO
-	 */
+ 	 * Method for updating the branch default system details
+	 * @param details
+ 	 * @return
+     */
 	@RequestMapping(value = "updateLabBranchSystemInfo", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseDTO updateLabBranchSystemInfo(@RequestBody LabBranchSystemInfoDetails details) {

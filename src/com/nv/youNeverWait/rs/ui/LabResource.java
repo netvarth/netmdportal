@@ -850,17 +850,17 @@ public class LabResource {
 	}
 
 	/**
-	 * Method performed to get Health Monitor
+	 * Method performed for system health monitor
 	 * 
 	 * @return HealthMonitorResponse
 	 */
-	@RequestMapping(value = "getHealthMonitor", method = RequestMethod.POST)
+	@RequestMapping(value = "checkSystemHealth", method = RequestMethod.POST)
 	@ResponseBody
-	public HealthMonitorResponse getHealthMonitor(@RequestBody SystemHealthDetails systemHealthDetails) {
+	public HealthMonitorResponse checkSystemHealth(@RequestBody SystemHealthDetails systemHealthDetails) {
 
 		HealthMonitorResponse response = new HealthMonitorResponse();
 		try {
-			response = labService.getHealthMonitor(systemHealthDetails);
+			response = labService.checkSystemHealth(systemHealthDetails);
 		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();
