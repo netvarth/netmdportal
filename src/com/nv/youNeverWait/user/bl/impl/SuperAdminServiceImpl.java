@@ -773,19 +773,32 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 				.viewBranchOrders(globalId);
 		return response;
 	}
-
+	
+	/**
+	 * Method for listing orders
+ 	 */
 	@Override
 	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO) {
 		BranchOrdersResponseDTO response = labService.orderList(orderDTO);
 		return response;
 	}
 
+	/**
+	 * Method for viewing branch default system details
+	 * @param branchId
+	 * @return
+	 */
 	@Override
 	public LabBranchSystemInfoDetails viewBranchSystemInfo(int branchId) {
 		LabBranchSystemInfoDetails response= labService.viewBranchSystemInfoDetails(branchId);
 	return response;
 	}
 	
+	/**
+ 	 * Method for updating the branch default system details
+	 * @param details
+ 	 * @return
+     */
 	@Override
 	public ResponseDTO updateLabBranchSystemInfo(
 			LabBranchSystemInfoDetails details) {

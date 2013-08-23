@@ -18,7 +18,6 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.transaction.annotation.Transactional;
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
 import com.nv.framework.sendmsg.email.SendMailMsgObj;
@@ -987,14 +986,14 @@ public class LabServiceImpl implements LabService {
 	 * getHealthMonitor()
 	 */
 	@Override
-	public HealthMonitorResponse getHealthMonitor(SystemHealthDetails systemHealthDetails) {
+	public HealthMonitorResponse checkSystemHealth(SystemHealthDetails systemHealthDetails) {
 		validator.validateHeaderDetails(systemHealthDetails.getHeader());
 		validator.validateSystemHealthDetails(systemHealthDetails);
 		
-		System.out.println(" getting health monitoring details......");
 		/*Checking whether system is in critical condition*/
-		HealthMonitorResponse response= labDao.healthMonitorResponse(systemHealthDetails);
+		HealthMonitorResponse response= labDao.checkSystemHealth(systemHealthDetails);
 		if(response.isCritical()){
+			/*Getting branch owner details and sending mail*/
 			BranchOwnerDetails branchOwnerDetails=labDao.getBranchOwners(systemHealthDetails.getHeader().getLabBranchId());
 			sendEmailToLabOwner(branchOwnerDetails, Constants.LAB_SYSTEM_FAILURE,
 					response,systemHealthDetails);
@@ -1080,7 +1079,12 @@ public class LabServiceImpl implements LabService {
 		fullMsgBody = fullMsgBody.replace("{frequencyPeriod}", response.getFreqPeriod());
 		return fullMsgBody;
 	}
-
+	
+	/**
+	 * Method for viewing branch default system details
+	 * @param branchId
+	 * @return
+	 */
 	@Override
 	public LabBranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId) {
 		if(branchId<=0){
@@ -1090,10 +1094,15 @@ public class LabServiceImpl implements LabService {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		LabBranchSystemInfoDetails response=labDao.viewBranchsystemInfoDetails(branchId);
+		LabBranchSystemInfoDetails response=labDao.viewBranchSystemInfoDetails(branchId);
 		return response;
 	}
 	
+	/**
+ 	 * Method for updating the branch default system details
+	 * @param details
+ 	 * @return
+     */
 	@Override
 	public ResponseDTO updateLabBranchSystemInfo(
 			LabBranchSystemInfoDetails details) {
