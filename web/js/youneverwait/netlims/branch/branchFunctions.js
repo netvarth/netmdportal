@@ -45,3 +45,43 @@ function fillBranchTable(branchListJson,tableObj) {
 	}		
 	return branchResult;
 }
+
+function viewHealthmonitor(healtMontr)
+{
+	if(healtMontr)
+		$j("#healthMonitorViewForm #branchname ").val(healtMontr.branchName);
+	else
+		$j("#healthMonitorViewForm #branchname ").val("Nil");
+	if(healtMontr)
+		$j("#healthMonitorViewForm #currentCpuUsage").val(healtMontr.currentCpuUsage);
+	else
+		$j("#healthMonitorViewForm #currentCpuUsage").val('Nil');
+	if(healtMontr)
+		$j("#healthMonitorViewForm #criticalCpuLevel").val(healtMontr.criticalCpuLevel);
+	else
+		$j("#healthMonitorViewForm #criticalCpuLevel").val('Nil');
+	if(healtMontr)
+		$j("#healthMonitorViewForm #criticalMemoryLevel").val(healtMontr.criticalMemoryLevel);
+	else 
+		$j("#healthMonitorViewForm #criticalMemoryLevel").val('Nil');
+	if(healtMontr)
+		$j("#healthMonitorViewForm #frequencyType").val(healtMontr.freqType);
+	else 
+		$j("#healthMonitorViewForm #frequencyType").val('Nil');
+	if(healtMontr)
+		$j("#healthMonitorViewForm #intervalTime").val(healtMontr.intervalTime);
+	else 
+		$j("#healthMonitorViewForm #intervalTime").val('Nil');	
+	if(healtMontr)
+		$j("#healthMonitorViewForm #currentHardDiskSpace").val(healtMontr.currentHardDiskSpace);
+	else 
+		$j("#healthMonitorViewForm #currentHardDiskSpace").val('Nil');
+	if(healtMontr)
+		$j("#healthMonitorViewForm #currentMemorySpace").val(healtMontr.currentMemorySpace);
+	else 
+		$j("#healthMonitorViewForm #currentMemorySpace").val('Nil');
+	if(healtMontr)
+		$j("#healthMonitorViewForm #criticalHardDiskSpaceLevel").val(healtMontr.criticalHardDiskSpaceLevel);
+	else 
+		$j("#healthMonitorViewForm #criticalHardDiskSpaceLevel").val('Nil');
+}

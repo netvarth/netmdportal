@@ -88,6 +88,27 @@ $j('#pageTitle1').show();
 		}	
 	});
 	
+	$j('#branchPTBContainer #btn_health_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	  var branchId = getSelectedBranchId(pgTableName);
+	    if(branchId!="") {
+	    	var healtMontr=getRequestData('/youNeverWait/ws/ui/superAdmin/viewBranchSystemInfo/'+branchId);
+			//alert(JSON.stringify(healtMontr));
+	    	var tableobj="#healthMonitorTable";
+	    	var obj=$j(this);
+		createModal(constants_graphHealthmonitorJson,'graphHealthmonitorModal');	
+		openModalBox(obj,'graphHealthmonitorModal')
+		makeDataTable(tableobj);
+		fillhealthmonitortable(tableobj,healtMontr);
+
+			/*var healtMontr=getRequestData('/youNeverWait/ws/ui/superAdmin/viewBranchSystemInfo/'+branchId);
+			alert(JSON.stringify(healtMontr));
+			var obj=$j(this);
+		createModal(constants_netlimsHealthmonitorJson,'netlimsHealthmonitorModal');	
+		openModalBox(obj,'netlimsHealthmonitorModal')
+		viewHealthmonitor(healtMontr);*/
+		}	
+	});
 	$j('#branchPTBContainer #btn_view_ptb_id').die('click').live("click",function() {
 	removeErrors();
 	  var branchId = getSelectedBranchId(pgTableName);
@@ -122,23 +143,77 @@ $j('#pageTitle1').show();
 		//updateTipsNew(getErrorName(response.error),$j('#errorDivData'),$j('#errorDivHeader'));
 		}
 	});	
-	/*$j('#branchPTBContainer #btn_newuser_ptb_id').die('click').live("click",function() {
-	alert("new user");
+	$j('#healthMonitorViewForm #healthbtnedit').die('click').live('click',function(){
+		validateNumber("#healthMonitorViewForm #criticalCpuLevel");
+		validateNumber("#healthMonitorViewForm #criticalMemoryLevel");
+		validateNumber("#healthMonitorViewForm #criticalHardDiskSpaceLevel");
+		validateNumber("#healthMonitorViewForm #intervalTime");
+
+		removeErrors();
+		
+		$j('#healthMonitorViewForm #texfrequencyType').hide();
+		$j('#healthMonitorViewForm #selfrequencyType').show();
+		$j('#healthMonitorViewForm #healthbtnedit').hide();
+		$j('#healthMonitorViewForm #healthbtnDone').show();
+		$j('#healthMonitorViewForm #healthbtnCancel').show();
+			
+		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').removeClass('newBox'); // make box 
+		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').removeAttr('readonly');
+		$j('#viewBranchHeader #branchname').addClass('newBox');
+		$j('#viewBranchHeader #branchname').attr('readonly','readonly');
+		$j('#viewBranchHeader #currentCpuUsage').addClass('newBox');
+		$j('#viewBranchHeader #currentCpuUsage').attr('readonly','readonly');
+		$j('#viewBranchHeader #currentHardDiskSpace').addClass('newBox');
+		$j('#viewBranchHeader #currentHardDiskSpace').attr('readonly','readonly');
+		$j('#viewBranchHeader #currentMemorySpace').addClass('newBox');
+		$j('#viewBranchHeader #currentMemorySpace').attr('readonly','readonly');
+		$j('#healthMonitorViewForm #selectfrequencyType').empty();
+		fillFrequencyList("#selectfrequencyType");
+	});
+
+	$j('#healthMonitorViewForm #healthbtnCancel').die('click').live('click',function(){
 	removeErrors();
-		var branchid= getSelectedBranchId(pgTableName);
-		if(branchid!="") {
-		var obj=$j(this);
-		createModal(constants_newNetUserJson,'netlimsModal');	
-		openModalBox(obj,'netlimsModal')
-		$j.cachedScript(constants_newNetLimsUser).done(function(script, textStatus) {
-		createUser(branchid);
-		})
-		}
-	});*/
+		
+		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').addClass('newBox');
+		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').attr('readonly','readonly');	
+		$j('#healthMonitorViewForm #texfrequencyType').show();
+		$j('#healthMonitorViewForm #selfrequencyType').hide();
+		$j('#healthMonitorViewForm #healthbtnDone').hide();
+		$j('#healthMonitorViewForm #healthbtnCancel').hide();
+		$j('#healthMonitorViewForm #healthbtnedit').show();
 	
-	
+	});
+
 }
-	
+	function fillhealthmonitortable(tableobj,healtMontr) {
+	$j(tableobj).dataTable().fnClearTable();
+	//var netlimsorderResult=getRequestData("/youNeverWait/ws/ui/superAdmin/viewBranchOrders/"+ netlabId );
+	//alert(JSON.stringify(netlimsorderResult));
+		if(healtMontr.healthMonitorList.length>0) {			
+			$j(healtMontr.healthMonitorList).each(function (index, lab) {
+				
+				var rowData=$j(tableobj).dataTable().fnAddData([lab.createdDateTime,lab.cpuUsage,lab.memoryUsage,lab.hardDiskSpaceUasge]);
+				var row=$j(tableobj).dataTable().fnSettings().aoData[rowData].nTr;
+				//$j(row).attr('id',id);	
+				//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
+				});	
+		}
+	//}	 
+	return healtMontr;
+}
+
+	function fillFrequencyList(controlobj)
+	{
+		
+		var list=["daily","hourly","minutes"];
+		$j(list).each(function (Index, List) {
+			var freqlist=List;
+			$j(controlobj).append('<option  value="'+freqlist+'">'+freqlist+'</option>');
+		});
+
+		
+	}
+
 	function createDeleteJson(branchId,netlimsId){
 		var BranchDetails = '{"globalId":'+branchId+',';
 			BranchDetails +='"labId":' + netlimsId + '}';
@@ -159,3 +234,16 @@ $j('#pageTitle1').show();
 		}		
 		return branchId;
 	}
+
+	function makeDataTable(tableObj) {
+	$j(tableObj).dataTable( {
+		"sPaginationType": "full_numbers",
+		"bFilter":false,
+		"bInfo":false,
+		"bPaginate":false,
+		"bSort": false,
+		"bDestroy": true,
+		"bAutoWidth": false,
+		"sDom": '<"top"Hip>'
+	});
+}

@@ -3,7 +3,8 @@ constant_NetLimsFunctions_Url ="/youNeverWait/js/youneverwait/netlims/netlimsFun
 constants_newNetLimsJson='/youNeverWait/json/new/newNetLims.json';
 constants_adminChangePwdJsonas='/youNeverWait/json/changepassword/adminChangePassword.json';
 constants_userLogJson='/youNeverWait/json/userlog/userlog.json';
-
+constants_netlimsHealthmonitorJson='/youNeverWait/json/view/healthMonitor.json';
+constants_graphHealthmonitorJson='/youNeverWait/json/graphHealth.json';
 constants_newNetLims="/youNeverWait/js/youneverwait/netlims/new/newNetLims.js";
 constant_NetLimsList_Msg="NETLIMS LIST";
 
