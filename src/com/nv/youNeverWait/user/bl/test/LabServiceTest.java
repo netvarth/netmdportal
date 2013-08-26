@@ -2445,12 +2445,12 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
 		systemResponse.setHeader(header);
-		systemResponse.setCpuUsage("8");
-		systemResponse.setHardDiskUsed("8");
-		systemResponse.setMemoryUsed("9");
-		systemResponse.setTotalCpuSpace("80");
-		systemResponse.setTotalHardDiskSpace("80");
-		systemResponse.setTotalMemorySpace("80");
+		systemResponse.setCpuUsage("26898432");
+		systemResponse.setHardDiskUsed("26898432");
+		systemResponse.setMemoryUsed("26898432");
+		systemResponse.setTotalCpuSpace("27000000");
+		systemResponse.setTotalHardDiskSpace("27000000");
+		systemResponse.setTotalMemorySpace("27000000");
 		try{
 			service.checkSystemHealth(systemResponse);
 		}
