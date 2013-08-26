@@ -1925,9 +1925,9 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		}
 		for(HealthMonitorTbl hMonitor:healthMonitorTblList){
 			SystemHealthMonitorDetailList systemHealth= new SystemHealthMonitorDetailList();
-			systemHealth.setCpuUsage(hMonitor.getCpuUsage());
-			systemHealth.setHardDiskSpaceUasge(hMonitor.getHardDiskUsage());
-			systemHealth.setMemoryUsage(hMonitor.getMemoryUsage());
+			systemHealth.setCpuUsage(Math.round(hMonitor.getCpuUsage()/(1024*1024)));
+			systemHealth.setHardDiskSpaceUasge(Math.round(hMonitor.getHardDiskUsage()/(1024*1024)));
+			systemHealth.setMemoryUsage(Math.round(hMonitor.getMemoryUsage()/(1024*1024)));
 			systemHealth.setCreatedDateTime(sdf.format(hMonitor.getCreateDateTime()));
 			healthMonitorList.add(systemHealth);
 		}

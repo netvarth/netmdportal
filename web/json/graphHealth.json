@@ -30,17 +30,17 @@
                                                     },
                                                     {
                                                         "className": "head1",
-                                                        "name": "Cpu Usage(bytes)",
+                                                        "name": "Cpu Usage(in MB)",
                                                         "style": "width:200px"
                                                     },
                                                     {
                                                         "className": "head0",
-                                                        "name": "Memory Usage(bytes)",
+                                                        "name": "Memory Usage(in MB)",
                                                         "style": "width:200px"
                                                     },
                                                     {
                                                         "className": "head1",
-                                                        "name": "HardDiskSpace Uasge(bytes)",
+                                                        "name": "HardDiskSpace Usage(in MB)",
                                                         "style": "width:200px"
                                                     }
                                                 ]
