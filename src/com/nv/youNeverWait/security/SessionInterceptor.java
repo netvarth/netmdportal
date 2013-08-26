@@ -106,7 +106,9 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/ws/ui/lab/pricing")
 							&& !request.getRequestURI().equals(
-									"/youNeverWait/ws/ui/lab/privacyPolicy")) {
+									"/youNeverWait/ws/ui/lab/privacyPolicy")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/lab/checkSystemHealth")) {
 						request.getRequestDispatcher("/ws/ui/lab/lForm")
 								.forward(request, response);
 						return false;
