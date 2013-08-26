@@ -1070,11 +1070,11 @@ public class LabServiceImpl implements LabService {
 		fullMsgBody = fullMsgBody.replace("{branchName}",
 				branchOwnerDetails.getBranchName());
 		fullMsgBody = fullMsgBody.replace("{hardDiskSpace}",
-				systemHealthDetails.getHardDiskUsed());
+				Double.toString(Math.round(Integer.parseInt(systemHealthDetails.getHardDiskUsed())/(1024.0*1024.0))));
 		fullMsgBody = fullMsgBody.replace("{memoryDiskSpace}",
-				systemHealthDetails.getMemoryUsed());
+				Double.toString(Math.round((Integer.parseInt(systemHealthDetails.getMemoryUsed())/(1024.0*1024.0)))));
 		fullMsgBody = fullMsgBody.replace("{cpuUsage}",
-				systemHealthDetails.getCpuUsage());
+				Double.toString(Math.round(Integer.parseInt(systemHealthDetails.getCpuUsage())/(1024.0*1024.0))));
 		fullMsgBody = fullMsgBody.replace("{intervalTime}", response.getIntervalTime());
 		fullMsgBody = fullMsgBody.replace("{frequencyPeriod}", response.getFreqPeriod());
 		return fullMsgBody;
