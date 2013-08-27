@@ -92,14 +92,17 @@ $j('#pageTitle1').show();
 	removeErrors();
 	  var branchId = getSelectedBranchId(pgTableName);
 	    if(branchId!="") {
-	    	var healtMontr=getRequestData('/youNeverWait/ws/ui/superAdmin/viewBranchSystemInfo/'+branchId);
+	    	//var healtMontr=getRequestData('/youNeverWait/ws/ui/superAdmin/viewBranchSystemInfo/'+branchId);
 			//alert(JSON.stringify(healtMontr));
 	    	var tableobj="#healthMonitorTable";
 	    	var obj=$j(this);
 		createModal(constants_graphHealthmonitorJson,'graphHealthmonitorModal');	
-		openModalBox(obj,'graphHealthmonitorModal')
-		makeDataTable(tableobj);
-		fillhealthmonitortable(tableobj,healtMontr);
+		openModalBox(obj,'graphHealthmonitorModal');
+		$j.getScript(constant_Healthmonitor_Url).done(function(script, textStatus) {
+})
+		//makeDataTable(tableobj);
+		//fillhealthmonitortable(tableobj,branchId);
+		viewHealthmonitor(branchId);
 
 			/*var healtMontr=getRequestData('/youNeverWait/ws/ui/superAdmin/viewBranchSystemInfo/'+branchId);
 			alert(JSON.stringify(healtMontr));
@@ -143,52 +146,71 @@ $j('#pageTitle1').show();
 		//updateTipsNew(getErrorName(response.error),$j('#errorDivData'),$j('#errorDivHeader'));
 		}
 	});	
-	$j('#healthMonitorViewForm #healthbtnedit').die('click').live('click',function(){
-		validateNumber("#healthMonitorViewForm #criticalCpuLevel");
-		validateNumber("#healthMonitorViewForm #criticalMemoryLevel");
-		validateNumber("#healthMonitorViewForm #criticalHardDiskSpaceLevel");
-		validateNumber("#healthMonitorViewForm #intervalTime");
+	$j('#newHealthForm #healthbtnedit').die('click').live('click',function(){
+		validateNumber("#newHealthForm #criticalCpuLevel");
+		validateNumber("#newHealthForm #criticalMemoryLevel");
+		validateNumber("#newHealthForm #criticalHardDiskSpaceLevel");
+		validateNumber("#newHealthForm #intervalTime");
 
 		removeErrors();
 		
-		$j('#healthMonitorViewForm #texfrequencyType').hide();
-		$j('#healthMonitorViewForm #selfrequencyType').show();
-		$j('#healthMonitorViewForm #healthbtnedit').hide();
-		$j('#healthMonitorViewForm #healthbtnDone').show();
-		$j('#healthMonitorViewForm #healthbtnCancel').show();
+		$j('#newHealthForm #texfrequencyType').hide();
+		$j('#newHealthForm #selfrequencyType').show();
+		$j('#newHealthForm #healthbtnedit').hide();
+		$j('#newHealthForm #healthbtnDone').show();
+		$j('#newHealthForm #healthbtnCancel').show();
 			
 		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').removeClass('newBox'); // make box 
 		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').removeAttr('readonly');
-		$j('#viewBranchHeader #branchname').addClass('newBox');
-		$j('#viewBranchHeader #branchname').attr('readonly','readonly');
-		$j('#viewBranchHeader #currentCpuUsage').addClass('newBox');
-		$j('#viewBranchHeader #currentCpuUsage').attr('readonly','readonly');
-		$j('#viewBranchHeader #currentHardDiskSpace').addClass('newBox');
-		$j('#viewBranchHeader #currentHardDiskSpace').attr('readonly','readonly');
-		$j('#viewBranchHeader #currentMemorySpace').addClass('newBox');
-		$j('#viewBranchHeader #currentMemorySpace').attr('readonly','readonly');
-		$j('#healthMonitorViewForm #selectfrequencyType').empty();
+		$j('#newHealthForm #branchid').addClass('newBox');
+		$j('#newHealthForm #branchid').attr('readonly','readonly');
+		$j('#newHealthForm #selectfrequencyType').empty();
 		fillFrequencyList("#selectfrequencyType");
 	});
 
-	$j('#healthMonitorViewForm #healthbtnCancel').die('click').live('click',function(){
+	$j('#newHealthForm #healthbtnCancel').die('click').live('click',function(){
 	removeErrors();
 		
 		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').addClass('newBox');
 		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').attr('readonly','readonly');	
-		$j('#healthMonitorViewForm #texfrequencyType').show();
-		$j('#healthMonitorViewForm #selfrequencyType').hide();
-		$j('#healthMonitorViewForm #healthbtnDone').hide();
-		$j('#healthMonitorViewForm #healthbtnCancel').hide();
-		$j('#healthMonitorViewForm #healthbtnedit').show();
+		$j('#newHealthForm #texfrequencyType').show();
+		$j('#newHealthForm #selfrequencyType').hide();
+		$j('#newHealthForm #healthbtnDone').hide();
+		$j('#newHealthForm #healthbtnCancel').hide();
+		$j('#newHealthForm #healthbtnedit').show();
+		 var branchId = $j("#newHealthForm #branchid").val();
+		 viewHealthmonitor(branchId);
+
+	
+	});
+
+	$j('#newHealthForm #healthbtnDone').die('click').live('click',function(){
+	removeErrors();
+		var response = submitHealthmonitorInfo();
+		if(response.success==true) {
+		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').addClass('newBox');
+		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').attr('readonly','readonly');	
+		$j('#newHealthForm #healthbtnDone').hide();
+		$j('#newHealthForm #healthbtnCancel').hide();
+		$j('#newHealthForm #healthbtnedit').show();
+		$j('#newHealthForm #texfrequencyType').show();
+		$j('#newHealthForm #selfrequencyType').hide();
+		var branchId = getSelectedBranchId(pgTableName);
+		 viewHealthmonitor(branchId);
+		showTip("Healthmonitor updated successfully");					
+	}	
+	else
+		updateTipsNew(getErrorName(response.error),$j('#errorDivData'),$j('#errorDivHeader'));
+		
+
 	
 	});
 
 }
-	function fillhealthmonitortable(tableobj,healtMontr) {
+	function fillhealthmonitortable(tableobj,branchId) {
 	$j(tableobj).dataTable().fnClearTable();
-	//var netlimsorderResult=getRequestData("/youNeverWait/ws/ui/superAdmin/viewBranchOrders/"+ netlabId );
-	//alert(JSON.stringify(netlimsorderResult));
+	var healtMontr=getRequestData('/youNeverWait/ws/ui/superAdmin/viewBranchSystemInfo/'+branchId);
+	//alert(JSON.stringify(healtMontr));
 		if(healtMontr.healthMonitorList.length>0) {			
 			$j(healtMontr.healthMonitorList).each(function (index, lab) {
 				

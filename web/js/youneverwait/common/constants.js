@@ -6,6 +6,7 @@ constants_userLogJson='/youNeverWait/json/userlog/userlog.json';
 constants_netlimsHealthmonitorJson='/youNeverWait/json/view/healthMonitor.json';
 constants_graphHealthmonitorJson='/youNeverWait/json/graphHealth.json';
 constants_newNetLims="/youNeverWait/js/youneverwait/netlims/new/newNetLims.js";
+constant_Healthmonitor_Url="/youNeverWait/js/youneverwait/netlims/branch/branchHealthmonitor.js";
 constant_NetLimsList_Msg="NETLIMS LIST";
 
 constants_ViewNetLimsEntryPoint="/youNeverWait/js/youneverwait/netlims/view/viewNetLimsEntryPoint.js";
