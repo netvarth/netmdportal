@@ -26,7 +26,7 @@ $j('#pageTitle1').show();
 		maxPages = parseInt(maxRecords/interval) + 1;
 	else
 		maxPages = parseInt(maxRecords/interval);	
-	//setPaginationFields(curPage, maxPages, pgTableContainer);
+	setPaginationFields(curPage, maxPages, pgTableContainer);
 	$j(pgTableContainer +' #next').die('click').click(function() {
 		if(curPage!=maxPages && curPage<maxPages) {
 			curPage+=1;
