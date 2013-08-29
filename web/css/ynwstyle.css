@@ -279,25 +279,37 @@ border-radius: 6px;
 		width:112px;
 		height: 35px;
 		cursor: hand;
-		background : url(/youNeverWait/images/viewDoctorBTN.png) no-repeat ;
-		border:10px;
+		font-weight: bold;
+		background: #B0E2FF;
+border: 2px solid #87CEEB;
+border-radius: 5px;
+		/*background : url(/youNeverWait/images/viewDoctorBTN.png) no-repeat ;
+		border:10px;*/
 		
 		}
 .doctorbeforeswitch:hover
 		{
-		 background:  url(/youNeverWait/images/viewDoctorBTNOver.png)  no-repeat  ; 
+			background: #87CEEB;
+border: 2px solid #00BFFF;
+		/* background:  url(/youNeverWait/images/viewDoctorBTNOver.png)  no-repeat  ;*/ 
 		}
 .doctorafterswitch{
-		width:112px;
+	width:112px;
 		height: 35px;
 		cursor: hand;
-		background : url(/youNeverWait/images/hideDoctorBTN.png) no-repeat ;
-		border:10px;
+		font-weight: bold;
+		background:#BFEFFF;
+		border: 2px solid #63D1F4;
+border-radius: 5px;
+		/*background : url(/youNeverWait/images/hideDoctorBTN.png) no-repeat ;
+		border:10px;*/
 		
 		}
 .doctorafterSwitch:hover
 		{
-		background : url(/youNeverWait/images/hideDoctorBTnOvr.png) no-repeat ;
+			background: #B2DFEE;
+border: 2px solid #63D1F4;
+		/*background : url(/youNeverWait/images/hideDoctorBTnOvr.png) no-repeat ;*/
 		}		
 .phead{font-size: 13pt;font-weight: bold;margin-top: 5px;color: #123D8C;}
 .pMobile{background:  url(/youNeverWait/images/mob.png)  no-repeat  ;margin-left: -4px;}
@@ -1034,7 +1046,7 @@ color: #57a9d9;
 
 .wrapper-dropdown-5.active {
 border-radius: 5px 5px 0 0;
-background: #123D8C;
+
 box-shadow: none;
 border-bottom: none;
 color: white;
@@ -1464,6 +1476,47 @@ background:#eee url(../../images/tab-head.png) repeat-x top left;
 border-radius: 6px;
 border: 1px solid #c19e67;
 }
+	
+
+.theme1.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorbeforeswitch{
+		width:112px;
+		height: 35px;
+		cursor: hand;
+		font-weight: bold;
+		background: #CDAA7D;
+border: 2px solid #8E6B23;
+border-radius: 5px;
+		
+		
+		}
+
+.theme1.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorbeforeswitch:hover
+		{
+			background: #EEC591;
+border: 2px solid #C48E48;
+				}
+.theme1.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorafterswitch{
+	width:112px;
+		height: 35px;
+		cursor: hand;
+		font-weight: bold;
+		background:#EED5B7;
+		border: 2px solid #B28647;
+border-radius: 5px;
+		
+		}
+.theme1.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorafterSwitch:hover
+		{
+			background: #E7C6A5;
+border: 2px solid #CC7F32;
+		}
+.theme1>.wrapper-dropdown-5.active:after {
+border-color: #9F703A transparent;
+}
+
+.theme1>.wrapper-dropdown-5 .dropdown li:hover a {
+color: 	#9F703A;
+}		
 
 /*theme2*/
 
@@ -1539,4 +1592,44 @@ width: 100%;
 background:#eee url(../../images/tab-head.png) repeat-x top left;
 border-radius: 6px;
 border: 1px solid #88946f;
+}
+.theme2.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorbeforeswitch{
+		width:112px;
+		height: 35px;
+		cursor: hand;
+		font-weight: bold;
+		background: #78AB46;
+border: 2px solid #92CCA6;
+border-radius: 5px;
+		
+		
+		}
+
+.theme2.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorbeforeswitch:hover
+		{
+			background: #92CCA6;
+border: 2px solid #78AB46;
+				}
+.theme2.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorafterswitch{
+	width:112px;
+		height: 35px;
+		cursor: hand;
+		font-weight: bold;
+		background:#C5E3BF;
+		border: 2px solid #7BBF6A;
+border-radius: 5px;
+		
+		}
+.theme2.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorafterSwitch:hover
+		{
+			background: #8FBC8F;
+border: 2px solid #548B54;
+		}
+
+.theme2>.wrapper-dropdown-5.active:after {
+border-color: #93DB70 transparent;
+}
+
+.theme2>.wrapper-dropdown-5 .dropdown li:hover a {
+color: #93DB70;
 }

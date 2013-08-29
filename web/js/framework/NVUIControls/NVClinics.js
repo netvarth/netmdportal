@@ -23,7 +23,7 @@ this.result =function(){
 				var divright=$j('<div class="clinicright" ></div>');
 				var pTag=$j('<div  style="height: 10%;"><p class="phead">'+netmd.name+'</p>'+'<p>'+addres+'</p>'+'<div class="pMobile"><p>'+mobile+'</p></div>'+'<div class="pPhone"><p>'+phone+'</p></div></div>');
 				divcenter.append(pTag);
-				var buttonTag=$j('<div style="float: right;margin: 10px 10px 0px 0px;"><p><a href="#"><input type="button" name="'+netmd.globalId+'" class="doctor doctorbeforeswitch "></a></p></div>');	
+				var buttonTag=$j('<div class="clinicthme"style="float: right;margin: 10px 10px 0px 0px;"><p class="pTheme"><a class="aTheme" href="#"><input type="button" value="View Doctor(s)" name="'+netmd.globalId+'" class="doctor doctorbeforeswitch "></a></p></div>');	
                 divcenter.append(buttonTag);
                  newrow.append(divleft);
 				 newrow.append(divcenter);
@@ -41,3 +41,4 @@ this.result =function(){
 		return content;
 	};
 }	
+
