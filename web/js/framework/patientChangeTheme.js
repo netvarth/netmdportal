@@ -18,9 +18,8 @@ if(classtab.indexOf('theme') != -1){
 	reltsel1=reltsel1[1];
 	$j('#dropdownOne').removeClass(reltsel1);
 
-	var viwbtnTeme=$j('.clinicCentr').attr('class').split(' ');
-	viwbtnTeme=viwbtnTeme[1];
-	$j('.clinicCentr').removeClass(viwbtnTeme);
+	var viwbtnTeme=$j('#tabs-nohdr').attr('class');
+	$j('#tabs-nohdr').removeClass(viwbtnTeme);
 }
 	
 });
@@ -47,9 +46,8 @@ if(classtab.indexOf('theme') != -1){
 	reltsel1=reltsel1[1];
 	$j('#dropdownOne').removeClass(reltsel1);
 
-	var viwbtnTeme=$j('.clinicCentr').attr('class').split(' ');
-	viwbtnTeme=viwbtnTeme[1];
-	$j('.clinicCentr').removeClass(viwbtnTeme);
+	var viwbtnTeme=$j('#tabs-nohdr').attr('class');
+	$j('#tabs-nohdr').removeClass(viwbtnTeme);
 
 }
 	
@@ -58,7 +56,7 @@ if(classtab.indexOf('theme') != -1){
 	$j('#patientBody').addClass('theme1');
 	$j('.todaysapp').addClass('theme1');
 	$j('#labTable').addClass('theme1');
-	$j('.clinicCentr').addClass('theme1');
+	$j('#tabs-nohdr').addClass('theme1');
 	$j('#dropdownOne1').addClass('theme1');
 	$j('#dropdownOne').addClass('theme1');
 });
@@ -86,9 +84,8 @@ if(classtab.indexOf('theme') != -1){
 	reltsel1=reltsel1[1];
 	$j('#dropdownOne').removeClass(reltsel1);
 
-	var viwbtnTeme=$j('.clinicCentr').attr('class').split(' ');
-	viwbtnTeme=viwbtnTeme[1];
-	$j('.clinicCentr').removeClass(viwbtnTeme);
+	var viwbtnTeme=$j('#tabs-nohdr').attr('class');
+	$j('#tabs-nohdr').removeClass(viwbtnTeme);
 
 }
 
@@ -97,7 +94,7 @@ if(classtab.indexOf('theme') != -1){
 	$j('#patientBody').addClass('theme2');
 	$j('.todaysapp').addClass('theme2');
 	$j('#labTable').addClass('theme2');
-	$j('.clinicCentr').addClass('theme2');
+	$j('#tabs-nohdr').addClass('theme2');
 	$j('#dropdownOne1').addClass('theme2');
 	$j('#dropdownOne').addClass('theme2');
 });

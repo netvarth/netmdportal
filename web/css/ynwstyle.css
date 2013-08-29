@@ -1478,7 +1478,7 @@ border: 1px solid #c19e67;
 }
 	
 
-.theme1.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorbeforeswitch{
+.theme1>#clinicsInfoTab>#contentclinic>.branch>.common>.clinics>.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorbeforeswitch{
 		width:112px;
 		height: 35px;
 		cursor: hand;
@@ -1490,12 +1490,12 @@ border-radius: 5px;
 		
 		}
 
-.theme1.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorbeforeswitch:hover
+.theme1>#clinicsInfoTab>#contentclinic>.branch>.common>.clinics>.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorbeforeswitch:hover
 		{
 			background: #EEC591;
 border: 2px solid #C48E48;
 				}
-.theme1.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorafterswitch{
+.theme1>#clinicsInfoTab>#contentclinic>.branch>.common>.clinics>.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorafterswitch{
 	width:112px;
 		height: 35px;
 		cursor: hand;
@@ -1505,7 +1505,7 @@ border: 2px solid #C48E48;
 border-radius: 5px;
 		
 		}
-.theme1.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorafterSwitch:hover
+.theme1>#clinicsInfoTab>#contentclinic>.branch>.common>.clinics>.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorafterSwitch:hover
 		{
 			background: #E7C6A5;
 border: 2px solid #CC7F32;
@@ -1593,7 +1593,7 @@ background:#eee url(../../images/tab-head.png) repeat-x top left;
 border-radius: 6px;
 border: 1px solid #88946f;
 }
-.theme2.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorbeforeswitch{
+.theme2>#clinicsInfoTab>#contentclinic>.branch>.common>.clinics>.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorbeforeswitch{
 		width:112px;
 		height: 35px;
 		cursor: hand;
@@ -1605,12 +1605,12 @@ border-radius: 5px;
 		
 		}
 
-.theme2.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorbeforeswitch:hover
+.theme2>#clinicsInfoTab>#contentclinic>.branch>.common>.clinics>.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorbeforeswitch:hover
 		{
 			background: #92CCA6;
 border: 2px solid #78AB46;
 				}
-.theme2.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorafterswitch{
+.theme2>#clinicsInfoTab>#contentclinic>.branch>.common>.clinics>.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorafterswitch{
 	width:112px;
 		height: 35px;
 		cursor: hand;
@@ -1620,7 +1620,7 @@ border: 2px solid #78AB46;
 border-radius: 5px;
 		
 		}
-.theme2.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorafterSwitch:hover
+.theme2>#clinicsInfoTab>#contentclinic>.branch>.common>.clinics>.clinicCentr>.clinicthme>.pTheme>.aTheme>.doctorafterSwitch:hover
 		{
 			background: #8FBC8F;
 border: 2px solid #548B54;
