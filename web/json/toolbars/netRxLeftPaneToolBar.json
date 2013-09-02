@@ -3,13 +3,13 @@
 		{
           "title": "Branch List",
 		  "className": "netrx",
-          "name": "leftPaneNetMdBranch"
+          "name": "leftPaneNetRxBranch"
         },
 		
 		{
           "title": "Settings",
 		  "className": "admin",
-          "name": "leftPaneSettings"
+          "name": "leftPaneNetrxSettings"
         }
 		
     ]

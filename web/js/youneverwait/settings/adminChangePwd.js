@@ -11,6 +11,18 @@ $j('#tabs-1').html(adminTB.result);
 		createModal(constants_adminChangePwdJsonas,'changepwdModal');	
 		openModalBox(obj,'changepwdModal');
 	});
+
+	$j('#btnTestList').die('click').live("click",function() {
+		removeErrors();
+		$j.cachedScript("/youNeverWait/js/youneverwait/netlims/test/testEntryPoint.js").done(function(script, textStatus) {
+			
+		})
+	
+	});
+
+	$j('#btnSpecimen').die('click').live("click",function() {
+	
+	});
 	
 	$j('#btn_userlogcontrol_ptb_id').die('click').live("click",function() {
 	var currentstatus=getRequestData('/youNeverWait/ws/ui/superAdmin/enableLogStatus');
