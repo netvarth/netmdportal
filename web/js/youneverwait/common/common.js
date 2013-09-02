@@ -16,7 +16,7 @@ function createGlobalToolBarNetmd () {
 	$j('.global-bar-tab .controlB').html(globalTB.result);		
 }
 function createLeftpaneToolBarNetrx() {
-	var response= getRequestData("/youNeverWait/json/toolbars/netMdLeftPaneToolBar.json");
+	var response= getRequestData("/youNeverWait/json/toolbars/netRxLeftPaneToolBar.json");
 	var leftpaneTB = new leftpaneToolBar(response.buttons);
 	$j('.leftmenu').html(leftpaneTB.result);		
 }

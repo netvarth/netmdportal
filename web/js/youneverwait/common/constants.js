@@ -209,3 +209,11 @@ constants_ViewNetrxBranchFunction="/youNeverWait/js/youneverwait/netrx/branchvie
 constants_ViewNetrxBranchAction="/youNeverWait/js/youneverwait/netrx/branchview/viewNetrxBranchActions.js";
 constants_ViewNetrxBranchValidation="/youNeverWait/js/youneverwait/netrx/branchview/viewNetrxBranchValidations.js";
 constant_NetrxBranchView_Msg="View NetRx Branch";
+
+//NetRx Account
+constant_NetRxAccFunctions_Url="/youNeverWait/js/youneverwait/netrxAcc/netrxAccFunctions.js";
+constant_NetRxAccList_Msg="BRANCH LIST";
+constant_NetRxAccEntry_Url="/youNeverWait/js/youneverwait/netrxAcc/netrxAccEntryPoint.js";
+constants_newBranchNetrxAccJson='/youNeverWait/json/new/newBranchNetrxAcc.json';
+constants_newNetrxAccBranch="/youNeverWait/js/youneverwait/netmdAcc/Branch/new/newNetrxAccBranch.js";
+constant_newNetrxAccBranch_Delete_Url="/youNeverWait/ws/ui/netRx/deleteNetRxBranch/";

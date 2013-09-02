@@ -21,7 +21,7 @@ function setBranchTableStructure() {
 
 function loadBranchPageToolBar() {
 	//Creating Page Tool Bar
-	var ptbdata =getRequestData('/youNeverWait/json/toolbars/branchPageToolBar.json');
+	var ptbdata =getRequestData('/youNeverWait/json/toolbars/netLimsbranchPageToolBar.json');
 	var ptbContainer = $j('<div id="branchPTBContainer"/>');
 	var ptb = new PageToolBar(ptbdata);
 	$j(ptbContainer).append(ptb.result);

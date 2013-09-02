@@ -47,7 +47,11 @@ $j(document).ready(function(){
 	$j('#Nameofnetrxuser').html(otherUserName);
 });	
 
-
+$j('#leftPaneNetRxBranch').die('click').live("click",function() {
+		removeErrors();
+		$j.cachedScript(constant_NetRxAccEntry_Url).done(function(script, textStatus) {
+		})
+	});
 
 
 
