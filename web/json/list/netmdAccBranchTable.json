@@ -1,13 +1,13 @@
 {
     "data": [
         {
-            "id": "branchNetrxAccTableCont",
+            "id": "branchNetmdAccTableCont",
             "elements": [
 				{
                     "type": "table",
                     "content": {
-                        "name" : "branchNetrxAcc",
-						"idProperty" : "branchNetrxAcc",
+                        "name" : "branchNetmdAcc",
+						"idProperty" : "branchNetmdAcc",
 						"className" :"stdtable stdtablecb",
 						"style":"border-spacing:0;border-collapse:collapse; border:0;",
 						"colHeaders" : [
