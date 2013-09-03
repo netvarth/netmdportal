@@ -105,8 +105,8 @@ $j(document).ready(function() {
 	removeErrors();
 	    var branchId= $j(this).parent().attr('id');
 		if(branchId!="") {
-			$j.cachedScript(constants_ViewNetmdAccBranchEntryPoint).done(function(script, textStatus) {
-			viewNetmdAccBranch(branchId,'#passphraseViewTableAcc','#passphrasePrimaryViewTableAcc');
+			$j.cachedScript(constants_ViewNetrxAccBranchEntryPoint).done(function(script, textStatus) {
+			viewNetrxAccBranch(branchId,'#passphraseViewTableAcc','#passphrasePrimaryViewTableAcc');
 			//viewbranchNetmdAccMacInfo(branchId);
 			})
 		}	
@@ -116,8 +116,8 @@ $j(document).ready(function() {
 	removeErrors();
 		var branchId = getSelectedBranchId(pgTableName);
 		if(branchId!="") {
-			$j.cachedScript(constants_ViewNetmdAccBranchEntryPoint).done(function(script, textStatus) {
-			viewNetmdAccBranch(branchId,'#passphraseViewTableAcc','#passphrasePrimaryViewTableAcc');
+			$j.cachedScript(constants_ViewNetrxAccBranchEntryPoint).done(function(script, textStatus) {
+			viewNetrxAccBranch(branchId,'#passphraseViewTableAcc','#passphrasePrimaryViewTableAcc');
 			//viewbranchNetmdAccMacInfo(branchId);
 			})
 		}

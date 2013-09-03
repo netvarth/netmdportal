@@ -84,6 +84,11 @@ function getNetMdBranchAccData(netmdbranchId) {
 	var response= getRequestData('/youNeverWait/ws/ui/netMd/viewNetMdBranch/'+ netmdbranchId);
 	return response;
 }
+
+function getNetRxBranchAccData(netrxbranchId) {
+	var response= getRequestData('/youNeverWait/ws/ui/netRx/viewNetRxBranch/'+ netrxbranchId);
+	return response;
+}
  
 function getErrorName(error) {
 	var errorcode = error.errCode;
