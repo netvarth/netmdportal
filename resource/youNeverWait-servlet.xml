@@ -134,4 +134,24 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="log.service" />
 		</property>
 	</bean>
+	<bean class="com.nv.youNeverWait.rs.ui.ConfigResource" >
+		<property name="configDataValidator">
+			<ref bean="config.validator" />
+		</property>
+		<property name="configManager">
+			<ref bean="config.manager" />
+		</property>
+	</bean>
+	<bean class="com.nv.youNeverWait.rs.ui.TestResource" >
+
+		<property name="testManager">
+			<ref bean="test.manager" />
+		</property>
+	</bean>
+	<bean class="com.nv.youNeverWait.rs.ui.SpecimenResource" >
+
+		<property name="specimenManager">
+			<ref bean="specimen.manager" />
+		</property>
+	</bean>
 </beans>

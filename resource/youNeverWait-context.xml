@@ -182,6 +182,10 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 				</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.AppointmentPropertyEnum
 				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.TestPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.SpecimenPropertyEnum
+				</value>
 
 
 			</list>
@@ -376,6 +380,12 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="netRxService">
 			<ref bean="netRx.service" />
 		</property>
+		<property name="testService">
+			<ref bean="test.manager" />
+		</property>
+		<property name="specimenService">
+			<ref bean="specimen.manager" />
+		</property>
 		<property name="netlimsServerIpAddress">
 			<value>${netlims.server.ip.address}</value>
 		</property>
@@ -487,10 +497,14 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 					value="com.nv.youNeverWait.util.filter.queryBuilder.NetRxBranchQueryBuilder" />
 				<entry key="netrxUser"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.NetRxUserQueryBuilder" />
-					<entry key="result"
+				<entry key="result"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.ResultQueryBuilder" />
-					<entry key="appointments"
+				<entry key="appointments"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.AppointmentQueryBuilder" />
+				<entry key="tests"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.TestQueryBuilder" />
+				<entry key="specimens"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.SpecimenQueryBuilder" />
 			</map>
 		</property>
 
@@ -567,5 +581,52 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="netRx.dao" class="com.nv.youNeverWait.user.pl.impl.NetRxDaoImpl"
 		parent="generic.dao">
 	</bean>
+	<bean id="config.manager" class="com.nv.youNeverWait.user.bl.impl.ConfigServiceImpl">
+		<property name="configDao">
+			<ref bean="config.dao" />
+		</property>
+	</bean>
+	<bean id="config.validator"
+		class="com.nv.youNeverWait.user.bl.validation.ConfigDataValidator"></bean>
+	<bean id="config.dao" class="com.nv.youNeverWait.user.pl.impl.ConfigDaoImpl"
+		parent="generic.dao">
+		<property name="configDataValidator">
+			<ref bean="config.validator" />
+		</property>
+	</bean>
+	<bean id="test.manager" class="com.nv.youNeverWait.user.bl.impl.TestServiceImpl">
+		<property name="testValidator">
+			<ref bean="test.validator" />
+		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
+		<property name="testDao">
+			<ref bean="test.dao" />
+		</property>
+	</bean>
+	
+<bean id="test.validator" class="com.nv.youNeverWait.user.bl.validation.TestValidator"></bean>
+<bean id="test.dao" class="com.nv.youNeverWait.user.pl.impl.TestDaoImpl"></bean>
+<bean id="specimen.manager" class="com.nv.youNeverWait.user.bl.impl.SpecimenServiceImpl">
+		<property name="specimenValidator">
+			<ref bean="specimen.validator" />
+		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
+		<property name="specimenDao">
+			<ref bean="specimen.dao" />
+		</property>
+	</bean>
+	<bean id="specimen.validator" class="com.nv.youNeverWait.user.bl.validation.SpecimenValidator"></bean>
+	<bean id="specimen.dao" class="com.nv.youNeverWait.user.pl.impl.SpecimenDaoImpl"></bean>
+	
 </beans>		
 	
