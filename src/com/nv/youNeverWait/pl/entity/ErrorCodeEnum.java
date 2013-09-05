@@ -130,6 +130,21 @@ public enum ErrorCodeEnum {
 	CriticalCpuLevelNull("546","Critical CPU level is not given"),
 	CriticalHardDiskSPaceLevelNull("547","Critical hard disk space level is not given"),
 	CriticalMemoryLevelNull("548","Critical memory level not given"),
+	NoFileSelected("549","There is no file selected"),
+	SpecimenUidNull("550","Specimen {uid} is null"),
+	TestCodeNull("551","Test {uid} is null"),
+	InvalidSpecimenName("552","Invalid specimen name"),
+	SpecimenNameExists("553","Specimen with name {name} already exists"),
+	InvalidSpecimenUid("554","Specimen uid is invalid"),
+	SpecimenCantDelete("555","Unable to delete specimen.Its already in use"),
+	InvalidTestName("556","Invalid test name"),
+	TestNameExists("557","Test with name {name} already exists"),
+	AbbreviationExists("558","Test with abbreviation {name} already exists"),
+	InvalidTestUid("559","Test uid is invalid"),
+	SpecimenExist("560","Test with specimenUid {SpecimenUid} already exist"),
+	SpecimenNotExist("561","Test with specimenUid {SpecimenUid} does not exist"),
+	InvalidTest("562","Test with uid {TestUid} does not exist"),
+	NullTestUid("563","Test with uid {TestUid} does not exist"),
 	
 	/*
 	 * netMd Errors 
@@ -211,7 +226,7 @@ public enum ErrorCodeEnum {
 	InvalidNetRxBranchId("2012","Given netRx branch id is invalid"),
 	InvalidNetRxUser("2013","User with id {id} does not exists in this netrx branch"),
 	InvalidNetRxUserName("2014","Please enter valid user name"),
-	NetRxIdNull("2015","Netrx Id should not be null")
+	NetRxIdNull("2015","Netrx Id should not be null")  
 	;
 	private String errCode;
 	private String errMsg;
