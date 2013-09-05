@@ -101,5 +101,9 @@ public class Constants {
 	public static final String POLICY = "Shows NetLims privacyPolicy page";
 	public static final String NETMD_POLICY = "Shows NetMd privacyPolicy page";
 	public static final String LAB_SYSTEM_FAILURE = "System in Critical Stage ";
+	public static final String TEST = "tests";
+	public static final String SPECIMEN = "specimens";
+	public static final String SPECIMENUID = "SpecimenUid";
+	public static final String TESTUID = "TestUid";
 	
 }
