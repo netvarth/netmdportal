@@ -25,7 +25,7 @@ $j(document).ready(function() {
 	
 		
 	$j('#forgotpwdNetrx').die('click').live("click",function(){
-	//window.location.href = "/youNeverWait/html/netmdForgotPassword.html";
+	window.location.href = "/youNeverWait/html/netrxForgotPassword.html";
 	});
 
 	$j('#btnLoginNetrx').die('click').live("click",function(){

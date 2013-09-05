@@ -60,3 +60,28 @@ $j('#leftPaneNetrxSettings').die('click').live("click",function() {
 		})
 	});
 
+$j('#ribbonNewNetRxBranch').die('click').live("click",function() {
+		removeErrors();
+		var obj=$j(this);
+		createModal(constants_newBranchNetrxAccJson,'netrxAccBranchModal');	
+		openModalBox(obj,'netrxAccBranchModal')
+		$j.cachedScript(constants_newNetrxAccBranch).done(function(script, textStatus) {
+		})
+	});
+	
+	$j('#ribbonNetRxDownload').die('click').live("click",function() {
+		
+		removeErrors();
+		
+		$j.ajax({
+			type: 'GET',
+			url: serverPath + "/youNeverWait/ws/ui/netRx/download",
+			dataType: 'html',
+			contentType: 'text/html',
+			success: function (html) {
+			var w = window.open();
+			w.document.writeln(html);
+			//w.location.reload();
+			}
+		});
+	});
