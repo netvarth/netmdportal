@@ -33,6 +33,7 @@ import com.nv.youNeverWait.pl.entity.LogTbl;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
+import com.nv.youNeverWait.rs.dto.ConfigDataDetails;
 import com.nv.youNeverWait.rs.dto.EnableLogStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
@@ -63,13 +64,17 @@ import com.nv.youNeverWait.rs.dto.NetRxListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
+import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.service.NetRxService;
+import com.nv.youNeverWait.user.bl.service.SpecimenManager;
 import com.nv.youNeverWait.user.bl.service.SuperAdminService;
+import com.nv.youNeverWait.user.bl.service.TestManager;
 import com.nv.youNeverWait.user.bl.validation.SuperAdminValidator;
 import com.nv.youNeverWait.user.pl.dao.SuperAdminDao;
 import com.nv.youNeverWait.util.filter.core.Filter;
@@ -88,6 +93,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	private QueryBuilderFactory queryBuilderFactory;
 	private FilterFactory filterFactory;
 	private NetRxService netRxService;
+	private TestManager testService;
+	private SpecimenManager specimenService;
 	private static final Log log = LogFactory
 			.getLog(SuperAdminServiceImpl.class);
 
@@ -806,6 +813,33 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return response;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#getConfigData(com.nv.youNeverWait.rs.dto.ConfigDataDetails)
+	 */
+	@Override
+	public ResponseDTO getConfigData(ConfigDataDetails configData) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#testList(com.nv.youNeverWait.rs.dto.FilterDTO)
+	 */
+	@Override
+	public TestListResponseDTO testList(FilterDTO filter) {
+		TestListResponseDTO response= testService.testList(filter);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#specimenList(com.nv.youNeverWait.rs.dto.FilterDTO)
+	 */
+	@Override
+	public SpecimenListResponseDTO specimenList(FilterDTO filter) {
+		SpecimenListResponseDTO response= specimenService.specimenList(filter);
+		return response;
+	}
+	
 	/**
 	 * @return the netMdService
 	 */
@@ -956,8 +990,32 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		this.netRxService = netRxService;
 	}
 
-	
+	/**
+	 * @return the testService
+	 */
+	public TestManager getTestService() {
+		return testService;
+	}
 
+	/**
+	 * @param testService the testService to set
+	 */
+	public void setTestService(TestManager testService) {
+		this.testService = testService;
+	}
 
+	/**
+	 * @return the specimenService
+	 */
+	public SpecimenManager getSpecimenService() {
+		return specimenService;
+	}
+
+	/**
+	 * @param specimenService the specimenService to set
+	 */
+	public void setSpecimenService(SpecimenManager specimenService) {
+		this.specimenService = specimenService;
+	}
 
 }
