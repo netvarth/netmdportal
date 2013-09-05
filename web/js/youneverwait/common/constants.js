@@ -223,3 +223,6 @@ constants_ViewNetrxAccBranchFunction="/youNeverWait/js/youneverwait/netrxAcc/Bra
 constants_ViewNetrxAccBranchAction="/youNeverWait/js/youneverwait/netrxAcc/Branch/View/viewBranchNetrxAccActions.js";
 constants_ViewNetrxAccBranchValidation="/youNeverWait/js/youneverwait/netrxAcc/Branch/View/viewBranchNetrxAccValidations.js";
 constant_BranchNetrxAccView_Msg="View NetRx Branch";
+constant_netRxaccSettingsEntry_Url="/youNeverWait/js/youneverwait/settings/netRxAccChangePwd.js";
+constants_netRxAccChangePwdJson='/youNeverWait/json/changepassword/netRxAccChangePassword.json';
+constant_netRxAccChangePassword_Url="/youNeverWait/ws/ui/netRx/changePassword";

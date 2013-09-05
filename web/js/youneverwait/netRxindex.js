@@ -53,5 +53,10 @@ $j('#leftPaneNetRxBranch').die('click').live("click",function() {
 		})
 	});
 
-
+$j('#leftPaneNetrxSettings').die('click').live("click",function() {
+		removeErrors();
+		$j('#pageToolBar-Container').html("");
+		$j.cachedScript(constant_netRxaccSettingsEntry_Url).done(function(script, textStatus) {
+		})
+	});
 
