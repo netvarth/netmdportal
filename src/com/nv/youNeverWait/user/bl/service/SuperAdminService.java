@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
-import com.nv.youNeverWait.rs.dto.ConfigDataDetails;
+
 import com.nv.youNeverWait.rs.dto.EnableLogStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
@@ -97,15 +97,7 @@ public interface SuperAdminService {
 	public LabBranchSystemInfoDetails viewBranchSystemInfo(int branchId);
 	public ResponseDTO updateLabBranchSystemInfo(
 			LabBranchSystemInfoDetails details);
-	/**
-	 * @param configData
-	 * @return
-	 */
-	public ResponseDTO getConfigData(ConfigDataDetails configData);
-	/**
-	 * @param filter
-	 * @return
-	 */
+	
 	public TestListResponseDTO testList(FilterDTO filter);
 	/**
 	 * @param filter

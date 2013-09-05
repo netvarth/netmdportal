@@ -33,7 +33,6 @@ import com.nv.youNeverWait.pl.entity.LogTbl;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
-import com.nv.youNeverWait.rs.dto.ConfigDataDetails;
 import com.nv.youNeverWait.rs.dto.EnableLogStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
@@ -813,14 +812,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return response;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#getConfigData(com.nv.youNeverWait.rs.dto.ConfigDataDetails)
-	 */
-	@Override
-	public ResponseDTO getConfigData(ConfigDataDetails configData) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	/* (non-Javadoc)
 	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#testList(com.nv.youNeverWait.rs.dto.FilterDTO)
