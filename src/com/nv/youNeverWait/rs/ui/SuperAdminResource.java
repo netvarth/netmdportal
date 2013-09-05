@@ -9,9 +9,7 @@ package com.nv.youNeverWait.rs.ui;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,6 +51,8 @@ import com.nv.youNeverWait.rs.dto.NetRxViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
+import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
 import com.nv.youNeverWait.security.User;
@@ -1222,6 +1222,80 @@ public class SuperAdminResource {
 			return response;
 		}
 
+		return response;
+	}
+
+	/**
+	 * Shows a list of all user logs
+	 * 
+	 * @param filter
+	 * @return UserLogListResponseDTO
+	 */
+	@RequestMapping(value = "userLogList", method = RequestMethod.POST)
+	@ResponseBody
+	public UserLogListResponseDTO userLogList(@RequestBody FilterDTO filter) {
+		UserLogListResponseDTO response = new UserLogListResponseDTO();
+		try {
+			response = service.userLogList(filter);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+
+	/**
+	 * Shows a list of all tests
+	 * 
+	 * @param filter
+	 * @return TestListResponseDTO
+	 */
+	@RequestMapping(value = "testList", method = RequestMethod.POST)
+	@ResponseBody
+	public TestListResponseDTO testList(@RequestBody FilterDTO filter) {
+		TestListResponseDTO response = new TestListResponseDTO();
+		try {
+			response = service.testList(filter);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	/**
+	 * Shows a list of all test specimens
+	 * 
+	 * @param filter
+	 * @return SpecimenListResponseDTO
+	 */
+	@RequestMapping(value = "specimenList", method = RequestMethod.POST)
+	@ResponseBody
+	public SpecimenListResponseDTO specimenList(@RequestBody FilterDTO filter) {
+		SpecimenListResponseDTO response = new SpecimenListResponseDTO();
+		try {
+			response = service.specimenList(filter);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
 		return response;
 	}
 
