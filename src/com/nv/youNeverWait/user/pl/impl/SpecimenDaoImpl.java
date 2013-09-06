@@ -50,26 +50,47 @@ public class SpecimenDaoImpl extends GenericDaoHibernateImpl implements Specimen
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		//BigInteger specimenUid = getNextSequence(Constants.SPECIMEN_UID_SEQ);	
-		BigInteger specimenUid = null;
+		Integer lastRecrd= getLastUId();
 		SpecimenTbl newSpecimenTbl = new SpecimenTbl();
-		newSpecimenTbl.setUid(specimenUid.intValue());
+		newSpecimenTbl.setUid(lastRecrd+1);                // creating UID manually
 		newSpecimenTbl.setName(specimenName.trim());
 		newSpecimenTbl.setUnit(specimen.getUnit());
 		save(newSpecimenTbl);
 
-		//response.setUid(newSpecimenTbl.getUid());
+		response.setUid(newSpecimenTbl.getUid());
 		response.setId(newSpecimenTbl.getId());
 		response.setSuccess(true);
 		return response;
 	}
 
+//	/**
+//	 * Query returning last record uid
+//	 * @return
+//	 */
+//	private int getLastUId() {
+//		Integer lastUid=0;
+//		javax.persistence.Query query=em.createQuery(Query.GET_LAST_ID);
+//		 lastUid=(Integer) query.getSingleResult();
+//		 return lastUid;
+//	}
+
+	/**
+	 * Query returning last record uid
+	 * @return
+	 */
+	private Integer getLastUId() {
+		Integer lastId=null;
+		javax.persistence.Query query=em.createQuery(Query.GET_LAST_UID);	
+		lastId=(Integer)query.getSingleResult();
+		return lastId;
+	}
 	/* (non-Javadoc)
 	 * @see com.nv.youNeverWait.user.pl.dao.SpecimenDao#updateSpecimen(com.nv.youNeverWait.rs.dto.SpecimenDTO)
 	 */
 	@Override
 	@Transactional(readOnly=false)
 	public ResponseDTO updateSpecimen(SpecimenDTO specimen) {
+		
 		ResponseDTO response = new ResponseDTO();		
 		SpecimenTbl specimenTbl = getByUid(SpecimenTbl.class, specimen.getUid());
 		if(specimenTbl==null){

@@ -12,6 +12,7 @@ package com.nv.youNeverWait.user.pl.impl;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -68,8 +69,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 	public ResponseDTO createTest(AddTestDTO testDTO) {
 		ResponseDTO response = new ResponseDTO();
 		TestTbl testTbl = new TestTbl();
-	//	BigInteger testUid = getNextSequence(Constants.TEST_UID_SEQ);		
-		//testTbl.setUid(testUid.intValue());		
+			
 		String testName = testDTO.getName().trim().replaceAll(" +", " ");
 		TestTbl test = getTestTblByName(testName.toUpperCase());
 		if(test!=null){
@@ -80,7 +80,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 		}
 		testTbl.setTestName(testName.trim());
 		testTbl.setGenericName(testDTO.getGenericName());		
-		if(!testDTO.getAbbreviation().equals("")){
+		if(testDTO.getAbbreviation()!=null && !testDTO.getAbbreviation().equals("")){
 			String abbreviation = testDTO.getAbbreviation().trim(); 
 			TestTbl testAbb = getTestTblByAbbreviation(abbreviation.toUpperCase());
 			if(testAbb!=null){
@@ -91,7 +91,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 			}
 			testTbl.setAbbreviation(abbreviation.toUpperCase());
 		}
-		if(!testDTO.getMinTimeRequired().equals(""))			
+		if( testDTO.getMinTimeRequired()!=null && !testDTO.getMinTimeRequired().equals(""))			
 			testTbl.setMinTimeRequired(testDTO.getMinTimeRequired());			
 		testTbl.setResult(testDTO.getResult());
 		testTbl.setRemarks(testDTO.getRemarks());
@@ -100,9 +100,13 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 		testTbl.setActive(true);
 		testTbl.setSpecimenentryStatus(testDTO.isSpecimenEntryStatus());
 		testTbl.setMachineentryStatus(testDTO.isMachineEntryStatus());
+		Integer lastRecrd= getLastUId();  // getting last uid of the test tbl
+		testTbl.setUid(lastRecrd+1);     // creating uid by adding last record uid +1
+		Date currentDateTime= new Date();
+		testTbl.setCreatedDateTime(currentDateTime);
+		testTbl.setUpdatedDateTime(currentDateTime);
 		save(testTbl);
 
-		List<TestSpecimenDTO> testSpecimens = new ArrayList<TestSpecimenDTO>(); 
 		if(testDTO.getTestSpecimen()!=null){			
 			for(TestSpecimenDTO testSpecimen:testDTO.getTestSpecimen()){
 				TestSpecimenTbl testSpecimenTbl = new TestSpecimenTbl();
@@ -153,7 +157,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 				testTbl.setTestName(testName.trim());
 			}						
 			testTbl.setUid(Integer.parseInt(testDTO.getUid()));
-			if(!testDTO.getAbbreviation().equals("")){
+			if(testDTO.getAbbreviation()!=null && !testDTO.getAbbreviation().equals("")){
 				String abbreviation = testDTO.getAbbreviation().trim(); 				
 				TestTbl testAbb = getTestTblByAbbreviation(abbreviation.toUpperCase());
 				if(testAbb!=null){
@@ -166,7 +170,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 				}
 				testTbl.setAbbreviation(abbreviation.toUpperCase());
 			}	
-			if(!testDTO.getMinTimeRequired().equals(""))			
+			if( testDTO.getMinTimeRequired()!=null && !testDTO.getMinTimeRequired().equals(""))			
 				testTbl.setMinTimeRequired(testDTO.getMinTimeRequired());		
 			testTbl.setGenericName(testDTO.getGenericName());				
 			testTbl.setResult(testDTO.getResult());
@@ -355,6 +359,18 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 		query.setParameter("param1", abbreviation);
 		return executeUniqueQuery(TestTbl.class, query);
 	}
+	
+	/**
+	 * Query returning last record uid
+	 * @return
+	 */
+	private Integer getLastUId() {
+		Integer lastId=null;
+		javax.persistence.Query query=em.createQuery(Query.GET_LAST_TEST_UID);	
+		lastId=(Integer)query.getSingleResult();
+		return lastId;
+	}
+	
 	/**
 	 * @return the em
 	 */

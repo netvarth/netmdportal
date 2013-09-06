@@ -10,6 +10,7 @@
  */
 package com.nv.youNeverWait.user.bl.validation;
 
+import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
@@ -53,14 +54,14 @@ public class SpecimenValidator  extends FilterValidator{
 	 * @param specimen
 	 * @return
 	 */
-	public ErrorDTO validateSpecimen(SpecimenDTO specimen) {
-		ErrorDTO error = new ErrorDTO();
-		if(specimen.getSpecimenName().equals("") && specimen.getSpecimenName()==null && specimen.getSpecimenName().matches("\\d*")){
-			error.setErrCode(ErrorCodeEnum.InvalidSpecimenName.getErrCode());
-			error.setDisplayErrMsg(true);
-			return error;
+	public void validateSpecimen(SpecimenDTO specimen) {
+		if(specimen.getSpecimenName()==null || specimen.getSpecimenName().equals("") ||  specimen.getSpecimenName().matches("\\d*")){
+			
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidSpecimenName);
+			se.setDisplayErrMsg(true);
+			throw se;
 		}
-		return null;
 	}
 
 	/**
@@ -69,7 +70,7 @@ public class SpecimenValidator  extends FilterValidator{
 	 */
 	public ErrorDTO validateSpecimenDetails(SpecimenDTO specimen) {
 		ErrorDTO error = new ErrorDTO();
-		if(specimen.getSpecimenName().equals("") && specimen.getSpecimenName()==null && specimen.getSpecimenName().matches("\\d*")){
+		if(specimen.getSpecimenName()==null || specimen.getSpecimenName().equals("") ||  specimen.getSpecimenName().matches("\\d*")){
 			error.setErrCode(ErrorCodeEnum.InvalidSpecimenName.getErrCode());
 			error.setDisplayErrMsg(true);
 			return error;
