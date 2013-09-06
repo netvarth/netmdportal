@@ -113,14 +113,8 @@ public class SpecimenServiceImpl  implements SpecimenManager{
 	 */
 	@Override
 	public ResponseDTO createSpecimen(SpecimenDTO specimen) {
-		ResponseDTO response= new ResponseDTO();
-		ErrorDTO error = specimenValidator.validateSpecimen(specimen);
-		if(error!=null){
-			response.setError(error);
-			response.setSuccess(false);
-			return response;
-		}
-		response = specimenDao.createSpecimen(specimen);
+		specimenValidator.validateSpecimen(specimen);
+		ResponseDTO response= specimenDao.createSpecimen(specimen);
 		return response;
 	}
 
