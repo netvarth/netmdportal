@@ -80,6 +80,14 @@ public class SpecimenDTO {
 		this.unit = specimenTbl.getUnit();
 		this.uid = specimenTbl.getUid();
 	}
+
+
+	/**
+	 * 
+	 */
+	public SpecimenDTO() {
+		
+	}
 	
 
 }

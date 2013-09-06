@@ -17,7 +17,14 @@ public class ResponseDTO {
 	private String updateDateTime;
 	private ErrorDTO error;
 	private boolean success;
+	private int uid;
 	
+	/**
+	 * @param uid the uid to set
+	 */
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
 	/**
 	 * @return the createDateTime
 	 */
