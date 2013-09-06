@@ -23,12 +23,12 @@ public class TestSpecimenTbl implements Serializable {
 
 	//bi-directional many-to-one association to SpecimenTbl
 	@ManyToOne
-	@JoinColumn(name="specimen_uid", nullable=false)
+	@JoinColumn(name="specimen_uid", nullable=false,referencedColumnName="uid")
 	private SpecimenTbl specimenTbl;
 
 	//bi-directional many-to-one association to TestTbl
 	@ManyToOne
-	@JoinColumn(name="test_uid", nullable=false)
+	@JoinColumn(name="test_uid", nullable=false,referencedColumnName="uid")
 	private TestTbl testTbl;
 
 	public TestSpecimenTbl() {
