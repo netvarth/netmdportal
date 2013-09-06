@@ -147,4 +147,13 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="specimen.manager" />
 		</property>
 	</bean>
+	<bean class="com.nv.youNeverWait.rs.ui.ConfigResource" >
+
+		<property name="configManager">
+			<ref bean="config.manager" />
+		</property>
+		<property name="configDataValidator">
+			<ref bean="config.validator" />
+		</property>
+	</bean>
 </beans>

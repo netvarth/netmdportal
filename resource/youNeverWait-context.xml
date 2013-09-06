@@ -616,5 +616,13 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="specimen.validator" class="com.nv.youNeverWait.user.bl.validation.SpecimenValidator"></bean>
 	<bean id="specimen.dao" class="com.nv.youNeverWait.user.pl.impl.SpecimenDaoImpl"></bean>
 	
+	<bean id="config.manager" class="com.nv.youNeverWait.user.bl.impl.ConfigServiceImpl">
+	    <property name="configDao">
+			<ref bean="config.dao" />
+		</property>
+	</bean>
+	
+	<bean id="config.validator" class="com.nv.youNeverWait.user.bl.validation.ConfigDataValidator"></bean>
+	<bean id="config.dao" class="com.nv.youNeverWait.user.pl.impl.ConfigDaoImpl"></bean>
 </beans>		
 	
