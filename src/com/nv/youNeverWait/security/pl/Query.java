@@ -239,15 +239,17 @@ public class Query {
 
 	/*SpecimenTbl*/
 	public static final String GET_SPECIMEN_BY_NAME="from SpecimenTbl as specimen where TRIM(UPPER(specimen.name)) = :param1";
+	public static final String GET_LAST_UID = "select MAX(u.uid) from SpecimenTbl as u";   
 	
 	/*TestTbl*/
 	public static final String GET_TEST_BY_NAME = "from TestTbl as test where TRIM(UPPER(test.testName)) = :param1";
 	public static final String GET_TEST_BY_ABBREVIATION = "from TestTbl as test where TRIM(UPPER(test.abbreviation)) = :param1";
-	
+	public static final String GET_LAST_TEST_UID = "select MAX(u.uid) from TestTbl as u";   
 
 	/*TestSpecimenTbl*/
 	public static final String GET_TEST_SPECIMEN_BY_SPECIMEN_UID ="from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid = :param1 and testSpecimen.specimenTbl.uid = :param2";
-	public static final String GET_TEST_SPECIMEN = "from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid = :param1";   
+	public static final String GET_TEST_SPECIMEN = "from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid = :param1";
+	
 	
 	
 	
