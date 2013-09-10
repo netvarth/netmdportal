@@ -15,6 +15,7 @@ import java.util.List;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenResponseDTO;
 import com.nv.youNeverWait.user.bl.service.SpecimenManager;
@@ -113,6 +114,25 @@ public class SpecimenResource {
 		return response;
 	}
 		
+	@RequestMapping(value = "specimenList", method = RequestMethod.GET)
+	@ResponseBody
+	public RetrieveSpecimenResponseDTO specimenList(){
+		RetrieveSpecimenResponseDTO response = new RetrieveSpecimenResponseDTO();
+		try{
+			response = specimenManager.specimenList();
+		}
+		catch(ServiceException e){
+			List<Parameter> parameters =e.getParamList();
+			ErrorDTO error=new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
 	/**
 	 * @return the specimenManager
 	 */
