@@ -10,9 +10,13 @@
  */
 package com.nv.youNeverWait.user.pl.dao;
 
+import java.util.Date;
+
 import com.nv.youNeverWait.rs.dto.AddTestDTO;
 import com.nv.youNeverWait.rs.dto.DeleteTestResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveTestResponseDTO;
 import com.nv.youNeverWait.rs.dto.UpdateTestResponseDTO;
 import com.nv.youNeverWait.rs.dto.ViewTestResponseDTO;
 
@@ -46,5 +50,14 @@ public interface TestDao {
 	 * @return
 	 */
 	ViewTestResponseDTO viewTest(String uid);
+
+	/**
+	 * @param header
+	 * @param lastSyncTime
+	 * @param currentSyncTime
+	 * @return
+	 */
+	RetrieveTestResponseDTO getTests(LabHeaderDTO header, String lastSyncTime,
+			Date currentSyncTime);
 
 }
