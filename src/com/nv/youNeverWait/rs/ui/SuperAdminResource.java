@@ -74,31 +74,6 @@ public class SuperAdminResource {
 	}
 
 	/**
-	 * Shows a list of all user logs
-	 * 
-	 * @param filter
-	 * @return UserLogListResponseDTO
-	 */
-	@RequestMapping(value = "userLogList", method = RequestMethod.POST)
-	@ResponseBody
-	public UserLogListResponseDTO list(@RequestBody FilterDTO filter) {
-		UserLogListResponseDTO response = new UserLogListResponseDTO();
-		try {
-			response = service.userLogList(filter);
-		} catch (ServiceException e) {
-
-			List<Parameter> parameters = e.getParamList();
-			ErrorDTO error = new ErrorDTO();
-			error.setErrCode(e.getError().getErrCode());
-			error.setParams(parameters);
-			error.setDisplayErrMsg(e.isDisplayErrMsg());
-			response.setError(error);
-			response.setSuccess(false);
-		}
-		return response;
-	}
-
-	/**
 	 * To enable/disable log process
 	 * 
 	 * @param log
