@@ -2,6 +2,7 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 
@@ -28,6 +29,14 @@ public class SpecimenTbl implements Serializable {
 	@Column(nullable=false, length=45)
 	private String unit;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_date_time", nullable=false)
+	private Date createdDateTime;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="updated_date_time", nullable=false)
+	private Date updatedDateTime;
+	
 	//bi-directional many-to-one association to TestSpecimenTbl
 	@OneToMany(mappedBy="specimenTbl")
 	private List<TestSpecimenTbl> testSpecimenTbls;
@@ -75,6 +84,21 @@ public class SpecimenTbl implements Serializable {
 		this.testSpecimenTbls = testSpecimenTbls;
 	}
 
+	public Date getCreatedDateTime() {
+		return this.createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+	public Date getUpdatedDateTime() {
+		return this.updatedDateTime;
+	}
+
+	public void setUpdatedDateTime(Date updatedDateTime) {
+		this.updatedDateTime = updatedDateTime;
+	}
+	
 	public TestSpecimenTbl addTestSpecimenTbl(TestSpecimenTbl testSpecimenTbl) {
 		getTestSpecimenTbls().add(testSpecimenTbl);
 		testSpecimenTbl.setSpecimenTbl(this);
