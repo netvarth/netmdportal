@@ -243,6 +243,12 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="resultService">
 			<ref bean="result.service" />
 		</property>
+		<property name="specimenManager">
+			<ref bean="specimen.manager" />
+		</property>
+		<property name="testManager">
+			<ref bean="test.manager" />
+		</property>
 	</bean>
 
 	<bean id="sync.validator" class="com.nv.youNeverWait.user.bl.validation.SyncValidator"></bean>
@@ -581,7 +587,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="netRx.dao" class="com.nv.youNeverWait.user.pl.impl.NetRxDaoImpl"
 		parent="generic.dao">
 	</bean>
-	
+
 	<bean id="test.manager" class="com.nv.youNeverWait.user.bl.impl.TestServiceImpl">
 		<property name="testValidator">
 			<ref bean="test.validator" />
@@ -596,10 +602,14 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="test.dao" />
 		</property>
 	</bean>
-	
-<bean id="test.validator" class="com.nv.youNeverWait.user.bl.validation.TestValidator"></bean>
-<bean id="test.dao" class="com.nv.youNeverWait.user.pl.impl.TestDaoImpl"></bean>
-<bean id="specimen.manager" class="com.nv.youNeverWait.user.bl.impl.SpecimenServiceImpl">
+
+	<bean id="test.validator" class="com.nv.youNeverWait.user.bl.validation.TestValidator"></bean>
+	<bean id="test.dao" class="com.nv.youNeverWait.user.pl.impl.TestDaoImpl">
+		<property name="labDao">
+			<ref bean="lab.dao" />
+		</property>
+	</bean>
+	<bean id="specimen.manager" class="com.nv.youNeverWait.user.bl.impl.SpecimenServiceImpl">
 		<property name="specimenValidator">
 			<ref bean="specimen.validator" />
 		</property>
@@ -613,16 +623,22 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="specimen.dao" />
 		</property>
 	</bean>
-	<bean id="specimen.validator" class="com.nv.youNeverWait.user.bl.validation.SpecimenValidator"></bean>
-	<bean id="specimen.dao" class="com.nv.youNeverWait.user.pl.impl.SpecimenDaoImpl"></bean>
-	
+	<bean id="specimen.validator"
+		class="com.nv.youNeverWait.user.bl.validation.SpecimenValidator"></bean>
+	<bean id="specimen.dao" class="com.nv.youNeverWait.user.pl.impl.SpecimenDaoImpl">
+		<property name="labDao">
+			<ref bean="lab.dao" />
+		</property>
+	</bean>
+
 	<bean id="config.manager" class="com.nv.youNeverWait.user.bl.impl.ConfigServiceImpl">
-	    <property name="configDao">
+		<property name="configDao">
 			<ref bean="config.dao" />
 		</property>
 	</bean>
-	
-	<bean id="config.validator" class="com.nv.youNeverWait.user.bl.validation.ConfigDataValidator"></bean>
+
+	<bean id="config.validator"
+		class="com.nv.youNeverWait.user.bl.validation.ConfigDataValidator"></bean>
 	<bean id="config.dao" class="com.nv.youNeverWait.user.pl.impl.ConfigDaoImpl"></bean>
 </beans>		
 	
