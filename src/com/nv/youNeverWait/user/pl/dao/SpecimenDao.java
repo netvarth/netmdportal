@@ -10,7 +10,11 @@
  */
 package com.nv.youNeverWait.user.pl.dao;
 
+import java.util.Date;
+
+import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenResponseDTO;
 
@@ -44,5 +48,19 @@ public interface SpecimenDao {
 	 * @return
 	 */
 	SpecimenResponseDTO viewSpecimen(int uid);
+
+	/**
+	 * @param header
+	 * @param lastSyncTime
+	 * @param currentSyncTime
+	 * @return
+	 */
+	RetrieveSpecimenResponseDTO getSpecimens(LabHeaderDTO header,
+			String lastSyncTime, Date currentSyncTime);
+
+	/**
+	 * @return
+	 */
+	 public RetrieveSpecimenResponseDTO specimenList();
 
 }
