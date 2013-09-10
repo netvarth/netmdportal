@@ -648,12 +648,12 @@ private ApplicationContext applicationContext;
 		SyncService service = (SyncService) applicationContext
 				.getBean("sync.service");
 		LabSyncDTO sync = new LabSyncDTO();
-		sync.setLastSyncTime("2013-06-20 14:10:32");
+		sync.setLastSyncTime("2013-09-10 09:52:55");
 		LabHeaderDTO header = new LabHeaderDTO();
-		header.setLabBranchId(180);
-		header.setLabId(249);
-		header.setMacId("123");
-		header.setPassPhrase("X/Ur2LSUHWS1YRO1F5WPYw==");
+		header.setLabId(192);
+		header.setLabBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
 		sync.setHeader(header);
 		try {
 			service.syncNetLimsData(sync);
