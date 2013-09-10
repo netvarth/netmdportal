@@ -260,7 +260,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 			throw se;
 		}
 				
-			List<TestSpecimenTbl> testSpecimenList = getSpecimenList(Integer.parseInt(uid));
+			List<TestSpecimenTbl> testSpecimenList = getTestSpecimen(Integer.parseInt(uid));
 			for (TestSpecimenTbl testSpecimenTbl : testSpecimenList) {
 				delete(testSpecimenTbl);
 			}			
