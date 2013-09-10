@@ -19,7 +19,7 @@ public class SpecimenResponseDTO {
 
 	
 	private int uid;	
-	private String name;
+	private String specimenName;
 	private String unit;
 	private ErrorDTO error;
 	private boolean success;
@@ -28,11 +28,11 @@ public class SpecimenResponseDTO {
 		
 	}
 	
-	public SpecimenResponseDTO(int uid, String name, String unit,
+	public SpecimenResponseDTO(int uid, String specimenName, String unit,
 			ErrorDTO error, boolean success) {
 		super();
 		this.uid = uid;
-		this.name = name;
+		this.specimenName = specimenName;
 		this.unit = unit;
 		this.error = error;
 		this.success = success;
@@ -46,12 +46,19 @@ public class SpecimenResponseDTO {
 		this.uid = uid;
 	}
 
-	public String getName() {
-		return name;
+	
+	/**
+	 * @return the specimenName
+	 */
+	public String getSpecimenName() {
+		return specimenName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	/**
+	 * @param specimenName the specimenName to set
+	 */
+	public void setSpecimenName(String specimenName) {
+		this.specimenName = specimenName;
 	}
 
 	public String getUnit() {
