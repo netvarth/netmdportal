@@ -11,6 +11,7 @@
 package com.nv.youNeverWait.user.bl.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -21,7 +22,9 @@ import com.nv.youNeverWait.pl.entity.TestTbl;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
+import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenResponseDTO;
@@ -166,6 +169,28 @@ public class SpecimenServiceImpl  implements SpecimenManager{
 		return response;
 	}
 	
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#getSpecimens(com.nv.youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, java.util.Date)
+	 */
+	@Override
+	public RetrieveSpecimenResponseDTO getSpecimens(LabHeaderDTO header,
+			String lastSyncTime, Date currentSyncTime) {
+		RetrieveSpecimenResponseDTO response= specimenDao.getSpecimens(header, lastSyncTime,currentSyncTime);
+		return response;
+
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.SpecimenManager#specimenList()
+	 */
+	@Override
+	public RetrieveSpecimenResponseDTO specimenList() {
+		RetrieveSpecimenResponseDTO response = specimenDao.specimenList();
+		return response;
+	}
+
+	
 	/**
 	 * @return the specimenValidator
 	 */
@@ -222,6 +247,7 @@ public class SpecimenServiceImpl  implements SpecimenManager{
 		this.specimenDao = specimenDao;
 	}
 
+	
 	
 
 	
