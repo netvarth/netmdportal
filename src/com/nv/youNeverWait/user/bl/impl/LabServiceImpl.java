@@ -1111,6 +1111,7 @@ public class LabServiceImpl implements LabService {
 		return response;
 	}
 	
+	
 	/**
 	 * @return the labDao
 	 */
@@ -1230,9 +1231,5 @@ public class LabServiceImpl implements LabService {
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
 	}
-
-	
-
-	
 
 }
