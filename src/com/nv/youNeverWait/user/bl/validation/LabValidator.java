@@ -677,13 +677,13 @@ public class LabValidator extends FilterValidator {
 
 	public void validateOrderDetails(BranchOrderDetail branchOrders) {
 
-		if(branchOrders.getLastOrderdTime()==null  ||branchOrders.getLastOrderdTime().equals("") ){
+		if(branchOrders.getLastOrderdTime()==null && branchOrders.getLastOrderdTime().equals("") ){
 			ServiceException se = new ServiceException(ErrorCodeEnum.OrderedTimeNull);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
 		
-		if (branchOrders.getOrderDate() == null || !branchOrders.getOrderDate().matches("\\d{4}-\\d{2}-\\d{2}")) {
+		if (branchOrders.getOrderDate() == null && !branchOrders.getOrderDate().matches("\\d{4}-\\d{2}-\\d{2}")) {
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidDateFormat);
 			se.setDisplayErrMsg(true);
 			throw se;
