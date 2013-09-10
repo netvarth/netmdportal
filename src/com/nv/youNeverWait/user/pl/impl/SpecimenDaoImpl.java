@@ -116,6 +116,7 @@ public class SpecimenDaoImpl extends GenericDaoHibernateImpl implements
 		specimenTbl.setName(specimenName.trim());
 		specimenTbl.setUid(specimen.getUid());
 		specimenTbl.setUnit(specimen.getUnit());
+		specimenTbl.setUpdatedDateTime(new Date());
 		update(specimenTbl);
 
 		// response.setUid(specimenTbl.getUid());
