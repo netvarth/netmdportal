@@ -10,42 +10,36 @@
  */
 package com.nv.youNeverWait.user.pl.impl;
 
-import java.math.BigInteger;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.servlet.http.HttpServletRequest;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ActionNameEnum;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.SpecimenTbl;
-import com.nv.youNeverWait.pl.entity.SuperAdminTbl;
 import com.nv.youNeverWait.pl.entity.TestSpecimenTbl;
 import com.nv.youNeverWait.pl.entity.TestTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.AddTestDTO;
 import com.nv.youNeverWait.rs.dto.DeleteTestResponseDTO;
-import com.nv.youNeverWait.rs.dto.EnableLogStatusResponseDTO;
-import com.nv.youNeverWait.rs.dto.ErrorDTO;
-import com.nv.youNeverWait.rs.dto.LogDTO;
-import com.nv.youNeverWait.rs.dto.LoginDTO;
-import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
-import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveTestResponseDTO;
 import com.nv.youNeverWait.rs.dto.TestSpecimenDTO;
 import com.nv.youNeverWait.rs.dto.UpdateTestResponseDTO;
-import com.nv.youNeverWait.rs.dto.UserCredentials;
-import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.ViewTestResponseDTO;
 import com.nv.youNeverWait.security.pl.Query;
+import com.nv.youNeverWait.user.pl.dao.LabDao;
 import com.nv.youNeverWait.user.pl.dao.TestDao;
 /**
  *
@@ -56,6 +50,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 
 	@PersistenceContext()
 	private EntityManager em;
+	private LabDao labDao;
 	/* (non-Javadoc)
 	 * @see com.nv.youNeverWait.user.pl.dao.TestDao#createTest(com.nv.youNeverWait.rs.dto.AddTestDTO)
 	 */
@@ -121,6 +116,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 			}
 		}	
 		response.setId(testTbl.getId());
+		response.setUid(testTbl.getUid());
 		response.setSuccess(true);
 		return response;
 	}
@@ -324,6 +320,105 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 		
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.pl.dao.LabDao#getTests(com.nv.youNeverWait.rs
+	 * .dto.LabHeaderDTO, java.lang.String, java.util.Date)
+	 */
+	@Override
+	@Transactional
+	public RetrieveTestResponseDTO getTests(LabHeaderDTO header,
+			String lastSyncTime, Date currentSyncTime) {
+		RetrieveTestResponseDTO response = new RetrieveTestResponseDTO();
+		labDao.validateHeader(header); // validates header details
+		SimpleDateFormat sf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		Date lastSynTime = null;
+		try {
+			lastSynTime = sf.parse(lastSyncTime);
+		} catch (ParseException e) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidSyncTime);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
+		List<AddTestDTO> testList = new ArrayList<AddTestDTO>();
+		List<TestTbl> createdTests = getTestsByDateTime(lastSynTime,
+				currentSyncTime);
+
+		for (TestTbl testTbl : createdTests) {
+			AddTestDTO newTests = new AddTestDTO();
+			List<TestSpecimenTbl> testSpecimenList = getSpecimenByTestUid(testTbl
+					.getUid());
+			
+			List<TestSpecimenDTO> testSpecimen = new ArrayList<TestSpecimenDTO>();
+			for (TestSpecimenTbl testSpecimenTbl : testSpecimenList) {
+				TestSpecimenDTO specimenDTO = new TestSpecimenDTO();
+				specimenDTO.setQuantity(testSpecimenTbl.getQuantity());
+				specimenDTO.setSpecimenName(testSpecimenTbl.getSpecimenTbl()
+						.getName());
+				specimenDTO.setSpecimenUid(testSpecimenTbl.getSpecimenTbl()
+						.getUid());
+				testSpecimen.add(specimenDTO);
+			}
+			newTests.setTestSpecimen(testSpecimen);
+			newTests.setUid(Integer.toString(testTbl.getUid()));
+			newTests.setName(testTbl.getTestName());
+			newTests.setAbbreviation(testTbl.getAbbreviation());
+			newTests.setGenericName(testTbl.getGenericName());
+			newTests.setMinTimeRequired(testTbl.getMinTimeRequired());
+			newTests.setInformaticValue(testTbl.getInformaticValues());
+			newTests.setMachineEntryStatus(testTbl.getMachineentryStatus());
+			try {
+				newTests.setResult(testTbl.getResult());
+			} catch (JsonGenerationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			newTests.setRemarks(testTbl.getRemarks());
+			newTests.setUploadStatus(testTbl.getUploadStatus());
+			newTests.setNormalRange(testTbl.getNormalRange());
+			newTests.setSpecimenEntryStatus(testTbl.getSpecimenentryStatus());
+			testList.add(newTests);
+		}
+
+		response.setTestList(testList); 
+		return response;
+	}
+
+	/**
+	 * @param uid
+	 * @return
+	 */
+	private List<TestSpecimenTbl> getSpecimenByTestUid(int uid) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_SPECIMEN_BY_TEST_UID);
+		query.setParameter("param1", uid);
+		return executeQuery(TestSpecimenTbl.class, query);
+	}
+	
+	/**
+	 * @param lastSyncTime
+	 * @param currentSyncTime
+	 * @return
+	 */
+	private List<TestTbl> getTestsByDateTime(Date lastSyncTime,
+			Date currentSyncTime) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_TEST_BY_DATE);
+		query.setParameter("param1", lastSyncTime);
+		query.setParameter("param2", currentSyncTime);
+		return executeQuery(TestTbl.class, query);
+	}
 	
 	/**
 	 * @param parseInt
@@ -382,6 +477,20 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 	 */
 	public void setEm(EntityManager em) {
 		this.em = em;
+	}
+
+	/**
+	 * @return the labDao
+	 */
+	public LabDao getLabDao() {
+		return labDao;
+	}
+
+	/**
+	 * @param labDao the labDao to set
+	 */
+	public void setLabDao(LabDao labDao) {
+		this.labDao = labDao;
 	}
 
 	
