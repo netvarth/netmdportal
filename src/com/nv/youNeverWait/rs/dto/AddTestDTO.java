@@ -62,7 +62,6 @@ public class AddTestDTO {
 		this.specimenEntryStatus = specimenEntryStatus;
 		this.machineEntryStatus = machineEntryStatus;
 	}
-
 	public String getNormalRange() {
 		return normalRange;
 	}
