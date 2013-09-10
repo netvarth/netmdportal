@@ -20,12 +20,27 @@ import com.nv.youNeverWait.pl.entity.TestTbl;
 public class TestDTO {
 	String testName;
 	int id;
+	int uid;
 	float stdRate;
+	
+	/**
+	 * @return the uid
+	 */
+	public int getUid() {
+		return uid;
+	}
+	/**
+	 * @param uid the uid to set
+	 */
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
 	/**
 	 * @param testTbl
 	 */
 	public TestDTO(TestTbl testTbl) {
 		this.id= testTbl.getId();
+		this.uid=testTbl.getUid();
 		this.testName= testTbl.getTestName();
 		this.stdRate= 0;
 	}
