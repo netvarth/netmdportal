@@ -11,6 +11,7 @@
 package com.nv.youNeverWait.user.bl.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.TypedQuery;
 import com.nv.youNeverWait.common.Constants;
@@ -20,7 +21,9 @@ import com.nv.youNeverWait.rs.dto.DeleteTestResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
+import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveTestResponseDTO;
 import com.nv.youNeverWait.rs.dto.TestDTO;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UpdateTestResponseDTO;
@@ -155,6 +158,16 @@ public class TestServiceImpl implements TestManager {
 	@Override
 	public ViewTestResponseDTO viewTest(String uid) {
 		ViewTestResponseDTO  response=testDao.viewTest(uid);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#getTests(com.nv.youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, java.util.Date)
+	 */
+	@Override
+	public RetrieveTestResponseDTO getTests(LabHeaderDTO header, String lastSyncTime,
+			Date currentSyncTime) {
+		RetrieveTestResponseDTO response= testDao.getTests(header,lastSyncTime,currentSyncTime);
 		return response;
 	}
 
