@@ -18,9 +18,38 @@ public class LabSyncResponseDTO {
 	private LabBranchListResponseDTO retrieveLabBranchList = new LabBranchListResponseDTO();
 	private RetrieveUserListResponseDTO retrieveUserList = new RetrieveUserListResponseDTO();
 	private ResultRetrievalResponseDTO getResult = new ResultRetrievalResponseDTO();
+	private RetrieveTestResponseDTO retrieveTests= new RetrieveTestResponseDTO();
+	private RetrieveSpecimenResponseDTO retrieveSpecimens = new RetrieveSpecimenResponseDTO();
+	
+	
+	/**
+	 * @return the retrieveSpecimens
+	 */
+	public RetrieveSpecimenResponseDTO getRetrieveSpecimens() {
+		return retrieveSpecimens;
+	}
 
-	
-	
+	/**
+	 * @param retrieveSpecimens the retrieveSpecimens to set
+	 */
+	public void setRetrieveSpecimens(RetrieveSpecimenResponseDTO retrieveSpecimens) {
+		this.retrieveSpecimens = retrieveSpecimens;
+	}
+
+	/**
+	 * @return the retrieveTests
+	 */
+	public RetrieveTestResponseDTO getRetrieveTests() {
+		return retrieveTests;
+	}
+
+	/**
+	 * @param retrieveTests the retrieveTests to set
+	 */
+	public void setRetrieveTests(RetrieveTestResponseDTO retrieveTests) {
+		this.retrieveTests = retrieveTests;
+	}
+
 	/**
 	 * @return the orderAmount
 	 */
