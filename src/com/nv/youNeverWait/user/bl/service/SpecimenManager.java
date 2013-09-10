@@ -10,8 +10,12 @@
  */
 package com.nv.youNeverWait.user.bl.service;
 
+import java.util.Date;
+
 import com.nv.youNeverWait.rs.dto.FilterDTO;
+import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenResponseDTO;
@@ -52,5 +56,20 @@ public interface SpecimenManager {
 	 * @return
 	 */
 	SpecimenResponseDTO viewSpecimen(int uid);
+	
+	/**
+	 * @param header
+	 * @param lastSyncTime
+	 * @param currentSyncTime
+	 * @return
+	 */
+	public RetrieveSpecimenResponseDTO getSpecimens(LabHeaderDTO header,
+			String lastSyncTime, Date currentSyncTime);
+
+	/**
+	 * @return
+	 */
+	 public RetrieveSpecimenResponseDTO specimenList();
+	
 
 }
