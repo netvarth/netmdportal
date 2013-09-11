@@ -27,7 +27,7 @@ import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponse;
 import com.nv.youNeverWait.rs.dto.SpecimenDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenResponseDTO;
 import com.nv.youNeverWait.security.pl.Query;
@@ -185,9 +185,9 @@ public class SpecimenDaoImpl extends GenericDaoHibernateImpl implements
 	 */
 	@Override
 	@Transactional
-	public RetrieveSpecimenResponseDTO getSpecimens(LabHeaderDTO header,
+	public RetrieveSpecimenResponse getSpecimens(LabHeaderDTO header,
 			String lastSyncTime, Date currentSyncTime) {
-		RetrieveSpecimenResponseDTO response = new RetrieveSpecimenResponseDTO();
+		RetrieveSpecimenResponse response = new RetrieveSpecimenResponse();
 		labDao.validateHeader(header); // validates lab header details
 		SimpleDateFormat sf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
@@ -220,8 +220,8 @@ public class SpecimenDaoImpl extends GenericDaoHibernateImpl implements
 	 */
 	@Override
 	@Transactional
-	public RetrieveSpecimenResponseDTO specimenList() {
-		RetrieveSpecimenResponseDTO response = new RetrieveSpecimenResponseDTO();
+	public RetrieveSpecimenResponse specimenList() {
+		RetrieveSpecimenResponse response = new RetrieveSpecimenResponse();
 		List<SpecimenTbl> specimenTblList=loadAll(SpecimenTbl.class);
 		
 		List<SpecimenDTO>  specimenList= new ArrayList<SpecimenDTO>();

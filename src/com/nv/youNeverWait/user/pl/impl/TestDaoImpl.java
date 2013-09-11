@@ -34,7 +34,7 @@ import com.nv.youNeverWait.rs.dto.DeleteTestResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrieveTestResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveTestResponse;
 import com.nv.youNeverWait.rs.dto.TestSpecimenDTO;
 import com.nv.youNeverWait.rs.dto.UpdateTestResponseDTO;
 import com.nv.youNeverWait.rs.dto.ViewTestResponseDTO;
@@ -329,9 +329,9 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 	 */
 	@Override
 	@Transactional
-	public RetrieveTestResponseDTO getTests(LabHeaderDTO header,
+	public RetrieveTestResponse getTests(LabHeaderDTO header,
 			String lastSyncTime, Date currentSyncTime) {
-		RetrieveTestResponseDTO response = new RetrieveTestResponseDTO();
+		RetrieveTestResponse response = new RetrieveTestResponse();
 		labDao.validateHeader(header); // validates header details
 		SimpleDateFormat sf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
