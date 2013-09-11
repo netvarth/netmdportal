@@ -254,10 +254,5 @@ public class Query {
 	public static final String GET_SPECIMEN_BY_TEST_UID = "from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid=:param1";
 	
 	
-	
-	
-	
-	
-	
 }
 
