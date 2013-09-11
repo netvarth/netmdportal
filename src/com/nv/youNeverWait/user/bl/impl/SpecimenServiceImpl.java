@@ -54,7 +54,7 @@ public class SpecimenServiceImpl  implements SpecimenManager{
 	 * @see com.nv.youNeverWait.user.bl.service.SpecimenManager#specimenList(com.nv.youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
-	public SpecimenListResponseDTO specimenList(FilterDTO filterDTO) {
+	public SpecimenListResponseDTO testSpecimenList(FilterDTO filterDTO) {
 		SpecimenListResponseDTO response = new SpecimenListResponseDTO();
 
 		// validate filterDTO to identify invalid expressions and if there is
