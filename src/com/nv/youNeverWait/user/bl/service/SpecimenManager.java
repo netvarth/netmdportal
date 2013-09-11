@@ -31,7 +31,7 @@ public interface SpecimenManager {
 	 * @param filter
 	 * @return
 	 */
-	SpecimenListResponseDTO specimenList(FilterDTO filter);
+	SpecimenListResponseDTO testSpecimenList(FilterDTO filter);
 
 	/**
 	 * @param specimen
