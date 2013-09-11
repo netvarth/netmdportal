@@ -23,7 +23,7 @@ import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrieveTestResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveTestResponse;
 import com.nv.youNeverWait.rs.dto.TestDTO;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UpdateTestResponseDTO;
@@ -165,9 +165,9 @@ public class TestServiceImpl implements TestManager {
 	 * @see com.nv.youNeverWait.user.bl.service.LabService#getTests(com.nv.youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, java.util.Date)
 	 */
 	@Override
-	public RetrieveTestResponseDTO getTests(LabHeaderDTO header, String lastSyncTime,
+	public RetrieveTestResponse getTests(LabHeaderDTO header, String lastSyncTime,
 			Date currentSyncTime) {
-		RetrieveTestResponseDTO response= testDao.getTests(header,lastSyncTime,currentSyncTime);
+		RetrieveTestResponse response= testDao.getTests(header,lastSyncTime,currentSyncTime);
 		return response;
 	}
 

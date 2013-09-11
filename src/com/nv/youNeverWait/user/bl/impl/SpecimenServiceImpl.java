@@ -24,7 +24,7 @@ import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponse;
 import com.nv.youNeverWait.rs.dto.SpecimenDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenResponseDTO;
@@ -174,9 +174,9 @@ public class SpecimenServiceImpl  implements SpecimenManager{
 	 * @see com.nv.youNeverWait.user.bl.service.LabService#getSpecimens(com.nv.youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, java.util.Date)
 	 */
 	@Override
-	public RetrieveSpecimenResponseDTO getSpecimens(LabHeaderDTO header,
+	public RetrieveSpecimenResponse getSpecimens(LabHeaderDTO header,
 			String lastSyncTime, Date currentSyncTime) {
-		RetrieveSpecimenResponseDTO response= specimenDao.getSpecimens(header, lastSyncTime,currentSyncTime);
+		RetrieveSpecimenResponse response= specimenDao.getSpecimens(header, lastSyncTime,currentSyncTime);
 		return response;
 
 	}
@@ -185,8 +185,8 @@ public class SpecimenServiceImpl  implements SpecimenManager{
 	 * @see com.nv.youNeverWait.user.bl.service.SpecimenManager#specimenList()
 	 */
 	@Override
-	public RetrieveSpecimenResponseDTO specimenList() {
-		RetrieveSpecimenResponseDTO response = specimenDao.specimenList();
+	public RetrieveSpecimenResponse specimenList() {
+		RetrieveSpecimenResponse response = specimenDao.specimenList();
 		return response;
 	}
 

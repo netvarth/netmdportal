@@ -42,14 +42,14 @@ import com.nv.youNeverWait.rs.dto.RetrievalPatientResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalScheduleResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponse;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
 import com.nv.youNeverWait.rs.dto.ScheduleDetail;
 import com.nv.youNeverWait.rs.dto.ScheduleResponse;
 import com.nv.youNeverWait.rs.dto.ScheduleResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncDTO;
 import com.nv.youNeverWait.rs.dto.SyncResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrieveTestResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveTestResponse;
 import com.nv.youNeverWait.rs.dto.UserResponse;
 import com.nv.youNeverWait.user.bl.service.AppointmentService;
 import com.nv.youNeverWait.user.bl.service.DoctorService;
@@ -1024,11 +1024,11 @@ public class SyncServiceImpl implements SyncService {
 		syncResponse.setRetrieveUserList(retrieveUserList);
 
 		/*Retrieving  newly added updated lab test*/
-		 RetrieveTestResponseDTO getTests= testManager.getTests(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
+		 RetrieveTestResponse getTests= testManager.getTests(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
 		 syncResponse.setRetrieveTests(getTests);
 		 
 		 /*Retrieving newly added updated test specimen*/
-		 RetrieveSpecimenResponseDTO retreiveSpecimens= specimenManager.getSpecimens(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
+		 RetrieveSpecimenResponse retreiveSpecimens= specimenManager.getSpecimens(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
 		 syncResponse.setRetrieveSpecimens(retreiveSpecimens);
 		 
 		 /*Get all results from other branches of same lab*/
