@@ -386,10 +386,10 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="netRxService">
 			<ref bean="netRx.service" />
 		</property>
-		<property name="testService">
+		<property name="testManager">
 			<ref bean="test.manager" />
 		</property>
-		<property name="specimenService">
+		<property name="specimenManager">
 			<ref bean="specimen.manager" />
 		</property>
 		<property name="netlimsServerIpAddress">
