@@ -103,7 +103,7 @@ public interface SuperAdminService {
 	 * @param filter
 	 * @return
 	 */
-	public SpecimenListResponseDTO specimenList(FilterDTO filter);
+	public SpecimenListResponseDTO testSpecimenList(FilterDTO filter);
 	
 
 }
