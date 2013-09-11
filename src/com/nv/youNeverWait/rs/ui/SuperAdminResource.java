@@ -1255,12 +1255,12 @@ public class SuperAdminResource {
 	 * @param filter
 	 * @return SpecimenListResponseDTO
 	 */
-	@RequestMapping(value = "specimenList", method = RequestMethod.POST)
+	@RequestMapping(value = "testSpecimenList", method = RequestMethod.POST)
 	@ResponseBody
-	public SpecimenListResponseDTO specimenList(@RequestBody FilterDTO filter) {
+	public SpecimenListResponseDTO testSpecimenList(@RequestBody FilterDTO filter) {
 		SpecimenListResponseDTO response = new SpecimenListResponseDTO();
 		try {
-			response = service.specimenList(filter);
+			response = service.testSpecimenList(filter);
 		} catch (ServiceException e) {
 
 			List<Parameter> parameters = e.getParamList();
