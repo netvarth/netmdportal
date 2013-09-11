@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author Luciya Jose
  */
-public class RetrieveTestResponseDTO {
+public class RetrieveTestResponse {
 	private List<AddTestDTO> testList= new ArrayList<AddTestDTO>();
 	private ErrorDTO error;
 	private boolean success;

@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author Luciya Jose
  */
-public class RetrieveSpecimenResponseDTO {
+public class RetrieveSpecimenResponse {
  private List<SpecimenDTO>  specimenList= new ArrayList<SpecimenDTO>();
  private ErrorDTO error;
  private boolean success;

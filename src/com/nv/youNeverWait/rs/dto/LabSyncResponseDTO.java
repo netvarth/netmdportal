@@ -18,35 +18,35 @@ public class LabSyncResponseDTO {
 	private LabBranchListResponseDTO retrieveLabBranchList = new LabBranchListResponseDTO();
 	private RetrieveUserListResponseDTO retrieveUserList = new RetrieveUserListResponseDTO();
 	private ResultRetrievalResponseDTO getResult = new ResultRetrievalResponseDTO();
-	private RetrieveTestResponseDTO retrieveTests= new RetrieveTestResponseDTO();
-	private RetrieveSpecimenResponseDTO retrieveSpecimens = new RetrieveSpecimenResponseDTO();
+	private RetrieveTestResponse retrieveTests= new RetrieveTestResponse();
+	private RetrieveSpecimenResponse retrieveSpecimens = new RetrieveSpecimenResponse();
 	
 	
 	/**
 	 * @return the retrieveSpecimens
 	 */
-	public RetrieveSpecimenResponseDTO getRetrieveSpecimens() {
+	public RetrieveSpecimenResponse getRetrieveSpecimens() {
 		return retrieveSpecimens;
 	}
 
 	/**
 	 * @param retrieveSpecimens the retrieveSpecimens to set
 	 */
-	public void setRetrieveSpecimens(RetrieveSpecimenResponseDTO retrieveSpecimens) {
+	public void setRetrieveSpecimens(RetrieveSpecimenResponse retrieveSpecimens) {
 		this.retrieveSpecimens = retrieveSpecimens;
 	}
 
 	/**
 	 * @return the retrieveTests
 	 */
-	public RetrieveTestResponseDTO getRetrieveTests() {
+	public RetrieveTestResponse getRetrieveTests() {
 		return retrieveTests;
 	}
 
 	/**
 	 * @param retrieveTests the retrieveTests to set
 	 */
-	public void setRetrieveTests(RetrieveTestResponseDTO retrieveTests) {
+	public void setRetrieveTests(RetrieveTestResponse retrieveTests) {
 		this.retrieveTests = retrieveTests;
 	}
 
