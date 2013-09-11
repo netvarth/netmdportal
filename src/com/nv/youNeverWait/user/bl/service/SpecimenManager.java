@@ -15,7 +15,7 @@ import java.util.Date;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponse;
 import com.nv.youNeverWait.rs.dto.SpecimenDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenResponseDTO;
@@ -63,13 +63,13 @@ public interface SpecimenManager {
 	 * @param currentSyncTime
 	 * @return
 	 */
-	public RetrieveSpecimenResponseDTO getSpecimens(LabHeaderDTO header,
+	public RetrieveSpecimenResponse getSpecimens(LabHeaderDTO header,
 			String lastSyncTime, Date currentSyncTime);
 
 	/**
 	 * @return
 	 */
-	 public RetrieveSpecimenResponseDTO specimenList();
+	 public RetrieveSpecimenResponse specimenList();
 	
 
 }

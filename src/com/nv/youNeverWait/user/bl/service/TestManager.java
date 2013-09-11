@@ -17,7 +17,7 @@ import com.nv.youNeverWait.rs.dto.DeleteTestResponseDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrieveTestResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveTestResponse;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UpdateTestResponseDTO;
 import com.nv.youNeverWait.rs.dto.ViewTestResponseDTO;
@@ -65,7 +65,7 @@ public interface TestManager {
 	 * @param currentSyncTime
 	 * @return
 	 */
-	public RetrieveTestResponseDTO getTests(LabHeaderDTO header,
+	public RetrieveTestResponse getTests(LabHeaderDTO header,
 			String lastSyncTime, Date currentSyncTime);
 	
 	
