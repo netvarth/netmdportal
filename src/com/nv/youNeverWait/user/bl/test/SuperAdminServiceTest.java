@@ -675,7 +675,7 @@ public class SuperAdminServiceTest {
 			filter.setCount(10);
 			filter.setFrom(0);
 			filter.setAsc(true);
-			SpecimenListResponseDTO response = service.specimenList(filter);
+			SpecimenListResponseDTO response = service.testSpecimenList(filter);
 			for (SpecimenDTO b : response.getSpecimenList()) {
 				System.out.println(b.getSpecimenName());
 			}
