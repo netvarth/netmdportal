@@ -127,7 +127,7 @@ function Constants() {
 	/*****************-------------Specimen-----------**----*************/
 	this.SPECIMENFILTERKEY = "SpecimenPropertyEnum";
 	this.SPECIMENNAME = "specimenName";
-	this.SPECIMENLISTURL="/youNeverWait/ws/ui/superAdmin/specimenList";
+	this.SPECIMENLISTURL="/youNeverWait/ws/ui/superAdmin/testSpecimenList";
 	this.SPECIMENLISTTABLEURL="/youNeverWait/json/list/specimenTable.json";
 	this.VIEWSPECIMENPAGEURL = "/youNeverWait/json/viewSpecimen.json";
 	this.SPECIMENGENERALPTBURL='/youNeverWait/json/toolbars/viewGeneralToolbar.json';
