@@ -39,19 +39,7 @@
                                 {
                                     "className": "column-right",
                                     "data": [
-                                        {
-                                            "className": "column-left",
-                                            "elements": [
-                                                {
-                                                    "name": "txtTestRate",
-                                                    "id": "txtTestRate",
-                                                    "type": "text",
-                                                    "className": "dlarge",
-                                                    "title": "Rate",
-                                                    "required": "true"
-                                                }
-                                            ]
-                                        },
+                                        
                                         {
                                             "className": "column-left",
                                             "elements": [
@@ -59,7 +47,7 @@
                                                     "name": "txtTestTimeRq",
                                                     "id": "txtTestTimeRq",
                                                     "type": "text",
-                                                    "className": "dlarge",
+                                                    "className": "large",
                                                     "title": "Time Required"
                                                 }
                                             ]
@@ -143,7 +131,6 @@
                                                             "id": "selectTestSpecimen",
                                                             "type": "select",
                                                             "className": "select",
-                                                            "style": "width:79%",
                                                             "value": [
                                                                 {
                                                                     "title": "Select type"
@@ -415,26 +402,6 @@
                                                 "className": "head1",
                                                 "name": "",
                                                 "style": "width:8%;"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "className": "five_sixth",
-                            "elements": [
-                                {
-                                    "type": "button",
-                                    "content": {
-                                        "buttons": [
-                                            {
-                                                "name": "btntestReportPreview",
-                                                "id": "btntestReportPreview",
-                                                "title": "Preview",
-                                                "type": "button",
-                                                "className": "stdbtn btn_black",
-                                                "style": "opacity:1;Float:right;"
                                             }
                                         ]
                                     }

@@ -20,7 +20,10 @@ $j('#tabs-1').html(adminTB.result);
 	
 	});
 
-	$j('#btnSpecimen').die('click').live("click",function() {
+	$j('#btnSpecimenList').die('click').live("click",function() {
+		//alert("btnSpecimen click")
+		var specimenUI = new SpecimenUIStartup();			
+		specimenUI.init();
 	
 	});
 	

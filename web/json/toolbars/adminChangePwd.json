@@ -2,7 +2,7 @@
 	"buttons":	[
 		{"title" 	: 	"Change Password","className":"d2",  "name":"btnChangePwd"},
 		{"title" 	: 	"User Log","className":"d3",  "name":"btnUserLogList"},
-		{"title" 	: 	"Test","className":"d3",  "name":"btnTestList"},
-		{"title" 	: 	"Specimen","className":"d3",  "name":"btnSpecimenList"}
+		{"title" 	: 	"Test","className":"d4",  "name":"btnTestList"},
+		{"title" 	: 	"Specimen","className":"d5",  "name":"btnSpecimenList"}
 	]
 }
