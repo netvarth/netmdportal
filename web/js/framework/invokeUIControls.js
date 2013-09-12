@@ -10,7 +10,8 @@ $j.cachedScript("/youNeverWait/js/framework/NVUIControls/NVFilterToolBar.js").do
 })
 $j.cachedScript("/youNeverWait/js/framework/NVUIControls/NVPageToolBar.js").done(function(script, textStatus) {	
 })
-
+$j.cachedScript("/youNeverWait/js/framework/NVUIControls/NVButtonsToolBar.js").done(function(script, textStatus) {	
+})
 $j.cachedScript("/youNeverWait/js/framework/NVUIControls/NVTable.js").done(function(script, textStatus) {		
 })
 $j.cachedScript("/youNeverWait/js/framework/NVUIControls/NVAdminToolBar.js").done(function(script, textStatus) {

@@ -6,6 +6,7 @@ function ServerUrlProcessor() {
 
 	this.post = function(param) {
 		var postResponse;
+		$j("#dvLoading").show();
 		jQuery.ajax({
 			type: "POST",
 			url: this.url,
@@ -15,19 +16,20 @@ function ServerUrlProcessor() {
 			async: false,
 			success:function(response) {
 				if(response==null){
-					window.location.href=pageHandler.getHomePageUrl();
-					location.reload();
+				//	window.location.href=pageHandler.getHomePageUrl();
+				//	location.reload();
 					return false;
 				}	
 				else{
 					postResponse = response;
-				}	
+				}
+				$j("#dvLoading").hide();
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError);
 				postResponse = false;	
-				window.location.href=pageHandler.getHomePageUrl();
-				location.reload();  
+			//	window.location.href=pageHandler.getHomePageUrl();
+			//	location.reload();  
 			}
 		});	
 		return postResponse;	
@@ -41,8 +43,8 @@ function ServerUrlProcessor() {
 
 		if(response==undefined) {
 			response=false;
-			window.location.href=pageHandler.getHomePageUrl();
-			location.reload();
+		//	window.location.href=pageHandler.getHomePageUrl();
+		//	location.reload();
 		}
 		return response;	
 	}

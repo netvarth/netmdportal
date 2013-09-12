@@ -1,20 +1,20 @@
-function PageHandler(startUrl) {
-	this.startUrl = startUrl;
-	
+function PageHandler() {
 	this.getHomePageUrl=function() {
-		this.startUrl;
+		return "/weblims/ws/ui/html/startUp";
 	}
 	
-	this.create = function(url,parent) {
+	this.create = function(url) {
 		ajaxProcessor.setUrl(url);
 		var pageContent = ajaxProcessor.get();
 		var page = new form(pageContent);
-		$j(parent).html(page.result);
+		$j('#tabs-1').html(page.result);
 	}
 	
 	this.buttons = function(url, parent) {
+		//alert(url);
 		ajaxProcessor.setUrl(url);
 		var response = ajaxProcessor.post();
+		//var response=url
 		var buttonsDiv = new buttonsContainer(response);
 		$j(parent).html(buttonsDiv.result);
 	}
