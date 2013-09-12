@@ -35,6 +35,11 @@ $j.cachedScript("/youNeverWait/js/framework/login.js").done(function(script, tex
 })
 var errorData = getErrorData();
 $j(document).ready(function(){
+	var classLoader = new ClassLoader();
+	classLoader.load();
+	//config upload handling js
+	$j.getScript("/youNeverWait/js/ClassInitializer.js").done(function(script, textStatus) {
+	})
 	createLeftpaneToolBar();
 	createGlobalToolBar();
 	$j('#tabs-1').removeClass('ui-widget-content');

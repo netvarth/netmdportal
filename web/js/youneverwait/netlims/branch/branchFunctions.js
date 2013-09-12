@@ -50,28 +50,28 @@ function viewHealthmonitor(branchId)
 {
 	var healtMontr=getRequestData('/youNeverWait/ws/ui/superAdmin/viewBranchSystemInfo/'+branchId);
 	//alert(JSON.stringify(healtMontr));
-	if(healtMontr)
+	if(healtMontr.criticalCpuLevel)
 		$j("#newHealthForm #criticalCpuLevel").val(healtMontr.criticalCpuLevel);
 	else
 		$j("#newHealthForm #criticalCpuLevel").val('Nil');
-	if(healtMontr)
+	if(healtMontr.criticalMemoryLevel)
 		$j("#newHealthForm #criticalMemoryLevel").val(healtMontr.criticalMemoryLevel);
 	else 
 		$j("#newHealthForm #criticalMemoryLevel").val('Nil');
-	if(healtMontr)
+	if(healtMontr.branchId)
 		$j("#newHealthForm #branchid").val(healtMontr.branchId);
 	else 
 		$j("#newHealthForm #branchid").val('Nil');
-	if(healtMontr)
+	if(healtMontr.freqType)
 		$j("#newHealthForm #frequencyType").val(healtMontr.freqType);
 	else 
 		$j("#newHealthForm #frequencyType").val('Nil');
-	if(healtMontr)
+	if(healtMontr.intervalTime)
 		$j("#newHealthForm #intervalTime").val(healtMontr.intervalTime);
 	else 
 		$j("#newHealthForm #intervalTime").val('Nil');	
 	
-	if(healtMontr)
+	if(healtMontr.criticalHardDiskSpaceLevel)
 		$j("#newHealthForm #criticalHardDiskSpaceLevel").val(healtMontr.criticalHardDiskSpaceLevel);
 	else 
 		$j("#newHealthForm #criticalHardDiskSpaceLevel").val('Nil');
@@ -89,10 +89,13 @@ function submitHealthmonitorInfo(){
 
 function createSubmitJson(){
 	
-
+	var branchId=$j("#newHealthForm #branchid").val();
+	if(branchId==""){
+		branchId=0;
+	}
 	var submitdata;
 	submitdata = '{'   +'"criticalCpuLevel"' + ':"'+$j('#newHealthForm #criticalCpuLevel').val() +'",';
-	submitdata+='"branchId"' +':' + $j("#newHealthForm #branchid").val() +',';
+	submitdata+='"branchId"' +':' + branchId +',';
 	
 	submitdata+='"criticalMemoryLevel"' +':"' + $j('#newHealthForm #criticalMemoryLevel').val() +'",';
 	submitdata+='"criticalHardDiskSpaceLevel"' +':"' + $j('#newHealthForm #criticalHardDiskSpaceLevel').val() +'",';

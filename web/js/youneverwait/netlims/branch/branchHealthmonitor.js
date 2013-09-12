@@ -1,6 +1,7 @@
-$j(document).ready(function () {
+//$j(document).ready(function () {
 	
 	var branchId = getSelectedBranchId("#branch");
+	//alert(branchId);
 	var response=getRequestData('/youNeverWait/ws/ui/superAdmin/viewBranchSystemInfo/'+branchId);
 	//alert(JSON.stringify(response));
 	
@@ -167,4 +168,4 @@ $j(document).ready(function () {
             previousPoint = null;
         }
     });
-});
+//});

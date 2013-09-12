@@ -8,6 +8,11 @@ constants_graphHealthmonitorJson='/youNeverWait/json/graphHealth.json';
 constants_newNetLims="/youNeverWait/js/youneverwait/netlims/new/newNetLims.js";
 constant_Healthmonitor_Url="/youNeverWait/js/youneverwait/netlims/branch/branchHealthmonitor.js";
 constant_NetLimsList_Msg="NETLIMS LIST";
+constants_testDetails = "Test Details";
+constants_nameRequired = "Name required";
+constants_rateRequired = "Rate required";
+constants_avoidDoubleQuotes = "Please avoid double quotes";
+constants_testDeleteSuccess = "Test deleted successfully";
 
 constants_ViewNetLimsEntryPoint="/youNeverWait/js/youneverwait/netlims/view/viewNetLimsEntryPoint.js";
 constants_ViewNetLimsFunction="/youNeverWait/js/youneverwait/netlims/view/viewNetLimsFunctions.js";

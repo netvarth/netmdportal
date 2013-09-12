@@ -98,7 +98,7 @@ $j('#pageTitle1').show();
 	    	var obj=$j(this);
 		createModal(constants_graphHealthmonitorJson,'graphHealthmonitorModal');	
 		openModalBox(obj,'graphHealthmonitorModal');
-		$j.getScript(constant_Healthmonitor_Url).done(function(script, textStatus) {
+		$j.cachedScript(constant_Healthmonitor_Url).done(function(script, textStatus) {
 })
 		//makeDataTable(tableobj);
 		//fillhealthmonitortable(tableobj,branchId);
@@ -151,7 +151,7 @@ $j('#pageTitle1').show();
 		validateNumber("#newHealthForm #criticalMemoryLevel");
 		validateNumber("#newHealthForm #criticalHardDiskSpaceLevel");
 		validateNumber("#newHealthForm #intervalTime");
-
+		clearNilFields(newHealthForm);
 		removeErrors();
 		
 		$j('#newHealthForm #texfrequencyType').hide();
