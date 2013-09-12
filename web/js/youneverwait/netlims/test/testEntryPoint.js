@@ -13,14 +13,15 @@ $j(document).ready(function(){
 	var interval = 10;// Interval between pages
 	var curPage = 1;//Current selected page
 	//fill the result
-	var testListJson= getFilterlistUrl(exp,(curPage-1),interval);aapgTestList = viewTestList(pgTableName);
-	//if(pgTestList.count)
-	//	maxRecords = pgTestList.count;	
-	//if(maxRecords%interval!=0)
-	//	maxPages = parseInt(maxRecords/interval)+ 1;
-	//else
-	//	maxPages = parseInt(maxRecords/interval);	
-	//setPaginationFields(curPage, maxPages, pgTableContainer);
+	var testListJson= getFilterlistUrl(exp,(curPage-1),interval);
+	pgTestList = viewTestList(pgTableName,testListJson);
+	if(pgTestList.count)
+		maxRecords = pgTestList.count;	
+	if(maxRecords%interval!=0)
+		maxPages = parseInt(maxRecords/interval)+ 1;
+	else
+		maxPages = parseInt(maxRecords/interval);	
+	setPaginationFields(curPage, maxPages, pgTableContainer);
 	//alert("in last");
 	// page tool bar new button pressed 
 	$j('#testPTBContainer #btn_new_ptb_id').die('click').live('click',function(){
@@ -29,11 +30,11 @@ $j(document).ready(function(){
 		var obj=$j(this);
 		createModal('/youNeverWait/json/new/newTest.json','testModal');		
 		openModalBox(obj,'testModal');
-		//$j.getScript("/youNeverWait/js/youneverwait/netlims/test/new/newTest.js").done(function(script, textStatus) {
-		//})
+		$j.getScript("/youNeverWait/js/youneverwait/netlims/test/new/newTest.js").done(function(script, textStatus) {
+		})
 	});	
 
-	/*//disable the submit function of the form while user press enter key
+	//disable the submit function of the form while user press enter key
 	$j("form").bind("keypress", function (e) {
 		if (e.keyCode == 13) return false;
 	});
@@ -54,28 +55,19 @@ $j(document).ready(function(){
 	$j('#testPTBContainer #btn_delete_ptb_id').die('click').live('click',function(){
 		removeErrors();
 		var testId = getSelectedTestId(pgTableName);
+		//alert(testId);
 		if(testId!="") {
-			var confirmStatus = confirm("Do you really want to delete test " + getTestName(testId));
-			if(confirmStatus==true) {
-				var response = getRequestData('/weblims/ws/ui/test/deleteTest/' + testId);
-				pgTestList = viewTestList(testListJson,pgTableName);
-				if(pgTestList.count)
-					maxRecords = pgTestList.count;	
-				if(maxRecords%interval!=0)
-					maxPages = parseInt(maxRecords/interval) + 1;
-				else
-					maxPages = parseInt(maxRecords/interval);	
-				setPaginationFields(curPage, maxPages, pgTableContainer);
+				var response = getRequestData('/youNeverWait/ws/ui/test/deleteTest/' + testId);
+							
 				if(response.success==true){
-					$j(pgTableName).dataTable().fnDeleteRow($j('#'+testId).closest('tr')[0]);			
-					showTip(constants_testDeleteSuccess);
+					viewTestList(pgTableName,testListJson);
+					showTip("Test deleted successfully");
 				}	
 				else
 					updateTipsNew(getErrorName(response.error),$j('#errorDivData'),$j('#errorDivHeader'));
-				configData= getConfigData();
-				gbSpecialTestList = getSpecialTestList();
+						//gbSpecialTestList = getSpecialTestList();
 				
-			}		
+			
 		}
 	});
 	
@@ -91,7 +83,7 @@ $j(document).ready(function(){
 		removeErrors();
 	});
 	
-	$j(pgTableContainer +' #next').die('click').click(function() {	
+	$j(pgTableContainer +' #next').die('click').click(function() {
 		if(curPage!=maxPages && curPage<maxPages) {
 			curPage+=1;
 			var startValue = interval*(curPage-1);
@@ -225,5 +217,5 @@ $j(document).ready(function(){
 				testId=selTests.attr('id');
 		}	
 		return testId;
-	}*/
+	}
 });	

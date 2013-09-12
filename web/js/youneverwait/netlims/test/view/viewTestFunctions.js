@@ -11,21 +11,21 @@ function viewTest(testId,specimenTableObj,repTableObj) {
 	$j('#tabs-1').html(layout);	
 	makeTestDataTable(specimenTableObj);
 	makeTestDataTable(repTableObj);
-	fillHeaderDataToControl('#viewSelectTableHeader');
-	fillLayoutToControl('#viewSelectTestLayout');
-	fillSpecimenToControl('#viewSelectTestSpecimen');
 	fillRemarksValToControl('#viewSelectTestRemarks');
+	fillLayoutToControl('#viewSelectTestLayout');
+	fillHeaderDataToControl('#viewSelectTableHeader');
+	fillSpecimenToControl('#viewSelectTestSpecimen');
 	viewTestInfo(testId,specimenTableObj,repTableObj);
 }
 function getPTBTestGeneral() {
-	var ptbdata=getRequestData('/weblims/json/toolbars/viewGeneralToolbar.json');
+	var ptbdata=getRequestData('/youNeverWait/json/toolbars/viewGeneralToolbar.json');
 	var ptbContainer = $j('<div id="testGeneralPTBContainer"/>');
 	var ptb = new PageToolBar(ptbdata);
 	$j(ptbContainer).append(ptb.result);
 	return ptbContainer;
 }
 function createTestViewLayout() {
-	var response = getRequestData('/weblims/json/testview.json');
+	var response = getRequestData('/youNeverWait/json/testview.json');
 	var contentForm = new form(response);
 	return contentForm.result;
 }
@@ -50,12 +50,15 @@ function makeDataTable(tableObj) {
 	});
 }
 function viewTestInfo(testId,specimenTableObj,repTableObj) {
-	
+	//alert("in view");
 	$j('#pageTitle').html(constants_testDetails);
 	$j('#viewTestForm #btnViewTestReportPreview').hide();
 	$j('#viewTestForm input[type=text],textarea').attr('readonly','readonly');
-	
+	//alert(testId);
 	var testInfo = getTestData(testId);
+
+	//alert(JSON.stringify(testInfo));
+
 	uploadstatus=testInfo.uploadStatus;
     $j("#viewTestForm #lblViewTestId label").text(testInfo.uid);
 	$j("#viewTestForm #txtViewTestName ").val(testInfo.name);
@@ -67,7 +70,7 @@ function viewTestInfo(testId,specimenTableObj,repTableObj) {
 		$j("#viewTestForm #txtViewTestGenericName").val(testInfo.genericName);
 	else
 		$j("#viewTestForm #txtViewTestGenericName").val('Nil');
-	if(testInfo.minTimeRequirednormalRangenormalRange)
+	if(testInfo.minTimeRequired)
 		$j("#viewTestForm #txtViewTestTimeRq ").val(testInfo.minTimeRequired);
 	else
 		$j("#viewTestForm #txtViewTestTimeRq ").val('Nil');
@@ -98,16 +101,21 @@ function viewTestInfo(testId,specimenTableObj,repTableObj) {
 
 function fillspecimenTable(testInfo,specimenTableObj){
 	$j(specimenTableObj).dataTable().fnClearTable();
+	var curSelLength=testInfo.testSpecimens.length;
+	if(curSelLength>0) {	
 	$j(testInfo.testSpecimens).each(function(index,specimen){
-		var myData='<a href="#"><img width="20" height="20" style="margin:0 0 0 5px;"class="deleteSpecimen" src="/weblims/images/remove-btn.png"></a>';
+		var myData='<a href="#"><img width="20" height="20" style="margin:0 0 0 5px;"class="deleteSpecimen" src="/youNeverWait/images/remove-btn.png"></a>';
 		var rowData=$j(specimenTableObj).dataTable().fnAddData([specimen.specimenName,myData]);
 		var row=$j(specimenTableObj).dataTable().fnSettings().aoData[rowData].nTr;
 		$j(row).attr('id',specimen.specimenUid);
 	});
 	$j(specimenTableObj).dataTable().fnSetColumnVis( 1, false );
 }
+}
+
 
 function fillReportLayout(testInfo,tableObj){
+	//alert(JSON.stringify(testInfo));
     var testname=testInfo.name;
 	if(testInfo.result=="{}"){
 		$j('#viewTestForm #lblViewLayout label').text("None");
@@ -144,7 +152,7 @@ function fillReportLayout(testInfo,tableObj){
 									tblvalue="";	
 							});
 						if(tbldata!="INVESTIGATION")
-							myData='<a href="#"><img width="20" height="20" style="margin:0 0 0 5px;"class="deleteViewHdr" src="/weblims/images/remove-btn.png"></a>';
+							myData='<a href="#"><img width="20" height="20" style="margin:0 0 0 5px;"class="deleteViewHdr" src="/youNeverWait/images/remove-btn.png"></a>';
 						var rowData=$j(tableObj).dataTable().fnAddData([tbldata,tblvalue,myData]);
 						var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 						$j(row).attr('id',rowId);
@@ -164,7 +172,7 @@ function fillViewSpecimenToTable(specimenName,specimenVal,tableObj){
 		createError(constants_specimenExists,$j('#viewSelectTestSpecimen'));
 		return false;
 	}
-    var myData='<a href="#"><img width="20" height="20" style="margin:0 0 0 5px;"class="deleteSpecimen" src="/weblims/images/remove-btn.png" rel="tooltip" title="delete"></a>';
+    var myData='<a href="#"><img width="20" height="20" style="margin:0 0 0 5px;"class="deleteSpecimen" src="/youNeverWait/images/remove-btn.png" rel="tooltip" title="delete"></a>';
 	var rowData=$j(tableObj).dataTable().fnAddData([specimenName,myData]);
 	var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 	$j(row).attr('id',specimenVal);	
@@ -238,9 +246,7 @@ function createUpdateJson(TestSpecimenFilteredData,ReportList,uploadstatus) {
 	var submitdata;
 	TestSpecimenFilteredData='['+TestSpecimenFilteredData+']';
 	var testname= $j('#txtViewTestName').val();
-	var rate=parseFloat($j('#txtViewTestRate').val(),10) || 0;
-	if(rate=="")
-	 rate=0;
+	var rate=0;
 	var timeRequired=$j('#txtViewTestTimeRq').val();
 	var testid=$j('#lblViewTestId label').text();
 	var genericname=$j('#txtViewTestGenericName').val();	
@@ -311,7 +317,7 @@ function setViewJsonforReportModel(ReportList){
 function updateTestInfo(TestSpecimenFilteredData,ReportList,uploadstatus){
 	/* making json data of new order page  section wise*/
 	var resultJson=createUpdateJson(TestSpecimenFilteredData,ReportList,uploadstatus);
-	var response = postdataToServer("/weblims/ws/ui/test/updateTest",resultJson );	
+	var response = postdataToServer("/youNeverWait/ws/ui/test/updateTest",resultJson );	
 	return response;
 }
 
@@ -348,7 +354,7 @@ function fillViewheaderToTable(name,value,setTblVal){
 		createError("Header exists",$j('#viewSelectTableHeader'));
 		return false;
 		}
-    var myData='<a href="#"><img width="20" height="20" style="margin:0 0 0 5px;"class="deleteRptHdr" src="/weblims/images/remove-btn.png" rel="tooltip" title="delete"></a>';
+    var myData='<a href="#"><img width="20" height="20" style="margin:0 0 0 5px;"class="deleteRptHdr" src="/youNeverWait/images/remove-btn.png" rel="tooltip" title="delete"></a>';
 	var rowData=$j('#viewTbltestReport').dataTable().fnAddData([name,setTblVal,myData]);
 	var row=$j('#viewTbltestReport').dataTable().fnSettings().aoData[rowData].nTr;
 	$j(row).attr('id',value);	

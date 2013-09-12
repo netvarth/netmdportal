@@ -27,7 +27,7 @@ function fillSpecimenToTable(specimenName,specimenVal){
 		createError("specimen exists",$j('#selectTestSpecimen'));
 		return false;
 		}
-    var myData='<a href="#"><img width="20" height="20" style="margin:0 0 0 5px;"class="delete" src="/weblims/images/remove-btn.png" rel="tooltip" title="delete"></a>';
+    var myData='<a href="#"><img width="20" height="20" style="margin:0 0 0 5px;"class="delete" src="/youNeverWait/images/remove-btn.png" rel="tooltip" title="delete"></a>';
 	var rowData=$j('#tblTestSpecimen').dataTable().fnAddData([specimenName,myData]);
 	var row=$j('#tblTestSpecimen').dataTable().fnSettings().aoData[rowData].nTr;
 	$j(row).attr('id',specimenVal);	
@@ -40,7 +40,7 @@ function fillheaderToTable(name,value,setTblVal){
 		createError("Header exists",$j('#selectTableHeader'));
 		return false;
 		}
-    var myData='<a href="#"><img width="20" height="20" style="margin:0 0 0 5px;"class="deleteRptHdr" src="/weblims/images/remove-btn.png" rel="tooltip" title="delete"></a>';
+    var myData='<a href="#"><img width="20" height="20" style="margin:0 0 0 5px;"class="deleteRptHdr" src="/youNeverWait/images/remove-btn.png" rel="tooltip" title="delete"></a>';
 	var rowData=$j('#newTest #tbltestReport').dataTable().fnAddData([name,setTblVal,myData]);
 	var row=$j('#newTest #tbltestReport').dataTable().fnSettings().aoData[rowData].nTr;
 	$j(row).attr('id',value);	
@@ -64,9 +64,7 @@ function checkRowIdDuplication(tableObj,rowId) {
 function createSubmitJson(ReportList) {
 	var submitdata;
 	var testname= $j('#newTest #txtTestName').val();
-	var rate=parseFloat($j('#newTest #txtTestRate').val(),10) || 0;
-	if(rate=="")
-	 rate=0;
+	var rate=0;
 	var replaceResult="";
 	var timeRequired=$j('#newTest #txtTestTimeRq').val();
 	var genericname=$j('#newTest #txtTestGenericName').val();	
@@ -199,7 +197,7 @@ function setJsonforReportModel(ReportList){
 function submitTestInfo(ReportList){
 	/* making json data of new order page  section wise*/
 	var resultJson=createSubmitJson(ReportList);
-	var response = postdataToServer("/weblims/ws/ui/test/createTest",resultJson );	
+	var response = postdataToServer("/youNeverWait/ws/ui/test/createTest",resultJson );	
 	return response;
 }
 function resetNewtestForm() {

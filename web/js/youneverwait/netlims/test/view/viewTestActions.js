@@ -1,10 +1,10 @@
 var testInfo = "";
 TestSpecimenFilteredData = [];
 var uploadstatus;
-var ReportList=getRequestData('/weblims/js/forApp/test/reportcreation.json');
+var ReportList=getRequestData('/youNeverWait/js/youneverwait/netlims/test/reportcreation.json');
 
 $j("#testGeneralPTBContainer #btn_back_ptb_id").die('click').live('click',function() {	
-	$j.getScript(serverPath + "/weblims/js/forApp/test/testEntryPoint.js").done(function(script, textStatus) {
+	$j.getScript( "/youNeverWait/js/youneverwait/netlims/test/testEntryPoint.js").done(function(script, textStatus) {
 	})
 });
 
@@ -118,6 +118,8 @@ function restoreTestInfo(){
 	$j('#viewTestForm #lblremarks').show();
 	$j('#viewTestForm #viewpreviewDiv').hide();
 	$j('#viewTestForm #btnViewTestReportPreview').removeClass('visible');
+	$j('#viewTestForm #machineEntryDiv').hide();
+	$j('#viewTestForm #machineEntryDisplayDiv').show();
 	$j('#viewTestForm #specimenEntryDiv').hide();
 	$j('#viewTestForm #specimenEntryDisplayDiv').show();
 	viewTestInfo(testId,'#viewTestForm  #tblViewTestSpecimen','#viewTestForm  #viewTbltestReport');
@@ -140,11 +142,11 @@ $j('#viewTestForm #btnViewSaveTest').die('click').live('click',function(){
 		var response = updateTestInfo(TestSpecimenFilteredData,ReportList,uploadstatus);
 		if(response.success==true){	
 			TestSpecimenFilteredData=[];
-			showTip(constants_testUpdateSuccess);
+			showTip("Test updated successfully");
 			testId=getCurTestId();
 			restoreTestInfo(testId);
-			configData= getConfigData();
-			gbSpecialTestList = getSpecialTestList();
+			//configData= getConfigData();
+			//gbSpecialTestList = getSpecialTestList();
 		} else
 			updateTipsNew(getErrorName(response.error),$j('#viewTestForm #errorDivViewTestData'),$j('#viewTestForm #errorDivHeader'));
 				

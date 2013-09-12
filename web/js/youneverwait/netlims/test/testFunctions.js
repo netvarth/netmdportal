@@ -1,14 +1,14 @@
 //alert("function");
-function viewTestList(specimentableObj) {
+function viewTestList(tableObj,testListJson) {
 	loadTestPageToolBar();
 	var testTable=setTestTableStructure();
 	$j('#tabs-1').html(testTable.html());
-	setCustomDataTable(specimentableObj);
+	setCustomDataTable(tableObj);
 	//searchDiv = createSearchDiv("test-filter-toolbar");
 	//$j('#tabs-1 .dataTables_wrapper .top').append(searchDiv);
 	//fillTestOnlyToControl("txt_Search");
-	//pgTestList=fillTestTable(testListJson,specimentableObj);
-	//return pgTestList;
+	pgTestList=fillTestTable(testListJson,tableObj);
+	return pgTestList;
 }
 
 function loadTestPageToolBar() {
@@ -31,29 +31,30 @@ function setTestTableStructure() {
 	return boxDiv;
 }
 
-/*function fillTestTable(testListJson, tableObj) {
+function fillTestTable(testListJson,tableObj) {
 	$j(tableObj).dataTable().fnClearTable();
-	var testRateList = postdataToServer("/weblims/ws/ui/test/getTests",testListJson);
-	curSelLength=testRateList.test.length;
+	var testRateList = postdataToServer("/youNeverWait/ws/ui/superAdmin/testList",testListJson);
+	//alert(JSON.stringify(testRateList));
+	curSelLength=testRateList.testList.length;
 	if(curSelLength>0) {		
-		$j(testRateList.test).each(function(index,testDetail) {
+		$j(testRateList.testList).each(function(index,testDetail) {
 			var stdRate=testDetail.stdRate;
-			var active=testDetail.active;
-			var rowData= $j(tableObj).dataTable().fnAddData([testDetail.uid,testDetail.name,stdRate.toFixed(2)]);
+			//var active=testDetail.active;
+			var rowData= $j(tableObj).dataTable().fnAddData([testDetail.uid,testDetail.testName,stdRate.toFixed(2)]);
 			var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 			$j(row).children("td:nth-child(3)").attr('name',stdRate);
 			$j(row).children("td:nth-child(3)").attr("class","column-2");
 			$j(row).attr('id',testDetail.uid);	
 			$j(row).children("td:nth-child(1)").attr("class","testIdCol Ustyle");		
-			if(active==false)
-				$j(row).attr('style','background:#888888 ;');					
+			//if(active==false)
+			//	$j(row).attr('style','background:#888888 ;');					
 		});
 	}	
 	return testRateList;		
 }
 
 // for search option
-function filltestSearchTable(testListJson, tableObj) {
+/*function filltestSearchTable(testListJson, tableObj) {
 	$j(tableObj).dataTable().fnClearTable();
 	var testRateList = postdataToServer("/weblims/ws/ui/test/searchTest",testListJson);	
 	curSelLength=testRateList.test.length;
@@ -69,19 +70,20 @@ function filltestSearchTable(testListJson, tableObj) {
 		});
 	}	
 	return testRateList;		
-}
+}*/
 
 // function to get the  previous testid from the testlist json 
 function getpreviousTestId(testId, testResult) {
 	var tstId;
-	$j(testResult.test).each(function (index, rowTest) {
+	//alert(JSON.stringify(testResult));
+	$j(testResult.testList).each(function (index, rowTest) {
 		if(testId==rowTest.uid)	{
-			var arrayLength=(testResult.test).length;
+			var arrayLength=(testResult.testList).length;
 			var comp=arrayLength-1;
 			if(index==0)
 				tstId = testId;
 			else
-				tstId=testResult.test[index-1].uid;
+				tstId=testResult.testList[index-1].uid;
 			return false;
 		}
 	});
@@ -90,14 +92,14 @@ function getpreviousTestId(testId, testResult) {
 // function to get the  next testid from the testlist json 
 function getnextTestId(testId, testResult) {
 	var tstId;
-	$j(testResult.test).each(function (index, rowTest) {
+	$j(testResult.testList).each(function (index, rowTest) {
 		if(testId==rowTest.uid)	{
-			var arrayLength=(testResult.test).length;
+			var arrayLength=(testResult.testList).length;
 			var comp=arrayLength-1;
 			if(index==comp)
 				tstId = testId;
 			else
-				tstId=testResult.test[index+1].uid;	
+				tstId=testResult.testList[index+1].uid;	
 			return false;
 		}
 	});	
@@ -110,7 +112,7 @@ function updatedTestRate(){
 	var len = getCount();
 	if(len>0) {
 		var resultJson=createPkgJson();
-		var orderResult = postdataToServer("/weblims/ws/ui/test/updateTestRate", resultJson );
+		var orderResult = postdataToServer("/youNeverWait/ws/ui/test/updateTestRate", resultJson );
 		$j('.Update').closest('tr').removeAttr('style');
 		return;
 	}
@@ -147,4 +149,4 @@ function getCount() {
 	});
 	return count;
 }
-*/
+

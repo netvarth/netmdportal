@@ -1,12 +1,12 @@
 $j(document).ready(function() {
-	$j.cachedScript("/weblims/js/forApp/test/new/newTestFunctions.js").done(function(script, textStatus) {
+	$j.cachedScript("/youNeverWait/js/youneverwait/netlims/test/new/newTestFunctions.js").done(function(script, textStatus) {
 	})
-	$j.cachedScript("/weblims/js/forApp/test/new/newTestValidation.js").done(function(script, textStatus) {
+	$j.cachedScript("/youNeverWait/js/youneverwait/netlims/test/new/newTestValidation.js").done(function(script, textStatus) {
 	})
-	var ReportList=getRequestData('/weblims/js/forApp/test/reportcreation.json');
+	var ReportList=getRequestData('/youNeverWait/js/youneverwait/netlims/test/reportcreation.json');
 	fillLayoutToControl('#selectTestLayout');
-	fillSpecimenToControl('#selectTestSpecimen');
 	fillRemarksValToControl('#selectTestRemarks');
+	fillSpecimenToControl('#selectTestSpecimen');
 	fillHeaderDataToControl('#selectTableHeader');
 	makeDataTable('#newTest #tblTestSpecimen');
 	makeDataTable('#newTest #tbltestReport');
@@ -118,9 +118,9 @@ $j(document).ready(function() {
 			var response = submitTestInfo(ReportList);
 			if(response.success==true){	
                 resetNewtestForm();	
-				configData= getConfigData();
-				gbSpecialTestList = getSpecialTestList();
-                $j.cachedScript("/weblims/js/forApp/test/testEntryPoint.js").done(function(script, textStatus) {
+				//configData= getConfigData();
+				//gbSpecialTestList = getSpecialTestList();
+                $j.cachedScript("/youNeverWait/js/youneverwait/netlims/test/testEntryPoint.js").done(function(script, textStatus) {
 				})		
 				showTip("Test created successfully");	
 			} else
