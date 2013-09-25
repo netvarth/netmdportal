@@ -28,6 +28,7 @@ import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
+import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultRetrievalResponseDTO;
@@ -82,6 +83,15 @@ public interface LabService {
 	public LabBranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId);
 	public ResponseDTO updateLabBranchSystemInfo(
 			LabBranchSystemInfoDetails details);
+	
+	/**
+	 * @param header
+	 * @param lastSyncTime
+	 * @param currentSyncTime
+	 * @return
+	 */
+	public OrderDetails retrieveBranchOrders(LabHeaderDTO header,
+			String lastSyncTime, Date currentSyncTime);
 	
 
 }
