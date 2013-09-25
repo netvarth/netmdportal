@@ -31,6 +31,7 @@ import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
+import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientResponse;
@@ -55,6 +56,7 @@ import com.nv.youNeverWait.user.bl.service.AppointmentService;
 import com.nv.youNeverWait.user.bl.service.DoctorService;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
+import com.nv.youNeverWait.user.bl.service.OrderManager;
 import com.nv.youNeverWait.user.bl.service.PatientService;
 import com.nv.youNeverWait.user.bl.service.ResultService;
 import com.nv.youNeverWait.user.bl.service.ScheduleService;
@@ -80,6 +82,7 @@ public class SyncServiceImpl implements SyncService {
 	private LabService labService;
 	private SpecimenManager specimenManager;
 	private TestManager testManager;
+	
 	private static final Log log = LogFactory.getLog(SyncServiceImpl.class);
 
 	/**
@@ -1039,6 +1042,10 @@ public class SyncServiceImpl implements SyncService {
 		BranchOrderCountResponseDTO response= labService.createTotalOrders(sync.getHeader(),sync.getBranchOrders());
 		syncResponse.setOrderAmount(response);
 		
+		/* Retrieving orders from other branches*/
+		OrderDetails orderDetail= labService.retrieveBranchOrders(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
+		syncResponse.setRetrieveOrders(orderDetail);
+		
 		syncResponse.setLastSynctime(df.format(currentSyncTime));
 		return syncResponse;
 	}
@@ -1196,6 +1203,8 @@ public class SyncServiceImpl implements SyncService {
 	public void setTestManager(TestManager testManager) {
 		this.testManager = testManager;
 	}
+
+	
 
 
 }
