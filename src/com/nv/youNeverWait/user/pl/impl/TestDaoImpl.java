@@ -332,7 +332,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 	public RetrieveTestResponse getTests(LabHeaderDTO header,
 			String lastSyncTime, Date currentSyncTime) {
 		RetrieveTestResponse response = new RetrieveTestResponse();
-		labDao.validateHeader(header); // validates header details
+		labDao.CheckHeaderDetails(header); // validates header details
 		SimpleDateFormat sf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		Date lastSynTime = null;
