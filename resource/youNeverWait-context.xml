@@ -474,6 +474,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="mailThread">
 			<ref bean="email.worker.thread" />
 		</property>
+		<property name="orderManager">
+			<ref bean="order.manager" />
+		</property>
 	</bean>
 
 	<bean id="lab.validator" class="com.nv.youNeverWait.user.bl.validation.LabValidator"></bean>
@@ -640,5 +643,20 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="config.validator"
 		class="com.nv.youNeverWait.user.bl.validation.ConfigDataValidator"></bean>
 	<bean id="config.dao" class="com.nv.youNeverWait.user.pl.impl.ConfigDaoImpl"></bean>
+
+	<bean id="order.manager" class="com.nv.youNeverWait.user.bl.impl.OrderServiceImpl">
+		<property name="orderDao">
+			<ref bean="order.dao" />
+		</property>
+		<property name="validator">
+			<ref bean="order.validator" />
+		</property>
+	</bean>
+	<bean id="order.validator" class="com.nv.youNeverWait.user.bl.validation.OrderValidator"></bean>
+	<bean id="order.dao" class="com.nv.youNeverWait.user.pl.impl.OrderDaoImpl">
+		<property name="labDao">
+			<ref bean="lab.dao" />
+		</property>
+	</bean>
 </beans>		
 	
