@@ -173,7 +173,8 @@ public class Query {
 	public static final String GET_HOME_BRANCH = "from LabBranchTbl as branch where branch.homeBranch=true and branch.labTbl.id=:param1";
 	public static final String GET_BRANCHES = "from LabBranchTbl as branch where  branch.labTbl.id=:param1";
 	public static final String GET_BRANCH = "from LabBranchTbl as branch where branch.id=:param1 and branch.labTbl.id=:param2";
-
+	public static final String GET_LAB_BRANCH= " from LabBranchTbl as labBranch where labBranch.id =:param1 and labBranch.labTbl.id=:param2";
+	
 	/* LabPassphraseTbl */
 	public static final String GET_NETLIMS_MAC_BY_PASSPHRASE = " select lab.macId from LabPassphraseTbl as lab where lab.passPhrase=:param1";
 	public static final String GET_NETLIMS_BRANCH_BY_PASSPHRASE = " from LabPassphraseTbl as lab where lab.passPhrase=:param1";
@@ -212,6 +213,10 @@ public class Query {
 	public static final String GET_INQUEUE_FROM_TABLE = "from PendingMessageTbl as msg where msg.status=:param3 and msg.communicationType=:param1 and msg.applicationSpecifier=:param2 ORDER BY lastAttemptOn ASC";
 	public static final String GET_COUNT_NEW_FROM_TABLE = "from PendingMessageTbl as msg where msg.status=:param3 and msg.communicationType=:param1  and msg.applicationSpecifier=:param2";
 	public static final String GET_NEW_MSG = "from PendingMessageTbl as msg where msg.status=:param3 and msg.communicationType=:param1 and msg.applicationSpecifier=:param2 ORDER BY lastAttemptOn ASC";
+	
+	/*OrderTransferTbl*/
+	public static final String GET_LAST_UNIQUE_ID = "select MAX(u.uniqueId) from OrderTransferTbl as u"; 
+	public static final String GET_ORDERS = "from OrderTransferTbl as order where order.destinationLab.id=:param1 and order.destinationBranch.id=:param2 and order.updatedDateTime>=:param3 and order.updatedDateTime<:param4";
 	
 	/**************NetRx******************/
 	/*netRxTbl*/
