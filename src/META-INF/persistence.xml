@@ -3,7 +3,7 @@
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="youNeverWaitPU">
-	    <class>com.nv.youNeverWait.pl.entity.BranchSystemInfoTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.BranchSystemInfoTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.CaseTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.DoctorAchievementTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.DoctorEducationalQualificationTbl</class>
@@ -34,6 +34,7 @@
 		<class>com.nv.youNeverWait.pl.entity.NetrxUserTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.OrderTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.OrderAmountTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.OrderTransferTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.PatientAppointmentTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.PatientMedicalHistoryTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.PatientTbl</class>
@@ -44,6 +45,7 @@
 		<class>com.nv.youNeverWait.pl.entity.SuperAdminTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.TestSpecimenTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.TestTbl</class>
+
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 		</properties>
