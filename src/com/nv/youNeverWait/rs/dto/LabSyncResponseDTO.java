@@ -20,35 +20,27 @@ public class LabSyncResponseDTO {
 	private ResultRetrievalResponseDTO getResult = new ResultRetrievalResponseDTO();
 	private RetrieveTestResponse retrieveTests= new RetrieveTestResponse();
 	private RetrieveSpecimenResponse retrieveSpecimens = new RetrieveSpecimenResponse();
+	private OrderDetails retrieveOrders= new OrderDetails();
 	
 	
+	
 	/**
-	 * @return the retrieveSpecimens
+	 * @return the lastSynctime
 	 */
-	public RetrieveSpecimenResponse getRetrieveSpecimens() {
-		return retrieveSpecimens;
+	public String getLastSynctime() {
+		return lastSynctime;
 	}
 
-	/**
-	 * @param retrieveSpecimens the retrieveSpecimens to set
-	 */
-	public void setRetrieveSpecimens(RetrieveSpecimenResponse retrieveSpecimens) {
-		this.retrieveSpecimens = retrieveSpecimens;
-	}
+
 
 	/**
-	 * @return the retrieveTests
+	 * @return the error
 	 */
-	public RetrieveTestResponse getRetrieveTests() {
-		return retrieveTests;
+	public ErrorDTO getError() {
+		return error;
 	}
 
-	/**
-	 * @param retrieveTests the retrieveTests to set
-	 */
-	public void setRetrieveTests(RetrieveTestResponse retrieveTests) {
-		this.retrieveTests = retrieveTests;
-	}
+
 
 	/**
 	 * @return the orderAmount
@@ -57,19 +49,25 @@ public class LabSyncResponseDTO {
 		return orderAmount;
 	}
 
-	/**
-	 * @param orderAmount the orderAmount to set
-	 */
-	public void setOrderAmount(BranchOrderCountResponseDTO orderAmount) {
-		this.orderAmount = orderAmount;
-	}
+
 
 	/**
-	 * @return the lastSynctime
+	 * @return the retrieveLabBranchList
 	 */
-	public String getLastSynctime() {
-		return lastSynctime;
+	public LabBranchListResponseDTO getRetrieveLabBranchList() {
+		return retrieveLabBranchList;
 	}
+
+
+
+	/**
+	 * @return the retrieveUserList
+	 */
+	public RetrieveUserListResponseDTO getRetrieveUserList() {
+		return retrieveUserList;
+	}
+
+
 
 	/**
 	 * @return the getResult
@@ -77,6 +75,70 @@ public class LabSyncResponseDTO {
 	public ResultRetrievalResponseDTO getGetResult() {
 		return getResult;
 	}
+
+
+
+	/**
+	 * @return the retrieveTests
+	 */
+	public RetrieveTestResponse getRetrieveTests() {
+		return retrieveTests;
+	}
+
+
+
+	/**
+	 * @return the retrieveSpecimens
+	 */
+	public RetrieveSpecimenResponse getRetrieveSpecimens() {
+		return retrieveSpecimens;
+	}
+
+
+
+	/**
+	 * @return the retrieveOrders
+	 */
+	public OrderDetails getRetrieveOrders() {
+		return retrieveOrders;
+	}
+
+
+
+	/**
+	 * @param retrieveOrders the retrieveOrders to set
+	 */
+	public void setRetrieveOrders(OrderDetails retrieveOrders) {
+		this.retrieveOrders = retrieveOrders;
+	}
+
+	
+
+	/**
+	 * @param retrieveSpecimens the retrieveSpecimens to set
+	 */
+	public void setRetrieveSpecimens(RetrieveSpecimenResponse retrieveSpecimens) {
+		this.retrieveSpecimens = retrieveSpecimens;
+	}
+
+	
+
+	/**
+	 * @param retrieveTests the retrieveTests to set
+	 */
+	public void setRetrieveTests(RetrieveTestResponse retrieveTests) {
+		this.retrieveTests = retrieveTests;
+	}
+
+
+	/**
+	 * @param orderAmount the orderAmount to set
+	 */
+	public void setOrderAmount(BranchOrderCountResponseDTO orderAmount) {
+		this.orderAmount = orderAmount;
+	}
+
+	
 
 	/**
 	 * @param getResult
@@ -94,13 +156,7 @@ public class LabSyncResponseDTO {
 		this.lastSynctime = lastSynctime;
 	}
 
-	/**
-	 * @return the error
-	 */
-	public ErrorDTO getError() {
-		return error;
-	}
-
+	
 	/**
 	 * @param error
 	 *            the error to set
@@ -124,12 +180,7 @@ public class LabSyncResponseDTO {
 		this.success = success;
 	}
 
-	/**
-	 * @return the retrieveLabBranchList
-	 */
-	public LabBranchListResponseDTO getRetrieveLabBranchList() {
-		return retrieveLabBranchList;
-	}
+
 
 	/**
 	 * @param retrieveLabBranchList
@@ -139,12 +190,7 @@ public class LabSyncResponseDTO {
 			LabBranchListResponseDTO retrieveLabBranchList) {
 		this.retrieveLabBranchList = retrieveLabBranchList;
 	}
-	/**
-	 * @return the retrieveUserList
-	 */
-	public RetrieveUserListResponseDTO getRetrieveUserList() {
-		return retrieveUserList;
-	}
+
 
 	/**
 	 * @param retrieveUserList
