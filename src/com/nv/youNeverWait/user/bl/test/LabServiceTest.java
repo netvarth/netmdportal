@@ -36,7 +36,6 @@ import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserBranchDTO;
-import com.nv.youNeverWait.security.bl.service.AuthenticationService;
 import com.nv.youNeverWait.user.bl.service.LabService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -2833,5 +2832,6 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		}
 		
 	}
+	
 }
 
