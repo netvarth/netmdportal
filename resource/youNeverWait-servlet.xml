@@ -156,4 +156,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="config.validator" />
 		</property>
 	</bean>
+	<bean class="com.nv.youNeverWait.rs.ui.OrderResource" >
+	    <property name="orderManager">
+			<ref bean="order.manager" />
+		</property>
+	</bean>
 </beans>
