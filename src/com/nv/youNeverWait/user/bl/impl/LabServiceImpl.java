@@ -50,6 +50,7 @@ import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabDetail;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
+import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
@@ -65,6 +66,7 @@ import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
+import com.nv.youNeverWait.user.bl.service.OrderManager;
 import com.nv.youNeverWait.user.bl.validation.LabValidator;
 import com.nv.youNeverWait.user.pl.dao.LabDao;
 import com.nv.youNeverWait.user.pl.impl.BranchOwnerDetails;
@@ -83,7 +85,7 @@ public class LabServiceImpl implements LabService {
 	private FilterFactory filterFactory;
 	private SendEmailMsgWorkerThread mailThread;
 	private static final Log log = LogFactory.getLog(LabServiceImpl.class);
-
+	private OrderManager orderManager;
 	/**
 	 * Create user in Lab
 	 * 
@@ -841,7 +843,7 @@ public class LabServiceImpl implements LabService {
 	public RetrieveNetmdListResponseDTO retrieveNetmdList(LabHeaderDTO header,
 			String lastSyncTime, Date currentTime) {
 
-		labDao.validateHeader(header);
+		labDao.CheckHeaderDetails(header);
 		RetrieveNetmdListResponseDTO response = netMdService.retrieveNetmdList(
 				lastSyncTime, currentTime);
 		return response;
@@ -857,7 +859,7 @@ public class LabServiceImpl implements LabService {
 	public RetrieveNetmdBranchListResponseDTO retrieveNetmdBranchList(
 			LabHeaderDTO header, String lastSyncTime, Date currentTime) {
 
-		labDao.validateHeader(header);
+		labDao.CheckHeaderDetails(header);
 		RetrieveNetmdBranchListResponseDTO response = netMdService
 				.retrieveNetmdBranchList(lastSyncTime, currentTime);
 		return response;
@@ -1112,6 +1114,22 @@ public class LabServiceImpl implements LabService {
 	}
 	
 	
+	
+	
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#retrieveBranchOrders(com.nv.youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, java.util.Date)
+	 */
+	@Override
+	public OrderDetails retrieveBranchOrders(LabHeaderDTO header,
+			String lastSyncTime, Date currentSyncTime) {
+		validator.validateHeaderDetails(header);
+		validator.validateLabBranchIds(header.getLabId(),
+				header.getLabBranchId());
+		OrderDetails orderDetail=orderManager.retrieveBranchOrders(header, lastSyncTime, currentSyncTime);
+		return orderDetail;
+	}
+
+	
 	/**
 	 * @return the labDao
 	 */
@@ -1231,5 +1249,20 @@ public class LabServiceImpl implements LabService {
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
 	}
+	/**
+	 * @return the orderManager
+	 */
+	public OrderManager getOrderManager() {
+		return orderManager;
+	}
+
+	/**
+	 * @param orderManager the orderManager to set
+	 */
+	public void setOrderManager(OrderManager orderManager) {
+		this.orderManager = orderManager;
+	}
+	
+	
 
 }
