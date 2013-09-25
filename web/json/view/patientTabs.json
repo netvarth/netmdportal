@@ -3,7 +3,6 @@
     {
         "name": "Cases",
         "title": "APPOINTMENTS",
-        "style":"margin-left:10px",
         "image":"/youNeverWait/images/appoint.png",
         "id": "appointmentInfoTab",
         "content": [
@@ -13,7 +12,6 @@
 	{
         "name": "PersonalInfo",
         "title": "CLINICS",
-        "style":"margin-left:5px",
         "image":"/youNeverWait/images/clinics.png",
         "id": "clinicsInfoTab",
 		
@@ -24,7 +22,7 @@
     {
         "name": "Visits",
         "title": "RESULTS",
-         "style":"margin-left:5px",
+         "style":"margin-left:5%",
          "image":"/youNeverWait/images/result.png",
         "id": "resultsInfoTab",
         "content": [

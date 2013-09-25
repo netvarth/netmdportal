@@ -5,7 +5,7 @@ function patienttabs(jsondata) {
 		maindiv.attr('id','tabs-nohdr');
 		if(jsondata!=null)
 		{
-		var ulTag=$j('<ul style="height:10%;margin-left:25%">');
+		var ulTag=$j('<ul style="height:10%;margin-left:30%">');
 			$j(jsondata).each(function(index,subcontent){
 				var divTag = $j('<div/>');
 				var pTag=$j('<p>');

@@ -245,7 +245,7 @@ input.readonlybox {
 {
 width:99%;
 font-size:11pt;
- height: 13%;
+ height: 14%;
 
 }
 .boldtabledoc{font-size:11pt;
@@ -357,8 +357,8 @@ background:linear-gradient(to bottom, rgba(219,237,245,1) 0%, rgba(219,237,245,1
 	border-bottom: solid #0a63bd 1px;
 	border-left: solid #0a63bd 1px;
 	border-right: solid #0a63bd 1px;
-	margin-left: 30px;
-	margin-right: 30px;
+	margin-left: 4%;
+	margin-right: 4%;
 	background: #e8f9fa;
     border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
@@ -396,39 +396,39 @@ background:linear-gradient(to bottom, rgba(219,237,245,1) 0%, rgba(219,237,245,1
     width: 65%;
 	margin-left:-35%}*/
 	.aTagappointmentInfoTab{
-    height: 60px;
-    width: 95px;
-    
-	 }
+    height: 70%;
+    width: 60%;
+   
+     }
 	.aTagclinicsInfoTab{
-	height: 60px;
-	 width: 95px;
+	height: 70%;
+	   width: 80%;
    }
 	.aTagresultsInfoTab{
-	height: 60px;
-	 width: 95px;
+	height: 70%;
+	   width: 80%;
     }
     .aTagappointmentInfoTab .imagediv{
-    	background: url(/youNeverWait/images/appoint.png); 
-    	height: 25px;
-    	width: 25px;
-    	margin: 0px 0px 0px 30px;
+    	background: url(/youNeverWait/images/appoint.png) no-repeat; 
+    	height: 60%;
+    	width: 40%;
+    	margin: 0 0 0 30%;
     	 }
     .aTagclinicsInfoTab .imagediv{
-    	background: url(/youNeverWait/images/clinics.png);
-    	height: 25px;
-    	width: 25px;
-    	margin: 0px 0px 0px 30px;
+    	background: url(/youNeverWait/images/clinics.png)no-repeat;
+    	height: 60%;
+    	width: 40%;
+    	margin: 0 0 0 30%;
     }
     .aTagresultsInfoTab .imagediv{
-    	background: url(/youNeverWait/images/result.png);
-  		 height: 25px;
-    	width: 25px;
-    	margin: 0px 0px 0px 30px;
+    	background: url(/youNeverWait/images/result.png) no-repeat;
+  		height: 60%;
+    	width: 40%;
+    	margin: 0 0 0 30%;
     }
-    .aTagappointmentInfoTab .divcontent{}
-    .aTagclinicsInfoTab .divcontent{margin: 0px 0px 0px 20px;}
-    .aTagresultsInfoTab .divcontent{margin: 0px 0px 0px 20px;}
+    .aTagappointmentInfoTab .divcontent{margin-left: -5%}
+    .aTagclinicsInfoTab .divcontent{margin-left: 15%}
+    .aTagresultsInfoTab .divcontent{margin-left: 15%}
 
  .creteapp{
 width: 100%;
@@ -440,7 +440,7 @@ border: 1px solid #29b8e5;
 .creteapp h1{font-size: 12pt;
 font-weight: bold;
 font-family: Arial, Helvetica, sans-serif;
-margin-top: 7px;}
+margin-top: 1.5%;}
  /* .appointmentInfoTabicon-flag{background: white url(/youNeverWait/images/appoint.jpg) no-repeat top;} */
 
  .wrapper-demo {
@@ -1378,7 +1378,7 @@ color:blue;
 	float:right;
 	margin:5px 8px 0 0;
 }
-#tabs-1>#tabs-nohdr .ui-tabs-nav li { display: inline-block;position: relative;}
+#tabs-1>#tabs-nohdr .ui-tabs-nav li { display: inline-block;}
 /*#tabs-1>#tabs-nohdr .ui-tabs-nav li:first-child a { -moz-border-radius: 3px 0 0 0; -webkit-border-radius: 3px 0 0 0; border-radius: 3px 0 0 0; }*/
 #tabs-1>#tabs-nohdr .ui-tabs-nav li a { 
 	display: block; padding: 10px 20px; font-weight: bold;   
@@ -1425,8 +1425,8 @@ background: linear-gradient(to bottom, rgba(229,221,210,1) 0%, rgba(206,186,161,
 	border-bottom: solid #a11233 1px;
 	border-left: solid #a11233 1px;
 	border-right: solid #a11233 1px;
-	margin-left: 30px;
-	margin-right: 30px;
+	margin-left: 4%;
+	margin-right: 4%;
 	background: #d4caba;
     border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
@@ -1542,8 +1542,8 @@ background: linear-gradient(to bottom, rgba(157,179,140,1) 0%, rgba(225,237,216,
 	border-bottom: solid #8ba673 1px;
 	border-left: solid #8ba673 1px;
 	border-right: solid #8ba673 1px;
-	margin-left: 30px;
-	margin-right: 30px;
+	margin-left: 4%;
+	margin-right: 4%;
 	background: #ccdbbf;
     border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
