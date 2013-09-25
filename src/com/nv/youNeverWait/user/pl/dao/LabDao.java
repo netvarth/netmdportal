@@ -67,7 +67,7 @@ public interface LabDao {
 	public BranchOwnerDetails getBranchOwners(int labId);
 	public ResponseDTO resetPassword(LoginDTO login);
 	public ResultTransferResponseDTO transferResultToNetMd(TransferNetMdResultDTO resultTranfer);
-	public void validateHeader(LabHeaderDTO header);
+	public void CheckHeaderDetails(LabHeaderDTO header);
 	public BranchOrdersResponseDTO viewBranchOrders(int globalId);
 	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO);
 	public BranchOrderCountResponseDTO createTotalOrders(LabHeaderDTO header,
