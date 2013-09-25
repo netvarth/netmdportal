@@ -59,6 +59,8 @@ import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
+import com.nv.youNeverWait.rs.dto.OrderTransfer;
+import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
@@ -597,8 +599,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labPassPhrase.setLabBranchTbl(labBranch);
 		save(labPassPhrase);
 
-		/*Saving default system details in lab branch system info tbl*/
-		BranchSystemInfoTbl systemDetails=new BranchSystemInfoTbl();
+		/* Saving default system details in lab branch system info tbl */
+		BranchSystemInfoTbl systemDetails = new BranchSystemInfoTbl();
 		systemDetails.setCriticalHardDiskSpaceLevel(1);
 		systemDetails.setCriticalCpuLevel(1);
 		systemDetails.setCriticalMemoryLevel(2);
@@ -927,7 +929,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 						userDetail.setPassword(userLogin.getPassword());
 					}
 					userDetail
-					.setFirstName(user.getLabUserTbl().getFirstName());
+							.setFirstName(user.getLabUserTbl().getFirstName());
 					userDetail.setStatus(user.getStatus());
 					userDetail.setEmail(user.getLabUserTbl().getEmail());
 					userDetail.setPhone(user.getLabUserTbl().getPhone());
@@ -1096,7 +1098,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 				PatientTbl patientByMobile = getPatientByMobile(resultTranfer
 						.getPatient().getFirstName().toUpperCase().trim(),
 						doctr.getNetmdBranchTbl().getId(), resultTranfer
-						.getPatient().getMobile());
+								.getPatient().getMobile());
 				if (patientByMobile == null) {
 					/*
 					 * Getting patient record by Email when there is no patient
@@ -1105,7 +1107,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 					PatientTbl patientByEmail = getPatientByEmail(resultTranfer
 							.getPatient().getFirstName().toUpperCase().trim(),
 							doctr.getNetmdBranchTbl().getId(), resultTranfer
-							.getPatient().getEmail());
+									.getPatient().getEmail());
 					if (patientByEmail == null) {
 						if (count == doctorTbl.size() && flag == false) {
 
@@ -1122,9 +1124,9 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 						/* Checking the result tbl record already exists */
 						patientResults = getPatientResult(
 								resultTranfer.getOrderUid(), doctr
-								.getNetmdBranchTbl().getId(), doctr
-								.getNetmdBranchTbl().getNetmdTbl()
-								.getId(), patientByEmail.getId(),
+										.getNetmdBranchTbl().getId(), doctr
+										.getNetmdBranchTbl().getNetmdTbl()
+										.getId(), patientByEmail.getId(),
 								resultTranfer.getSourceLabId(),
 								resultTranfer.getSourceLabBranchId());
 						if (patientResults == null)
@@ -1134,8 +1136,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 					/* Checking the result tbl record already exists */
 					patientResults = getPatientResult(
 							resultTranfer.getOrderUid(), doctr
-							.getNetmdBranchTbl().getId(), doctr
-							.getNetmdBranchTbl().getNetmdTbl().getId(),
+									.getNetmdBranchTbl().getId(), doctr
+									.getNetmdBranchTbl().getNetmdTbl().getId(),
 							patientByMobile.getId(),
 							resultTranfer.getSourceLabId(),
 							resultTranfer.getSourceLabBranchId());
@@ -1146,7 +1148,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 				/* Checking the result tbl record already exists */
 				patientResults = getPatientResult(resultTranfer.getOrderUid(),
 						doctr.getNetmdBranchTbl().getId(), doctr
-						.getNetmdBranchTbl().getNetmdTbl().getId(),
+								.getNetmdBranchTbl().getNetmdTbl().getId(),
 						patientByPhone.getId(), resultTranfer.getSourceLabId(),
 						resultTranfer.getSourceLabBranchId());
 
@@ -1309,7 +1311,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			String lastSyncTm, Date currentTime) {
 
 		ResultRetrievalResponseDTO response = new ResultRetrievalResponseDTO();
-		validateHeader(header);
+		CheckHeaderDetails(header);
 		SimpleDateFormat sf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		Date dat = null;
@@ -1357,7 +1359,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			String lastSyncTme, Date currentTime) {
 
 		LabBranchListResponseDTO response = new LabBranchListResponseDTO();
-		validateHeader(header);
+		CheckHeaderDetails(header);
 		SimpleDateFormat sdf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		Date syncTime = null;
@@ -1417,7 +1419,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			throw se;
 		}
 		/* Valdates header details */
-		validateHeader(header);
+		CheckHeaderDetails(header);
 
 		List<LabDTO> newLabList = new ArrayList<LabDTO>();
 		List<LabDTO> updatedLabList = new ArrayList<LabDTO>();
@@ -1523,7 +1525,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			throw se;
 		}
 		/* Valdates header details */
-		validateHeader(header);
+		CheckHeaderDetails(header);
 
 		List<UserInfoDetail> newUserList = new ArrayList<UserInfoDetail>();
 		List<UserInfoDetail> updatedUserList = new ArrayList<UserInfoDetail>();
@@ -1574,7 +1576,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	/**
 	 * Method to validate the header details
 	 */
-	public void validateHeader(LabHeaderDTO header) {
+	public void CheckHeaderDetails(LabHeaderDTO header) {
 
 		LabPassphraseTbl passPhrase = getLabBranchByPassphrase(header
 				.getPassPhrase());
@@ -1811,7 +1813,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		String frequencyType = null;
 		boolean criticalFlag = false;
 		Date newDate = new Date();
-		validateHeader(systemHealthDetails.getHeader()); // validates header details
+		CheckHeaderDetails(systemHealthDetails.getHeader()); // checking header
+															// details
 		LabBranchTbl labBranch = getById(LabBranchTbl.class,
 				systemHealthDetails.getHeader().getLabBranchId());
 		if (labBranch == null) {
@@ -1826,42 +1829,50 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 				.getHardDiskUsed());
 
 		int freeHardDiskSpace = Integer.parseInt(systemHealthDetails
-				.getTotalHardDiskSpace()) - hardDiskUsed; // available hard disk space
-		int freeMemorySpace=Integer.parseInt(systemHealthDetails.getTotalMemorySpace())- memoryUsed; // available memory space
-		int freeCpuSpace=Integer.parseInt(systemHealthDetails.getTotalCpuSpace())- cpuUsage; // available cpu space
-		float freeHardDiskSpaceInPercent=(freeHardDiskSpace/Integer.parseInt(systemHealthDetails.getTotalHardDiskSpace()))*100;
-		float freeMemorySpaceInPercent=(freeMemorySpace/Integer.parseInt(systemHealthDetails.getTotalMemorySpace()))*100;
-		float freeCpuSpaceInPercent=(freeCpuSpace/Integer.parseInt(systemHealthDetails.getTotalCpuSpace()))*100;
-		/*Getting the branch default system details from branch system info tbl*/
-		BranchSystemInfoTbl branchSystemInfo= getSystemDetailsByBranchId(labBranch.getId());
-		if(branchSystemInfo==null)
-		{
+				.getTotalHardDiskSpace()) - hardDiskUsed; // available hard disk
+															// space
+		int freeMemorySpace = Integer.parseInt(systemHealthDetails
+				.getTotalMemorySpace()) - memoryUsed; // available memory space
+		int freeCpuSpace = Integer.parseInt(systemHealthDetails
+				.getTotalCpuSpace()) - cpuUsage; // available cpu space
+		float freeHardDiskSpaceInPercent = (freeHardDiskSpace / Integer
+				.parseInt(systemHealthDetails.getTotalHardDiskSpace())) * 100;
+		float freeMemorySpaceInPercent = (freeMemorySpace / Integer
+				.parseInt(systemHealthDetails.getTotalMemorySpace())) * 100;
+		float freeCpuSpaceInPercent = (freeCpuSpace / Integer
+				.parseInt(systemHealthDetails.getTotalCpuSpace())) * 100;
+		/* Getting the branch default system details from branch system info tbl */
+		BranchSystemInfoTbl branchSystemInfo = getSystemDetailsByBranchId(labBranch
+				.getId());
+		if (branchSystemInfo == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.BranchSystemInfoNull);
-			se.addParam(new Parameter(Constants.ID,Integer.toString(labBranch.getId())));
+			se.addParam(new Parameter(Constants.ID, Integer.toString(labBranch
+					.getId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
 
 		/* Checking whether system is in critical condition */
-		if (freeHardDiskSpaceInPercent <=branchSystemInfo.getCriticalHardDiskSpaceLevel()) {
+		if (freeHardDiskSpaceInPercent <= branchSystemInfo
+				.getCriticalHardDiskSpaceLevel()) {
 			criticalFlag = true;
 			intervalTym = branchSystemInfo.getIntervalTime();
-			frequencyType =branchSystemInfo.getFreqType();
+			frequencyType = branchSystemInfo.getFreqType();
 		}
 
-		if (freeMemorySpaceInPercent <= branchSystemInfo.getCriticalMemoryLevel()) {
+		if (freeMemorySpaceInPercent <= branchSystemInfo
+				.getCriticalMemoryLevel()) {
 			criticalFlag = true;
 			intervalTym = branchSystemInfo.getIntervalTime();
-			frequencyType =branchSystemInfo.getFreqType();
+			frequencyType = branchSystemInfo.getFreqType();
 		}
 
-		if (freeCpuSpaceInPercent <=branchSystemInfo.getCriticalCpuLevel()) {
-			criticalFlag=true;
+		if (freeCpuSpaceInPercent <= branchSystemInfo.getCriticalCpuLevel()) {
+			criticalFlag = true;
 			intervalTym = branchSystemInfo.getIntervalTime();
-			frequencyType =branchSystemInfo.getFreqType();
+			frequencyType = branchSystemInfo.getFreqType();
 		}
-
 
 		/* Saving system details in health monitor tbl */
 		healthMonitor.setLabBranchTbl(labBranch);
@@ -1883,52 +1894,66 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 
 	/**
 	 * Method for viewing branch default system details
+	 * 
 	 * @param branchId
 	 * @return
 	 */
 	@Override
 	@Transactional
 	public LabBranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId) {
-		LabBranchSystemInfoDetails details= new LabBranchSystemInfoDetails();
-		List<SystemHealthMonitorDetailList> healthMonitorList= new ArrayList<SystemHealthMonitorDetailList>();
-		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT_WITH_TIME_SECONDS);
-		LabBranchTbl labBranch = getById(LabBranchTbl.class,branchId);
+		LabBranchSystemInfoDetails details = new LabBranchSystemInfoDetails();
+		List<SystemHealthMonitorDetailList> healthMonitorList = new ArrayList<SystemHealthMonitorDetailList>();
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		LabBranchTbl labBranch = getById(LabBranchTbl.class, branchId);
 		if (labBranch == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidBranchId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		/* Getting system default information like critical memory level, freq type and so on*/
-		BranchSystemInfoTbl systemInfo= getSystemDetailsByBranchId(branchId);
-		if(systemInfo==null){
+		/*
+		 * Getting system default information like critical memory level, freq
+		 * type and so on
+		 */
+		BranchSystemInfoTbl systemInfo = getSystemDetailsByBranchId(branchId);
+		if (systemInfo == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.BranchSystemInfoNull);
-			se.addParam(new Parameter(Constants.ID,Integer.toString(labBranch.getId())));
+			se.addParam(new Parameter(Constants.ID, Integer.toString(labBranch
+					.getId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
 		details.setBranchId(labBranch.getId());
 		details.setBranchName(systemInfo.getLabBranchTbl().getName());
-		details.setCriticalCpuLevel(Integer.toString(systemInfo.getCriticalCpuLevel()));
-		details.setCriticalHardDiskSpaceLevel(Integer.toString(systemInfo.getCriticalHardDiskSpaceLevel()));
-		details.setCriticalMemoryLevel(Integer.toString(systemInfo.getCriticalMemoryLevel()));
+		details.setCriticalCpuLevel(Integer.toString(systemInfo
+				.getCriticalCpuLevel()));
+		details.setCriticalHardDiskSpaceLevel(Integer.toString(systemInfo
+				.getCriticalHardDiskSpaceLevel()));
+		details.setCriticalMemoryLevel(Integer.toString(systemInfo
+				.getCriticalMemoryLevel()));
 		details.setFreqType(systemInfo.getFreqType());
 		details.setIntervalTime(Integer.toString(systemInfo.getIntervalTime()));
-		/*Getting last 10 records of system health monitor details*/
-		List<HealthMonitorTbl> healthMonitorTblList = getMonitorDetailsByBranchId(branchId); /// query for fetching the latest record corresponding to this branch 
-		if(healthMonitorTblList.isEmpty()){
+		/* Getting last 10 records of system health monitor details */
+		List<HealthMonitorTbl> healthMonitorTblList = getMonitorDetailsByBranchId(branchId); // /
+																								// branch
+		if (healthMonitorTblList.isEmpty()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.SystemMonitorDetailsNull);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		for(HealthMonitorTbl hMonitor:healthMonitorTblList){
-			SystemHealthMonitorDetailList systemHealth= new SystemHealthMonitorDetailList();
-			systemHealth.setCpuUsage(Math.round(hMonitor.getCpuUsage()/(1024*1024)));
-			systemHealth.setHardDiskSpaceUasge(Math.round(hMonitor.getHardDiskUsage()/(1024*1024)));
-			systemHealth.setMemoryUsage(Math.round(hMonitor.getMemoryUsage()/(1024*1024)));
-			systemHealth.setCreatedDateTime(sdf.format(hMonitor.getCreateDateTime()));
+		for (HealthMonitorTbl hMonitor : healthMonitorTblList) {
+			SystemHealthMonitorDetailList systemHealth = new SystemHealthMonitorDetailList();
+			systemHealth.setCpuUsage(Math.round(hMonitor.getCpuUsage()
+					/ (1024 * 1024)));
+			systemHealth.setHardDiskSpaceUasge(Math.round(hMonitor
+					.getHardDiskUsage() / (1024 * 1024)));
+			systemHealth.setMemoryUsage(Math.round(hMonitor.getMemoryUsage()
+					/ (1024 * 1024)));
+			systemHealth.setCreatedDateTime(sdf.format(hMonitor
+					.getCreateDateTime()));
 			healthMonitorList.add(systemHealth);
 		}
 		details.setHealthMonitorList(healthMonitorList);
@@ -1938,16 +1963,18 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	}
 
 	/**
- 	 * Method for updating the branch default system details
+	 * Method for updating the branch default system details
+	 * 
 	 * @param details
- 	 * @return
-     */
+	 * @return
+	 */
 	@Override
 	@Transactional
 	public ResponseDTO updateLabBranchSystemInfo(
 			LabBranchSystemInfoDetails details) {
-		ResponseDTO response =new ResponseDTO();
-		LabBranchTbl labBranch = getById(LabBranchTbl.class,details.getBranchId());
+		ResponseDTO response = new ResponseDTO();
+		LabBranchTbl labBranch = getById(LabBranchTbl.class,
+				details.getBranchId());
 		if (labBranch == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidBranchId);
@@ -1955,25 +1982,31 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			throw se;
 		}
 
-		BranchSystemInfoTbl systemInfo= getSystemDetailsByBranchId(labBranch.getId());
-		if(systemInfo==null){
+		BranchSystemInfoTbl systemInfo = getSystemDetailsByBranchId(labBranch
+				.getId());
+		if (systemInfo == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.BranchSystemInfoNull);
-			se.addParam(new Parameter(Constants.ID,Integer.toString(labBranch.getId())));
+			se.addParam(new Parameter(Constants.ID, Integer.toString(labBranch
+					.getId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		systemInfo.setCriticalHardDiskSpaceLevel(Integer.parseInt(details.getCriticalHardDiskSpaceLevel()));
-		systemInfo.setCriticalCpuLevel(Integer.parseInt(details.getCriticalCpuLevel()));
-		systemInfo.setCriticalMemoryLevel(Integer.parseInt(details.getCriticalMemoryLevel()));
+		systemInfo.setCriticalHardDiskSpaceLevel(Integer.parseInt(details
+				.getCriticalHardDiskSpaceLevel()));
+		systemInfo.setCriticalCpuLevel(Integer.parseInt(details
+				.getCriticalCpuLevel()));
+		systemInfo.setCriticalMemoryLevel(Integer.parseInt(details
+				.getCriticalMemoryLevel()));
 		systemInfo.setFreqType(details.getFreqType());
 		systemInfo.setIntervalTime(Integer.parseInt(details.getIntervalTime()));
 		update(systemInfo);
-		
+
 		response.setSuccess(true);
 		return response;
 	}
-	
+
+
 	private List<HealthMonitorTbl> getMonitorDetailsByBranchId(int branchId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_MONITORING_DETAILS_BY_BRANCH_ID);
@@ -2182,6 +2215,19 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 
 	/**
 	 * 
+	 * @param branchId
+	 * @param labId
+	 * @return LabBranchTbl
+	 */
+	public LabBranchTbl getByLabId(int branchId, int labId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_BRANCH);
+		query.setParameter("param1", branchId);
+		query.setParameter("param2", labId);
+		return executeUniqueQuery(LabBranchTbl.class, query);
+	}
+	
+	/**
+	 * 
 	 * @param password
 	 * @param userName
 	 * @return
@@ -2350,18 +2396,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		return executeUniqueQuery(LabTbl.class, query);
 	}
 
-	/**
-	 * 
-	 * @param branchId
-	 * @param labId
-	 * @return LabBranchTbl
-	 */
-	public LabBranchTbl getByLabId(int branchId, int labId) {
-		javax.persistence.Query query = em.createQuery(Query.GET_BRANCH);
-		query.setParameter("param1", branchId);
-		query.setParameter("param2", labId);
-		return executeUniqueQuery(LabBranchTbl.class, query);
-	}
+	
 
 	/**
 	 * Method to get Mac Id using passphrase
@@ -2480,6 +2515,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		return executeUniqueQuery(ResultTbl.class, query);
 	}
 
+	
 	/**
 	 * @return the em
 	 */
@@ -2509,9 +2545,5 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	public void setNetlimsServerIpAddress(String netlimsServerIpAddress) {
 		this.netlimsServerIpAddress = netlimsServerIpAddress;
 	}
-
-	
-
-
 
 }
