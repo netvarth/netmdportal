@@ -145,6 +145,9 @@ public enum ErrorCodeEnum {
 	SpecimenNotExist("561","Test with specimenUid {SpecimenUid} does not exist"),
 	InvalidTest("562","Test with uid {TestUid} does not exist"),
 	NullTestUid("563","Test with uid {TestUid} does not exist"),
+	OrderDetailsNull("564","No order details to transfer"),
+	InvalidSourceLabBranch("567","Wrong source lab id or source branch Id"),
+	InvalidDestinationLabBranch("568","Wrong destination lab id or destination branch id"),
 	
 	/*
 	 * netMd Errors 
