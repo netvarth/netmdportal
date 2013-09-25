@@ -188,7 +188,7 @@ public class SpecimenDaoImpl extends GenericDaoHibernateImpl implements
 	public RetrieveSpecimenResponse getSpecimens(LabHeaderDTO header,
 			String lastSyncTime, Date currentSyncTime) {
 		RetrieveSpecimenResponse response = new RetrieveSpecimenResponse();
-		labDao.validateHeader(header); // validates lab header details
+		labDao.CheckHeaderDetails(header); // validates lab header details
 		SimpleDateFormat sf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		Date lastSynTime = null;
