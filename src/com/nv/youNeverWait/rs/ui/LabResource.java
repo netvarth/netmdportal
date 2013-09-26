@@ -37,6 +37,8 @@ import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
+import com.nv.youNeverWait.rs.dto.OrderTransfer;
+import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
@@ -47,6 +49,7 @@ import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.LogService;
+import com.nv.youNeverWait.user.bl.service.OrderManager;
 
 @Controller
 @RequestMapping("ui/lab/")
@@ -56,6 +59,7 @@ public class LabResource {
 
 	/**
 	 * Shows NetLims Detail page
+	 * 
 	 * @return aboutNetLims html
 	 */
 	@RequestMapping(value = "aboutNetLims", method = RequestMethod.GET)
@@ -63,17 +67,17 @@ public class LabResource {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
-		logService
-				.saveUserDetails(request.getRemoteAddr(), null,
-						LogUserTypeEnum.Nil.getDisplayName(), null, null,
-						ApplicationNameEnum.NetLims.getDisplayName(),
-						Constants.ABOUT_NETLIMS);
+		logService.saveUserDetails(request.getRemoteAddr(), null,
+				LogUserTypeEnum.Nil.getDisplayName(), null, null,
+				ApplicationNameEnum.NetLims.getDisplayName(),
+				Constants.ABOUT_NETLIMS);
 
 		return "aboutNetLims";
 	}
 
 	/**
 	 * Shows NetLims Contact Details
+	 * 
 	 * @return contactUs html
 	 */
 	@RequestMapping(value = "contactUs", method = RequestMethod.GET)
@@ -81,17 +85,17 @@ public class LabResource {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
-		logService
-				.saveUserDetails(request.getRemoteAddr(), null,
-						LogUserTypeEnum.Nil.getDisplayName(), null, null,
-						ApplicationNameEnum.NetLims.getDisplayName(),
-						Constants.CONTACT_US);
+		logService.saveUserDetails(request.getRemoteAddr(), null,
+				LogUserTypeEnum.Nil.getDisplayName(), null, null,
+				ApplicationNameEnum.NetLims.getDisplayName(),
+				Constants.CONTACT_US);
 
 		return "contactUs";
 	}
-	
+
 	/**
 	 * Shows Pricing Details
+	 * 
 	 * @return pricing html
 	 */
 	@RequestMapping(value = "pricing", method = RequestMethod.GET)
@@ -107,9 +111,10 @@ public class LabResource {
 
 		return "pricing";
 	}
-	
+
 	/**
 	 * Shows Privacy and policy details
+	 * 
 	 * @return pricing html
 	 */
 	@RequestMapping(value = "privacyPolicy", method = RequestMethod.GET)
@@ -117,16 +122,13 @@ public class LabResource {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
-		logService
-				.saveUserDetails(request.getRemoteAddr(), null,
-						LogUserTypeEnum.Nil.getDisplayName(), null, null,
-						ApplicationNameEnum.NetLims.getDisplayName(),
-						Constants.POLICY);
+		logService.saveUserDetails(request.getRemoteAddr(), null,
+				LogUserTypeEnum.Nil.getDisplayName(), null, null,
+				ApplicationNameEnum.NetLims.getDisplayName(), Constants.POLICY);
 
 		return "privacyPolicy";
 	}
-	
-	
+
 	/**
 	 * Method performed for session logout
 	 * 
@@ -826,6 +828,7 @@ public class LabResource {
 
 	/**
 	 * List all recorde of Report Tbl for given From and To date
+	 * 
 	 * @param report
 	 * @return ReportResponseDTO
 	 */
@@ -856,7 +859,8 @@ public class LabResource {
 	 */
 	@RequestMapping(value = "checkSystemHealth", method = RequestMethod.POST)
 	@ResponseBody
-	public HealthMonitorResponse checkSystemHealth(@RequestBody SystemHealthDetails systemHealthDetails) {
+	public HealthMonitorResponse checkSystemHealth(
+			@RequestBody SystemHealthDetails systemHealthDetails) {
 
 		HealthMonitorResponse response = new HealthMonitorResponse();
 		try {
@@ -872,7 +876,28 @@ public class LabResource {
 		}
 		return response;
 	}
-	
+
+	@RequestMapping(value = "orderTransfer", method = RequestMethod.POST)
+	@ResponseBody
+	public OrderTransferResponse orderTransfer(
+			@RequestBody OrderTransfer orderTranfer) {
+		OrderTransferResponse response = new OrderTransferResponse();
+		try {
+			response = labService.transferOrder(orderTranfer);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+
+		}
+		return response;
+	}
+
 	/**
 	 * @return the labService
 	 */

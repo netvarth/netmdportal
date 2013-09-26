@@ -60,6 +60,12 @@ public class OrderValidator {
 			se.setDisplayErrMsg(true);
 			throw se;	
 		}
+		if(orderTranfer.getSourceLabBranchId()== orderTranfer.getDestinationLabBranchId()){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.SourceDestinationBranchSame);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
 	}
 
 }

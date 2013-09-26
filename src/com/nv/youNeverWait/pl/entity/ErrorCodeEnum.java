@@ -148,7 +148,7 @@ public enum ErrorCodeEnum {
 	OrderDetailsNull("564","No order details to transfer"),
 	InvalidSourceLabBranch("567","Wrong source lab id or source branch Id"),
 	InvalidDestinationLabBranch("568","Wrong destination lab id or destination branch id"),
-	
+	SourceDestinationBranchSame("569","Source and destination branch is same"),
 	/*
 	 * netMd Errors 
 	 */

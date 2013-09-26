@@ -26,8 +26,8 @@ import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.user.bl.service.OrderManager;
 
 /**
- *
- *
+ * 
+ * 
  * @author Luciya Jose
  */
 
@@ -36,26 +36,6 @@ import com.nv.youNeverWait.user.bl.service.OrderManager;
 public class OrderResource {
 	private OrderManager orderManager;
 
-	@RequestMapping(value = "orderTransfer", method = RequestMethod.POST)
-	@ResponseBody
-	public OrderTransferResponse orderTransfer(
-			@RequestBody OrderTransfer orderTranfer) {
-		OrderTransferResponse response = new OrderTransferResponse();
-		try {
-			response = orderManager.transferOrder(orderTranfer);
-		} catch (ServiceException e) {
-
-			List<Parameter> parameters = e.getParamList();
-			ErrorDTO error = new ErrorDTO();
-			error.setErrCode(e.getError().getErrCode());
-			error.setParams(parameters);
-			error.setDisplayErrMsg(e.isDisplayErrMsg());
-			response.setError(error);
-			response.setSuccess(false);
-
-		}
-		return response;
-	}
 	/**
 	 * @return the orderManager
 	 */
@@ -64,10 +44,11 @@ public class OrderResource {
 	}
 
 	/**
-	 * @param orderManager the orderManager to set
+	 * @param orderManager
+	 *            the orderManager to set
 	 */
 	public void setOrderManager(OrderManager orderManager) {
 		this.orderManager = orderManager;
 	}
-	
+
 }

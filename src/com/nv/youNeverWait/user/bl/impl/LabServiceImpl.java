@@ -51,6 +51,8 @@ import com.nv.youNeverWait.rs.dto.LabDetail;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
+import com.nv.youNeverWait.rs.dto.OrderTransfer;
+import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
@@ -1128,6 +1130,20 @@ public class LabServiceImpl implements LabService {
 		OrderDetails orderDetail=orderManager.retrieveBranchOrders(header, lastSyncTime, currentSyncTime);
 		return orderDetail;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#transferOrder(com.nv.youNeverWait.rs.dto.OrderTransfer)
+	 */
+	@Override
+	public OrderTransferResponse transferOrder(OrderTransfer orderTranfer) {
+	
+		validator.validateHeaderDetails(orderTranfer.getHeader());
+		validator.validateLabBranchIds(orderTranfer.getHeader().getLabId(),
+				orderTranfer.getHeader().getLabBranchId());
+		OrderTransferResponse response= orderManager.transferOrder(orderTranfer);
+		return response;
+	}
+	
 
 	
 	/**

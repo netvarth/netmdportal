@@ -22,7 +22,21 @@ public class OrderTransfer {
 	private int destinationLabBranchId;
 	private String orderDetails;
 	private int uniqueId;
+	private LabHeaderDTO header;
 	
+	
+	/**
+	 * @return the header
+	 */
+	public LabHeaderDTO getHeader() {
+		return header;
+	}
+	/**
+	 * @param header the header to set
+	 */
+	public void setHeader(LabHeaderDTO header) {
+		this.header = header;
+	}
 	/**
 	 * @return the uniqueId
 	 */
