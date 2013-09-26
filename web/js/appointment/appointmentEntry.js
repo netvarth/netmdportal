@@ -33,9 +33,9 @@ $j('.createAppointment').die('click').live('click',function(){
 				getIdfornetmd(parentid);
 				setDoctorid(doctorid);
 		});
+		$j('.fc-header-left .fc-button-agendaDay').trigger('click'); 
 		
-		
-	monthlyviewSchedule(doctorid,parentid);	
+	//monthlyviewSchedule(doctorid,parentid);	
 		
 	
 	
