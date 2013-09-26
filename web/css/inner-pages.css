@@ -37,14 +37,14 @@
 	background:url(../images/icon/left_top_crnr.png) no-repeat;
 	}
 #main-cnts-header-right {
-	width:3.5%;
+	width:2.5%;
 	height:50px;
 	float:right;
 	background:url(../images/icon/right_top_crnr.png) no-repeat;
 	
 	}
 #main-cnts-header-text {
-	width: 94.5%;
+	width: 95.5%;
 	height:50px;
 	float:left;
 	background:url(../images/icon/centr.png) repeat-x;
