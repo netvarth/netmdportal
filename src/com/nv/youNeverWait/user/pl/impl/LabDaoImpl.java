@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
@@ -533,6 +535,15 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		}
 		Date createdTime = new Date();
 
+		/**Generating random alpha numeric value for lab code with length two char**/
+		String CHARACTER_SET = "23456789abcdefghijkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ";
+		Random random = new Random();
+		StringBuilder builder = new StringBuilder();
+	    for(int i = 0; i < 2; i++){
+	        builder.append(CHARACTER_SET.charAt(random.nextInt(CHARACTER_SET.length())));
+	    }
+	    System.out.println("alpha numeric value for lab code is  "+builder.toString());
+	    
 		labTbl.setOwnerFirstName(lab.getOwnerFirstName());
 		labTbl.setOwnerLastName(lab.getOwnerLastName());
 		labTbl.setOwnerEmail(lab.getOwnerEmail());
@@ -546,7 +557,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labTbl.setHeadOfficeEmail(lab.getHeadOfficeEmail());
 		labTbl.setLabLoginTbl(login);
 		labTbl.setStatus(LabStatusEnum.Active.getDisplayName());
-		labTbl.setLabCode(lab.getLabCode());
+		labTbl.setLabCode(builder.toString());
 		labTbl.setCreateDateTime(createdTime);
 		labTbl.setUpdateDateTime(createdTime);
 		save(labTbl);
@@ -669,7 +680,6 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labTbl.setHeadOfficeMobile(lab.getHeadOfficeMobile());
 		labTbl.setHeadOfficeEmail(lab.getHeadOfficeEmail());
 		labTbl.setUpdateDateTime(new Date());
-		labTbl.setLabCode(lab.getLabCode());
 		update(labTbl);
 		response.setGlobalId(labTbl.getId());
 		response.setSuccess(true);
@@ -1379,6 +1389,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
+		
 		List<LabBranchDTO> ownBranchList = new ArrayList<LabBranchDTO>();
 		List<LabBranchTbl> ownBranches = getOwnBranches(syncTime,
 				header.getLabId(), currentTime);
@@ -1395,9 +1406,46 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			branch.setPassPhrase(header.getPassPhrase());
 			branch.setPhone(labBranchTbl.getPhone());
 			branch.setStatus(labBranchTbl.getStatus());
+			branch.setBranchCode(labBranchTbl.getBranchCode());
 			ownBranchList.add(branch);
 
 		}
+		
+		List<LabBranchDTO> newBranchList = new ArrayList<LabBranchDTO>();
+		List<LabBranchTbl> newBranches = getNewBranches(syncTime,
+				header.getLabId(),currentTime);
+		for (LabBranchTbl labBranchTbl : newBranches) {
+			LabBranchDTO branch = new LabBranchDTO();
+			branch.setAddress(labBranchTbl.getAddress());
+			branch.setEmail(labBranchTbl.getEmail());
+			branch.setGlobalId(labBranchTbl.getId());
+			branch.setLabId(labBranchTbl.getLabTbl().getId());
+			branch.setMacId(header.getMacId());
+			branch.setMobile(labBranchTbl.getMobile());
+			branch.setName(labBranchTbl.getName());
+			branch.setPassPhrase(header
+					.getPassPhrase());
+			branch.setPhone(labBranchTbl.getPhone());
+			branch.setStatus(labBranchTbl.getStatus());
+			branch.setBranchCode(labBranchTbl.getBranchCode());
+			newBranchList.add(branch);
+		}
+		List<LabBranchDTO> updatedBranchList = new ArrayList<LabBranchDTO>();
+		List<LabBranchTbl> updatedBranches = getUpdatedBranches(syncTime,
+				header.getLabId(),currentTime);
+		for (LabBranchTbl labBranchTbl : updatedBranches) {
+			LabBranchDTO branch = new LabBranchDTO();
+			branch.setGlobalId(labBranchTbl.getId());
+			branch.setLabId(labBranchTbl.getLabTbl().getId());
+			branch.setMacId(header.getMacId());
+			branch.setPassPhrase(header
+					.getPassPhrase());
+			branch.setStatus(labBranchTbl.getStatus());
+			branch.setBranchCode(labBranchTbl.getBranchCode());
+			updatedBranchList.add(branch);
+		}
+		response.setNewBranchList(newBranchList);
+		response.setUpdatedBranchList(updatedBranchList);
 		response.setOwnBranchList(ownBranchList);
 		response.setSuccess(true);
 		return response;
@@ -2523,6 +2571,32 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		return executeUniqueQuery(ResultTbl.class, query);
 	}
 
+	/**
+	 * @param syncTime
+	 * @param labId
+	 * @return LabBranchTbl
+	 */
+	private List<LabBranchTbl> getNewBranches(Date syncTime, int labId, Date currentTime) {
+		javax.persistence.Query query = em.createQuery(Query.GET_NEW_BRANCHES);
+		query.setParameter("param1", labId);
+		query.setParameter("param2", syncTime);
+		query.setParameter("param3", currentTime);
+		return executeQuery(LabBranchTbl.class, query);
+	}
+	
+	/**
+	 * @param syncTime
+	 * @param labId
+	 * @return LabBranchTbl
+	 */
+	private List<LabBranchTbl> getUpdatedBranches(Date syncTime, int labId,Date currentTime) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_UPDATED_BRANCHES);
+		query.setParameter("param1", labId);
+		query.setParameter("param2", syncTime);
+		query.setParameter("param3", currentTime);
+		return executeQuery(LabBranchTbl.class, query);
+	}
 	
 	/**
 	 * @return the em

@@ -9,12 +9,38 @@ import java.util.List;
 
 
 public class LabBranchListResponseDTO {
-
+	private List<LabBranchDTO> newBranchList = new ArrayList<LabBranchDTO>();
+	private List<LabBranchDTO> updatedBranchList = new ArrayList<LabBranchDTO>();
 	private List<LabBranchDTO> ownBranchList = new ArrayList<LabBranchDTO>();
 	private String lastSynctime;
 	private ErrorDTO error;
 	private boolean success;
 
+	
+	/**
+	 * @return the newBranchList
+	 */
+	public List<LabBranchDTO> getNewBranchList() {
+		return newBranchList;
+	}
+	/**
+	 * @param newBranchList the newBranchList to set
+	 */
+	public void setNewBranchList(List<LabBranchDTO> newBranchList) {
+		this.newBranchList = newBranchList;
+	}
+	/**
+	 * @return the updatedBranchList
+	 */
+	public List<LabBranchDTO> getUpdatedBranchList() {
+		return updatedBranchList;
+	}
+	/**
+	 * @param updatedBranchList the updatedBranchList to set
+	 */
+	public void setUpdatedBranchList(List<LabBranchDTO> updatedBranchList) {
+		this.updatedBranchList = updatedBranchList;
+	}
 	/**
 	 * @return the ownBranchList
 	 */
