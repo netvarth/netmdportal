@@ -72,7 +72,8 @@ function validateNewNetlimsBranch(){
 	
 	var bValid=true,OrgNameValid=true,OrgEmailValid=true,PhoneValid=true,MobValid=true,orgbrachcodevalid=true,OrgNregValid=true,OrgPhregValid=true,OrgMobregValid=true,OrgEmailregValid=true;
 	OrgNameValid = checkNull( organizationName,constants_branchNameRequired);
-	orgbrachcodevalid= checkNull( organizationbrchcode,constants_branchcodeRequired);
+	orgbrachcodevalid=checkNull(organizationbrchcode,constants_branchcodeRequired);
+	OrgNameValid=orgbrachcodevalid&&OrgNameValid;
 	//OrgEmailValid = checkNull( email,constants_emailRequired);
 	//OrgEmailValid=OrgEmailValid&&OrgNameValid;
 	PhoneValid = checkNull( phone,constants_phoneRequired);
