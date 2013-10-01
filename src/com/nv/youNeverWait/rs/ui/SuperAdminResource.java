@@ -55,6 +55,7 @@ import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncLogDTO;
 import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.SuperAdminService;
 
@@ -1274,6 +1275,35 @@ public class SuperAdminResource {
 		return response;
 	}
 
+	/**
+	 * To enable/disable  sync log process
+	 * 
+	 * @param log
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "enableSyncLog", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO enableSyncLog(@RequestBody SyncLogDTO syncLog) {
+
+		ResponseDTO response = new ResponseDTO();
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		try {
+			response = service.enableSyncLog(syncLog, request);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	
 	/**
 	 * @return the service
 	 */
