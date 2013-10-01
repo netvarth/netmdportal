@@ -66,11 +66,11 @@
                                     "className": "column-right",
                                     "elements": [
                                         {
-                                            "name": "ownerFirstName",
-                                            "id": "ownerFirstName",
+                                            "name": "ownercode",
+                                            "id": "ownerFirstcode",
                                             "type": "text",
                                             "readonly": "readonly",
-                                            "title": "Owner First Name",
+                                            "title": "Organization code",
                                             "className": "newBox"
                                         }
                                     ]
@@ -80,8 +80,21 @@
 						{
                             "className": "five-sixth",
                             "data": [
-                                {
+                               {
                                     "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "ownerFirstName",
+                                            "id": "ownerFirstName",
+                                            "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "Owner First Name",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
                                     "elements": [
                                         {
                                             "name": "ownerLastName",
@@ -92,20 +105,8 @@
                                             "className": "newBox"
                                         }
                                     ]
-                                },
-                                {
-                                    "className": "column-right",
-                                    "elements": [
-                                        {
-                                            "name": "ownerEmail",
-                                            "id": "ownerEmail",
-                                            "type": "text",
-                                            "readonly": "readonly",
-                                            "title": "Owner Email",
-                                            "className": "newBox"
-                                        }
-                                    ]
                                 }
+                                
                             ]
                         },
 						 {
@@ -214,15 +215,15 @@
 						{
                             "className": "five-sixth",
                             "data": [
-                                {
+                               {
                                     "className": "column-left",
                                     "elements": [
                                         {
-                                           "name": "ownerAddress",
-                                            "id": "ownerAddress",
-                                            "type": "textarea",
+                                            "name": "ownerEmail",
+                                            "id": "ownerEmail",
+                                            "type": "text",
                                             "readonly": "readonly",
-                                            "title": "Owner Address",
+                                            "title": "Owner Email",
                                             "className": "newBox"
                                         }
                                     ]
@@ -241,6 +242,25 @@
                                     ]
                                 }
                                 
+                            ]
+                        },
+                        {
+                            "className": "five-sixth",
+                            "data": [
+                               {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                           "name": "ownerAddress",
+                                            "id": "ownerAddress",
+                                            "type": "textarea",
+                                            "readonly": "readonly",
+                                            "title": "Owner Address",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                }
+                               
                             ]
                         }
                  

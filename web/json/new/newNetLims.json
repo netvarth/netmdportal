@@ -131,6 +131,22 @@
                                         }
 										
                                     ]
+                                },
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            
+                                            "name": "headofficeaddress",
+                                            "id": "headofficecode",
+                                            "type": "text",
+                                            "className": "small",
+                                            "title": "Organization code",
+                                             "maxlength":"2",
+                                             "style": "width:10%;",
+                                            "required": true
+                                        }
+                                    ]
                                 }
                                
                             ]
