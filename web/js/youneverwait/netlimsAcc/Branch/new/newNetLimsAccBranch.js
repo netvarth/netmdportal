@@ -49,7 +49,7 @@ function createSubmitJson(){
 		netlimsDetails += '"address":"'+ nl2br($j('#newBranchNetlimsAccForm #organizationaddress').val()) +'",';
 		netlimsDetails += '"email":"'+ $j('#newBranchNetlimsAccForm #Email').val() +'",';
 		netlimsDetails +='"phone":"' + $j('#newBranchNetlimsAccForm #phone').val() + '",';
-	
+		netlimsDetails +='"branchCode":"' + $j('#newBranchNetlimsAccForm #organizationaccbrcode').val() + '",';
 		netlimsDetails +='"labId":' +netlimsId+ ',';
 		netlimsDetails +='"mobile":"' + $j('#newBranchNetlimsAccForm #mobile').val() + '"}';
 	return netlimsDetails;
@@ -61,10 +61,13 @@ function validateNewNetlimsAccBranch(){
 	var phone=$j('#newBranchNetlimsAccForm #phone');
 	var mobile=$j('#newBranchNetlimsAccForm #mobile');
 	var email=$j('#newBranchNetlimsAccForm #Email');
+	var brachcode=$j('#newBranchNetlimsAccForm #organizationaccbrcode');
 
 	
-	var bValid=true,OrgNameValid=true,OrgEmailValid=true,PhoneValid=true,MobValid=true,OrgNregValid=true,OrgPhregValid=true,OrgMobregValid=true,OrgEmailregValid=true;
+	var bValid=true,OrgNameValid=true,OrgEmailValid=true,PhoneValid=true,MobValid=true,orgbcodevalid=true,OrgNregValid=true,OrgPhregValid=true,OrgMobregValid=true,OrgEmailregValid=true;
 	OrgNameValid = checkNull( organizationName,constants_branchNameRequired);
+	orgbcodevalid=checkNull(brachcode,constants_branchcodeRequired);
+	OrgNameValid=orgbcodevalid&&OrgNameValid;
 	//OrgEmailValid = checkNull( email,constants_emailRequired);
 	//OrgEmailValid=OrgEmailValid&&OrgNameValid;
 	PhoneValid = checkNull( phone,constants_phoneRequired);

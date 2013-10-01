@@ -6,11 +6,13 @@ function validateviewnetlimsaccbranch(){
 	var branchMobile=$j('#branchNetlimsAccViewForm #branchMobile');
 	var address=$j('#branchNetlimsAccViewForm #address');
 	var email=$j('#branchNetlimsAccViewForm #email');
+	var branchaccode=$j('#branchNetlimsAccViewForm #accbranchcode');
 	
-	
-	var bValid=true,OrgNameValid=true,BRPhoneValid=true,BRMobileValid=true,BREmailValid=true,OrgNregValid=true,BRPhoneregValid=true,BRMobregValid=true,BREmailregValid=true;
+	var bValid=true,OrgNameValid=true,BRPhoneValid=true,BRMobileValid=true,branchcodevalid=true,BREmailValid=true,OrgNregValid=true,BRPhoneregValid=true,BRMobregValid=true,BREmailregValid=true;
 	
 	OrgNameValid = checkNull( organizationName,constants_organizationNameRequired);
+	branchcodevalid=checkNull( branchaccode,constants_branchcodeRequired);
+	OrgNameValid=branchcodevalid&&OrgNameValid;
 	BRPhoneValid = checkNull( branchPhone,constants_phoneRequired);
 	BRPhoneValid=BRPhoneValid&&OrgNameValid;
 	BRMobileValid = checkNull( branchMobile,constants_mobileRequired);

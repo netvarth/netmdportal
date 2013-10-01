@@ -43,12 +43,18 @@
                                     "className": "column-right",
                                     "elements": [
                                         {
-                                            "name": "organizationaddress",
-                                            "id": "organizationaddress",
-                                            "type": "textarea",
+                                            "name": "organizationaccbrcode",
+                                            "id": "organizationaccbrcode",
+                                            "type": "text",
                                             "className": "large ",
-                                            "title": "Address"
+                                            "title": "Branch code",
+                                            "tabIndex": 2,
+                                            "maxlength":"1",
+                                             "style": "width:10%;",
+                                              "required": true
                                         }
+										
+										
                                     ]
                                 }
                             ]
@@ -60,13 +66,13 @@
                                     "className": "column-right",
                                     "elements": [
                                         {
-                                            "name": "Email",
-                                            "id": "Email",
+                                            "name": "mobile",
+                                            "id": "mobile",
                                             "type": "text",
+											"tabIndex": 3,
                                             "className": "large ",
-                                            "title": "Email"
-											
-                                           
+                                            "title": "Mobile",
+											"required": "true"
                                         }
 
                                     ]
@@ -82,15 +88,39 @@
                                             "className": "large ",
                                             "title": "Phone",
                                             "required": "true"
-                                        },
+                                        }
+                                        
+                                    ]
+                                }
+                            ]
+                        },
+						 {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
                                         {
-                                            "name": "mobile",
-                                            "id": "mobile",
+                                            "name": "Email",
+                                            "id": "Email",
                                             "type": "text",
-											"tabIndex": 3,
                                             "className": "large ",
-                                            "title": "Mobile",
-											"required": "true"
+                                            "title": "Email"
+											
+                                           
+                                        }
+
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "organizationaddress",
+                                            "id": "organizationaddress",
+                                            "type": "textarea",
+                                            "className": "large ",
+                                            "title": "Address"
                                         }
                                     ]
                                 }

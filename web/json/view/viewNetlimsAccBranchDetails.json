@@ -142,14 +142,17 @@
                                 {
                                     "className": "column-right",
                                     "elements": [
-                                        {
-                                            "name": "branchPhone",
-                                            "id": "branchPhone",
-                                            "type": "text",
-                                            "readonly": "readonly",
-                                            "title": "Phone",
-                                            "className": "newBox"
+                                       {   
+                                    "name": "accbranchcode",
+                                    "id": "accbranchcode",
+                                    "type": "text",
+                                    "title": "Branch code",
+                                    "className": "newBox",
+                                    "maxlength":"1",
+                                     "style": "width:20%;"
+                                           
                                         }
+									  
                                     ]
                                 }
                             ]
@@ -160,15 +163,14 @@
                                  {
                                      "className": "column-left",
 										"elements": [
-											{
-												"name": "email",
-												"id": "email",
-												"type": "text",
-												"readonly": "readonly",
-												"title": "Email",
-												"className": "newBox"
-												
-											}
+											 {
+                                            "name": "branchPhone",
+                                            "id": "branchPhone",
+                                            "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "Phone",
+                                            "className": "newBox"
+                                        }
 										]
                                 },
                                 {
@@ -185,6 +187,27 @@
                                         }
                                     ]
                                 }
+                            ]
+                        },
+						 {
+                            "className": "five-sixth",
+                            "data": [
+                                 {
+                                     "className": "column-left",
+										"elements": [
+											
+											{
+												"name": "email",
+												"id": "email",
+												"type": "text",
+												"readonly": "readonly",
+												"title": "Email",
+												"className": "newBox"
+												
+											}
+										]
+                                }
+                                
                             ]
                         }
                       
