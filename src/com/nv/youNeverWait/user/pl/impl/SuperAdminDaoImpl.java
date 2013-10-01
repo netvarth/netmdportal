@@ -28,6 +28,7 @@ import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncLogDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.security.pl.Query;
@@ -201,6 +202,27 @@ SuperAdminDao {
 		return response;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.SuperAdminDao#enableSyncLog(com.nv.youNeverWait.rs.dto.LogDTO, javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO enableSyncLog(SyncLogDTO syncLog, HttpServletRequest request) {
+		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+		if (superAdmin != null) {
+			superAdmin.setEnableSyncLog(syncLog.isSyncLogEnable());
+			update(superAdmin);
+		
+			if(request!=null)
+				request.getSession().getServletContext()
+				.setAttribute("logEnabled", superAdmin.isEnableLog());
+		}
+		ResponseDTO response = new ResponseDTO();
+		response.setSuccess(true);
+		return response;
+	}
+
+	
 	/**
 	 * get User By LoginId And Password
 	 * @param password
@@ -248,5 +270,6 @@ SuperAdminDao {
 		this.em = em;
 	}
 
+	
 
 }
