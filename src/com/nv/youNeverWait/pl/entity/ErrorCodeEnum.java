@@ -149,6 +149,8 @@ public enum ErrorCodeEnum {
 	InvalidSourceLabBranch("567","Wrong source lab id or source branch Id"),
 	InvalidDestinationLabBranch("568","Wrong destination lab id or destination branch id"),
 	SourceDestinationBranchSame("569","Source and destination branch is same"),
+	BranchCodeNull("570","There is no branch code"),
+	LabCodeNull("571","There is no lab code"),
 	/*
 	 * netMd Errors 
 	 */

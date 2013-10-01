@@ -2,7 +2,6 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.Date;
 import java.util.Set;
 
@@ -37,6 +36,9 @@ public class LabBranchTbl implements Serializable {
 	@Column(length=45)
 	private String email;
 
+	@Column(name="branch_code", nullable=false, length=45)
+	private String branchCode;
+	
 	//bi-directional many-to-one association to LabTbl
     @ManyToOne
 	@JoinColumn(name="lab_id", nullable=false)
@@ -176,6 +178,14 @@ public class LabBranchTbl implements Serializable {
 		this.labUserBranchTbls = labUserBranchTbls;
 	}
 
+	public String getBranchCode() {
+		return this.branchCode;
+	}
+
+	public void setBranchCode(String branchCode) {
+		this.branchCode = branchCode;
+	}
+	
 	/**
 	 * @return the email
 	 */

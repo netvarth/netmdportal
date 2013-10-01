@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 
+
 /**
  * The persistent class for the super_admin_tbl database table.
  * 
@@ -33,6 +34,9 @@ public class SuperAdminTbl implements Serializable {
 	@Column(name="enable_log")
 	private boolean enableLog;
 
+	@Column(name="enable_sync_log", nullable=false)
+	private boolean enableSyncLog;
+	
     public SuperAdminTbl() {
     }
 
@@ -88,6 +92,20 @@ public class SuperAdminTbl implements Serializable {
 	 */
 	public void setEnableLog(boolean enableLog) {
 		this.enableLog = enableLog;
+	}
+
+	/**
+	 * @return the enableSyncLog
+	 */
+	public boolean isEnableSyncLog() {
+		return enableSyncLog;
+	}
+
+	/**
+	 * @param enableSyncLog the enableSyncLog to set
+	 */
+	public void setEnableSyncLog(boolean enableSyncLog) {
+		this.enableSyncLog = enableSyncLog;
 	}
 
 }
