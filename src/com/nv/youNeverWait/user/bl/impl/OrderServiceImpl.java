@@ -16,6 +16,8 @@ import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
+import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
+import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.user.bl.service.OrderManager;
 import com.nv.youNeverWait.user.bl.validation.OrderValidator;
 import com.nv.youNeverWait.user.pl.dao.OrderDao;
@@ -51,7 +53,17 @@ public class OrderServiceImpl implements OrderManager {
 		return response;
 	}
 	
-
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.OrderManager#setOrderType(com.nv.youNeverWait.rs.dto.OrderTypeDTO)
+	 */
+	@Override
+	public ResponseDTO setOrderType(OrderTypeDTO orderTypeDetails) {
+		ResponseDTO response = new ResponseDTO();
+		validator.validateOrderTypeDetails(orderTypeDetails);
+		response =orderDao.setOrderType(orderTypeDetails);
+		return response;
+	}
+	
 	/**
 	 * @return the validator
 	 */
@@ -80,5 +92,7 @@ public class OrderServiceImpl implements OrderManager {
 	public void setOrderDao(OrderDao orderDao) {
 		this.orderDao = orderDao;
 	}
+
+	
 
 }

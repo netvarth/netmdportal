@@ -14,6 +14,7 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
+import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 
 /**
@@ -66,6 +67,23 @@ public class OrderValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
+	}
+
+	/**
+	 * @param orderTypeDetails
+	 */
+	public void validateOrderTypeDetails(OrderTypeDTO orderTypeDetails) {
+		if(orderTypeDetails.getLabId()<=0){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidLabId);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(orderTypeDetails.getLabId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if(orderTypeDetails.getOrderTypeCodes()==null && orderTypeDetails.getOrderTypeCodes().equals("")){
+			
+		}
+		
 	}
 
 }

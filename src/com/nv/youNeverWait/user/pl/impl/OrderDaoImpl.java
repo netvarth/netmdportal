@@ -22,39 +22,47 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
+import com.nv.youNeverWait.pl.entity.LabTbl;
 import com.nv.youNeverWait.pl.entity.OrderTransferTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
+import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
+import com.nv.youNeverWait.rs.dto.Parameter;
+import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.LabDao;
 import com.nv.youNeverWait.user.pl.dao.OrderDao;
 
 /**
- *
- *
+ * 
+ * 
  * @author Luciya Jose
  */
 public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
-	
+
 	@PersistenceContext()
 	private EntityManager em;
 	private LabDao labDao;
-	
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.pl.dao.OrderDao#retrieveBranchOrders(com.nv.youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, java.util.Date)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.pl.dao.OrderDao#retrieveBranchOrders(com.nv.
+	 * youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, java.util.Date)
 	 */
 	@Override
 	@Transactional
 	public OrderDetails retrieveBranchOrders(LabHeaderDTO header,
 			String lastSyncTime, Date currentSyncTime) {
-		OrderDetails orderDetail= new OrderDetails();
-		
-		/*Checking header details*/
+		OrderDetails orderDetail = new OrderDetails();
+
+		/* Checking header details */
 		labDao.CheckHeaderDetails(header);
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		Date syncTime = null;
@@ -66,10 +74,12 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		List<OrderTransfer> orderList= new ArrayList<OrderTransfer>();
-		List<OrderTransferTbl> recievedOrders= getTransferredOrders(header.getLabId(),header.getLabBranchId(),syncTime,currentSyncTime);
-		for(OrderTransferTbl order: recievedOrders){
-			OrderTransfer newOrder= new OrderTransfer();
+		List<OrderTransfer> orderList = new ArrayList<OrderTransfer>();
+		List<OrderTransferTbl> recievedOrders = getTransferredOrders(
+				header.getLabId(), header.getLabBranchId(), syncTime,
+				currentSyncTime);
+		for (OrderTransferTbl order : recievedOrders) {
+			OrderTransfer newOrder = new OrderTransfer();
 			newOrder.setSourceLabId(order.getSourceLab().getId());
 			newOrder.setSourceLabBranchId(order.getSourceBranch().getId());
 			newOrder.setUniqueId(order.getUniqueId());
@@ -92,31 +102,32 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 	@Transactional
 	public OrderTransferResponse transferOrder(OrderTransfer orderTranfer) {
 		OrderTransferResponse response = new OrderTransferResponse();
-		LabBranchTbl sourceLabBranch = getLabBranchId(orderTranfer
-				.getSourceLabBranchId(),orderTranfer.getSourceLabId());
-		LabBranchTbl destinationLabBranch = getLabBranchId(orderTranfer
-				.getDestinationLabBranchId(),orderTranfer.getDestinationLabId());
-		if (sourceLabBranch==null) {
+		LabBranchTbl sourceLabBranch = getLabBranchId(
+				orderTranfer.getSourceLabBranchId(),
+				orderTranfer.getSourceLabId());
+		LabBranchTbl destinationLabBranch = getLabBranchId(
+				orderTranfer.getDestinationLabBranchId(),
+				orderTranfer.getDestinationLabId());
+		if (sourceLabBranch == null) {
 
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidSourceLabBranch);
-			
+
 			se.setDisplayErrMsg(true);
 			throw se;
-			
+
 		}
-		if (destinationLabBranch==null) {
+		if (destinationLabBranch == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidDestinationLabBranch);
-			
+
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
 		OrderTransferTbl orderTransferTbl = new OrderTransferTbl();
 		orderTransferTbl.setSourceLab(sourceLabBranch.getLabTbl());
 		orderTransferTbl.setSourceBranch(sourceLabBranch);
-		orderTransferTbl
-				.setDestinationLab(destinationLabBranch.getLabTbl());
+		orderTransferTbl.setDestinationLab(destinationLabBranch.getLabTbl());
 		orderTransferTbl.setDestinationBranch(destinationLabBranch);
 		orderTransferTbl.setOrderDetails(orderTranfer.getOrderDetails());
 
@@ -138,6 +149,30 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		return response;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.pl.dao.OrderDao#setOrderType(com.nv.youNeverWait
+	 * .rs.dto.OrderTypeDTO)
+	 */
+	@Override
+	public ResponseDTO setOrderType(OrderTypeDTO orderTypeDetails) {
+		ResponseDTO response = new ResponseDTO();
+		LabTbl lab = getById(LabTbl.class, orderTypeDetails.getLabId());
+		if (lab == null) {
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidLab);
+			se.addParam(new Parameter(Constants.ID, Integer
+					.toString(orderTypeDetails.getLabId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		lab.setOrderTypeCode(orderTypeDetails.getOrderTypeCodes());
+		lab.setUpdateDateTime(new Date());
+		update(lab);
+		return response;
+	}
+
 	/**
 	 * @return
 	 */
@@ -150,7 +185,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			lastId = 0;
 		return lastId;
 	}
-	
+
 	/**
 	 * 
 	 * @param branchId
@@ -163,31 +198,29 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		query.setParameter("param2", labId);
 		return executeUniqueQuery(LabBranchTbl.class, query);
 	}
-	
+
 	/**
-	 * @param i 
+	 * @param i
 	 * @param sourceLabBranchId
 	 * @return
 	 */
 	private LabBranchTbl getLabBranchId(int labBranchId, int labId) {
-		
+
 		javax.persistence.Query query = em.createQuery(Query.GET_LAB_BRANCH);
 		query.setParameter("param1", labBranchId);
 		query.setParameter("param2", labId);
-		return executeUniqueQuery(LabBranchTbl.class,query);
+		return executeUniqueQuery(LabBranchTbl.class, query);
 	}
 
-	
-	
 	/**
-	 * @param labId 
-	 * @param labBranchId 
+	 * @param labId
+	 * @param labBranchId
 	 * @param syncTime
 	 * @param currentSyncTime
 	 * @return
 	 */
-	private List<OrderTransferTbl> getTransferredOrders(int labId , int labBranchId, Date syncTime,
-			Date currentSyncTime) {
+	private List<OrderTransferTbl> getTransferredOrders(int labId,
+			int labBranchId, Date syncTime, Date currentSyncTime) {
 		javax.persistence.Query query = em.createQuery(Query.GET_ORDERS);
 		query.setParameter("param1", labId);
 		query.setParameter("param2", labBranchId);
@@ -196,14 +229,13 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		return executeQuery(OrderTransferTbl.class, query);
 	}
 
-
 	/**
-	 * @param labDao the labDao to set
+	 * @param labDao
+	 *            the labDao to set
 	 */
 	public void setLabDao(LabDao labDao) {
 		this.labDao = labDao;
 	}
-
 
 	/**
 	 * @return the em
@@ -213,7 +245,8 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 	}
 
 	/**
-	 * @param em the em to set
+	 * @param em
+	 *            the em to set
 	 */
 	public void setEm(EntityManager em) {
 		this.em = em;

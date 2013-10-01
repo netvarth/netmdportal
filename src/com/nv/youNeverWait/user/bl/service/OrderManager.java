@@ -16,6 +16,8 @@ import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
+import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
+import com.nv.youNeverWait.rs.dto.ResponseDTO;
 
 /**
  *
@@ -37,5 +39,11 @@ public interface OrderManager {
 	 */
 	OrderDetails retrieveBranchOrders(LabHeaderDTO header, String lastSyncTime,
 			Date currentSyncTime);
+
+	/**
+	 * @param orderTypeDetails
+	 * @return
+	 */
+	public ResponseDTO setOrderType(OrderTypeDTO orderTypeDetails);
 
 }

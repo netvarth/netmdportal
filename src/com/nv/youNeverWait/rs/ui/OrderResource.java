@@ -19,10 +19,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
+import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
+import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
+import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
+import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.user.bl.service.OrderManager;
 
 /**
@@ -36,6 +42,32 @@ import com.nv.youNeverWait.user.bl.service.OrderManager;
 public class OrderResource {
 	private OrderManager orderManager;
 
+	
+	/**
+	 * Method performed for system health monitor
+	 * 
+	 * @return HealthMonitorResponse
+	 */
+	@RequestMapping(value = "setOrderType", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO setOrderType(
+			@RequestBody OrderTypeDTO orderTypeDetails) {
+
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = orderManager.setOrderType(orderTypeDetails);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
 	/**
 	 * @return the orderManager
 	 */

@@ -61,6 +61,10 @@ public class LabTbl implements Serializable {
 	@Column(name="lab_code", nullable=false, length=45)
 	private String labCode;
 	
+	@Lob
+	@Column(name="order_type_code", nullable=false)
+	private String orderTypeCode;
+	
 	//bi-directional many-to-one association to LabBranchTbl
 	@OneToMany(mappedBy="labTbl")
 	private Set<LabBranchTbl> labBranchTbls;
@@ -273,7 +277,14 @@ public class LabTbl implements Serializable {
 		this.labBranchTbls = labBranchTbls;
 	}
 	
-	
+	public String getOrderTypeCode() {
+		return this.orderTypeCode;
+	}
+
+	public void setOrderTypeCode(String orderTypeCode) {
+		this.orderTypeCode = orderTypeCode;
+	}
+
 
 	/**
 	 * @return the labLoginTbl
