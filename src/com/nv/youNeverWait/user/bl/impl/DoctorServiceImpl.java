@@ -86,7 +86,7 @@ public class DoctorServiceImpl implements DoctorService {
 			if (netmdLogin.getPassword() != null
 					&& !netmdLogin.getPassword().equals("")) {
 				sendCredentialsMailToDoctor(Constants.DOCTOR_CREDENTIALS,
-						doctor, netmdLogin.getPassword(), netmdBranch.getName());
+						doctor, netmdBranch.getName());
 			} else {
 				sendRemainderToDoctor(Constants.DOCTOR_REMAINDER, doctor);
 			}
@@ -295,14 +295,13 @@ public class DoctorServiceImpl implements DoctorService {
 	 * @param password
 	 */
 	private void sendCredentialsMailToDoctor(String subject,
-			DoctorDetail doctor, String password, String netmdName) {
+			DoctorDetail doctor,String  netmdName) {
 		String msgBody = "";
 		URL url = null;
 		try {
 			url = new URL("http://" + netMdServerIpAddress
 					+ "/youNeverWait/EmailFormat/DoctorCredentials.html");
-			msgBody = createDefaultEmailBodyForCredentialUse(url, doctor,
-					password, netmdName);
+			msgBody = createDefaultEmailBodyForCredentialUse(url, doctor,netmdName);
 			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,
 					doctor.getEmail(), mailFrom, 0, 0, null,
 					SendMsgCallbackEnum.DOCTOR_CREDENTIALS.getId(), null);
@@ -325,7 +324,7 @@ public class DoctorServiceImpl implements DoctorService {
 	 * @throws IOException
 	 */
 	private String createDefaultEmailBodyForCredentialUse(URL url,
-			DoctorDetail doctor, String password, String netmdName)
+			DoctorDetail doctor,String netmdName)
 			throws IOException {
 		StringBuffer msgBodyBfr = new StringBuffer();
 		String fullMsgBody = "";
@@ -349,7 +348,6 @@ public class DoctorServiceImpl implements DoctorService {
 		fullMsgBody = fullMsgBody.replace("{lastName}", doctor.getLastName());
 		fullMsgBody = fullMsgBody.replace("{userName}", doctor.getEmail()
 				.trim());
-		fullMsgBody = fullMsgBody.replace("{password}", password);
 		fullMsgBody = fullMsgBody.replace("{NetmdBranch}", netmdName);
 		fullMsgBody = fullMsgBody.replace("{ResetLink}", resetPasswordLink);
 		fullMsgBody = fullMsgBody.replace("{serverIpAddress}",
