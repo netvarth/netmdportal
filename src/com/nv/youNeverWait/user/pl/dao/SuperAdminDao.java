@@ -15,6 +15,7 @@ import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncLogDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 
@@ -26,5 +27,11 @@ public interface SuperAdminDao {
 	public ResponseDTO resetPassword(LoginDTO login);
 	public ResponseDTO enableLog(LogDTO log, HttpServletRequest request);
 	public EnableLogStatusResponseDTO enableLogStatus();
+	/**
+	 * @param syncLog
+	 * @param request
+	 * @return
+	 */
+	public ResponseDTO enableSyncLog(SyncLogDTO syncLog, HttpServletRequest request);
 
 }

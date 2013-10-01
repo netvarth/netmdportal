@@ -59,8 +59,6 @@ import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
-import com.nv.youNeverWait.rs.dto.OrderTransfer;
-import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
@@ -548,6 +546,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labTbl.setHeadOfficeEmail(lab.getHeadOfficeEmail());
 		labTbl.setLabLoginTbl(login);
 		labTbl.setStatus(LabStatusEnum.Active.getDisplayName());
+		labTbl.setLabCode(lab.getLabCode());
 		labTbl.setCreateDateTime(createdTime);
 		labTbl.setUpdateDateTime(createdTime);
 		save(labTbl);
@@ -586,7 +585,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labBranch.setPhone(branch.getPhone());
 		labBranch.setMobile(branch.getMobile());
 		labBranch.setEmail(branch.getEmail());
-
+		labBranch.setBranchCode(branch.getBranchCode());
 		labBranch.setLabTbl(lab);
 		save(labBranch);
 		response.setGlobalId(labBranch.getId());
@@ -670,6 +669,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labTbl.setHeadOfficeMobile(lab.getHeadOfficeMobile());
 		labTbl.setHeadOfficeEmail(lab.getHeadOfficeEmail());
 		labTbl.setUpdateDateTime(new Date());
+		labTbl.setLabCode(lab.getLabCode());
 		update(labTbl);
 		response.setGlobalId(labTbl.getId());
 		response.setSuccess(true);
@@ -777,6 +777,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		branch.setLabId(labBranch.getLabTbl().getId());
 		branch.setEmail(labBranch.getEmail());
 		branch.setStatus(labBranch.getStatus());
+		branch.setBranchCode(labBranch.getBranchCode());
 		LabPassphraseTbl branchHeader = (LabPassphraseTbl) getMacPassPhraseByBranch(labBranch
 				.getId());
 		if (branchHeader != null) {
@@ -819,6 +820,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labBranch.setPhone(branch.getPhone());
 		labBranch.setMobile(branch.getMobile());
 		labBranch.setEmail(branch.getEmail());
+		labBranch.setBranchCode(branch.getBranchCode());
 		labBranch.setUpdateDateTime(new Date());
 		update(labBranch);
 		response.setGlobalId(labBranch.getId());
@@ -857,6 +859,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		lab.setHeadOfficeName(labTbl.getHeadOfficeName());
 		lab.setHeadOfficePhone(labTbl.getHeadOfficePhone());
 		lab.setStatus(labTbl.getStatus());
+		lab.setLabCode(labTbl.getLabCode());
 		if (labTbl.getLabLoginTbl() != null) {
 			LabLoginTbl ownerLogin = getById(LabLoginTbl.class, labTbl
 					.getLabLoginTbl().getId());
@@ -978,6 +981,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		newLab.setHeadOfficeName(lab.getHeadOfficeName());
 		newLab.setHeadOfficePhone(lab.getHeadOfficePhone());
 		newLab.setAuthToSent(lab.isAuthToSentResult());
+		newLab.setLabCode(lab.getLabCode());
 		response.setLab(newLab);
 
 		// setting branch details
@@ -987,6 +991,9 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		if (!branches.isEmpty()) {
 			for (LabBranchTbl branch : branches) {
 				LabBranchDTO newBranch = new LabBranchDTO();
+				if(branch.getId()==branchpassPhrase.getLabBranchTbl().getId()){
+					newBranch.setHomeBranch(true);
+				}
 				newBranch.setGlobalId(branch.getId());
 				newBranch.setName(branch.getName());
 				newBranch.setStatus(branch.getStatus());
@@ -994,6 +1001,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 				newBranch.setPhone(branch.getPhone());
 				newBranch.setMobile(branch.getMobile());
 				newBranch.setEmail(branch.getEmail());
+				newBranch.setBranchCode(branch.getBranchCode());
 				if (branch.getId() == branchpassPhrase.getLabBranchTbl()
 						.getId()) {
 					newBranch.setHomeBranch(true);

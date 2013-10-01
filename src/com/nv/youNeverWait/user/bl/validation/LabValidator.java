@@ -195,6 +195,12 @@ public class LabValidator extends FilterValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
+		if(netLims.getLabCode()==null || netLims.getLabCode().isEmpty()){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.LabCodeNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
 	}
 
 	/**
@@ -289,6 +295,12 @@ public class LabValidator extends FilterValidator {
 				se.setDisplayErrMsg(true);
 				throw se;
 			}
+		}
+		if(branch.getBranchCode()==null  && branch.getBranchCode().equals("")){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.BranchCodeNull);
+			se.setDisplayErrMsg(true);
+			throw se;
 		}
 	}
 
