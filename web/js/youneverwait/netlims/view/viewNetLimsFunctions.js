@@ -29,8 +29,8 @@ function viewnetlimsInfo(netlimsId) {
 	else
 		$j("#netlimsViewForm #organizationName").val('Nil');
 	
-	if(netlimsInfo.lab.branchCode)
-		$j("#netlimsViewForm #ownerFirstcode").val(netlimsInfo.lab.branchCode);
+	if(netlimsInfo.lab.labCode)
+		$j("#netlimsViewForm #ownerFirstcode").val(netlimsInfo.lab.labCode);
 	else
 		$j("#netlimsViewForm #ownerFirstcode").val('Nil');
 	if(netlimsInfo.lab.headOfficeEmail)
