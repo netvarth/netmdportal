@@ -116,6 +116,7 @@ constants_passwordMismatch="password do not match";
 
 //new branch validation
 constants_branchNameRequired="Branch Name Required";
+constants_branchcodeRequired="Branch Code Required";
 constants_emailRequired="Email Required";
 constants_phoneRequired="Phone Required";
 constants_mobileRequired="Mobile Required";

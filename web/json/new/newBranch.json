@@ -43,11 +43,15 @@
                                     "className": "column-right",
                                     "elements": [
                                         {
-                                            "name": "organizationaddress",
-                                            "id": "organizationaddress",
-                                            "type": "textarea",
+                                            "name": "organizationbrcode",
+                                            "id": "organizationbrcode",
+                                            "type": "text",
                                             "className": "large ",
-                                            "title": "Address"
+                                            "title": "Branch code",
+                                            "tabIndex": 2,
+                                            "maxlength":"1",
+                                             "style": "width:10%;",
+                                              "required": true
                                         }
                                     ]
                                 }
@@ -60,13 +64,13 @@
                                     "className": "column-right",
                                     "elements": [
                                         {
-                                            "name": "Email",
-                                            "id": "Email",
+                                            "name": "mobile",
+                                            "id": "mobile",
                                             "type": "text",
                                             "className": "large ",
-                                            "title": "Email"
-											
-                                           
+                                            "tabIndex": 4,
+                                            "title": "Mobile",
+                                            "required": "true"
                                         }
 
                                     ]
@@ -79,18 +83,42 @@
                                             "id": "phone",
                                             "type": "text",
                                             "className": "large ",
-											"tabIndex": 2,
+											"tabIndex": 3,
                                             "title": "Phone",
                                             "required": "true"
-                                        },
+                                        }
+                                        
+                                    ]
+                                }
+                            ]
+                        },
+                         {
+                            "className": "five_sixth",
+                            "data": [
+ 
+                                {
+                                    "className": "column-left",
+                                    "elements": [
                                         {
-                                            "name": "mobile",
-                                            "id": "mobile",
+                                            "name": "Email",
+                                            "id": "Email",
                                             "type": "text",
                                             "className": "large ",
-											"tabIndex": 3,
-                                            "title": "Mobile",
-											"required": "true"
+                                            "title": "Email"
+                                            
+                                           
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "organizationaddress",
+                                            "id": "organizationaddress",
+                                            "type": "textarea",
+                                            "className": "large ",
+                                            "title": "Address"
                                         }
                                     ]
                                 }

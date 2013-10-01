@@ -43,6 +43,8 @@
 		$j('#viewNetlimsHeader #netlimsid').attr('readonly','readonly');
 		$j('#viewNetlimsHeader #username').addClass('newBox');
 		$j('#viewNetlimsHeader #username').attr('readonly','readonly');
+		$j('#viewNetlimsHeader #ownerFirstcode').addClass('newBox');
+		$j('#viewNetlimsHeader #ownerFirstcode').attr('readonly','readonly');
 		clearNilFields(netlimsViewForm);
 	});
 
