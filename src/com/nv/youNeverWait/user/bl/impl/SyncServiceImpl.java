@@ -1063,8 +1063,8 @@ public class SyncServiceImpl implements SyncService {
 		syncResponse.setGetResult(getResult);
 		
 		/* Save total orders and its related details of a branch*/
-		/*BranchOrderCountResponseDTO response= labService.createTotalOrders(sync.getHeader(),sync.getBranchOrders());
-		syncResponse.setOrderAmount(response);*/
+		BranchOrderCountResponseDTO response= labService.createTotalOrders(sync.getHeader(),sync.getBranchOrders());
+		syncResponse.setOrderAmount(response);
 		
 		/* Retrieving orders from other branches*/
 		OrderDetails orderDetail= labService.retrieveBranchOrders(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
