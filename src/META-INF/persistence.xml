@@ -22,6 +22,7 @@
 		<class>com.nv.youNeverWait.pl.entity.LogTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.MedicalRecordTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.MessageTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdBillTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdBranchTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdLoginTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl</class>
@@ -41,6 +42,7 @@
 		<class>com.nv.youNeverWait.pl.entity.PendingMessageTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.ResultTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.SeriesTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.SyncLogTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.SpecimenTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.SuperAdminTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.TestSpecimenTbl</class>
