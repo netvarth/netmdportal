@@ -149,6 +149,7 @@ constant_NetLimsAccBrachorder_Msg="Today's Branch Orders";
 
 constant_SettingsNetlimsAccEntry_Url="/youNeverWait/js/youneverwait/settings/netlimsAccChangePwd.js";
 constants_netlimsAccChangePwdJson='/youNeverWait/json/changepassword/netlimsAccChangePassword.json';
+constants_netlimsOrdertypeJson='/youNeverWait/json/OrderType.json';
 
 constant_netlimsAccChangePassword_Url="/youNeverWait/ws/ui/lab/changePassword";
 

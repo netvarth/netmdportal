@@ -9,7 +9,37 @@ $j('#tabs-1').html(adminTB.result);
 		createModal(constants_netlimsAccChangePwdJson,'changepwdModalNetLims');	
 		openModalBox(obj,'changepwdModalNetLims');
 	});
+	
+	$j('#btnNetlimsOrdertype').die('click').live("click",function() {
+	var obj=$j(this);
+		createModal(constants_netlimsOrdertypeJson,'orderTypeModalNetLims');	
+		openModalBox(obj,'orderTypeModalNetLims');
+		$j("#agentorder").val("AO");
+		$j("#blanketorder").val("BO");
+		$j("#walkinorder").val("WO");
+	});
+	
+	$j('#btnordertypeSubmit').die('click').live("click",function() {
+			removeErrors();	
+		if(validateNetlimsorderType())
+		{
+			var response = submitorderType();
+				if(response.success==true){
+				showTip("Order Type Successfully");
+				$j('#errorDivChangePwdData').hide();
+				$j("#changePasswordFormNetLimsAcc input[type=text]").val("");
 
+			}
+			else {
+				updateTipsNew(getErrorName(response.error),$j('#changepwdModalNetLims #errorDivChangePwdData'),$j('#changepwdModalNetLims #errorDivHeader'));
+			}
+		}	
+	});
+	
+	$j('#btnordertypeCancel').die('click').live("click",function() {
+		$j("#ordertypeFormNetLimsAcc input[type=text]").val("");
+	});
+	
 	$j('#changePasswordFormNetLimsAcc #btnChangePwdSubmit').die('click').live('click',function(){
 	removeErrors();	
 		if(validateNetlimsAccChangePassword())
@@ -26,7 +56,18 @@ $j('#tabs-1').html(adminTB.result);
 			}
 		}	
 	});
-	
+function submitorderType(){
+	var resultJson = createSubmitOrdertypeJson();
+	var response = postdataToServer(constant_netlimsAccChangePassword_Url, resultJson );	
+	return response;
+}
+function createSubmitOrdertypeJson(){
+	var userdata =getRequestData('/youNeverWait/ws/ui/auth/getUser');
+    var orderTypeDetails = '{"agentorder":"'+$j('#changePasswordFormNetLimsAcc #oldpassword').val()  +'",';
+		orderTypeDetails += '"blanketorder":"'+ userdata.userName +'",';
+		orderTypeDetails +='"walkinorder":"' + $j('#changePasswordFormNetLimsAcc #newpassword').val() + '"}';
+	return orderTypeDetails;
+}
 function submitChangePasswordInfo(){
 	var resultJson = createSubmitJson();
 	var response = postdataToServer(constant_netlimsAccChangePassword_Url, resultJson );	
