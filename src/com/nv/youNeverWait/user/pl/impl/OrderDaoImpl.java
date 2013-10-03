@@ -171,9 +171,28 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		lab.setOrderTypeCode(orderTypeDetails.getOrderTypeCodes());
 		lab.setUpdateDateTime(new Date());
 		update(lab);
+		response.setSuccess(true);
 		return response;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.OrderDao#getOrderType(int)
+	 */
+	@Override
+	@Transactional
+	public OrderTypeDTO getOrderType(int labId) {
+		LabTbl lab = getById(LabTbl.class, labId);
+		if (lab == null) {
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidLab);
+			se.addParam(new Parameter(Constants.ID, Integer
+					.toString(labId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		OrderTypeDTO orderType= new OrderTypeDTO();
+		orderType.setOrderTypeCodes(lab.getOrderTypeCode());
+		return orderType;
+	}
 	/**
 	 * @return
 	 */
@@ -252,5 +271,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
+
+	
 
 }

@@ -47,4 +47,10 @@ public interface OrderDao {
 	 */
 	public ResponseDTO setOrderType(OrderTypeDTO orderTypeDetails);
 
+	/**
+	 * @param labId
+	 * @return
+	 */
+	public OrderTypeDTO getOrderType(int labId);
+
 }

@@ -13,6 +13,7 @@ package com.nv.youNeverWait.rs.ui;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,8 +44,9 @@ public class OrderResource {
 	private OrderManager orderManager;
 
 	
+
 	/**
-	 * Method performed for system health monitor
+	 * Method performed for nomenclature of order types
 	 * 
 	 * @return HealthMonitorResponse
 	 */
@@ -56,6 +58,31 @@ public class OrderResource {
 		ResponseDTO response = new ResponseDTO();
 		try {
 			response = orderManager.setOrderType(orderTypeDetails);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * Method performed for viewing order types
+	 * 
+	 * @return HealthMonitorResponse
+	 */
+	@RequestMapping(value = "getOrderType/{labId}", method = RequestMethod.GET)
+	@ResponseBody
+	public OrderTypeDTO getOrderType(
+			@PathVariable int labId) {
+
+		OrderTypeDTO response = new OrderTypeDTO();
+		try {
+			response = orderManager.getOrderType(labId);
 		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();

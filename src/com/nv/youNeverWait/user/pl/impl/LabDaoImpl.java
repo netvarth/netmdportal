@@ -536,7 +536,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		Date createdTime = new Date();
 
 		/**Generating random alpha numeric value for lab code with length two char**/
-		String CHARACTER_SET = "23456789abcdefghijkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ";
+		String CHARACTER_SET = "123456789ABCDEFGHIJKLMNPQRSTUVWXYZ";
 		Random random = new Random();
 		StringBuilder builder = new StringBuilder();
 	    for(int i = 0; i < 2; i++){
