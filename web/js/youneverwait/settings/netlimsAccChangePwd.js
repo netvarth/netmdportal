@@ -4,40 +4,51 @@ response = getRequestData('/youNeverWait/json/toolbars/netlimsAccChangePwd.json'
 var adminTB = new AdminToolBar(response);
 $j('#tabs-1').html(adminTB.result);	
 	
-	$j('#btnNetlimsChangePwd').die('click').live("click",function() {
-	var obj=$j(this);
-		createModal(constants_netlimsAccChangePwdJson,'changepwdModalNetLims');	
-		openModalBox(obj,'changepwdModalNetLims');
-	});
+	
 	
 	$j('#btnNetlimsOrdertype').die('click').live("click",function() {
 	var obj=$j(this);
 		createModal(constants_netlimsOrdertypeJson,'orderTypeModalNetLims');	
 		openModalBox(obj,'orderTypeModalNetLims');
-		$j("#agentorder").val("AO");
-		$j("#blanketorder").val("BO");
-		$j("#walkinorder").val("WO");
+		var userdata =getRequestData('/youNeverWait/ws/ui/auth/getUser');
+		var userlabId=userdata.labId;
+		var response = getRequestData("/youNeverWait/ws/ui/order/getOrderType/"+userlabId);	
+		var orderFormat=$j.parseJSON(response.orderTypeCodes);
+		var agentOrdertype=orderFormat.agentorder;
+		var blanketorder=orderFormat.blanketorder;
+		var walkinorder=orderFormat.walkinorder;
+		$j("#agentorder").val(agentOrdertype);
+		$j("#blanketorder").val(blanketorder);
+		$j("#walkinorder").val(walkinorder);
 	});
 	
 	$j('#btnordertypeSubmit').die('click').live("click",function() {
 			removeErrors();	
-		if(validateNetlimsorderType())
-		{
+		//if(validateNetlimsorderType())
+		//{
 			var response = submitorderType();
+				//alert(JSON.stringify(response));
 				if(response.success==true){
-				showTip("Order Type Successfully");
+				showTip("Order Type Successfully Created");
 				$j('#errorDivChangePwdData').hide();
-				$j("#changePasswordFormNetLimsAcc input[type=text]").val("");
+				$j("#ordertypeFormNetLimsAcc input[type=text]").val("");
 
 			}
 			else {
-				updateTipsNew(getErrorName(response.error),$j('#changepwdModalNetLims #errorDivChangePwdData'),$j('#changepwdModalNetLims #errorDivHeader'));
-			}
-		}	
+				updateTipsNew(getErrorName(response.error),$j('#orderTypeModalNetLims #errorDivChangePwdData'),$j('#changepwdModalNetLims #errorDivHeader'));
+		}
+		//}	
 	});
 	
 	$j('#btnordertypeCancel').die('click').live("click",function() {
 		$j("#ordertypeFormNetLimsAcc input[type=text]").val("");
+	});
+	
+	
+	$j('#btnNetlimsChangePwd').die('click').live("click",function() {
+	var obj=$j(this);
+		createModal(constants_netlimsAccChangePwdJson,'changepwdModalNetLims');	
+		openModalBox(obj,'changepwdModalNetLims');
 	});
 	
 	$j('#changePasswordFormNetLimsAcc #btnChangePwdSubmit').die('click').live('click',function(){
@@ -58,16 +69,24 @@ $j('#tabs-1').html(adminTB.result);
 	});
 function submitorderType(){
 	var resultJson = createSubmitOrdertypeJson();
-	var response = postdataToServer(constant_netlimsAccChangePassword_Url, resultJson );	
+	//alert(resultJson);
+	var response = postdataToServer(constant_netlimsAccOrdertype_Url, resultJson );	
 	return response;
 }
 function createSubmitOrdertypeJson(){
 	var userdata =getRequestData('/youNeverWait/ws/ui/auth/getUser');
-    var orderTypeDetails = '{"agentorder":"'+$j('#changePasswordFormNetLimsAcc #oldpassword').val()  +'",';
-		orderTypeDetails += '"blanketorder":"'+ userdata.userName +'",';
-		orderTypeDetails +='"walkinorder":"' + $j('#changePasswordFormNetLimsAcc #newpassword').val() + '"}';
-	return orderTypeDetails;
+	var userlabId=userdata.labId;
+    var orderTypeDetails = '{"agentorder":"'+$j('#ordertypeFormNetLimsAcc #agentorder').val()  +'",';
+		orderTypeDetails += '"blanketorder":"'+ $j('#ordertypeFormNetLimsAcc #blanketorder').val() +'",';
+		orderTypeDetails +='"walkinorder":"' + $j('#ordertypeFormNetLimsAcc #walkinorder').val() + '"}';
+	var orderPassJson='{"labId":'+ userlabId +',';
+		orderPassJson +='"orderTypeCodes":' +JSON.stringify(orderTypeDetails)+ '}';
+	
+	return orderPassJson;
 }
+
+
+
 function submitChangePasswordInfo(){
 	var resultJson = createSubmitJson();
 	var response = postdataToServer(constant_netlimsAccChangePassword_Url, resultJson );	

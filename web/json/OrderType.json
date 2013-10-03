@@ -1,6 +1,6 @@
 {
     "title": "Order Type",
-    "style": "width:30%;margin:0 35%",
+    "style": "width:35%;margin:0 35%",
     "data": [
         {
             "name": "ordertypeFormNetLimsAcc",
@@ -37,6 +37,7 @@
                                             "className": "small ",
                                             "title": "Agent Order",
 											"maxlength":"2",
+											"style":"width:15%",
                                             "required": "true"
                                         },
                                         {
@@ -46,6 +47,7 @@
 											  "tabIndex": 2,
                                             "className": "small ",
 											"maxlength":"2",
+											"style":"width:15%",
                                             "title": "Blanket Order",
 											"required": "true"
                                         },
@@ -56,6 +58,7 @@
                                             "type": "text",
 											"maxlength":"2",
                                             "className": "small",
+											"style":"width:15%",
                                             "title": "Walkin Order",
                                             "required": true
                                         }
@@ -93,8 +96,9 @@
                                                 "title": "Cancel",
                                                 "type": "button",
                                                 "className": "stdbtn",
-                                                "style": "opacity:1; margin:2px"
-                                            }
+                                                "style": "opacity:1;margin: -35px 0px 0px 80px;"
+   
+										   }
                                         ]
                                     }
                                 }

@@ -152,7 +152,7 @@ constants_netlimsAccChangePwdJson='/youNeverWait/json/changepassword/netlimsAccC
 constants_netlimsOrdertypeJson='/youNeverWait/json/OrderType.json';
 
 constant_netlimsAccChangePassword_Url="/youNeverWait/ws/ui/lab/changePassword";
-
+constant_netlimsAccOrdertype_Url="/youNeverWait/ws/ui/order/setOrderType";
 constants_newBranchNetLimsAccJson='/youNeverWait/json/new/newBranchNetlimsAcc.json';
 constants_newNetLimsAccBranch="/youNeverWait/js/youneverwait/netlimsAcc/Branch/new/newNetLimsAccBranch.js";
 
