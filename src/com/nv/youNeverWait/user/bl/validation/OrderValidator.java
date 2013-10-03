@@ -80,8 +80,11 @@ public class OrderValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if(orderTypeDetails.getOrderTypeCodes()==null && orderTypeDetails.getOrderTypeCodes().equals("")){
-			
+		if(orderTypeDetails.getOrderTypeCodes()==null || orderTypeDetails.getOrderTypeCodes().equals("")){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.OrderTypeNull);
+			se.setDisplayErrMsg(true);
+			throw se;
 		}
 		
 	}
