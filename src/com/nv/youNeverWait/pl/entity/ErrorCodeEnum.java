@@ -151,6 +151,7 @@ public enum ErrorCodeEnum {
 	SourceDestinationBranchSame("569","Source and destination branch is same"),
 	BranchCodeNull("570","There is no branch code"),
 	LabCodeNull("571","There is no lab code"),
+	OrderTypeNull("572","Nomenclature order types given empty."),
 	/*
 	 * netMd Errors 
 	 */
