@@ -30,8 +30,34 @@ public class SyncDTO {
 	private List<AppointmentDetailsDTO> updatedAppointmentList = new ArrayList<AppointmentDetailsDTO>();
 	private List<AppointmentDetailsDTO> deletedAppointmentList = new ArrayList<AppointmentDetailsDTO>();
 	private List<UserInfoDetail> user = new ArrayList<UserInfoDetail>();
+	private List<BillSummaryDTO> newBillList=new ArrayList<BillSummaryDTO>();
+	private List<BillSummaryDTO> updateBillList=new ArrayList<BillSummaryDTO>();
 	
 	
+	/**
+	 * @return the newBillList
+	 */
+	public List<BillSummaryDTO> getNewBillList() {
+		return newBillList;
+	}
+	/**
+	 * @param newBillList the newBillList to set
+	 */
+	public void setNewBillList(List<BillSummaryDTO> newBillList) {
+		this.newBillList = newBillList;
+	}
+	/**
+	 * @return the updateBillList
+	 */
+	public List<BillSummaryDTO> getUpdateBillList() {
+		return updateBillList;
+	}
+	/**
+	 * @param updateBillList the updateBillList to set
+	 */
+	public void setUpdateBillList(List<BillSummaryDTO> updateBillList) {
+		this.updateBillList = updateBillList;
+	}
 	/**
 	 * @return the newUserList
 	 */

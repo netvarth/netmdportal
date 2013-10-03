@@ -14,12 +14,15 @@ import java.util.Date;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.nv.youNeverWait.rs.dto.BillSyncResponseDTO;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ActionNameEnum;
 import com.nv.youNeverWait.rs.dto.Appointment;
 import com.nv.youNeverWait.rs.dto.AppointmentDetailsDTO;
 import com.nv.youNeverWait.rs.dto.AppointmentResponse;
+import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.DoctorLoginDTO;
@@ -156,6 +159,13 @@ public class SyncServiceImpl implements SyncService {
 							.getNetMdBranchId(), currentSyncTime);
 			syncResponse.setRetrievalAppointmentListForPrimary(retrievalAppointmentDTOForPrimary);
 
+			/*Synchronizing bill details*/
+			List<BillSyncResponseDTO> billResponseList = getBillResponseList(
+					sync.getHeader(), sync.getNewBillList(),
+					sync.getUpdateBillList());
+
+			syncResponse.setBillResponse(billResponseList);
+			
 		}// end of if loop
 
 		/*Retrieve appointments for secondary devices*/
@@ -211,6 +221,19 @@ public class SyncServiceImpl implements SyncService {
 		syncResponse.setHeaderResponse(headerResponse);
 		syncResponse.setSuccess(true);
 		return syncResponse;
+	}
+
+	/**
+	 * @param header
+	 * @param newBillList
+	 * @param updateBillList
+	 * @return
+	 */
+	private List<BillSyncResponseDTO> getBillResponseList(HeaderDTO header,
+			List<BillSummaryDTO> newBillList,
+			List<BillSummaryDTO> updateBillList) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**

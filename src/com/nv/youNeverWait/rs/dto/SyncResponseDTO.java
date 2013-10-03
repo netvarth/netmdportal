@@ -29,12 +29,25 @@ public class SyncResponseDTO {
 	private RetrievalScheduleResponseDTO retrievalScheduleList= new RetrievalScheduleResponseDTO();
 	private List<RetrieveResultsResponseDTO> retrieveResults= new ArrayList<RetrieveResultsResponseDTO>();
 	private RetrievalAppointmentResponseDTO retrievalAppointmentListForPrimary = new RetrievalAppointmentResponseDTO();
+	private List<BillSyncResponseDTO> billResponse=new ArrayList<BillSyncResponseDTO>();
 	private String lastSynctime;
 	private ErrorDTO error;
 	private boolean success;
 	
 	
 	
+	/**
+	 * @return the billResponse
+	 */
+	public List<BillSyncResponseDTO> getBillResponse() {
+		return billResponse;
+	}
+	/**
+	 * @param billResponse the billResponse to set
+	 */
+	public void setBillResponse(List<BillSyncResponseDTO> billResponse) {
+		this.billResponse = billResponse;
+	}
 	/**
 	 * @return the retrievalAppointmentListForPrimary
 	 */
