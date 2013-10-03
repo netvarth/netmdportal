@@ -192,7 +192,8 @@ public class Query {
 	public static final String GET_UPDATED_LABS = "from LabTbl as lab where lab.id!=:param1 and lab.createDateTime < lab.updateDateTime and lab.updateDateTime>:param2 and lab.updateDateTime<:param3 order by updateDateTime";
 	public static final String GET_OWN_LAB = "from LabTbl as lab where  lab.id=:param1 and lab.updateDateTime>:param2 and lab.updateDateTime<:param3 order by updateDateTime";
 	public static final String GET_LAB_BY_LOGIN_ID = "from LabTbl as lab where  lab.labLoginTbl.id=:param1";
-
+	public static final String GET_LAB_DETAILS_BY_TIME = "from LabTbl as lab where lab.id=:param1 and lab.updateDateTime >=:param2 and lab.updateDateTime<:param3";
+	
 	/* ResultTbl */
 	public static final String GET_RESULT_BY_PATIENTID = "from ResultTbl as result where result.patientTbl.id=:param1";
 	public static final String GET_RESULTS = "from ResultTbl as patientResults where patientResults.netmdTbl.id=:param1 and patientResults.netmdBranchTbl.id=:param2 and patientResults.updatedDateTime>:param3 and patientResults.updatedDateTime<:param4";
@@ -257,6 +258,7 @@ public class Query {
 	public static final String GET_TEST_SPECIMEN_BY_SPECIMEN_UID ="from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid = :param1 and testSpecimen.specimenTbl.uid = :param2";
 	public static final String GET_TEST_SPECIMEN = "from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid = :param1";
 	public static final String GET_SPECIMEN_BY_TEST_UID = "from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid=:param1";
+
 	
 	
 }

@@ -21,9 +21,28 @@ public class LabSyncResponseDTO {
 	private RetrieveTestResponse retrieveTests= new RetrieveTestResponse();
 	private RetrieveSpecimenResponse retrieveSpecimens = new RetrieveSpecimenResponse();
 	private OrderDetails retrieveOrders= new OrderDetails();
+	private LabDTO labDetails= new LabDTO();
 	
 	
 	
+	/**
+	 * @return the labDetails
+	 */
+	public LabDTO getLabDetails() {
+		return labDetails;
+	}
+
+
+
+	/**
+	 * @param labDetails the labDetails to set
+	 */
+	public void setLabDetails(LabDTO labDetails) {
+		this.labDetails = labDetails;
+	}
+
+
+
 	/**
 	 * @return the lastSynctime
 	 */

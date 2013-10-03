@@ -100,5 +100,13 @@ public interface LabService {
 	 * @return
 	 */
 	public OrderTransferResponse transferOrder(OrderTransfer orderTranferDto);
+	/**
+	 * @param header
+	 * @param lastSyncTime
+	 * @param currentSyncTime
+	 * @return
+	 */
+	public LabDTO getLab(LabHeaderDTO header, String lastSyncTime,
+			Date currentSyncTime);
 
 }

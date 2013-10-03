@@ -1144,7 +1144,16 @@ public class LabServiceImpl implements LabService {
 		return response;
 	}
 	
-
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#getLab(com.nv.youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, java.util.Date)
+	 */
+	@Override
+	public LabDTO getLab(LabHeaderDTO header, String lastSyncTime,
+			Date currentSyncTime) {
+		LabDTO labDetails= labDao.getLab(header,lastSyncTime,currentSyncTime);
+		return labDetails;
+	}
+	
 	
 	/**
 	 * @return the labDao
@@ -1278,7 +1287,6 @@ public class LabServiceImpl implements LabService {
 	public void setOrderManager(OrderManager orderManager) {
 		this.orderManager = orderManager;
 	}
-	
-	
 
+	
 }

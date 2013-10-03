@@ -37,9 +37,21 @@ public class LabDTO {
 	private String createdDateTime;
 	private String updatedDateTime;
 	private String labCode;
-	
+	private String orderType;
 
 
+	/**
+	 * @return the orderType
+	 */
+	public String getOrderType() {
+		return orderType;
+	}
+	/**
+	 * @param orderType the orderType to set
+	 */
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
+	}
 	/**
 	 * @return the labCode
 	 */

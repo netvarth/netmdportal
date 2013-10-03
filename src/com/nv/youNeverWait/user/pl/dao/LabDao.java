@@ -77,6 +77,14 @@ public interface LabDao {
 	public LabBranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId);
 	public ResponseDTO updateLabBranchSystemInfo(
 			LabBranchSystemInfoDetails details);
+	/**
+	 * @param header
+	 * @param lastSyncTime
+	 * @param currentSyncTime
+	 * @return
+	 */
+	public LabDTO getLab(LabHeaderDTO header, String lastSyncTime,
+			Date currentSyncTime);
 	
 	
 	

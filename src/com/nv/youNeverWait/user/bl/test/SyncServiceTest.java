@@ -648,7 +648,7 @@ private ApplicationContext applicationContext;
 		SyncService service = (SyncService) applicationContext
 				.getBean("sync.service");
 		LabSyncDTO sync = new LabSyncDTO();
-		sync.setLastSyncTime("2013-09-24 12:59:57");
+		sync.setLastSyncTime("2013-10-03 11:10:11");
 		LabHeaderDTO header = new LabHeaderDTO();
 		header.setLabId(192);
 		header.setLabBranchId(122);

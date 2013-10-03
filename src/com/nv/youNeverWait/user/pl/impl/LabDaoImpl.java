@@ -992,6 +992,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		newLab.setHeadOfficePhone(lab.getHeadOfficePhone());
 		newLab.setAuthToSent(lab.isAuthToSentResult());
 		newLab.setLabCode(lab.getLabCode());
+		newLab.setOrderType(lab.getOrderTypeCode());
 		response.setLab(newLab);
 
 		// setting branch details
@@ -2063,6 +2064,66 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.LabDao#getLab(com.nv.youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, java.util.Date)
+	 */
+	@Override
+	@Transactional
+	public LabDTO getLab(LabHeaderDTO header, String lastSyncTime,
+			Date currentSyncTime) {
+		LabDTO labDetails=new LabDTO();
+		CheckHeaderDetails(header);
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		Date syncTime = null;
+		try {
+			syncTime = sdf.parse(lastSyncTime);
+		} catch (ParseException e) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidSyncTime);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
+		LabTbl labTbl= getlabDetailsByTime(header.getLabId(),syncTime,currentSyncTime);
+		if(labTbl!=null){
+			labDetails.setGlobalId(labTbl.getId());
+			labDetails.setName(labTbl.getName());
+			labDetails.setOwnerAddress(labTbl.getOwnerAddress());
+			labDetails.setOwnerEmail(labTbl.getOwnerEmail());
+			labDetails.setOwnerMobile(labTbl.getOwnerMobile());
+			labDetails.setOwnerFirstName(labTbl.getOwnerFirstName());
+			labDetails.setOwnerLastName(labTbl.getOwnerLastName());
+			labDetails.setOwnerPhone(labTbl.getOwnerPhone());
+			labDetails.setHeadOfficeAddress(labTbl.getHeadOfficeAddress());
+			labDetails.setHeadOfficeEmail(labTbl.getHeadOfficeEmail());
+			labDetails.setHeadOfficeMobile(labTbl.getHeadOfficeMobile());
+			labDetails.setHeadOfficeName(labTbl.getHeadOfficeName());
+			labDetails.setHeadOfficePhone(labTbl.getHeadOfficePhone());
+			labDetails.setStatus(labTbl.getStatus());
+			labDetails.setLabCode(labTbl.getLabCode());
+			labDetails.setOrderType(labTbl.getOrderTypeCode());
+		}
+		return labDetails;
+	}
+
+	
+	/**
+	 * @param labId
+	 * @param syncTime
+	 * @param currentSyncTime
+	 * @return
+	 */
+	private LabTbl getlabDetailsByTime(int labId, Date lastSyncTime,
+			Date currentSyncTime) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_LAB_DETAILS_BY_TIME);
+		query.setParameter("param1", labId);
+		query.setParameter("param2", lastSyncTime);
+		query.setParameter("param3", currentSyncTime);
+		return executeUniqueQuery(LabTbl.class, query);
+	}
+
 	private List<HealthMonitorTbl> getMonitorDetailsByBranchId(int branchId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_MONITORING_DETAILS_BY_BRANCH_ID);
@@ -2628,4 +2689,5 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		this.netlimsServerIpAddress = netlimsServerIpAddress;
 	}
 
+	
 }

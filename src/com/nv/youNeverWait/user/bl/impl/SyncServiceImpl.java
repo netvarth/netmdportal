@@ -31,6 +31,7 @@ import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.HeaderResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
@@ -1062,12 +1063,16 @@ public class SyncServiceImpl implements SyncService {
 		syncResponse.setGetResult(getResult);
 		
 		/* Save total orders and its related details of a branch*/
-		BranchOrderCountResponseDTO response= labService.createTotalOrders(sync.getHeader(),sync.getBranchOrders());
-		syncResponse.setOrderAmount(response);
+		/*BranchOrderCountResponseDTO response= labService.createTotalOrders(sync.getHeader(),sync.getBranchOrders());
+		syncResponse.setOrderAmount(response);*/
 		
 		/* Retrieving orders from other branches*/
 		OrderDetails orderDetail= labService.retrieveBranchOrders(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
 		syncResponse.setRetrieveOrders(orderDetail);
+		
+		/* Retrieving lab details*/
+		LabDTO labDetails= labService.getLab(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
+		syncResponse.setLabDetails(labDetails);
 		
 		syncResponse.setLastSynctime(df.format(currentSyncTime));
 		return syncResponse;
