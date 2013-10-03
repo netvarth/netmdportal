@@ -157,6 +157,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 	 * .rs.dto.OrderTypeDTO)
 	 */
 	@Override
+	@Transactional
 	public ResponseDTO setOrderType(OrderTypeDTO orderTypeDetails) {
 		ResponseDTO response = new ResponseDTO();
 		LabTbl lab = getById(LabTbl.class, orderTypeDetails.getLabId());
