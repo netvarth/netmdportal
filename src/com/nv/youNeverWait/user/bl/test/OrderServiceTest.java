@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
+import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.OrderManager;
 
@@ -170,4 +171,56 @@ public class OrderServiceTest {
 			System.out.println(e.getParamList());
 		}
 	}
+	@Test
+	public void setOrderTypeSuccess(){
+		OrderManager service =(OrderManager) applicationContext.getBean("order.manager");
+		OrderTypeDTO orderTypeDto= new OrderTypeDTO();
+		orderTypeDto.setLabId(193);
+		orderTypeDto.setOrderTypeCodes("{AgentOrder:A,BlanketOrder:B,WalkIn Order:W}");
+		try{
+		
+			service.setOrderType(orderTypeDto);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	
+	@Test
+	public void setOrderTypeWrong(){
+		OrderManager service =(OrderManager) applicationContext.getBean("order.manager");
+		OrderTypeDTO orderTypeDto= new OrderTypeDTO();
+		orderTypeDto.setLabId(193);
+		orderTypeDto.setOrderTypeCodes(null);
+		try{
+		
+			service.setOrderType(orderTypeDto);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	
+	@Test
+	public void setOrderTypeWrongLabId(){
+		OrderManager service =(OrderManager) applicationContext.getBean("order.manager");
+		OrderTypeDTO orderTypeDto= new OrderTypeDTO();
+		orderTypeDto.setLabId(563);
+		orderTypeDto.setOrderTypeCodes("AgentOrder");
+		try{
+		
+			service.setOrderType(orderTypeDto);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	
+	
 }
