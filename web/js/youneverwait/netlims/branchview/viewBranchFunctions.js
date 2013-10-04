@@ -146,7 +146,7 @@ function createSubmitJson(){
 	submitdata+='"phone"' +':"' + $j('#branchViewForm #branchPhone').val() +'",';
 	submitdata+='"mobile"' +':"' + $j('#branchViewForm #branchMobile').val() +'",';
 	submitdata+='"address"' +':"' +nl2br($j('#branchViewForm #address').val()) +'",';
-	submitdata +='"branchCode":"' + $j('#branchViewForm #branchcode').val() + '",';
+	//submitdata +='"branchCode":"' + $j('#branchViewForm #branchcode').val() + '",';
 	submitdata +='"labId":' + $j('#branchViewForm #labid').val() + ',';
 	submitdata +='"status":"' + $j('#branchViewForm #branchStatus').val() + '",';
 	submitdata +='"passPhrase":"' + $j('#branchViewForm #passPhrase').val() + '",';

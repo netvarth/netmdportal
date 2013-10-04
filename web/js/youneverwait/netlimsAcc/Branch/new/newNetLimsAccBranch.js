@@ -49,7 +49,7 @@ function createSubmitJson(){
 		netlimsDetails += '"address":"'+ nl2br($j('#newBranchNetlimsAccForm #organizationaddress').val()) +'",';
 		netlimsDetails += '"email":"'+ $j('#newBranchNetlimsAccForm #Email').val() +'",';
 		netlimsDetails +='"phone":"' + $j('#newBranchNetlimsAccForm #phone').val() + '",';
-		netlimsDetails +='"branchCode":"' + $j('#newBranchNetlimsAccForm #organizationaccbrcode').val() + '",';
+		//netlimsDetails +='"branchCode":"' + $j('#newBranchNetlimsAccForm #organizationaccbrcode').val() + '",';
 		netlimsDetails +='"labId":' +netlimsId+ ',';
 		netlimsDetails +='"mobile":"' + $j('#newBranchNetlimsAccForm #mobile').val() + '"}';
 	return netlimsDetails;

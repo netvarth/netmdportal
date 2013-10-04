@@ -54,7 +54,7 @@ function createSubmitJson(netlimsId){
 		netlimsDetails += '"address":"'+ nl2br($j('#newBranchForm #organizationaddress').val()) +'",';
 		netlimsDetails += '"email":"'+ $j('#newBranchForm #Email').val() +'",';
 		netlimsDetails +='"phone":"' + $j('#newBranchForm #phone').val() + '",';
-		netlimsDetails += '"branchCode":"'+ $j('#newBranchForm #organizationbrcode').val() +'",';
+		//netlimsDetails += '"branchCode":"'+ $j('#newBranchForm #organizationbrcode').val() +'",';
 		netlimsDetails +='"labId":' +netlimsId+ ',';
 		netlimsDetails +='"mobile":"' + $j('#newBranchForm #mobile').val() + '"}';
 	return netlimsDetails;

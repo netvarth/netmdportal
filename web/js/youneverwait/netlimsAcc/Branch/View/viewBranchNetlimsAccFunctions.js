@@ -143,7 +143,7 @@ function createSubmitJson(){
 	submitdata+='"globalId"' +':' + $j('#branchNetlimsAccViewForm #branchid').val() +',';
 	submitdata+='"phone"' +':"' + $j('#branchNetlimsAccViewForm #branchPhone').val() +'",';
 	submitdata+='"mobile"' +':"' + $j('#branchNetlimsAccViewForm #branchMobile').val() +'",';
-	submitdata+='"branchCode"' +':"' + $j('#branchNetlimsAccViewForm #accbranchcode').val() +'",';
+	//submitdata+='"branchCode"' +':"' + $j('#branchNetlimsAccViewForm #accbranchcode').val() +'",';
 	submitdata+='"address"' +':"' +nl2br($j('#branchNetlimsAccViewForm #address').val()) +'",';
 	submitdata +='"labId":' + $j('#branchNetlimsAccViewForm #labid').val() + ',';
 	submitdata +='"status":"' + $j('#branchNetlimsAccViewForm #branchStatus').val() + '",';
