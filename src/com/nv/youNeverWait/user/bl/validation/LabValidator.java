@@ -290,12 +290,12 @@ public class LabValidator extends FilterValidator {
 				throw se;
 			}
 		}
-		if(branch.getBranchCode()==null  && branch.getBranchCode().equals("")){
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.BranchCodeNull);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
+//		if(branch.getBranchCode()==null  && branch.getBranchCode().equals("")){
+//			ServiceException se = new ServiceException(
+//					ErrorCodeEnum.BranchCodeNull);
+//			se.setDisplayErrMsg(true);
+//			throw se;
+//		}
 	}
 
 	/**
