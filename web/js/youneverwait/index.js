@@ -117,6 +117,17 @@ $j(document).ready(function(){
 		$j('#filter').hide();
 		$j('#user-filter-toolbar').hide();
 	});
+	
+	$j('#ribbonSetSync').die('click').live("click",function() {
+		removeErrors();
+		var obj=$j(this);
+		createModal(constants_newSetsycJson,'setsycModal');	
+		openModalBox(obj,'setsycModal');
+		$j.cachedScript(constants_newsynctype).done(function(script, textStatus) {
+		})
+		$j('#filter').hide();
+		$j('#user-filter-toolbar').hide();
+	});
 });	
 
 

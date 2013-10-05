@@ -35,7 +35,8 @@ constant_NetMdList_Msg="NETMD LIST";
 constant_NetMdFunctions_Url="/youNeverWait/js/youneverwait/netmd/netmdFunctions.js";
 constants_newNetMdJson='/youNeverWait/json/new/newNetMd.json';
 constants_newNetMd="/youNeverWait/js/youneverwait/netmd/new/newNetMd.js";
-
+constants_newSetsycJson="/youNeverWait/json/new/newsetSync.json";
+constants_newsynctype="/youNeverWait/js/youneverwait/setSync.js";
 
 
 constants_ViewMdEntryPoint="/youNeverWait/js/youneverwait/netmd/view/viewNetMdEntryPoint.js";
