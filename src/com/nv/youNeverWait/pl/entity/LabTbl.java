@@ -58,8 +58,8 @@ public class LabTbl implements Serializable {
 	@Column(name="owner_phone", length=45)
 	private String ownerPhone;
 
-	@Column(name="lab_code", nullable=false, length=45)
-	private String labCode;
+//	@Column(name="lab_code", nullable=false, length=45)
+//	private String labCode;
 	
 	@Lob
 	@Column(name="order_type_code", nullable=false)
@@ -109,13 +109,13 @@ public class LabTbl implements Serializable {
 		this.id = id;
 	}
 
-	public String getLabCode() {
-		return this.labCode;
-	}
-
-	public void setLabCode(String labCode) {
-		this.labCode = labCode;
-	}
+//	public String getLabCode() {
+//		return this.labCode;
+//	}
+//
+//	public void setLabCode(String labCode) {
+//		this.labCode = labCode;
+//	}
 
 	/**
 	 * @return the authToSentResult
