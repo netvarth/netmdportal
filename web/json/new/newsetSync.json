@@ -22,39 +22,68 @@
                     "id": "referralsdiv",
                     "data": [
                         {
-                            "className": "column-left",
-                            "elements": [
+                            "className": "five_sixth",
+                            "data": [
                                 {
-                                    "name": "syncType",
-                                    "id": "syncType",
-                                    "type": "radio",
-                                    "title": "Synchornisation",
-                                    "value": [
+                                    "className": "column-left",
+                                    "elements": [
                                         {
-                                            "title": "Enable",
-                                            "value": "Enable",
-                                            "id": "Enable"
-                                        },
+                                            "name": "syncType",
+                                            "id": "syncTypeEn",
+                                            "type": "radio",
+                                            "title": "Synchornisation",
+                                            "value": [
+                                                {
+                                                    "title": "Enable",
+                                                    "value": "Enable",
+                                                    "id": "Enable"
+                                                },
+                                                {
+                                                    "title": "Disable",
+                                                    "value": "Disable",
+                                                    "id": "Disable",
+                                                    "checked": true,
+                                                    "style": "margin-left: 20%;"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "id": "syctxtEnTime",
+                                    "elements": [
                                         {
-                                            "title": "Disable",
-                                            "value": "Disable",
-                                            "id": "Disable",
-                                            "checked": true,
-                                            "style": "margin-left: 10%;"
+                                            "name": "syncTime",
+                                            "id": "syncTime",
+                                            "title": "syncTime",
+                                            "type": "text",
+                                            "className": "small "
                                         }
                                     ]
                                 },
                                 {
-                                    "name": "syncTime",
-                                    "id": "syncTime",
-                                    "title": "syncTime",
-                                    "type": "text",
-                                    "className": "small "
+                                    "className": "column-right",
+                                    "id": "syctxtEnInr",
+                                    "style": "margin: -9% 30% 0 0;",
+                                    "elements": [
+                                        {
+                                            "name": "syncInterval",
+                                            "id": "syncInterval",
+                                            "title": "syncInterval",
+                                            "type": "text",
+                                            "className": "small "
+                                        }
+                                    ]
                                 }
                             ]
                         }
                     ]
-					                      
                 },
                 {
                     "className": "sep-div ",

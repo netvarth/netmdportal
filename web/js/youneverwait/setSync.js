@@ -1,9 +1,14 @@
+var flag=$j('input[type=radio]:checked').val();	
+ if(flag!=""){$j('#syctxtEnTime').hide();
+ $j('#syctxtEnInr').hide();}	
+
+
 $j('#Enable').die('click').live("click",function() {
-		alert("hihi");
-		$j('#syncTime').show();
+		$j('#syctxtEnTime').show();
+		$j('#syctxtEnInr').show();
 	});
 
 $j('#Disable').die('click').live("click",function() {
-		alert("dis");
-		$j('#syncTime').hide();
+		$j('#syctxtEnTime').hide();
+		$j('#syctxtEnInr').hide();
 	});
