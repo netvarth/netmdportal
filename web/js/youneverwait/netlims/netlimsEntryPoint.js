@@ -57,7 +57,19 @@ $j(document).ready(function() {
 		}
 	});
 	
-
+	$j('#netlimsPTBContainer #btn_change_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	//alert("list");
+	var netlimsId= getSelectedNetLimsId(pgTableName);
+		if(netlimsId!="") {
+		var obj=$j(this);
+		createModal(constants_netlimsSycSetJson,'netlimsSycSetModal');	
+		openModalBox(obj,'netlimsSycSetModal')
+		$j.cachedScript(constant_NetLimsSyncSet_Url).done(function(script, textStatus) {
+		
+		})
+		}
+	});
 	
 	//To select row from the table
 	$j("#netlims" + ' tbody tr').die('click').live('click',function(){		
