@@ -40,6 +40,7 @@ import com.nv.youNeverWait.rs.dto.RetrieveLabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 
@@ -108,5 +109,15 @@ public interface LabService {
 	 */
 	public LabDTO getLab(LabHeaderDTO header, String lastSyncTime,
 			Date currentSyncTime);
+	/**
+	 * @param sync
+	 * @return
+	 */
+	public ResponseDTO enableSync(SyncFreqDTO sync);
+	/**
+	 * @param sync
+	 * @return
+	 */
+	public ResponseDTO enableBranchSync(SyncFreqDTO sync);
 
 }
