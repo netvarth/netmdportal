@@ -28,6 +28,7 @@ import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncLogDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.rs.dto.UserDetails;
@@ -175,7 +176,7 @@ SuperAdminDao {
 		
 			if(request!=null)
 				request.getSession().getServletContext()
-				.setAttribute("logEnabled", superAdmin.isEnableLog());
+				.setAttribute("logEnabled", superAdmin.getEnableLog());
 		}
 		ResponseDTO response = new ResponseDTO();
 		response.setSuccess(true);
@@ -197,7 +198,7 @@ SuperAdminDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response.setStatus(superAdmin.isEnableLog());
+		response.setStatus(superAdmin.getEnableLog());
 		response.setSuccess(true);
 		return response;
 	}
@@ -215,14 +216,29 @@ SuperAdminDao {
 		
 			if(request!=null)
 				request.getSession().getServletContext()
-				.setAttribute("logEnabled", superAdmin.isEnableLog());
+				.setAttribute("logEnabled", superAdmin.getEnableLog());
 		}
 		ResponseDTO response = new ResponseDTO();
 		response.setSuccess(true);
 		return response;
 	}
 
-	
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.SuperAdminDao#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO enableSync(SyncFreqDTO sync) {
+		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+		if (superAdmin != null) {
+			superAdmin.setEnableSync(sync.isEnableSync());
+			update(superAdmin);
+		}
+		ResponseDTO response = new ResponseDTO();
+		response.setSuccess(true);
+		return response;
+	}
+
 	/**
 	 * get User By LoginId And Password
 	 * @param password
@@ -269,7 +285,5 @@ SuperAdminDao {
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
-
-	
 
 }
