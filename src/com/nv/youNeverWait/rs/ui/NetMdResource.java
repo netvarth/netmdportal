@@ -39,6 +39,7 @@ import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.LogService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
@@ -724,6 +725,57 @@ public class NetMdResource {
 		return response;
 	}
 
+	/**
+	 * To enable/disable  sync process
+	 * 
+	 * @param log
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "enableSync", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO enableSync(@RequestBody SyncFreqDTO sync) {
+
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = netMdService.enableSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To enable/disable  sync process
+	 * 
+	 * @param log
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "enableBranchSync", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO enableBranchSync(@RequestBody SyncFreqDTO sync) {
+
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = netMdService.enableBranchSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	
 	
 	/**
 	 * @return the netMdService
