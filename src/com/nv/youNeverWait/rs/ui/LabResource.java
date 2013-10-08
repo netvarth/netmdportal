@@ -44,6 +44,7 @@ import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.security.User;
@@ -898,6 +899,58 @@ public class LabResource {
 		return response;
 	}
 
+	/**
+	 * To enable/disable  sync process
+	 * 
+	 * @param log
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "enableSync", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO enableSync(@RequestBody SyncFreqDTO sync) {
+
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = labService.enableSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To enable/disable  sync process
+	 * 
+	 * @param log
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "enableBranchSync", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO enableBranchSync(@RequestBody SyncFreqDTO sync) {
+
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = labService.enableBranchSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	
+	
 	/**
 	 * @return the labService
 	 */
