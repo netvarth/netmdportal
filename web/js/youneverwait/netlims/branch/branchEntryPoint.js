@@ -112,6 +112,20 @@ $j('#pageTitle1').show();
 		viewHealthmonitor(healtMontr);*/
 		}	
 	});
+	
+	$j('#branchPTBContainer #btn_change_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	  var branchId = getSelectedBranchId(pgTableName);
+	    if(branchId!="") {
+			var obj=$j(this);
+			createModal(constants_netlimsBranchSycSetJson,'netlimsBrachSycSetModal');	
+			openModalBox(obj,'netlimsBrachSycSetModal')
+		$j.cachedScript(constant_NetLimsBranchSyncSet_Url).done(function(script, textStatus) {
+		
+		})
+		}	
+	});
+	
 	$j('#branchPTBContainer #btn_view_ptb_id').die('click').live("click",function() {
 	removeErrors();
 	  var branchId = getSelectedBranchId(pgTableName);

@@ -20,6 +20,10 @@
 			"name" 	: 	"health",
 			"title"	:	"Health monitor"
 			
+		},
+		{
+			"name" 	: 	"change",
+			"title"	:	"Sync Set"
 		}
 
 	]

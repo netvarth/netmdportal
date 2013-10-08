@@ -3,8 +3,8 @@
     "style": "width:60%;margin:0 20%",
     "data": [
         {
-            "name": "newBranchForm",
-            "id": "newBranchForm",
+            "name": "newsetSyncForm",
+            "id": "newsetSyncForm",
             "content": [
                 {
                     "className": "sep-div",
@@ -28,7 +28,7 @@
                                     "className": "column-left",
                                     "elements": [
                                         {
-                                            "name": "syncType",
+                                            "name": "NetlimsSyncType",
                                             "id": "syncTypeEn",
                                             "type": "radio",
                                             "title": "Synchornisation",
@@ -36,12 +36,12 @@
                                                 {
                                                     "title": "Enable",
                                                     "value": "Enable",
-                                                    "id": "Enable"
+                                                    "id": "netlimsEnable"
                                                 },
                                                 {
                                                     "title": "Disable",
                                                     "value": "Disable",
-                                                    "id": "Disable",
+                                                    "id": "netlimsDisable",
                                                     "checked": true,
                                                     "style": "margin-left: 20%;"
                                                 }
@@ -56,11 +56,11 @@
                             "data": [
                                 {
                                     "className": "column-left",
-                                    "id": "syctxtEnTime",
+                                    "id": "syctxtnetlimsEnTime",
                                     "elements": [
                                         {
-                                            "name": "syncTime",
-                                            "id": "syncTime",
+                                            "name": "NetlimsSyncTime",
+                                            "id": "NetlimsSyncTime",
                                             "title": "Syncfreqtype",
                                             "type": "select",
                                             "className": "large "
@@ -69,12 +69,12 @@
                                 },
                                 {
                                     "className": "column-right",
-                                    "id": "syctxtEnInr",
+                                    "id": "syctxtnetlimsEnInr",
                                     "style": "margin: -9% 30% 0 0;",
                                     "elements": [
                                         {
-                                            "name": "syncInterval",
-                                            "id": "syncInterval",
+                                            "name": "NetlimsSyncInterval",
+                                            "id": "NetlimsSyncInterval",
                                             "title": "SyncInterval",
                                             "type": "text",
                                             "className": "small "
@@ -95,21 +95,29 @@
                                     "type": "button",
                                     "content": {
                                         "buttons": [
-                                            {
-                                                "name": "btnNewBranchCreate",
-                                                "id": "btnNewBranchCreate",
-                                                "title": "Create",
+                                             {
+                                                "name": "btnNewNetlimssycEdit",
+                                                "id": "btnNewNetlimssycEdit",
+                                                "title": "Edit",
                                                 "type": "button",
                                                 "className": "stdbtn btn_black",
-                                                "style": "opacity:1; margin:2px"
+                                                "style": "opacity:1;margin:2px"
+                                            },
+											 {
+                                                "name": "btnNewNetlimsSycCreate",
+                                                "id": "btnNewNetlimsSycCreate",
+                                                "title": "Done",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;display:none;margin:2px"
                                             },
                                             {
-                                                "name": "btnNewBranchCancel",
-                                                "id": "btnNewBranchCancel",
+                                                "name": "btnNewNetlimsCancel",
+                                                "id": "btnNewNetlimsCancel",
                                                 "title": "Cancel",
                                                 "type": "button",
                                                 "className": "stdbtn",
-                                                "style": "opacity:1; margin:2px"
+                                                "style": "opacity:1;display:none;margin:2px"
                                             }
                                         ]
                                     }

@@ -3,8 +3,8 @@
     "style": "width:60%;margin:0 20%",
     "data": [
         {
-            "name": "newBranchForm",
-            "id": "newBranchForm",
+            "name": "newBranchsetSyncForm",
+            "id": "newBranchsetSyncForm",
             "content": [
                 {
                     "className": "sep-div",
@@ -28,7 +28,7 @@
                                     "className": "column-left",
                                     "elements": [
                                         {
-                                            "name": "syncType",
+                                            "name": "NetlimsSyncType",
                                             "id": "syncTypeEn",
                                             "type": "radio",
                                             "title": "Synchornisation",
@@ -56,11 +56,11 @@
                             "data": [
                                 {
                                     "className": "column-left",
-                                    "id": "syctxtEnTime",
+                                    "id": "syctxtBranchEnTime",
                                     "elements": [
                                         {
-                                            "name": "syncTime",
-                                            "id": "syncTime",
+                                            "name": "NetlimsBranchSyncTime",
+                                            "id": "NetlimsBranchSyncTime",
                                             "title": "Syncfreqtype",
                                             "type": "select",
                                             "className": "large "
@@ -69,12 +69,12 @@
                                 },
                                 {
                                     "className": "column-right",
-                                    "id": "syctxtEnInr",
+                                    "id": "syctxtBranchEnInr",
                                     "style": "margin: -9% 30% 0 0;",
                                     "elements": [
                                         {
-                                            "name": "syncInterval",
-                                            "id": "syncInterval",
+                                            "name": "NetlimsBranchSyncInterval",
+                                            "id": "NetlimsBranchSyncInterval",
                                             "title": "SyncInterval",
                                             "type": "text",
                                             "className": "small "
@@ -96,12 +96,20 @@
                                     "content": {
                                         "buttons": [
                                             {
-                                                "name": "btnNewBranchCreate",
-                                                "id": "btnNewBranchCreate",
-                                                "title": "Create",
+                                                "name": "btnNewBranchsycEdit",
+                                                "id": "btnNewBranchsycEdit",
+                                                "title": "Edit",
                                                 "type": "button",
                                                 "className": "stdbtn btn_black",
-                                                "style": "opacity:1; margin:2px"
+                                                "style": "opacity:1;margin:2px"
+                                            },
+											 {
+                                                "name": "btnNewBranchSycCreate",
+                                                "id": "btnNewBranchSycCreate",
+                                                "title": "Done",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;display:none;margin:2px"
                                             },
                                             {
                                                 "name": "btnNewBranchCancel",
@@ -109,7 +117,7 @@
                                                 "title": "Cancel",
                                                 "type": "button",
                                                 "className": "stdbtn",
-                                                "style": "opacity:1; margin:2px"
+                                                "style": "opacity:1;display:none;margin:2px"
                                             }
                                         ]
                                     }

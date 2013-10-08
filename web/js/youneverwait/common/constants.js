@@ -47,6 +47,10 @@ constant_NetMdView_Msg="View NetMd";
 
 constant_NetLimsSyncSet_Url="/youNeverWait/js/youneverwait/netlims/netlimsSycSet.js";
 constants_netlimsSycSetJson="/youNeverWait/json/new/netlimssetSync.json"
+constants_netlimsBranchSycSetJson="/youNeverWait/json/new/netlimsBranchsetSync.json";
+constant_NetLimsBranchSyncSet_Url="/youNeverWait/js/youneverwait/netlims/branch/netlimsBranchSycSet.js"
+
+
 constant_NetLimsBranchEntry_Url="/youNeverWait/js/youneverwait/netlims/branch/branchEntryPoint.js";
 constants_newNetLimsBranch="/youNeverWait/js/youneverwait/netlims/new/newNetLimsBranch.js";
 constants_newNetMdBranch="/youNeverWait/js/youneverwait/netmd/new/newNetMdBranch.js";
