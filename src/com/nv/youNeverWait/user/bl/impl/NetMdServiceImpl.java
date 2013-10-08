@@ -29,6 +29,7 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetmdTbl;
+import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
@@ -51,6 +52,7 @@ import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.validation.NetMdValidator;
@@ -838,6 +840,42 @@ public class NetMdServiceImpl implements NetMdService {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#createBill(com.nv.youNeverWait.rs.dto.BillSummaryDTO, com.nv.youNeverWait.rs.dto.HeaderDTO)
+	 */
+	@Override
+	public ResponseDTO createBill(BillSummaryDTO newBill, HeaderDTO header) {
+		ResponseDTO response = netMdDao.createBill(newBill,header);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#updatedBills(com.nv.youNeverWait.rs.dto.BillSummaryDTO, com.nv.youNeverWait.rs.dto.HeaderDTO)
+	 */
+	@Override
+	public ResponseDTO updateBills(BillSummaryDTO updatedBill, HeaderDTO header) {
+		ResponseDTO response = netMdDao.updateBill(updatedBill,header);
+		return response;
+	}
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#enableBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	public ResponseDTO enableBranchSync(SyncFreqDTO sync) {
+		ResponseDTO response = netMdDao.enableBranchSync(sync);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	public ResponseDTO enableSync(SyncFreqDTO sync) {
+		ResponseDTO response = netMdDao.enableSync(sync);
+		return response;
+	}
+	
+	
 	/**
 	 * @return the netMdDao
 	 */
@@ -943,4 +981,8 @@ public class NetMdServiceImpl implements NetMdService {
 		this.mailThread = mailThread;
 	}
 
+	
+
+	
+	
 }

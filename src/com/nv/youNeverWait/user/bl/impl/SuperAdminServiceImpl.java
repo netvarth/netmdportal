@@ -64,6 +64,7 @@ import com.nv.youNeverWait.rs.dto.NetRxViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncLogDTO;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
@@ -842,6 +843,14 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return response;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	public ResponseDTO enableSync(SyncFreqDTO sync) {
+		ResponseDTO response = superAdminDao.enableSync(sync);
+		return response;
+	}
 	
 	/**
 	 * @return the netMdService
@@ -1020,5 +1029,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public void setSpecimenManager(SpecimenManager specimenManager) {
 		this.specimenManager = specimenManager;
 	}
+
+	
 
 }

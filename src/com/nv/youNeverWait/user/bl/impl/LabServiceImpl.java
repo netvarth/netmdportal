@@ -63,6 +63,7 @@ import com.nv.youNeverWait.rs.dto.RetrieveLabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
@@ -1154,6 +1155,24 @@ public class LabServiceImpl implements LabService {
 		return labDetails;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	public ResponseDTO enableSync(SyncFreqDTO sync) {
+		ResponseDTO response = labDao.enableSync(sync);
+		return response;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	public ResponseDTO enableBranchSync(SyncFreqDTO sync) {
+		ResponseDTO response = labDao.enableBranchSync(sync);
+		return response;
+	}
 	
 	/**
 	 * @return the labDao
@@ -1288,5 +1307,6 @@ public class LabServiceImpl implements LabService {
 		this.orderManager = orderManager;
 	}
 
+	
 	
 }
