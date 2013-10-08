@@ -20,6 +20,10 @@ private int globalId;
 private String uid;
 private boolean success;
 private ErrorDTO error;
+private String actionName;
+private String createDateTime;
+private String updateDateTime;
+
 /**
  * 
  */
@@ -40,6 +44,44 @@ public BillSyncResponseDTO(int globalId, String uid, boolean success,
 	this.uid = uid;
 	this.success = success;
 	this.error = error;
+}
+
+
+/**
+ * @return the actionName
+ */
+public String getActionName() {
+	return actionName;
+}
+/**
+ * @param actionName the actionName to set
+ */
+public void setActionName(String actionName) {
+	this.actionName = actionName;
+}
+/**
+ * @return the createDateTime
+ */
+public String getCreateDateTime() {
+	return createDateTime;
+}
+/**
+ * @param createDateTime the createDateTime to set
+ */
+public void setCreateDateTime(String createDateTime) {
+	this.createDateTime = createDateTime;
+}
+/**
+ * @return the updateDateTime
+ */
+public String getUpdateDateTime() {
+	return updateDateTime;
+}
+/**
+ * @param updateDateTime the updateDateTime to set
+ */
+public void setUpdateDateTime(String updateDateTime) {
+	this.updateDateTime = updateDateTime;
 }
 /**
  * @return the globalId
