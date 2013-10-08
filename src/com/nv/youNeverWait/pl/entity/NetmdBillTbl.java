@@ -19,8 +19,8 @@ public class NetmdBillTbl implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int id;
 
-	@Column(name="amount_date", nullable=false)
-	private float amountDate;
+	@Column(name="amount_paid", nullable=false)
+	private float amountPaid;
 
 	@Column(name="bill_amount", nullable=false)
 	private float billAmount;
@@ -62,12 +62,12 @@ public class NetmdBillTbl implements Serializable {
 		this.id = id;
 	}
 
-	public float getAmountDate() {
-		return this.amountDate;
+	public float getAmountPaid() {
+		return this.amountPaid;
 	}
 
-	public void setAmountDate(float amountDate) {
-		this.amountDate = amountDate;
+	public void setAmountPaid(float amountPaid) {
+		this.amountPaid = amountPaid;
 	}
 
 	public float getBillAmount() {
@@ -133,5 +133,6 @@ public class NetmdBillTbl implements Serializable {
 	public void setPatientTbl(PatientTbl patientTbl) {
 		this.patientTbl = patientTbl;
 	}
+
 
 }
