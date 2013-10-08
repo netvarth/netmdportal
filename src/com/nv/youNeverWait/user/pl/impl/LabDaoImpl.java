@@ -43,6 +43,7 @@ import com.nv.youNeverWait.pl.entity.OrderAmountTbl;
 import com.nv.youNeverWait.pl.entity.OrderTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
+import com.nv.youNeverWait.pl.entity.SuperAdminTbl;
 import com.nv.youNeverWait.pl.entity.UserStatusEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
@@ -69,6 +70,7 @@ import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveLabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.SystemHealthMonitorDetailList;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
@@ -957,7 +959,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 
 		LabTbl lab = getById(LabTbl.class, branchpassPhrase.getLabBranchTbl()
 				.getLabTbl().getId());
-		// setting netmd details
+		// setting lab details
 		LabDTO newLab = new LabDTO();
 		if (lab.getLabLoginTbl() != null) {
 			LabLoginTbl ownerLogin = getById(LabLoginTbl.class, lab
@@ -2108,6 +2110,36 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.LabDao#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	public ResponseDTO enableSync(SyncFreqDTO sync) {
+		LabTbl lab = getById(LabTbl.class, sync.getLabId());
+		if (lab != null) {
+			lab.setEnableSync(sync.isEnableSync());
+			update(lab);
+		}
+		ResponseDTO response = new ResponseDTO();
+		response.setSuccess(true);
+		return response;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.LabDao#enableBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	public ResponseDTO enableBranchSync(SyncFreqDTO sync) {
+		LabBranchTbl labBranch = getById(LabBranchTbl.class, sync.getLabBranchId());
+		if (labBranch != null) {
+			labBranch.setEnableSync(sync.isEnableSync());
+			update(labBranch);
+		}
+		ResponseDTO response = new ResponseDTO();
+		response.setSuccess(true);
+		return response;
+	}
+	
 	/**
 	 * @param labId
 	 * @param syncTime
@@ -2688,6 +2720,10 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	public void setNetlimsServerIpAddress(String netlimsServerIpAddress) {
 		this.netlimsServerIpAddress = netlimsServerIpAddress;
 	}
+
+	
+
+	
 
 	
 }
