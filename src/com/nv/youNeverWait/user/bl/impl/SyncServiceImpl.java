@@ -233,8 +233,100 @@ public class SyncServiceImpl implements SyncService {
 	private List<BillSyncResponseDTO> getBillResponseList(HeaderDTO header,
 			List<BillSummaryDTO> newBillList,
 			List<BillSummaryDTO> updateBillList) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<BillSyncResponseDTO> billResponseList = new ArrayList<BillSyncResponseDTO>();
+
+		List<BillSyncResponseDTO> newBillResponseList = syncNewBills(
+				newBillList, header);
+		List<BillSyncResponseDTO> updatedBillResponseList = syncUpdatedBills(
+				updateBillList, header);
+		billResponseList.addAll(newBillResponseList);
+		billResponseList.addAll(updatedBillResponseList);
+
+		return billResponseList;
+	}
+
+	/**
+	 * @param updateBillList
+	 * @param header
+	 * @return
+	 */
+	private List<BillSyncResponseDTO> syncUpdatedBills(
+			List<BillSummaryDTO> updateBillList, HeaderDTO header) {
+		List<BillSyncResponseDTO> updatedBillResponseList = new ArrayList<BillSyncResponseDTO>();
+		for (BillSummaryDTO updatedBill : updateBillList) {
+			try {
+
+				ResponseDTO response = netMdService.updateBills(updatedBill,
+						header);
+				BillSyncResponseDTO billResponse = new BillSyncResponseDTO();
+				billResponse.setActionName(ActionNameEnum.UPDATE.getDisplayName());
+				billResponse.setUpdateDateTime(response.getUpdateDateTime());
+				billResponse.setGlobalId(response.getGlobalId());
+				billResponse.setUid(Integer.toString(response.getUid()));
+				billResponse.setSuccess(true);
+
+				updatedBillResponseList.add(billResponse);
+			} catch (ServiceException se) {
+				log.error("Error while saving updated bills into portal ", se);
+				List<Parameter> parameters = se.getParamList();
+				ErrorDTO error = new ErrorDTO();
+				error.setErrCode(se.getError().getErrCode());
+				error.setParams(parameters);
+				error.setDisplayErrMsg(se.isDisplayErrMsg());
+				BillSyncResponseDTO billResponse = new BillSyncResponseDTO();
+				billResponse.setError(error);
+				billResponse.setSuccess(false);
+				billResponse.setUid(updatedBill.getUid());
+				billResponse.setGlobalId(updatedBill.getGlobalId());
+				billResponse.setActionName(ActionNameEnum.UPDATE
+						.getDisplayName());
+
+				updatedBillResponseList.add(billResponse);
+			}
+		}
+		return updatedBillResponseList;
+	}
+
+	/**
+	 * @param newBillList
+	 * @param header
+	 * @return
+	 */
+	private List<BillSyncResponseDTO> syncNewBills(
+			List<BillSummaryDTO> newBillList, HeaderDTO header) {
+		List<BillSyncResponseDTO> newBillResponseList = new ArrayList<BillSyncResponseDTO>();
+		for (BillSummaryDTO newBill : newBillList) {
+			try {
+
+				ResponseDTO response = netMdService.createBill(newBill, header);
+				BillSyncResponseDTO billResponse = new BillSyncResponseDTO();
+				billResponse.setActionName(ActionNameEnum.ADD
+						.getDisplayName());
+				billResponse.setCreateDateTime(response.getCreateDateTime());
+				billResponse.setUpdateDateTime(response.getUpdateDateTime());
+				billResponse.setGlobalId(response.getGlobalId());
+				billResponse.setUid(Integer.toString(response.getUid()));
+				billResponse.setSuccess(true);
+
+				newBillResponseList.add(billResponse);
+			} catch (ServiceException se) {
+				log.error("Error while saving new bills into portal ", se);
+				List<Parameter> parameters = se.getParamList();
+				ErrorDTO error = new ErrorDTO();
+				error.setErrCode(se.getError().getErrCode());
+				error.setParams(parameters);
+				error.setDisplayErrMsg(se.isDisplayErrMsg());
+				BillSyncResponseDTO billResponse = new BillSyncResponseDTO();
+				billResponse.setError(error);
+				billResponse.setSuccess(false);
+				billResponse.setUid(newBill.getUid());
+				billResponse.setActionName(ActionNameEnum.ADD
+						.getDisplayName());
+				newBillResponseList.add(billResponse);
+			}
+		}
+		return newBillResponseList;
 	}
 
 	/**
