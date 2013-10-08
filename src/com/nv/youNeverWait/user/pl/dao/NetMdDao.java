@@ -8,6 +8,8 @@
 package com.nv.youNeverWait.user.pl.dao;
 
 import java.util.Date;
+
+import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetMdActivationResponseDTO;
@@ -22,6 +24,7 @@ import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.pl.impl.NetMdBranchOwnerDetails;
 
@@ -51,4 +54,26 @@ public interface NetMdDao {
 	public ResponseDTO clearMacId(HeaderDTO header);
 	public ResponseDTO makePrimary(HeaderDTO header);
 	public ResponseDTO changePassword(PasswordDTO passwords);
+	/**
+	 * @param newBill
+	 * @param header
+	 * @return
+	 */
+	public ResponseDTO createBill(BillSummaryDTO newBill, HeaderDTO header);
+	/**
+	 * @param updatedBill
+	 * @param header
+	 * @return
+	 */
+	public ResponseDTO updateBill(BillSummaryDTO updatedBill, HeaderDTO header);
+	/**
+	 * @param sync
+	 * @return
+	 */
+	public ResponseDTO enableBranchSync(SyncFreqDTO sync);
+	/**
+	 * @param sync
+	 * @return
+	 */
+	public ResponseDTO enableSync(SyncFreqDTO sync);
 }
