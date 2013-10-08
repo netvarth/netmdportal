@@ -65,6 +65,15 @@ public class LabTbl implements Serializable {
 	@Column(name="order_type_code", nullable=false)
 	private String orderTypeCode;
 	
+	@Column(name="enable_sync", nullable=false)
+	private boolean enableSync;
+	
+	@Column(name="sync_freq_type", nullable=false, length=45)
+	private String syncFreqType;
+	
+	@Column(name="sync_time", nullable=false)
+	private int syncTime;
+
 	//bi-directional many-to-one association to LabBranchTbl
 	@OneToMany(mappedBy="labTbl")
 	private Set<LabBranchTbl> labBranchTbls;
@@ -326,6 +335,21 @@ public class LabTbl implements Serializable {
 	 */
 	public void setDestinationLabTbls(Set<OrderTbl> destinationLabTbls) {
 		this.destinationLabTbls = destinationLabTbls;
+	}
+	
+	public boolean getEnableSync() {
+		return this.enableSync;
+	}
+
+	public void setEnableSync(boolean enableSync) {
+		this.enableSync = enableSync;
+	}
+	public String getSyncFreqType() {
+		return this.syncFreqType;
+	}
+
+	public void setSyncFreqType(String syncFreqType) {
+		this.syncFreqType = syncFreqType;
 	}
 	
 	
