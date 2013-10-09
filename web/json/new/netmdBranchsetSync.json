@@ -1,0 +1,132 @@
+{
+    "title": "Set Synchronisation",
+    "style": "width:60%;margin:0 20%",
+    "data": [
+        {
+            "name": "newnetmdBranchsetSyncForm",
+            "id": "newnetmdBranchsetSyncForm",
+            "content": [
+                {
+                    "className": "sep-div",
+                    "style": "display:none",
+                    "id": "errorDivHeader",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "id": "errorDivNewNetmdBranchData"
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div",
+                    "id": "referralsdiv",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "NetmdbrSyncType",
+                                            "id": "syncTypeEn",
+                                            "type": "radio",
+                                            "title": "Synchornisation",
+                                            "value": [
+                                                {
+                                                    "title": "Enable",
+                                                    "value": "Enable",
+                                                    "id": "netmdbrchEnable"
+                                                },
+                                                {
+                                                    "title": "Disable",
+                                                    "value": "Disable",
+                                                    "id": "netmdbrchDisable",
+                                                    "checked": true,
+                                                    "style": "margin-left: 20%;"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "id": "syctxtnetmdBranchEnTime",
+                                    "elements": [
+                                        {
+                                            "name": "NetmdBranchSyncTime",
+                                            "id": "NetmdBranchSyncTime",
+                                            "title": "Syncfreqtype",
+                                            "type": "select",
+                                            "className": "large "
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "id": "syctxtnetmdBranchEnInr",
+                                    "style": "margin: -9% 30% 0 0;",
+                                    "elements": [
+                                        {
+                                            "name": "NetmdBranchSyncInterval",
+                                            "id": "NetmdBranchSyncInterval",
+                                            "title": "SyncInterval",
+                                            "type": "text",
+                                            "className": "small "
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div ",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                            {
+                                                "name": "btnNewnetmdBranchsycEdit",
+                                                "id": "btnNewnetmdBranchsycEdit",
+                                                "title": "Edit",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;margin:2px"
+                                            },
+											 {
+                                                "name": "btnNewnetmdBranchSycCreate",
+                                                "id": "btnNewnetmdBranchSycCreate",
+                                                "title": "Done",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;display:none;margin:2px"
+                                            },
+                                            {
+                                                "name": "btnNewnetmdBranchCancel",
+                                                "id": "btnNewnetmdBranchCancel",
+                                                "title": "Cancel",
+                                                "type": "button",
+                                                "className": "stdbtn",
+                                                "style": "opacity:1;display:none;margin:2px"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

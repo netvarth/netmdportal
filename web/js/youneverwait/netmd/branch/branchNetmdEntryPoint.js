@@ -99,6 +99,20 @@ $j('#pageTitle1').html('['+a.netMd.name.toUpperCase()+']');
 			})
 		}
 	});
+	
+	$j('#branchPTBContainer #btn_change_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	  var branchId = getSelectedNetmdBranchId(pgTableName);
+	    if(branchId!="") {
+			var obj=$j(this);
+			createModal(constants_netmdBranchSycSetJson,'netmdBrachSycSetModal');	
+			openModalBox(obj,'netmdBrachSycSetModal')
+		$j.cachedScript(constant_NetmdBranchSyncSet_Url).done(function(script, textStatus) {
+		
+		})
+		}	
+	});
+	
 	$j('#branchPTBContainer #btn_back_ptb_id').die('click').live("click",function() {
 	removeErrors();
 	$j('#pageTitle1').hide();
