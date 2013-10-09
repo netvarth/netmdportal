@@ -351,6 +351,20 @@ public class LabTbl implements Serializable {
 	public void setSyncFreqType(String syncFreqType) {
 		this.syncFreqType = syncFreqType;
 	}
+
+	/**
+	 * @return the syncTime
+	 */
+	public int getSyncTime() {
+		return syncTime;
+	}
+
+	/**
+	 * @param syncTime the syncTime to set
+	 */
+	public void setSyncTime(int syncTime) {
+		this.syncTime = syncTime;
+	}
 	
 	
 	

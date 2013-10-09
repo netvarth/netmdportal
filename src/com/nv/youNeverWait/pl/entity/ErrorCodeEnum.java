@@ -232,7 +232,8 @@ public enum ErrorCodeEnum {
 	InvalidNetRxBranchId("2012","Given netRx branch id is invalid"),
 	InvalidNetRxUser("2013","User with id {id} does not exists in this netrx branch"),
 	InvalidNetRxUserName("2014","Please enter valid user name"),
-	NetRxIdNull("2015","Netrx Id should not be null")  
+	NetRxIdNull("2015","Netrx Id should not be null"), 
+	InvalidSyncFreqType("2016","Invalid synchronization frequency type")  
 	;
 	private String errCode;
 	private String errMsg;
