@@ -1,0 +1,132 @@
+{
+    "title": "Set Synchronisation",
+    "style": "width:60%;margin:0 20%",
+    "data": [
+        {
+            "name": "newsetNetmdSyncForm",
+            "id": "newsetNetmdSyncForm",
+            "content": [
+                {
+                    "className": "sep-div",
+                    "style": "display:none",
+                    "id": "errorDivHeader",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "id": "errorDivNewNetlimsBranchData"
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div",
+                    "id": "referralsdiv",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "NetmdSyncType",
+                                            "id": "syncTypeEn",
+                                            "type": "radio",
+                                            "title": "Synchornisation",
+                                            "value": [
+                                                {
+                                                    "title": "Enable",
+                                                    "value": "Enable",
+                                                    "id": "NetmdEnable"
+                                                },
+                                                {
+                                                    "title": "Disable",
+                                                    "value": "Disable",
+                                                    "id": "NetmdDisable",
+                                                    "checked": true,
+                                                    "style": "margin-left: 20%;"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "id": "syctxtNetmdEnTime",
+                                    "elements": [
+                                        {
+                                            "name": "NetmdSyncTime",
+                                            "id": "NetmdSyncTime",
+                                            "title": "Syncfreqtype",
+                                            "type": "select",
+                                            "className": "large "
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "id": "syctxtNetmdEnInr",
+                                    "style": "margin: -9% 30% 0 0;",
+                                    "elements": [
+                                        {
+                                            "name": "NetmdSyncInterval",
+                                            "id": "NetmdSyncInterval",
+                                            "title": "SyncInterval",
+                                            "type": "text",
+                                            "className": "small "
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div ",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                             {
+                                                "name": "btnNewNetmdsycEdit",
+                                                "id": "btnNewNetmdsycEdit",
+                                                "title": "Edit",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;margin:2px"
+                                            },
+											 {
+                                                "name": "btnNewNetmdSycCreate",
+                                                "id": "btnNewNetmdSycCreate",
+                                                "title": "Done",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;display:none;margin:2px"
+                                            },
+                                            {
+                                                "name": "btnNewNetmdCancel",
+                                                "id": "btnNewNetmdCancel",
+                                                "title": "Cancel",
+                                                "type": "button",
+                                                "className": "stdbtn",
+                                                "style": "opacity:1;display:none;margin:2px"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
