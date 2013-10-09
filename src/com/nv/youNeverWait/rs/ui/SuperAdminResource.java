@@ -1304,19 +1304,21 @@ public class SuperAdminResource {
 		return response;
 	}
 	
+//	
+	
 	/**
 	 * To enable/disable  sync process
 	 * 
 	 * @param log
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "enableSync", method = RequestMethod.POST)
+	@RequestMapping(value = "setSync", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseDTO enableSync(@RequestBody SyncFreqDTO sync) {
+	public ResponseDTO setSync(@RequestBody SyncFreqDTO sync) {
 
 		ResponseDTO response = new ResponseDTO();
 		try {
-			response = service.enableSync(sync);
+			response = service.setSync(sync);
 		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();
@@ -1329,7 +1331,54 @@ public class SuperAdminResource {
 		return response;
 	}
 	
-	
+	/**
+	 * To get synchronization frequency of a lab 
+	 * 
+	 * @param log
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "getSyncDetails", method = RequestMethod.GET)
+	@ResponseBody
+	public SyncFreqDTO getSyncDetails() {
+
+		SyncFreqDTO response = new SyncFreqDTO();
+		try {
+			response = service.getSyncDetails();
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	/**
+//	 * To enable/disable  sync process
+//	 * 
+//	 * @param log
+//	 * @return ResponseDTO
+//	 */
+//	@RequestMapping(value = "enableSync", method = RequestMethod.POST)
+//	@ResponseBody
+//	public ResponseDTO enableSync(@RequestBody SyncFreqDTO sync) {
+//
+//		ResponseDTO response = new ResponseDTO();
+//		try {
+//			response = service.enableSync(sync);
+//		} catch (ServiceException e) {
+//			List<Parameter> parameters = e.getParamList();
+//			ErrorDTO error = new ErrorDTO();
+//			error.setErrCode(e.getError().getErrCode());
+//			error.setParams(parameters);
+//			error.setDisplayErrMsg(e.isDisplayErrMsg());
+//			response.setError(error);
+//			response.setSuccess(false);
+//		}
+//		return response;
+//	}
 	
 	/**
 	 * @return the service

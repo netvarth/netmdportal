@@ -18,6 +18,8 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
 import com.nv.framework.sendmsg.email.SendMailMsgObj;
@@ -1156,24 +1158,87 @@ public class LabServiceImpl implements LabService {
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.LabService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#setBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 	 */
 	@Override
-	public ResponseDTO enableSync(SyncFreqDTO sync) {
-		ResponseDTO response = labDao.enableSync(sync);
+	public ResponseDTO setBranchSync(SyncFreqDTO sync) {
+		if(sync.getLabBranchId()<=0){
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;	
+		}
+		ResponseDTO response = labDao.setBranchSync(sync);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#setLabSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	public ResponseDTO setLabSync(SyncFreqDTO sync) {
+		if(sync.getLabId()<=0){
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidLab);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(sync.getLabId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		ResponseDTO response = labDao.setLabSync(sync);
 		return response;
 	}
 
 
 	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.LabService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#getLabSyncDetails(int)
 	 */
 	@Override
-	public ResponseDTO enableBranchSync(SyncFreqDTO sync) {
-		ResponseDTO response = labDao.enableBranchSync(sync);
+	public SyncFreqDTO getLabSyncDetails(int labId) {
+		if (labId <= 0) {
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidLab);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(labId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		SyncFreqDTO response=  labDao.getLabSyncDetails(labId);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#getBranchSyncDetails(int)
+	 */
+	@Override
+	public SyncFreqDTO getBranchSyncDetails(int branchId) {
+		if (branchId <= 0) {
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		SyncFreqDTO response=  labDao.getBranchSyncDetails(branchId);
 		return response;
 	}
 	
+//	/* (non-Javadoc)
+//	 * @see com.nv.youNeverWait.user.bl.service.LabService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+//	 */
+//	@Override
+//	public ResponseDTO enableLabSync(SyncFreqDTO sync) {
+//		
+//		ResponseDTO response = labDao.enableLabSync(sync);
+//		return response;
+//	}
+//
+//
+//	/* (non-Javadoc)
+//	 * @see com.nv.youNeverWait.user.bl.service.LabService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+//	 */
+//	@Override
+//	public ResponseDTO enableBranchSync(SyncFreqDTO sync) {
+//		if(sync.getLabBranchId()<=0){
+//			// set error message
+//		}
+//		ResponseDTO response = labDao.enableBranchSync(sync);
+//		return response;
+//	}
+//	
 	/**
 	 * @return the labDao
 	 */
@@ -1308,5 +1373,5 @@ public class LabServiceImpl implements LabService {
 	}
 
 	
-	
+
 }

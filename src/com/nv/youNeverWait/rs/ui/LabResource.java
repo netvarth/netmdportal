@@ -899,19 +899,69 @@ public class LabResource {
 		return response;
 	}
 
+//	/**
+//	 * To enable/disable  sync process
+//	 * 
+//	 * @param log
+//	 * @return ResponseDTO
+//	 */
+//	@RequestMapping(value = "enableLabSync", method = RequestMethod.POST)
+//	@ResponseBody
+//	public ResponseDTO enableSync(@RequestBody SyncFreqDTO sync) {
+//
+//		ResponseDTO response = new ResponseDTO();
+//		try {
+//			response = labService.enableLabSync(sync);
+//		} catch (ServiceException e) {
+//			List<Parameter> parameters = e.getParamList();
+//			ErrorDTO error = new ErrorDTO();
+//			error.setErrCode(e.getError().getErrCode());
+//			error.setParams(parameters);
+//			error.setDisplayErrMsg(e.isDisplayErrMsg());
+//			response.setError(error);
+//			response.setSuccess(false);
+//		}
+//		return response;
+//	}
+	
+//	/**
+//	 * To enable/disable  sync process
+//	 * 
+//	 * @param log
+//	 * @return ResponseDTO
+//	 */
+//	@RequestMapping(value = "enableBranchSync", method = RequestMethod.POST)
+//	@ResponseBody
+//	public ResponseDTO enableBranchSync(@RequestBody SyncFreqDTO sync) {
+//
+//		ResponseDTO response = new ResponseDTO();
+//		try {
+//			response = labService.enableBranchSync(sync);
+//		} catch (ServiceException e) {
+//			List<Parameter> parameters = e.getParamList();
+//			ErrorDTO error = new ErrorDTO();
+//			error.setErrCode(e.getError().getErrCode());
+//			error.setParams(parameters);
+//			error.setDisplayErrMsg(e.isDisplayErrMsg());
+//			response.setError(error);
+//			response.setSuccess(false);
+//		}
+//		return response;
+//	}
+//	
 	/**
-	 * To enable/disable  sync process
+	 * To set synchronization frequency for a lab 
 	 * 
 	 * @param log
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "enableSync", method = RequestMethod.POST)
+	@RequestMapping(value = "setLabSync", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseDTO enableSync(@RequestBody SyncFreqDTO sync) {
+	public ResponseDTO setLabSync(@RequestBody SyncFreqDTO sync) {
 
 		ResponseDTO response = new ResponseDTO();
 		try {
-			response = labService.enableSync(sync);
+			response = labService.setLabSync(sync);
 		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();
@@ -925,18 +975,69 @@ public class LabResource {
 	}
 	
 	/**
-	 * To enable/disable  sync process
+	 * To set synchronization frequency for a lab branch
 	 * 
 	 * @param log
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "enableBranchSync", method = RequestMethod.POST)
+	@RequestMapping(value = "setBranchSync", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseDTO enableBranchSync(@RequestBody SyncFreqDTO sync) {
+	public ResponseDTO setBranchSync(@RequestBody SyncFreqDTO sync) {
 
 		ResponseDTO response = new ResponseDTO();
 		try {
-			response = labService.enableBranchSync(sync);
+			response = labService.setBranchSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	
+	/**
+	 * To get synchronization frequency of a lab 
+	 * 
+	 * @param log
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "getLabSyncDetails/{labId}", method = RequestMethod.GET)
+	@ResponseBody
+	public SyncFreqDTO getLabSyncDetails(@PathVariable int labId) {
+
+		SyncFreqDTO response = new SyncFreqDTO();
+		try {
+			response = labService.getLabSyncDetails(labId);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To get synchronization frequency of a lab 
+	 * 
+	 * @param log
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "getBranchSyncDetails/{branchId}", method = RequestMethod.GET)
+	@ResponseBody
+	public SyncFreqDTO getBranchSyncDetails(@PathVariable int branchId) {
+
+		SyncFreqDTO response = new SyncFreqDTO();
+		try {
+			response = labService.getBranchSyncDetails(branchId);
 		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();

@@ -844,14 +844,34 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#setSyncFreq(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 	 */
 	@Override
-	public ResponseDTO enableSync(SyncFreqDTO sync) {
-		ResponseDTO response = superAdminDao.enableSync(sync);
+	public ResponseDTO setSync(SyncFreqDTO sync) {
+//		validator.validateSyncDetails(sync);
+		ResponseDTO response = superAdminDao.setSync(sync);
 		return response;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncDetails()
+	 */
+	@Override
+	public SyncFreqDTO getSyncDetails() {
+		SyncFreqDTO response = superAdminDao.getSyncDetails();
+		return response;
+	}
+
 	
+//	/* (non-Javadoc)
+//	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+//	 */
+//	@Override
+//	public ResponseDTO enableSync(SyncFreqDTO sync) {
+//		ResponseDTO response = superAdminDao.enableSync(sync);
+//		return response;
+//	}
+//	
 	/**
 	 * @return the netMdService
 	 */
@@ -1030,6 +1050,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		this.specimenManager = specimenManager;
 	}
 
+	
 	
 
 }
