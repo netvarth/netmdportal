@@ -56,21 +56,34 @@
                             "data": [
                                 {
                                     "className": "column-left",
+                                    "style": "display:none",
                                     "id": "syctxtEnTime",
                                     "elements": [
                                         {
                                             "name": "syncTime",
                                             "id": "syncTime",
-                                            "title": "Syncfreqtype",
+                                            "title": "SyncFreqType",
                                             "type": "select",
                                             "className": "large "
                                         }
                                     ]
                                 },
                                 {
+                                    "className": "column-left",
+                                    "id": "syctxtEnTimelabel",
+                                    "elements": [
+                                        {
+                                            "name": "syncTime",
+                                            "id": "syncTimelabel",
+                                            "title": "SyncFreqType",
+                                            "type": "label"
+                                        }
+                                    ]
+                                },
+                                {
                                     "className": "column-right",
                                     "id": "syctxtEnInr",
-                                    "style": "margin: -9% 30% 0 0;",
+                                    "style": "margin: -9% 30% 0 0;display:none",
                                     "elements": [
                                         {
                                             "name": "syncInterval",
@@ -78,6 +91,19 @@
                                             "title": "SyncInterval",
                                             "type": "text",
                                             "className": "small "
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "id": "syctxtEnInrlabel",
+                                    "style": "margin: -4% 30% 0 0;",
+                                    "elements": [
+                                        {
+                                            "name": "syncInterval",
+                                            "id": "syncIntervallabel",
+                                            "title": "SyncInterval",
+                                            "type": "label"
                                         }
                                     ]
                                 }
@@ -96,20 +122,28 @@
                                     "content": {
                                         "buttons": [
                                             {
-                                                "name": "btnNewBranchCreate",
-                                                "id": "btnNewBranchCreate",
-                                                "title": "Create",
+                                                "name": "btnEdit",
+                                                "id": "btnEdit",
+                                                "title": "Edit",
                                                 "type": "button",
                                                 "className": "stdbtn btn_black",
-                                                "style": "opacity:1; margin:2px"
+                                                "style": "opacity:1;margin:2px"
                                             },
                                             {
-                                                "name": "btnNewBranchCancel",
-                                                "id": "btnNewBranchCancel",
+                                                "name": "btnCreate",
+                                                "id": "btnCreate",
+                                                "title": "Done",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;display:none; margin:2px"
+                                            },
+                                            {
+                                                "name": "btnCancel",
+                                                "id": "btnCancel",
                                                 "title": "Cancel",
                                                 "type": "button",
                                                 "className": "stdbtn",
-                                                "style": "opacity:1; margin:2px"
+                                                "style": "opacity:1; display:none;margin:2px"
                                             }
                                         ]
                                     }
