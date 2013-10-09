@@ -1142,11 +1142,11 @@ public class SyncServiceImpl implements SyncService {
 		RetrieveUserListResponseDTO retrieveUserList= labService.retrieveUserList(sync.getHeader(), sync.getLastSyncTime(), currentSyncTime);
 		syncResponse.setRetrieveUserList(retrieveUserList);
 
-		/*Retrieving  newly added updated lab test*/
+		/*Retrieving  newly added and updated lab test*/
 		 RetrieveTestResponse getTests= testManager.getTests(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
 		 syncResponse.setRetrieveTests(getTests);
 		 
-		 /*Retrieving newly added updated test specimen*/
+		 /*Retrieving newly added and updated test specimen*/
 		 RetrieveSpecimenResponse retreiveSpecimens= specimenManager.getSpecimens(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
 		 syncResponse.setRetrieveSpecimens(retreiveSpecimens);
 		 
