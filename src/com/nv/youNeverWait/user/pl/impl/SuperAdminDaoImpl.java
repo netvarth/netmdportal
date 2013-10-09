@@ -223,21 +223,57 @@ SuperAdminDao {
 		return response;
 	}
 
+
 	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.pl.dao.SuperAdminDao#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 * @see com.nv.youNeverWait.user.pl.dao.SuperAdminDao#setSyncFreq(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 	 */
 	@Override
 	@Transactional
-	public ResponseDTO enableSync(SyncFreqDTO sync) {
+	public ResponseDTO setSync(SyncFreqDTO sync) {
 		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
 		if (superAdmin != null) {
 			superAdmin.setEnableSync(sync.isEnableSync());
+			update(superAdmin);
+		}
+		/******Setting sync values when sync is enabled*******/
+		if(superAdmin.getEnableSync()==true){
+			superAdmin.setSyncFreqType(sync.getSyncFreqType());
+			superAdmin.setSyncTime(sync.getSyncTime());
 			update(superAdmin);
 		}
 		ResponseDTO response = new ResponseDTO();
 		response.setSuccess(true);
 		return response;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.SuperAdminDao#getSyncDetails()
+	 */
+	@Override
+	@Transactional
+	public SyncFreqDTO getSyncDetails() {
+		SyncFreqDTO sync = new SyncFreqDTO();
+		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+		if (superAdmin != null) {
+			sync.setSyncFreqType(superAdmin.getSyncFreqType());
+			sync.setSyncTime(superAdmin.getSyncTime());
+			sync.setEnableSync(superAdmin.getEnableSync());
+			sync.setSuccess(true);
+		}
+		return sync;
+	}
+	
+//	/* (non-Javadoc)
+//	 * @see com.nv.youNeverWait.user.pl.dao.SuperAdminDao#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+//	 */
+//	@Override
+//	@Transactional
+//	public ResponseDTO enableSync(SyncFreqDTO sync) {
+//		
+//		ResponseDTO response = new ResponseDTO();
+//		response.setSuccess(true);
+//		return response;
+//	}
 
 	/**
 	 * get User By LoginId And Password
@@ -285,5 +321,9 @@ SuperAdminDao {
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
+
+	
+
+	
 
 }

@@ -34,10 +34,20 @@ public interface SuperAdminDao {
 	 * @return
 	 */
 	public ResponseDTO enableSyncLog(SyncLogDTO syncLog, HttpServletRequest request);
+
 	/**
 	 * @param sync
 	 * @return
 	 */
-	public ResponseDTO enableSync(SyncFreqDTO sync);
+	public ResponseDTO setSync(SyncFreqDTO sync);
+//	/**
+//	 * @param sync
+//	 * @return
+//	 */
+//	public ResponseDTO enableSync(SyncFreqDTO sync);
+	/**
+	 * @return
+	 */
+	public SyncFreqDTO getSyncDetails();
 
 }

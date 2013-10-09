@@ -86,17 +86,37 @@ public interface LabDao {
 	 */
 	public LabDTO getLab(LabHeaderDTO header, String lastSyncTime,
 			Date currentSyncTime);
+
 	/**
 	 * @param sync
 	 * @return
 	 */
-	public ResponseDTO enableSync(SyncFreqDTO sync);
+	public ResponseDTO setBranchSync(SyncFreqDTO sync);
 	/**
 	 * @param sync
 	 * @return
 	 */
-	public ResponseDTO enableBranchSync(SyncFreqDTO sync);
+	public ResponseDTO setLabSync(SyncFreqDTO sync);
+	/**
+	 * @param labId
+	 * @return
+	 */
+	public SyncFreqDTO getLabSyncDetails(int labId);
+	/**
+	 * @param branchId
+	 * @return
+	 */
+	public SyncFreqDTO getBranchSyncDetails(int branchId);
 	
-	
+//	/**
+//	 * @param sync
+//	 * @return
+//	 */
+//	public ResponseDTO enableLabSync(SyncFreqDTO sync);
+//	/**
+//	 * @param sync
+//	 * @return
+//	 */
+//	public ResponseDTO enableBranchSync(SyncFreqDTO sync);
 	
 }
