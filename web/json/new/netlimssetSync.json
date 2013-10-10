@@ -35,14 +35,13 @@
                                             "value": [
                                                 {
                                                     "title": "Enable",
-                                                    "value": "Enable",
+                                                    "value": "enable",
                                                     "id": "netlimsEnable"
                                                 },
                                                 {
                                                     "title": "Disable",
-                                                    "value": "Disable",
+                                                    "value": "disable",
                                                     "id": "netlimsDisable",
-                                                    "checked": true,
                                                     "style": "margin-left: 20%;"
                                                 }
                                             ]
@@ -56,6 +55,7 @@
                             "data": [
                                 {
                                     "className": "column-left",
+									  "style": "display:none",
                                     "id": "syctxtnetlimsEnTime",
                                     "elements": [
                                         {
@@ -70,7 +70,7 @@
                                 {
                                     "className": "column-right",
                                     "id": "syctxtnetlimsEnInr",
-                                    "style": "margin: -9% 30% 0 0;",
+                                    "style": "margin: -9% 30% 0 0;display:none;",
                                     "elements": [
                                         {
                                             "name": "NetlimsSyncInterval",
@@ -96,28 +96,12 @@
                                     "content": {
                                         "buttons": [
                                              {
-                                                "name": "btnNewNetlimssycEdit",
-                                                "id": "btnNewNetlimssycEdit",
-                                                "title": "Edit",
+                                                "name": "btnnetlimsSubmit",
+                                                "id": "btnnetlimsSubmit",
+                                                "title": "Submit",
                                                 "type": "button",
                                                 "className": "stdbtn btn_black",
                                                 "style": "opacity:1;margin:2px"
-                                            },
-											 {
-                                                "name": "btnNewNetlimsSycCreate",
-                                                "id": "btnNewNetlimsSycCreate",
-                                                "title": "Done",
-                                                "type": "button",
-                                                "className": "stdbtn btn_black",
-                                                "style": "opacity:1;display:none;margin:2px"
-                                            },
-                                            {
-                                                "name": "btnNewNetlimsCancel",
-                                                "id": "btnNewNetlimsCancel",
-                                                "title": "Cancel",
-                                                "type": "button",
-                                                "className": "stdbtn",
-                                                "style": "opacity:1;display:none;margin:2px"
                                             }
                                         ]
                                     }

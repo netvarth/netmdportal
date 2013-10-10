@@ -66,7 +66,7 @@ $j(document).ready(function() {
 		createModal(constants_netlimsSycSetJson,'netlimsSycSetModal');	
 		openModalBox(obj,'netlimsSycSetModal')
 		$j.cachedScript(constant_NetLimsSyncSet_Url).done(function(script, textStatus) {
-		
+		getNetlimsId(netlimsId);
 		})
 		}
 	});
