@@ -49,7 +49,7 @@ public class NetRxValidator extends FilterValidator{
 		}
 		if (header.getNetRxId() <= 0) {
 			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidNetMd);
+					ErrorCodeEnum.InvalidNetRx);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(header.getNetRxId())));
 			se.setDisplayErrMsg(true);
 			throw se;

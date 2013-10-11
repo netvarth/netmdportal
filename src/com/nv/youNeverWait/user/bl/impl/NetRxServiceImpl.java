@@ -46,6 +46,7 @@ import com.nv.youNeverWait.rs.dto.NetRxViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.bl.service.NetRxService;
 import com.nv.youNeverWait.user.bl.validation.NetRxValidator;
@@ -786,6 +787,35 @@ public class NetRxServiceImpl implements NetRxService {
 		return fullMsgBody;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.NetRxService#setNetRxSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	public ResponseDTO setNetRxSync(SyncFreqDTO sync) {
+		if(sync.getNetrxId()<=0){
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetRx);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(sync.getNetrxId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		ResponseDTO response = netRxDao.setNetRxSync(sync);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.NetRxService#setNetRxBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	public ResponseDTO setNetRxBranchSync(SyncFreqDTO sync) {
+		if(sync.getNetrxBranchId()<=0){
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetRxBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		ResponseDTO response = netRxDao.setNetRxBranchSync(sync);
+		return response;
+	}
+	
 	/**
 	 * To reset password of netRx user/owner
 	 * 
@@ -904,5 +934,7 @@ public class NetRxServiceImpl implements NetRxService {
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
 	}
+
+	
 
 }

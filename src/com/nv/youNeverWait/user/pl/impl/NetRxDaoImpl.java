@@ -19,12 +19,16 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.BranchStatusEnum;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetRxUserTypeEnum;
+import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
+import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.NetrxBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetrxLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetrxPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.NetrxTbl;
 import com.nv.youNeverWait.pl.entity.NetrxUserTbl;
 import com.nv.youNeverWait.pl.entity.StatusEnum;
+import com.nv.youNeverWait.pl.entity.SuperAdminTbl;
+import com.nv.youNeverWait.pl.entity.SyncFreqTypeEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchDetail;
@@ -39,6 +43,7 @@ import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PassPhraseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.NetRxDao;
@@ -879,6 +884,139 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		return response;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.NetRxDao#setNetRxSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO setNetRxSync(SyncFreqDTO sync) {
+//		NetrxTbl netrx = getById(NetrxTbl.class, sync.getNetrxId());
+//		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+//		if (netrx != null) {
+//			if (superAdmin.getEnableSync() == false) {
+//				netrx.setEnableSync(false);
+//			} else
+//				netmd.setEnableSync(sync.isEnableSync());
+//			update(netmd);
+//			/**** Setting values when the sync is enabled ****/
+//			if (netmd.getEnableSync() == true) {
+//
+//				/****** Checking sync values with global sync time *****/
+//				checkSync(superAdmin.getSyncFreqType(), sync.getSyncFreqType(),
+//						sync.getSyncTime(), superAdmin.getSyncTime());
+//
+//				netmd.setSyncTime(sync.getSyncTime());
+//				netmd.setSyncFreqType(sync.getSyncFreqType());
+//				update(netmd);
+//			} else {
+//				/****** Setting all branches of the lab as disabled *******/
+//				for (NetmdBranchTbl netmdBranch : netmd.getNetmdBranchTbls()) {
+//					netmdBranch.setEnableSync(netmd.getEnableSync());
+//					update(netmdBranch);
+//				}// end of for loop
+//			}
+//
+//		} else {
+//			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetMd);
+//			se.addParam(new Parameter(Constants.ID, Integer.toString(sync
+//					.getNetmdId())));
+//			se.setDisplayErrMsg(true);
+//			throw se;
+//		}
+		ResponseDTO response = new ResponseDTO();
+		response.setSuccess(true);
+		return response;
+	}
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.NetRxDao#setNetRxBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO setNetRxBranchSync(SyncFreqDTO sync) {
+//		NetmdBranchTbl netmdBranch = getById(NetmdBranchTbl.class,
+//				sync.getNetmdBranchId());
+//		if (netmdBranch != null) {
+//			if (netmdBranch.getNetmdTbl().getEnableSync() == false) {
+//				netmdBranch.setEnableSync(false);
+//			} else
+//				netmdBranch.setEnableSync(sync.isEnableSync());
+//			update(netmdBranch);
+//			if (netmdBranch.getEnableSync() == true) {
+//				/**
+//				 * Checking whether branch sync time is greater than netmd sync
+//				 * time
+//				 **/
+//				checkSync(netmdBranch.getNetmdTbl().getSyncFreqType(),
+//						sync.getSyncFreqType(), sync.getSyncTime(), netmdBranch
+//								.getNetmdTbl().getSyncTime());
+//
+//				netmdBranch.setSyncTime(sync.getSyncTime());
+//				netmdBranch.setSyncFreqType(sync.getSyncFreqType());
+//				update(netmdBranch);
+//			}
+//		} else {
+//			ServiceException se = new ServiceException(
+//					ErrorCodeEnum.InvalidBranchId);
+//			se.setDisplayErrMsg(true);
+//			throw se;
+//		}
+		ResponseDTO response = new ResponseDTO();
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * @param priorSyncFreqType
+	 * @param syncFreqType
+	 * @param syncTime
+	 * @param priorSyncTime
+	 */
+	private void checkSync(String priorSyncFreqType, String syncFreqType,
+			int syncTime, int priorSyncTime) {
+		if (priorSyncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
+			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
+				if (syncTime > priorSyncTime) {
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.SynctimeExceeds);
+					se.setDisplayErrMsg(true);
+					throw se;
+				}
+			}
+		} // end of daily if loop
+		if (priorSyncFreqType.equals(SyncFreqTypeEnum.HOURLY.getDisplayName())) {
+			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
+				// set errror message
+			} else if (syncFreqType.equals(SyncFreqTypeEnum.HOURLY
+					.getDisplayName())) {
+				if (syncTime > priorSyncTime) {
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.SynctimeExceeds);
+					se.setDisplayErrMsg(true);
+					throw se;
+				}
+			}
+		} // end of hourly if loop
+		if (priorSyncFreqType.equals(SyncFreqTypeEnum.MINUTES.getDisplayName())) {
+			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())
+					|| syncFreqType.equals(SyncFreqTypeEnum.HOURLY
+							.getDisplayName())) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.SynctimeExceeds);
+				se.setDisplayErrMsg(true);
+				throw se;
+			} else if (syncFreqType.equals(SyncFreqTypeEnum.MINUTES
+					.getDisplayName())) {
+				if (syncTime > priorSyncTime) {
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.SynctimeExceeds);
+					se.setDisplayErrMsg(true);
+					throw se;
+				}
+			}
+		} // end of minutes if loop
+	}
+
+	
 	/**
 	 * 
 	 * @param loginId
@@ -1008,4 +1146,8 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
+
+	
+
+	
 }

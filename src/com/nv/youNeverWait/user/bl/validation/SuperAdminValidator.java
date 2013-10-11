@@ -14,6 +14,7 @@ import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.util.filter.core.Property;
 import com.nv.youNeverWait.util.filter.queryBuilder.UserLogPropertyEnum;
 import com.nv.youNeverWait.util.filter.validation.FilterValidator;
@@ -95,5 +96,21 @@ public class SuperAdminValidator extends FilterValidator {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @param sync
+	 */
+	public void validateSyncDetails(SyncFreqDTO sync) {
+		// TODO Auto-generated method stub
+		if(!sync.isEnableSync()){
+			// set errror message that its diabled
+		}
+		if(sync.getSyncTime()<=0){
+			// set error
+		}
+		if(sync.getSyncFreqType()==null && sync.getSyncFreqType().equals("")){
+			
+		}
 	}
 }
