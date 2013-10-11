@@ -23,10 +23,36 @@ public class SyncFreqDTO {
 	private int labBranchId;
 	private int netmdId;
 	private int netmdBranchId;
+	private int netrxId;
+	private int netrxBranchId;
 	private boolean success;
 	private ErrorDTO error;
 	
 	
+	/**
+	 * @return the netrxId
+	 */
+	public int getNetrxId() {
+		return netrxId;
+	}
+	/**
+	 * @param netrxId the netrxId to set
+	 */
+	public void setNetrxId(int netrxId) {
+		this.netrxId = netrxId;
+	}
+	/**
+	 * @return the netrxBranchId
+	 */
+	public int getNetrxBranchId() {
+		return netrxBranchId;
+	}
+	/**
+	 * @param netrxBranchId the netrxBranchId to set
+	 */
+	public void setNetrxBranchId(int netrxBranchId) {
+		this.netrxBranchId = netrxBranchId;
+	}
 	/**
 	 * @return the success
 	 */
