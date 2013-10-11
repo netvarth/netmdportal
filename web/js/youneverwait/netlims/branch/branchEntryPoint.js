@@ -121,7 +121,7 @@ $j('#pageTitle1').show();
 			createModal(constants_netlimsBranchSycSetJson,'netlimsBrachSycSetModal');	
 			openModalBox(obj,'netlimsBrachSycSetModal')
 		$j.cachedScript(constant_NetLimsBranchSyncSet_Url).done(function(script, textStatus) {
-		
+		getNetlimsBrchId(branchId)
 		})
 		}	
 	});

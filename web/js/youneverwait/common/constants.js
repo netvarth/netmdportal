@@ -84,8 +84,8 @@ constants_newNetUserJson='/youNeverWait/json/new/newUser.json';
 constants_newNetLimsUser="/youNeverWait/js/youneverwait/netlims/new/newNetLimsUser.js";
 
 
-
-constant_newnetlimsSync_Create_Url="/youNeverWait/ws/ui/lab/setLabSync"
+constant_newnetlimsBrchSync_Create_Url="/youNeverWait/ws/ui/lab/setBranchSync";
+constant_newnetlimsSync_Create_Url="/youNeverWait/ws/ui/lab/setLabSync";
 constants_SyncintervalRequired="Synchronisation Interval Required";
 constant_newSync_Create_Url="/youNeverWait/ws/ui/superAdmin/setSync";
 constant_newNetLims_Create_Url="/youNeverWait/ws/ui/superAdmin/createLab";
