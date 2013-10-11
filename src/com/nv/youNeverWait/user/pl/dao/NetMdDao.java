@@ -86,6 +86,16 @@ public interface NetMdDao {
 //	 * @return
 //	 */
 //	public ResponseDTO enableSync(SyncFreqDTO sync);
+	/**
+	 * @param netmdId
+	 * @return
+	 */
+	public SyncFreqDTO getNetmdSyncDetails(int netmdId);
+	/**
+	 * @param branchId
+	 * @return
+	 */
+	public SyncFreqDTO getBranchSyncDetails(int branchId);
 
 
 }

@@ -1508,6 +1508,53 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		} // end of minutes if loop
 	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.LabDao#getLabSyncDetails(int)
+	 */
+	@Override
+	@Transactional
+	public SyncFreqDTO getNetmdSyncDetails(int netmdId) {
+		SyncFreqDTO sync = new SyncFreqDTO();
+		NetmdTbl netmd = getById(NetmdTbl.class, netmdId);
+		if(netmd!=null){
+			sync.setSyncFreqType(netmd.getSyncFreqType());
+			sync.setSyncTime(netmd.getSyncTime());
+			sync.setEnableSync(netmd.getEnableSync());
+			sync.setSuccess(true);
+		}
+		else{
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetMd);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(netmdId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
+		return sync;
+	}
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.LabDao#getBranchSyncDetails(int)
+	 */
+	@Override
+	@Transactional
+	public SyncFreqDTO getBranchSyncDetails(int branchId) {
+		SyncFreqDTO sync = new SyncFreqDTO();
+		NetmdBranchTbl netmdBranch = getById(NetmdBranchTbl.class, branchId);
+		if(netmdBranch!=null){
+			sync.setSyncFreqType(netmdBranch.getSyncFreqType());
+			sync.setSyncTime(netmdBranch.getSyncTime());
+			sync.setEnableSync(netmdBranch.getEnableSync());
+			sync.setSuccess(true);
+		}
+		else{
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidBranch);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(branchId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
+		return sync;
+	}
+	
 	//
 //	/* (non-Javadoc)
 //	 * @see com.nv.youNeverWait.user.pl.dao.NetMdDao#enableBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
@@ -1927,6 +1974,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		this.em = em;
 	}
 
+	
 	
 
 }

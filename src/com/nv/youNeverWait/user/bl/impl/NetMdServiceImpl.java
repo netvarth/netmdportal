@@ -888,7 +888,36 @@ public class NetMdServiceImpl implements NetMdService {
 		ResponseDTO response = netMdDao.setNetMdBranchSync(sync);
 		return response;
 	}
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#getLabSyncDetails(int)
+	 */
+	@Override
+	public SyncFreqDTO getNetmdSyncDetails(int netmdId) {
+		if (netmdId <= 0) {
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetMd);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(netmdId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		SyncFreqDTO response=  netMdDao.getNetmdSyncDetails(netmdId);
+		return response;
+	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#getBranchSyncDetails(int)
+	 */
+	@Override
+	public SyncFreqDTO getBranchSyncDetails(int branchId) {
+		if (branchId <= 0) {
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		SyncFreqDTO response=  netMdDao.getBranchSyncDetails(branchId);
+		return response;
+	}
+	
+	
 //	/* (non-Javadoc)
 //	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#enableBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 //	 */
@@ -1012,5 +1041,7 @@ public class NetMdServiceImpl implements NetMdService {
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
 	}
+
+	
 
 }

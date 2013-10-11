@@ -91,6 +91,16 @@ public interface NetMdService {
 //	 * @return
 //	 */
 //	public ResponseDTO enableSync(SyncFreqDTO sync);
+	/**
+	 * @param branchId
+	 * @return
+	 */
+	public SyncFreqDTO getBranchSyncDetails(int branchId);
+	/**
+	 * @param netmdId
+	 * @return
+	 */
+	public SyncFreqDTO getNetmdSyncDetails(int netmdId);
 	
 	
 }

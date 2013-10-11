@@ -776,6 +776,56 @@ public class NetMdResource {
 		return response;
 	}
 	
+	/**
+	 * To get synchronization frequency details of a netmd 
+	 * 
+	 * @param log
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "getNetmdSyncDetails/{netmdId}", method = RequestMethod.GET)
+	@ResponseBody
+	public SyncFreqDTO getNetmdSyncDetails(@PathVariable int netmdId) {
+
+		SyncFreqDTO response = new SyncFreqDTO();
+		try {
+			response = netMdService.getNetmdSyncDetails(netmdId);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To get synchronization frequency of a netmd branch 
+	 * 
+	 * @param log
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "getBranchSyncDetails/{branchId}", method = RequestMethod.GET)
+	@ResponseBody
+	public SyncFreqDTO getBranchSyncDetails(@PathVariable int branchId) {
+
+		SyncFreqDTO response = new SyncFreqDTO();
+		try {
+			response = netMdService.getBranchSyncDetails(branchId);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
 //	/**
 //	 * To enable/disable  sync process
 //	 * 
