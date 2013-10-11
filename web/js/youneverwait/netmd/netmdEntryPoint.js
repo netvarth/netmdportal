@@ -65,7 +65,7 @@ $j(document).ready(function() {
 		createModal(constants_netmdSycSetJson,'netmdSycSetModal');	
 		openModalBox(obj,'netmdSycSetModal')
 		$j.cachedScript(constant_NetmdSyncSet_Url).done(function(script, textStatus) {
-		
+		getNetmdId(netmdId)
 		})
 		}
 	});
