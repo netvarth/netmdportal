@@ -37,6 +37,8 @@ import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.StatusEnum;
+import com.nv.youNeverWait.pl.entity.SuperAdminTbl;
+import com.nv.youNeverWait.pl.entity.SyncFreqTypeEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.AppointmentDTO;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
@@ -1373,6 +1375,170 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		return response;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.NetMdDao#setNetMdSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO setNetMdSync(SyncFreqDTO sync) {
+		NetmdTbl netmd = getById(NetmdTbl.class, sync.getNetmdId());
+		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+		if (netmd != null) {
+			if (superAdmin.getEnableSync() == false) {
+				netmd.setEnableSync(false);
+			} else
+				netmd.setEnableSync(sync.isEnableSync());
+			update(netmd);
+			/**** Setting values when the sync is enabled ****/
+			if (netmd.getEnableSync() == true) {
+
+				/****** Checking sync values with global sync time *****/
+				checkSync(superAdmin.getSyncFreqType(), sync.getSyncFreqType(),
+						sync.getSyncTime(), superAdmin.getSyncTime());
+
+				netmd.setSyncTime(sync.getSyncTime());
+				netmd.setSyncFreqType(sync.getSyncFreqType());
+				update(netmd);
+			} else {
+				/****** Setting all branches of the lab as disabled *******/
+				for (NetmdBranchTbl netmdBranch : netmd.getNetmdBranchTbls()) {
+					netmdBranch.setEnableSync(netmd.getEnableSync());
+					update(netmdBranch);
+				}// end of for loop
+			}
+
+		} else {
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetMd);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(sync
+					.getNetmdId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		ResponseDTO response = new ResponseDTO();
+		response.setSuccess(true);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.NetMdDao#setNetMdBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO setNetMdBranchSync(SyncFreqDTO sync) {
+		NetmdBranchTbl netmdBranch = getById(NetmdBranchTbl.class,
+				sync.getNetmdBranchId());
+		if (netmdBranch != null) {
+			if (netmdBranch.getNetmdTbl().getEnableSync() == false) {
+				netmdBranch.setEnableSync(false);
+			} else
+				netmdBranch.setEnableSync(sync.isEnableSync());
+			update(netmdBranch);
+			if (netmdBranch.getEnableSync() == true) {
+				/**
+				 * Checking whether branch sync time is greater than netmd sync
+				 * time
+				 **/
+				checkSync(netmdBranch.getNetmdTbl().getSyncFreqType(),
+						sync.getSyncFreqType(), sync.getSyncTime(), netmdBranch
+								.getNetmdTbl().getSyncTime());
+
+				netmdBranch.setSyncTime(sync.getSyncTime());
+				netmdBranch.setSyncFreqType(sync.getSyncFreqType());
+				update(netmdBranch);
+			}
+		} else {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		ResponseDTO response = new ResponseDTO();
+		response.setSuccess(true);
+		return response;
+	}
+	
+	/**
+	 * @param priorSyncFreqType
+	 * @param syncFreqType
+	 * @param syncTime
+	 * @param priorSyncTime
+	 */
+	private void checkSync(String priorSyncFreqType, String syncFreqType,
+			int syncTime, int priorSyncTime) {
+		if (priorSyncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
+			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
+				if (syncTime > priorSyncTime) {
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.SynctimeExceeds);
+					se.setDisplayErrMsg(true);
+					throw se;
+				}
+			}
+		} // end of daily if loop
+		if (priorSyncFreqType.equals(SyncFreqTypeEnum.HOURLY.getDisplayName())) {
+			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
+				// set errror message
+			} else if (syncFreqType.equals(SyncFreqTypeEnum.HOURLY
+					.getDisplayName())) {
+				if (syncTime > priorSyncTime) {
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.SynctimeExceeds);
+					se.setDisplayErrMsg(true);
+					throw se;
+				}
+			}
+		} // end of hourly if loop
+		if (priorSyncFreqType.equals(SyncFreqTypeEnum.MINUTES.getDisplayName())) {
+			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())
+					|| syncFreqType.equals(SyncFreqTypeEnum.HOURLY
+							.getDisplayName())) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.SynctimeExceeds);
+				se.setDisplayErrMsg(true);
+				throw se;
+			} else if (syncFreqType.equals(SyncFreqTypeEnum.MINUTES
+					.getDisplayName())) {
+				if (syncTime > priorSyncTime) {
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.SynctimeExceeds);
+					se.setDisplayErrMsg(true);
+					throw se;
+				}
+			}
+		} // end of minutes if loop
+	}
+
+	//
+//	/* (non-Javadoc)
+//	 * @see com.nv.youNeverWait.user.pl.dao.NetMdDao#enableBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+//	 */
+//	@Override
+//	public ResponseDTO enableBranchSync(SyncFreqDTO sync) {
+//		NetmdBranchTbl netMdBranch = getById(NetmdBranchTbl.class, sync.getNetmdBranchId());
+//		if (netMdBranch != null) {
+//			netMdBranch.setEnableSync(sync.isEnableSync());
+//			update(netMdBranch);
+//		}
+//		ResponseDTO response = new ResponseDTO();
+//		response.setSuccess(true);
+//		return response;
+//	}
+//
+//	/* (non-Javadoc)
+//	 * @see com.nv.youNeverWait.user.pl.dao.NetMdDao#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+//	 */
+//	@Override
+//	public ResponseDTO enableSync(SyncFreqDTO sync) {
+//		NetmdTbl netmd = getById(NetmdTbl.class, sync.getNetmdId());
+//		if (netmd != null) {
+//			netmd.setEnableSync(sync.isEnableSync());
+//			update(netmd);
+//		}
+//		ResponseDTO response = new ResponseDTO();
+//		response.setSuccess(true);
+//		return response;
+//	}
+
 	/**
 	 * 
 	 * @param branchId
@@ -1759,36 +1925,6 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	 */
 	public void setEm(EntityManager em) {
 		this.em = em;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.pl.dao.NetMdDao#enableBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
-	 */
-	@Override
-	public ResponseDTO enableBranchSync(SyncFreqDTO sync) {
-		NetmdBranchTbl netMdBranch = getById(NetmdBranchTbl.class, sync.getNetmdBranchId());
-		if (netMdBranch != null) {
-			netMdBranch.setEnableSync(sync.isEnableSync());
-			update(netMdBranch);
-		}
-		ResponseDTO response = new ResponseDTO();
-		response.setSuccess(true);
-		return response;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.pl.dao.NetMdDao#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
-	 */
-	@Override
-	public ResponseDTO enableSync(SyncFreqDTO sync) {
-		NetmdTbl netmd = getById(NetmdTbl.class, sync.getNetmdId());
-		if (netmd != null) {
-			netmd.setEnableSync(sync.isEnableSync());
-			update(netmd);
-		}
-		ResponseDTO response = new ResponseDTO();
-		response.setSuccess(true);
-		return response;
 	}
 
 	

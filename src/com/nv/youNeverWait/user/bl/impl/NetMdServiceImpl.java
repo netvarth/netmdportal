@@ -47,6 +47,7 @@ import com.nv.youNeverWait.rs.dto.NetMdResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
 import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
+import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
@@ -857,23 +858,54 @@ public class NetMdServiceImpl implements NetMdService {
 		ResponseDTO response = netMdDao.updateBill(updatedBill,header);
 		return response;
 	}
+	
 	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#enableBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#setNetMdSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 	 */
 	@Override
-	public ResponseDTO enableBranchSync(SyncFreqDTO sync) {
-		ResponseDTO response = netMdDao.enableBranchSync(sync);
+	public ResponseDTO setNetMdSync(SyncFreqDTO sync) {
+		if(sync.getNetmdId()<=0){
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetMd);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(sync.getNetmdId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		ResponseDTO response = netMdDao.setNetMdSync(sync);
 		return response;
 	}
 
+
 	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#setNetMdBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 	 */
 	@Override
-	public ResponseDTO enableSync(SyncFreqDTO sync) {
-		ResponseDTO response = netMdDao.enableSync(sync);
+	public ResponseDTO setNetMdBranchSync(SyncFreqDTO sync) {
+		if(sync.getNetmdBranchId()<=0){
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetMdBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		ResponseDTO response = netMdDao.setNetMdBranchSync(sync);
 		return response;
 	}
+
+//	/* (non-Javadoc)
+//	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#enableBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+//	 */
+//	@Override
+//	public ResponseDTO enableBranchSync(SyncFreqDTO sync) {
+//		ResponseDTO response = netMdDao.enableBranchSync(sync);
+//		return response;
+//	}
+//
+//	/* (non-Javadoc)
+//	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+//	 */
+//	@Override
+//	public ResponseDTO enableSync(SyncFreqDTO sync) {
+//		ResponseDTO response = netMdDao.enableSync(sync);
+//		return response;
+//	}
 	
 	
 	/**
@@ -981,8 +1013,4 @@ public class NetMdServiceImpl implements NetMdService {
 		this.mailThread = mailThread;
 	}
 
-	
-
-	
-	
 }

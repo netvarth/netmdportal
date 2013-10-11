@@ -2263,7 +2263,10 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		if (priorSyncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
 			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
 				if (syncTime > priorSyncTime) {
-					// set error message
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.SynctimeExceeds);
+					se.setDisplayErrMsg(true);
+					throw se;
 				}
 			}
 		} // end of daily if loop
@@ -2273,7 +2276,10 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			} else if (syncFreqType.equals(SyncFreqTypeEnum.HOURLY
 					.getDisplayName())) {
 				if (syncTime > priorSyncTime) {
-					// set error message
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.SynctimeExceeds);
+					se.setDisplayErrMsg(true);
+					throw se;
 				}
 			}
 		} // end of hourly if loop
@@ -2281,11 +2287,17 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())
 					|| syncFreqType.equals(SyncFreqTypeEnum.HOURLY
 							.getDisplayName())) {
-				// set error message
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.SynctimeExceeds);
+				se.setDisplayErrMsg(true);
+				throw se;
 			} else if (syncFreqType.equals(SyncFreqTypeEnum.MINUTES
 					.getDisplayName())) {
 				if (syncTime > priorSyncTime) {
-					// set error message
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.SynctimeExceeds);
+					se.setDisplayErrMsg(true);
+					throw se;
 				}
 			}
 		} // end of minutes if loop

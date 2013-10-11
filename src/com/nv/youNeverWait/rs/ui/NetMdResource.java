@@ -726,18 +726,19 @@ public class NetMdResource {
 	}
 
 	/**
-	 * To enable/disable  sync process
+	 * To set synchronization frequency for a NetMd 
 	 * 
-	 * @param log
+	 * @param sync
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "enableSync", method = RequestMethod.POST)
+	@RequestMapping(value = "setNetMdSync", method = RequestMethod.POST)
+	
 	@ResponseBody
-	public ResponseDTO enableSync(@RequestBody SyncFreqDTO sync) {
+	public ResponseDTO setNetMdSync(@RequestBody SyncFreqDTO sync) {
 
 		ResponseDTO response = new ResponseDTO();
 		try {
-			response = netMdService.enableSync(sync);
+			response = netMdService.setNetMdSync(sync);
 		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();
@@ -749,20 +750,20 @@ public class NetMdResource {
 		}
 		return response;
 	}
-	
 	/**
-	 * To enable/disable  sync process
+	 * To set synchronization frequency for a NetMd branch
 	 * 
-	 * @param log
+	 * @param sync
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "enableBranchSync", method = RequestMethod.POST)
+	@RequestMapping(value = "setNetMdBranchSync", method = RequestMethod.POST)
+	
 	@ResponseBody
-	public ResponseDTO enableBranchSync(@RequestBody SyncFreqDTO sync) {
+	public ResponseDTO setNetMdBranchSync(@RequestBody SyncFreqDTO sync) {
 
 		ResponseDTO response = new ResponseDTO();
 		try {
-			response = netMdService.enableBranchSync(sync);
+			response = netMdService.setNetMdBranchSync(sync);
 		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();
@@ -775,8 +776,58 @@ public class NetMdResource {
 		return response;
 	}
 	
-	
-	
+//	/**
+//	 * To enable/disable  sync process
+//	 * 
+//	 * @param log
+//	 * @return ResponseDTO
+//	 */
+//	@RequestMapping(value = "enableSync", method = RequestMethod.POST)
+//	@ResponseBody
+//	public ResponseDTO enableSync(@RequestBody SyncFreqDTO sync) {
+//
+//		ResponseDTO response = new ResponseDTO();
+//		try {
+//			response = netMdService.enableSync(sync);
+//		} catch (ServiceException e) {
+//			List<Parameter> parameters = e.getParamList();
+//			ErrorDTO error = new ErrorDTO();
+//			error.setErrCode(e.getError().getErrCode());
+//			error.setParams(parameters);
+//			error.setDisplayErrMsg(e.isDisplayErrMsg());
+//			response.setError(error);
+//			response.setSuccess(false);
+//		}
+//		return response;
+//	}
+//	
+//	/**
+//	 * To enable/disable  sync process
+//	 * 
+//	 * @param log
+//	 * @return ResponseDTO
+//	 */
+//	@RequestMapping(value = "enableBranchSync", method = RequestMethod.POST)
+//	@ResponseBody
+//	public ResponseDTO enableBranchSync(@RequestBody SyncFreqDTO sync) {
+//
+//		ResponseDTO response = new ResponseDTO();
+//		try {
+//			response = netMdService.enableBranchSync(sync);
+//		} catch (ServiceException e) {
+//			List<Parameter> parameters = e.getParamList();
+//			ErrorDTO error = new ErrorDTO();
+//			error.setErrCode(e.getError().getErrCode());
+//			error.setParams(parameters);
+//			error.setDisplayErrMsg(e.isDisplayErrMsg());
+//			response.setError(error);
+//			response.setSuccess(false);
+//		}
+//		return response;
+//	}
+//	
+//	
+
 	/**
 	 * @return the netMdService
 	 */

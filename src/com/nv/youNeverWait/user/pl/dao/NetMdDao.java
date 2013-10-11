@@ -70,10 +70,22 @@ public interface NetMdDao {
 	 * @param sync
 	 * @return
 	 */
-	public ResponseDTO enableBranchSync(SyncFreqDTO sync);
+	public ResponseDTO setNetMdSync(SyncFreqDTO sync);
 	/**
 	 * @param sync
 	 * @return
 	 */
-	public ResponseDTO enableSync(SyncFreqDTO sync);
+	public ResponseDTO setNetMdBranchSync(SyncFreqDTO sync);
+//	/**
+//	 * @param sync
+//	 * @return
+//	 */
+//	public ResponseDTO enableBranchSync(SyncFreqDTO sync);
+//	/**
+//	 * @param sync
+//	 * @return
+//	 */
+//	public ResponseDTO enableSync(SyncFreqDTO sync);
+
+
 }
