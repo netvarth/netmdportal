@@ -3,9 +3,8 @@ package com.nv.youNeverWait.pl.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
 /**
- * The persistent class for the lab_branch_system_tbl database table.
+ * The persistent class for the branch_system_info_tbl database table.
  * 
  */
 @Entity
@@ -18,24 +17,24 @@ public class BranchSystemInfoTbl implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int id;
 
-	@Column(name="critical_hard_disk_space_level",nullable=false)
-	private int criticalHardDiskSpaceLevel;
+	@Column(name="critical_cpu_level", nullable=false)
+	private float criticalCpuLevel;
 
-	@Column(name="critical_cpu_level",nullable=false)
-	private int criticalCpuLevel;
+	@Column(name="critical_hard_disk_space_level", nullable=false)
+	private float criticalHardDiskSpaceLevel;
 
-	@Column(name="critical_memory_level",nullable=false)
-	private int criticalMemoryLevel;
+	@Column(name="critical_memory_level", nullable=false)
+	private float criticalMemoryLevel;
 
-	@Column(name="freq_type",nullable=false)
+	@Column(name="freq_type", nullable=false, length=1)
 	private String freqType;
 
-	@Column(name="interval_time",nullable=false)
+	@Column(name="interval_time", nullable=false)
 	private int intervalTime;
 
 	//bi-directional many-to-one association to LabBranchTbl
 	@ManyToOne
-	@JoinColumn(name="branch_id",nullable=false)
+	@JoinColumn(name="branch_id", nullable=false)
 	private LabBranchTbl labBranchTbl;
 
 	public BranchSystemInfoTbl() {
@@ -49,27 +48,27 @@ public class BranchSystemInfoTbl implements Serializable {
 		this.id = id;
 	}
 
-	public int getCriticalHardDiskSpaceLevel() {
-		return this.criticalHardDiskSpaceLevel;
-	}
-
-	public void setCriticalHardDiskSpaceLevel(int criticalHardDiskSpaceLevel) {
-		this.criticalHardDiskSpaceLevel = criticalHardDiskSpaceLevel;
-	}
-	
-	public int getCriticalCpuLevel() {
+	public float getCriticalCpuLevel() {
 		return this.criticalCpuLevel;
 	}
 
-	public void setCriticalCpuLevel(int criticalCpuLevel) {
+	public void setCriticalCpuLevel(float criticalCpuLevel) {
 		this.criticalCpuLevel = criticalCpuLevel;
 	}
 
-	public int getCriticalMemoryLevel() {
+	public float getCriticalHardDiskSpaceLevel() {
+		return this.criticalHardDiskSpaceLevel;
+	}
+
+	public void setCriticalHardDiskSpaceLevel(float criticalHardDiskSpaceLevel) {
+		this.criticalHardDiskSpaceLevel = criticalHardDiskSpaceLevel;
+	}
+
+	public float getCriticalMemoryLevel() {
 		return this.criticalMemoryLevel;
 	}
 
-	public void setCriticalMemoryLevel(int criticalMemoryLevel) {
+	public void setCriticalMemoryLevel(float criticalMemoryLevel) {
 		this.criticalMemoryLevel = criticalMemoryLevel;
 	}
 
