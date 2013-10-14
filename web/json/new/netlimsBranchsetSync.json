@@ -61,7 +61,7 @@
                                         {
                                             "name": "NetlimsBranchSyncTime",
                                             "id": "NetlimsBranchSyncTime",
-                                            "title": "Syncfreqtype",
+                                            "title": "SyncFreqType",
                                             "type": "select",
                                             "className": "large "
                                         }

@@ -61,7 +61,7 @@
                                         {
                                             "name": "NetmdSyncTime",
                                             "id": "NetmdSyncTime",
-                                            "title": "Syncfreqtype",
+                                            "title": "SyncFreqType",
                                             "type": "select",
                                             "className": "large "
                                         }

@@ -61,7 +61,7 @@
                                         {
                                             "name": "NetmdBranchSyncTime",
                                             "id": "NetmdBranchSyncTime",
-                                            "title": "Syncfreqtype",
+                                            "title": "SyncFreqType",
                                             "type": "select",
                                             "className": "large "
                                         }

@@ -61,7 +61,7 @@
                                         {
                                             "name": "NetlimsSyncTime",
                                             "id": "NetlimsSyncTime",
-                                            "title": "Syncfreqtype",
+                                            "title": "SyncFreqType",
                                             "type": "select",
                                             "className": "large "
                                         }
