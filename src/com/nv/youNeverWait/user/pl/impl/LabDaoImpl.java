@@ -1885,24 +1885,38 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		int cpuUsage = Integer.parseInt(systemHealthDetails.getCpuUsage());
-		int memoryUsed = Integer.parseInt(systemHealthDetails.getMemoryUsed());
-		int hardDiskUsed = Integer.parseInt(systemHealthDetails
+		/******************************/
+		double mb= Math.round((Double.parseDouble(systemHealthDetails.getCpuUsage())/(1024.0*1024.0)));
+		System.out.println("mega bytes  "+mb);
+		//Double.toString(((Float.parseFloat)))
+		/*********************************/
+		/** System used details**/
+		float cpuUsage = Float.parseFloat(systemHealthDetails.getCpuUsage());
+		float memoryUsed = Float.parseFloat(systemHealthDetails.getMemoryUsed());
+		float hardDiskUsed = Float.parseFloat(systemHealthDetails
 				.getHardDiskUsed());
-
-		int freeHardDiskSpace = Integer.parseInt(systemHealthDetails
+		
+		/** System free space details **/
+		float freeHardDiskSpace = Integer.parseInt(systemHealthDetails
 				.getTotalHardDiskSpace()) - hardDiskUsed; // available hard disk
 															// space
-		int freeMemorySpace = Integer.parseInt(systemHealthDetails
+		float freeMemorySpace = Integer.parseInt(systemHealthDetails
 				.getTotalMemorySpace()) - memoryUsed; // available memory space
-		int freeCpuSpace = Integer.parseInt(systemHealthDetails
+		float freeCpuSpace = Integer.parseInt(systemHealthDetails
 				.getTotalCpuSpace()) - cpuUsage; // available cpu space
-		float freeHardDiskSpaceInPercent = (freeHardDiskSpace / Integer
-				.parseInt(systemHealthDetails.getTotalHardDiskSpace())) * 100;
-		float freeMemorySpaceInPercent = (freeMemorySpace / Integer
-				.parseInt(systemHealthDetails.getTotalMemorySpace())) * 100;
-		float freeCpuSpaceInPercent = (freeCpuSpace / Integer
-				.parseInt(systemHealthDetails.getTotalCpuSpace())) * 100;
+		
+		
+		/** System total space **/
+		float totalCpuUsage = Integer.parseInt(systemHealthDetails.getTotalCpuSpace());
+		float totalMemoryUsed =  Integer.parseInt(systemHealthDetails.getTotalMemorySpace());
+		float totalHardDiskUsed = Integer.parseInt(systemHealthDetails.getTotalHardDiskSpace());
+		
+		/** System free space in percentage **/
+		float freeHardDiskSpaceInPercent = (freeHardDiskSpace/totalHardDiskUsed) * 100;
+		System.out.println("free space in percent "+freeHardDiskSpaceInPercent);
+		float freeMemorySpaceInPercent = (freeMemorySpace /totalMemoryUsed) * 100;
+		float freeCpuSpaceInPercent = (freeCpuSpace /totalCpuUsage ) * 100;
+		
 		/* Getting the branch default system details from branch system info tbl */
 		BranchSystemInfoTbl branchSystemInfo = getSystemDetailsByBranchId(labBranch
 				.getId());
@@ -1943,8 +1957,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		healthMonitor.setMemoryUsage(memoryUsed);
 		healthMonitor.setFreqType(frequencyType);
 		healthMonitor.setIntervalTime(intervalTym);
-		healthMonitor.setCreateDateTime(newDate);
-		healthMonitor.setUpdateDateTime(newDate);
+		healthMonitor.setCreatedDateTime(newDate);
+		healthMonitor.setUpdatedDateTime(newDate);
 		save(healthMonitor);
 
 		response.setIntervalTime(Integer.toString(intervalTym));
@@ -1989,11 +2003,11 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		}
 		details.setBranchId(labBranch.getId());
 		details.setBranchName(systemInfo.getLabBranchTbl().getName());
-		details.setCriticalCpuLevel(Integer.toString(systemInfo
+		details.setCriticalCpuLevel(Float.toString(systemInfo
 				.getCriticalCpuLevel()));
-		details.setCriticalHardDiskSpaceLevel(Integer.toString(systemInfo
+		details.setCriticalHardDiskSpaceLevel(Float.toString(systemInfo
 				.getCriticalHardDiskSpaceLevel()));
-		details.setCriticalMemoryLevel(Integer.toString(systemInfo
+		details.setCriticalMemoryLevel(Float.toString(systemInfo
 				.getCriticalMemoryLevel()));
 		details.setFreqType(systemInfo.getFreqType());
 		details.setIntervalTime(Integer.toString(systemInfo.getIntervalTime()));
@@ -2015,7 +2029,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			systemHealth.setMemoryUsage(Math.round(hMonitor.getMemoryUsage()
 					/ (1024 * 1024)));
 			systemHealth.setCreatedDateTime(sdf.format(hMonitor
-					.getCreateDateTime()));
+					.getCreatedDateTime()));
 			healthMonitorList.add(systemHealth);
 		}
 		details.setHealthMonitorList(healthMonitorList);
@@ -2272,7 +2286,10 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		} // end of daily if loop
 		if (priorSyncFreqType.equals(SyncFreqTypeEnum.HOURLY.getDisplayName())) {
 			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
-				// set errror message
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.SynctimeExceeds);
+				se.setDisplayErrMsg(true);
+				throw se;
 			} else if (syncFreqType.equals(SyncFreqTypeEnum.HOURLY
 					.getDisplayName())) {
 				if (syncTime > priorSyncTime) {

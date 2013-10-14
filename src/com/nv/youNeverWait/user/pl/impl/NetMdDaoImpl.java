@@ -1477,7 +1477,10 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		} // end of daily if loop
 		if (priorSyncFreqType.equals(SyncFreqTypeEnum.HOURLY.getDisplayName())) {
 			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
-				// set errror message
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.SynctimeExceeds);
+				se.setDisplayErrMsg(true);
+				throw se;
 			} else if (syncFreqType.equals(SyncFreqTypeEnum.HOURLY
 					.getDisplayName())) {
 				if (syncTime > priorSyncTime) {
