@@ -35,14 +35,13 @@
                                             "value": [
                                                 {
                                                     "title": "Enable",
-                                                    "value": "Enable",
+                                                    "value": "enable",
                                                     "id": "netmdbrchEnable"
                                                 },
                                                 {
                                                     "title": "Disable",
-                                                    "value": "Disable",
+                                                    "value": "disable",
                                                     "id": "netmdbrchDisable",
-                                                    "checked": true,
                                                     "style": "margin-left: 20%;"
                                                 }
                                             ]
@@ -57,6 +56,7 @@
                                 {
                                     "className": "column-left",
                                     "id": "syctxtnetmdBranchEnTime",
+									 "style": "display:none",
                                     "elements": [
                                         {
                                             "name": "NetmdBranchSyncTime",
@@ -70,7 +70,7 @@
                                 {
                                     "className": "column-right",
                                     "id": "syctxtnetmdBranchEnInr",
-                                    "style": "margin: -9% 30% 0 0;",
+                                    "style": "margin: -9% 30% 0 0;display:none;",
                                     "elements": [
                                         {
                                             "name": "NetmdBranchSyncInterval",
@@ -95,29 +95,13 @@
                                     "type": "button",
                                     "content": {
                                         "buttons": [
-                                            {
-                                                "name": "btnNewnetmdBranchsycEdit",
-                                                "id": "btnNewnetmdBranchsycEdit",
-                                                "title": "Edit",
+                                             {
+                                                "name": "btnnetmdbrchSubmit",
+                                                "id": "btnnetmdbrchSubmit",
+                                                "title": "Submit",
                                                 "type": "button",
                                                 "className": "stdbtn btn_black",
                                                 "style": "opacity:1;margin:2px"
-                                            },
-											 {
-                                                "name": "btnNewnetmdBranchSycCreate",
-                                                "id": "btnNewnetmdBranchSycCreate",
-                                                "title": "Done",
-                                                "type": "button",
-                                                "className": "stdbtn btn_black",
-                                                "style": "opacity:1;display:none;margin:2px"
-                                            },
-                                            {
-                                                "name": "btnNewnetmdBranchCancel",
-                                                "id": "btnNewnetmdBranchCancel",
-                                                "title": "Cancel",
-                                                "type": "button",
-                                                "className": "stdbtn",
-                                                "style": "opacity:1;display:none;margin:2px"
                                             }
                                         ]
                                     }

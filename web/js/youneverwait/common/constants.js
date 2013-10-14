@@ -87,6 +87,7 @@ constants_newNetLimsUser="/youNeverWait/js/youneverwait/netlims/new/newNetLimsUs
 constant_newnetlimsBrchSync_Create_Url="/youNeverWait/ws/ui/lab/setBranchSync";
 constant_newnetlimsSync_Create_Url="/youNeverWait/ws/ui/lab/setLabSync";
 constant_newnetmdSync_Create_Url="/youNeverWait/ws/ui/netMd/setNetMdSync";
+constant_newnetmdBrchSync_Create_Url="/youNeverWait/ws/ui/netMd/setNetMdBranchSync";
 constants_SyncintervalRequired="Synchronisation Interval Required";
 constant_newSync_Create_Url="/youNeverWait/ws/ui/superAdmin/setSync";
 constant_newNetLims_Create_Url="/youNeverWait/ws/ui/superAdmin/createLab";

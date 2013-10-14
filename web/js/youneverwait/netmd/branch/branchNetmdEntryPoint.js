@@ -108,7 +108,7 @@ $j('#pageTitle1').html('['+a.netMd.name.toUpperCase()+']');
 			createModal(constants_netmdBranchSycSetJson,'netmdBrachSycSetModal');	
 			openModalBox(obj,'netmdBrachSycSetModal')
 		$j.cachedScript(constant_NetmdBranchSyncSet_Url).done(function(script, textStatus) {
-		
+		getNetmdBrchId(branchId)
 		})
 		}	
 	});

@@ -51,7 +51,7 @@ $j("#newsetSyncForm #btnnetlimsSubmit").die('click').live('click',function(){
 			showTip("Set Synchronisation Successfully");
 		}
 	else {
-			updateTipsNew(getErrorName(response.error),$j('#newsetSyncForm #errorDivNewNetlimsBranchData'),$j('#newBranchForm #errorDivHeader'));
+			updateTipsNew(getErrorName(response.error),$j('#newsetSyncForm #errorDivNewNetlimsBranchData'),$j('#newsetSyncForm #errorDivHeader'));
 		}
 		}
 	});	

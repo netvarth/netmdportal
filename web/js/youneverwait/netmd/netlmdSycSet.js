@@ -50,7 +50,7 @@ $j("#newsetNetmdSyncForm #btnnetmdSubmit").die('click').live('click',function(){
 			showTip("Set Synchronisation Successfully");
 		}
 	else {
-			updateTipsNew(getErrorName(response.error),$j('#newsetNetmdSyncForm #errorDivNewNetmdBranchData'),$j('#newBranchForm #errorDivHeader'));
+			updateTipsNew(getErrorName(response.error),$j('#newsetNetmdSyncForm #errorDivNewNetmdBranchData'),$j('#newsetNetmdSyncForm #errorDivHeader'));
 		}
 		}
 	});	

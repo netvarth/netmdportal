@@ -49,7 +49,7 @@ $j("#newBranchsetSyncForm #btnnetlimsBranchSubmit").die('click').live('click',fu
 			showTip("Set Synchronisation Successfully");
 		}
 	else {
-			updateTipsNew(getErrorName(response.error),$j('#newBranchsetSyncForm #errorDivNewNetlimsBranchData'),$j('#newBranchForm #errorDivHeader'));
+			updateTipsNew(getErrorName(response.error),$j('#newBranchsetSyncForm #errorDivNewNetlimsBranchData'),$j('#newBranchsetSyncForm #errorDivHeader'));
 		}
 		}
 	});	
