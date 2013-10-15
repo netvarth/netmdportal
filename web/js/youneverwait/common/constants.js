@@ -44,7 +44,7 @@ constants_ViewNetMdAction="/youNeverWait/js/youneverwait/netmd/view/viewNetMdAct
 constants_ViewNetMdFunctions="/youNeverWait/js/youneverwait/netmd/view/viewNetMdFunction.js";
 constants_ViewNetMdValidations="/youNeverWait/js/youneverwait/netmd/view/viewNetMdValidations.js";
 constant_NetMdView_Msg="View NetMd";
-
+/*SYNCHRONISATION*/
 constant_NetLimsSyncSet_Url="/youNeverWait/js/youneverwait/netlims/netlimsSycSet.js";
 constants_netlimsSycSetJson="/youNeverWait/json/new/netlimssetSync.json"
 constants_netlimsBranchSycSetJson="/youNeverWait/json/new/netlimsBranchsetSync.json";
@@ -53,6 +53,8 @@ constants_netmdSycSetJson="/youNeverWait/json/new/netmdsetSync.json";
 constant_NetmdSyncSet_Url="/youNeverWait/js/youneverwait/netmd/netlmdSycSet.js";
 constants_netmdBranchSycSetJson="/youNeverWait/json/new/netmdBranchsetSync.json";
 constant_NetmdBranchSyncSet_Url="/youNeverWait/js/youneverwait/netmd/branch/netmdBranchSycSet.js"
+constants_netrxSycSetJson="/youNeverWait/json/new/netrxsetSync.json";
+constant_NetrxSyncSet_Url="/youNeverWait/js/youneverwait/netrx/netrxSycset.js";
 
 constant_NetLimsBranchEntry_Url="/youNeverWait/js/youneverwait/netlims/branch/branchEntryPoint.js";
 constants_newNetLimsBranch="/youNeverWait/js/youneverwait/netlims/new/newNetLimsBranch.js";

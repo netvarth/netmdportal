@@ -1,0 +1,116 @@
+{
+    "title": "Set Synchronisation",
+    "style": "width:60%;margin:0 20%",
+    "data": [
+        {
+            "name": "newsetNetrxSyncForm",
+            "id": "newsetNetrxSyncForm",
+            "content": [
+                {
+                    "className": "sep-div",
+                    "style": "display:none",
+                    "id": "errorDivHeader",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "id": "errorDivNewNetrxBranchData"
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div",
+                    "id": "referralsdiv",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "NetrxSyncType",
+                                            "id": "syncTypeEn",
+                                            "type": "radio",
+                                            "title": "Synchornisation",
+                                            "value": [
+                                                {
+                                                    "title": "Enable",
+                                                    "value": "enable",
+                                                    "id": "NetrxEnable"
+                                                },
+                                                {
+                                                    "title": "Disable",
+                                                    "value": "disable",
+                                                    "id": "NetrxDisable",
+                                                    "style": "margin-left: 20%;"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "id": "syctxtNetrxEnTime",
+									 "style": "display:none",
+                                    "elements": [
+                                        {
+                                            "name": "NetrxSyncTime",
+                                            "id": "NetrxSyncTime",
+                                            "title": "SyncFreqType",
+                                            "type": "select",
+                                            "className": "large "
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "id": "syctxtNetrxEnInr",
+                                    "style": "margin: -9% 30% 0 0;display:none;",
+                                    "elements": [
+                                        {
+                                            "name": "NetrxSyncInterval",
+                                            "id": "NetrxSyncInterval",
+                                            "title": "SyncInterval",
+                                            "type": "text",
+                                            "className": "small "
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div ",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                             {
+                                                "name": "btnnetrxSubmit",
+                                                "id": "btnnetrxSubmit",
+                                                "title": "Submit",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;margin:2px"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
