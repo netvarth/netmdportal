@@ -41,6 +41,7 @@ import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 
@@ -114,12 +115,12 @@ public interface LabService {
 	 * @param sync
 	 * @return
 	 */
-	public ResponseDTO setBranchSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setBranchSync(SyncFreqDTO sync);
 	/**
 	 * @param sync
 	 * @return
 	 */
-	public ResponseDTO setLabSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync);
 //	/**
 //	 * @param sync
 //	 * @return
