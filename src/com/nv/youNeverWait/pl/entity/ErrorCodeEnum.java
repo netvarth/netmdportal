@@ -74,6 +74,7 @@ public enum ErrorCodeEnum {
 	 EmailSendFailed("1229","Email sending operation failed"),
 	 SyncTimeNull("1230","Synchronization time should be given"),
 	 PassPhraseNotExist("1231","There is no record with given PassPhrase for this branch"),
+	 SyncDisable("1232","Sync disbled"),
 /*
  * netlims Errors 
  */
@@ -244,7 +245,7 @@ public enum ErrorCodeEnum {
 	InvalidNetRxBranchId("2012","Given netRx branch id is invalid"),
 	InvalidNetRxUser("2013","User with id {id} does not exists in this netrx branch"),
 	InvalidNetRxUserName("2014","Please enter valid user name"),
-	NetRxIdNull("2015","Netrx Id should not be null") 
+	NetRxIdNull("2015","Netrx Id should not be null"),  
 	  
 	;
 	private String errCode;
