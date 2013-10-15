@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -72,6 +73,7 @@ import com.nv.youNeverWait.rs.dto.ResultTransferResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveLabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.SystemHealthMonitorDetailList;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
@@ -1885,38 +1887,34 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		/******************************/
-		double mb= Math.round((Double.parseDouble(systemHealthDetails.getCpuUsage())/(1024.0*1024.0)));
-		System.out.println("mega bytes  "+mb);
-		//Double.toString(((Float.parseFloat)))
-		/*********************************/
-		/** System used details**/
-		float cpuUsage = Float.parseFloat(systemHealthDetails.getCpuUsage());
-		float memoryUsed = Float.parseFloat(systemHealthDetails.getMemoryUsed());
-		float hardDiskUsed = Float.parseFloat(systemHealthDetails
+
+		/** System used details **/
+		long cpuUsage = Long.parseLong(systemHealthDetails.getCpuUsage());
+		long memoryUsed = Long.parseLong(systemHealthDetails.getMemoryUsed());
+		long hardDiskUsed = Long.parseLong(systemHealthDetails
 				.getHardDiskUsed());
-		
-		/** System free space details **/
-		float freeHardDiskSpace = Integer.parseInt(systemHealthDetails
-				.getTotalHardDiskSpace()) - hardDiskUsed; // available hard disk
-															// space
-		float freeMemorySpace = Integer.parseInt(systemHealthDetails
-				.getTotalMemorySpace()) - memoryUsed; // available memory space
-		float freeCpuSpace = Integer.parseInt(systemHealthDetails
-				.getTotalCpuSpace()) - cpuUsage; // available cpu space
-		
-		
+
 		/** System total space **/
-		float totalCpuUsage = Integer.parseInt(systemHealthDetails.getTotalCpuSpace());
-		float totalMemoryUsed =  Integer.parseInt(systemHealthDetails.getTotalMemorySpace());
-		float totalHardDiskUsed = Integer.parseInt(systemHealthDetails.getTotalHardDiskSpace());
-		
+		long totalCpuUsage = Long.parseLong(systemHealthDetails
+				.getTotalCpuSpace());
+		long totalMemoryUsed = Long.parseLong(systemHealthDetails
+				.getTotalMemorySpace());
+		long totalHardDiskUsed = Long.parseLong(systemHealthDetails
+				.getTotalHardDiskSpace());
+
+		/** System free space details **/
+		long freeHardDiskSpace = totalCpuUsage - hardDiskUsed;
+		long freeMemorySpace = totalMemoryUsed - memoryUsed;
+		long freeCpuSpace = totalHardDiskUsed - cpuUsage;
+
 		/** System free space in percentage **/
-		float freeHardDiskSpaceInPercent = (freeHardDiskSpace/totalHardDiskUsed) * 100;
-		System.out.println("free space in percent "+freeHardDiskSpaceInPercent);
-		float freeMemorySpaceInPercent = (freeMemorySpace /totalMemoryUsed) * 100;
-		float freeCpuSpaceInPercent = (freeCpuSpace /totalCpuUsage ) * 100;
-		
+		long freeHardDiskSpaceInPercent = freeHardDiskSpace * 100
+				/ totalHardDiskUsed;
+		System.out.println("free space in percent "
+				+ freeHardDiskSpaceInPercent);
+		long freeMemorySpaceInPercent = freeMemorySpace * 100 / totalMemoryUsed;
+		long freeCpuSpaceInPercent = freeCpuSpace * 100 / totalCpuUsage;
+
 		/* Getting the branch default system details from branch system info tbl */
 		BranchSystemInfoTbl branchSystemInfo = getSystemDetailsByBranchId(labBranch
 				.getId());
@@ -2012,7 +2010,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		details.setFreqType(systemInfo.getFreqType());
 		details.setIntervalTime(Integer.toString(systemInfo.getIntervalTime()));
 		/* Getting last 10 records of system health monitor details */
-		List<HealthMonitorTbl> healthMonitorTblList = getMonitorDetailsByBranchId(branchId); // /
+		List<HealthMonitorTbl> healthMonitorTblList = getMonitorDetailsByBranchId(branchId); // //
 																								// branch
 		if (healthMonitorTblList.isEmpty()) {
 			ServiceException se = new ServiceException(
@@ -2022,6 +2020,11 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		}
 		for (HealthMonitorTbl hMonitor : healthMonitorTblList) {
 			SystemHealthMonitorDetailList systemHealth = new SystemHealthMonitorDetailList();
+			System.out.println("in mega bytes without rounding "
+					+ hMonitor.getCpuUsage() / (1024 * 1024));
+			System.out.println("in mega bytes with rounding "
+					+ Math.round(hMonitor.getCpuUsage() / (1024 * 1024)));
+
 			systemHealth.setCpuUsage(Math.round(hMonitor.getCpuUsage()
 					/ (1024 * 1024)));
 			systemHealth.setHardDiskSpaceUasge(Math.round(hMonitor
@@ -2130,7 +2133,9 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		return labDetails;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.nv.youNeverWait.user.pl.dao.LabDao#getLabSyncDetails(int)
 	 */
 	@Override
@@ -2138,22 +2143,24 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	public SyncFreqDTO getLabSyncDetails(int labId) {
 		SyncFreqDTO sync = new SyncFreqDTO();
 		LabTbl lab = getById(LabTbl.class, labId);
-		if(lab!=null){
+		if (lab != null) {
 			sync.setSyncFreqType(lab.getSyncFreqType());
 			sync.setSyncTime(lab.getSyncTime());
 			sync.setEnableSync(lab.getEnableSync());
 			sync.setSuccess(true);
-		}
-		else{
+		} else {
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidLab);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(labId)));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		
+
 		return sync;
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.nv.youNeverWait.user.pl.dao.LabDao#getBranchSyncDetails(int)
 	 */
 	@Override
@@ -2161,22 +2168,22 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	public SyncFreqDTO getBranchSyncDetails(int branchId) {
 		SyncFreqDTO sync = new SyncFreqDTO();
 		LabBranchTbl labBranch = getById(LabBranchTbl.class, branchId);
-		if(labBranch!=null){
+		if (labBranch != null) {
 			sync.setSyncFreqType(labBranch.getSyncFreqType());
 			sync.setSyncTime(labBranch.getSyncTime());
 			sync.setEnableSync(labBranch.getEnableSync());
 			sync.setSuccess(true);
-		}
-		else{
-			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidBranch);
+		} else {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranch);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(branchId)));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		
+
 		return sync;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -2186,14 +2193,16 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	 */
 	@Override
 	@Transactional
-	public ResponseDTO setLabSync(SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync) {
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
 		LabTbl lab = getById(LabTbl.class, sync.getLabId());
 		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
 		if (lab != null) {
 			if (superAdmin.getEnableSync() == false) {
 				lab.setEnableSync(false);
-			} else
+			} else {
 				lab.setEnableSync(sync.isEnableSync());
+			}
 			update(lab);
 			/**** Setting values when the sync is enabled ****/
 			if (lab.getEnableSync() == true) {
@@ -2205,11 +2214,13 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 				lab.setSyncTime(sync.getSyncTime());
 				lab.setSyncFreqType(sync.getSyncFreqType());
 				update(lab);
+
 			} else {
 				/****** Setting all branches of the lab as disabled *******/
 				for (LabBranchTbl labBranch : lab.getLabBranchTbls()) {
 					labBranch.setEnableSync(lab.getEnableSync());
 					update(labBranch);
+					response.setMsg(Constants.MESSAGE);
 				}// end of for loop
 			}
 
@@ -2220,7 +2231,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		ResponseDTO response = new ResponseDTO();
+
 		response.setSuccess(true);
 		return response;
 	}
@@ -2234,14 +2245,21 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	 */
 	@Override
 	@Transactional
-	public ResponseDTO setBranchSync(SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setBranchSync(SyncFreqDTO sync) {
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
 		LabBranchTbl labBranch = getById(LabBranchTbl.class,
 				sync.getLabBranchId());
 		if (labBranch != null) {
 			if (labBranch.getLabTbl().getEnableSync() == false) {
 				labBranch.setEnableSync(false);
-			} else
-				labBranch.setEnableSync(sync.isEnableSync());
+			} else {
+				SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+				if (superAdmin.getEnableSync() == false) {
+					labBranch.setEnableSync(false);
+				} else {
+					labBranch.setEnableSync(sync.isEnableSync());
+				}
+			}
 			update(labBranch);
 			if (labBranch.getEnableSync() == true) {
 				/**
@@ -2255,6 +2273,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 				labBranch.setSyncTime(sync.getSyncTime());
 				labBranch.setSyncFreqType(sync.getSyncFreqType());
 				update(labBranch);
+			} else {
+				response.setMsg(Constants.MESSAGE);
 			}
 		} else {
 			ServiceException se = new ServiceException(
@@ -2262,7 +2282,6 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		ResponseDTO response = new ResponseDTO();
 		response.setSuccess(true);
 		return response;
 	}
@@ -2385,6 +2404,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 				.createQuery(Query.GET_MONITORING_DETAILS_BY_BRANCH_ID);
 		query.setParameter("param1", branchId);
 		query.setMaxResults(10);
+		query.setFirstResult(230);
+		// query.getFirstResult();
 		return executeQuery(HealthMonitorTbl.class, query);
 	}
 
@@ -2944,9 +2965,5 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	public void setNetlimsServerIpAddress(String netlimsServerIpAddress) {
 		this.netlimsServerIpAddress = netlimsServerIpAddress;
 	}
-
-	
-
-	
 
 }

@@ -44,6 +44,7 @@ import com.nv.youNeverWait.rs.dto.PassPhraseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.NetRxDao;
@@ -889,7 +890,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 	 */
 	@Override
 	@Transactional
-	public ResponseDTO setNetRxSync(SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setNetRxSync(SyncFreqDTO sync) {
 //		NetrxTbl netrx = getById(NetrxTbl.class, sync.getNetrxId());
 //		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
 //		if (netrx != null) {
@@ -923,7 +924,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 //			se.setDisplayErrMsg(true);
 //			throw se;
 //		}
-		ResponseDTO response = new ResponseDTO();
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
 		response.setSuccess(true);
 		return response;
 	}
@@ -932,7 +933,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 	 */
 	@Override
 	@Transactional
-	public ResponseDTO setNetRxBranchSync(SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setNetRxBranchSync(SyncFreqDTO sync) {
 //		NetmdBranchTbl netmdBranch = getById(NetmdBranchTbl.class,
 //				sync.getNetmdBranchId());
 //		if (netmdBranch != null) {
@@ -960,7 +961,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 //			se.setDisplayErrMsg(true);
 //			throw se;
 //		}
-		ResponseDTO response = new ResponseDTO();
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
 		response.setSuccess(true);
 		return response;
 	}

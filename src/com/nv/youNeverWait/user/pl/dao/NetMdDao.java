@@ -25,6 +25,7 @@ import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.pl.impl.NetMdBranchOwnerDetails;
 
@@ -70,12 +71,12 @@ public interface NetMdDao {
 	 * @param sync
 	 * @return
 	 */
-	public ResponseDTO setNetMdSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setNetMdSync(SyncFreqDTO sync);
 	/**
 	 * @param sync
 	 * @return
 	 */
-	public ResponseDTO setNetMdBranchSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setNetMdBranchSync(SyncFreqDTO sync);
 //	/**
 //	 * @param sync
 //	 * @return

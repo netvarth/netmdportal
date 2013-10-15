@@ -2570,12 +2570,12 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
 		systemResponse.setHeader(header);
-		systemResponse.setCpuUsage("8");
-		systemResponse.setHardDiskUsed("8");
-		systemResponse.setMemoryUsed("9");
-		systemResponse.setTotalCpuSpace("80");
-		systemResponse.setTotalHardDiskSpace("80");
-		systemResponse.setTotalMemorySpace("80");
+		systemResponse.setCpuUsage("18726240");
+		systemResponse.setHardDiskUsed("18726240");
+		systemResponse.setMemoryUsed("18726240");
+		systemResponse.setTotalCpuSpace("38158336");
+		systemResponse.setTotalHardDiskSpace("38158336");
+		systemResponse.setTotalMemorySpace("38158336");
 		try{
 			service.checkSystemHealth(systemResponse);
 		}
@@ -2832,6 +2832,18 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		}
 		
 	}
-	
+	@Test
+	public void viewsystemHealthMonitor(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+
+		try{
+			service.viewBranchSystemInfoDetails(122);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
 }
 

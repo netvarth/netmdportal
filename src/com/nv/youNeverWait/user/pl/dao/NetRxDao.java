@@ -20,6 +20,7 @@ import com.nv.youNeverWait.rs.dto.NetRxViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 
 
@@ -52,11 +53,11 @@ public interface NetRxDao {
 	 * @param sync
 	 * @return
 	 */
-	public ResponseDTO setNetRxSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setNetRxSync(SyncFreqDTO sync);
 	/**
 	 * @param sync
 	 * @return
 	 */
-	public ResponseDTO setNetRxBranchSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setNetRxBranchSync(SyncFreqDTO sync);
 
 }

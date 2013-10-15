@@ -33,6 +33,7 @@ import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveLabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
@@ -91,12 +92,12 @@ public interface LabDao {
 	 * @param sync
 	 * @return
 	 */
-	public ResponseDTO setBranchSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setBranchSync(SyncFreqDTO sync);
 	/**
 	 * @param sync
 	 * @return
 	 */
-	public ResponseDTO setLabSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync);
 	/**
 	 * @param labId
 	 * @return
