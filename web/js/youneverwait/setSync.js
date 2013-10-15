@@ -2,6 +2,7 @@
 fillTimeList("#syncTime");
 validateNumber("#newBranchForm #syncInterval");
 var getSyncdetails=getRequestData('/youNeverWait/ws/ui/superAdmin/getSyncDetails');
+//alert(JSON.stringify(getSyncdetails));
 var radioStatus=getSyncdetails.enableSync;
 
 if(radioStatus==false)
@@ -18,11 +19,13 @@ if(getSyncdetails.syncFreqType)
 	else
 		$j("#newBranchForm #syncInterval ").val();	
 
-var flag=$j('input[type=radio]:checked').val();	
+var flag=$j('#newBranchForm input[type=radio]:checked').val();	
+	//alert(flag);
 	if(flag!="disable"){
 		$j('#syctxtEnTime').show();
 		$j('#syctxtEnInr').show();
 	}
+	
 
 $j('#Enable').die('click').live("click",function() {
 		 $j('#syctxtEnTime').show();
@@ -59,9 +62,9 @@ $j("#newBranchForm #btnSubmit").die('click').live('click',function(){
 	
 function createSyncDetailsJson()
 	{
-	var rsd=$j('input[type=radio]:checked').val();
+	var rsd=$j('#newBranchForm input[type=radio]:checked').val();
 	//alert(rsd);
-	 if($j('input[type=radio]:checked').val()=="enable"){
+	 if($j('#newBranchForm input[type=radio]:checked').val()=="enable"){
 		 
 		var syncDetails = '{"enableSync":'+"true"+',';
 			syncDetails += '"syncTime":'+$j("#newBranchForm #syncInterval ").val()+',';
