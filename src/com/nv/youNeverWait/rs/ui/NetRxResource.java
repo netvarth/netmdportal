@@ -35,6 +35,7 @@ import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.LogService;
 import com.nv.youNeverWait.user.bl.service.NetRxService;
@@ -578,7 +579,7 @@ public class NetRxResource {
 	}
 
 	/**
-	 * To set synchronization frequency for a NetMd 
+	 * To set synchronization frequency for a NetRx 
 	 * 
 	 * @param sync
 	 * @return ResponseDTO
@@ -586,9 +587,9 @@ public class NetRxResource {
 	@RequestMapping(value = "setNetRxSync", method = RequestMethod.POST)
 	
 	@ResponseBody
-	public ResponseDTO setNetRxSync(@RequestBody SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setNetRxSync(@RequestBody SyncFreqDTO sync) {
 
-		ResponseDTO response = new ResponseDTO();
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
 		try {
 			response = netRxService.setNetRxSync(sync);
 		} catch (ServiceException e) {
@@ -603,7 +604,7 @@ public class NetRxResource {
 		return response;
 	}
 	/**
-	 * To set synchronization frequency for a NetMd branch
+	 * To set synchronization frequency for a NetRx branch
 	 * 
 	 * @param sync
 	 * @return ResponseDTO
@@ -611,9 +612,9 @@ public class NetRxResource {
 	@RequestMapping(value = "setNetRxBranchSync", method = RequestMethod.POST)
 	
 	@ResponseBody
-	public ResponseDTO setNetRxBranchSync(@RequestBody SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setNetRxBranchSync(@RequestBody SyncFreqDTO sync) {
 
-		ResponseDTO response = new ResponseDTO();
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
 		try {
 			response = netRxService.setNetRxBranchSync(sync);
 		} catch (ServiceException e) {

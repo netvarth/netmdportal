@@ -40,6 +40,7 @@ import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.LogService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
@@ -734,9 +735,9 @@ public class NetMdResource {
 	@RequestMapping(value = "setNetMdSync", method = RequestMethod.POST)
 	
 	@ResponseBody
-	public ResponseDTO setNetMdSync(@RequestBody SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setNetMdSync(@RequestBody SyncFreqDTO sync) {
 
-		ResponseDTO response = new ResponseDTO();
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
 		try {
 			response = netMdService.setNetMdSync(sync);
 		} catch (ServiceException e) {
@@ -759,9 +760,9 @@ public class NetMdResource {
 	@RequestMapping(value = "setNetMdBranchSync", method = RequestMethod.POST)
 	
 	@ResponseBody
-	public ResponseDTO setNetMdBranchSync(@RequestBody SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setNetMdBranchSync(@RequestBody SyncFreqDTO sync) {
 
-		ResponseDTO response = new ResponseDTO();
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
 		try {
 			response = netMdService.setNetMdBranchSync(sync);
 		} catch (ServiceException e) {

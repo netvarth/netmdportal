@@ -45,6 +45,7 @@ import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.security.User;
@@ -957,9 +958,9 @@ public class LabResource {
 	 */
 	@RequestMapping(value = "setLabSync", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseDTO setLabSync(@RequestBody SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setLabSync(@RequestBody SyncFreqDTO sync) {
 
-		ResponseDTO response = new ResponseDTO();
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
 		try {
 			response = labService.setLabSync(sync);
 		} catch (ServiceException e) {
@@ -982,9 +983,9 @@ public class LabResource {
 	 */
 	@RequestMapping(value = "setBranchSync", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseDTO setBranchSync(@RequestBody SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setBranchSync(@RequestBody SyncFreqDTO sync) {
 
-		ResponseDTO response = new ResponseDTO();
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
 		try {
 			response = labService.setBranchSync(sync);
 		} catch (ServiceException e) {
