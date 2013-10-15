@@ -99,6 +99,21 @@ $j('#pageTitle1').html('['+a.netRxDTO.name.toUpperCase()+']');
 			})
 		}
 	});
+	
+	$j('#branchNetrxPTBContainer #btn_change_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	  var netrxbranchId = getSelectedNetrxBranchId(pgTableName);
+	    if(netrxbranchId!="") {
+			var obj=$j(this);
+			createModal(constants_netrxBranchSycSetJson,'netrxBranchSycSetModal');	
+			openModalBox(obj,'netrxBranchSycSetModal')
+		$j.cachedScript(constant_NetrxBranchSyncSet_Url).done(function(script, textStatus) {
+		//getNetrxBrchId(netrxbranchId)
+		})
+		}	
+	});
+	
+	
 	$j('#branchNetrxPTBContainer #btn_back_ptb_id').die('click').live("click",function() {
 	removeErrors();
 		$j('#pageTitle1').hide();
