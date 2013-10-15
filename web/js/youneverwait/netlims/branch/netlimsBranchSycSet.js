@@ -47,7 +47,10 @@ $j("#newBranchsetSyncForm #btnnetlimsBranchSubmit").die('click').live('click',fu
 		{
 	var response = submitNetlimsBrchSyncDetailsInfo();
 	if(response.success==true){
+			var messg=response.msg;
+		if(response.msg==null){
 			showTip("Set Synchronisation Successfully");
+			}else{updateTipsNew(messg,$j('#newBranchsetSyncForm #errorDivNewNetlimsBranchData'),$j('#newBranchsetSyncForm #errorDivHeader');} 
 		}
 	else {
 			updateTipsNew(getErrorName(response.error),$j('#newBranchsetSyncForm #errorDivNewNetlimsBranchData'),$j('#newBranchsetSyncForm #errorDivHeader'));
@@ -59,7 +62,7 @@ function submitNetlimsBrchSyncDetailsInfo(){
 	var resultJson = createNetlimsBrchSyncDetailsJson();
 	//alert(resultJson);
 	var response = postdataToServer(constant_newnetlimsBrchSync_Create_Url, resultJson );	
-	//alert(JSON.stringify(response));
+	alert(JSON.stringify(response));
 	return response;
 }	
 

@@ -51,7 +51,10 @@ $j("#newsetSyncForm #btnnetlimsSubmit").die('click').live('click',function(){
 		{
 	var response = submitNetlimsSyncDetailsInfo();
 	if(response.success==true){
+		 var messg=response.msg;
+		if(response.msg==null){
 			showTip("Set Synchronisation Successfully");
+			}else{updateTipsNew(messg,$j('#newsetSyncForm #errorDivNewNetlimsBranchData'),$j('#newsetSyncForm #errorDivHeader'));} 
 		}
 	else {
 			updateTipsNew(getErrorName(response.error),$j('#newsetSyncForm #errorDivNewNetlimsBranchData'),$j('#newsetSyncForm #errorDivHeader'));
@@ -63,7 +66,7 @@ function submitNetlimsSyncDetailsInfo(){
 	var resultJson = createNetlimsSyncDetailsJson();
 	//alert(resultJson);
 	var response = postdataToServer(constant_newnetlimsSync_Create_Url, resultJson );	
-	//alert(JSON.stringify(response));
+	alert(JSON.stringify(response));
 	return response;
 }
 

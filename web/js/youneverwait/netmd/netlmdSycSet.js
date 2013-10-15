@@ -47,7 +47,12 @@ $j("#newsetNetmdSyncForm #btnnetmdSubmit").die('click').live('click',function(){
 		{
 	var response = submitNetmdSyncDetailsInfo();
 	if(response.success==true){
+			var messg=response.msg;
+		if(response.msg==null){
 			showTip("Set Synchronisation Successfully");
+			}else{
+			updateTipsNew(messg,$j('#newsetNetmdSyncForm #errorDivNewNetmdBranchData'),$j('#newsetNetmdSyncForm #errorDivHeader'));
+			} 
 		}
 	else {
 			updateTipsNew(getErrorName(response.error),$j('#newsetNetmdSyncForm #errorDivNewNetmdBranchData'),$j('#newsetNetmdSyncForm #errorDivHeader'));
