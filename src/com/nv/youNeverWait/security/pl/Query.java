@@ -209,7 +209,7 @@ public class Query {
 	public static final String GET_SYSTEM_DETAILS_BY_BRANCH_ID = " from BranchSystemInfoTbl as details where details.labBranchTbl.id=:param1";
 
 	/*HealthMonitorTbl*/
-	public static final String GET_MONITORING_DETAILS_BY_BRANCH_ID = "from HealthMonitorTbl as health where health.labBranchTbl.id =:param1 order by health.createDateTime desc limit 10";
+	public static final String GET_MONITORING_DETAILS_BY_BRANCH_ID = "from HealthMonitorTbl as health where health.labBranchTbl.id =:param1 order by health.createdDateTime desc limit 10";
 	/********** Email *******/
 	public static final String GET_INQUEUE_FROM_TABLE = "from PendingMessageTbl as msg where msg.status=:param3 and msg.communicationType=:param1 and msg.applicationSpecifier=:param2 ORDER BY lastAttemptOn ASC";
 	public static final String GET_COUNT_NEW_FROM_TABLE = "from PendingMessageTbl as msg where msg.status=:param3 and msg.communicationType=:param1  and msg.applicationSpecifier=:param2";
