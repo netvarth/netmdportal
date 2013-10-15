@@ -105,5 +105,6 @@ public class Constants {
 	public static final String SPECIMEN = "specimens";
 	public static final String SPECIMENUID = "SpecimenUid";
 	public static final String TESTUID = "TestUid";
+	public static final String MESSAGE = "Synchronization disabled.";
 	
 }
