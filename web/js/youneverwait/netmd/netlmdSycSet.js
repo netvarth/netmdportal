@@ -21,7 +21,7 @@ function getNetmdId(netmdId){
 	else
 		$j("#newsetNetmdSyncForm #NetmdSyncInterval ").val();	
 	
-	var flag=$j('input[type=radio]:checked').val();	
+	var flag=$j('#newsetNetmdSyncForm input[type=radio]:checked').val();	
 	if(flag!="disable"){
 		$j('#syctxtNetmdEnTime').show();
 		$j('#syctxtNetmdEnInr').show();
@@ -65,9 +65,9 @@ function submitNetmdSyncDetailsInfo(){
 
 function createNetmdSyncDetailsJson()
 	{
-	var rsd=$j('input[type=radio]:checked').val();
+	var rsd=$j('#newsetNetmdSyncForm input[type=radio]:checked').val();
 	//alert(rsd);
-	 if($j('input[type=radio]:checked').val()=="enable"){
+	 if($j('#newsetNetmdSyncForm input[type=radio]:checked').val()=="enable"){
 		 
 		var syncDetails = '{"enableSync":'+"true"+',';
 			syncDetails += '"syncTime":'+$j("#newsetNetmdSyncForm #NetmdSyncInterval").val()+',';

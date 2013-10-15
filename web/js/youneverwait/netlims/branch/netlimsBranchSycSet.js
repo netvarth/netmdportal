@@ -5,6 +5,7 @@ var netlmsBrchId="";
 function getNetlimsBrchId(branchId){
 	netlmsBrchId=branchId;
 	var getSyncdetails=getRequestData('/youNeverWait/ws/ui/lab/getBranchSyncDetails/'+netlmsBrchId);
+	//alert(JSON.stringify(getSyncdetails));
 	var radioStatus=getSyncdetails.enableSync;
 	
 	if(radioStatus==false)
@@ -21,7 +22,7 @@ function getNetlimsBrchId(branchId){
 	else
 		$j("#newBranchsetSyncForm #NetlimsBranchSyncInterval ").val();	
 	
-	var flag=$j('input[type=radio]:checked').val();	
+	var flag=$j('#newBranchsetSyncForm input[type=radio]:checked').val();	
 	if(flag!="disable"){
 		$j('#syctxtBranchEnTime').show();
 		$j('#syctxtBranchEnInr').show();
@@ -64,9 +65,9 @@ function submitNetlimsBrchSyncDetailsInfo(){
 
 function createNetlimsBrchSyncDetailsJson()
 	{
-	var rsd=$j('input[type=radio]:checked').val();
+	var rsd=$j('#newBranchsetSyncForm  input[type=radio]:checked').val();
 	//alert(rsd);
-	 if($j('input[type=radio]:checked').val()=="enable"){
+	 if($j('#newBranchsetSyncForm input[type=radio]:checked').val()=="enable"){
 		 
 		var syncDetails = '{"enableSync":'+"true"+',';
 			syncDetails += '"syncTime":'+$j("#newBranchsetSyncForm #NetlimsBranchSyncInterval").val()+',';

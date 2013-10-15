@@ -21,7 +21,7 @@ function getNetmdBrchId(netmdbrId){
 	else
 		$j("#newnetmdBranchsetSyncForm #NetmdBranchSyncInterval ").val();	
 	
-	var flag=$j('input[type=radio]:checked').val();	
+	var flag=$j('#newnetmdBranchsetSyncForm input[type=radio]:checked').val();	
 	if(flag!="disable"){
 		$j('#syctxtnetmdBranchEnTime').show();
 		$j('#syctxtnetmdBranchEnInr').show();
@@ -63,9 +63,9 @@ function submitNetmdBrchSyncDetailsInfo(){
 
 function createNetmdBrchSyncDetailsJson()
 	{
-	var rsd=$j('input[type=radio]:checked').val();
+	var rsd=$j('#newnetmdBranchsetSyncForm input[type=radio]:checked').val();
 	//alert(rsd);
-	 if($j('input[type=radio]:checked').val()=="enable"){
+	 if($j('#newnetmdBranchsetSyncForm  input[type=radio]:checked').val()=="enable"){
 		 
 		var syncDetails = '{"enableSync":'+"true"+',';
 			syncDetails += '"syncTime":'+$j("#newnetmdBranchsetSyncForm #NetmdBranchSyncInterval").val()+',';

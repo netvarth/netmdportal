@@ -4,6 +4,7 @@ var netlmsId="";
 function getNetlimsId(netlimsId){
 	netlmsId=netlimsId;
 	var getSyncdetails=getRequestData('/youNeverWait/ws/ui/lab/getLabSyncDetails/'+netlmsId);
+	//alert(JSON.stringify(getSyncdetails));
 	var radioStatus=getSyncdetails.enableSync;
 	
 	if(radioStatus==false)
@@ -20,11 +21,13 @@ function getNetlimsId(netlimsId){
 	else
 		$j("#newsetSyncForm #NetlimsSyncInterval ").val();	
 	
-	var flag=$j('input[type=radio]:checked').val();	
+	var flag=$j('#newsetSyncForm input[type=radio]:checked').val();	
+	//alert(flag);
 	if(flag!="disable"){
 		$j('#syctxtnetlimsEnTime').show();
 		$j('#syctxtnetlimsEnInr').show();
 	}
+	
 }
 
 
@@ -66,9 +69,9 @@ function submitNetlimsSyncDetailsInfo(){
 
 function createNetlimsSyncDetailsJson()
 	{
-	var rsd=$j('input[type=radio]:checked').val();
+	var rsd=$j('#newsetSyncForm input[type=radio]:checked').val();
 	//alert(rsd);
-	 if($j('input[type=radio]:checked').val()=="enable"){
+	 if($j('#newsetSyncForm input[type=radio]:checked').val()=="enable"){
 		 
 		var syncDetails = '{"enableSync":'+"true"+',';
 			syncDetails += '"syncTime":'+$j("#newsetSyncForm #NetlimsSyncInterval ").val()+',';
