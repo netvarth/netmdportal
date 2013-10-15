@@ -11,6 +11,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,6 +68,7 @@ import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
@@ -1059,6 +1062,11 @@ public class LabServiceImpl implements LabService {
 		BufferedReader in = new BufferedReader(new InputStreamReader(
 				inputStream));
 		String readLine = "";
+		
+		long hardDiskUsed=Long.parseLong(systemHealthDetails.getHardDiskUsed());
+		long memoryUsed=Long.parseLong(systemHealthDetails.getMemoryUsed());
+		long cpuUsed=Long.parseLong(systemHealthDetails.getCpuUsage());
+		
 		while ((readLine = in.readLine()) != null) {
 			msgBodyBfr.append(readLine).append("\n");
 		}
@@ -1076,12 +1084,9 @@ public class LabServiceImpl implements LabService {
 				branchOwnerDetails.getLabName());
 		fullMsgBody = fullMsgBody.replace("{branchName}",
 				branchOwnerDetails.getBranchName());
-		fullMsgBody = fullMsgBody.replace("{hardDiskSpace}",
-				Double.toString(Math.round(Integer.parseInt(systemHealthDetails.getHardDiskUsed())/(1024.0*1024.0))));
-		fullMsgBody = fullMsgBody.replace("{memoryDiskSpace}",
-				Double.toString(Math.round((Integer.parseInt(systemHealthDetails.getMemoryUsed())/(1024.0*1024.0)))));
-		fullMsgBody = fullMsgBody.replace("{cpuUsage}",
-				Double.toString(Math.round(Integer.parseInt(systemHealthDetails.getCpuUsage())/(1024.0*1024.0))));
+		fullMsgBody = fullMsgBody.replace("{hardDiskSpace}",Long.toString(hardDiskUsed/(1024*1024)));
+		fullMsgBody = fullMsgBody.replace("{memoryDiskSpace}",Long.toString(memoryUsed/(1024*1024)));
+		fullMsgBody = fullMsgBody.replace("{cpuUsage}",Long.toString(cpuUsed/(1024*1024)));
 		fullMsgBody = fullMsgBody.replace("{intervalTime}", response.getIntervalTime());
 		fullMsgBody = fullMsgBody.replace("{frequencyPeriod}", response.getFreqPeriod());
 		return fullMsgBody;
@@ -1161,13 +1166,13 @@ public class LabServiceImpl implements LabService {
 	 * @see com.nv.youNeverWait.user.bl.service.LabService#setBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 	 */
 	@Override
-	public ResponseDTO setBranchSync(SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setBranchSync(SyncFreqDTO sync) {
 		if(sync.getLabBranchId()<=0){
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidBranchId);
 			se.setDisplayErrMsg(true);
 			throw se;	
 		}
-		ResponseDTO response = labDao.setBranchSync(sync);
+		SyncFreqResponseDTO response = labDao.setBranchSync(sync);
 		return response;
 	}
 
@@ -1175,14 +1180,14 @@ public class LabServiceImpl implements LabService {
 	 * @see com.nv.youNeverWait.user.bl.service.LabService#setLabSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 	 */
 	@Override
-	public ResponseDTO setLabSync(SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync) {
 		if(sync.getLabId()<=0){
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidLab);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(sync.getLabId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		ResponseDTO response = labDao.setLabSync(sync);
+		SyncFreqResponseDTO response = labDao.setLabSync(sync);
 		return response;
 	}
 

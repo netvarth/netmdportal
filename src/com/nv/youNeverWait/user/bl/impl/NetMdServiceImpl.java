@@ -54,6 +54,7 @@ import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.validation.NetMdValidator;
@@ -863,14 +864,14 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#setNetMdSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 	 */
 	@Override
-	public ResponseDTO setNetMdSync(SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setNetMdSync(SyncFreqDTO sync) {
 		if(sync.getNetmdId()<=0){
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetMd);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(sync.getNetmdId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		ResponseDTO response = netMdDao.setNetMdSync(sync);
+		SyncFreqResponseDTO response = netMdDao.setNetMdSync(sync);
 		return response;
 	}
 
@@ -879,13 +880,13 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#setNetMdBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 	 */
 	@Override
-	public ResponseDTO setNetMdBranchSync(SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setNetMdBranchSync(SyncFreqDTO sync) {
 		if(sync.getNetmdBranchId()<=0){
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetMdBranchId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		ResponseDTO response = netMdDao.setNetMdBranchSync(sync);
+		SyncFreqResponseDTO response = netMdDao.setNetMdBranchSync(sync);
 		return response;
 	}
 	/* (non-Javadoc)

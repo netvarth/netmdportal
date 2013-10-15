@@ -47,6 +47,7 @@ import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.bl.service.NetRxService;
 import com.nv.youNeverWait.user.bl.validation.NetRxValidator;
@@ -791,14 +792,14 @@ public class NetRxServiceImpl implements NetRxService {
 	 * @see com.nv.youNeverWait.user.bl.service.NetRxService#setNetRxSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 	 */
 	@Override
-	public ResponseDTO setNetRxSync(SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setNetRxSync(SyncFreqDTO sync) {
 		if(sync.getNetrxId()<=0){
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetRx);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(sync.getNetrxId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		ResponseDTO response = netRxDao.setNetRxSync(sync);
+		SyncFreqResponseDTO response = netRxDao.setNetRxSync(sync);
 		return response;
 	}
 
@@ -806,13 +807,13 @@ public class NetRxServiceImpl implements NetRxService {
 	 * @see com.nv.youNeverWait.user.bl.service.NetRxService#setNetRxBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 	 */
 	@Override
-	public ResponseDTO setNetRxBranchSync(SyncFreqDTO sync) {
+	public SyncFreqResponseDTO setNetRxBranchSync(SyncFreqDTO sync) {
 		if(sync.getNetrxBranchId()<=0){
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetRxBranchId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		ResponseDTO response = netRxDao.setNetRxBranchSync(sync);
+		SyncFreqResponseDTO response = netRxDao.setNetRxBranchSync(sync);
 		return response;
 	}
 	
