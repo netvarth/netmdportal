@@ -4,12 +4,17 @@
 	//alert(branchId);
 	var response=getRequestData('/youNeverWait/ws/ui/superAdmin/viewBranchSystemInfo/'+branchId);
 	//alert(JSON.stringify(response));
-	
+	var brName=response.branchName;
+	$j('#graphHealthmonitorModal h1').text("Health Monitor-"+brName);
 	var memory = [];
 	var cpu = [];
 	var harddisk = [];
+	var lastTime=[];
 	var index = 1325376000000;
 	$j(response.healthMonitorList).each(function(healthIndex, health) {
+		var datetime=[];
+		datetime.push(health.createdDateTime);
+		lastTime.push(datetime);
 		
 		var cpuVal = [];
 		cpuVal.push(index);
@@ -28,144 +33,146 @@
 		
 		index+=2678400000;
 	});
-Â Â Â Â var data1 = [
-Â Â Â Â Â Â Â Â {
-Â Â Â Â Â Â Â Â Â Â Â Â label: "Memory",
-Â Â Â Â Â Â Â Â Â Â Â Â data: memory,
-Â Â Â Â Â Â Â Â Â Â Â Â bars: {
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â show: true,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â barWidth: 12*24*60*60*500,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â fill: true,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â lineWidth: 1,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â order: 1,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â fillColor:Â  "#AA4643"
-Â Â Â Â Â Â Â Â Â Â Â Â },
-Â Â Â Â Â Â Â Â Â Â Â Â color: "#AA4643"
-Â Â Â Â Â Â Â Â },
-Â Â Â Â Â Â Â Â {
-Â Â Â Â Â Â Â Â Â Â Â Â label: "CPU",
-Â Â Â Â Â Â Â Â Â Â Â Â data: cpu,
-Â Â Â Â Â Â Â Â Â Â Â Â bars: {
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â show: true,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â barWidth: 12*24*60*60*500,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â fill: true,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â lineWidth: 1,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â order: 2,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â fillColor:Â  "#89A54E"
-Â Â Â Â Â Â Â Â Â Â Â Â },
-Â Â Â Â Â Â Â Â Â Â Â Â color: "#89A54E"
-Â Â Â Â Â Â Â Â },
-Â Â Â Â Â Â Â Â {
-Â Â Â Â Â Â Â Â Â Â Â Â label: "Hard Disk",
-Â Â Â Â Â Â Â Â Â Â Â Â data: harddisk,
-Â Â Â Â Â Â Â Â Â Â Â Â bars: {
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â show: true,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â barWidth: 12*24*60*60*500,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â fill: true,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â lineWidth: 1,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â order: 3,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â fillColor:Â  "#4572A7"
-Â Â Â Â Â Â Â Â Â Â Â Â },
-Â Â Â Â Â Â Â Â Â Â Â Â color: "#4572A7"
-Â Â Â Â Â Â Â Â }
-Â Â Â Â ];
-Â 
-Â Â Â Â $j.plot($j("#healthdiv"), data1, {
-Â Â Â Â Â Â Â Â xaxis: {
-Â Â Â Â Â Â Â Â Â Â Â //Â min: (new Date(2011, 11, 15)).getTime(),
-Â Â Â Â Â Â Â Â Â Â Â //Â max: (new Date(2012, 04, 18)).getTime(),
-Â Â Â Â Â Â Â Â Â Â Â Â mode: "time",
-Â Â Â Â Â Â Â Â Â Â Â Â timeformat: "%b",
-Â Â Â Â Â Â Â Â Â Â Â Â tickSize: [1, "month"],
-Â Â Â Â Â Â Â Â Â Â Â Â monthNames: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-Â Â Â Â Â Â Â Â Â Â Â Â tickLength: 0, // hide gridlines
-Â Â Â Â Â Â Â Â Â Â Â Â axisLabel: 'Last 10 Intervals',
-Â Â Â Â Â Â Â Â Â Â Â Â axisLabelUseCanvas: false,
-Â Â Â Â Â Â Â Â Â Â Â Â axisLabelFontSizePixels: 12,
-Â Â Â Â Â Â Â Â Â Â Â Â axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-Â Â Â Â Â Â Â Â Â Â Â Â axisLabelPadding: 5
-Â Â Â Â Â Â Â Â },
-Â Â Â Â Â Â Â Â yaxis: {
-Â Â Â Â Â Â Â Â Â Â Â Â axisLabel: 'Usage',
-Â Â Â Â Â Â Â Â Â Â Â Â axisLabelUseCanvas: false,
-Â Â Â Â Â Â Â Â Â Â Â Â axisLabelFontSizePixels: 12,
-Â Â Â Â Â Â Â Â Â Â Â Â axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-Â Â Â Â Â Â Â Â Â Â Â Â axisLabelPadding: 5
-Â Â Â Â Â Â Â Â },
-Â Â Â Â Â Â Â Â grid: {
-Â Â Â Â Â Â Â Â Â Â Â Â hoverable: true,
-Â Â Â Â Â Â Â Â Â Â Â Â clickable: false,
-Â Â Â Â Â Â Â Â Â Â Â Â borderWidth: 1
-Â Â Â Â Â Â Â Â },
-Â Â Â Â Â Â Â Â legend: {
-Â Â Â Â Â Â Â Â Â Â Â Â labelBoxBorderColor: "none",
-Â Â Â Â Â Â Â Â Â Â Â Â position: "right"
-Â Â Â Â Â Â Â Â },
-Â Â Â Â Â Â Â Â series: {
-Â Â Â Â Â Â Â Â Â Â Â Â shadowSize: 1
-Â Â Â Â Â Â Â Â }
-Â Â Â Â });
-Â 
-Â Â Â Â function showTooltip(x, y, contents, z) {
-Â Â Â Â Â Â Â Â $j('<div id="flot-tooltip">' + contents + '</div>').css({
-Â Â Â Â Â Â Â Â Â Â Â Â top: y - 20,
-Â Â Â Â Â Â Â Â Â Â Â Â left: x - 90,
-Â Â Â Â Â Â Â Â Â Â Â Â 'border-color': z,
-Â Â Â Â Â Â Â Â }).appendTo("body").show();
-Â Â Â Â }
-Â 
-Â Â Â Â function getMonthName(newTimestamp) {
-Â Â Â Â Â Â Â Â var d = new Date(newTimestamp);
-Â 
-Â Â Â Â Â Â Â Â var numericMonth = d.getMonth();
-Â Â Â Â Â Â Â Â var monthArray = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-Â 
-Â Â Â Â Â Â Â Â var alphaMonth = monthArray[numericMonth];
-Â 
-Â Â Â Â Â Â Â Â return alphaMonth;
-Â Â Â Â }
-Â 
-Â Â Â Â $j("#healthdiv").bind("plothover", function (event, pos, item) {
-Â Â Â Â Â Â Â Â if (item) {
-Â Â Â Â Â Â Â Â Â Â Â Â if (previousPoint != item.datapoint) {
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â previousPoint = item.datapoint;
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â $j("#flot-tooltip").remove();
-Â 
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â var originalPoint;
-Â 
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â if (item.datapoint[0] == item.series.data[0][3]) {
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â originalPoint = item.series.data[0][0];
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â } else if (item.datapoint[0] == item.series.data[1][3]){
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â originalPoint = item.series.data[1][0];
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â } else if (item.datapoint[0] == item.series.data[2][3]){
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â originalPoint = item.series.data[2][0];
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â } else if (item.datapoint[0] == item.series.data[3][3]){
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â originalPoint = item.series.data[3][0];
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â } else if (item.datapoint[0] == item.series.data[4][3]){
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â originalPoint = item.series.data[4][0];
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â } else if (item.datapoint[0] == item.series.data[5][3]){
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â originalPoint = item.series.data[5][0];
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â } else if (item.datapoint[0] == item.series.data[6][3]){
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â originalPoint = item.series.data[6][0];
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â } else if (item.datapoint[0] == item.series.data[7][3]){
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â originalPoint = item.series.data[7][0];
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â } else if (item.datapoint[0] == item.series.data[8][3]){
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â originalPoint = item.series.data[8][0];
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â } else if (item.datapoint[0] == item.series.data[9][3]){
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â originalPoint = item.series.data[9][0];
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â }
-Â 
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â var x = getMonthName(originalPoint);
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â y = item.datapoint[1];
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â z = item.series.color;
-Â 
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â showTooltip(item.pageX, item.pageY,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â "<b>" + item.series.label + "</b><br /> " + x + " = " + y + "MB",
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â z);
-Â Â Â Â Â Â Â Â Â Â Â Â }
-Â Â Â Â Â Â Â Â } else {
-Â Â Â Â Â Â Â Â Â Â Â Â $j("#flot-tooltip").remove();
-Â Â Â Â Â Â Â Â Â Â Â Â previousPoint = null;
-Â Â Â Â Â Â Â Â }
-Â Â Â Â });
+	
+	var lastInterval="Last 10 Intervals Till("+lastTime[9]+")";
+    var data1 = [
+        {
+            label: "Memory",
+            data: memory,
+            bars: {
+                show: true,
+                barWidth: 12*24*60*60*500,
+                fill: true,
+                lineWidth: 1,
+                order: 1,
+                fillColor:  "#AA4643"
+            },
+            color: "#AA4643"
+        },
+        {
+            label: "CPU",
+            data: cpu,
+            bars: {
+                show: true,
+                barWidth: 12*24*60*60*500,
+                fill: true,
+                lineWidth: 1,
+                order: 2,
+                fillColor:  "#89A54E"
+            },
+            color: "#89A54E"
+        },
+        {
+            label: "Hard Disk",
+            data: harddisk,
+            bars: {
+                show: true,
+                barWidth: 12*24*60*60*500,
+                fill: true,
+                lineWidth: 1,
+                order: 3,
+                fillColor:  "#4572A7"
+            },
+            color: "#4572A7"
+        }
+    ];
+ 
+    $j.plot($j("#healthdiv"), data1, {
+        xaxis: {
+           // min: (new Date(2011, 11, 15)).getTime(),
+           // max: (new Date(2012, 04, 18)).getTime(),
+            mode: "time",
+            timeformat: "%b",
+            tickSize: [1, "month"],
+            monthNames: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+            tickLength: 0, // hide gridlines
+            axisLabel: lastInterval,
+            axisLabelUseCanvas: false,
+            axisLabelFontSizePixels: 12,
+            axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+            axisLabelPadding: 5
+        },
+        yaxis: {
+            axisLabel: 'Usage(%)',
+            axisLabelUseCanvas: false,
+            axisLabelFontSizePixels: 12,
+            axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+            axisLabelPadding: 5
+        },
+        grid: {
+            hoverable: true,
+            clickable: false,
+            borderWidth: 1
+        },
+        legend: {
+            labelBoxBorderColor: "none",
+            position: "right"
+        },
+        series: {
+            shadowSize: 1
+        }
+    });
+ 
+    function showTooltip(x, y, contents, z) {
+        $j('<div id="flot-tooltip">' + contents + '</div>').css({
+            top: y - 20,
+            left: x - 90,
+            'border-color': z,
+        }).appendTo("body").show();
+    }
+ 
+    function getMonthName(newTimestamp) {
+        var d = new Date(newTimestamp);
+ 
+        var numericMonth = d.getMonth();
+        var monthArray = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+ 
+        var alphaMonth = monthArray[numericMonth];
+ 
+        return alphaMonth;
+    }
+ 
+    $j("#healthdiv").bind("plothover", function (event, pos, item) {
+        if (item) {
+            if (previousPoint != item.datapoint) {
+                previousPoint = item.datapoint;
+                $j("#flot-tooltip").remove();
+ 
+                var originalPoint;
+ 
+                if (item.datapoint[0] == item.series.data[0][3]) {
+                    originalPoint = item.series.data[0][0];
+                } else if (item.datapoint[0] == item.series.data[1][3]){
+                    originalPoint = item.series.data[1][0];
+                } else if (item.datapoint[0] == item.series.data[2][3]){
+                    originalPoint = item.series.data[2][0];
+                } else if (item.datapoint[0] == item.series.data[3][3]){
+                    originalPoint = item.series.data[3][0];
+                } else if (item.datapoint[0] == item.series.data[4][3]){
+                    originalPoint = item.series.data[4][0];
+                } else if (item.datapoint[0] == item.series.data[5][3]){
+                    originalPoint = item.series.data[5][0];
+                } else if (item.datapoint[0] == item.series.data[6][3]){
+                    originalPoint = item.series.data[6][0];
+                } else if (item.datapoint[0] == item.series.data[7][3]){
+                    originalPoint = item.series.data[7][0];
+                } else if (item.datapoint[0] == item.series.data[8][3]){
+                    originalPoint = item.series.data[8][0];
+                } else if (item.datapoint[0] == item.series.data[9][3]){
+                    originalPoint = item.series.data[9][0];
+                }
+ 
+                var x = getMonthName(originalPoint);
+                y = item.datapoint[1];
+                z = item.series.color;
+ 
+                showTooltip(item.pageX, item.pageY,
+                    "<b>" + item.series.label + "</b><br /> " + x + " = " + y + "MB",
+                    z);
+            }
+        } else {
+            $j("#flot-tooltip").remove();
+            previousPoint = null;
+        }
+    });
 //});
