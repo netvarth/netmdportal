@@ -33,8 +33,8 @@
 		
 		index+=2678400000;
 	});
-	
 	var lastInterval="Last 10 Intervals Till("+lastTime[9]+")";
+	//alert(lastInterval);
     var data1 = [
         {
             label: "Memory",
@@ -86,7 +86,7 @@
             tickSize: [1, "month"],
             monthNames: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
             tickLength: 0, // hide gridlines
-            axisLabel: lastInterval,
+            axisLabel: lastInterval,
             axisLabelUseCanvas: false,
             axisLabelFontSizePixels: 12,
             axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
