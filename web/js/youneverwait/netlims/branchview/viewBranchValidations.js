@@ -4,13 +4,13 @@ function validateviewbranch(){
 	var branchMobile=$j('#branchMobile');
 	var address=$j('#address');
 	var email=$j('#email');
-	var orgcode=$j('#branchcode');
+	//var orgcode=$j('#branchcode');
 	
 	var bValid=true,OrgNameValid=true,BRPhoneValid=true,BRMobileValid=true,Orgbrcodevalid=true,BREmailValid=true,OrgNregValid=true,BRPhoneregValid=true,BRMobregValid=true,BREmailregValid=true;
 	
 	OrgNameValid = checkNull( organizationName,constants_organizationNameRequired);
-	Orgbrcodevalid = checkNull( orgcode,constants_branchcodeRequired);
-	OrgNameValid=Orgbrcodevalid&&OrgNameValid;
+	//Orgbrcodevalid = checkNull( orgcode,constants_branchcodeRequired);
+	//OrgNameValid=Orgbrcodevalid&&OrgNameValid;
 	BRPhoneValid = checkNull( branchPhone,constants_phoneRequired);
 	BRPhoneValid=BRPhoneValid&&OrgNameValid;
 	BRMobileValid = checkNull( branchMobile,constants_mobileRequired);
