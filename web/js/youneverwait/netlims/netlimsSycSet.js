@@ -66,7 +66,7 @@ function submitNetlimsSyncDetailsInfo(){
 	var resultJson = createNetlimsSyncDetailsJson();
 	//alert(resultJson);
 	var response = postdataToServer(constant_newnetlimsSync_Create_Url, resultJson );	
-	alert(JSON.stringify(response));
+	//alert(JSON.stringify(response));
 	return response;
 }
 

@@ -5,7 +5,6 @@ var netlmsBrchId="";
 function getNetlimsBrchId(branchId){
 	netlmsBrchId=branchId;
 	var getSyncdetails=getRequestData('/youNeverWait/ws/ui/lab/getBranchSyncDetails/'+netlmsBrchId);
-	//alert(JSON.stringify(getSyncdetails));
 	var radioStatus=getSyncdetails.enableSync;
 	
 	if(radioStatus==false)
@@ -41,28 +40,29 @@ $j('#netlimsBrchDisable').die('click').live("click",function() {
 	});
 	
 $j("#newBranchsetSyncForm #btnnetlimsBranchSubmit").die('click').live('click',function(){
-	//alert("click");
 	removeErrors();	
-	if(validateNetlimsBrchSync())
+	 if(validateNetlimsBrchSync())
 		{
 	var response = submitNetlimsBrchSyncDetailsInfo();
-	if(response.success==true){
-			var messg=response.msg;
+	 if(response.success==true){
+			var messge=response.msg;
 		if(response.msg==null){
 			showTip("Set Synchronisation Successfully");
-			}else{updateTipsNew(messg,$j('#newBranchsetSyncForm #errorDivNewNetlimsBranchData'),$j('#newBranchsetSyncForm #errorDivHeader');} 
+			}else{
+			updateTipsNew(messge,$j('#newBranchsetSyncForm #errorDivNewNetlimsBranchData'),$j('#newBranchsetSyncForm #errorDivHeader'));
+			} 
 		}
 	else {
 			updateTipsNew(getErrorName(response.error),$j('#newBranchsetSyncForm #errorDivNewNetlimsBranchData'),$j('#newBranchsetSyncForm #errorDivHeader'));
-		}
-		}
+		} 
+		} 
 	});	
 
 function submitNetlimsBrchSyncDetailsInfo(){
 	var resultJson = createNetlimsBrchSyncDetailsJson();
 	//alert(resultJson);
 	var response = postdataToServer(constant_newnetlimsBrchSync_Create_Url, resultJson );	
-	alert(JSON.stringify(response));
+	//alert(JSON.stringify(response));
 	return response;
 }	
 
@@ -106,4 +106,4 @@ function fillTimeList(controlobj)
 		});
 
 		
-	}
+	} 
