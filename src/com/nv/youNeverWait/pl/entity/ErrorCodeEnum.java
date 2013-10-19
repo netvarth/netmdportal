@@ -228,7 +228,7 @@ public enum ErrorCodeEnum {
 	ExperienceNotExist("1180","Requested  experience not exist"),
 	QualificationNotExist("1181","Requested  qualification not exist"),
 	DoctorNotFound("1182","Unknown doctor with id {id}"),
-	
+	NetmdBranchSystemInfoNull("1183","Default system information for this device does not exist"),
 	/*netRx*/
 	InvalidNetRxName("2000","You must enter valid name for netmd"),
 	NetRxAccountAlreadyExists("2001","There is another netrx account with given username"),

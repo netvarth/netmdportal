@@ -3,13 +3,14 @@ package com.nv.youNeverWait.pl.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
+
 /**
- * The persistent class for the branch_system_info_tbl database table.
+ * The persistent class for the lab_branch_system_info_tbl database table.
  * 
  */
 @Entity
-@Table(name="branch_system_info_tbl")
-public class BranchSystemInfoTbl implements Serializable {
+@Table(name="lab_branch_system_info_tbl")
+public class LabBranchSystemInfoTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -37,7 +38,7 @@ public class BranchSystemInfoTbl implements Serializable {
 	@JoinColumn(name="branch_id", nullable=false)
 	private LabBranchTbl labBranchTbl;
 
-	public BranchSystemInfoTbl() {
+	public LabBranchSystemInfoTbl() {
 	}
 
 	public int getId() {
