@@ -68,10 +68,10 @@ public class LabTbl implements Serializable {
 	@Column(name="enable_sync", nullable=false)
 	private boolean enableSync;
 	
-	@Column(name="sync_freq_type", nullable=false, length=45)
+	@Column(name="sync_freq_type", length=45)
 	private String syncFreqType;
 	
-	@Column(name="sync_time", nullable=false)
+	@Column(name="sync_time")
 	private int syncTime;
 
 	//bi-directional many-to-one association to LabBranchTbl

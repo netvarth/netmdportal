@@ -2,7 +2,6 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.Date;
 import java.util.Set;
 
@@ -47,6 +46,15 @@ public class NetrxBranchTbl implements Serializable {
 	@Column(name="update_date_time")
 	private Date updateDateTime;
  
+    @Column(name="enable_sync", nullable=false)
+	private boolean enableSync;
+    
+    @Column(name="sync_freq_type", length=45)
+	private String syncFreqType;
+
+	@Column(name="sync_time")
+	private int syncTime;
+    
     //bi-directional many-to-one association to NetrxTbl
     @ManyToOne
 	@JoinColumn(name="netrx_id", nullable=false)
@@ -163,6 +171,48 @@ public class NetrxBranchTbl implements Serializable {
 	 */
 	public void setNetrxTbl(NetrxTbl netrxTbl) {
 		this.netrxTbl = netrxTbl;
+	}
+
+	/**
+	 * @return the enableSync
+	 */
+	public boolean getEnableSync() {
+		return this.enableSync;
+	}
+
+	/**
+	 * @param enableSync the enableSync to set
+	 */
+	public void setEnableSync(boolean enableSync) {
+		this.enableSync = enableSync;
+	}
+
+	/**
+	 * @return the syncFreqType
+	 */
+	public String getSyncFreqType() {
+		return syncFreqType;
+	}
+
+	/**
+	 * @param syncFreqType the syncFreqType to set
+	 */
+	public void setSyncFreqType(String syncFreqType) {
+		this.syncFreqType = syncFreqType;
+	}
+
+	/**
+	 * @return the syncTime
+	 */
+	public int getSyncTime() {
+		return syncTime;
+	}
+
+	/**
+	 * @param syncTime the syncTime to set
+	 */
+	public void setSyncTime(int syncTime) {
+		this.syncTime = syncTime;
 	}
 	
 }
