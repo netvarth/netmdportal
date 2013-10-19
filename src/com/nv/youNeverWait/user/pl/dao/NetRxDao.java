@@ -59,5 +59,15 @@ public interface NetRxDao {
 	 * @return
 	 */
 	public SyncFreqResponseDTO setNetRxBranchSync(SyncFreqDTO sync);
+	/**
+	 * @param branchId
+	 * @return
+	 */
+	public SyncFreqDTO getBranchSyncDetails(int branchId);
+	/**
+	 * @param netrxId
+	 * @return
+	 */
+	public SyncFreqDTO getNetrxSyncDetails(int netrxId);
 
 }

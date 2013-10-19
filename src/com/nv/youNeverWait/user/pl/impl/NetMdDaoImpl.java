@@ -24,10 +24,14 @@ import com.nv.youNeverWait.pl.entity.BranchStatusEnum;
 import com.nv.youNeverWait.pl.entity.DoctorScheduleTbl;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.pl.entity.LabBranchSystemInfoTbl;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
+import com.nv.youNeverWait.pl.entity.LabHealthMonitorTbl;
 import com.nv.youNeverWait.pl.entity.LabTbl;
 import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBillTbl;
+import com.nv.youNeverWait.pl.entity.NetmdBranchSystemInfoTbl;
+import com.nv.youNeverWait.pl.entity.NetmdHealthMonitorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
@@ -42,6 +46,7 @@ import com.nv.youNeverWait.pl.entity.SyncFreqTypeEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.AppointmentDTO;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
@@ -67,6 +72,7 @@ import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
 import com.nv.youNeverWait.rs.dto.ScheduleDetail;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthMonitorDetailList;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.NetMdDao;
@@ -86,6 +92,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	@Override
 	public ResponseDTO create(NetMdDTO netMd) {
 		ResponseDTO response = new ResponseDTO();
+		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
 		NetmdLoginTbl loginTbl = getLoginByUserName(netMd.getUserName());
 		if (loginTbl != null) {
 			ServiceException se = new ServiceException(
@@ -136,6 +143,13 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		Date createdTime = new Date();
 		netMdTbl.setCreateDateTime(createdTime);
 		netMdTbl.setUpdateDateTime(createdTime);
+		if (superAdmin.getEnableSync() == false) {
+			netMdTbl.setEnableSync(false);
+		} else {
+			netMdTbl.setEnableSync(true);
+			netMdTbl.setSyncFreqType(superAdmin.getSyncFreqType());
+			netMdTbl.setSyncTime(superAdmin.getSyncTime());
+		}
 		save(netMdTbl);
 		response.setGlobalId(netMdTbl.getId());
 		response.setSuccess(true);
@@ -308,6 +322,14 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netMdBranch.setMobile(branch.getMobile());
 		netMdBranch.setEmail(branch.getEmail());
 		netMdBranch.setNetmdTbl(netMd);
+		if(netMd.getEnableSync()==false){
+			netMdBranch.setEnableSync(false);
+		}
+		else{
+			netMdBranch.setEnableSync(true);
+			netMdBranch.setSyncFreqType(netMd.getSyncFreqType());
+			netMdBranch.setSyncTime(netMd.getSyncTime());
+		}
 		save(netMdBranch);
 		NetmdPassphraseTbl netMdPassPhrase = new NetmdPassphraseTbl();
 		String passphrase = StringEncoder.getKeyvalue(StringEncoder.getKey());
@@ -1318,21 +1340,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				&& !header.getMacId().isEmpty()
 				&& !header.getPassPhrase().isEmpty()) {
 
-			NetmdPassphraseTbl passPhrase = getByPassphrase(header
-					.getPassPhrase());
-			if (passPhrase == null
-					|| passPhrase.getMacId() == null
-					|| !passPhrase.getMacId().equals(header.getMacId())
-					|| passPhrase.getNetmdBranchTbl().getId() != header
-							.getNetMdBranchId()
-					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != header
-							.getNetMdId()) {
-
-				ServiceException se = new ServiceException(
-						ErrorCodeEnum.InvalidNetMdAccount);
-				se.setDisplayErrMsg(true);
-				throw se;
-			}
+			checkHeader(header);
 		}
 		PatientTbl existingPatient = getById(PatientTbl.class,
 				Integer.parseInt(newBill.getPatientGlobalId()));
@@ -1393,6 +1401,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	@Transactional
 	public SyncFreqResponseDTO setNetMdSync(SyncFreqDTO sync) {
 		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		Date newDate = new Date();
 		NetmdTbl netmd = getById(NetmdTbl.class, sync.getNetmdId());
 		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
 		if (netmd != null) {
@@ -1400,6 +1409,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				netmd.setEnableSync(false);
 			} else
 				netmd.setEnableSync(sync.isEnableSync());
+			netmd.setUpdateDateTime(newDate);
 			update(netmd);
 			/**** Setting values when the sync is enabled ****/
 			if (netmd.getEnableSync() == true) {
@@ -1410,11 +1420,13 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 
 				netmd.setSyncTime(sync.getSyncTime());
 				netmd.setSyncFreqType(sync.getSyncFreqType());
+				netmd.setUpdateDateTime(newDate);
 				update(netmd);
 			} else {
 				/****** Setting all branches of the lab as disabled *******/
 				for (NetmdBranchTbl netmdBranch : netmd.getNetmdBranchTbls()) {
 					netmdBranch.setEnableSync(netmd.getEnableSync());
+					netmdBranch.setUpdateDateTime(newDate);
 					update(netmdBranch);
 					response.setMsg(Constants.MESSAGE);
 				}// end of for loop
@@ -1443,6 +1455,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	@Transactional
 	public SyncFreqResponseDTO setNetMdBranchSync(SyncFreqDTO sync) {
 		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		Date newDate = new Date();
 		NetmdBranchTbl netmdBranch = getById(NetmdBranchTbl.class,
 				sync.getNetmdBranchId());
 		if (netmdBranch != null) {
@@ -1456,6 +1469,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 					netmdBranch.setEnableSync(sync.isEnableSync());
 				}
 			}
+			netmdBranch.setUpdateDateTime(newDate);
 			update(netmdBranch);
 			if (netmdBranch.getEnableSync() == true) {
 				/**
@@ -1468,6 +1482,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 
 				netmdBranch.setSyncTime(sync.getSyncTime());
 				netmdBranch.setSyncFreqType(sync.getSyncFreqType());
+				netmdBranch.setUpdateDateTime(newDate);
 				update(netmdBranch);
 			} else {
 				response.setMsg(Constants.MESSAGE);
@@ -1589,6 +1604,93 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		return sync;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.NetMdDao#viewBranchSystemInfoDetails(java.lang.String)
+	 */
+	@Override
+	@Transactional
+	public BranchSystemInfoDetails viewBranchSystemInfoDetails(String passphrase) {
+		BranchSystemInfoDetails details = new BranchSystemInfoDetails();
+		List<SystemHealthMonitorDetailList> healthMonitorList = new ArrayList<SystemHealthMonitorDetailList>();
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		NetmdPassphraseTbl netmdPassphrase = getByPassphrase(passphrase);
+		if (netmdPassphrase == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPassphrase);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		/*
+		 * Getting system default information like critical memory level, freq
+		 * type and so on
+		 */
+		NetmdBranchSystemInfoTbl systemInfo = getSystemDetailsByNetmdBranchId(netmdPassphrase.getNetmdBranchTbl().getId(),netmdPassphrase.getId());
+				if (systemInfo == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.NetmdBranchSystemInfoNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		details.setBranchId(netmdPassphrase.getNetmdBranchTbl().getId());
+		details.setBranchName(netmdPassphrase.getNetmdBranchTbl().getName());
+		details.setCriticalCpuLevel(Float.toString(systemInfo
+				.getCriticalCpuLevel()));
+		details.setCriticalHardDiskSpaceLevel(Float.toString(systemInfo
+				.getCriticalHardDiskLevel()));
+		details.setCriticalMemoryLevel(Float.toString(systemInfo
+				.getCriticalMemoryLevel()));
+		details.setFreqType(systemInfo.getFreqType());
+		details.setIntervalTime(Integer.toString(systemInfo.getIntervalTime()));
+		/**Query for getting total number of records*/
+		int totalRecords= getTotalHealthMonitorRecords(netmdPassphrase.getId());
+		int startIndex=0;
+		if(totalRecords>10)
+		 startIndex=totalRecords-10;
+		/* Getting last 10 records of system health monitor details */
+		List<NetmdHealthMonitorTbl> healthMonitorTblList = getMonitorDetailsByBranchId(netmdPassphrase.getId(),startIndex);
+		if (healthMonitorTblList.isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.SystemMonitorDetailsNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		for (NetmdHealthMonitorTbl hMonitor : healthMonitorTblList) {
+			SystemHealthMonitorDetailList systemHealth = new SystemHealthMonitorDetailList();
+		
+			systemHealth.setCpuUsage(hMonitor.getFreeCpuSpace());
+			systemHealth.setHardDiskSpaceUasge(hMonitor.getFreeHardDiskSpace());
+			systemHealth.setMemoryUsage(hMonitor.getFreeMemorySpace());
+			systemHealth.setCreatedDateTime(sdf.format(hMonitor
+					.getCreatedDateTime()));
+			healthMonitorList.add(systemHealth);
+			details.setTotalCpu(hMonitor.getTotalCpuSpace());
+			details.setTotalHardDisk(hMonitor.getTotalHardDiskSpace());
+			details.setTotalMemory(hMonitor.getTotalMemorySpace());
+		}
+		details.setHealthMonitorList(healthMonitorList);
+
+		details.setSuccess(true);
+		return details;
+	}
+
+	public void checkHeader(HeaderDTO header){
+		NetmdPassphraseTbl passPhrase = getByPassphrase(header
+				.getPassPhrase());
+		if (passPhrase == null
+				|| passPhrase.getMacId() == null
+				|| !passPhrase.getMacId().equals(header.getMacId())
+				|| passPhrase.getNetmdBranchTbl().getId() != header
+						.getNetMdBranchId()
+				|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != header
+						.getNetMdId()) {
+
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMdAccount);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+	}
 	//
 	// /* (non-Javadoc)
 	// * @see
@@ -1623,6 +1725,40 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	// return response;
 	// }
 
+	private List<NetmdHealthMonitorTbl> getMonitorDetailsByBranchId(int passPhraseId, int startIndex) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_HEALTH_MONITORING_DETAILS);
+		query.setParameter("param1", passPhraseId);
+		query.setFirstResult(startIndex);
+		query.setMaxResults(10);
+		return executeQuery(NetmdHealthMonitorTbl.class, query);
+	}
+	
+	/**
+	 * @param passPhraseId
+	 * @return
+	 */
+	private int getTotalHealthMonitorRecords(int passPhraseId) {
+		int totalRecords=0;
+	javax.persistence.Query query= em.createQuery(Query.GET_NETMD_TOTAL_RECORDS);
+	query.setParameter("param1",passPhraseId);
+	totalRecords=((Number) query.getSingleResult()).intValue();
+		return totalRecords;
+	}
+	
+	/**
+	 * @param netmdBranchId
+	 * @param netmdPassphraseId
+	 * @return
+	 */
+	private NetmdBranchSystemInfoTbl getSystemDetailsByNetmdBranchId(int netmdBranchId, int netmdPassphraseId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_BRANCH_SYSTEM_DETAILS);
+		query.setParameter("param1", netmdBranchId);
+		query.setParameter("param2", netmdPassphraseId);
+		return executeUniqueQuery(NetmdBranchSystemInfoTbl.class, query);
+	}
+	
 	/**
 	 * 
 	 * @param branchId
@@ -2011,4 +2147,5 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		this.em = em;
 	}
 
+	
 }

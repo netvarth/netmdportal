@@ -10,6 +10,7 @@ package com.nv.youNeverWait.user.pl.dao;
 import java.util.Date;
 
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetMdActivationResponseDTO;
@@ -77,16 +78,6 @@ public interface NetMdDao {
 	 * @return
 	 */
 	public SyncFreqResponseDTO setNetMdBranchSync(SyncFreqDTO sync);
-//	/**
-//	 * @param sync
-//	 * @return
-//	 */
-//	public ResponseDTO enableBranchSync(SyncFreqDTO sync);
-//	/**
-//	 * @param sync
-//	 * @return
-//	 */
-//	public ResponseDTO enableSync(SyncFreqDTO sync);
 	/**
 	 * @param netmdId
 	 * @return
@@ -98,5 +89,22 @@ public interface NetMdDao {
 	 */
 	public SyncFreqDTO getBranchSyncDetails(int branchId);
 
+	public void checkHeader(HeaderDTO header);
+//	/**
+//	 * @param sync
+//	 * @return
+//	 */
+//	public ResponseDTO enableBranchSync(SyncFreqDTO sync);
+//	/**
+//	 * @param sync
+//	 * @return
+//	 */
+//	public ResponseDTO enableSync(SyncFreqDTO sync);
+	/**
+	 * @param passphrase
+	 * @return
+	 */
+	public BranchSystemInfoDetails viewBranchSystemInfoDetails(String passphrase);
+	
 
 }
