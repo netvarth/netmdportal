@@ -30,7 +30,7 @@ import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenResponseDTO;
 import com.nv.youNeverWait.rs.dto.TestDTO;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
-import com.nv.youNeverWait.user.bl.service.SpecimenManager;
+import com.nv.youNeverWait.user.bl.service.SpecimenService;
 import com.nv.youNeverWait.user.bl.validation.SpecimenValidator;
 import com.nv.youNeverWait.user.bl.validation.TestValidator;
 import com.nv.youNeverWait.user.pl.dao.SpecimenDao;
@@ -44,7 +44,7 @@ import com.nv.youNeverWait.util.filter.core.QueryBuilderFactory;
  *
  * @author Luciya Jose
  */
-public class SpecimenServiceImpl  implements SpecimenManager{
+public class SpecimenManager  implements SpecimenService{
 	private SpecimenValidator specimenValidator;
 	private QueryBuilderFactory queryBuilderFactory;
 	private FilterFactory filterFactory;

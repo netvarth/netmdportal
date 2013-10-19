@@ -40,7 +40,7 @@ import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabBranchSystemInfoDetails;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
@@ -73,9 +73,9 @@ import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.service.NetRxService;
-import com.nv.youNeverWait.user.bl.service.SpecimenManager;
+import com.nv.youNeverWait.user.bl.service.SpecimenService;
 import com.nv.youNeverWait.user.bl.service.SuperAdminService;
-import com.nv.youNeverWait.user.bl.service.TestManager;
+import com.nv.youNeverWait.user.bl.service.TestService;
 import com.nv.youNeverWait.user.bl.validation.SuperAdminValidator;
 import com.nv.youNeverWait.user.pl.dao.SuperAdminDao;
 import com.nv.youNeverWait.util.filter.core.Filter;
@@ -94,8 +94,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	private QueryBuilderFactory queryBuilderFactory;
 	private FilterFactory filterFactory;
 	private NetRxService netRxService;
-	private TestManager testManager;
-	private SpecimenManager specimenManager;
+	private TestService testService;
+	private SpecimenService specimenService;
 	private static final Log log = LogFactory
 			.getLog(SuperAdminServiceImpl.class);
 
@@ -797,8 +797,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @return
 	 */
 	@Override
-	public LabBranchSystemInfoDetails viewBranchSystemInfo(int branchId) {
-		LabBranchSystemInfoDetails response= labService.viewBranchSystemInfoDetails(branchId);
+	public BranchSystemInfoDetails viewBranchSystemInfo(int branchId) {
+		BranchSystemInfoDetails response= labService.viewBranchSystemInfoDetails(branchId);
 	return response;
 	}
 	
@@ -809,7 +809,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
      */
 	@Override
 	public ResponseDTO updateLabBranchSystemInfo(
-			LabBranchSystemInfoDetails details) {
+			BranchSystemInfoDetails details) {
 		ResponseDTO response= labService.updateLabBranchSystemInfo(details);
 		return response;
 	}
@@ -821,7 +821,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public TestListResponseDTO testList(FilterDTO filter) {
-		TestListResponseDTO response= testManager.testList(filter);
+		TestListResponseDTO response= testService.testList(filter);
 		return response;
 	}
 
@@ -830,7 +830,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public SpecimenListResponseDTO testSpecimenList(FilterDTO filter) {
-		SpecimenListResponseDTO response= specimenManager.testSpecimenList(filter);
+		SpecimenListResponseDTO response= specimenService.testSpecimenList(filter);
 		return response;
 	}
 	
@@ -859,6 +859,15 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	@Override
 	public SyncFreqDTO getSyncDetails() {
 		SyncFreqDTO response = superAdminDao.getSyncDetails();
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#viewNetMdBranchSystemInfo(java.lang.String)
+	 */
+	@Override
+	public BranchSystemInfoDetails viewNetMdBranchSystemInfo(String passphrase) {
+		BranchSystemInfoDetails response= netMdService.viewNetmdBranchSystemInfoDetails(passphrase);
 		return response;
 	}
 
@@ -1023,33 +1032,34 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	}
 
 	/**
-	 * @return the testManager
+	 * @return the testService
 	 */
-	public TestManager getTestManager() {
-		return testManager;
+	public TestService getTestService() {
+		return testService;
 	}
 
 	/**
-	 * @param testManager the testManager to set
+	 * @param testService the testService to set
 	 */
-	public void setTestManager(TestManager testManager) {
-		this.testManager = testManager;
+	public void setTestService(TestService testService) {
+		this.testService = testService;
 	}
 
 	/**
-	 * @return the specimenManager
+	 * @return the specimenService
 	 */
-	public SpecimenManager getSpecimenManager() {
-		return specimenManager;
+	public SpecimenService getSpecimenService() {
+		return specimenService;
 	}
 
 	/**
-	 * @param specimenManager the specimenManager to set
+	 * @param specimenService the specimenService to set
 	 */
-	public void setSpecimenManager(SpecimenManager specimenManager) {
-		this.specimenManager = specimenManager;
+	public void setSpecimenService(SpecimenService specimenService) {
+		this.specimenService = specimenService;
 	}
 
+	
 	
 	
 

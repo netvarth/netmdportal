@@ -28,7 +28,7 @@ import com.nv.youNeverWait.rs.dto.TestDTO;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UpdateTestResponseDTO;
 import com.nv.youNeverWait.rs.dto.ViewTestResponseDTO;
-import com.nv.youNeverWait.user.bl.service.TestManager;
+import com.nv.youNeverWait.user.bl.service.TestService;
 import com.nv.youNeverWait.user.bl.validation.TestValidator;
 import com.nv.youNeverWait.user.pl.dao.TestDao;
 import com.nv.youNeverWait.util.filter.core.Filter;
@@ -41,7 +41,7 @@ import com.nv.youNeverWait.util.filter.core.QueryBuilderFactory;
  *
  * @author Luciya Jose
  */
-public class TestServiceImpl implements TestManager {
+public class TestManager implements TestService {
 	private TestValidator testValidator;
 	private TestDao testDao;
 	private QueryBuilderFactory queryBuilderFactory;
