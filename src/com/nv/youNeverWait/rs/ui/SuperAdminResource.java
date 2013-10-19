@@ -29,7 +29,7 @@ import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabBranchSystemInfoDetails;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LogDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
@@ -1158,8 +1158,8 @@ public class SuperAdminResource {
 	 */
 	@RequestMapping (value="viewBranchSystemInfo/{branchId}", method=RequestMethod.GET)
 	@ResponseBody
-	public LabBranchSystemInfoDetails viewBranchSystemInfo(@PathVariable int branchId){
-		LabBranchSystemInfoDetails details= new LabBranchSystemInfoDetails();
+	public BranchSystemInfoDetails viewBranchSystemInfo(@PathVariable int branchId){
+		BranchSystemInfoDetails details= new BranchSystemInfoDetails();
 		try{
 			details= service.viewBranchSystemInfo(branchId);
 		}
@@ -1176,6 +1176,30 @@ public class SuperAdminResource {
 		
 	}
 	
+	/**
+	 * Method for viewing branch default system details
+	 * @param branchId
+	 * @return
+	 */
+	@RequestMapping (value="viewNetMdBranchSystemInfo/{passphrase}", method=RequestMethod.GET)
+	@ResponseBody
+	public BranchSystemInfoDetails viewNetMdBranchSystemInfo(@PathVariable String passphrase){
+		BranchSystemInfoDetails details= new BranchSystemInfoDetails();
+		try{
+			details= service.viewNetMdBranchSystemInfo(passphrase);
+		}
+		catch(ServiceException e){
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			details.setError(error);
+			details.setSuccess(false);
+		}
+		return details;
+		
+	}
 
 	/**
  	 * Method for updating the branch default system details
@@ -1184,7 +1208,7 @@ public class SuperAdminResource {
      */
 	@RequestMapping(value = "updateLabBranchSystemInfo", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseDTO updateLabBranchSystemInfo(@RequestBody LabBranchSystemInfoDetails details) {
+	public ResponseDTO updateLabBranchSystemInfo(@RequestBody BranchSystemInfoDetails details) {
 		ResponseDTO response = new ResponseDTO();
 		try {
 			response = service.updateLabBranchSystemInfo(details);

@@ -51,7 +51,7 @@ import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.LogService;
-import com.nv.youNeverWait.user.bl.service.OrderManager;
+import com.nv.youNeverWait.user.bl.service.OrderService;
 
 @Controller
 @RequestMapping("ui/lab/")
@@ -953,8 +953,8 @@ public class LabResource {
 	/**
 	 * To set synchronization frequency for a lab 
 	 * 
-	 * @param log
-	 * @return ResponseDTO
+	 * @param sync
+	 * @return SyncFreqResponseDTO
 	 */
 	@RequestMapping(value = "setLabSync", method = RequestMethod.POST)
 	@ResponseBody
@@ -978,8 +978,8 @@ public class LabResource {
 	/**
 	 * To set synchronization frequency for a lab branch
 	 * 
-	 * @param log
-	 * @return ResponseDTO
+	 * @param sync
+	 * @return SyncFreqResponseDTO
 	 */
 	@RequestMapping(value = "setBranchSync", method = RequestMethod.POST)
 	@ResponseBody
@@ -1004,8 +1004,8 @@ public class LabResource {
 	/**
 	 * To get synchronization frequency of a lab 
 	 * 
-	 * @param log
-	 * @return ResponseDTO
+	 * @param labId
+	 * @return SyncFreqDTO
 	 */
 	@RequestMapping(value = "getLabSyncDetails/{labId}", method = RequestMethod.GET)
 	@ResponseBody
@@ -1029,8 +1029,8 @@ public class LabResource {
 	/**
 	 * To get synchronization frequency of a lab 
 	 * 
-	 * @param log
-	 * @return ResponseDTO
+	 * @param branchId
+	 * @return SyncFreqDTO
 	 */
 	@RequestMapping(value = "getBranchSyncDetails/{branchId}", method = RequestMethod.GET)
 	@ResponseBody

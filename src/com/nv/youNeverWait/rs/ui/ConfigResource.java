@@ -25,7 +25,7 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.DeployConfigDataResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
-import com.nv.youNeverWait.user.bl.service.ConfigManager;
+import com.nv.youNeverWait.user.bl.service.ConfigService;
 import com.nv.youNeverWait.user.bl.validation.ConfigDataValidator;
 
 /**
@@ -38,7 +38,7 @@ import com.nv.youNeverWait.user.bl.validation.ConfigDataValidator;
 public class ConfigResource {
 	
 	private ConfigDataValidator configDataValidator;
-	private ConfigManager configManager;;
+	private ConfigService configService;
 	
 	/**
 	 * for uploading config data
@@ -59,7 +59,7 @@ public class ConfigResource {
 				response.setSuccess(false);
 			}
 			else
-				response = configManager.configDataUpload(multipartFile);	
+				response = configService.configDataUpload(multipartFile);	
 		}
 		catch(ServiceException e){
 			List<Parameter> parameters =e.getParamList();
@@ -88,17 +88,17 @@ public class ConfigResource {
 	}
 
 	/**
-	 * @return the configManager
+	 * @return the configService
 	 */
-	public ConfigManager getConfigManager() {
-		return configManager;
+	public ConfigService getConfigService() {
+		return configService;
 	}
 
 	/**
-	 * @param configManager the configManager to set
+	 * @param configService the configService to set
 	 */
-	public void setConfigManager(ConfigManager configManager) {
-		this.configManager = configManager;
+	public void setConfigService(ConfigService configService) {
+		this.configService = configService;
 	}
 
 }

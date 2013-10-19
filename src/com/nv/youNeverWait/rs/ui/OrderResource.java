@@ -30,7 +30,7 @@ import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
-import com.nv.youNeverWait.user.bl.service.OrderManager;
+import com.nv.youNeverWait.user.bl.service.OrderService;
 
 /**
  * 
@@ -41,7 +41,7 @@ import com.nv.youNeverWait.user.bl.service.OrderManager;
 @Controller
 @RequestMapping("ui/order/")
 public class OrderResource {
-	private OrderManager orderManager;
+	private OrderService orderService;
 
 	
 
@@ -57,7 +57,7 @@ public class OrderResource {
 
 		ResponseDTO response = new ResponseDTO();
 		try {
-			response = orderManager.setOrderType(orderTypeDetails);
+			response = orderService.setOrderType(orderTypeDetails);
 		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();
@@ -82,7 +82,7 @@ public class OrderResource {
 
 		OrderTypeDTO response = new OrderTypeDTO();
 		try {
-			response = orderManager.getOrderType(labId);
+			response = orderService.getOrderType(labId);
 		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();
@@ -96,18 +96,18 @@ public class OrderResource {
 	}
 	
 	/**
-	 * @return the orderManager
+	 * @return the orderService
 	 */
-	public OrderManager getOrderManager() {
-		return orderManager;
+	public OrderService getOrderService() {
+		return orderService;
 	}
 
 	/**
-	 * @param orderManager
-	 *            the orderManager to set
+	 * @param orderService
+	 *            the orderService to set
 	 */
-	public void setOrderManager(OrderManager orderManager) {
-		this.orderManager = orderManager;
+	public void setOrderService(OrderService orderService) {
+		this.orderService = orderService;
 	}
 
 }

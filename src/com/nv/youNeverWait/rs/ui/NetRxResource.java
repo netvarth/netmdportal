@@ -582,7 +582,7 @@ public class NetRxResource {
 	 * To set synchronization frequency for a NetRx 
 	 * 
 	 * @param sync
-	 * @return ResponseDTO
+	 * @return SyncFreqResponseDTO
 	 */
 	@RequestMapping(value = "setNetRxSync", method = RequestMethod.POST)
 	
@@ -607,7 +607,7 @@ public class NetRxResource {
 	 * To set synchronization frequency for a NetRx branch
 	 * 
 	 * @param sync
-	 * @return ResponseDTO
+	 * @return SyncFreqResponseDTO
 	 */
 	@RequestMapping(value = "setNetRxBranchSync", method = RequestMethod.POST)
 	
@@ -617,6 +617,56 @@ public class NetRxResource {
 		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
 		try {
 			response = netRxService.setNetRxBranchSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To get synchronization frequency details of a netrx 
+	 * 
+	 * @param netmdId
+	 * @return SyncFreqDTO
+	 */
+	@RequestMapping(value = "getNetrxSyncDetails/{netrxId}", method = RequestMethod.GET)
+	@ResponseBody
+	public SyncFreqDTO getNetrxSyncDetails(@PathVariable int netrxId) {
+
+		SyncFreqDTO response = new SyncFreqDTO();
+		try {
+			response = netRxService.getNetrxSyncDetails(netrxId);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To get synchronization frequency of a netrx branch 
+	 * 
+	 * @param branchId
+	 * @return SyncFreqDTO
+	 */
+	@RequestMapping(value = "getBranchSyncDetails/{branchId}", method = RequestMethod.GET)
+	@ResponseBody
+	public SyncFreqDTO getBranchSyncDetails(@PathVariable int branchId) {
+
+		SyncFreqDTO response = new SyncFreqDTO();
+		try {
+			response = netRxService.getBranchSyncDetails(branchId);
 		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();

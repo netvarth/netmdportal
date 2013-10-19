@@ -18,7 +18,7 @@ import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponse;
 import com.nv.youNeverWait.rs.dto.SpecimenDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenResponseDTO;
-import com.nv.youNeverWait.user.bl.service.SpecimenManager;
+import com.nv.youNeverWait.user.bl.service.SpecimenService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,14 +36,14 @@ import com.nv.youNeverWait.rs.dto.Parameter;
 @Controller
 @RequestMapping("ui/specimen/")
 public class SpecimenResource {
-	private SpecimenManager specimenManager;
+	private SpecimenService specimenService;
 
 	@RequestMapping(value = "createSpecimen", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseDTO createSpecimen(@RequestBody SpecimenDTO specimen){
 		ResponseDTO response = new ResponseDTO();
 		try{
-			response = specimenManager.createSpecimen(specimen);
+			response = specimenService.createSpecimen(specimen);
 		}
 		catch(ServiceException e){
 			List<Parameter> parameters =e.getParamList();
@@ -62,7 +62,7 @@ public class SpecimenResource {
 	public ResponseDTO updateSpecimen(@RequestBody SpecimenDTO specimen){
 		ResponseDTO response = new ResponseDTO();
 		try{
-			response = specimenManager.updateSpecimen(specimen);
+			response = specimenService.updateSpecimen(specimen);
 		}
 		catch(ServiceException e){
 			List<Parameter> parameters =e.getParamList();
@@ -81,7 +81,7 @@ public class SpecimenResource {
 	public ResponseDTO deleteSpecimen(@PathVariable int uid){
 		ResponseDTO response = new ResponseDTO();
 		try{
-			response = specimenManager.deleteSpecimen(uid);
+			response = specimenService.deleteSpecimen(uid);
 		}
 		catch(ServiceException e){
 			List<Parameter> parameters =e.getParamList();
@@ -100,7 +100,7 @@ public class SpecimenResource {
 	public SpecimenResponseDTO viewSpecimen(@PathVariable int uid){
 		SpecimenResponseDTO response = new SpecimenResponseDTO();
 		try{
-			response = specimenManager.viewSpecimen(uid);
+			response = specimenService.viewSpecimen(uid);
 		}
 		catch(ServiceException e){
 			List<Parameter> parameters =e.getParamList();
@@ -119,7 +119,7 @@ public class SpecimenResource {
 	public RetrieveSpecimenResponse specimenList(){
 		RetrieveSpecimenResponse response = new RetrieveSpecimenResponse();
 		try{
-			response = specimenManager.specimenList();
+			response = specimenService.specimenList();
 		}
 		catch(ServiceException e){
 			List<Parameter> parameters =e.getParamList();
@@ -134,17 +134,17 @@ public class SpecimenResource {
 	}
 	
 	/**
-	 * @return the specimenManager
+	 * @return the specimenService
 	 */
-	public SpecimenManager getSpecimenManager() {
-		return specimenManager;
+	public SpecimenService getSpecimenService() {
+		return specimenService;
 	}
 
 	/**
-	 * @param specimenManager the specimenManager to set
+	 * @param specimenService the specimenService to set
 	 */
-	public void setSpecimenManager(SpecimenManager specimenManager) {
-		this.specimenManager = specimenManager;
+	public void setSpecimenService(SpecimenService specimenService) {
+		this.specimenService = specimenService;
 	}
 	
 

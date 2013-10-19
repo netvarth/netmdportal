@@ -26,6 +26,7 @@ import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
+import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdActivationResponseDTO;
@@ -41,6 +42,7 @@ import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.LogService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
@@ -730,7 +732,7 @@ public class NetMdResource {
 	 * To set synchronization frequency for a NetMd 
 	 * 
 	 * @param sync
-	 * @return ResponseDTO
+	 * @return SyncFreqResponseDTO
 	 */
 	@RequestMapping(value = "setNetMdSync", method = RequestMethod.POST)
 	
@@ -755,7 +757,7 @@ public class NetMdResource {
 	 * To set synchronization frequency for a NetMd branch
 	 * 
 	 * @param sync
-	 * @return ResponseDTO
+	 * @return SyncFreqResponseDTO
 	 */
 	@RequestMapping(value = "setNetMdBranchSync", method = RequestMethod.POST)
 	
@@ -780,8 +782,8 @@ public class NetMdResource {
 	/**
 	 * To get synchronization frequency details of a netmd 
 	 * 
-	 * @param log
-	 * @return ResponseDTO
+	 * @param netmdId
+	 * @return SyncFreqDTO
 	 */
 	@RequestMapping(value = "getNetmdSyncDetails/{netmdId}", method = RequestMethod.GET)
 	@ResponseBody
@@ -805,8 +807,8 @@ public class NetMdResource {
 	/**
 	 * To get synchronization frequency of a netmd branch 
 	 * 
-	 * @param log
-	 * @return ResponseDTO
+	 * @param branchId
+	 * @return SyncFreqDTO
 	 */
 	@RequestMapping(value = "getBranchSyncDetails/{branchId}", method = RequestMethod.GET)
 	@ResponseBody
@@ -826,7 +828,31 @@ public class NetMdResource {
 		}
 		return response;
 	}
-	
+	/**
+	 * Method performed for system health monitor
+	 * 
+	 * @return HealthMonitorResponse
+	 */
+	@RequestMapping(value = "checkSystemHealth", method = RequestMethod.POST)
+	@ResponseBody
+	public HealthMonitorResponse checkSystemHealth(
+			@RequestBody SystemHealthDetails systemHealthDetails) {
+
+		HealthMonitorResponse response = new HealthMonitorResponse();
+		try {
+			response = netMdService.checkSystemHealth(systemHealthDetails);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+
 //	/**
 //	 * To enable/disable  sync process
 //	 * 
