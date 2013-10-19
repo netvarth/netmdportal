@@ -22,7 +22,7 @@ import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
 import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
-import com.nv.youNeverWait.user.bl.service.OrderManager;
+import com.nv.youNeverWait.user.bl.service.OrderService;
 import com.nv.youNeverWait.user.bl.validation.OrderValidator;
 import com.nv.youNeverWait.user.pl.dao.OrderDao;
 
@@ -31,7 +31,7 @@ import com.nv.youNeverWait.user.pl.dao.OrderDao;
  * 
  * @author Luciya Jose
  */
-public class OrderServiceImpl implements OrderManager {
+public class OrderManager implements OrderService {
 	private OrderDao orderDao;
 	private OrderValidator validator;
 

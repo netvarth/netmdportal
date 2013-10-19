@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.rs.dto.DeployConfigDataResponseDTO;
-import com.nv.youNeverWait.user.bl.service.ConfigManager;
+import com.nv.youNeverWait.user.bl.service.ConfigService;
 import com.nv.youNeverWait.user.pl.dao.ConfigDao;
 
 /**
@@ -25,7 +25,7 @@ import com.nv.youNeverWait.user.pl.dao.ConfigDao;
  *
  * @author Luciya Jose
  */
-public class ConfigServiceImpl implements ConfigManager {
+public class ConfigManager implements ConfigService {
 	private ConfigDao configDao;
 
 	/* (non-Javadoc)

@@ -831,6 +831,36 @@ public class NetRxServiceImpl implements NetRxService {
 		return response;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.NetRxService#getBranchSyncDetails(int)
+	 */
+	@Override
+	public SyncFreqDTO getBranchSyncDetails(int branchId) {
+		if (branchId <= 0) {
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		SyncFreqDTO response=  netRxDao.getBranchSyncDetails(branchId);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.NetRxService#getNetrxSyncDetails(int)
+	 */
+	@Override
+	public SyncFreqDTO getNetrxSyncDetails(int netrxId) {
+		if (netrxId <= 0) {
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetRx);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(netrxId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		SyncFreqDTO response=  netRxDao.getNetrxSyncDetails(netrxId);
+		return response;
+	}
+
+	
 	/**
 	 * @return the netRxDao
 	 */
@@ -936,6 +966,7 @@ public class NetRxServiceImpl implements NetRxService {
 		this.mailThread = mailThread;
 	}
 
+	
 	
 
 }

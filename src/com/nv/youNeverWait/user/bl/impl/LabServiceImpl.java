@@ -21,7 +21,6 @@ import javax.persistence.TypedQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
 import com.nv.framework.sendmsg.email.SendMailMsgObj;
@@ -38,7 +37,7 @@ import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabBranchSystemInfoDetails;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
@@ -72,9 +71,11 @@ import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
+import com.nv.youNeverWait.user.bl.service.HealthMonitorService;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
-import com.nv.youNeverWait.user.bl.service.OrderManager;
+import com.nv.youNeverWait.user.bl.service.OrderService;
+import com.nv.youNeverWait.user.bl.validation.HealthMonitorValidator;
 import com.nv.youNeverWait.user.bl.validation.LabValidator;
 import com.nv.youNeverWait.user.pl.dao.LabDao;
 import com.nv.youNeverWait.user.pl.impl.BranchOwnerDetails;
@@ -93,7 +94,10 @@ public class LabServiceImpl implements LabService {
 	private FilterFactory filterFactory;
 	private SendEmailMsgWorkerThread mailThread;
 	private static final Log log = LogFactory.getLog(LabServiceImpl.class);
-	private OrderManager orderManager;
+	private OrderService orderService;
+	private HealthMonitorService healthService;
+	
+	
 	/**
 	 * Create user in Lab
 	 * 
@@ -997,14 +1001,22 @@ public class LabServiceImpl implements LabService {
 	 */
 	@Override
 	public HealthMonitorResponse checkSystemHealth(SystemHealthDetails systemHealthDetails) {
-		validator.validateHeaderDetails(systemHealthDetails.getHeader());
-		validator.validateSystemHealthDetails(systemHealthDetails);
 		
-		/*Checking whether system is in critical condition*/
-		HealthMonitorResponse response= labDao.checkSystemHealth(systemHealthDetails);
+		/**Validates pssphrase and mac id empty or not**/
+		validator.validateHeaderDetails(systemHealthDetails.getHeader().getLabHeader());
+		
+		/**Validates lab and branch ids**/
+		validator.validateLabBranchIds(systemHealthDetails.getHeader().getLabHeader().getLabId(),
+				systemHealthDetails.getHeader().getLabHeader().getLabBranchId());
+				
+		/**Checking header details whether given correctly or not**/
+		labDao.CheckHeaderDetails(systemHealthDetails.getHeader().getLabHeader()); 
+	
+		/**Calling method for checking system in critical stage or not**/
+		HealthMonitorResponse response= healthService.checkSystemHealth(systemHealthDetails);
 		if(response.isCritical()){
 			/*Getting branch owner details and sending mail*/
-			BranchOwnerDetails branchOwnerDetails=labDao.getBranchOwners(systemHealthDetails.getHeader().getLabBranchId());
+			BranchOwnerDetails branchOwnerDetails=labDao.getBranchOwners(systemHealthDetails.getHeader().getLabHeader().getLabBranchId());
 			sendEmailToLabOwner(branchOwnerDetails, Constants.LAB_SYSTEM_FAILURE,
 					response,systemHealthDetails);
 		
@@ -1098,7 +1110,7 @@ public class LabServiceImpl implements LabService {
 	 * @return
 	 */
 	@Override
-	public LabBranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId) {
+	public BranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId) {
 		if(branchId<=0){
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidBranch);
@@ -1106,7 +1118,7 @@ public class LabServiceImpl implements LabService {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		LabBranchSystemInfoDetails response=labDao.viewBranchSystemInfoDetails(branchId);
+		BranchSystemInfoDetails response=labDao.viewBranchSystemInfoDetails(branchId);
 		return response;
 	}
 	
@@ -1117,7 +1129,7 @@ public class LabServiceImpl implements LabService {
      */
 	@Override
 	public ResponseDTO updateLabBranchSystemInfo(
-			LabBranchSystemInfoDetails details) {
+			BranchSystemInfoDetails details) {
 		validator.validateSystemDefaultDetails(details);
 		ResponseDTO response =labDao.updateLabBranchSystemInfo(details);
 		return response;
@@ -1135,7 +1147,7 @@ public class LabServiceImpl implements LabService {
 		validator.validateHeaderDetails(header);
 		validator.validateLabBranchIds(header.getLabId(),
 				header.getLabBranchId());
-		OrderDetails orderDetail=orderManager.retrieveBranchOrders(header, lastSyncTime, currentSyncTime);
+		OrderDetails orderDetail=orderService.retrieveBranchOrders(header, lastSyncTime, currentSyncTime);
 		return orderDetail;
 	}
 
@@ -1148,7 +1160,7 @@ public class LabServiceImpl implements LabService {
 		validator.validateHeaderDetails(orderTranfer.getHeader());
 		validator.validateLabBranchIds(orderTranfer.getHeader().getLabId(),
 				orderTranfer.getHeader().getLabBranchId());
-		OrderTransferResponse response= orderManager.transferOrder(orderTranfer);
+		OrderTransferResponse response= orderService.transferOrder(orderTranfer);
 		return response;
 	}
 	
@@ -1364,19 +1376,31 @@ public class LabServiceImpl implements LabService {
 		this.mailThread = mailThread;
 	}
 	/**
-	 * @return the orderManager
+	 * @return the orderService
 	 */
-	public OrderManager getOrderManager() {
-		return orderManager;
+	public OrderService getOrderService() {
+		return orderService;
 	}
 
 	/**
-	 * @param orderManager the orderManager to set
+	 * @param orderService the orderService to set
 	 */
-	public void setOrderManager(OrderManager orderManager) {
-		this.orderManager = orderManager;
+	public void setOrderService(OrderService orderService) {
+		this.orderService = orderService;
 	}
 
-	
+	/**
+	 * @return the healthService
+	 */
+	public HealthMonitorService getHealthService() {
+		return healthService;
+	}
+
+	/**
+	 * @param healthService the healthService to set
+	 */
+	public void setHealthService(HealthMonitorService healthService) {
+		this.healthService = healthService;
+	}
 
 }
