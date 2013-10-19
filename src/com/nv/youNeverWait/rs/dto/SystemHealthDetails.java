@@ -16,16 +16,27 @@ package com.nv.youNeverWait.rs.dto;
  * @author Luciya Jose
  */
 public class SystemHealthDetails {
-	LabHeaderDTO header;
+	HeaderDetail header;
 	String hardDiskUsed;
 	String memoryUsed;
 	String cpuUsage;
 	String totalHardDiskSpace;
 	String totalMemorySpace;
 	String totalCpuSpace;
+	String appType;
 	
-
-	
+	/**
+	 * @return the appType
+	 */
+	public String getAppType() {
+		return appType;
+	}
+	/**
+	 * @param appType the appType to set
+	 */
+	public void setAppType(String appType) {
+		this.appType = appType;
+	}
 	public String getTotalCpuSpace() {
 		return totalCpuSpace;
 	}
@@ -58,16 +69,17 @@ public class SystemHealthDetails {
 		this.cpuUsage = cpuUsage;
 	}
 
+
 	/**
 	 * @return the header
 	 */
-	public LabHeaderDTO getHeader() {
+	public HeaderDetail getHeader() {
 		return header;
 	}
 	/**
 	 * @param header the header to set
 	 */
-	public void setHeader(LabHeaderDTO header) {
+	public void setHeader(HeaderDetail header) {
 		this.header = header;
 	}
 	/**

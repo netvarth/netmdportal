@@ -21,8 +21,47 @@ public class HealthMonitorResponse {
 	 ErrorDTO error;
 	 boolean success;
 	 boolean critical;
+	 long freeHardDiskSpaceInPercent;
+	 long freeMemorySpaceInPercent;
+	 long freeCpuSpaceInPercent;
+	
 	 
-	 
+	/**
+	 * @return the freeHardDiskSpaceInPercent
+	 */
+	public long getFreeHardDiskSpaceInPercent() {
+		return freeHardDiskSpaceInPercent;
+	}
+	/**
+	 * @param freeHardDiskSpaceInPercent the freeHardDiskSpaceInPercent to set
+	 */
+	public void setFreeHardDiskSpaceInPercent(long freeHardDiskSpaceInPercent) {
+		this.freeHardDiskSpaceInPercent = freeHardDiskSpaceInPercent;
+	}
+	/**
+	 * @return the freeMemorySpaceInPercent
+	 */
+	public long getFreeMemorySpaceInPercent() {
+		return freeMemorySpaceInPercent;
+	}
+	/**
+	 * @param freeMemorySpaceInPercent the freeMemorySpaceInPercent to set
+	 */
+	public void setFreeMemorySpaceInPercent(long freeMemorySpaceInPercent) {
+		this.freeMemorySpaceInPercent = freeMemorySpaceInPercent;
+	}
+	/**
+	 * @return the freeCpuSpaceInPercent
+	 */
+	public long getFreeCpuSpaceInPercent() {
+		return freeCpuSpaceInPercent;
+	}
+	/**
+	 * @param freeCpuSpaceInPercent the freeCpuSpaceInPercent to set
+	 */
+	public void setFreeCpuSpaceInPercent(long freeCpuSpaceInPercent) {
+		this.freeCpuSpaceInPercent = freeCpuSpaceInPercent;
+	}
 	/**
 	 * @return the critical
 	 */

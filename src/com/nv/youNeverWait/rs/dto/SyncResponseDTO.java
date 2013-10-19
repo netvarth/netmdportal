@@ -31,11 +31,37 @@ public class SyncResponseDTO {
 	private RetrievalAppointmentResponseDTO retrievalAppointmentListForPrimary = new RetrievalAppointmentResponseDTO();
 	private List<BillSyncResponseDTO> billResponse=new ArrayList<BillSyncResponseDTO>();
 	private String lastSynctime;
+	private String syncFreqType;
+	private int syncInterval;
 	private ErrorDTO error;
 	private boolean success;
 	
 	
 	
+	/**
+	 * @return the syncFreqType
+	 */
+	public String getSyncFreqType() {
+		return syncFreqType;
+	}
+	/**
+	 * @param syncFreqType the syncFreqType to set
+	 */
+	public void setSyncFreqType(String syncFreqType) {
+		this.syncFreqType = syncFreqType;
+	}
+	/**
+	 * @return the syncInterval
+	 */
+	public int getSyncInterval() {
+		return syncInterval;
+	}
+	/**
+	 * @param syncInterval the syncInterval to set
+	 */
+	public void setSyncInterval(int syncInterval) {
+		this.syncInterval = syncInterval;
+	}
 	/**
 	 * @return the billResponse
 	 */

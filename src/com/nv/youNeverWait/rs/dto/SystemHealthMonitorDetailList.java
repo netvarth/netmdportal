@@ -16,45 +16,44 @@ package com.nv.youNeverWait.rs.dto;
  * @author Luciya Jose
  */
 public class SystemHealthMonitorDetailList {
-	int cpuUsage;
-	int memoryUsage;
-	int hardDiskSpaceUasge;
+	float cpuUsage;
+	float memoryUsage;
+	float hardDiskSpaceUasge;
 	String createdDateTime;
-	
 	/**
 	 * @return the cpuUsage
 	 */
-	public int getCpuUsage() {
+	public float getCpuUsage() {
 		return cpuUsage;
 	}
 	/**
 	 * @param cpuUsage the cpuUsage to set
-	 */
-	public void setCpuUsage(int cpuUsage) {
+	 */                                                                                          
+	public void setCpuUsage(float cpuUsage) {
 		this.cpuUsage = cpuUsage;
 	}
 	/**
 	 * @return the memoryUsage
 	 */
-	public int getMemoryUsage() {
+	public float getMemoryUsage() {
 		return memoryUsage;
 	}
 	/**
 	 * @param memoryUsage the memoryUsage to set
 	 */
-	public void setMemoryUsage(int memoryUsage) {
+	public void setMemoryUsage(float memoryUsage) {
 		this.memoryUsage = memoryUsage;
 	}
 	/**
 	 * @return the hardDiskSpaceUasge
 	 */
-	public int getHardDiskSpaceUasge() {
+	public float getHardDiskSpaceUasge() {
 		return hardDiskSpaceUasge;
 	}
 	/**
 	 * @param hardDiskSpaceUasge the hardDiskSpaceUasge to set
 	 */
-	public void setHardDiskSpaceUasge(int hardDiskSpaceUasge) {
+	public void setHardDiskSpaceUasge(float hardDiskSpaceUasge) {
 		this.hardDiskSpaceUasge = hardDiskSpaceUasge;
 	}
 	/**
@@ -70,5 +69,5 @@ public class SystemHealthMonitorDetailList {
 		this.createdDateTime = createdDateTime;
 	}
 	
-
+	
 }

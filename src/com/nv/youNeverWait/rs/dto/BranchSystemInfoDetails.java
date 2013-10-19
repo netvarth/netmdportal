@@ -13,7 +13,7 @@ package com.nv.youNeverWait.rs.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LabBranchSystemInfoDetails {
+public class BranchSystemInfoDetails {
 
 	String criticalCpuLevel;
 	String criticalMemoryLevel;
@@ -21,12 +21,51 @@ public class LabBranchSystemInfoDetails {
 	String freqType;
 	String intervalTime;
 	String branchName;
+	float totalCpu;
+	float totalHardDisk;
+	float totalMemory;
 	List<SystemHealthMonitorDetailList> healthMonitorList= new ArrayList<SystemHealthMonitorDetailList>();
 	int branchId;
 	boolean success;
 	ErrorDTO error;
 	
 	
+	/**
+	 * @return the totalCpu
+	 */
+	public float getTotalCpu() {
+		return totalCpu;
+	}
+	/**
+	 * @param totalCpu the totalCpu to set
+	 */
+	public void setTotalCpu(float totalCpu) {
+		this.totalCpu = totalCpu;
+	}
+	/**
+	 * @return the totalHardDisk
+	 */
+	public float getTotalHardDisk() {
+		return totalHardDisk;
+	}
+	/**
+	 * @param totalHardDisk the totalHardDisk to set
+	 */
+	public void setTotalHardDisk(float totalHardDisk) {
+		this.totalHardDisk = totalHardDisk;
+	}
+	/**
+	 * @return the totalMemory
+	 */
+	public float getTotalMemory() {
+		return totalMemory;
+	}
+	/**
+	 * @param totalMemory the totalMemory to set
+	 */
+	public void setTotalMemory(float totalMemory) {
+		this.totalMemory = totalMemory;
+	}
 	public int getBranchId() {
 		return branchId;
 	}
