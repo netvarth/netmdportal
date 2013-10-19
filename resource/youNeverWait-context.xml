@@ -243,11 +243,11 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="resultService">
 			<ref bean="result.service" />
 		</property>
-		<property name="specimenManager">
-			<ref bean="specimen.manager" />
+		<property name="specimenService">
+			<ref bean="specimen.service" />
 		</property>
-		<property name="testManager">
-			<ref bean="test.manager" />
+		<property name="testService">
+			<ref bean="test.service" />
 		</property>
 	</bean>
 
@@ -386,11 +386,11 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="netRxService">
 			<ref bean="netRx.service" />
 		</property>
-		<property name="testManager">
-			<ref bean="test.manager" />
+		<property name="testService">
+			<ref bean="test.service" />
 		</property>
-		<property name="specimenManager">
-			<ref bean="specimen.manager" />
+		<property name="specimenService">
+			<ref bean="specimen.service" />
 		</property>
 		<property name="netlimsServerIpAddress">
 			<value>${netlims.server.ip.address}</value>
@@ -456,6 +456,10 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="lab.validator" />
 		</property>
 
+		<property name="healthService">
+			<ref bean="health.service" />
+		</property>
+		
 		<property name="netlimsServerIpAddress">
 			<value>${netlims.server.ip.address}</value>
 		</property>
@@ -474,8 +478,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="mailThread">
 			<ref bean="email.worker.thread" />
 		</property>
-		<property name="orderManager">
-			<ref bean="order.manager" />
+		<property name="orderService">
+			<ref bean="order.service" />
 		</property>
 	</bean>
 
@@ -591,7 +595,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		parent="generic.dao">
 	</bean>
 
-	<bean id="test.manager" class="com.nv.youNeverWait.user.bl.impl.TestServiceImpl">
+	<bean id="test.service" class="com.nv.youNeverWait.user.bl.impl.TestManager">
 		<property name="testValidator">
 			<ref bean="test.validator" />
 		</property>
@@ -612,7 +616,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="lab.dao" />
 		</property>
 	</bean>
-	<bean id="specimen.manager" class="com.nv.youNeverWait.user.bl.impl.SpecimenServiceImpl">
+	<bean id="specimen.service" class="com.nv.youNeverWait.user.bl.impl.SpecimenManager">
 		<property name="specimenValidator">
 			<ref bean="specimen.validator" />
 		</property>
@@ -634,7 +638,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 	</bean>
 
-	<bean id="config.manager" class="com.nv.youNeverWait.user.bl.impl.ConfigServiceImpl">
+	<bean id="config.service" class="com.nv.youNeverWait.user.bl.impl.ConfigManager">
 		<property name="configDao">
 			<ref bean="config.dao" />
 		</property>
@@ -644,7 +648,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		class="com.nv.youNeverWait.user.bl.validation.ConfigDataValidator"></bean>
 	<bean id="config.dao" class="com.nv.youNeverWait.user.pl.impl.ConfigDaoImpl"></bean>
 
-	<bean id="order.manager" class="com.nv.youNeverWait.user.bl.impl.OrderServiceImpl">
+	<bean id="order.service" class="com.nv.youNeverWait.user.bl.impl.OrderManager">
 		<property name="orderDao">
 			<ref bean="order.dao" />
 		</property>
@@ -657,6 +661,18 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="labDao">
 			<ref bean="lab.dao" />
 		</property>
+	</bean>
+	<bean id="health.service" class="com.nv.youNeverWait.user.bl.impl.HealthMonitorManager">
+		<property name="hMonitorDao">
+			<ref bean="healthMonitor.dao" />
+		</property>
+		<property name="hMonitorValidator">
+			<ref bean="healthMonitor.validator" />
+		</property>
+	</bean>
+	<bean id="healthMonitor.validator" class="com.nv.youNeverWait.user.bl.validation.HealthMonitorValidator"></bean>
+	<bean id="healthMonitor.dao" class="com.nv.youNeverWait.user.pl.impl.HealthMonitorDaoImpl">
+		
 	</bean>
 </beans>		
 	

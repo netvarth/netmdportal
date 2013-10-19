@@ -137,28 +137,29 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	
 	<bean class="com.nv.youNeverWait.rs.ui.TestResource" >
 
-		<property name="testManager">
-			<ref bean="test.manager" />
+		<property name="testService">
+			<ref bean="test.service" />
 		</property>
 	</bean>
 	<bean class="com.nv.youNeverWait.rs.ui.SpecimenResource" >
 
-		<property name="specimenManager">
-			<ref bean="specimen.manager" />
+		<property name="specimenService">
+			<ref bean="specimen.service" />
 		</property>
 	</bean>
 	<bean class="com.nv.youNeverWait.rs.ui.ConfigResource" >
 
-		<property name="configManager">
-			<ref bean="config.manager" />
+		<property name="configService">
+			<ref bean="config.service" />
 		</property>
 		<property name="configDataValidator">
 			<ref bean="config.validator" />
 		</property>
 	</bean>
 	<bean class="com.nv.youNeverWait.rs.ui.OrderResource" >
-	    <property name="orderManager">
-			<ref bean="order.manager" />
+	    <property name="orderService">
+			<ref bean="order.service" />
 		</property>
 	</bean>
+	
 </beans>
