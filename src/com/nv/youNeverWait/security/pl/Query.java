@@ -145,6 +145,13 @@ public class Query {
 	/* SeriesTbl */
 	public static final String GET_EXISTING_SERIES = "from SeriesTbl as series where series.seriesId= :param1 and series.netmdPassphraseTbl.id=:param2";
 
+	/*NetmdBranchSystemInfoTbl*/
+	public static final String GET_NETMD_BRANCH_SYSTEM_DETAILS = " from NetmdBranchSystemInfoTbl as details where details.netmdBranchTbl.id=:param1 and details.netmdPassphraseTbl.id=:param2";
+	
+	/*NetmdHealthMonitorTbl*/
+	public static final String GET_NETMD_TOTAL_RECORDS = "select count(*) from NetmdHealthMonitorTbl as h where h.netmdPassphraseTbl.id =:param1";
+	public static final String GET_NETMD_HEALTH_MONITORING_DETAILS = "from NetmdHealthMonitorTbl as health where health.netmdPassphraseTbl.id =:param1  order by health.id ";
+	
 	/*** NETLIMS ***/
 
 	/* LabUserTbl */
@@ -205,11 +212,13 @@ public class Query {
 	public static final String GET_BRANCH_ORDERS_BY_DATE = "from OrderAmountTbl as orders where orders.orderDate>=:param1 and orders.orderDate<=:param2 and orders.labTbl.id=:param3 and orders.labBranchTbl.id=:param4 ";
 	public static final String GET_BRANCH_ORDERS_BY_LAB ="from OrderAmountTbl as orders where orders.labTbl.id=:param1 and orders.labBranchTbl.id=:param2 and orders.orderDate=:param3";
 	
-	/*BranchSystemInfoTbl*/
-	public static final String GET_SYSTEM_DETAILS_BY_BRANCH_ID = " from BranchSystemInfoTbl as details where details.labBranchTbl.id=:param1";
+	/*LabBranchSystemInfoTbl*/
+	public static final String GET_SYSTEM_DETAILS_BY_BRANCH_ID = " from LabBranchSystemInfoTbl as details where details.labBranchTbl.id=:param1";
 
-	/*HealthMonitorTbl*/
-	public static final String GET_MONITORING_DETAILS_BY_BRANCH_ID = "from HealthMonitorTbl as health where health.labBranchTbl.id =:param1  order by health.id desc";
+	/*LabHealthMonitorTbl*/
+	public static final String GET_MONITORING_DETAILS_BY_BRANCH_ID = "from LabHealthMonitorTbl as health where health.labBranchTbl.id =:param1  order by health.id ";
+	public static final String GET_TOTAL_RECORDS = "select COUNT(*) from LabHealthMonitorTbl as h where h.labBranchTbl.id =:param1";
+	
 	/********** Email *******/
 	public static final String GET_INQUEUE_FROM_TABLE = "from PendingMessageTbl as msg where msg.status=:param3 and msg.communicationType=:param1 and msg.applicationSpecifier=:param2 ORDER BY lastAttemptOn ASC";
 	public static final String GET_COUNT_NEW_FROM_TABLE = "from PendingMessageTbl as msg where msg.status=:param3 and msg.communicationType=:param1  and msg.applicationSpecifier=:param2";
@@ -219,9 +228,27 @@ public class Query {
 	public static final String GET_LAST_UNIQUE_ID = "select MAX(u.uniqueId) from OrderTransferTbl as u"; 
 	public static final String GET_ORDERS = "from OrderTransferTbl as order where order.destinationLab.id=:param1 and order.destinationBranch.id=:param2 and order.updatedDateTime>=:param3 and order.updatedDateTime<:param4";
 	
-	/**************NetRx******************/
-	/*netRxTbl*/
+
+	/*SpecimenTbl*/
+	public static final String GET_SPECIMEN_BY_NAME="from SpecimenTbl as specimen where TRIM(UPPER(specimen.name)) = :param1";
+	public static final String GET_LAST_UID = "select MAX(u.uid) from SpecimenTbl as u";   
+	public static final String GET_SPECIMEN_BY_DATE = "from SpecimenTbl as specimen where specimen.updatedDateTime >=:param1 and specimen.updatedDateTime<:param2 order by updatedDateTime";
 	
+	/*TestTbl*/
+	public static final String GET_TEST_BY_NAME = "from TestTbl as test where TRIM(UPPER(test.testName)) = :param1";
+	public static final String GET_TEST_BY_ABBREVIATION = "from TestTbl as test where TRIM(UPPER(test.abbreviation)) = :param1";
+	public static final String GET_LAST_TEST_UID = "select MAX(u.uid) from TestTbl as u";   
+	public static final String GET_TEST_BY_DATE = " from TestTbl as test where test.updatedDateTime >= :param1 and test.updatedDateTime <:param2 order by updatedDateTime";
+	
+	/*TestSpecimenTbl*/
+	public static final String GET_TEST_SPECIMEN_BY_SPECIMEN_UID ="from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid = :param1 and testSpecimen.specimenTbl.uid = :param2";
+	public static final String GET_TEST_SPECIMEN = "from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid = :param1";
+	public static final String GET_SPECIMEN_BY_TEST_UID = "from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid=:param1";
+	
+	
+	/**************NetRx******************/
+	
+	/*NetRxTbl*/
 	public static final String GET_NETRX_BY_NAME = "from NetrxTbl as netrx where  REPLACE(TRIM(UPPER(netrx.name)),' ','')=:param1";
 	public static final String GET_NETRX_BY_LOGIN_ID = "from NetrxTbl as netmd where  netmd.netrxLoginTbl.id=:param1";
 	
@@ -242,22 +269,7 @@ public class Query {
 	public static final String GET_NETRX_USER_BY_USERNAME_PASSWORD = "from NetrxLoginTbl as login  where login.password =:param1 and login.userName =:param2";
 	public static final String GET_NETRX_PASSPHRASE_BY_BRANCH_ID = "from NetrxPassphraseTbl as branchPassphrase where branchPassphrase.netrxBranchTbl.id=:param1 and branchPassphrase.passPhrase=:param2";
 	
-
-	/*SpecimenTbl*/
-	public static final String GET_SPECIMEN_BY_NAME="from SpecimenTbl as specimen where TRIM(UPPER(specimen.name)) = :param1";
-	public static final String GET_LAST_UID = "select MAX(u.uid) from SpecimenTbl as u";   
-	public static final String GET_SPECIMEN_BY_DATE = "from SpecimenTbl as specimen where specimen.updatedDateTime >=:param1 and specimen.updatedDateTime<:param2 order by updatedDateTime";
 	
-	/*TestTbl*/
-	public static final String GET_TEST_BY_NAME = "from TestTbl as test where TRIM(UPPER(test.testName)) = :param1";
-	public static final String GET_TEST_BY_ABBREVIATION = "from TestTbl as test where TRIM(UPPER(test.abbreviation)) = :param1";
-	public static final String GET_LAST_TEST_UID = "select MAX(u.uid) from TestTbl as u";   
-	public static final String GET_TEST_BY_DATE = " from TestTbl as test where test.updatedDateTime >= :param1 and test.updatedDateTime <:param2 order by updatedDateTime";
-	
-	/*TestSpecimenTbl*/
-	public static final String GET_TEST_SPECIMEN_BY_SPECIMEN_UID ="from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid = :param1 and testSpecimen.specimenTbl.uid = :param2";
-	public static final String GET_TEST_SPECIMEN = "from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid = :param1";
-	public static final String GET_SPECIMEN_BY_TEST_UID = "from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid=:param1";
 
 	
 	
