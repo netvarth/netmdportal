@@ -24,8 +24,8 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.AddTestDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenDTO;
 import com.nv.youNeverWait.rs.dto.TestSpecimenDTO;
-import com.nv.youNeverWait.user.bl.service.SpecimenManager;
-import com.nv.youNeverWait.user.bl.service.TestManager;
+import com.nv.youNeverWait.user.bl.service.SpecimenService;
+import com.nv.youNeverWait.user.bl.service.TestService;
 
 /**
  *
@@ -42,7 +42,7 @@ public class TestServiceTest {
 	
 	@Test
 	public void createTest() {
-		TestManager service = (TestManager) applicationContext
+		TestService service = (TestService) applicationContext
 				.getBean("test.manager");
 		AddTestDTO testDTO = new AddTestDTO();
 		testDTO.setName("Skin Test");
@@ -59,7 +59,7 @@ public class TestServiceTest {
 	
 	@Test
 	public void createTestWithSpecimen() {
-		TestManager service = (TestManager) applicationContext
+		TestService service = (TestService) applicationContext
 				.getBean("test.manager");
 		AddTestDTO testDTO = new AddTestDTO();
 		List<TestSpecimenDTO> specimenList= new ArrayList<TestSpecimenDTO>();

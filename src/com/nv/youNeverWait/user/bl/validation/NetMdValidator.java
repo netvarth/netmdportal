@@ -383,7 +383,7 @@ public class NetMdValidator extends FilterValidator {
 		 * @param header
 		 * @return ErrorDTO
 		 */
-		public void validateHeader(HeaderDTO header) {
+		public void validateNetmdBranchIds(HeaderDTO header) {
 
 			if (header.getNetMdId() <= 0) {
 
@@ -392,13 +392,13 @@ public class NetMdValidator extends FilterValidator {
 				se.setDisplayErrMsg(true);
 				throw se;
 			}
-			if (header.getPassPhrase() == null || header.getPassPhrase().equals("")) {
-
-				ServiceException se = new ServiceException(
-						ErrorCodeEnum.PassPhraseNull);
-				se.setDisplayErrMsg(true);
-				throw se;
-			}
+//			if (header.getPassPhrase() == null || header.getPassPhrase().equals("")) {
+//
+//				ServiceException se = new ServiceException(
+//						ErrorCodeEnum.PassPhraseNull);
+//				se.setDisplayErrMsg(true);
+//				throw se;
+//			}
 			if (header.getNetMdBranchId() <= 0) {
 
 				ServiceException se = new ServiceException(

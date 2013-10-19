@@ -21,7 +21,7 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
 import com.nv.youNeverWait.user.bl.service.LabService;
-import com.nv.youNeverWait.user.bl.service.OrderManager;
+import com.nv.youNeverWait.user.bl.service.OrderService;
 
 /**
  *
@@ -39,7 +39,7 @@ public class OrderServiceTest {
 
 	@Test
 	public void orderTransferSourceLabIdWrong(){
-		OrderManager service =(OrderManager) applicationContext.getBean("order.manager");
+		OrderService service =(OrderService) applicationContext.getBean("order.manager");
 		OrderTransfer orderTranferDto= new OrderTransfer();
 		orderTranferDto.setSourceLabId(1933);
 		orderTranferDto.setSourceLabBranchId(123);
@@ -58,7 +58,7 @@ public class OrderServiceTest {
 	}
 	@Test
 	public void orderTransferWrongSourceBranchId(){
-		OrderManager service =(OrderManager) applicationContext.getBean("order.manager");
+		OrderService service =(OrderService) applicationContext.getBean("order.manager");
 		OrderTransfer orderTranferDto= new OrderTransfer();
 		orderTranferDto.setSourceLabId(193);
 		orderTranferDto.setSourceLabBranchId(1256);
@@ -77,7 +77,7 @@ public class OrderServiceTest {
 	}
 	@Test
 	public void orderTransferwrongDestinationLabId(){
-		OrderManager service =(OrderManager) applicationContext.getBean("order.manager");
+		OrderService service =(OrderService) applicationContext.getBean("order.manager");
 		OrderTransfer orderTranferDto= new OrderTransfer();
 		orderTranferDto.setSourceLabId(193);
 		orderTranferDto.setSourceLabBranchId(123);
@@ -96,7 +96,7 @@ public class OrderServiceTest {
 	}
 	@Test
 	public void orderTransferWrongDestinationBranchId(){
-		OrderManager service =(OrderManager) applicationContext.getBean("order.manager");
+		OrderService service =(OrderService) applicationContext.getBean("order.manager");
 		OrderTransfer orderTranferDto= new OrderTransfer();
 		orderTranferDto.setSourceLabId(193);
 		orderTranferDto.setSourceLabBranchId(123);
@@ -115,7 +115,7 @@ public class OrderServiceTest {
 	}
 	@Test
 	public void orderTransferOrderDetailsNull(){
-		OrderManager service =(OrderManager) applicationContext.getBean("order.manager");
+		OrderService service =(OrderService) applicationContext.getBean("order.manager");
 		OrderTransfer orderTranferDto= new OrderTransfer();
 		orderTranferDto.setSourceLabId(193);
 		orderTranferDto.setSourceLabBranchId(123);
@@ -134,7 +134,7 @@ public class OrderServiceTest {
 	}
 	@Test
 	public void orderTransferSuccess(){
-		OrderManager service =(OrderManager) applicationContext.getBean("order.manager");
+		OrderService service =(OrderService) applicationContext.getBean("order.manager");
 		OrderTransfer orderTranferDto= new OrderTransfer();
 		orderTranferDto.setSourceLabId(193);
 		orderTranferDto.setSourceLabBranchId(123);
@@ -153,7 +153,7 @@ public class OrderServiceTest {
 	}
 	@Test
 	public void orderTransferUniqueIdGiven(){
-		OrderManager service =(OrderManager) applicationContext.getBean("order.manager");
+		OrderService service =(OrderService) applicationContext.getBean("order.manager");
 		OrderTransfer orderTranferDto= new OrderTransfer();
 		orderTranferDto.setSourceLabId(193);
 		orderTranferDto.setSourceLabBranchId(123);
@@ -173,7 +173,7 @@ public class OrderServiceTest {
 	}
 	@Test
 	public void setOrderTypeSuccess(){
-		OrderManager service =(OrderManager) applicationContext.getBean("order.manager");
+		OrderService service =(OrderService) applicationContext.getBean("order.manager");
 		OrderTypeDTO orderTypeDto= new OrderTypeDTO();
 		orderTypeDto.setLabId(193);
 		orderTypeDto.setOrderTypeCodes("{AgentOrder:A,BlanketOrder:B,WalkIn Order:W}");
@@ -190,7 +190,7 @@ public class OrderServiceTest {
 	
 	@Test
 	public void setOrderTypeWrong(){
-		OrderManager service =(OrderManager) applicationContext.getBean("order.manager");
+		OrderService service =(OrderService) applicationContext.getBean("order.manager");
 		OrderTypeDTO orderTypeDto= new OrderTypeDTO();
 		orderTypeDto.setLabId(193);
 		orderTypeDto.setOrderTypeCodes(null);
@@ -207,7 +207,7 @@ public class OrderServiceTest {
 	
 	@Test
 	public void setOrderTypeWrongLabId(){
-		OrderManager service =(OrderManager) applicationContext.getBean("order.manager");
+		OrderService service =(OrderService) applicationContext.getBean("order.manager");
 		OrderTypeDTO orderTypeDto= new OrderTypeDTO();
 		orderTypeDto.setLabId(563);
 		orderTypeDto.setOrderTypeCodes("AgentOrder");

@@ -21,8 +21,9 @@ import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
+import com.nv.youNeverWait.rs.dto.HeaderDetail;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
-import com.nv.youNeverWait.rs.dto.LabBranchSystemInfoDetails;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
@@ -320,59 +321,6 @@ public class LabValidator extends FilterValidator {
 
 
 	/**
-	 * Validating system health monitoring details
-	 * @param systemHealthDetails
-	 */
-	public void validateSystemHealthDetails(
-			SystemHealthDetails systemHealthDetails) {
-		if (systemHealthDetails.getHardDiskUsed() == null
-				|| systemHealthDetails.getHardDiskUsed().isEmpty()) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.HardDiskSizeNull);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		if (systemHealthDetails.getMemoryUsed() == null
-				||systemHealthDetails.getMemoryUsed().isEmpty()) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.MemorySizeNull);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		if (systemHealthDetails.getCpuUsage() == null
-				||systemHealthDetails.getCpuUsage().isEmpty()) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.CpuUsageNull);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		
-		
-		if (systemHealthDetails.getTotalHardDiskSpace()== null
-				|| systemHealthDetails.getHardDiskUsed().isEmpty()) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.HardDiskSpaceNull);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		if (systemHealthDetails.getTotalMemorySpace() == null
-				||systemHealthDetails.getMemoryUsed().isEmpty()) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.MemorySpaceNull);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		
-		if (systemHealthDetails.getTotalCpuSpace() == null
-				||systemHealthDetails.getMemoryUsed().isEmpty()) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.CpuSpaceNull);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		
-	}
-	/**
 	 * Method which return false if value is null/empty
 	 * @param value
 	 * @return
@@ -545,7 +493,18 @@ public class LabValidator extends FilterValidator {
 			throw se;
 		}
 
-		validateHeaderDetails(resultTranfer.getHeader());
+		if (resultTranfer.getHeader().getMacId() == null || resultTranfer.getHeader().getMacId().equals("")) {
+			ServiceException se = new ServiceException(ErrorCodeEnum.MacIdNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (resultTranfer.getHeader().getPassPhrase() == null || resultTranfer.getHeader().getPassPhrase().equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.PassPhraseNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
 		validateLabBranchIds(resultTranfer.getHeader().getLabId(),
 				resultTranfer.getHeader().getLabBranchId());
 	}
@@ -569,7 +528,7 @@ public class LabValidator extends FilterValidator {
 		}
 
 	}
-
+	
 	public void validateLabBranchIds(int labId, int branchId) {
 		if (labId <= 0) {
 			ServiceException se = new ServiceException(
@@ -586,35 +545,6 @@ public class LabValidator extends FilterValidator {
 			throw se;
 		}
 		
-	}
-
-	public void validateLabDetails(ResultRetrievalDTO resultRetrievalDTO) {
-		if (resultRetrievalDTO.getLabId() <= 0) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidLabId);
-			se.addParam(new Parameter(Constants.ID, Integer
-					.toString(resultRetrievalDTO.getLabId())));
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		if (resultRetrievalDTO.getBranchId() <= 0) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidBranch);
-			se.addParam(new Parameter(Constants.ID, Integer
-					.toString(resultRetrievalDTO.getBranchId())));
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		try {
-			sf.parse(resultRetrievalDTO.getSyncTime());
-		} catch (ParseException e) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidSyncTime);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-
 	}
 
 	public void validateBranchStatus(String status) {
@@ -703,7 +633,7 @@ public class LabValidator extends FilterValidator {
 		
 	}
 
-	public void validateSystemDefaultDetails(LabBranchSystemInfoDetails details) {
+	public void validateSystemDefaultDetails(BranchSystemInfoDetails details) {
 		if(details.getBranchId()<=0){
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidBranch);

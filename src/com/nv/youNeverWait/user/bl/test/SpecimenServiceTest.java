@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.SpecimenDTO;
-import com.nv.youNeverWait.user.bl.service.SpecimenManager;
+import com.nv.youNeverWait.user.bl.service.SpecimenService;
 
 /**
  * 
@@ -36,7 +36,7 @@ public class SpecimenServiceTest {
 
 	@Test
 	public void createSpecimenEmptyOrNullSpecimenName() {
-		SpecimenManager service = (SpecimenManager) applicationContext
+		SpecimenService service = (SpecimenService) applicationContext
 				.getBean("specimen.manager");
 		SpecimenDTO specimen = new SpecimenDTO();
 		specimen.setSpecimenName(null);
@@ -53,7 +53,7 @@ public class SpecimenServiceTest {
 	
 	@Test
 	public void createSpecimenSuccess() {
-		SpecimenManager service = (SpecimenManager) applicationContext
+		SpecimenService service = (SpecimenService) applicationContext
 				.getBean("specimen.manager");
 		SpecimenDTO specimen = new SpecimenDTO();
 		specimen.setSpecimenName("gladder");
@@ -69,7 +69,7 @@ public class SpecimenServiceTest {
 
 	@Test
 	public void createSpecimenNameAlreadyExists() {
-		SpecimenManager service = (SpecimenManager) applicationContext
+		SpecimenService service = (SpecimenService) applicationContext
 				.getBean("specimen.manager");
 		SpecimenDTO specimen = new SpecimenDTO();
 		specimen.setSpecimenName("Vitamin D3");
@@ -85,7 +85,7 @@ public class SpecimenServiceTest {
 	}
 	@Test
 	public void updateSpecimenNameAlreadyExists() {
-		SpecimenManager service = (SpecimenManager) applicationContext
+		SpecimenService service = (SpecimenService) applicationContext
 				.getBean("specimen.manager");
 		SpecimenDTO specimen = new SpecimenDTO();
 		specimen.setSpecimenName("Vitamin D3");
@@ -101,7 +101,7 @@ public class SpecimenServiceTest {
 	}
 	@Test
 	public void updateSpecimenSuccess() {
-		SpecimenManager service = (SpecimenManager) applicationContext
+		SpecimenService service = (SpecimenService) applicationContext
 				.getBean("specimen.manager");
 		SpecimenDTO specimen = new SpecimenDTO();
 		specimen.setSpecimenName("glader");
@@ -117,7 +117,7 @@ public class SpecimenServiceTest {
 	}
 	@Test
 	public void updateSpecimenEmptyOrNullSpecimenName() {
-		SpecimenManager service = (SpecimenManager) applicationContext
+		SpecimenService service = (SpecimenService) applicationContext
 				.getBean("specimen.manager");
 		SpecimenDTO specimen = new SpecimenDTO();
 		specimen.setSpecimenName(null);
