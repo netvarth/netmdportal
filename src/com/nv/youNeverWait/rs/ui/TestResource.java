@@ -16,7 +16,7 @@ import com.nv.youNeverWait.rs.dto.DeleteTestResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.UpdateTestResponseDTO;
 import com.nv.youNeverWait.rs.dto.ViewTestResponseDTO;
-import com.nv.youNeverWait.user.bl.service.TestManager;
+import com.nv.youNeverWait.user.bl.service.TestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +36,7 @@ import com.nv.youNeverWait.rs.dto.ErrorDTO;
 @Controller
 @RequestMapping("ui/test/")
 public class TestResource {
-	private TestManager testManager;
+	private TestService testService;
 
 	/**
 	 * for creating new test
@@ -49,7 +49,7 @@ public class TestResource {
 		ResponseDTO response=new ResponseDTO();
 		try
 		{
-			response=testManager.createTest(testDTO);
+			response=testService.createTest(testDTO);
 		}
 		catch(ServiceException e){
 			List<Parameter> parameters =e.getParamList();
@@ -72,7 +72,7 @@ public class TestResource {
 	public UpdateTestResponseDTO updateTest(@RequestBody AddTestDTO testDTO){
 		UpdateTestResponseDTO response = new UpdateTestResponseDTO();
 		try{
-			response = testManager.updateTest(testDTO);
+			response = testService.updateTest(testDTO);
 		}
 		catch(ServiceException e){
 			List<Parameter> parameters =e.getParamList();
@@ -97,7 +97,7 @@ public class TestResource {
 		DeleteTestResponseDTO  response= new DeleteTestResponseDTO();
 		try
 		{
-			response=testManager.deleteTest(uid);
+			response=testService.deleteTest(uid);
 		}
 		catch(ServiceException e){
 			List<Parameter> parameters =e.getParamList();
@@ -122,7 +122,7 @@ public class TestResource {
 		ViewTestResponseDTO  response=new ViewTestResponseDTO();
 		try
 		{
-			response=testManager.viewTest(uid);
+			response=testService.viewTest(uid);
 		}
 		catch(ServiceException e){
 
@@ -139,17 +139,17 @@ public class TestResource {
 	}
 	
 	/**
-	 * @return the testManager
+	 * @return the testService
 	 */
-	public TestManager getTestManager() {
-		return testManager;
+	public TestService getTestService() {
+		return testService;
 	}
 
 	/**
-	 * @param testManager the testManager to set
+	 * @param testService the testService to set
 	 */
-	public void setTestManager(TestManager testManager) {
-		this.testManager = testManager;
+	public void setTestService(TestService testService) {
+		this.testService = testService;
 	}
 	
 
