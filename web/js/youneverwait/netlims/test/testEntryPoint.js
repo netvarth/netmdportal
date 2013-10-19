@@ -210,9 +210,9 @@ $j(document).ready(function(){
 		if($j(pgTableName).dataTable().fnGetData().length>0) {
 			var selTests = $j(pgTableName + ' tbody tr[selected]');
 			if(selTests.length==0){		
-				updateTipsNew(constants_selectOnlyOneTest,$j('#errorDivData'),$j('#errorDivHeader'));
+				updateTipsNew("Select atleast one test",$j('#errorDivData'),$j('#errorDivHeader'));
 			} else if(selTests.length>1) 
-				updateTipsNew(constants_selectOnlyOneTest,$j('#errorDivData'),$j('#errorDivHeader'));
+				updateTipsNew("Select atleast one test",$j('#errorDivData'),$j('#errorDivHeader'));
 			else
 				testId=selTests.attr('id');
 		}	
