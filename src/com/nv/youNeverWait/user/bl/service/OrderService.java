@@ -24,7 +24,7 @@ import com.nv.youNeverWait.rs.dto.ResponseDTO;
  *
  * @author Luciya Jose
  */
-public interface OrderManager {
+public interface OrderService {
 	/**
 	 * @param orderTranferDto
 	 * @return

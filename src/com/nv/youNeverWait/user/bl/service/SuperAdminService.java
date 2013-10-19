@@ -18,7 +18,7 @@ import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabBranchSystemInfoDetails;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LogDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
@@ -96,9 +96,9 @@ public interface SuperAdminService {
 	public EnableLogStatusResponseDTO enableLogStatus();
 	public BranchOrdersResponseDTO viewBranchOrders(int globalId);
 	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO);
-	public LabBranchSystemInfoDetails viewBranchSystemInfo(int branchId);
+	public BranchSystemInfoDetails viewBranchSystemInfo(int branchId);
 	public ResponseDTO updateLabBranchSystemInfo(
-			LabBranchSystemInfoDetails details);
+			BranchSystemInfoDetails details);
 	
 	public TestListResponseDTO testList(FilterDTO filter);
 	/**
@@ -127,5 +127,10 @@ public interface SuperAdminService {
 	 * @return
 	 */
 	public SyncFreqDTO getSyncDetails();
+	/**
+	 * @param passphrase
+	 * @return
+	 */
+	public BranchSystemInfoDetails viewNetMdBranchSystemInfo(String passphrase);
 
 }

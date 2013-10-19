@@ -19,7 +19,7 @@ import com.nv.youNeverWait.rs.dto.DeployConfigDataResponseDTO;
  *
  * @author Luciya Jose
  */
-public interface ConfigManager {
+public interface ConfigService {
 
 	/**
 	 * @param multipartFile

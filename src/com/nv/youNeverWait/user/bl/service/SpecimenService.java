@@ -25,7 +25,7 @@ import com.nv.youNeverWait.rs.dto.SpecimenResponseDTO;
  *
  * @author Luciya Jose
  */
-public interface SpecimenManager {
+public interface SpecimenService {
 
 	/**
 	 * @param filter

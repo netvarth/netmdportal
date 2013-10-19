@@ -27,7 +27,7 @@ import com.nv.youNeverWait.rs.dto.ViewTestResponseDTO;
  *
  * @author Luciya Jose
  */
-public interface TestManager {
+public interface TestService {
 
 	/**
 	 * @param filter

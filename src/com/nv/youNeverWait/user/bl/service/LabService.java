@@ -16,7 +16,7 @@ import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabBranchSystemInfoDetails;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
@@ -84,9 +84,9 @@ public interface LabService {
 	public BranchOrderCountResponseDTO createTotalOrders(LabHeaderDTO header,
 			BranchOrderDetail branchOrders);
 	public HealthMonitorResponse checkSystemHealth(SystemHealthDetails systemHealthDetails);
-	public LabBranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId);
+	public BranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId);
 	public ResponseDTO updateLabBranchSystemInfo(
-			LabBranchSystemInfoDetails details);
+			BranchSystemInfoDetails details);
 	
 	/**
 	 * @param header

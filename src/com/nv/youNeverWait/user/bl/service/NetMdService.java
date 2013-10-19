@@ -12,8 +12,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetMdActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
@@ -32,6 +34,7 @@ import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 
 
 public interface NetMdService {
@@ -102,6 +105,17 @@ public interface NetMdService {
 	 * @return
 	 */
 	public SyncFreqDTO getNetmdSyncDetails(int netmdId);
+	/**
+	 * @param systemHealthDetails
+	 * @return
+	 */
+	public HealthMonitorResponse checkSystemHealth(
+			SystemHealthDetails systemHealthDetails);
+	/**
+	 * @param passphrase
+	 * @return
+	 */
+	BranchSystemInfoDetails viewNetmdBranchSystemInfoDetails(String passphrase);
 	
 	
 }
