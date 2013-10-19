@@ -60,13 +60,13 @@ import com.nv.youNeverWait.user.bl.service.AppointmentService;
 import com.nv.youNeverWait.user.bl.service.DoctorService;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
-import com.nv.youNeverWait.user.bl.service.OrderManager;
+import com.nv.youNeverWait.user.bl.service.OrderService;
 import com.nv.youNeverWait.user.bl.service.PatientService;
 import com.nv.youNeverWait.user.bl.service.ResultService;
 import com.nv.youNeverWait.user.bl.service.ScheduleService;
-import com.nv.youNeverWait.user.bl.service.SpecimenManager;
+import com.nv.youNeverWait.user.bl.service.SpecimenService;
 import com.nv.youNeverWait.user.bl.service.SyncService;
-import com.nv.youNeverWait.user.bl.service.TestManager;
+import com.nv.youNeverWait.user.bl.service.TestService;
 import com.nv.youNeverWait.user.bl.validation.SyncValidator;
 import com.nv.youNeverWait.user.pl.dao.SyncDao;
 
@@ -84,8 +84,8 @@ public class SyncServiceImpl implements SyncService {
 	private AppointmentService appointmentService;
 	private ResultService resultService;
 	private LabService labService;
-	private SpecimenManager specimenManager;
-	private TestManager testManager;
+	private SpecimenService specimenService;
+	private TestService testService;
 	
 	private static final Log log = LogFactory.getLog(SyncServiceImpl.class);
 
@@ -1143,11 +1143,11 @@ public class SyncServiceImpl implements SyncService {
 		syncResponse.setRetrieveUserList(retrieveUserList);
 
 		/*Retrieving  newly added and updated lab test*/
-		 RetrieveTestResponse getTests= testManager.getTests(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
+		 RetrieveTestResponse getTests= testService.getTests(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
 		 syncResponse.setRetrieveTests(getTests);
 		 
 		 /*Retrieving newly added and updated test specimen*/
-		 RetrieveSpecimenResponse retreiveSpecimens= specimenManager.getSpecimens(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
+		 RetrieveSpecimenResponse retreiveSpecimens= specimenService.getSpecimens(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
 		 syncResponse.setRetrieveSpecimens(retreiveSpecimens);
 		 
 		 /*Get all results from other branches of same lab*/
@@ -1297,31 +1297,31 @@ public class SyncServiceImpl implements SyncService {
 	}
 
 	/**
-	 * @return the specimenManager
+	 * @return the specimenService
 	 */
-	public SpecimenManager getSpecimenManager() {
-		return specimenManager;
+	public SpecimenService getSpecimenService() {
+		return specimenService;
 	}
 
 	/**
-	 * @param specimenManager the specimenManager to set
+	 * @param specimenService the specimenService to set
 	 */
-	public void setSpecimenManager(SpecimenManager specimenManager) {
-		this.specimenManager = specimenManager;
+	public void setSpecimenService(SpecimenService specimenService) {
+		this.specimenService = specimenService;
 	}
 
 	/**
-	 * @return the testManager
+	 * @return the testService
 	 */
-	public TestManager getTestManager() {
-		return testManager;
+	public TestService getTestService() {
+		return testService;
 	}
 
 	/**
-	 * @param testManager the testManager to set
+	 * @param testService the testService to set
 	 */
-	public void setTestManager(TestManager testManager) {
-		this.testManager = testManager;
+	public void setTestService(TestService testService) {
+		this.testService = testService;
 	}
 
 	
