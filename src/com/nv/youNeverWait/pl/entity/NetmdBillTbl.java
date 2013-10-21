@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 
-
 /**
  * The persistent class for the netmd_bill_tbl database table.
  * 
@@ -45,6 +44,16 @@ public class NetmdBillTbl implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="updated_date_time", nullable=false)
 	private Date updatedDateTime;
+
+	//bi-directional many-to-one association to NetmdBranchTbl
+	@ManyToOne
+	@JoinColumn(name="netmd_branch_id", nullable=false)
+	private NetmdBranchTbl netmdBranchTbl;
+
+	//bi-directional many-to-one association to NetmdTbl
+	@ManyToOne
+	@JoinColumn(name="netmd_id", nullable=false)
+	private NetmdTbl netmdTbl;
 
 	//bi-directional many-to-one association to PatientTbl
 	@ManyToOne
@@ -126,6 +135,22 @@ public class NetmdBillTbl implements Serializable {
 		this.updatedDateTime = updatedDateTime;
 	}
 
+	public NetmdBranchTbl getNetmdBranchTbl() {
+		return this.netmdBranchTbl;
+	}
+
+	public void setNetmdBranchTbl(NetmdBranchTbl netmdBranchTbl) {
+		this.netmdBranchTbl = netmdBranchTbl;
+	}
+
+	public NetmdTbl getNetmdTbl() {
+		return this.netmdTbl;
+	}
+
+	public void setNetmdTbl(NetmdTbl netmdTbl) {
+		this.netmdTbl = netmdTbl;
+	}
+
 	public PatientTbl getPatientTbl() {
 		return this.patientTbl;
 	}
@@ -133,6 +158,5 @@ public class NetmdBillTbl implements Serializable {
 	public void setPatientTbl(PatientTbl patientTbl) {
 		this.patientTbl = patientTbl;
 	}
-
 
 }
