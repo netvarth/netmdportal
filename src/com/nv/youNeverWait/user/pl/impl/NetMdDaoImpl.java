@@ -38,6 +38,7 @@ import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
+import com.nv.youNeverWait.pl.entity.OrderAmountTbl;
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.StatusEnum;
@@ -46,6 +47,8 @@ import com.nv.youNeverWait.pl.entity.SyncFreqTypeEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.AppointmentDTO;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
@@ -322,10 +325,9 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netMdBranch.setMobile(branch.getMobile());
 		netMdBranch.setEmail(branch.getEmail());
 		netMdBranch.setNetmdTbl(netMd);
-		if(netMd.getEnableSync()==false){
+		if (netMd.getEnableSync() == false) {
 			netMdBranch.setEnableSync(false);
-		}
-		else{
+		} else {
 			netMdBranch.setEnableSync(true);
 			netMdBranch.setSyncFreqType(netMd.getSyncFreqType());
 			netMdBranch.setSyncTime(netMd.getSyncTime());
@@ -1440,7 +1442,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		
+
 		response.setSuccess(true);
 		return response;
 	}
@@ -1493,7 +1495,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		
+
 		response.setSuccess(true);
 		return response;
 	}
@@ -1604,8 +1606,12 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		return sync;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.pl.dao.NetMdDao#viewBranchSystemInfoDetails(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.pl.dao.NetMdDao#viewBranchSystemInfoDetails(
+	 * java.lang.String)
 	 */
 	@Override
 	@Transactional
@@ -1625,8 +1631,10 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		 * Getting system default information like critical memory level, freq
 		 * type and so on
 		 */
-		NetmdBranchSystemInfoTbl systemInfo = getSystemDetailsByNetmdBranchId(netmdPassphrase.getNetmdBranchTbl().getId(),netmdPassphrase.getId());
-				if (systemInfo == null) {
+		NetmdBranchSystemInfoTbl systemInfo = getSystemDetailsByNetmdBranchId(
+				netmdPassphrase.getNetmdBranchTbl().getId(),
+				netmdPassphrase.getId());
+		if (systemInfo == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.NetmdBranchSystemInfoNull);
 			se.setDisplayErrMsg(true);
@@ -1642,13 +1650,14 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				.getCriticalMemoryLevel()));
 		details.setFreqType(systemInfo.getFreqType());
 		details.setIntervalTime(Integer.toString(systemInfo.getIntervalTime()));
-		/**Query for getting total number of records*/
-		int totalRecords= getTotalHealthMonitorRecords(netmdPassphrase.getId());
-		int startIndex=0;
-		if(totalRecords>10)
-		 startIndex=totalRecords-10;
+		/** Query for getting total number of records */
+		int totalRecords = getTotalHealthMonitorRecords(netmdPassphrase.getId());
+		int startIndex = 0;
+		if (totalRecords > 10)
+			startIndex = totalRecords - 10;
 		/* Getting last 10 records of system health monitor details */
-		List<NetmdHealthMonitorTbl> healthMonitorTblList = getMonitorDetailsByBranchId(netmdPassphrase.getId(),startIndex);
+		List<NetmdHealthMonitorTbl> healthMonitorTblList = getMonitorDetailsByBranchId(
+				netmdPassphrase.getId(), startIndex);
 		if (healthMonitorTblList.isEmpty()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.SystemMonitorDetailsNull);
@@ -1657,7 +1666,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		}
 		for (NetmdHealthMonitorTbl hMonitor : healthMonitorTblList) {
 			SystemHealthMonitorDetailList systemHealth = new SystemHealthMonitorDetailList();
-		
+
 			systemHealth.setCpuUsage(hMonitor.getFreeCpuSpace());
 			systemHealth.setHardDiskSpaceUasge(hMonitor.getFreeHardDiskSpace());
 			systemHealth.setMemoryUsage(hMonitor.getFreeMemorySpace());
@@ -1674,9 +1683,8 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		return details;
 	}
 
-	public void checkHeader(HeaderDTO header){
-		NetmdPassphraseTbl passPhrase = getByPassphrase(header
-				.getPassPhrase());
+	public void checkHeader(HeaderDTO header) {
+		NetmdPassphraseTbl passPhrase = getByPassphrase(header.getPassPhrase());
 		if (passPhrase == null
 				|| passPhrase.getMacId() == null
 				|| !passPhrase.getMacId().equals(header.getMacId())
@@ -1691,6 +1699,49 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			throw se;
 		}
 	}
+
+	@Override
+	@Transactional
+	public BranchBillListResponseDTO billList(BranchBillListDTO listDTO) {
+		BranchBillListResponseDTO response = new BranchBillListResponseDTO();
+		List<BillSummaryDTO> branchBill = new
+
+		ArrayList<BillSummaryDTO>();
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		SimpleDateFormat df = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITHOUT_TIME);
+
+		try {
+
+			List<NetmdBillTbl> netMdBranchBillList =getBillsByDate(df.parse(listDTO.getFromDate()),
+					df.parse(listDTO.getToDate()),listDTO.getNetmdId(), listDTO.getNetmdBranchId());
+			for (NetmdBillTbl bill : netMdBranchBillList) {
+				BillSummaryDTO billDetail = new
+
+				BillSummaryDTO();
+
+				billDetail.setPatientName(bill.getPatientTbl().getFirstName());
+				billDetail.setUid(bill.getUid());
+				billDetail.setPayStatus(bill.getPayStatus());
+
+				billDetail.setBillAmount(bill.getBillAmount());
+
+				billDetail.setAmountPaid(bill.getAmountPaid());
+
+				billDetail.setOrderDate(df.format(bill.getOrderDate()));
+				branchBill.add(billDetail);
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		response.setBranchOrders(branchBill);
+		response.setSuccess(true);
+		return response;
+	}
+
 	//
 	// /* (non-Javadoc)
 	// * @see
@@ -1725,7 +1776,19 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	// return response;
 	// }
 
-	private List<NetmdHealthMonitorTbl> getMonitorDetailsByBranchId(int passPhraseId, int startIndex) {
+	private List<NetmdBillTbl> getBillsByDate(Date fromDate, Date toDate,
+			int netmdId, int netmdBranchId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_BILL_BY_DATE);
+		query.setParameter("param1", fromDate);
+		query.setParameter("param2", toDate);
+		query.setParameter("param3", netmdId);
+		query.setParameter("param4", netmdBranchId);
+		return executeQuery(NetmdBillTbl.class, query);
+	}
+
+	private List<NetmdHealthMonitorTbl> getMonitorDetailsByBranchId(
+			int passPhraseId, int startIndex) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_NETMD_HEALTH_MONITORING_DETAILS);
 		query.setParameter("param1", passPhraseId);
@@ -1733,32 +1796,34 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		query.setMaxResults(10);
 		return executeQuery(NetmdHealthMonitorTbl.class, query);
 	}
-	
+
 	/**
 	 * @param passPhraseId
 	 * @return
 	 */
 	private int getTotalHealthMonitorRecords(int passPhraseId) {
-		int totalRecords=0;
-	javax.persistence.Query query= em.createQuery(Query.GET_NETMD_TOTAL_RECORDS);
-	query.setParameter("param1",passPhraseId);
-	totalRecords=((Number) query.getSingleResult()).intValue();
+		int totalRecords = 0;
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_TOTAL_RECORDS);
+		query.setParameter("param1", passPhraseId);
+		totalRecords = ((Number) query.getSingleResult()).intValue();
 		return totalRecords;
 	}
-	
+
 	/**
 	 * @param netmdBranchId
 	 * @param netmdPassphraseId
 	 * @return
 	 */
-	private NetmdBranchSystemInfoTbl getSystemDetailsByNetmdBranchId(int netmdBranchId, int netmdPassphraseId) {
+	private NetmdBranchSystemInfoTbl getSystemDetailsByNetmdBranchId(
+			int netmdBranchId, int netmdPassphraseId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_NETMD_BRANCH_SYSTEM_DETAILS);
 		query.setParameter("param1", netmdBranchId);
 		query.setParameter("param2", netmdPassphraseId);
 		return executeUniqueQuery(NetmdBranchSystemInfoTbl.class, query);
 	}
-	
+
 	/**
 	 * 
 	 * @param branchId
@@ -2147,5 +2212,4 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		this.em = em;
 	}
 
-	
 }

@@ -16,6 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
@@ -717,4 +718,25 @@ public class NetMdServiceTest {
 			System.out.println(e.getParamList());
 		}
 	}
+	@Test
+	public void viewBillSuccess(){
+		NetMdService service = (NetMdService) applicationContext
+				.getBean("netMd.service");
+		BranchBillListDTO listDTO= new BranchBillListDTO();
+		listDTO.setFromDate("2013-10-01");
+		listDTO.setToDate("2013-10-10");
+		listDTO.setNetmdId(3);
+		listDTO.setNetmdBranchId(5); 
+		
+		try{
+			service.billList(listDTO);
+		}
+		catch(ServiceException e){
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	
 }

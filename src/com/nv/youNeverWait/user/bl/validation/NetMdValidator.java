@@ -7,10 +7,16 @@
  */
 package com.nv.youNeverWait.user.bl.validation;
 
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
+import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
@@ -408,5 +414,69 @@ public class NetMdValidator extends FilterValidator {
 				throw se;
 			}
 		}
+		
+		public void validateNetMdBillDate(BranchBillListDTO listDTO) {
+			String billFromDate = listDTO.getFromDate();
+			String billToDate = listDTO.getToDate();	
+
+			if(billFromDate==null || billFromDate.equals("")){
+				ServiceException se = new ServiceException(ErrorCodeEnum.FromDateNull);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			if(billToDate==null ||billToDate.equals("")){
+				ServiceException se = new ServiceException(ErrorCodeEnum.ToDateNull);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			if(!billFromDate.matches("\\d{4}-\\d{2}-\\d{2}")){
+				ServiceException se = new ServiceException(ErrorCodeEnum.InvalidDateFormat);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			if(!billToDate.matches("\\d{4}-\\d{2}-\\d{2}")){
+
+				ServiceException se = new ServiceException(ErrorCodeEnum.InvalidDateFormat);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			DateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
+
+			try {
+				Date fromDate = df.parse(billFromDate);
+				Date toDate = df.parse(billToDate);
+				if(fromDate.after(toDate)){
+					ServiceException se = new ServiceException(ErrorCodeEnum.InvalidFromToDate);
+					se.setDisplayErrMsg(true);
+					throw se;
+				}	
+			} catch (ParseException e) {
+				e.printStackTrace();
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidDateFormat);
+				se.setDisplayErrMsg(true);
+				throw se;
+
+			}
+		}
+		
+		public void validateNetMdBranchBillIds(int NetMdId, int NetMdbranchId) {
+			if (NetMdId <= 0) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidLabId);
+				se.addParam(new Parameter(Constants.ID, Integer.toString(NetMdId)));
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			if (NetMdbranchId <= 0) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidBranch);
+				se.addParam(new Parameter(Constants.ID, Integer.toString(NetMdbranchId)));
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			
+		}
+
 
 }

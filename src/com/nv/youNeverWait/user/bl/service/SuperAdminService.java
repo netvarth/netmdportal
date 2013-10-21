@@ -13,6 +13,8 @@ import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 
+import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.EnableLogStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
@@ -97,6 +99,7 @@ public interface SuperAdminService {
 	public BranchOrdersResponseDTO viewBranchOrders(int globalId);
 	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO);
 	public BranchSystemInfoDetails viewBranchSystemInfo(int branchId);
+	public BranchBillListResponseDTO billList(BranchBillListDTO listDTO);
 	public ResponseDTO updateLabBranchSystemInfo(
 			BranchSystemInfoDetails details);
 	

@@ -10,6 +10,8 @@ package com.nv.youNeverWait.user.pl.dao;
 import java.util.Date;
 
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
@@ -56,6 +58,7 @@ public interface NetMdDao {
 	public ResponseDTO clearMacId(HeaderDTO header);
 	public ResponseDTO makePrimary(HeaderDTO header);
 	public ResponseDTO changePassword(PasswordDTO passwords);
+	public BranchBillListResponseDTO billList(BranchBillListDTO listDTO);
 	/**
 	 * @param newBill
 	 * @param header

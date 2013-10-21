@@ -20,6 +20,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
@@ -952,7 +954,26 @@ public class SuperAdminResource {
 		}
 		return response;
 	}
+	
+	@RequestMapping(value = "billList", method = RequestMethod.POST)
+	@ResponseBody
+	public BranchBillListResponseDTO billList(@RequestBody BranchBillListDTO listDTO) {
 
+		BranchBillListResponseDTO response=	new BranchBillListResponseDTO();	
+		try{
+			response=service.billList(listDTO);
+		}
+		catch(ServiceException e){
+			List<Parameter> parameters =e.getParamList();
+			ErrorDTO error=new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
 	/**
 	 * Update netmd account
 	 * 

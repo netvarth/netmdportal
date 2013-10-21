@@ -30,6 +30,8 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LogTbl;
+import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
@@ -871,7 +873,11 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return response;
 	}
 
-	
+	@Override
+	public BranchBillListResponseDTO billList(BranchBillListDTO listDTO) {
+		BranchBillListResponseDTO response=netMdService.billList(listDTO);
+		return response;
+	}
 //	/* (non-Javadoc)
 //	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 //	 */
@@ -1058,6 +1064,10 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public void setSpecimenService(SpecimenService specimenService) {
 		this.specimenService = specimenService;
 	}
+
+	
+
+
 
 	
 	

@@ -30,6 +30,8 @@ import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
@@ -1051,6 +1053,15 @@ public class NetMdServiceImpl implements NetMdService {
 		return fullMsgBody;
 	}
 	
+	@Override
+	public BranchBillListResponseDTO billList(BranchBillListDTO listDTO) {
+		BranchBillListResponseDTO response = new BranchBillListResponseDTO();
+		validator.validateNetMdBillDate(listDTO);
+		validator.validateNetMdBranchBillIds(listDTO.getNetmdId(),
+				listDTO.getNetmdBranchId());
+		response = netMdDao.billList(listDTO);
+		return response;
+	}
 //	/* (non-Javadoc)
 //	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#enableBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 //	 */
