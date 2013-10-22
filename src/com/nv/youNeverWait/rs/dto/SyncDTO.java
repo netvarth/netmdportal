@@ -32,7 +32,33 @@ public class SyncDTO {
 	private List<UserInfoDetail> user = new ArrayList<UserInfoDetail>();
 	private List<BillSummaryDTO> newBillList=new ArrayList<BillSummaryDTO>();
 	private List<BillSummaryDTO> updateBillList=new ArrayList<BillSummaryDTO>();
+	private String freqType;
+	private int interval;
 	
+	/**
+	 * @return the freqType
+	 */
+	public String getFreqType() {
+		return freqType;
+	}
+	/**
+	 * @param freqType the freqType to set
+	 */
+	public void setFreqType(String freqType) {
+		this.freqType = freqType;
+	}
+	/**
+	 * @return the interval
+	 */
+	public int getInterval() {
+		return interval;
+	}
+	/**
+	 * @param interval the interval to set
+	 */
+	public void setInterval(int interval) {
+		this.interval = interval;
+	}
 	
 	/**
 	 * @return the newBillList
