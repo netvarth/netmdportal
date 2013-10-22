@@ -1820,7 +1820,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			e.printStackTrace();
 		}
 
-		response.setBranchOrders(branchBill);
+		response.setbranchBillList(branchBill);
 		response.setSuccess(true);
 		return response;
 	}
