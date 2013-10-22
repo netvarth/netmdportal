@@ -23,6 +23,8 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
+import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
@@ -425,7 +427,28 @@ public class NetMdResource {
 		}
 		return response;
 	}
+	
+	@RequestMapping(value = "billList", method = RequestMethod.POST)
+	@ResponseBody
+	public BranchBillListResponseDTO billList(@RequestBody BranchBillListDTO listDTO) {
 
+		BranchBillListResponseDTO response=	new BranchBillListResponseDTO();	
+		try{
+			response=netMdService.billList(listDTO);
+		}
+		catch(ServiceException e){
+			List<Parameter> parameters =e.getParamList();
+			ErrorDTO error=new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	
 	/**
 	 * Deletes a netmd branch
 	 * 
