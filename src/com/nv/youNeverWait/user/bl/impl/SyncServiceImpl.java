@@ -22,6 +22,7 @@ import com.nv.youNeverWait.pl.entity.ActionNameEnum;
 import com.nv.youNeverWait.rs.dto.Appointment;
 import com.nv.youNeverWait.rs.dto.AppointmentDetailsDTO;
 import com.nv.youNeverWait.rs.dto.AppointmentResponse;
+import com.nv.youNeverWait.rs.dto.BillResponseDTO;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
@@ -53,6 +54,7 @@ import com.nv.youNeverWait.rs.dto.ScheduleDetail;
 import com.nv.youNeverWait.rs.dto.ScheduleResponse;
 import com.nv.youNeverWait.rs.dto.ScheduleResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveTestResponse;
 import com.nv.youNeverWait.rs.dto.UserResponse;
@@ -110,6 +112,13 @@ public class SyncServiceImpl implements SyncService {
 		/* Validating last sync time */
 		validator.validateLastSyncTime(sync.getLastSyncTime());
 
+		/*Checking whether sync is enabled or disabled*/
+		SyncFreqDTO syncDetails=netMdService.syncEnableStatus(sync.getHeader(),sync.getFreqType(),sync.getInterval());
+		syncResponse.setSyncFreqType(syncDetails.getSyncFreqType());
+		syncResponse.setSyncInterval(syncDetails.getSyncTime());
+		syncResponse.setSyncStatus(syncDetails.isEnableSync());
+		validator.checkSyncFreq(syncDetails,sync.getFreqType(),sync.getInterval());
+		
 		/*Setting last sync time when the syncData calling for the first time*/
 		if(sync.getLastSyncTime()==null){
 			sync.setLastSyncTime(df.format(new Date(0)));
@@ -257,13 +266,13 @@ public class SyncServiceImpl implements SyncService {
 		for (BillSummaryDTO updatedBill : updateBillList) {
 			try {
 
-				ResponseDTO response = netMdService.updateBills(updatedBill,
+				BillResponseDTO response = netMdService.updateBills(updatedBill,
 						header);
 				BillSyncResponseDTO billResponse = new BillSyncResponseDTO();
 				billResponse.setActionName(ActionNameEnum.UPDATE.getDisplayName());
 				billResponse.setUpdateDateTime(response.getUpdateDateTime());
 				billResponse.setGlobalId(response.getGlobalId());
-				billResponse.setUid(Integer.toString(response.getUid()));
+				billResponse.setUid(response.getUid());
 				billResponse.setSuccess(true);
 
 				updatedBillResponseList.add(billResponse);
@@ -299,14 +308,14 @@ public class SyncServiceImpl implements SyncService {
 		for (BillSummaryDTO newBill : newBillList) {
 			try {
 
-				ResponseDTO response = netMdService.createBill(newBill, header);
+				BillResponseDTO response = netMdService.createBill(newBill, header);
 				BillSyncResponseDTO billResponse = new BillSyncResponseDTO();
 				billResponse.setActionName(ActionNameEnum.ADD
 						.getDisplayName());
 				billResponse.setCreateDateTime(response.getCreateDateTime());
 				billResponse.setUpdateDateTime(response.getUpdateDateTime());
 				billResponse.setGlobalId(response.getGlobalId());
-				billResponse.setUid(Integer.toString(response.getUid()));
+				billResponse.setUid(response.getUid());
 				billResponse.setSuccess(true);
 
 				newBillResponseList.add(billResponse);
@@ -1133,7 +1142,14 @@ public class SyncServiceImpl implements SyncService {
 			sync.setLastSyncTime(df.format(new Date(0)));
 		
 		Date currentSyncTime = new Date(); // setting current date time
-
+		
+		/*Checking whether sync is enabled or disabled*/
+		SyncFreqDTO syncDetails=labService.syncEnableStatus(sync.getHeader(),sync.getFreqType(),sync.getInterval());
+		syncResponse.setSyncStatus(syncDetails.isEnableSync());
+		syncResponse.setFreqType(syncDetails.getSyncFreqType());
+		syncResponse.setIntervalTime(syncDetails.getSyncTime());
+		validator.checkSyncFreq(syncDetails,sync.getFreqType(),sync.getInterval());
+		
 		/*Retrieving all lab branches in the portal*/
 		LabBranchListResponseDTO retrieveLabBranchList=labService.retrieveLabBranchList(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
 		syncResponse.setRetrieveLabBranchList(retrieveLabBranchList);
