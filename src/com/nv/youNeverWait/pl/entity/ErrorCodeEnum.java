@@ -75,6 +75,9 @@ public enum ErrorCodeEnum {
 	 SyncTimeNull("1230","Synchronization time should be given"),
 	 PassPhraseNotExist("1231","There is no record with given PassPhrase for this branch"),
 	 SyncDisable("1232","Sync disbled"),
+	 SyncFreqNull("1233","Synchronization frequecy type should be given"),
+	 SyncIntervalTimeNull("1234","Synchronization interval time should be given"),
+	 SyncFreqMissMatch("1235","Synchronization interval time has been changed.Please reset your synchronization time and sync later."),
 /*
  * netlims Errors 
  */
@@ -245,7 +248,7 @@ public enum ErrorCodeEnum {
 	InvalidNetRxBranchId("2012","Given netRx branch id is invalid"),
 	InvalidNetRxUser("2013","User with id {id} does not exists in this netrx branch"),
 	InvalidNetRxUserName("2014","Please enter valid user name"),
-	NetRxIdNull("2015","Netrx Id should not be null"),  
+	NetRxIdNull("2015","Netrx Id should not be null")  
 	  
 	;
 	private String errCode;
