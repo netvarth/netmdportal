@@ -108,7 +108,7 @@ constant_newNetMd_Create_Url="/youNeverWait/ws/ui/superAdmin/createNetMd";
 constant_adminChangePassword_Url="/youNeverWait/ws/ui/superAdmin/changePassword";
 constant_userLogControl_Url="/youNeverWait/ws/ui/superAdmin/enableLog";
 constants_SuperadShowOrdersModalJson='/youNeverWait/json/BranchSuperadNetlimsOrders.json';
-
+constants_SuperadBillListModalJson='/youNeverWait/json/BranchBillList.json';
 //new netlims validation
 constants_organizationNameRequired="Organization Name Required";
 constants_headofficeNameRequired="Head Office Name Required";

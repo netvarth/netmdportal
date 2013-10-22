@@ -138,6 +138,13 @@
 				
 	});
 	
+	$j("#netmdbranchViewForm #btnBill").die('click').live('click',function(){
+		removeErrors();
+		var obj=$j(this);
+		var branchBill=superBillDetaillist();
+		//alert(branchBill);
+		fillSuperNetmdEachBranchBillDetailTable(branchBill,obj)
+	});
 	
 	function createMacJson(passPhrase,macid){
 	
