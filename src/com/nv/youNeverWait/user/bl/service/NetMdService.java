@@ -11,6 +11,7 @@ package com.nv.youNeverWait.user.bl.service;
 import java.util.Date;
 import java.util.List;
 
+import com.nv.youNeverWait.rs.dto.BillResponseDTO;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
@@ -70,13 +71,13 @@ public interface NetMdService {
 	 * @param header
 	 * @return
 	 */
-	public ResponseDTO createBill(BillSummaryDTO newBill, HeaderDTO header);
+	public BillResponseDTO createBill(BillSummaryDTO newBill, HeaderDTO header);
 	/**
 	 * @param updatedBill
 	 * @param header
 	 * @return
 	 */
-	public ResponseDTO updateBills(BillSummaryDTO updatedBill, HeaderDTO header);
+	public BillResponseDTO updateBills(BillSummaryDTO updatedBill, HeaderDTO header);
 
 	/**
 	 * @param sync
@@ -119,6 +120,14 @@ public interface NetMdService {
 	 * @return
 	 */
 	BranchSystemInfoDetails viewNetmdBranchSystemInfoDetails(String passphrase);
+	/**
+	 * @param header
+	 * @param freqType
+	 * @param interval
+	 * @return
+	 */
+	public SyncFreqDTO syncEnableStatus(HeaderDTO header, String freqType,
+			int interval);
 	
 	
 }

@@ -141,4 +141,12 @@ public interface LabService {
 	 * @return
 	 */
 	public SyncFreqDTO getBranchSyncDetails(int branchId);
+	/**
+	 * @param header
+	 * @param freqType
+	 * @param interval
+	 * @return 
+	 */
+	public SyncFreqDTO syncEnableStatus(LabHeaderDTO header, String freqType,
+			int interval);
 }
