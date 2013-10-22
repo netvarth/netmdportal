@@ -438,6 +438,10 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="mailThread">
 			<ref bean="email.worker.thread" />
 		</property>
+		<property name="healthService">
+			<ref bean="health.service" />
+		</property>
+		
 	</bean>
 
 	<bean id="netMd.validator" class="com.nv.youNeverWait.user.bl.validation.NetMdValidator"></bean>
