@@ -1075,10 +1075,6 @@ public class LabServiceImpl implements LabService {
 				inputStream));
 		String readLine = "";
 		
-		long hardDiskUsed=Long.parseLong(systemHealthDetails.getHardDiskUsed());
-		long memoryUsed=Long.parseLong(systemHealthDetails.getMemoryUsed());
-		long cpuUsed=Long.parseLong(systemHealthDetails.getCpuUsage());
-		
 		while ((readLine = in.readLine()) != null) {
 			msgBodyBfr.append(readLine).append("\n");
 		}
@@ -1096,9 +1092,9 @@ public class LabServiceImpl implements LabService {
 				branchOwnerDetails.getLabName());
 		fullMsgBody = fullMsgBody.replace("{branchName}",
 				branchOwnerDetails.getBranchName());
-		fullMsgBody = fullMsgBody.replace("{hardDiskSpace}",Long.toString(hardDiskUsed/(1024*1024)));
-		fullMsgBody = fullMsgBody.replace("{memoryDiskSpace}",Long.toString(memoryUsed/(1024*1024)));
-		fullMsgBody = fullMsgBody.replace("{cpuUsage}",Long.toString(cpuUsed/(1024*1024)));
+		fullMsgBody = fullMsgBody.replace("{hardDiskSpace}",Long.toString(response.getFreeHardDiskSpaceInPercent()));
+		fullMsgBody = fullMsgBody.replace("{memoryDiskSpace}",Long.toString(response.getFreeMemorySpaceInPercent()));
+		fullMsgBody = fullMsgBody.replace("{cpuUsage}",Long.toString(response.getFreeCpuSpaceInPercent()));
 		fullMsgBody = fullMsgBody.replace("{intervalTime}", response.getIntervalTime());
 		fullMsgBody = fullMsgBody.replace("{frequencyPeriod}", response.getFreqPeriod());
 		return fullMsgBody;
@@ -1231,6 +1227,18 @@ public class LabServiceImpl implements LabService {
 		}
 		SyncFreqDTO response=  labDao.getBranchSyncDetails(branchId);
 		return response;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#syncEnableStatus(com.nv.youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, int)
+	 */
+	@Override
+	public SyncFreqDTO syncEnableStatus(LabHeaderDTO header, String freqType,
+			int interval) {
+		validator.validateSyncDetail(freqType,interval);
+		/*Getting frequency details from table*/
+		SyncFreqDTO syncFreqDetails=  labDao.getBranchSyncDetails(header.getLabBranchId());
+		return syncFreqDetails;
 	}
 	
 //	/* (non-Javadoc)
@@ -1402,5 +1410,7 @@ public class LabServiceImpl implements LabService {
 	public void setHealthService(HealthMonitorService healthService) {
 		this.healthService = healthService;
 	}
+
+	
 
 }

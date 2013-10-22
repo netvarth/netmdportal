@@ -29,6 +29,7 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetmdTbl;
+import com.nv.youNeverWait.rs.dto.BillResponseDTO;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
@@ -854,8 +855,8 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#createBill(com.nv.youNeverWait.rs.dto.BillSummaryDTO, com.nv.youNeverWait.rs.dto.HeaderDTO)
 	 */
 	@Override
-	public ResponseDTO createBill(BillSummaryDTO newBill, HeaderDTO header) {
-		ResponseDTO response = netMdDao.createBill(newBill,header);
+	public BillResponseDTO createBill(BillSummaryDTO newBill, HeaderDTO header) {
+		BillResponseDTO response = netMdDao.createBill(newBill,header);
 		return response;
 	}
 
@@ -863,8 +864,8 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#updatedBills(com.nv.youNeverWait.rs.dto.BillSummaryDTO, com.nv.youNeverWait.rs.dto.HeaderDTO)
 	 */
 	@Override
-	public ResponseDTO updateBills(BillSummaryDTO updatedBill, HeaderDTO header) {
-		ResponseDTO response = netMdDao.updateBill(updatedBill,header);
+	public BillResponseDTO updateBills(BillSummaryDTO updatedBill, HeaderDTO header) {
+		BillResponseDTO response = netMdDao.updateBill(updatedBill,header);
 		return response;
 	}
 	
@@ -1020,10 +1021,6 @@ public class NetMdServiceImpl implements NetMdService {
 				inputStream));
 		String readLine = "";
 		
-		long hardDiskUsed=Long.parseLong(systemHealthDetails.getHardDiskUsed());
-		long memoryUsed=Long.parseLong(systemHealthDetails.getMemoryUsed());
-		long cpuUsed=Long.parseLong(systemHealthDetails.getCpuUsage());
-		
 		while ((readLine = in.readLine()) != null) {
 			msgBodyBfr.append(readLine).append("\n");
 		}
@@ -1045,12 +1042,22 @@ public class NetMdServiceImpl implements NetMdService {
 				systemHealthDetails.getHeader().getNetmdHeader().getPassPhrase());
 		fullMsgBody = fullMsgBody.replace("{macId}",
 				systemHealthDetails.getHeader().getNetmdHeader().getMacId());
-		fullMsgBody = fullMsgBody.replace("{hardDiskSpace}",Long.toString(hardDiskUsed/(1024*1024)));
-		fullMsgBody = fullMsgBody.replace("{memoryDiskSpace}",Long.toString(memoryUsed/(1024*1024)));
-		fullMsgBody = fullMsgBody.replace("{cpuUsage}",Long.toString(cpuUsed/(1024*1024)));
+		fullMsgBody = fullMsgBody.replace("{hardDiskSpace}",Long.toString(response.getFreeHardDiskSpaceInPercent()));
+		fullMsgBody = fullMsgBody.replace("{memoryDiskSpace}",Long.toString(response.getFreeMemorySpaceInPercent()));
+		fullMsgBody = fullMsgBody.replace("{cpuUsage}",Long.toString(response.getFreeCpuSpaceInPercent()));
 		fullMsgBody = fullMsgBody.replace("{intervalTime}", response.getIntervalTime());
 		fullMsgBody = fullMsgBody.replace("{frequencyPeriod}", response.getFreqPeriod());
 		return fullMsgBody;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#syncEnableStatus(com.nv.youNeverWait.rs.dto.HeaderDTO, java.lang.String, int)
+	 */
+	@Override
+	public SyncFreqDTO syncEnableStatus(HeaderDTO header, String freqType,
+			int interval) {
+		SyncFreqDTO response=  netMdDao.getBranchSyncDetails(header.getNetMdBranchId());
+		return response;
 	}
 	
 	@Override
@@ -1199,6 +1206,8 @@ public class NetMdServiceImpl implements NetMdService {
 	public void setHealthService(HealthMonitorService healthService) {
 		this.healthService = healthService;
 	}
+
+	
 
 	
 
