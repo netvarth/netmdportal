@@ -20,6 +20,8 @@ import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.HeaderDetail;
+import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDetail;
@@ -30,6 +32,7 @@ import com.nv.youNeverWait.rs.dto.NetMdResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -710,6 +713,38 @@ public class NetMdServiceTest {
 		passwords.setUsername("mohini");
 		try{
 			service.changePassword(passwords);
+		}
+		catch(ServiceException e){
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void checkSystemHealth(){
+		System.out.println("checkSystemHealth");
+		NetMdService service = (NetMdService) applicationContext
+				.getBean("netMd.service");
+		SystemHealthDetails systemHealthDetails = new SystemHealthDetails();
+		systemHealthDetails.setAppType("netmd");
+		systemHealthDetails.setCpuUsage("50");
+		systemHealthDetails.setHardDiskUsed("50");
+		systemHealthDetails.setMemoryUsed("50");
+		systemHealthDetails.setTotalCpuSpace("100");
+		systemHealthDetails.setTotalHardDiskSpace("100");
+		systemHealthDetails.setTotalMemorySpace("100");
+		HeaderDetail header= new HeaderDetail();
+		HeaderDTO netmdHeader = new HeaderDTO();
+		netmdHeader.setMacId("00-80-48-6E-E1-E2");
+		netmdHeader.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
+		netmdHeader.setNetMdId(3);
+		netmdHeader.setNetMdBranchId(5);
+		header.setNetmdHeader(netmdHeader);
+		systemHealthDetails.setHeader(header);
+		try{
+			
+			service.checkSystemHealth(systemHealthDetails);
 		}
 		catch(ServiceException e){
 

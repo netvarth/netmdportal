@@ -17,6 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.AppointmentDetailsDTO;
+import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
@@ -687,4 +688,78 @@ private ApplicationContext applicationContext;
 			System.out.println(e.getParamList());
 		}
 	}
+	@Test
+	public void createBill (){
+		System.out.println("create bill");
+		SyncService service = (SyncService) applicationContext
+				.getBean("sync.service");
+		SyncDTO sync = new SyncDTO();
+		sync.setLastSyncTime("2013-10-19 10:10:10");
+		HeaderDTO header = new HeaderDTO();
+		header.setNetMdId(3);
+		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
+		header.setMacId("00-80-48-6E-E1-E2");
+		header.setNetMdBranchId(5);
+		header.setNetMdId(3);
+		sync.setHeader(header);
+		 List<BillSummaryDTO> newBillList=new ArrayList<BillSummaryDTO>();
+		 BillSummaryDTO bill= new BillSummaryDTO();
+		 bill.setPatientGlobalId("5");
+		 bill.setPatientName("asha");
+		 bill.setPayStatus("hold");
+		 bill.setAmountPaid(1000);
+		 bill.setOrderDate("2013-10-01");
+		 bill.setBillAmount(2000);
+		 bill.setUid("JV");
+		 newBillList.add(bill);
+		sync.setNewBillList(newBillList);
+		sync.setFreqType("hourly");
+		sync.setInterval(1);
+		try {
+			service.syncData(sync);
+		} catch (ServiceException e) {
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+
+@Test
+public void updateBill (){
+	System.out.println("update bill");
+	SyncService service = (SyncService) applicationContext
+			.getBean("sync.service");
+	SyncDTO sync = new SyncDTO();
+	sync.setLastSyncTime("2013-10-19 10:10:10");
+	HeaderDTO header = new HeaderDTO();
+	header.setNetMdId(3);
+	header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
+	header.setMacId("00-80-48-6E-E1-E2");
+	header.setNetMdBranchId(56);
+	header.setNetMdId(3);
+	sync.setHeader(header);
+	 List<BillSummaryDTO> updateBillList=new ArrayList<BillSummaryDTO>();
+	 BillSummaryDTO bill= new BillSummaryDTO();
+	 bill.setGlobalId(7);
+	 bill.setPatientGlobalId("5");
+	 bill.setPatientName("asha");
+	 bill.setPayStatus("progress");
+	 bill.setAmountPaid(1000);
+	 bill.setOrderDate("2013-10-01");
+	 bill.setBillAmount(2000);
+	 bill.setUid("JH01");
+	 updateBillList.add(bill);
+	sync.setNewBillList(updateBillList);
+	sync.setFreqType("hourly");
+	sync.setInterval(1);
+	try {
+		service.syncData(sync);
+	} catch (ServiceException e) {
+
+		System.out.println(e.isDisplayErrMsg());
+		System.out.println(e.getError());
+		System.out.println(e.getParamList());
+	}
+}
 }

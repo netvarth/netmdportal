@@ -676,4 +676,22 @@ public class LabValidator extends FilterValidator {
 			throw se;
 		}
 	}
+
+	/**
+	 * @param freqType
+	 * @param interval
+	 */
+	public void validateSyncDetail(String freqType, int interval) {
+		if(freqType==null || freqType.equals("")){
+			ServiceException se = new ServiceException(ErrorCodeEnum.SyncFreqNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if(interval<=0){
+			ServiceException se = new ServiceException(ErrorCodeEnum.SyncIntervalTimeNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
+	}
 }

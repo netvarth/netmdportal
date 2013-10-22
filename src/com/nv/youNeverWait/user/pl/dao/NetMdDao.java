@@ -9,6 +9,7 @@ package com.nv.youNeverWait.user.pl.dao;
 
 import java.util.Date;
 
+import com.nv.youNeverWait.rs.dto.BillResponseDTO;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
@@ -64,13 +65,13 @@ public interface NetMdDao {
 	 * @param header
 	 * @return
 	 */
-	public ResponseDTO createBill(BillSummaryDTO newBill, HeaderDTO header);
+	public BillResponseDTO createBill(BillSummaryDTO newBill, HeaderDTO header);
 	/**
 	 * @param updatedBill
 	 * @param header
 	 * @return
 	 */
-	public ResponseDTO updateBill(BillSummaryDTO updatedBill, HeaderDTO header);
+	public BillResponseDTO updateBill(BillSummaryDTO updatedBill, HeaderDTO header);
 	/**
 	 * @param sync
 	 * @return

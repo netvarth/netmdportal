@@ -46,6 +46,7 @@ import com.nv.youNeverWait.pl.entity.SuperAdminTbl;
 import com.nv.youNeverWait.pl.entity.SyncFreqTypeEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.AppointmentDTO;
+import com.nv.youNeverWait.rs.dto.BillResponseDTO;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
@@ -1331,18 +1332,33 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	 */
 	@Override
 	@Transactional
-	public ResponseDTO createBill(BillSummaryDTO newBill, HeaderDTO header) {
-		ResponseDTO response = new ResponseDTO();
+	public BillResponseDTO createBill(BillSummaryDTO newBill, HeaderDTO header) {
+		BillResponseDTO response = new BillResponseDTO();
 		DateFormat df = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		DateFormat sdf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITHOUT_TIME);
+		NetmdPassphraseTbl passPhrase = null;
 		// Validate header details
 		if (header.getMacId() != null && header.getPassPhrase() != null
 				&& !header.getMacId().isEmpty()
 				&& !header.getPassPhrase().isEmpty()) {
 
-			checkHeader(header);
+			 passPhrase = getByPassphrase(header
+					.getPassPhrase());
+			if (passPhrase == null
+					|| passPhrase.getMacId() == null
+					|| !passPhrase.getMacId().equals(header.getMacId())
+					|| passPhrase.getNetmdBranchTbl().getId() != header
+							.getNetMdBranchId()
+					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != header
+							.getNetMdId()) {
+
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidNetMdAccount);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
 		}
 		PatientTbl existingPatient = getById(PatientTbl.class,
 				Integer.parseInt(newBill.getPatientGlobalId()));
@@ -1369,9 +1385,11 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		newBillTbl.setPatientTbl(existingPatient);
 		newBillTbl.setPayStatus(newBill.getPayStatus());
 		newBillTbl.setUid(newBill.getUid());
+		newBillTbl.setNetmdTbl(passPhrase.getNetmdBranchTbl().getNetmdTbl());
+		newBillTbl.setNetmdBranchTbl(passPhrase.getNetmdBranchTbl());
 		newBillTbl.setUpdatedDateTime(createdDateTime);
-		save(newBill);
-		response.setUid(Integer.parseInt(newBillTbl.getUid()));
+		save(newBillTbl);
+		response.setUid(newBillTbl.getUid());
 		response.setGlobalId(newBillTbl.getId());
 		response.setSuccess(true);
 
@@ -1387,8 +1405,72 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	 */
 	@Override
 	@Transactional
-	public ResponseDTO updateBill(BillSummaryDTO updatedBill, HeaderDTO header) {
-		ResponseDTO response = new ResponseDTO();
+	public BillResponseDTO updateBill(BillSummaryDTO updatedBill, HeaderDTO header) {
+		BillResponseDTO response = new BillResponseDTO();
+		DateFormat df = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		DateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITHOUT_TIME);
+		NetmdPassphraseTbl passPhrase = null;
+		// Validate header details
+		if (header.getMacId() != null && header.getPassPhrase() != null
+				&& !header.getMacId().isEmpty()
+				&& !header.getPassPhrase().isEmpty()) {
+
+			 passPhrase = getByPassphrase(header
+					.getPassPhrase());
+			if (passPhrase == null
+					|| passPhrase.getMacId() == null
+					|| !passPhrase.getMacId().equals(header.getMacId())
+					|| passPhrase.getNetmdBranchTbl().getId() != header
+							.getNetMdBranchId()
+					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != header
+							.getNetMdId()) {
+
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidNetMdAccount);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+		}
+		NetmdBillTbl netMdBill= getById(NetmdBillTbl.class, updatedBill.getGlobalId());
+		if(netMdBill==null){
+			// set error
+		}
+		
+		PatientTbl existingPatient = getById(PatientTbl.class,
+				Integer.parseInt(updatedBill.getPatientGlobalId()));
+		if (existingPatient == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.PatientNotFound);
+			se.addParam(new Parameter(Constants.ID, updatedBill
+					.getPatientGlobalId()));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		Date updatedDateTime = new Date();
+		netMdBill.setAmountPaid(updatedBill.getAmountPaid());
+		netMdBill.setBillAmount(updatedBill.getBillAmount());
+		
+		try {
+			netMdBill.setOrderDate(sdf.parse(updatedBill.getOrderDate()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		netMdBill.setPatientName(updatedBill.getPatientName());
+		netMdBill.setPatientTbl(existingPatient);
+		netMdBill.setPayStatus(updatedBill.getPayStatus());
+		netMdBill.setUid(updatedBill.getUid());
+		netMdBill.setNetmdTbl(passPhrase.getNetmdBranchTbl().getNetmdTbl());
+		netMdBill.setNetmdBranchTbl(passPhrase.getNetmdBranchTbl());
+		netMdBill.setUpdatedDateTime(updatedDateTime);
+		update(netMdBill);
+		
+		response.setUid(netMdBill.getUid());
+		response.setGlobalId(netMdBill.getId());
+		response.setSuccess(true);
+
 		return response;
 	}
 
@@ -1699,6 +1781,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			throw se;
 		}
 	}
+
 
 	@Override
 	@Transactional

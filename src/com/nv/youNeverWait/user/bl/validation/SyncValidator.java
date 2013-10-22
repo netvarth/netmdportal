@@ -17,6 +17,7 @@ import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 
 /**
  * @author Luciya Jose
@@ -154,5 +155,26 @@ public class SyncValidator {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * @param intervalTime 
+	 * @param freqType 
+	 * @param syncDetails
+	 */
+	public void checkSyncFreq(SyncFreqDTO syncFreqDetails, String freqType, int intervalTime) {
+		if(!syncFreqDetails.isEnableSync()){
+			ServiceException se = new ServiceException(ErrorCodeEnum.SyncDisable);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		else if(syncFreqDetails.getSyncFreqType().equals(freqType)){
+			if(syncFreqDetails.getSyncTime()!=intervalTime){
+				ServiceException se = new ServiceException(ErrorCodeEnum.SyncFreqMissMatch);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+		}
+		
 	}
 }
