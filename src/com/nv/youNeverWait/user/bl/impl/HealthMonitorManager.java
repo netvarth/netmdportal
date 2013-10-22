@@ -71,9 +71,9 @@ public class HealthMonitorManager implements HealthMonitorService {
 				.getTotalHardDiskSpace());
 
 		/** System free space details **/
-		long freeHardDiskSpace = totalCpuUsage - hardDiskUsed;
+		long freeHardDiskSpace = totalHardDiskUsed - hardDiskUsed;
 		long freeMemorySpace = totalMemoryUsed - memoryUsed;
-		long freeCpuSpace = totalHardDiskUsed - cpuUsage;
+		long freeCpuSpace = totalCpuUsage - cpuUsage;
 
 		/** System free space in percentage **/
 		long freeHardDiskSpaceInPercent = freeHardDiskSpace * 100
@@ -90,6 +90,7 @@ public class HealthMonitorManager implements HealthMonitorService {
 		systemHealth.setFreeHardDiskSpaceInPercent(freeHardDiskSpaceInPercent);
 		systemHealth.setFreeMemorySpaceInPercent(freeMemorySpaceInPercent);
 		systemHealth.setAppType(systemHealthDetails.getAppType());
+		
 		/**If application is NetLims**/
 		if (systemHealthDetails.getAppType().equals("netlims")) {
 			systemHealth.setBranchId(systemHealthDetails.getHeader().getLabHeader().getLabBranchId());
@@ -99,6 +100,7 @@ public class HealthMonitorManager implements HealthMonitorService {
 		if (systemHealthDetails.getAppType().equals("netmd")) {
 			systemHealth.setBranchId(systemHealthDetails.getHeader().getNetmdHeader()
 					.getNetMdBranchId());
+			systemHealth.setPassPhrase(systemHealthDetails.getHeader().getNetmdHeader().getPassPhrase());
 			response=hMonitorDao.checkSystemHealthForNetmd(systemHealth);
 		}
 		return response;
