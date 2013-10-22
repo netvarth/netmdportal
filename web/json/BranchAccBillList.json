@@ -2,8 +2,8 @@
     "title": "Bill Details ",
     "data": [
         {
-            "name": "superBillDetailsModalForm",
-            "id": "superBillDetailsModalForm",
+            "name": "accBillDetailsModalForm",
+            "id": "accBillDetailsModalForm",
             "content": [
                 {
                     "className": "sep-div-view",
@@ -15,8 +15,8 @@
                                 {
                                     "type": "table",
                                     "content": {
-                                        "name": "superBillDetailsViewTable",
-                                        "idProperty": "superBillDetailsViewTable",
+                                        "name": "accBillDetailsViewTable",
+                                        "idProperty": "accBillDetailsViewTable",
                                         "className": "stdtable stdtablecb",
                                         "style": "border-spacing:0;border-collapse:collapse; border:0;",
                                         "colHeaders": [

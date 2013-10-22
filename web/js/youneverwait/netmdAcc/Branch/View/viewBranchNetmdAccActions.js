@@ -90,3 +90,10 @@
 			updateTipsNew(getErrorName(response.error),$j('#errorDivData'),$j('#errorDivHeader'));
 		}
 	});
+	
+	$j("#netmdAccbranchViewForm #BranchBillbtn").die('click').live('click',function(){
+		removeErrors();
+		var obj=$j(this);
+		var branchBill=BrachBilllist();
+		fillNetmdEachBranchBillTable(branchBill,obj)
+	});

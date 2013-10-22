@@ -93,7 +93,7 @@ function fillSuperNetmdEachBranchBillDetailTable(branchBill,obj) {
 			if(billResult.branchBillList.length>0) {			
 				$j(billResult.branchBillList).each(function (index, lab) {
 					var id=lab.uid;
-					var rowData=$j(tableObj).dataTable().fnAddData([lab.uid,lab.patientName,lab.payStatus,lab.billAmount,lab.amountPaid,lab.orderDate]);
+					var rowData=$j(tableObj).dataTable().fnAddData([lab.uid,lab.orderDate,lab.patientName,lab.payStatus,lab.billAmount,lab.amountPaid]);
 					var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 					$j(row).attr('id',id);	
 					//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");

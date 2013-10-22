@@ -16,6 +16,8 @@
 		var contentForm = new form(viewdata);
 		$j('#tabs-1').html(contentForm.result);	
 		viewNetmdAccBranchInfo(branchId,tableObj,tableObj1);
+		$j("#netmdAccbranchViewForm #BranchBillfromDate").datepicker();
+		$j("#netmdAccbranchViewForm #BranchBilltoDate").datepicker();
 	 }
 	 
 	function viewNetmdAccBranchInfo(netmdbranchId,tableObj,tableObj1) {
@@ -140,6 +142,44 @@
 			});	
 		});
 }
+
+function BrachBilllist() {
+		
+	var submitdata;
+	submitdata = '{'+'"fromDate"' + ':"'+$j('#netmdAccbranchViewForm #BranchBillfromDate').val()+'",';
+	submitdata+='"toDate"' +':"' +$j('#netmdAccbranchViewForm #BranchBilltoDate').val() +'",';
+	submitdata +='"netmdId":' + $j('#netmdAccbranchViewForm #netmdid').val() + ',';
+	submitdata +='"netmdBranchId":' + $j('#netmdAccbranchViewForm #branchid').val() + '}';
+	//var response = postdataToServer("/youNeverWait/ws/ui/netMd/billList",submitdata);
+	//alert(JSON.stringify(response));
+	return submitdata;
+}
+
+function fillNetmdEachBranchBillTable(branchBill,obj) {
+	var billResult=postdataToServer("/youNeverWait/ws/ui/netMd/billList",branchBill);
+	//alert(JSON.stringify(billResult));
+	if(billResult.success==true) {
+		createModal(constants_netmdBranchAccBillListModalJson,'ShowBillModal');	
+		openModalBox(obj,'ShowBillModal');
+		var tableObj="#accBillDetailsViewTable";
+		makeDataTable(tableObj);
+		$j(tableObj).dataTable().fnClearTable();
+			if(billResult.branchBillList.length>0) {			
+				$j(billResult.branchBillList).each(function (index, lab) {
+					var id=lab.branchId;
+					var rowData=$j(tableObj).dataTable().fnAddData([lab.uid,lab.orderDate,lab.patientName,lab.payStatus,lab.billAmount,lab.amountPaid]);
+					var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+					$j(row).attr('id',id);	
+					//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
+					});	
+			}
+	}
+	else
+		updateTipsNew(getErrorName(billResult.error),$j('#errorDivData'),$j('#errorDivHeader'));
+	
+	return billResult;
+}
+
 function makeDataTable(tableObj) {
 	$j(tableObj).dataTable( {
 		"sPaginationType": "full_numbers",
