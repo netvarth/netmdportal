@@ -31,6 +31,7 @@ public class SyncResponseDTO {
 	private RetrievalAppointmentResponseDTO retrievalAppointmentListForPrimary = new RetrievalAppointmentResponseDTO();
 	private List<BillSyncResponseDTO> billResponse=new ArrayList<BillSyncResponseDTO>();
 	private String lastSynctime;
+	private boolean syncStatus;
 	private String syncFreqType;
 	private int syncInterval;
 	private ErrorDTO error;
@@ -38,6 +39,18 @@ public class SyncResponseDTO {
 	
 	
 	
+	/**
+	 * @return the syncStatus
+	 */
+	public boolean isSyncStatus() {
+		return syncStatus;
+	}
+	/**
+	 * @param syncStatus the syncStatus to set
+	 */
+	public void setSyncStatus(boolean syncStatus) {
+		this.syncStatus = syncStatus;
+	}
 	/**
 	 * @return the syncFreqType
 	 */
