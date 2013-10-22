@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BranchBillListResponseDTO {
-	private List<BillSummaryDTO> branchOrders=new ArrayList<BillSummaryDTO>();
+	private List<BillSummaryDTO> branchBillList=new ArrayList<BillSummaryDTO>();
 	private ErrorDTO error;
 	private boolean success;
 	public List<BillSummaryDTO> getBranchOrders() {
-		return branchOrders;
+		return branchBillList;
 	}
-	public void setBranchOrders(List<BillSummaryDTO> branchOrders) {
-		this.branchOrders = branchOrders;
+	public void setBranchOrders(List<BillSummaryDTO> branchBillList) {
+		this.branchBillList = branchBillList;
 	}
 	public ErrorDTO getError() {
 		return error;
