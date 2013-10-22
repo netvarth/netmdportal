@@ -7,10 +7,10 @@ public class BranchBillListResponseDTO {
 	private List<BillSummaryDTO> branchBillList=new ArrayList<BillSummaryDTO>();
 	private ErrorDTO error;
 	private boolean success;
-	public List<BillSummaryDTO> getBranchOrders() {
+	public List<BillSummaryDTO> getbranchBillList() {
 		return branchBillList;
 	}
-	public void setBranchOrders(List<BillSummaryDTO> branchBillList) {
+	public void setbranchBillList(List<BillSummaryDTO> branchBillList) {
 		this.branchBillList = branchBillList;
 	}
 	public ErrorDTO getError() {
