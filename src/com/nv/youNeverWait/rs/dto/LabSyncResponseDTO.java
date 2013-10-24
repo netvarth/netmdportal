@@ -22,66 +22,66 @@ public class LabSyncResponseDTO {
 	private RetrieveSpecimenResponse retrieveSpecimens = new RetrieveSpecimenResponse();
 	private OrderDetails retrieveOrders= new OrderDetails();
 	private LabDTO labDetails= new LabDTO();
-	private String freqType;
-	private int intervalTime;
-	private boolean syncStatus;
+//	private String freqType;
+//	private int intervalTime;
+//	private boolean syncStatus;
 	
 	
-	
-	
-	/**
-	 * @return the freqType
-	 */
-	public String getFreqType() {
-		return freqType;
-	}
-
-
-
-	/**
-	 * @param freqType the freqType to set
-	 */
-	public void setFreqType(String freqType) {
-		this.freqType = freqType;
-	}
-
-
-
-	/**
-	 * @return the intervalTime
-	 */
-	public int getIntervalTime() {
-		return intervalTime;
-	}
-
-
-
-	/**
-	 * @param intervalTime the intervalTime to set
-	 */
-	public void setIntervalTime(int intervalTime) {
-		this.intervalTime = intervalTime;
-	}
-
-
-
-	/**
-	 * @return the syncStatus
-	 */
-	public boolean isSyncStatus() {
-		return syncStatus;
-	}
-
-
-
-	/**
-	 * @param syncStatus the syncStatus to set
-	 */
-	public void setSyncStatus(boolean syncStatus) {
-		this.syncStatus = syncStatus;
-	}
-
-
+//	
+//	
+//	/**
+//	 * @return the freqType
+//	 */
+//	public String getFreqType() {
+//		return freqType;
+//	}
+//
+//
+//
+//	/**
+//	 * @param freqType the freqType to set
+//	 */
+//	public void setFreqType(String freqType) {
+//		this.freqType = freqType;
+//	}
+//
+//
+//
+//	/**
+//	 * @return the intervalTime
+//	 */
+//	public int getIntervalTime() {
+//		return intervalTime;
+//	}
+//
+//
+//
+//	/**
+//	 * @param intervalTime the intervalTime to set
+//	 */
+//	public void setIntervalTime(int intervalTime) {
+//		this.intervalTime = intervalTime;
+//	}
+//
+//
+//
+//	/**
+//	 * @return the syncStatus
+//	 */
+//	public boolean isSyncStatus() {
+//		return syncStatus;
+//	}
+//
+//
+//
+//	/**
+//	 * @param syncStatus the syncStatus to set
+//	 */
+//	public void setSyncStatus(boolean syncStatus) {
+//		this.syncStatus = syncStatus;
+//	}
+//
+//
 
 	/**
 	 * @return the labDetails
