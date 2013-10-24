@@ -2138,6 +2138,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 					labBranch.setEnableSync(lab.getEnableSync());
 					labBranch.setUpdateDateTime(newDate);
 					update(labBranch);
+					if(sync.isEnableSync())
 					response.setMsg(Constants.MESSAGE);
 				}// end of for loop
 			}
