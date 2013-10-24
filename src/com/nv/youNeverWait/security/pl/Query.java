@@ -153,7 +153,7 @@ public class Query {
 	public static final String GET_NETMD_HEALTH_MONITORING_DETAILS = "from NetmdHealthMonitorTbl as health where health.netmdPassphraseTbl.id =:param1  order by health.id ";
 	
 	/*NetMdBilltbl*/
-	public static final String GET_BILL_BY_DATE ="from NetmdBillTbl as bill where bill.orderDate>=:param1 and bill.orderDate<=:param2 and bill.netmdTbl.id=:param3 and bill.netmdBranchTbl.id=:param4 ";
+	public static final String GET_BILL_BY_DATE ="from NetmdBillTbl as bill where bill.orderDate>=:param1 and bill.orderDate<=:param2 and bill.netmdTbl.id=:param3 and bill.netmdBranchTbl.id=:param4  order by orderDate";
 	/*** NETLIMS ***/
 
 	/* LabUserTbl */
