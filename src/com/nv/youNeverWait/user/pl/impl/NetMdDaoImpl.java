@@ -1344,8 +1344,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				&& !header.getMacId().isEmpty()
 				&& !header.getPassPhrase().isEmpty()) {
 
-			 passPhrase = getByPassphrase(header
-					.getPassPhrase());
+			passPhrase = getByPassphrase(header.getPassPhrase());
 			if (passPhrase == null
 					|| passPhrase.getMacId() == null
 					|| !passPhrase.getMacId().equals(header.getMacId())
@@ -1405,7 +1404,8 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	 */
 	@Override
 	@Transactional
-	public BillResponseDTO updateBill(BillSummaryDTO updatedBill, HeaderDTO header) {
+	public BillResponseDTO updateBill(BillSummaryDTO updatedBill,
+			HeaderDTO header) {
 		BillResponseDTO response = new BillResponseDTO();
 		DateFormat df = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
@@ -1417,8 +1417,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				&& !header.getMacId().isEmpty()
 				&& !header.getPassPhrase().isEmpty()) {
 
-			 passPhrase = getByPassphrase(header
-					.getPassPhrase());
+			passPhrase = getByPassphrase(header.getPassPhrase());
 			if (passPhrase == null
 					|| passPhrase.getMacId() == null
 					|| !passPhrase.getMacId().equals(header.getMacId())
@@ -1433,11 +1432,12 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				throw se;
 			}
 		}
-		NetmdBillTbl netMdBill= getById(NetmdBillTbl.class, updatedBill.getGlobalId());
-		if(netMdBill==null){
+		NetmdBillTbl netMdBill = getById(NetmdBillTbl.class,
+				updatedBill.getGlobalId());
+		if (netMdBill == null) {
 			// set error
 		}
-		
+
 		PatientTbl existingPatient = getById(PatientTbl.class,
 				Integer.parseInt(updatedBill.getPatientGlobalId()));
 		if (existingPatient == null) {
@@ -1451,7 +1451,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		Date updatedDateTime = new Date();
 		netMdBill.setAmountPaid(updatedBill.getAmountPaid());
 		netMdBill.setBillAmount(updatedBill.getBillAmount());
-		
+
 		try {
 			netMdBill.setOrderDate(sdf.parse(updatedBill.getOrderDate()));
 		} catch (ParseException e) {
@@ -1466,7 +1466,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netMdBill.setNetmdBranchTbl(passPhrase.getNetmdBranchTbl());
 		netMdBill.setUpdatedDateTime(updatedDateTime);
 		update(netMdBill);
-		
+
 		response.setUid(netMdBill.getUid());
 		response.setGlobalId(netMdBill.getId());
 		response.setSuccess(true);
@@ -1512,7 +1512,8 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 					netmdBranch.setEnableSync(netmd.getEnableSync());
 					netmdBranch.setUpdateDateTime(newDate);
 					update(netmdBranch);
-					response.setMsg(Constants.MESSAGE);
+					if (sync.isEnableSync())
+						response.setMsg(Constants.MESSAGE);
 				}// end of for loop
 			}
 
@@ -1569,7 +1570,8 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				netmdBranch.setUpdateDateTime(newDate);
 				update(netmdBranch);
 			} else {
-				response.setMsg(Constants.MESSAGE);
+				if (sync.isEnableSync())
+					response.setMsg(Constants.MESSAGE);
 			}
 		} else {
 			ServiceException se = new ServiceException(
@@ -1782,7 +1784,6 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		}
 	}
 
-
 	@Override
 	@Transactional
 	public BranchBillListResponseDTO billList(BranchBillListDTO listDTO) {
@@ -1797,8 +1798,10 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 
 		try {
 
-			List<NetmdBillTbl> netMdBranchBillList =getBillsByDate(df.parse(listDTO.getFromDate()),
-					df.parse(listDTO.getToDate()),listDTO.getNetmdId(), listDTO.getNetmdBranchId());
+			List<NetmdBillTbl> netMdBranchBillList = getBillsByDate(
+					df.parse(listDTO.getFromDate()),
+					df.parse(listDTO.getToDate()), listDTO.getNetmdId(),
+					listDTO.getNetmdBranchId());
 			for (NetmdBillTbl bill : netMdBranchBillList) {
 				BillSummaryDTO billDetail = new
 
@@ -1861,8 +1864,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 
 	private List<NetmdBillTbl> getBillsByDate(Date fromDate, Date toDate,
 			int netmdId, int netmdBranchId) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_BILL_BY_DATE);
+		javax.persistence.Query query = em.createQuery(Query.GET_BILL_BY_DATE);
 		query.setParameter("param1", fromDate);
 		query.setParameter("param2", toDate);
 		query.setParameter("param3", netmdId);

@@ -553,7 +553,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		// System.out.println("alpha numeric value for lab code is  "+builder.toString());
 		//
 		// labTbl.setLabCode(builder.toString());
-		
+
 		labTbl.setOwnerFirstName(lab.getOwnerFirstName());
 		labTbl.setOwnerLastName(lab.getOwnerLastName());
 		labTbl.setOwnerEmail(lab.getOwnerEmail());
@@ -615,10 +615,9 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labBranch.setEmail(branch.getEmail());
 		// labBranch.setBranchCode(branch.getBranchCode());
 		labBranch.setLabTbl(lab);
-		if(lab.getEnableSync()==false){
+		if (lab.getEnableSync() == false) {
 			labBranch.setEnableSync(false);
-		}
-		else{
+		} else {
 			labBranch.setEnableSync(true);
 			labBranch.setSyncFreqType(lab.getSyncFreqType());
 			labBranch.setSyncTime(lab.getSyncTime());
@@ -1920,14 +1919,15 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 				.getCriticalMemoryLevel()));
 		details.setFreqType(systemInfo.getFreqType());
 		details.setIntervalTime(Integer.toString(systemInfo.getIntervalTime()));
-		/**Query for getting total number of records*/
-		int totalRecords= getTotalHealthMonitorRecords(branchId);
-		int startIndex=0;
-		if(totalRecords>10)
-		 startIndex=totalRecords-10;
-	
+		/** Query for getting total number of records */
+		int totalRecords = getTotalHealthMonitorRecords(branchId);
+		int startIndex = 0;
+		if (totalRecords > 10)
+			startIndex = totalRecords - 10;
+
 		/* Getting last 10 records of system health monitor details */
-		List<LabHealthMonitorTbl> healthMonitorTblList = getMonitorDetailsByBranchId(branchId,startIndex);
+		List<LabHealthMonitorTbl> healthMonitorTblList = getMonitorDetailsByBranchId(
+				branchId, startIndex);
 		if (healthMonitorTblList.isEmpty()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.SystemMonitorDetailsNull);
@@ -1936,7 +1936,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		}
 		for (LabHealthMonitorTbl hMonitor : healthMonitorTblList) {
 			SystemHealthMonitorDetailList systemHealth = new SystemHealthMonitorDetailList();
-		
+
 			systemHealth.setCpuUsage(hMonitor.getFreeCpuSpace());
 			systemHealth.setHardDiskSpaceUasge(hMonitor.getFreeHardDiskSpace());
 			systemHealth.setMemoryUsage(hMonitor.getFreeMemorySpace());
@@ -1953,8 +1953,6 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		return details;
 	}
 
-	
-
 	/**
 	 * Method for updating the branch default system details
 	 * 
@@ -1963,8 +1961,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	 */
 	@Override
 	@Transactional
-	public ResponseDTO updateLabBranchSystemInfo(
-			BranchSystemInfoDetails details) {
+	public ResponseDTO updateLabBranchSystemInfo(BranchSystemInfoDetails details) {
 		ResponseDTO response = new ResponseDTO();
 		LabBranchTbl labBranch = getById(LabBranchTbl.class,
 				details.getBranchId());
@@ -2109,7 +2106,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	@Transactional
 	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync) {
 		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
-		Date newDate= new Date();
+		Date newDate = new Date();
 		LabTbl lab = getById(LabTbl.class, sync.getLabId());
 		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
 		if (lab != null) {
@@ -2138,8 +2135,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 					labBranch.setEnableSync(lab.getEnableSync());
 					labBranch.setUpdateDateTime(newDate);
 					update(labBranch);
-					if(sync.isEnableSync())
-					response.setMsg(Constants.MESSAGE);
+					if (sync.isEnableSync())
+						response.setMsg(Constants.MESSAGE);
 				}// end of for loop
 			}
 
@@ -2166,7 +2163,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	@Transactional
 	public SyncFreqResponseDTO setBranchSync(SyncFreqDTO sync) {
 		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
-		Date newDate= new Date();
+		Date newDate = new Date();
 		LabBranchTbl labBranch = getById(LabBranchTbl.class,
 				sync.getLabBranchId());
 		if (labBranch != null) {
@@ -2196,7 +2193,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 				labBranch.setUpdateDateTime(newDate);
 				update(labBranch);
 			} else {
-				response.setMsg(Constants.MESSAGE);
+				if (sync.isEnableSync())
+					response.setMsg(Constants.MESSAGE);
 			}
 		} else {
 			ServiceException se = new ServiceException(
@@ -2310,12 +2308,13 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	 * @return
 	 */
 	private int getTotalHealthMonitorRecords(int branchId) {
-		int totalRecords=0;
-	javax.persistence.Query query= em.createQuery(Query.GET_TOTAL_RECORDS);
-	query.setParameter("param1",branchId);
-	totalRecords= ((Number) query.getSingleResult()).intValue();
+		int totalRecords = 0;
+		javax.persistence.Query query = em.createQuery(Query.GET_TOTAL_RECORDS);
+		query.setParameter("param1", branchId);
+		totalRecords = ((Number) query.getSingleResult()).intValue();
 		return totalRecords;
 	}
+
 	/**
 	 * @param labId
 	 * @param syncTime
@@ -2332,7 +2331,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		return executeUniqueQuery(LabTbl.class, query);
 	}
 
-	private List<LabHealthMonitorTbl> getMonitorDetailsByBranchId(int branchId, int startIndex) {
+	private List<LabHealthMonitorTbl> getMonitorDetailsByBranchId(int branchId,
+			int startIndex) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_MONITORING_DETAILS_BY_BRANCH_ID);
 		query.setParameter("param1", branchId);
@@ -2341,7 +2341,6 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		return executeQuery(LabHealthMonitorTbl.class, query);
 	}
 
-	
 	/**
 	 * Get Orders By Branch OrderDate
 	 * 
@@ -2899,5 +2898,4 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		this.netlimsServerIpAddress = netlimsServerIpAddress;
 	}
 
-	
 }
