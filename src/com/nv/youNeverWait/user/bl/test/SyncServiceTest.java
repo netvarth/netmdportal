@@ -713,8 +713,8 @@ private ApplicationContext applicationContext;
 		 bill.setUid("JV");
 		 newBillList.add(bill);
 		sync.setNewBillList(newBillList);
-		sync.setFreqType("hourly");
-		sync.setInterval(1);
+//		sync.setFreqType("hourly");
+//		sync.setInterval(1);
 		try {
 			service.syncData(sync);
 		} catch (ServiceException e) {
@@ -751,8 +751,8 @@ public void updateBill (){
 	 bill.setUid("JH01");
 	 updateBillList.add(bill);
 	sync.setNewBillList(updateBillList);
-	sync.setFreqType("hourly");
-	sync.setInterval(1);
+//	sync.setFreqType("hourly");
+//	sync.setInterval(1);
 	try {
 		service.syncData(sync);
 	} catch (ServiceException e) {

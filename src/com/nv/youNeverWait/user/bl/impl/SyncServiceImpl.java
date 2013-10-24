@@ -113,11 +113,11 @@ public class SyncServiceImpl implements SyncService {
 		validator.validateLastSyncTime(sync.getLastSyncTime());
 
 		/*Checking whether sync is enabled or disabled*/
-		SyncFreqDTO syncDetails=netMdService.syncEnableStatus(sync.getHeader(),sync.getFreqType(),sync.getInterval());
-		syncResponse.setSyncFreqType(syncDetails.getSyncFreqType());
-		syncResponse.setSyncInterval(syncDetails.getSyncTime());
-		syncResponse.setSyncStatus(syncDetails.isEnableSync());
-		validator.checkSyncFreq(syncDetails,sync.getFreqType(),sync.getInterval());
+//		SyncFreqDTO syncDetails=netMdService.syncEnableStatus(sync.getHeader(),sync.getFreqType(),sync.getInterval());
+//		syncResponse.setSyncFreqType(syncDetails.getSyncFreqType());
+//		syncResponse.setSyncInterval(syncDetails.getSyncTime());
+//		syncResponse.setSyncStatus(syncDetails.isEnableSync());
+//		validator.checkSyncFreq(syncDetails,sync.getFreqType(),sync.getInterval());
 		
 		/*Setting last sync time when the syncData calling for the first time*/
 		if(sync.getLastSyncTime()==null){
@@ -1143,12 +1143,12 @@ public class SyncServiceImpl implements SyncService {
 		
 		Date currentSyncTime = new Date(); // setting current date time
 		
-		/*Checking whether sync is enabled or disabled*/
-		SyncFreqDTO syncDetails=labService.syncEnableStatus(sync.getHeader(),sync.getFreqType(),sync.getInterval());
-		syncResponse.setSyncStatus(syncDetails.isEnableSync());
-		syncResponse.setFreqType(syncDetails.getSyncFreqType());
-		syncResponse.setIntervalTime(syncDetails.getSyncTime());
-		validator.checkSyncFreq(syncDetails,sync.getFreqType(),sync.getInterval());
+//		/*Checking whether sync is enabled or disabled*/
+//		SyncFreqDTO syncDetails=labService.syncEnableStatus(sync.getHeader(),sync.getFreqType(),sync.getInterval());
+//		syncResponse.setSyncStatus(syncDetails.isEnableSync());
+//		syncResponse.setFreqType(syncDetails.getSyncFreqType());
+//		syncResponse.setIntervalTime(syncDetails.getSyncTime());
+//		validator.checkSyncFreq(syncDetails,sync.getFreqType(),sync.getInterval());
 		
 		/*Retrieving all lab branches in the portal*/
 		LabBranchListResponseDTO retrieveLabBranchList=labService.retrieveLabBranchList(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
