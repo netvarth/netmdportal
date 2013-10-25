@@ -2301,6 +2301,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	 * @see com.nv.youNeverWait.user.pl.dao.NetMdDao#systemCriticalDetails(com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails)
 	 */
 	@Override
+	@Transactional
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails) {
 		ResponseDTO response = new ResponseDTO();
