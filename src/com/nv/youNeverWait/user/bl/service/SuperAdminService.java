@@ -135,5 +135,11 @@ public interface SuperAdminService {
 	 * @return
 	 */
 	public BranchSystemInfoDetails viewNetMdBranchSystemInfo(String passphrase);
+	/**
+	 * @param systemCriticalDetails
+	 * @return
+	 */
+	public ResponseDTO updateNetmdBranchSystemInfo(
+			BranchSystemInfoDetails systemCriticalDetails);
 
 }

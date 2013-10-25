@@ -1069,6 +1069,17 @@ public class NetMdServiceImpl implements NetMdService {
 		response = netMdDao.billList(listDTO);
 		return response;
 	}
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#updateNetmdBranchSystemInfo(com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails)
+	 */
+	@Override
+	public ResponseDTO updateNetmdBranchSystemInfo(
+			BranchSystemInfoDetails systemCriticalDetails) {
+		validator.validateSystemDefaultDetails(systemCriticalDetails);
+		ResponseDTO response =netMdDao.updateNetmdBranchSystemInfo(systemCriticalDetails);
+		return response;
+	}
+	
 //	/* (non-Javadoc)
 //	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#enableBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 //	 */
@@ -1206,6 +1217,8 @@ public class NetMdServiceImpl implements NetMdService {
 	public void setHealthService(HealthMonitorService healthService) {
 		this.healthService = healthService;
 	}
+
+	
 
 	
 

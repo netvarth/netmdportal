@@ -878,6 +878,18 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		BranchBillListResponseDTO response=netMdService.billList(listDTO);
 		return response;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#updateNetmdBranchSystemInfo(com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails)
+	 */
+	@Override
+	public ResponseDTO updateNetmdBranchSystemInfo(
+			BranchSystemInfoDetails systemCriticalDetails) {
+		ResponseDTO response= netMdService.updateNetmdBranchSystemInfo(systemCriticalDetails);
+		return response;
+	}
+
+	
 //	/* (non-Javadoc)
 //	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 //	 */
@@ -1065,6 +1077,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		this.specimenService = specimenService;
 	}
 
+	
 	
 
 

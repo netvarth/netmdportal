@@ -128,6 +128,12 @@ public interface NetMdService {
 	 */
 	public SyncFreqDTO syncEnableStatus(HeaderDTO header, String freqType,
 			int interval);
+	/**
+	 * @param systemCriticalDetails
+	 * @return
+	 */
+	public ResponseDTO updateNetmdBranchSystemInfo(
+			BranchSystemInfoDetails systemCriticalDetails);
 	
 	
 }

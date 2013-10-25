@@ -2297,4 +2297,41 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		this.em = em;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.NetMdDao#systemCriticalDetails(com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails)
+	 */
+	@Override
+	public ResponseDTO updateNetmdBranchSystemInfo(
+			BranchSystemInfoDetails systemCriticalDetails) {
+		ResponseDTO response = new ResponseDTO();
+		NetmdPassphraseTbl netmdPassphrase = getByPassphrase(systemCriticalDetails.getPasspharse());
+		if (netmdPassphrase == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPassphrase);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		NetmdBranchSystemInfoTbl systemInfo = getSystemDetailsByNetmdBranchId(
+				netmdPassphrase.getNetmdBranchTbl().getId(),
+				netmdPassphrase.getId());
+		if (systemInfo == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.NetmdBranchSystemInfoNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		systemInfo.setCriticalHardDiskLevel(Integer.parseInt(systemCriticalDetails
+				.getCriticalHardDiskSpaceLevel()));
+		systemInfo.setCriticalCpuLevel(Integer.parseInt(systemCriticalDetails
+				.getCriticalCpuLevel()));
+		systemInfo.setCriticalMemoryLevel(Integer.parseInt(systemCriticalDetails
+				.getCriticalMemoryLevel()));
+		systemInfo.setFreqType(systemCriticalDetails.getFreqType());
+		systemInfo.setIntervalTime(Integer.parseInt(systemCriticalDetails.getIntervalTime()));
+		update(systemInfo);
+
+		response.setSuccess(true);
+		return response;
+	}
+
 }

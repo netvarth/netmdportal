@@ -17,6 +17,7 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
@@ -476,6 +477,54 @@ public class NetMdValidator extends FilterValidator {
 				throw se;
 			}
 			
+		}
+
+		/**
+		 * @param systemCriticalDetails
+		 */
+		public void validateSystemDefaultDetails(
+				BranchSystemInfoDetails systemCriticalDetails) {
+			if(systemCriticalDetails.getBranchId()<=0){
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidBranch);
+				se.addParam(new Parameter(Constants.ID, Integer.toString(systemCriticalDetails.getBranchId())));
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			if(systemCriticalDetails.getCriticalCpuLevel()==null && systemCriticalDetails.getCriticalCpuLevel().equals("")){
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.CriticalCpuLevelNull);
+				se.setDisplayErrMsg(true);
+				throw se;
+				
+			}
+			if(systemCriticalDetails.getCriticalHardDiskSpaceLevel()== null && systemCriticalDetails.getCriticalHardDiskSpaceLevel().equals("")){
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.CriticalHardDiskSPaceLevelNull);
+				se.setDisplayErrMsg(true);
+				throw se;
+				
+			}
+			if(systemCriticalDetails.getCriticalMemoryLevel()==null && systemCriticalDetails.getCriticalMemoryLevel().equals("")){
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.CriticalMemoryLevelNull);
+				se.setDisplayErrMsg(true);
+				throw se;
+				
+			}
+			if(systemCriticalDetails.getFreqType()==null){
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.FrequencyNull);
+				se.setDisplayErrMsg(true);
+				throw se;
+				
+			}
+			if(systemCriticalDetails.getIntervalTime()==null && systemCriticalDetails.getIntervalTime().equals("")){
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.IntervalTimeNull);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
 		}
 
 

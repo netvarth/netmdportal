@@ -28,8 +28,21 @@ public class BranchSystemInfoDetails {
 	int branchId;
 	boolean success;
 	ErrorDTO error;
+	String passpharse;
 	
 	
+	/**
+	 * @return the passpharse
+	 */
+	public String getPasspharse() {
+		return passpharse;
+	}
+	/**
+	 * @param passpharse the passpharse to set
+	 */
+	public void setPasspharse(String passpharse) {
+		this.passpharse = passpharse;
+	}
 	/**
 	 * @return the totalCpu
 	 */

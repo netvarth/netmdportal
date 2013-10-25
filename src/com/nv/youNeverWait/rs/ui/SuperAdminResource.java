@@ -1223,7 +1223,7 @@ public class SuperAdminResource {
 	}
 
 	/**
- 	 * Method for updating the branch default system details
+ 	 * Method for updating the branch default system details of a lab
 	 * @param details
  	 * @return
      */
@@ -1247,6 +1247,32 @@ public class SuperAdminResource {
 		return response;
 	}
 
+	/**
+ 	 * Method for updating the branch default system details of a netmd
+	 * @param details
+ 	 * @return
+     */
+	@RequestMapping(value = "updateNetmdBranchSystemInfo", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO updateNetmdBranchSystemInfo(@RequestBody BranchSystemInfoDetails systemCriticalDetails) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = service.updateNetmdBranchSystemInfo(systemCriticalDetails);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+
+		return response;
+	}
+
+	
 	/**
 	 * Shows a list of all user logs
 	 * 

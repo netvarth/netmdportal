@@ -109,6 +109,12 @@ public interface NetMdDao {
 	 * @return
 	 */
 	public BranchSystemInfoDetails viewBranchSystemInfoDetails(String passphrase);
+	/**
+	 * @param systemCriticalDetails
+	 * @return
+	 */
+	public ResponseDTO updateNetmdBranchSystemInfo(
+			BranchSystemInfoDetails systemCriticalDetails);
 	
 
 }
