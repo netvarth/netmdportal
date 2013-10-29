@@ -751,31 +751,7 @@ public class NetMdResource {
 		return response;
 	}
 
-	/**
-	 * To set synchronization frequency for a NetMd 
-	 * 
-	 * @param sync
-	 * @return SyncFreqResponseDTO
-	 */
-	@RequestMapping(value = "setNetMdSync", method = RequestMethod.POST)
 	
-	@ResponseBody
-	public SyncFreqResponseDTO setNetMdSync(@RequestBody SyncFreqDTO sync) {
-
-		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
-		try {
-			response = netMdService.setNetMdSync(sync);
-		} catch (ServiceException e) {
-			List<Parameter> parameters = e.getParamList();
-			ErrorDTO error = new ErrorDTO();
-			error.setErrCode(e.getError().getErrCode());
-			error.setParams(parameters);
-			error.setDisplayErrMsg(e.isDisplayErrMsg());
-			response.setError(error);
-			response.setSuccess(false);
-		}
-		return response;
-	}
 	/**
 	 * To set synchronization frequency for a NetMd branch
 	 * 

@@ -67,6 +67,7 @@ import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncLogDTO;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
@@ -854,6 +855,41 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		ResponseDTO response = superAdminDao.setSync(sync);
 		return response;
 	}
+	
+	@Override
+	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync) {
+		SyncFreqResponseDTO response=labService.setLabSync(sync);
+		return response;
+	}
+	
+	@Override
+	public SyncFreqResponseDTO setBranchSync(SyncFreqDTO sync) {
+		SyncFreqResponseDTO response=labService.setBranchSync(sync);
+		return response;
+	}
+	
+	@Override
+	public SyncFreqResponseDTO setNetMdSync(SyncFreqDTO sync) {
+		SyncFreqResponseDTO response=netMdService.setNetMdSync(sync);
+		return response;
+	}
+	@Override
+	public SyncFreqResponseDTO setNetMdBranchSync(SyncFreqDTO sync) {
+		SyncFreqResponseDTO response=netMdService.setNetMdBranchSync(sync);
+		return response;
+	}
+
+	@Override
+	public SyncFreqResponseDTO setNetRxSync(SyncFreqDTO sync) {
+		SyncFreqResponseDTO response=netRxService.setNetRxSync(sync);
+		return response;
+	}
+	@Override
+	public SyncFreqResponseDTO setNetRxBranchSync(SyncFreqDTO sync) {
+		SyncFreqResponseDTO response=netRxService.setNetRxBranchSync(sync);
+		return response;
+	}
+
 
 	/* (non-Javadoc)
 	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncDetails()
@@ -1076,6 +1112,14 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public void setSpecimenService(SpecimenService specimenService) {
 		this.specimenService = specimenService;
 	}
+
+	
+	
+
+	
+	
+
+	
 
 	
 	

@@ -44,6 +44,7 @@ import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncLogDTO;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserDetails;
@@ -100,6 +101,12 @@ public interface SuperAdminService {
 	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO);
 	public BranchSystemInfoDetails viewBranchSystemInfo(int branchId);
 	public BranchBillListResponseDTO billList(BranchBillListDTO listDTO);
+	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setBranchSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setNetMdSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setNetMdBranchSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setNetRxSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setNetRxBranchSync(SyncFreqDTO sync);
 	public ResponseDTO updateLabBranchSystemInfo(
 			BranchSystemInfoDetails details);
 	
@@ -141,5 +148,11 @@ public interface SuperAdminService {
 	 */
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails);
+	
+
+	
+	
+	
+	
 
 }

@@ -578,31 +578,7 @@ public class NetRxResource {
 		return response;
 	}
 
-	/**
-	 * To set synchronization frequency for a NetRx 
-	 * 
-	 * @param sync
-	 * @return SyncFreqResponseDTO
-	 */
-	@RequestMapping(value = "setNetRxSync", method = RequestMethod.POST)
 	
-	@ResponseBody
-	public SyncFreqResponseDTO setNetRxSync(@RequestBody SyncFreqDTO sync) {
-
-		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
-		try {
-			response = netRxService.setNetRxSync(sync);
-		} catch (ServiceException e) {
-			List<Parameter> parameters = e.getParamList();
-			ErrorDTO error = new ErrorDTO();
-			error.setErrCode(e.getError().getErrCode());
-			error.setParams(parameters);
-			error.setDisplayErrMsg(e.isDisplayErrMsg());
-			response.setError(error);
-			response.setSuccess(false);
-		}
-		return response;
-	}
 	/**
 	 * To set synchronization frequency for a NetRx branch
 	 * 
