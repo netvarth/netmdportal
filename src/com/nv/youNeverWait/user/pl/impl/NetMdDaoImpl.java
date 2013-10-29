@@ -882,7 +882,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		NetmdUserTbl user = new NetmdUserTbl();
 
 		NetmdBranchTbl branch = getById(NetmdBranchTbl.class,
-				header.getNetMdBranchId());
+				header.getBranchId());
 		if (branch == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetMdBranchId);
@@ -899,9 +899,9 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 					|| passPhrase.getMacId() == null
 					|| !passPhrase.getMacId().equals(header.getMacId())
 					|| passPhrase.getNetmdBranchTbl().getId() != header
-							.getNetMdBranchId()
+							.getBranchId()
 					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != header
-							.getNetMdId()) {
+							.getHeadOfficeId()) {
 
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.InvalidNetMdAccount);
@@ -913,7 +913,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		}
 
 		NetmdUserTbl netmdUserTbl = getNetMdUserByEmail(netMdUser.getEmail(),
-				header.getNetMdBranchId());
+				header.getBranchId());
 		if (netmdUserTbl != null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.NetMdUserAlreadyExists);
@@ -1213,7 +1213,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	public ResponseDTO makePrimary(HeaderDTO header) {
 		ResponseDTO response = new ResponseDTO();
 		List<NetmdPassphraseTbl> passphraseObjList = getPassPhraseByBranch(header
-				.getNetMdBranchId());
+				.getBranchId());
 		for (NetmdPassphraseTbl netmdPassphraseTblObj : passphraseObjList) {
 			if (header.getPassPhrase().equals(
 					netmdPassphraseTblObj.getPassPhrase())) {
@@ -1254,7 +1254,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 
 		ResponseDTO response = new ResponseDTO();
 		/* Query to get netmd record for given netMd id */
-		NetmdTbl netMd = getById(NetmdTbl.class, header.getNetMdId());
+		NetmdTbl netMd = getById(NetmdTbl.class, header.getHeadOfficeId());
 		/* Setting error message when netmd Id is incorrect */
 		if (netMd == null) {
 			ServiceException se = new ServiceException(
@@ -1273,7 +1273,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.BranchMissMatch);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(header
-					.getNetMdBranchId())));
+					.getBranchId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
@@ -1288,7 +1288,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			 * Checking whether netmd branch id matches with given netMd branch
 			 * id
 			 */
-			if (netMdBranch.getId() == header.getNetMdBranchId()) {
+			if (netMdBranch.getId() == header.getBranchId()) {
 				/* Query for retrieving netmd branch passphrase */
 				NetmdPassphraseTbl branchPassPhrase = getMacPassPhraseByBranch(
 						netMdBranch.getId(), header.getPassPhrase());
@@ -1315,7 +1315,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.BranchMissMatch);
 				se.addParam(new Parameter(Constants.ID, Integer.toString(header
-						.getNetMdBranchId())));
+						.getBranchId())));
 				se.setDisplayErrMsg(true);
 				throw se;
 			}
@@ -1349,9 +1349,9 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 					|| passPhrase.getMacId() == null
 					|| !passPhrase.getMacId().equals(header.getMacId())
 					|| passPhrase.getNetmdBranchTbl().getId() != header
-							.getNetMdBranchId()
+							.getBranchId()
 					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != header
-							.getNetMdId()) {
+							.getHeadOfficeId()) {
 
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.InvalidNetMdAccount);
@@ -1422,9 +1422,9 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 					|| passPhrase.getMacId() == null
 					|| !passPhrase.getMacId().equals(header.getMacId())
 					|| passPhrase.getNetmdBranchTbl().getId() != header
-							.getNetMdBranchId()
+							.getBranchId()
 					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != header
-							.getNetMdId()) {
+							.getHeadOfficeId()) {
 
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.InvalidNetMdAccount);
@@ -1773,9 +1773,9 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				|| passPhrase.getMacId() == null
 				|| !passPhrase.getMacId().equals(header.getMacId())
 				|| passPhrase.getNetmdBranchTbl().getId() != header
-						.getNetMdBranchId()
+						.getBranchId()
 				|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != header
-						.getNetMdId()) {
+						.getHeadOfficeId()) {
 
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetMdAccount);

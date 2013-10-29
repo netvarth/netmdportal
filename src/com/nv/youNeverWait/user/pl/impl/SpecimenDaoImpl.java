@@ -24,7 +24,7 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.SpecimenTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponse;
@@ -185,7 +185,7 @@ public class SpecimenDaoImpl extends GenericDaoHibernateImpl implements
 	 */
 	@Override
 	@Transactional
-	public RetrieveSpecimenResponse getSpecimens(LabHeaderDTO header,
+	public RetrieveSpecimenResponse getSpecimens(HeaderDTO header,
 			String lastSyncTime, Date currentSyncTime) {
 		RetrieveSpecimenResponse response = new RetrieveSpecimenResponse();
 		labDao.CheckHeaderDetails(header); // validates lab header details

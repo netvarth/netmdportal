@@ -25,7 +25,7 @@ import com.nv.youNeverWait.pl.entity.LabBranchTbl;
 import com.nv.youNeverWait.pl.entity.LabTbl;
 import com.nv.youNeverWait.pl.entity.OrderTransferTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
@@ -56,7 +56,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 	 */
 	@Override
 	@Transactional
-	public OrderDetails retrieveBranchOrders(LabHeaderDTO header,
+	public OrderDetails retrieveBranchOrders(HeaderDTO header,
 			String lastSyncTime, Date currentSyncTime) {
 		OrderDetails orderDetail = new OrderDetails();
 
@@ -76,7 +76,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		}
 		List<OrderTransfer> orderList = new ArrayList<OrderTransfer>();
 		List<OrderTransferTbl> recievedOrders = getTransferredOrders(
-				header.getLabId(), header.getLabBranchId(), syncTime,
+				header.getHeadOfficeId(), header.getBranchId(), syncTime,
 				currentSyncTime);
 		for (OrderTransferTbl order : recievedOrders) {
 			OrderTransfer newOrder = new OrderTransfer();

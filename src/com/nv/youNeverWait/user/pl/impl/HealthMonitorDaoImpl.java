@@ -29,6 +29,7 @@ import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetail;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
+import com.nv.youNeverWait.rs.dto.SystemHealthResponse;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.HealthMonitorDao;
 
@@ -47,9 +48,9 @@ public class HealthMonitorDaoImpl extends GenericDaoHibernateImpl implements Hea
  */
 @Override
 @Transactional
-public HealthMonitorResponse checkSystemHealthForLab(
+public SystemHealthResponse checkSystemHealthForLab(
 		SystemHealthDetail systemHealth) {
-	HealthMonitorResponse response= new HealthMonitorResponse();
+	SystemHealthResponse response= new SystemHealthResponse();
 	
 	LabBranchTbl labBranch = getById(LabBranchTbl.class,systemHealth.getBranchId());
 	if (labBranch == null) {
@@ -99,9 +100,9 @@ public HealthMonitorResponse checkSystemHealthForLab(
  */
 @Override
 @Transactional
-public HealthMonitorResponse checkSystemHealthForNetmd(
+public SystemHealthResponse checkSystemHealthForNetmd(
 		SystemHealthDetail systemHealth) {
-HealthMonitorResponse response= new HealthMonitorResponse();
+	SystemHealthResponse response= new SystemHealthResponse();
 	
 	NetmdPassphraseTbl netmdPassphraseBranch = getByPassphrase(systemHealth.getPassPhrase());
 	if (netmdPassphraseBranch == null) {
@@ -148,8 +149,8 @@ HealthMonitorResponse response= new HealthMonitorResponse();
  */
 @Override
 @Transactional
-public HealthMonitorResponse checkSystemHealthInCritical(SystemHealthDetail systemHealth) {
-	HealthMonitorResponse response = new HealthMonitorResponse();
+public SystemHealthResponse checkSystemHealthInCritical(SystemHealthDetail systemHealth) {
+	SystemHealthResponse response = new SystemHealthResponse();
 	int intervalTym = 0;
 	String frequencyType = null;
 	boolean criticalFlag = false;
@@ -172,9 +173,11 @@ public HealthMonitorResponse checkSystemHealthInCritical(SystemHealthDetail syst
 		intervalTym = systemHealth.getIntervalTime();
 		frequencyType = systemHealth.getFreqType();
 	}
-	response.setIntervalTime(Integer.toString(intervalTym));
-	response.setFreqPeriod(frequencyType);
-	response.setCritical(criticalFlag);
+	HealthMonitorResponse systemHealthResponse = new HealthMonitorResponse();
+	systemHealthResponse.setIntervalTime(Integer.toString(intervalTym));
+	systemHealthResponse.setFreqPeriod(frequencyType);
+	systemHealthResponse.setCritical(criticalFlag);
+	response.setSystemHealth(systemHealthResponse);
 	response.setFreeCpuSpaceInPercent(systemHealth.getFreeCpuSpaceInPercent());
 	response.setFreeHardDiskSpaceInPercent(systemHealth.getFreeHardDiskSpaceInPercent());
 	response.setFreeMemorySpaceInPercent(systemHealth.getFreeMemorySpaceInPercent());

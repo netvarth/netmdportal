@@ -31,7 +31,7 @@ import com.nv.youNeverWait.pl.entity.TestTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.AddTestDTO;
 import com.nv.youNeverWait.rs.dto.DeleteTestResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveTestResponse;
@@ -329,7 +329,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 	 */
 	@Override
 	@Transactional
-	public RetrieveTestResponse getTests(LabHeaderDTO header,
+	public RetrieveTestResponse getTests(HeaderDTO header,
 			String lastSyncTime, Date currentSyncTime) {
 		RetrieveTestResponse response = new RetrieveTestResponse();
 		labDao.CheckHeaderDetails(header); // validates header details

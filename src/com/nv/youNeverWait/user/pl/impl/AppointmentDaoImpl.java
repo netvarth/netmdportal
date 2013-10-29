@@ -310,9 +310,9 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 					|| !passPhrase.getMacId().equals(
 							appointment.getHeader().getMacId())
 					|| passPhrase.getNetmdBranchTbl().getId() != appointment
-							.getHeader().getNetMdBranchId()
+							.getHeader().getBranchId()
 					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != appointment
-							.getHeader().getNetMdId()) {
+							.getHeader().getHeadOfficeId()) {
 
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.InvalidNetMdAccount);
@@ -447,7 +447,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 		}
 		NetmdBranchTbl netmdbranchTbl = (NetmdBranchTbl) getById(
 				NetmdBranchTbl.class, appointment.getHeader()
-						.getNetMdBranchId());
+						.getBranchId());
 		appointmentTbl.setNetmdBranchTbl(netmdbranchTbl);
 		appointmentTbl.setAppointmentDate(startsDate);
 		appointmentTbl.setStartingTime(startTime);
@@ -536,9 +536,9 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 					|| !passPhrase.getMacId().equals(
 							appointment.getHeader().getMacId())
 					|| passPhrase.getNetmdBranchTbl().getId() != appointment
-							.getHeader().getNetMdBranchId()
+							.getHeader().getBranchId()
 					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != appointment
-							.getHeader().getNetMdId()) {
+							.getHeader().getHeadOfficeId()) {
 
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.InvalidNetMdAccount);
