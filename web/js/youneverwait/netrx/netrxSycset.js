@@ -58,7 +58,7 @@ $j("#newsetNetrxSyncForm #btnnetrxSubmit").die('click').live('click',function(){
 function submitNetrxSyncDetailsInfo(){
 	var resultJson = createNetrxSyncDetailsJson();
 	//alert(resultJson);
-	var response = postdataToServer(constant_newnetmdSync_Create_Url, resultJson );	
+	var response = postdataToServer(constant_newnetRxSync_Create_Url, resultJson );	
 	//alert(JSON.stringify(response));
 	return response;
 }	

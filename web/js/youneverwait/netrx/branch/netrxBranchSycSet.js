@@ -57,7 +57,7 @@ $j("#newnetrxBranchsetSyncForm #btnnetrxbrchSubmit").die('click').live('click',f
 
 function submitNetrxBrchSyncDetailsInfo(){
 	var resultJson = createNetrxBrchSyncDetailsJson();
-	var response = postdataToServer(constant_newnetmdBrchSync_Create_Url, resultJson );	
+	var response = postdataToServer(constant_newnetRxBrchSync_Create_Url, resultJson );	
 	return response;
 }	
 

@@ -108,7 +108,7 @@ $j('#pageTitle1').html('['+a.netRxDTO.name.toUpperCase()+']');
 			createModal(constants_netrxBranchSycSetJson,'netrxBranchSycSetModal');	
 			openModalBox(obj,'netrxBranchSycSetModal')
 		$j.cachedScript(constant_NetrxBranchSyncSet_Url).done(function(script, textStatus) {
-		//getNetrxBrchId(netrxbranchId)
+		getNetrxBrchId(netrxbranchId)
 		})
 		}	
 	});

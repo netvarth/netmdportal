@@ -66,7 +66,7 @@ $j(document).ready(function() {
 		createModal(constants_netrxSycSetJson,'netrxSycSetModal');	
 		openModalBox(obj,'netrxSycSetModal')
 		$j.cachedScript(constant_NetrxSyncSet_Url).done(function(script, textStatus) {
-		//getNetrxId(netrxId)
+		getNetrxId(netrxId)
 		})
 		}
 	});
