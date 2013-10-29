@@ -98,6 +98,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="service">
 			<ref bean="superAdmin.service" />
 		</property>
+			<property name="logService">
+			<ref bean="log.service" />
+		</property>
 	</bean>
 	<bean class="com.nv.youNeverWait.rs.ui.LabResource" >
 		<property name="labService">
