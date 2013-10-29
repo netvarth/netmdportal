@@ -21,10 +21,9 @@ import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
-import com.nv.youNeverWait.rs.dto.HeaderDetail;
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
@@ -505,15 +504,15 @@ public class LabValidator extends FilterValidator {
 			throw se;
 		}
 
-		validateLabBranchIds(resultTranfer.getHeader().getLabId(),
-				resultTranfer.getHeader().getLabBranchId());
+		validateLabBranchIds(resultTranfer.getHeader().getHeadOfficeId(),
+				resultTranfer.getHeader().getBranchId());
 	}
 
 	/**
 	 * Validating lab header details
 	 * @param header
 	 */
-	public void validateHeaderDetails(LabHeaderDTO header) {
+	public void validateHeaderDetails(HeaderDTO header) {
 
 		if (header.getMacId() == null || header.getMacId().equals("")) {
 			ServiceException se = new ServiceException(ErrorCodeEnum.MacIdNull);

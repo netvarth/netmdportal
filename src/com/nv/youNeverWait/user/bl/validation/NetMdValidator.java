@@ -287,14 +287,14 @@ public class NetMdValidator extends FilterValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (header.getNetMdId() <= 0) {
+		if (header.getHeadOfficeId() <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetMd);
-			se.addParam(new Parameter(Constants.ID, Integer.toString(header.getNetMdId())));
+			se.addParam(new Parameter(Constants.ID, Integer.toString(header.getHeadOfficeId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (header.getNetMdBranchId() <= 0) {
+		if (header.getBranchId() <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetMdBranchId);
 			se.setDisplayErrMsg(true);
@@ -392,7 +392,7 @@ public class NetMdValidator extends FilterValidator {
 		 */
 		public void validateNetmdBranchIds(HeaderDTO header) {
 
-			if (header.getNetMdId() <= 0) {
+			if (header.getHeadOfficeId() <= 0) {
 
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.NetMdIdNull);
@@ -406,11 +406,11 @@ public class NetMdValidator extends FilterValidator {
 //				se.setDisplayErrMsg(true);
 //				throw se;
 //			}
-			if (header.getNetMdBranchId() <= 0) {
+			if (header.getBranchId() <= 0) {
 
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.BranchMissMatch);
-				se.addParam(new Parameter(Constants.ID, Integer.toString(header.getNetMdBranchId())));
+				se.addParam(new Parameter(Constants.ID, Integer.toString(header.getBranchId())));
 				se.setDisplayErrMsg(true);
 				throw se;
 			}

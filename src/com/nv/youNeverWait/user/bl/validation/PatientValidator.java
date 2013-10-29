@@ -226,13 +226,13 @@ public class PatientValidator extends FilterValidator{
 	private ErrorDTO ValidateHeaderDetails(HeaderDTO header)
 	{
 		ErrorDTO error = new ErrorDTO();
-		if(header.getNetMdId()==0)
+		if(header.getHeadOfficeId()==0)
 		{
 			error.setErrCode(ErrorCodeEnum.NetMdIdNull.getErrCode());
 			error.setDisplayErrMsg(true);
 			return error;
 		}
-		if(header.getNetMdBranchId()==0)
+		if(header.getBranchId()==0)
 		{
 			error.setErrCode(ErrorCodeEnum.InvalidBranchId.getErrCode());
 			error.setDisplayErrMsg(true);

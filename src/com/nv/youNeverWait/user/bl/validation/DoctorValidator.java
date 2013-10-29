@@ -356,7 +356,7 @@ public class DoctorValidator {
 	 */
 	public void validateHeaderDetails(HeaderDTO header) {
 
-		if (header.getNetMdId() <= 0) {
+		if (header.getHeadOfficeId() <= 0) {
 
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.NetMdIdNull);
@@ -370,11 +370,11 @@ public class DoctorValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (header.getNetMdBranchId() <= 0) {
+		if (header.getBranchId() <= 0) {
 
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.BranchMissMatch);
-			se.addParam(new Parameter(Constants.ID, Integer.toString(header.getNetMdBranchId())));
+			se.addParam(new Parameter(Constants.ID, Integer.toString(header.getBranchId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}

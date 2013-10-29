@@ -15,7 +15,6 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 
@@ -30,7 +29,7 @@ public class SyncValidator {
 	 * 
 	 * @param header
 	 */
-	public void validateHeaderDetails(HeaderDTO header) {
+	public void validateNetMdHeaderDetails(HeaderDTO header) {
 		if (header == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidHeader);
@@ -38,7 +37,7 @@ public class SyncValidator {
 			throw se;
 		}
 
-		if (header.getNetMdId() <= 0) {
+		if (header.getHeadOfficeId() <= 0) {
 
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.NetMdIdNull);
@@ -52,12 +51,12 @@ public class SyncValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (header.getNetMdBranchId() <= 0) {
+		if (header.getBranchId() <= 0) {
 
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.BranchMissMatch);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(header
-					.getNetMdBranchId())));
+					.getBranchId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
@@ -74,7 +73,7 @@ public class SyncValidator {
 	 * 
 	 * @param header
 	 */
-	public void validateLabHeaderDetails(LabHeaderDTO header) {
+	public void validateLabHeaderDetails(HeaderDTO header) {
 		if (header == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidHeader);
@@ -82,12 +81,12 @@ public class SyncValidator {
 			throw se;
 		}
 
-		if (header.getLabId() <= 0) {
+		if (header.getHeadOfficeId() <= 0) {
 
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidLabId);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(header
-					.getLabId())));
+					.getHeadOfficeId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
@@ -98,12 +97,12 @@ public class SyncValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (header.getLabBranchId() <= 0) {
+		if (header.getBranchId() <= 0) {
 
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidBranch);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(header
-					.getLabBranchId())));
+					.getBranchId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
