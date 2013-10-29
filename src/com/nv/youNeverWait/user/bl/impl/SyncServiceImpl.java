@@ -107,7 +107,7 @@ public class SyncServiceImpl implements SyncService {
 		Date currentSyncTime = new Date(); // setting current date time
 
 		/* Validating header details */
-		validator.validateHeaderDetails(sync.getHeader());
+		validator.validateNetMdHeaderDetails(sync.getHeader());
 
 		/* Validating last sync time */
 		validator.validateLastSyncTime(sync.getLastSyncTime());
@@ -166,7 +166,7 @@ public class SyncServiceImpl implements SyncService {
 			RetrievalAppointmentResponseDTO retrievalAppointmentDTOForPrimary = appointmentService
 					.retrieveAppointmentForPrimary(sync.getLastSyncTime(), sync
 							.getHeader().getPassPhrase(), sync.getHeader()
-							.getNetMdBranchId(), currentSyncTime);
+							.getBranchId(), currentSyncTime);
 			syncResponse.setRetrievalAppointmentListForPrimary(retrievalAppointmentDTOForPrimary);
 
 			/*Synchronizing bill details*/
@@ -184,43 +184,43 @@ public class SyncServiceImpl implements SyncService {
 			RetrievalAppointmentResponseDTO retrievalAppointmentDTO = appointmentService
 					.retrieveAppointmentForSecondary(sync.getLastSyncTime(), sync
 							.getHeader().getPassPhrase(), sync.getHeader()
-							.getNetMdBranchId(), currentSyncTime);
+							.getBranchId(), currentSyncTime);
 			syncResponse.setRetrievalAppointmentList(retrievalAppointmentDTO);
 
 		}
 		/* Retrieving Doctor Password List */
 		List<DoctorLoginDTO> doctorPasswordList = doctorService
 				.DoctorPasswordList(sync.getLastSyncTime(), sync.getHeader()
-						.getPassPhrase(), sync.getHeader().getNetMdBranchId(),
+						.getPassPhrase(), sync.getHeader().getBranchId(),
 						currentSyncTime);
 		syncResponse.setDoctorLogin(doctorPasswordList);
 
 		/*Get  Result from resultTbl*/
 		List<RetrieveResultsResponseDTO> retrieveResults= resultService.getPatientResults(sync.getLastSyncTime(),sync.getHeader()
-				.getPassPhrase(), sync.getHeader().getNetMdBranchId(),currentSyncTime);
+				.getPassPhrase(), sync.getHeader().getBranchId(),currentSyncTime);
 
 		/* Retrieving Doctor List */
 		RetrievalDoctorResponseDTO retrieveDoctors = doctorService
 				.retrieveDoctorList(sync.getLastSyncTime(), sync.getHeader()
-						.getPassPhrase(), sync.getHeader().getNetMdBranchId(),
+						.getPassPhrase(), sync.getHeader().getBranchId(),
 						currentSyncTime);
 
 		/* Retrieving User List */
 		RetrievalUserResponseDTO retrieveUsers = netMdService.retrieveUserList(
 				sync.getLastSyncTime(), sync.getHeader().getPassPhrase(), sync
-				.getHeader().getNetMdBranchId(), currentSyncTime);
+				.getHeader().getBranchId(), currentSyncTime);
 
 		/* Synchronizing patients back to netMD */
 		RetrievalPatientResponseDTO retrievalPatientDTO = patientService
 				.retrievePatientsForNetMd(sync.getLastSyncTime(), sync
 						.getHeader().getPassPhrase(), sync.getHeader()
-						.getNetMdBranchId(), currentSyncTime);
+						.getBranchId(), currentSyncTime);
 
 		
 		/* Retrieving Schedule List */
 		RetrievalScheduleResponseDTO retrieveSchedules = scheduleService.retrieveScheduleList(
 				sync.getLastSyncTime(), sync.getHeader().getPassPhrase(), sync
-				.getHeader().getNetMdBranchId(), currentSyncTime);
+				.getHeader().getBranchId(), currentSyncTime);
 
 		syncResponse.setRetrieveResults(retrieveResults);
 		syncResponse.setRetrievalPatientDTO(retrievalPatientDTO);

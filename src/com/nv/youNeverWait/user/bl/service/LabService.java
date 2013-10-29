@@ -13,11 +13,11 @@ import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
@@ -61,27 +61,27 @@ public interface LabService {
 	public BranchListResponseDTO branchList(FilterDTO filter);
 	public ResultTransferResponseDTO transferResult(ResultTransferDTO resultTranferDto);
 	public MacStatusResponseDTO  getMacStatus(String passPhrase);
-	public LabActivationResponseDTO activateLab(LabHeaderDTO header);
-	public ResultRetrievalResponseDTO getResult(LabHeaderDTO header, String lastSyncTime,Date currentTime);
+	public LabActivationResponseDTO activateLab(HeaderDTO header);
+	public ResultRetrievalResponseDTO getResult(HeaderDTO header, String lastSyncTime,Date currentTime);
 	public ResponseDTO changePassword(PasswordDTO passwords);
 	public ResponseDTO clearMacId(LabBranchDTO branch);
 	public LabBranchListResponseDTO retrieveLabBranchList(
-			LabHeaderDTO header, String lastSyncTime,Date currentTime);
+			HeaderDTO header, String lastSyncTime,Date currentTime);
 	public RetrieveLabListResponseDTO retrieveLabList(
-		LabHeaderDTO header, String lastSyncTime,Date currentTime);
+		HeaderDTO header, String lastSyncTime,Date currentTime);
 	public ResponseDTO createUser(LabUserDTO user);
 	public ResponseDTO updateUser(LabUserDTO user);
 	public ResponseDTO deleteUser(int id);
 	public LabUserDTO viewUser(int globalId);
-	public RetrieveUserListResponseDTO retrieveUserList(LabHeaderDTO header, String lastSyncTime,Date currentTime);
+	public RetrieveUserListResponseDTO retrieveUserList(HeaderDTO header, String lastSyncTime,Date currentTime);
 	public ResponseDTO forgotPassword(LoginDTO login);
 	public ResponseDTO resetPassword(LoginDTO login);
 	public ResultTransferResponseDTO transferResultToNetMd(TransferNetMdResultDTO resultTranfer);
-	public RetrieveNetmdListResponseDTO retrieveNetmdList(LabHeaderDTO header, String lastSyncTime,Date currentTime);
-	public RetrieveNetmdBranchListResponseDTO retrieveNetmdBranchList(LabHeaderDTO header, String lastSyncTime,Date currentTime);
+	public RetrieveNetmdListResponseDTO retrieveNetmdList(HeaderDTO header, String lastSyncTime,Date currentTime);
+	public RetrieveNetmdBranchListResponseDTO retrieveNetmdBranchList(HeaderDTO header, String lastSyncTime,Date currentTime);
 	public BranchOrdersResponseDTO viewBranchOrders(int globalId);
 	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO);
-	public BranchOrderCountResponseDTO createTotalOrders(LabHeaderDTO header,
+	public BranchOrderCountResponseDTO createTotalOrders(HeaderDTO header,
 			BranchOrderDetail branchOrders);
 	public HealthMonitorResponse checkSystemHealth(SystemHealthDetails systemHealthDetails);
 	public BranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId);
@@ -94,7 +94,7 @@ public interface LabService {
 	 * @param currentSyncTime
 	 * @return
 	 */
-	public OrderDetails retrieveBranchOrders(LabHeaderDTO header,
+	public OrderDetails retrieveBranchOrders(HeaderDTO header,
 			String lastSyncTime, Date currentSyncTime);
 	
 	/**
@@ -108,7 +108,7 @@ public interface LabService {
 	 * @param currentSyncTime
 	 * @return
 	 */
-	public LabDTO getLab(LabHeaderDTO header, String lastSyncTime,
+	public LabDTO getLab(HeaderDTO header, String lastSyncTime,
 			Date currentSyncTime);
 
 	/**
@@ -121,16 +121,7 @@ public interface LabService {
 	 * @return
 	 */
 	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync);
-//	/**
-//	 * @param sync
-//	 * @return
-//	 */
-//	public ResponseDTO enableLabSync(SyncFreqDTO sync);
-//	/**
-//	 * @param sync
-//	 * @return
-//	 */
-//	public ResponseDTO enableBranchSync(SyncFreqDTO sync);
+
 	/**
 	 * @param labId
 	 * @return
@@ -147,6 +138,6 @@ public interface LabService {
 	 * @param interval
 	 * @return 
 	 */
-	public SyncFreqDTO syncEnableStatus(LabHeaderDTO header, String freqType,
+	public SyncFreqDTO syncEnableStatus(HeaderDTO header, String freqType,
 			int interval);
 }

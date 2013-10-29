@@ -22,7 +22,7 @@ import com.nv.youNeverWait.pl.entity.TestTbl;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponse;
 import com.nv.youNeverWait.rs.dto.SpecimenDTO;
@@ -174,7 +174,7 @@ public class SpecimenManager  implements SpecimenService{
 	 * @see com.nv.youNeverWait.user.bl.service.LabService#getSpecimens(com.nv.youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, java.util.Date)
 	 */
 	@Override
-	public RetrieveSpecimenResponse getSpecimens(LabHeaderDTO header,
+	public RetrieveSpecimenResponse getSpecimens(HeaderDTO header,
 			String lastSyncTime, Date currentSyncTime) {
 		RetrieveSpecimenResponse response= specimenDao.getSpecimens(header, lastSyncTime,currentSyncTime);
 		return response;

@@ -15,7 +15,7 @@ import java.util.Date;
 import com.nv.youNeverWait.rs.dto.AddTestDTO;
 import com.nv.youNeverWait.rs.dto.DeleteTestResponseDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveTestResponse;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
@@ -65,7 +65,7 @@ public interface TestService {
 	 * @param currentSyncTime
 	 * @return
 	 */
-	public RetrieveTestResponse getTests(LabHeaderDTO header,
+	public RetrieveTestResponse getTests(HeaderDTO header,
 			String lastSyncTime, Date currentSyncTime);
 	
 	

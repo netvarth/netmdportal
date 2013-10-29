@@ -12,7 +12,7 @@ package com.nv.youNeverWait.user.bl.service;
 
 import java.util.Date;
 
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
@@ -37,7 +37,7 @@ public interface OrderService {
 	 * @param currentSyncTime
 	 * @return
 	 */
-	OrderDetails retrieveBranchOrders(LabHeaderDTO header, String lastSyncTime,
+	OrderDetails retrieveBranchOrders(HeaderDTO header, String lastSyncTime,
 			Date currentSyncTime);
 
 	/**
