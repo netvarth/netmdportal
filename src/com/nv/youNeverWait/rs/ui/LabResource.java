@@ -950,30 +950,7 @@ public class LabResource {
 //		return response;
 //	}
 //	
-	/**
-	 * To set synchronization frequency for a lab 
-	 * 
-	 * @param sync
-	 * @return SyncFreqResponseDTO
-	 */
-	@RequestMapping(value = "setLabSync", method = RequestMethod.POST)
-	@ResponseBody
-	public SyncFreqResponseDTO setLabSync(@RequestBody SyncFreqDTO sync) {
-
-		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
-		try {
-			response = labService.setLabSync(sync);
-		} catch (ServiceException e) {
-			List<Parameter> parameters = e.getParamList();
-			ErrorDTO error = new ErrorDTO();
-			error.setErrCode(e.getError().getErrCode());
-			error.setParams(parameters);
-			error.setDisplayErrMsg(e.isDisplayErrMsg());
-			response.setError(error);
-			response.setSuccess(false);
-		}
-		return response;
-	}
+	
 	
 	/**
 	 * To set synchronization frequency for a lab branch
