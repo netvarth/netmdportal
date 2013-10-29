@@ -57,6 +57,7 @@ import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
@@ -1421,6 +1422,157 @@ public class SuperAdminResource {
 		return response;
 	}
 	
+	/**
+	 * To set synchronization frequency for a lab 
+	 * 
+	 * @param sync
+	 * @return SyncFreqResponseDTO
+	 */
+	@RequestMapping(value = "setLabSync", method = RequestMethod.POST)
+	@ResponseBody
+	public SyncFreqResponseDTO setLabSync(@RequestBody SyncFreqDTO sync) {
+
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		try {
+			response = service.setLabSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To set synchronization frequency for a lab branch
+	 * 
+	 * @param sync
+	 * @return SyncFreqResponseDTO
+	 */
+	@RequestMapping(value = "setBranchSync", method = RequestMethod.POST)
+	@ResponseBody
+	public SyncFreqResponseDTO setBranchSync(@RequestBody SyncFreqDTO sync) {
+
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		try {
+			response = service.setBranchSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To set synchronization frequency for a NetMd 
+	 * 
+	 * @param sync
+	 * @return SyncFreqResponseDTO
+	 */
+	@RequestMapping(value = "setNetMdSync", method = RequestMethod.POST)
+	
+	@ResponseBody
+	public SyncFreqResponseDTO setNetMdSync(@RequestBody SyncFreqDTO sync) {
+
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		try {
+			response = service.setNetMdSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To set synchronization frequency for a NetMd branch
+	 * 
+	 * @param sync
+	 * @return SyncFreqResponseDTO
+	 */
+	@RequestMapping(value = "setNetMdBranchSync", method = RequestMethod.POST)
+	
+	@ResponseBody
+	public SyncFreqResponseDTO setNetMdBranchSync(@RequestBody SyncFreqDTO sync) {
+
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		try {
+			response = service.setNetMdBranchSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	/**
+	 * To set synchronization frequency for a NetRx 
+	 * 
+	 * @param sync
+	 * @return SyncFreqResponseDTO
+	 */
+	@RequestMapping(value = "setNetRxSync", method = RequestMethod.POST)
+	
+	@ResponseBody
+	public SyncFreqResponseDTO setNetRxSync(@RequestBody SyncFreqDTO sync) {
+
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		try {
+			response = service.setNetRxSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	/**
+	 * To set synchronization frequency for a NetRx branch
+	 * 
+	 * @param sync
+	 * @return SyncFreqResponseDTO
+	 */
+	@RequestMapping(value = "setNetRxBranchSync", method = RequestMethod.POST)
+	
+	@ResponseBody
+	public SyncFreqResponseDTO setNetRxBranchSync(@RequestBody SyncFreqDTO sync) {
+
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		try {
+			response = service.setNetRxBranchSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
 	/**
 	 * To get synchronization frequency of a lab 
 	 * 
