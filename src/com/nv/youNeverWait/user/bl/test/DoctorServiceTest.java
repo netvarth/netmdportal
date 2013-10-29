@@ -75,10 +75,10 @@ public class DoctorServiceTest {
 		doctorDetail.setLogin(login);
 
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(76);
+		header.setHeadOfficeId(76);
 		header.setPassPhrase("bab5TqPDNCbFCy7LWRffyg==");
 		header.setMacId("20-CF-30-D9-9C-04");
-		header.setNetMdBranchId(72);
+		header.setBranchId(72);
 		doctor.setHeader(header);
 		doctor.setDoctor(doctorDetail);
 		try {
@@ -150,10 +150,10 @@ public class DoctorServiceTest {
 		doctorDetail.setLogin(login);
 
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(76);
+		header.setHeadOfficeId(76);
 		header.setPassPhrase("bab5TqPDNCbFCy7LWRffyg==");
 		header.setMacId("20-CF-30-D9-9C-04");
-		header.setNetMdBranchId(72);
+		header.setBranchId(72);
 		doctor.setHeader(header);
 		doctor.setDoctor(doctorDetail);
 		try {
@@ -191,10 +191,10 @@ public class DoctorServiceTest {
 		 doctorDetail.setLogin(login);
 
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("123");
 		header.setMacId("5646opiopiop");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		doctor.setHeader(header);
 		doctor.setDoctor(doctorDetail);
 		try {
@@ -233,10 +233,10 @@ public class DoctorServiceTest {
 		 doctorDetail.setLogin(login);
 
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("123");
 		header.setMacId("5646opiopiop");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		doctor.setHeader(header);
 		doctor.setDoctor(doctorDetail);
 		try {
@@ -260,10 +260,10 @@ public class DoctorServiceTest {
 		doctorDetail.setGlobalId(3);
 
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("123");
 		header.setMacId("5646opiopiop");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		doctor.setHeader(header);
 		doctor.setDoctor(doctorDetail);
 		try {
@@ -287,10 +287,10 @@ public class DoctorServiceTest {
 		doctorDetail.setGlobalId(23);
 
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("123");
 		header.setMacId("5646opiopiop");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		doctor.setHeader(header);
 		doctor.setDoctor(doctorDetail);
 		try {

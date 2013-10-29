@@ -21,14 +21,13 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.BranchDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
-import com.nv.youNeverWait.rs.dto.HeaderDetail;
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
@@ -601,9 +600,9 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		System.out.println("Transfering Result");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		TransferNetMdResultDTO resultTranfer =new TransferNetMdResultDTO();
-		LabHeaderDTO header=new LabHeaderDTO();
-		header.setLabId(49);
-		header.setLabBranchId(50);
+		HeaderDTO header=new HeaderDTO();
+		header.setHeadOfficeId(49);
+		header.setBranchId(50);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId("123");
 		resultTranfer.setHeader(header);
@@ -768,9 +767,9 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void retrieveUserList(){
 		System.out.println("retrieve user list");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header = new LabHeaderDTO();
-		header.setLabBranchId(31);
-		header.setLabId(130);
+		HeaderDTO header = new HeaderDTO();
+		header.setBranchId(31);
+		header.setHeadOfficeId(130);
 		header.setMacId("gjffd");
 		header.setPassPhrase("gf");
 		String lastSyncTime="2013-10-10 12:10:10";
@@ -790,9 +789,9 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void retrieveLabList(){
 		System.out.println("retrieve Lab list");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header = new LabHeaderDTO();
-		header.setLabBranchId(31);
-		header.setLabId(130);
+		HeaderDTO header = new HeaderDTO();
+		header.setBranchId(31);
+		header.setHeadOfficeId(130);
 		header.setMacId("gjffd");
 		header.setPassPhrase("gf");
 		String lastSyncTime="2013-10-10 12:10:10";
@@ -813,9 +812,9 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		System.out.println("retrieve Netmd list");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 
-		LabHeaderDTO header = new LabHeaderDTO();
-		header.setLabBranchId(50);
-		header.setLabId(49);
+		HeaderDTO header = new HeaderDTO();
+		header.setBranchId(50);
+		header.setHeadOfficeId(49);
 		header.setMacId("123");
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		String lastSyncTime="2013-03-02 15:40:40";
@@ -835,9 +834,9 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void retrieveNetmdBranchList(){
 		System.out.println("retrieve Netmd  Branchlist");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header = new LabHeaderDTO();
-		header.setLabBranchId(50);
-		header.setLabId(49);
+		HeaderDTO header = new HeaderDTO();
+		header.setBranchId(50);
+		header.setHeadOfficeId(49);
 		header.setMacId("123");
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		String lastSyncTime="2013-03-02 15:40:40";
@@ -988,7 +987,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void activatenetLimsWrongPassphrase(){
 		System.out.println("Setting Mac");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		header.setMacId("00-1C-C0-5A-AA-7B");
 		header.setPassPhrase("FDjZDflPVkT5Dgmt6hGbGg==");
 		try{
@@ -1005,7 +1004,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void activatenetLimsSuccess(){
 		System.out.println("Setting Mac");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		header.setMacId("00-1C-C0-5A-AA-7B");
 		header.setPassPhrase("rLWKLICl/Hk9jc2mE5okCw==");
 		try{
@@ -1029,11 +1028,11 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		result.setResult("Diabetics all around");
 		result.setSourceLabId(249);
 		result.setSourceBranchId(179);
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		header.setMacId("123");
 		header.setPassPhrase("iStxEG1I7u5a/vQAcIRBpg==");
-		header.setLabId(249);
-		header.setLabBranchId(179);
+		header.setHeadOfficeId(249);
+		header.setBranchId(179);
 		result.setHeader(header);
 
 		try{
@@ -1058,11 +1057,11 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		result.setResult("Pressure all around");
 		result.setSourceLabId(249);
 		result.setSourceBranchId(179);
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		header.setMacId("123");
 		header.setPassPhrase("iStxEG1I7u5a/vQAcIRBpg==");
-		header.setLabId(249);
-		header.setLabBranchId(179);
+		header.setHeadOfficeId(249);
+		header.setBranchId(179);
 		result.setHeader(header);
 
 		try{
@@ -1091,9 +1090,9 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void getBranchList(){
 		System.out.println("checking Mac id exist or not");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header = new LabHeaderDTO();
-		header.setLabBranchId(7);
-		header.setLabId(9);
+		HeaderDTO header=new HeaderDTO();
+		header.setBranchId(7);
+		header.setHeadOfficeId(9);
 		header.setMacId("123");
 		header.setPassPhrase("FDjZDflPVkT5Dgmt6hGbGg==");
 		String lastSyncTime="2013-03-02 15:40:40";
@@ -1134,7 +1133,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void createTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(25251);
 		detail.setPaidAmount(5000);
@@ -1142,8 +1141,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime("2013-07-05 09:29:15");
 		detail.setOrderDate("2013-07-05");
 		detail.setId(5);
-		header.setLabId(238);
-		header.setLabBranchId(152);
+		header.setHeadOfficeId(238);
+		header.setBranchId(152);
 		header.setPassPhrase("Z6z2gmRFYN5zK4h6BlENgQ==");
 		header.setMacId("123");
 	
@@ -1162,7 +1161,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void updateTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1170,8 +1169,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime("2013-06-26 12:12:12");
 		detail.setOrderDate("2013-06-26");
 		detail.setId(5);
-		header.setLabId(238);
-		header.setLabBranchId(152);
+		header.setHeadOfficeId(238);
+		header.setBranchId(152);
 		header.setPassPhrase("Z6z2gmRFYN5zK4h6BlENgQ==");
 		header.setMacId("123");
 	
@@ -1191,7 +1190,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void wrongPassPhraseTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1199,8 +1198,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime("2013-04-26 12:12:12");
 		detail.setOrderDate("2013-04-26");
 		detail.setId(5);
-		header.setLabId(49);
-		header.setLabBranchId(50);
+		header.setHeadOfficeId(49);
+		header.setBranchId(50);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==pops");
 		header.setMacId("123");
 	
@@ -1219,7 +1218,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void wrongMacIdTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1227,8 +1226,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime("2013-04-26 12:12:12");
 		detail.setOrderDate("2013-04-26");
 		detail.setId(5);
-		header.setLabId(49);
-		header.setLabBranchId(50);
+		header.setHeadOfficeId(49);
+		header.setBranchId(50);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId("123XXXXXX");
 	
@@ -1248,7 +1247,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void wrongLabIdTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1256,8 +1255,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime("2013-04-26 12:12:12");
 		detail.setOrderDate("2013-04-26");
 		detail.setId(5);
-		header.setLabId(49000);
-		header.setLabBranchId(50);
+		header.setHeadOfficeId(49000);
+		header.setBranchId(50);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId("123");
 	
@@ -1276,7 +1275,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void wrongLabBranchIdTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1284,8 +1283,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime("2013-04-26 12:12:12");
 		detail.setOrderDate("2013-04-26");
 		detail.setId(5);
-		header.setLabId(49);
-		header.setLabBranchId(50111111);
+		header.setHeadOfficeId(49);
+		header.setBranchId(50111111);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId("123");
 	
@@ -1305,7 +1304,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void OrderDateEmptyTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1313,8 +1312,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime("2013-04-26 12:12:12");
 		detail.setOrderDate("");
 		detail.setId(5);
-		header.setLabId(49);
-		header.setLabBranchId(50);
+		header.setHeadOfficeId(49);
+		header.setBranchId(50);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId("123");
 
@@ -1333,7 +1332,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void OrderDateNullTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1341,8 +1340,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setId(5);
 		detail.setLastOrderdTime("2013-04-26 12:12:12");
 		detail.setOrderDate(null);
-		header.setLabId(49);
-		header.setLabBranchId(50);
+		header.setHeadOfficeId(49);
+		header.setBranchId(50);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId("123");
 
@@ -1361,7 +1360,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void wrongOrderDateFormatTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1369,8 +1368,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setId(5);
 		detail.setLastOrderdTime("2013-04-26 12:12:12");
 		detail.setOrderDate("2007-03-T1");
-		header.setLabId(49);
-		header.setLabBranchId(50);
+		header.setHeadOfficeId(49);
+		header.setBranchId(50);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId("123");
 	
@@ -1390,7 +1389,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void wrongRexOrderDateTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1398,8 +1397,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime("2013-04-26 12:12:12");
 		detail.setId(5);
 		detail.setOrderDate("2013-2123-45");
-		header.setLabId(49);
-		header.setLabBranchId(50);
+		header.setHeadOfficeId(49);
+		header.setBranchId(50);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId("123");
 	
@@ -1419,7 +1418,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void lastOrderTimeEmptyTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1427,8 +1426,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setId(5);
 		detail.setLastOrderdTime("");
 		detail.setOrderDate("2013-04-05");
-		header.setLabId(49);
-		header.setLabBranchId(50);
+		header.setHeadOfficeId(49);
+		header.setBranchId(50);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId("123");
 	
@@ -1447,7 +1446,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void lastOrderTimeNullTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1455,8 +1454,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime(null);
 		detail.setOrderDate("2013-04-05");
 		detail.setId(5);
-		header.setLabId(49);
-		header.setLabBranchId(50);
+		header.setHeadOfficeId(49);
+		header.setBranchId(50);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId("123");
 	
@@ -1476,7 +1475,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void MacIdNullTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1484,8 +1483,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime(null);
 		detail.setOrderDate("2013-04-05");
 		detail.setId(5);
-		header.setLabId(49);
-		header.setLabBranchId(50);
+		header.setHeadOfficeId(49);
+		header.setBranchId(50);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId(null);
 	
@@ -1504,7 +1503,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void MacIdEmptyTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1512,8 +1511,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime(null);
 		detail.setOrderDate("2013-04-05");
 		detail.setId(5);
-		header.setLabId(49);
-		header.setLabBranchId(50);
+		header.setHeadOfficeId(49);
+		header.setBranchId(50);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId("");
 	
@@ -1532,7 +1531,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void PassPhraseNullTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1540,8 +1539,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime(null);
 		detail.setOrderDate("2013-04-05");
 		detail.setId(5);
-		header.setLabId(49);
-		header.setLabBranchId(50);
+		header.setHeadOfficeId(49);
+		header.setBranchId(50);
 		header.setPassPhrase(null);
 		header.setMacId("123");
 	
@@ -1560,7 +1559,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void passphraseEmptyTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1568,8 +1567,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime(null);
 		detail.setOrderDate("2013-04-05");
 		detail.setId(5);
-		header.setLabId(49);
-		header.setLabBranchId(50);
+		header.setHeadOfficeId(49);
+		header.setBranchId(50);
 		header.setPassPhrase("");
 		header.setMacId("123");
 	
@@ -1589,7 +1588,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void labBranchIdNegativeValTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1597,8 +1596,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime(null);
 		detail.setOrderDate("2013-04-05");
 		detail.setId(5);
-		header.setLabId(49);
-		header.setLabBranchId(-50);
+		header.setHeadOfficeId(49);
+		header.setBranchId(-50);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId("123");
 	
@@ -1617,7 +1616,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void labBranchIdZeroTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1625,8 +1624,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime(null);
 		detail.setId(5);
 		detail.setOrderDate("2013-04-05");
-		header.setLabId(49);
-		header.setLabBranchId(0);
+		header.setHeadOfficeId(49);
+		header.setBranchId(0);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId("123");
 	
@@ -1645,7 +1644,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void labIdNegativeValTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1653,8 +1652,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime(null);
 		detail.setOrderDate("2013-04-05");
 		detail.setId(5);
-		header.setLabId(-45);
-		header.setLabBranchId(50);
+		header.setHeadOfficeId(-45);
+		header.setBranchId(50);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId("123");
 	
@@ -1673,7 +1672,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void labIdZeroTotalOrders(){
 		System.out.println("Creating brnch total orders.....");
 		LabService service =(LabService) applicationContext.getBean("lab.service");
-		LabHeaderDTO header=new LabHeaderDTO();
+		HeaderDTO header=new HeaderDTO();
 		BranchOrderDetail detail= new BranchOrderDetail();
 		detail.setTotalOrders(12000);
 		detail.setPaidAmount(12500);
@@ -1681,8 +1680,8 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		detail.setLastOrderdTime(null);
 		detail.setOrderDate("2013-04-05");
 		detail.setId(5);
-		header.setLabId(0);
-		header.setLabBranchId(50);
+		header.setHeadOfficeId(0);
+		header.setBranchId(50);
 		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
 		header.setMacId("123");
 	
@@ -2414,15 +2413,15 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorFreqTypeNullOrEmpty(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
+		
 
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(192);
-		header.setLabBranchId(122);
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+		
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("8");
 		systemResponse.setHardDiskUsed("8");
 		systemResponse.setMemoryUsed("9");
@@ -2442,14 +2441,14 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorWrongFreqType(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(192);
-		header.setLabBranchId(122);
+		
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+	
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("26898432");
 		systemResponse.setHardDiskUsed("26898432");
 		systemResponse.setMemoryUsed("26898432");
@@ -2470,14 +2469,14 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorWrongPassphrase(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(192);
-		header.setLabBranchId(122);
+		
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==abcd");
 		header.setMacId("00-1C-C0-5A-AA-7B");
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+		
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("8");
 		systemResponse.setHardDiskUsed("8");
 		systemResponse.setMemoryUsed("9");
@@ -2497,14 +2496,14 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorNullPassPhraseOrEmpty(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(192);
-		header.setLabBranchId(122);
+		
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
 		header.setPassPhrase(null);
 		header.setMacId("00-1C-C0-5A-AA-7B");
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+		
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("8");
 		systemResponse.setHardDiskUsed("8");
 		systemResponse.setMemoryUsed("9");
@@ -2524,14 +2523,14 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorWrongMacId(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(192);
-		header.setLabBranchId(122);
+		
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7Beeeeeeeeeeee");
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+		
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("8");
 		systemResponse.setHardDiskUsed("8");
 		systemResponse.setMemoryUsed("9");
@@ -2551,14 +2550,14 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorNullMacIdOrEmpty(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(192);
-		header.setLabBranchId(122);
+		
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId(null);
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+		
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("8");
 		systemResponse.setHardDiskUsed("8");
 		systemResponse.setMemoryUsed("9");
@@ -2578,14 +2577,14 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorWrongLabId(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(192);
-		header.setLabBranchId(122);
+		
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+	
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("18726240");
 		systemResponse.setHardDiskUsed("18726240");
 		systemResponse.setMemoryUsed("18726240");
@@ -2606,14 +2605,14 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorLabIdNegativeOrZero(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(0);
-		header.setLabBranchId(122);
+	
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(0);
+		header.setBranchId(122);
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+	
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("8");
 		systemResponse.setHardDiskUsed("8");
 		systemResponse.setMemoryUsed("9");
@@ -2633,14 +2632,14 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorWrongLabBranchId(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(192);
-		header.setLabBranchId(1022);
+		
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(1022);
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+		
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("8");
 		systemResponse.setHardDiskUsed("8");
 		systemResponse.setMemoryUsed("9");
@@ -2660,14 +2659,13 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorLabBranchIdZeroOegative(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(192);
-		header.setLabBranchId(-1);
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(-1);
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+		
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("8");
 		systemResponse.setHardDiskUsed("8");
 		systemResponse.setMemoryUsed("9");
@@ -2687,14 +2685,14 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorWrongCpuUsage(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(192);
-		header.setLabBranchId(122);
+		
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+		
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("wert");
 		systemResponse.setHardDiskUsed("8");
 		systemResponse.setMemoryUsed("9");
@@ -2714,14 +2712,14 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorWrongHardDiskUsage(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(192);
-		header.setLabBranchId(122);
+
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+		
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("8");
 		systemResponse.setHardDiskUsed("we8");
 		systemResponse.setMemoryUsed("9");
@@ -2741,14 +2739,13 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorWrongMemoryusage(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(192);
-		header.setLabBranchId(122);
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+		
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("8");
 		systemResponse.setHardDiskUsed("8");
 		systemResponse.setMemoryUsed("1qw9");
@@ -2769,14 +2766,13 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorTotalCpuUsageMissMatch(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(192);
-		header.setLabBranchId(122);
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+		
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("80");
 		systemResponse.setHardDiskUsed("8");
 		systemResponse.setMemoryUsed("9");
@@ -2796,14 +2792,14 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorTotalMemoryMissMatch(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(192);
-		header.setLabBranchId(122);
+		
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+		
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("8");
 		systemResponse.setHardDiskUsed("8");
 		systemResponse.setMemoryUsed("80");
@@ -2823,14 +2819,14 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 	public void systemHealthMonitorTotalHardDiskSpaceMissMatch(){	
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		SystemHealthDetails systemResponse= new SystemHealthDetails();
-		HeaderDetail hDetail= new HeaderDetail();
-		LabHeaderDTO header= new LabHeaderDTO();
-		header.setLabId(192);
-		header.setLabBranchId(122);
+	
+		HeaderDTO header= new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
-		hDetail.setLabHeader(header);
-		systemResponse.setHeader(hDetail);
+		
+		systemResponse.setHeader(header);
 		systemResponse.setCpuUsage("8");
 		systemResponse.setHardDiskUsed("80");
 		systemResponse.setMemoryUsed("9");

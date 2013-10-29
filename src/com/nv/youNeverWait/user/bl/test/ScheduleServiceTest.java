@@ -59,8 +59,8 @@ public class ScheduleServiceTest {
 		
 		header.setMacId("00-80-48-6E-E1-E2");
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
-		header.setNetMdBranchId(5);
-		header.setNetMdId(3);
+		header.setBranchId(5);
+		header.setHeadOfficeId(3);
 		schedule.setHeader(header);
 		ScheduleDetail scheduleDetail = new ScheduleDetail();
 		scheduleDetail.setDoctorGlobalId(1);

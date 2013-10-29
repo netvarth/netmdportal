@@ -157,8 +157,8 @@ public class PatientServiceTest {
 				.getBean("patient.service");
 		
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(10);
-		header.setNetMdBranchId(11);
+		header.setHeadOfficeId(10);
+		header.setBranchId(11);
 		header.setPassPhrase("1TVt2Ao19pbaFyS3e7pNWQ==");
 		header.setMacId("08-00-27-00-18-11");
 		LoginDTO login = new LoginDTO();
@@ -198,8 +198,8 @@ public class PatientServiceTest {
 				.getBean("patient.service");
 		
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
-		header.setNetMdBranchId(5);
+		header.setHeadOfficeId(3);
+		header.setBranchId(5);
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 		header.setMacId("00-80-48-6E-E1-E2");
 		LoginDTO login = new LoginDTO();
@@ -245,8 +245,8 @@ public class PatientServiceTest {
 		details.setStartDate("2014-10-11");
 		details.setStartTime("11:12 am");
 		appointment.setAppointmentDetails(details);		
-		header.setNetMdId(3);
-		header.setNetMdBranchId(5);
+		header.setHeadOfficeId(3);
+		header.setBranchId(5);
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 		header.setMacId("00-80-48-6E-E1-E2");
 		appointment.setHeader(header);
@@ -267,10 +267,10 @@ public class PatientServiceTest {
 				.getBean("patient.service");
 		PatientDTO patient = new PatientDTO();
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("123");
 		header.setMacId("56");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		patient.setHeader(header);
 
 		PatientDetail detail = new PatientDetail();
@@ -302,10 +302,10 @@ public class PatientServiceTest {
 				.getBean("patient.service");
 		PatientDTO patient = new PatientDTO();
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("123");
 		header.setMacId("56");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		patient.setHeader(header);
 
 		PatientDetail detail = new PatientDetail();
@@ -338,10 +338,10 @@ public class PatientServiceTest {
 				.getBean("patient.service");
 		PatientDTO patient = new PatientDTO();
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("123");
 		header.setMacId("56");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		patient.setHeader(header);
 
 		PatientDetail detail = new PatientDetail();
@@ -373,10 +373,10 @@ public class PatientServiceTest {
 				.getBean("patient.service");
 		PatientDTO patient = new PatientDTO();
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 		header.setMacId("00-80-48-6E-E1-E2");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		patient.setHeader(header);
 
 		PatientDetail detail = new PatientDetail();

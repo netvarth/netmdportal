@@ -124,7 +124,7 @@ public class SuperAdminServiceTest {
 		doctorDetail.setLogin(login);
 
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(1);
+		header.setHeadOfficeId(1);
 		header.setPassPhrase("123");
 		doctor.setHeader(header);
 		doctor.setDoctor(doctorDetail);
@@ -476,8 +476,8 @@ public class SuperAdminServiceTest {
 		user.setGlobalId(3);
 		userCreationDTO.setUser(user);
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdBranchId(5);
-		header.setNetMdId(3);
+		header.setBranchId(5);
+		header.setHeadOfficeId(3);
 		header.setMacId("");
 		header.setPassPhrase("");
 		userCreationDTO.setHeader(header);

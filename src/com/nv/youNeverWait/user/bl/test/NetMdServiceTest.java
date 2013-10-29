@@ -20,8 +20,6 @@ import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
-import com.nv.youNeverWait.rs.dto.HeaderDetail;
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDetail;
@@ -49,8 +47,8 @@ public class NetMdServiceTest {
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
 		HeaderDTO header= new HeaderDTO();
-		header.setNetMdId(17);
-		header.setNetMdBranchId(20);
+		header.setHeadOfficeId(17);
+		header.setBranchId(20);
 		header.setPassPhrase("V4WueKvId5iyYsvi8gtPYA==");
 		try{
 			service.clearMacId(header);
@@ -68,8 +66,8 @@ public class NetMdServiceTest {
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
 		HeaderDTO header= new HeaderDTO();
-		header.setNetMdId(17);
-		header.setNetMdBranchId(20);
+		header.setHeadOfficeId(17);
+		header.setBranchId(20);
 		header.setPassPhrase("V4WueKvId5iyYsvi8gtPYA==jjjjjj");
 		try{
 			service.clearMacId(header);
@@ -102,8 +100,8 @@ public class NetMdServiceTest {
 		user.setNetMdBranchId(11);
 		userCreationDTO.setUser(user);
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdBranchId(17);
-		header.setNetMdId(25);
+		header.setBranchId(17);
+		header.setHeadOfficeId(25);
 		header.setMacId("5646opiopiop");
 		header.setPassPhrase("");
 		userCreationDTO.setHeader(header);
@@ -137,8 +135,8 @@ public class NetMdServiceTest {
 		user.setNetMdBranchId(86);
 		userCreationDTO.setUser(user);
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdBranchId(86);
-		header.setNetMdId(89);
+		header.setBranchId(86);
+		header.setHeadOfficeId(89);
 		header.setMacId("123");
 		header.setPassPhrase("Dzpl8VvTlrHGzjdSCfTqMw==");
 		userCreationDTO.setHeader(header);
@@ -293,8 +291,8 @@ public class NetMdServiceTest {
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdBranchId(5);
-		header.setNetMdId(3);
+		header.setBranchId(5);
+		header.setHeadOfficeId(3);
 		header.setMacId("00-80-48-6E-E1-E2");
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 		try {
@@ -465,8 +463,8 @@ public class NetMdServiceTest {
 		user.setGlobalId(1);
 		userCreationDTO.setUser(user);
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdBranchId(17);
-		header.setNetMdId(25);
+		header.setBranchId(17);
+		header.setHeadOfficeId(25);
 		header.setMacId("");
 		header.setPassPhrase("");
 		userCreationDTO.setHeader(header);
@@ -734,14 +732,14 @@ public class NetMdServiceTest {
 		systemHealthDetails.setTotalCpuSpace("100");
 		systemHealthDetails.setTotalHardDiskSpace("100");
 		systemHealthDetails.setTotalMemorySpace("100");
-		HeaderDetail header= new HeaderDetail();
+		
 		HeaderDTO netmdHeader = new HeaderDTO();
 		netmdHeader.setMacId("00-80-48-6E-E1-E2");
 		netmdHeader.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
-		netmdHeader.setNetMdId(3);
-		netmdHeader.setNetMdBranchId(5);
-		header.setNetmdHeader(netmdHeader);
-		systemHealthDetails.setHeader(header);
+		netmdHeader.setHeadOfficeId(3);
+		netmdHeader.setBranchId(5);
+		
+		systemHealthDetails.setHeader(netmdHeader);
 		try{
 			
 			service.checkSystemHealth(systemHealthDetails);
