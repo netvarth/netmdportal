@@ -13,6 +13,7 @@ package com.nv.youNeverWait.user.pl.dao;
 
 import com.nv.youNeverWait.rs.dto.SystemHealthDetail;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
+import com.nv.youNeverWait.rs.dto.SystemHealthResponse;
 
 /**
  *
@@ -25,17 +26,17 @@ public interface HealthMonitorDao {
 	 * @param systemHealth
 	 * @return
 	 */
-	HealthMonitorResponse checkSystemHealthInCritical(SystemHealthDetail systemHealth);
+	SystemHealthResponse checkSystemHealthInCritical(SystemHealthDetail systemHealth);
 
 	/**
 	 * @param systemHealth
 	 * @return
 	 */
-	HealthMonitorResponse checkSystemHealthForLab(SystemHealthDetail systemHealth);
+	SystemHealthResponse checkSystemHealthForLab(SystemHealthDetail systemHealth);
 
 	/**
 	 * @param systemHealth
 	 * @return
 	 */
-	HealthMonitorResponse checkSystemHealthForNetmd(SystemHealthDetail systemHealth);
+	SystemHealthResponse checkSystemHealthForNetmd(SystemHealthDetail systemHealth);
 }
