@@ -907,7 +907,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 	@Override
 	@Transactional
 	public SyncFreqResponseDTO setNetRxSync(SyncFreqDTO sync) {
-		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+ 		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
 		Date newDate= new Date();
 		NetrxTbl netrx = getById(NetrxTbl.class, sync.getNetrxId());
 		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
@@ -935,7 +935,8 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 					netrxBranch.setEnableSync(netrx.getEnableSync());
 					netrxBranch.setUpdateDateTime(newDate);
 					update(netrxBranch);
-					response.setMsg(Constants.MESSAGE);
+					if (sync.isEnableSync())
+						response.setMsg(Constants.MESSAGE);
 				}// end of for loop
 			}
 
