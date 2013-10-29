@@ -8,7 +8,7 @@ package com.nv.youNeverWait.rs.dto;
  *
  */
 public class ResultRetrievalDTO {
-	private LabHeaderDTO header;
+	private HeaderDTO header;
 	private int labId;
 	private int branchId;
 	private String syncTime;
@@ -52,14 +52,16 @@ public class ResultRetrievalDTO {
 	/**
 	 * @return the header
 	 */
-	public LabHeaderDTO getHeader() {
+	public HeaderDTO getHeader() {
 		return header;
 	}
 	/**
 	 * @param header the header to set
 	 */
-	public void setHeader(LabHeaderDTO header) {
+	public void setHeader(HeaderDTO header) {
 		this.header = header;
 	}
+	
+	
 
 }

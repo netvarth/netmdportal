@@ -11,7 +11,7 @@ package com.nv.youNeverWait.rs.dto;
  *
  */
 public class LabSyncDTO {
-	private LabHeaderDTO header;
+	private HeaderDTO header;
 	private String lastSyncTime;
 	private BranchOrderDetail branchOrders;
 //	private String freqType;
@@ -53,16 +53,18 @@ public class LabSyncDTO {
 	public void setBranchOrders(BranchOrderDetail branchOrders) {
 		this.branchOrders = branchOrders;
 	}
+	
+	
 	/**
 	 * @return the header
 	 */
-	public LabHeaderDTO getHeader() {
+	public HeaderDTO getHeader() {
 		return header;
 	}
 	/**
 	 * @param header the header to set
 	 */
-	public void setHeader(LabHeaderDTO header) {
+	public void setHeader(HeaderDTO header) {
 		this.header = header;
 	}
 	/**

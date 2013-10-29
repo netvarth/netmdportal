@@ -16,7 +16,7 @@ package com.nv.youNeverWait.rs.dto;
  * @author Luciya Jose
  */
 public class SystemHealthDetails {
-	HeaderDetail header;
+	HeaderDTO header;
 	String hardDiskUsed;
 	String memoryUsed;
 	String cpuUsage;
@@ -73,13 +73,13 @@ public class SystemHealthDetails {
 	/**
 	 * @return the header
 	 */
-	public HeaderDetail getHeader() {
+	public HeaderDTO getHeader() {
 		return header;
 	}
 	/**
 	 * @param header the header to set
 	 */
-	public void setHeader(HeaderDetail header) {
+	public void setHeader(HeaderDTO header) {
 		this.header = header;
 	}
 	/**
