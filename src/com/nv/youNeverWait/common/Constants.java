@@ -87,7 +87,10 @@ public class Constants {
 	public static final String NETMD_BRANCH_LIST = "Netmd branch list";
 	public static final String NETMD_DOWNLOAD = "Download netmd application";
 	public static final String NETMD_SYSTEM_FAILURE = "System in Critical Stage ";
-    /*NetRx*/
+	public static final String SUPER_ADMIN_LOGIN = "Super Admin Login";
+	public static final String SUPER_ADMIN_LOGOUT = "Super Admin Logout";
+	public static final String SUPER_ADMIN_CHANGE_PASSWORD = "Super Admin Change Password";	
+	/*NetRx*/
 	public static final String NETRX_REGISTER ="NetRx Registration";
 	public static final String NETRX ="netrx";
 	public static final String NETRX_BRANCH ="netrxBranch";
@@ -106,6 +109,10 @@ public class Constants {
 	public static final String SPECIMENUID = "SpecimenUid";
 	public static final String TESTUID = "TestUid";
 	public static final String MESSAGE = "Synchronization disabled.";
+	
+	
+	
+	
 	
 	
 }
