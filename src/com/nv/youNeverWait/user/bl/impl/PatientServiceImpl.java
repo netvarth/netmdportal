@@ -86,7 +86,7 @@ public class PatientServiceImpl implements PatientService {
 
 		validator.validateCreatePatient(patient, header);
 		ResponseDTO response = patientDao.createPatient(patient, header);
-		String branchName = patientDao.getBranch(header.getNetMdBranchId());
+		String branchName = patientDao.getBranch(header.getBranchId());
 
 		// send login details and password creation link to the user
 		sendEmailForPatientCreation(patient.getFirstName(), patient.getEmail(),

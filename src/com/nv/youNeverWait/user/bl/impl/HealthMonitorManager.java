@@ -13,6 +13,7 @@ package com.nv.youNeverWait.user.bl.impl;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetail;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
+import com.nv.youNeverWait.rs.dto.SystemHealthResponse;
 import com.nv.youNeverWait.user.bl.service.HealthMonitorService;
 import com.nv.youNeverWait.user.bl.validation.HealthMonitorValidator;
 import com.nv.youNeverWait.user.pl.dao.HealthMonitorDao;
@@ -49,9 +50,9 @@ public class HealthMonitorManager implements HealthMonitorService {
 	 * (com.nv.youNeverWait.rs.dto.HealthMonitorDetail)
 	 */
 	@Override
-	public HealthMonitorResponse checkSystemHealth(
+	public SystemHealthResponse checkSystemHealth(
 			SystemHealthDetails systemHealthDetails) {
-		HealthMonitorResponse response = new HealthMonitorResponse();
+		SystemHealthResponse response = new SystemHealthResponse();
 
 		/* Validates health monitor details */
 		hMonitorValidator.validateSystemHealthDetails(systemHealthDetails);
@@ -83,6 +84,8 @@ public class HealthMonitorManager implements HealthMonitorService {
 
 		/** Setting detials for checking critical condition **/
 		SystemHealthDetail systemHealth = new SystemHealthDetail();
+		systemHealth.setBranchId(systemHealthDetails.getHeader().getBranchId());
+		systemHealth.setPassPhrase(systemHealthDetails.getHeader().getPassPhrase());
 		systemHealth.setTotalCpuUsage(totalCpuUsage);
 		systemHealth.setTotalHardDiskUsed(totalHardDiskUsed);
 		systemHealth.setTotalMemoryUsed(totalMemoryUsed);
@@ -93,14 +96,10 @@ public class HealthMonitorManager implements HealthMonitorService {
 		
 		/**If application is NetLims**/
 		if (systemHealthDetails.getAppType().equals("netlims")) {
-			systemHealth.setBranchId(systemHealthDetails.getHeader().getLabHeader().getLabBranchId());
 			response=hMonitorDao.checkSystemHealthForLab(systemHealth);
 		}
 		/**If application is NetMd**/
 		if (systemHealthDetails.getAppType().equals("netmd")) {
-			systemHealth.setBranchId(systemHealthDetails.getHeader().getNetmdHeader()
-					.getNetMdBranchId());
-			systemHealth.setPassPhrase(systemHealthDetails.getHeader().getNetmdHeader().getPassPhrase());
 			response=hMonitorDao.checkSystemHealthForNetmd(systemHealth);
 		}
 		return response;

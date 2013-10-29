@@ -20,6 +20,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
+import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
@@ -60,13 +62,15 @@ import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncLogDTO;
 import com.nv.youNeverWait.security.User;
+import com.nv.youNeverWait.user.bl.service.LogService;
 import com.nv.youNeverWait.user.bl.service.SuperAdminService;
 
 @Controller
 @RequestMapping("ui/superAdmin/")
 public class SuperAdminResource {
 	private SuperAdminService service;
-
+	private LogService logService;
+	
 	@RequestMapping(value = "sForm", method = RequestMethod.GET)
 	public String sForm() {
 		return "superadminLoginPage";
@@ -242,6 +246,10 @@ public class SuperAdminResource {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest req = t.getRequest();
+		logService.saveUserDetails(req.getRemoteAddr(), null,
+				LogUserTypeEnum.Nil.getDisplayName(), null, null,
+				ApplicationNameEnum.SuperAdmin.getDisplayName(),
+				Constants.SUPER_ADMIN_LOGOUT);
 		req.getSession().setAttribute(Constants.USER, null);
 		response.setSuccess(true);
 		response.setError(null);
@@ -332,6 +340,13 @@ public class SuperAdminResource {
 	@ResponseBody
 	public ResponseDTO changePassword(@RequestBody PasswordDTO passwords) {
 		ResponseDTO response = new ResponseDTO();
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		logService.saveUserDetails(request.getRemoteAddr(), null,
+				LogUserTypeEnum.Nil.getDisplayName(), null, null,
+				ApplicationNameEnum.SuperAdmin.getDisplayName(),
+				Constants.SUPER_ADMIN_CHANGE_PASSWORD);
 		try {
 			response = service.changePassword(passwords);
 		} catch (ServiceException e) {
@@ -731,6 +746,10 @@ public class SuperAdminResource {
 				ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 						.currentRequestAttributes();
 				HttpServletRequest req = t.getRequest();
+				logService.saveUserDetails(req.getRemoteAddr(), null,
+						LogUserTypeEnum.Nil.getDisplayName(), null, null,
+						ApplicationNameEnum.SuperAdmin.getDisplayName(),
+						Constants.SUPER_ADMIN_LOGIN);
 				User user = new User();
 				UserDetails userDetail = service.getUser(login.getUserName());
 				if (userDetail != null) {
@@ -1465,4 +1484,20 @@ public class SuperAdminResource {
 	public void setService(SuperAdminService service) {
 		this.service = service;
 	}
+
+	/**
+	 * @return the logService
+	 */
+	public LogService getLogService() {
+		return logService;
+	}
+
+	/**
+	 * @param logService the logService to set
+	 */
+	public void setLogService(LogService logService) {
+		this.logService = logService;
+	}
+	
+	
 }

@@ -77,7 +77,7 @@ public class DoctorServiceImpl implements DoctorService {
 		validator.validateCreateDoctor(doctor, header);
 		ResponseDTO response = doctorDao.create(doctor, header);
 		NetmdBranchTbl netmdBranch = doctorDao.getById(NetmdBranchTbl.class,
-				header.getNetMdBranchId());
+				header.getBranchId());
 		NetmdLoginTbl netmdLogin = doctorDao.DoctorLoginDetails(
 				doctor.getEmail(), NetmdUserTypeEnum.Doctor.getDisplayName());
 		if (netmdLogin == null) {

@@ -24,10 +24,10 @@ import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
@@ -552,7 +552,7 @@ public class LabResource {
 	 */
 	@RequestMapping(value = "activateLab", method = RequestMethod.POST)
 	@ResponseBody
-	public LabActivationResponseDTO activateLab(@RequestBody LabHeaderDTO header) {
+	public LabActivationResponseDTO activateLab(@RequestBody HeaderDTO header) {
 		LabActivationResponseDTO response = new LabActivationResponseDTO();
 		try {
 			response = labService.activateLab(header);

@@ -15,7 +15,7 @@ import java.util.Date;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
@@ -44,7 +44,7 @@ public class OrderManager implements OrderService {
 	 * java.util.Date)
 	 */
 	@Override
-	public OrderDetails retrieveBranchOrders(LabHeaderDTO header,
+	public OrderDetails retrieveBranchOrders(HeaderDTO header,
 			String lastSyncTime, Date currentSyncTime) {
 		OrderDetails orderDetails = orderDao.retrieveBranchOrders(header,
 				lastSyncTime, currentSyncTime);
