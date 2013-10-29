@@ -988,6 +988,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 				netrxBranch.setUpdateDateTime(newDate);
 				update(netrxBranch);
 			} else {
+				if (sync.isEnableSync())
 				response.setMsg(Constants.MESSAGE);
 			}
 		} else {
@@ -1021,7 +1022,10 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		} // end of daily if loop
 		if (priorSyncFreqType.equals(SyncFreqTypeEnum.HOURLY.getDisplayName())) {
 			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
-				// set errror message
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.SynctimeExceeds);
+				se.setDisplayErrMsg(true);
+				throw se;
 			} else if (syncFreqType.equals(SyncFreqTypeEnum.HOURLY
 					.getDisplayName())) {
 				if (syncTime > priorSyncTime) {
