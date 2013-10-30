@@ -131,7 +131,11 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 						&& !request.getRequestURI().equals(
 								"/youNeverWait/ws/ui/auth/getErrorCodes")
 						&& !request.getRequestURI().equals(
-								"/youNeverWait/ws/ui/auth/getEnumsList")) {
+								"/youNeverWait/ws/ui/auth/getEnumsList")
+						&& !request.getRequestURI().equals(
+								"/youNeverWait/ws/ui/netRx/resetPassword")
+						&& !request.getRequestURI().equals(
+								"/youNeverWait/ws/ui/netRx/forgotPassword")) {
 					request.getRequestDispatcher("/ws/ui/netRx/rForm").forward(
 							request, response);
 					return false;
