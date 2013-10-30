@@ -61,7 +61,7 @@ $j("#newAccBranchsetSyncForm #btnnetlimsAccBranchSubmit").die('click').live('cli
 function submitNetlimsAccBrchSyncDetailsInfo(){
 	var resultJson = createNetlimsAccBrchSyncDetailsJson();
 	//alert(resultJson);
-	var response = postdataToServer(constant_newnetlimsBrchSync_Create_Url, resultJson );	
+	var response = postdataToServer(constant_newnetlimsAccBrchSync_Create_Url, resultJson );	
 	//alert(JSON.stringify(response));
 	return response;
 }	

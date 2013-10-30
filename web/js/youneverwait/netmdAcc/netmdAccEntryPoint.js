@@ -122,6 +122,19 @@ $j(document).ready(function() {
 		}
 
 	});
+	$j('#branchPTBContainer #btn_change_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	//alert("list");
+	var branchId= getSelectedBranchId(pgTableName);
+		if(branchId!="") {
+		var obj=$j(this);
+		createModal(constants_netmdAccBranchSycSetJson,'netMdAccSycSetModal');	
+		openModalBox(obj,'netMdAccSycSetModal')
+		  $j.cachedScript(constant_NetmdAccSyncSet_Url).done(function(script, textStatus) {
+		getNetmdAccBrchId(branchId);
+		})  
+		}
+	});
 	
 	$j('#branchPTBContainer #btn_delete_ptb_id').die('click').live("click",function() {
 	removeErrors();

@@ -54,6 +54,8 @@ constants_netlimsBranchSycSetJson="/youNeverWait/json/new/netlimsBranchsetSync.j
 constant_NetLimsBranchSyncSet_Url="/youNeverWait/js/youneverwait/netlims/branch/netlimsBranchSycSet.js"
 constants_netmdSycSetJson="/youNeverWait/json/new/netmdsetSync.json";
 constant_NetmdSyncSet_Url="/youNeverWait/js/youneverwait/netmd/netlmdSycSet.js";
+constants_netmdAccBranchSycSetJson="/youNeverWait/json/new/netmdAccBranchsetSync.json";
+constant_NetmdAccSyncSet_Url="/youNeverWait/js/youneverwait/netmdAcc/netmdAccBranchSynSet.js";
 constants_netmdBranchSycSetJson="/youNeverWait/json/new/netmdBranchsetSync.json";
 constant_NetmdBranchSyncSet_Url="/youNeverWait/js/youneverwait/netmd/branch/netmdBranchSycSet.js"
 constants_netrxSycSetJson="/youNeverWait/json/new/netrxsetSync.json";
@@ -93,10 +95,12 @@ constants_newNetLimsUser="/youNeverWait/js/youneverwait/netlims/new/newNetLimsUs
 
 
 constant_newnetlimsBrchSync_Create_Url="/youNeverWait/ws/ui/superAdmin/setBranchSync";
+constant_newnetlimsAccBrchSync_Create_Url="/youNeverWait/ws/ui/lab/setBranchSync";
 constant_newnetlimsSync_Create_Url="/youNeverWait/ws/ui/superAdmin/setLabSync";
 constant_newnetmdSync_Create_Url="/youNeverWait/ws/ui/superAdmin/setNetMdSync";
 constant_newnetRxSync_Create_Url="/youNeverWait/ws/ui/superAdmin/setNetRxSync";
 constant_newnetmdBrchSync_Create_Url="/youNeverWait/ws/ui/superAdmin/setNetMdBranchSync";
+constant_newnetmdAccBrchSync_Create_Url="/youNeverWait/ws/ui/netMd/setNetMdBranchSync";
 constant_newnetRxBrchSync_Create_Url="/youNeverWait/ws/ui/superAdmin/setNetRxBranchSync";
 constants_SyncintervalRequired="Synchronisation Interval Required";
 constant_newSync_Create_Url="/youNeverWait/ws/ui/superAdmin/setSync";
