@@ -108,6 +108,20 @@ $j(document).ready(function() {
 		}	
 	});
 	
+	$j('#branchNetlimsAccPTBContainer #btn_change_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	//alert("list");
+	var branchId= getSelectedBranchId(pgTableName);
+		if(branchId!="") {
+		var obj=$j(this);
+		createModal(constants_netlimsAccSycSetJson,'netlimsAccSycSetModal');	
+		openModalBox(obj,'netlimsAccSycSetModal')
+		 $j.cachedScript(constant_NetLimsAccSyncSet_Url).done(function(script, textStatus) {
+		getNetlimsAccBrchId(branchId);
+		}) 
+		}
+	});
+	
 	$j('#branchNetlimsAccPTBContainer #btn_view_ptb_id').die('click').live("click",function() {
 	removeErrors();
 		var branchId = getSelectedBranchId(pgTableName);

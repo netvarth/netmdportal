@@ -47,7 +47,9 @@ constant_NetMdView_Msg="View NetMd";
 
 /*SYNCHRONISATION*/
 constant_NetLimsSyncSet_Url="/youNeverWait/js/youneverwait/netlims/netlimsSycSet.js";
+constant_NetLimsAccSyncSet_Url="/youNeverWait/js/youneverwait/netlimsAcc/netlimsAccBranchSynSet.js";
 constants_netlimsSycSetJson="/youNeverWait/json/new/netlimssetSync.json"
+constants_netlimsAccSycSetJson="/youNeverWait/json/new/netlimsAccsetSync.json"
 constants_netlimsBranchSycSetJson="/youNeverWait/json/new/netlimsBranchsetSync.json";
 constant_NetLimsBranchSyncSet_Url="/youNeverWait/js/youneverwait/netlims/branch/netlimsBranchSycSet.js"
 constants_netmdSycSetJson="/youNeverWait/json/new/netmdsetSync.json";

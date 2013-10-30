@@ -1,0 +1,116 @@
+{
+    "title": "Set Synchronisation",
+    "style": "width:60%;margin:0 20%",
+    "data": [
+        {
+            "name": "newAccBranchsetSyncForm",
+            "id": "newAccBranchsetSyncForm",
+            "content": [
+                {
+                    "className": "sep-div",
+                    "style": "display:none",
+                    "id": "errorDivHeader",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "id": "errorDivNewNetlimsAccBranchData"
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div",
+                    "id": "referralsdiv",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "NetlimsAccSyncType",
+                                            "id": "AccsyncTypeEn",
+                                            "type": "radio",
+                                            "title": "Synchornisation",
+                                            "value": [
+                                                {
+                                                    "title": "Enable",
+                                                    "value": "enable",
+                                                    "id": "netlimsAccBrchEnable"
+                                                },
+                                                {
+                                                    "title": "Disable",
+                                                    "value": "disable",
+                                                    "id": "netlimsAccBrchDisable",
+                                                    "style": "margin-left: 20%;"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "id": "syctxtAccBranchEnTime",
+									 "style": "display:none",
+                                    "elements": [
+                                        {
+                                            "name": "NetlimsAccBranchSyncTime",
+                                            "id": "NetlimsAccBranchSyncTime",
+                                            "title": "SyncFreqType",
+                                            "type": "select",
+                                            "className": "large "
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "id": "syctxtAccBranchEnInr",
+                                    "style": "margin: -9% 30% 0 0;display:none;",
+                                    "elements": [
+                                        {
+                                            "name": "NetlimsAccBranchSyncInterval",
+                                            "id": "NetlimsAccBranchSyncInterval",
+                                            "title": "SyncInterval",
+                                            "type": "text",
+                                            "className": "small "
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                 {
+                    "className": "sep-div ",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                             {
+                                                "name": "btnnetlimsAccBranchSubmit",
+                                                "id": "btnnetlimsAccBranchSubmit",
+                                                "title": "Submit",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;margin:2px"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
