@@ -481,13 +481,13 @@ public class ScheduleDaoImpl extends GenericDaoHibernateImpl implements
 			return true;
 		} else {
 			for (DoctorScheduleTbl doctorScheduleTbl : scheduleList) {
-				if (!fromTime.before(doctorScheduleTbl.getStartingTime())) {
-					if (!fromTime.after(doctorScheduleTbl.getEndingTime())) {
+				if(fromTime.before(doctorScheduleTbl.getStartingTime())){
+					if(toTime.after(doctorScheduleTbl.getStartingTime())){
 						test++;
 					}
 				}
-				if (!toTime.before(doctorScheduleTbl.getEndingTime())) {
-					if (!toTime.after(doctorScheduleTbl.getEndingTime())) {
+				if(fromTime.after(doctorScheduleTbl.getStartingTime())){
+					if(	fromTime.before(doctorScheduleTbl.getEndingTime())){
 						test++;
 					}
 				}
