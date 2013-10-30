@@ -140,7 +140,7 @@ public class NetMdResource {
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
 		logService.saveUserDetails(request.getRemoteAddr(),
-				login.getUserName(), login.getUserType(), null, null,
+				null, login.getUserType(), null, null,
 				ApplicationNameEnum.NetMd.getDisplayName(),
 				Constants.RESET_PSWD);
 		return response;
@@ -720,7 +720,7 @@ public class NetMdResource {
 		logService.saveUserDetails(request.getRemoteAddr(), null,
 				LogUserTypeEnum.Nil.getDisplayName(), null, null,
 				ApplicationNameEnum.NetMd.getDisplayName(),
-				Constants.RESET_PSWD);
+				Constants.FORGOT_PWD);
 
 		return response;
 	}

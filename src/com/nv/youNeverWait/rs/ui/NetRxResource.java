@@ -572,7 +572,7 @@ public class NetRxResource {
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
 		logService.saveUserDetails(request.getRemoteAddr(),
-				login.getUserName(), login.getUserType(), null, null,
+				null, login.getUserType(), null, null,
 				ApplicationNameEnum.NetRx.getDisplayName(),
 				Constants.RESET_PSWD);
 		return response;

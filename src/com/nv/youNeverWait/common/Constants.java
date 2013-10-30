@@ -57,6 +57,7 @@ public class Constants {
 	public static final String RESULT_LIST = "Result List";
 	public static final String APPOINTMENTS = "appointments";
 	
+	
 	/* Log */
 	public static final String STARTUP = "Show login page";
 	public static final String RESET_PSWD = "Reset password";
@@ -90,6 +91,7 @@ public class Constants {
 	public static final String SUPER_ADMIN_LOGIN = "Super Admin Login";
 	public static final String SUPER_ADMIN_LOGOUT = "Super Admin Logout";
 	public static final String SUPER_ADMIN_CHANGE_PASSWORD = "Super Admin Change Password";	
+	public static final String FORGOT_PWD = "Forgot Password";
 	/*NetRx*/
 	public static final String NETRX_REGISTER ="NetRx Registration";
 	public static final String NETRX ="netrx";
