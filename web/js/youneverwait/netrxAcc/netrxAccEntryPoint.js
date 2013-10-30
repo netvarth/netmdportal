@@ -124,6 +124,19 @@ $j(document).ready(function() {
 
 	});
 	
+	$j('#branchPTBContainer #btn_change_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	  var netrxbranchId = getSelectedBranchId(pgTableName);
+	    if(netrxbranchId!="") {
+			var obj=$j(this);
+			createModal(constants_netrxAccBranchSycSetJson,'netrxAccBranchSycSetModal');	
+			openModalBox(obj,'netrxAccBranchSycSetModal')
+		$j.cachedScript(constant_NetrxAccBranchSyncSet_Url).done(function(script, textStatus) {
+		getNetrxBrchId(netrxbranchId)
+		})
+		}	
+	});
+	
 	$j('#branchPTBContainer #btn_delete_ptb_id').die('click').live("click",function() {
 	removeErrors();
 		var branchId = getSelectedBranchId(pgTableName);

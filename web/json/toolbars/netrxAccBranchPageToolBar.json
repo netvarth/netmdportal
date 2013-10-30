@@ -16,6 +16,9 @@
 			"name" 	: 	"new",
 			"title"	:	"new"
 			
+		},{
+			"name" 	: 	"change",
+			"title"	:	"Sync Set"
 		}
 
 	]
