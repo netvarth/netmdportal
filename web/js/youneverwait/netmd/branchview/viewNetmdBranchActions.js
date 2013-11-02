@@ -152,8 +152,8 @@
 	var branchId =$j('#netmdbranchViewForm #branchid').val();
 	var netmdId= $j('#netmdbranchViewForm #netmdid').val();
 	
-	submitdata = '{'+'"netMdBranchId"' + ':'+branchId+',';
-	submitdata +='"netMdId":' +netmdId+',';
+	submitdata = '{'+'"branchId"' + ':'+branchId+',';
+	submitdata +='"headOfficeId":' +netmdId+',';
 	submitdata +='"passPhrase":"' +passPhrase+'",';
 	submitdata +='"macId":"' + macid+ '"}';
 	
