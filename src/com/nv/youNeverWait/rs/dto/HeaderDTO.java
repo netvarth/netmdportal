@@ -11,7 +11,7 @@ public class HeaderDTO {
 	private int headOfficeId;
 	private String passPhrase;
 	private String macId;
-	private int BranchId;
+	private int branchId;
 
 	/**
 	 * @return the macId
@@ -59,14 +59,16 @@ public class HeaderDTO {
 	 * @return the branchId
 	 */
 	public int getBranchId() {
-		return BranchId;
+		return branchId;
 	}
 
 	/**
 	 * @param branchId the branchId to set
 	 */
 	public void setBranchId(int branchId) {
-		BranchId = branchId;
+		this.branchId = branchId;
 	}
+
+	
 
 }
