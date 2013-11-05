@@ -54,6 +54,12 @@ $j('#tabs-1').html(adminTB.result);
 	})
 	});
 	
+	$j('#btnSyncLogList').die('click').live("click",function() {
+	removeErrors();
+	$j.cachedScript(constant_SyncLogEntry_Url).done(function(script, textStatus) {
+	})
+	});	
+
 			
 	$j('#changePasswordForm #btnChangePwdSubmit').die('click').live('click',function(){
 	removeErrors();	

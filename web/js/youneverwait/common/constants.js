@@ -218,6 +218,11 @@ constant_UserLogEntry_Url="/youNeverWait/js/youneverwait/userlog/userlogEntryPoi
 constant_UserLogFunctions_Url="/youNeverWait/js/youneverwait/userlog/userlogFunctions.js";
 constant_UserLogList_Msg="USER LOG LIST";
 
+//Sync Log
+constant_SyncLogEntry_Url="/youNeverWait/js/youneverwait/syncLog/syncLogEntryPoint.js";
+constant_SyncLogList_Msg="SYNC LOG LIST";
+constant_SyncLogFunctions_Url="/youNeverWait/js/youneverwait/syncLog/syncLogFunctions.js";
+
 //MacId Clear Confirm
 constants_macIdConfirmJson='/youNeverWait/json/macidConfirm.json';
 constants_netmdmacIdConfirmJson='/youNeverWait/json/netmdmacidConfirm.json';

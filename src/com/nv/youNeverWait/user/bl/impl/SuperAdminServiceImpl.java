@@ -30,6 +30,7 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LogTbl;
+import com.nv.youNeverWait.pl.entity.SyncLogTbl;
 import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
@@ -69,6 +70,8 @@ import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncLogDTO;
+import com.nv.youNeverWait.rs.dto.SyncLogDetail;
+import com.nv.youNeverWait.rs.dto.SyncLogListResponseDTO;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.rs.dto.UserDetails;
@@ -925,8 +928,69 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return response;
 	}
 
+	@Override
+	public SyncLogListResponseDTO syncLogList(FilterDTO filterDTO) {
+		SyncLogListResponseDTO response = new SyncLogListResponseDTO();
+
+		// validate filterDTO to identify invalid expressions and if there is
+		// any,
+		// return result with appropriate error code
+		ErrorDTO error = validator.validateSyncLogFilter(filterDTO);
+		if (error != null) {
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+
+		// get queryBuilder for synclog from builder factory
+		QueryBuilder queryBuilder = queryBuilderFactory
+				.getQueryBuilder(Constants.SYNC_LOG);
+		if (queryBuilder == null) {
+			return response;
+		}
+		for (ExpressionDTO exp : filterDTO.getExp()) {
+
+			// get filter from filter factory by setting expression name and
+			// value to filter
+			Filter filter = filterFactory.getFilter(exp);
+			queryBuilder.addFilter(filter);
+		}
+		// build query
+		TypedQuery<SyncLogTbl> q = queryBuilder.buildQuery(filterDTO.isAsc(),
+				filterDTO.getFrom(), filterDTO.getCount());
+
+		Long count = queryBuilder.getCount();
+		System.out.println("queryBuilder.getCount():" + count);
+		// execute query
+		List<SyncLogTbl> logs = queryBuilder.executeQuery(q);
+		response = getSyncLogList(logs);
+		response.setCount(count);
+		response.setSuccess(true);
+		return response;
+	}
 	
-//	/* (non-Javadoc)
+private SyncLogListResponseDTO getSyncLogList(List<SyncLogTbl> logs) {
+	SyncLogListResponseDTO response = new SyncLogListResponseDTO();
+	if (logs == null) {
+		return response;
+	}
+	List<SyncLogDetail> syncLogList = new ArrayList<SyncLogDetail>();
+	for (SyncLogTbl synclogTbl : logs) {
+		
+		String lastsyncTime=null;
+		SimpleDateFormat df = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		if (synclogTbl.getLastSyncTime() != null) {
+			lastsyncTime = df.format(synclogTbl.getLastSyncTime());
+		}
+		syncLogList.add(new SyncLogDetail(synclogTbl,lastsyncTime));
+		
+	}
+	
+	return response;
+	}
+
+	//	/* (non-Javadoc)
 //	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
 //	 */
 //	@Override
@@ -1112,6 +1176,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public void setSpecimenService(SpecimenService specimenService) {
 		this.specimenService = specimenService;
 	}
+
+	
 
 	
 	

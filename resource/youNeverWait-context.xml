@@ -186,6 +186,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 				</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.SpecimenPropertyEnum
 				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.SyncLogPropertyEnum
+				</value>
 
 
 			</list>
@@ -522,6 +524,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 					value="com.nv.youNeverWait.util.filter.queryBuilder.TestQueryBuilder" />
 				<entry key="specimens"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.SpecimenQueryBuilder" />
+				<entry key="syncLog"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.SyncLogQueryBuilder" />
 			</map>
 		</property>
 

@@ -46,6 +46,7 @@ import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncLogDTO;
+import com.nv.youNeverWait.rs.dto.SyncLogListResponseDTO;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
@@ -148,6 +149,8 @@ public interface SuperAdminService {
 	 */
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails);
+	
+	public SyncLogListResponseDTO syncLogList(FilterDTO filter);
 	
 
 	

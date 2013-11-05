@@ -1,0 +1,39 @@
+{	
+		"buttons":	[
+		
+		{
+			"name" 	: 	"ipAddress",
+			"type"	:	"text",
+			"title"	:	"IP Address",
+			"className"	:"generalType"
+		},
+		{
+			"name" 	: 	"branchName",
+			"type"	:	"text",
+			"title"	:	"Branch Name",
+			"className"	:"generalType"
+		},
+		{
+			"name" 	: 	"headofficeName",
+			"type"	:	"text",
+			"title"	:	"Headoffice Name",
+			"className"	:"generalType"
+		},
+		
+		
+		{
+			"name" 	: 	"lastSyncTime",
+			"type"	:	"text",
+			"title"	:	"LastSync Time",
+			"className"	:"generalType"
+		},
+				
+		{
+			"name" 	: 	"applicationName",
+			"type"	:	"select",
+			 "value":	[{"app":"Netlims"},{"app":"Netmd"},{"app":"SuperAdmin"}],
+			"title"	:	"Application Name",
+			"className"	:"generalType"
+		}
+	]
+}

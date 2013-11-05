@@ -58,6 +58,7 @@ import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncLogListResponseDTO;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
@@ -1305,6 +1306,31 @@ public class SuperAdminResource {
 		UserLogListResponseDTO response = new UserLogListResponseDTO();
 		try {
 			response = service.userLogList(filter);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * Shows a list of all sync logs
+	 * 
+	 * @param filter
+	 * @return SyncLogListResponseDTO
+	 */
+	@RequestMapping(value = "syncLogList", method = RequestMethod.POST)
+	@ResponseBody
+	public SyncLogListResponseDTO syncLogList(@RequestBody FilterDTO filter) {
+		SyncLogListResponseDTO response = new SyncLogListResponseDTO();
+		try {
+			response = service.syncLogList(filter);
 		} catch (ServiceException e) {
 
 			List<Parameter> parameters = e.getParamList();
