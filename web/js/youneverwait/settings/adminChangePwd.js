@@ -48,6 +48,17 @@ $j('#tabs-1').html(adminTB.result);
 
 	});
 	
+	$j('#syncLogPTBContainer #btn_back_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	//$j('#pageToolBar-Container').html("");
+	$j.cachedScript(constant_SettingsEntry_Url).done(function(script, textStatus) {
+	})
+	$j('#filter').hide();
+	$j('#syncLogPTBContainer').hide();
+	$j('#sync-filter-toolbar').hide();
+
+	})
+	
 	$j('#btnUserLogList').die('click').live("click",function() {
 	removeErrors();
 	$j.cachedScript(constant_UserLogEntry_Url).done(function(script, textStatus) {
