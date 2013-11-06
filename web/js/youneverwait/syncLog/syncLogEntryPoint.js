@@ -25,16 +25,16 @@ $j(document).ready(function() {
 	
 	$j('#filter').die('click').live('click',function(){
 		removeErrors();
-		var filterArray = $j('#user-filter-toolbar .button_filter');
+		var filterArray = $j('#sync-filter-toolbar .button_filter');
 		$j(filterArray).each(function(){
 			var element = $j(this);
 			element.removeClass('button_filter');
 			element.removeAttr('selected');
-			$j('#user-filter-wb').hide();
+			$j('#sync-filter-wb').hide();
 		});
 	});
 	
-	$j('#user-filter-toolbar  a:not(:selected)').die('click').live("click",function(){
+	$j('#sync-filter-toolbar  a:not(:selected)').die('click').live("click",function(){
 		var curObjName = $j(this).attr('name');
 		$j(this).attr('selected','selected');
 		$j(this).addClass('button_filter');
@@ -42,8 +42,8 @@ $j(document).ready(function() {
 		$j('#select'+curObjName).show();
 		setReportFilterValues(curObjName);
 	});
-	//if the user deselect the filter option
-	$j('#user-filter-toolbar a[selected]').die('click').live("click",function(){
+	//if the sync deselect the filter option
+	$j('#sync-filter-toolbar a[selected]').die('click').live("click",function(){
 		var curObjName = $j(this).attr('name');
 		$j(this).removeAttr('selected');
 		$j(this).removeClass('button_filter');
@@ -51,13 +51,13 @@ $j(document).ready(function() {
 		$j('#select'+curObjName).hide();
 		$j('#txt'+curObjName).val("");
 		$j('#select'+curObjName).val("");
-		$j('#user-filter-toolbar #btnGo').trigger('click');
+		$j('#sync-filter-toolbar #btnGo').trigger('click');
 	});
 	
-	$j('#user-filter-toolbar #btnGo').die('click').click(function(){
+	$j('#sync-filter-toolbar #btnGo').die('click').click(function(){
 		removeErrors();
 		exp=[];
-		$j('#user-filter-toolbar a[selected]').each(function(){
+		$j('#sync-filter-toolbar a[selected]').each(function(){
 			var selName=$j(this).attr('name');
 			if(selName=='applicationName')
 			var selTextValue=$j("#select"+ selName).val();
@@ -72,7 +72,7 @@ $j(document).ready(function() {
 		startValue=0;
 		curPage =1;
 		syncLogListJson= getFilterlistUrl(exp,startValue,interval);
-		pgUserList=fillUserLogTable(userlogListJson,pgTableName);
+		pgUserList=fillSyncLogTable(syncLogListJson,pgTableName);
 		if(pgUserList.count)
 			maxRecords = pgUserList.count;	
 		if(maxRecords%interval!=0)
@@ -87,8 +87,8 @@ $j(document).ready(function() {
 		if(curPage!=maxPages && curPage<maxPages) {
 			curPage+=1;
 			var startValue = interval*(curPage-1);
-			userlogListJson=getFilterlistUrl(exp,startValue,interval);
-			pgBranchList=fillUserLogTable(userlogListJson,pgTableName);
+			syncLogListJson=getFilterlistUrl(exp,startValue,interval);
+			pgBranchList=fillSyncLogTable(syncLogListJson,pgTableName);
 			setPaginationFields(curPage, maxPages,pgTableContainer);
 		}
 	});
@@ -97,8 +97,8 @@ $j(document).ready(function() {
 		if(curPage!=1) {
 			curPage-=1;
 			var startValue = interval*(curPage-1);
-			userlogListJson=getFilterlistUrl(exp,startValue,interval);
-			pgBranchList=fillUserLogTable(userlogListJson,pgTableName);
+			syncLogListJson=getFilterlistUrl(exp,startValue,interval);
+			pgBranchList=fillSyncLogTable(syncLogListJson,pgTableName);
 			setPaginationFields(curPage, maxPages,pgTableContainer);
 		}
 	});
@@ -107,8 +107,8 @@ $j(document).ready(function() {
 		if(curPage!=1) {
 			curPage=1;
 			startValue = 0;
-			userlogListJson= getFilterlistUrl(exp,startValue,interval);
-			pgBranchList=fillUserLogTable(userlogListJson,pgTableName);
+			syncLogListJson= getFilterlistUrl(exp,startValue,interval);
+			pgBranchList=fillSyncLogTable(syncLogListJson,pgTableName);
 			setPaginationFields(curPage, maxPages, pgTableContainer);
 		}
 	});
@@ -117,8 +117,8 @@ $j(document).ready(function() {
 		if(curPage!=maxPages && curPage<maxPages) {
 			curPage =maxPages;
 			startValue = (curPage-1)*interval;
-			userlogListJson=getFilterlistUrl(exp,startValue,interval);
-			pgBranchList=fillUserLogTable(userlogListJson,pgTableName);
+			syncLogListJson=getFilterlistUrl(exp,startValue,interval);
+			pgBranchList=fillSyncLogTable(syncLogListJson,pgTableName);
 			setPaginationFields(curPage, maxPages, pgTableContainer);
 		}
 	});
