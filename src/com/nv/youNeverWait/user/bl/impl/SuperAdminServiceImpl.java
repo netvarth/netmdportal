@@ -986,7 +986,7 @@ private SyncLogListResponseDTO getSyncLogList(List<SyncLogTbl> logs) {
 		syncLogList.add(new SyncLogDetail(synclogTbl,lastsyncTime));
 		
 	}
-	
+	response.setSyncLog(syncLogList);
 	return response;
 	}
 

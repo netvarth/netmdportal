@@ -53,11 +53,11 @@ function fillSyncLogTable(synclogListJson,tableObj) {
 	$j(tableObj).dataTable().fnClearTable();
 	var syncLogListJson=postdataToServer("/youNeverWait/ws/ui/superAdmin/syncLogList", synclogListJson );
 	//alert(JSON.stringify(syncLogListJson));
-	 if(syncLogListJson.log) {
-		if(syncLogListJson.log.length>0) {			
-			$j(syncLogListJson.log).each(function (index, log) {
-				var id=log.id;
-				var rowData=$j(tableObj).dataTable().fnAddData([id,log.applicationName,log.branchName,log.headOfficeName,log.ipAddress,log.lastSyncTime]);
+	 if(syncLogListJson.syncLog) {
+		if(syncLogListJson.syncLog.length>0) {			
+			$j(syncLogListJson.syncLog).each(function (index, syncLog) {
+				var id=syncLog.id;
+				var rowData=$j(tableObj).dataTable().fnAddData([id,syncLog.applicationName,syncLog.branchName,syncLog.headOfficeName,syncLog.ipAddress,syncLog.lastSyncTime]);
 				var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 				$j(row).attr('id',id);	
 				$j(row).children("td:nth-child(1)").attr("class","logIdCol Ustyle");
