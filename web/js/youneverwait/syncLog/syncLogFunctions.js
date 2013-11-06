@@ -23,7 +23,7 @@ function setSyncLogTableStructure() {
 
 function loadSyncLogPageToolBar() {
 	//Creating Page Tool Bar
-	var ptbdata =getRequestData('/youNeverWait/json/toolbars/logPageToolBar.json');
+	var ptbdata =getRequestData('/youNeverWait/json/toolbars/syncLogPageToolBar.json');
 	var ptbContainer = $j('<div id="logPTBContainer"/>');
 	var ptb = new PageToolBar(ptbdata);
 	//alert(JSON.stringify(ptb));
