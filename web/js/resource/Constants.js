@@ -7,8 +7,19 @@ function Constants() {
 	this.PATIENTCLINICSOBJ="#clinicsInfoTab";
 	this.PATIENTRESULTVIEWURL="/youNeverWait/ws/ui/result/list/";
 	this.PATIENTRESULTOBJ="#resultsInfoTab";
-	
-	
+	/*****************-------------General-----------**----*************/
+	this.BRANCHLIST="BRANCH LIST";
+	this.BRANCHCREATESUCCESS="Branch created successfully";
+	/*****************-------------netlimsaccount-----------**----*************/
+	this.NETLIMSACCRIBBONURL="/youNeverWait/json/toolbars/netlimsGlobalToolbar.json";
+	this.NETLIMSACCLEFTPANEURL="/youNeverWait/json/toolbars/netlimsLeftPaneToolbar.json";
+	this.NETLIMSACCBRANCHLISTURL="/youNeverWait/ws/ui/lab/branchList";
+	this.NEWBRANCHMODAL="netlimsAccBranchModal";
+	this.NEWNETLIMSACCBRANCHJSON="/youNeverWait/json/new/newBranchNetlimsAcc.json";
+	this.NETLIMSBRANCH="BRANCH";
+	this.NETLIMSACCPAGEBRANCHJSON="/youNeverWait/json/toolbars/netlimsAccBranchPageToolBar.json";
+	this.NETLIMSACCBRANCHLISTJSON="/youNeverWait/json/list/netlimsAccBranchTable.json";
+	this.CREATENETLIMSACCBRANCHURL="/youNeverWait/ws/ui/lab/createBranch";
 	/*****************-------------General-----------**----*************/
 	this.NAME = "name";
 	this.ADDRESS = "address";
@@ -27,7 +38,9 @@ function Constants() {
 	this.EMAILINVALID = "Enter valid email";
 	this.NAMEREQUIRED = "Name required";
 	this.NOTEREQUIRED= "Note required";
+	this.PHONEREQUIRED="Phone number required";
 	this.PHONEINVALID = "Enter valid landline number";
+	this.MOBILEREQUIRED="Mobile number required";
 	this.MOBILEINVALID = "Enter valid mobile number";
 	this.NAMEINVALID = "Enter valid name";
 	this.DESIGNATIONREQUIRED = "Designation required";
@@ -49,9 +62,6 @@ function Constants() {
 	this.VALIDTEST="Enter valid test/package";
 	this.AUTOFIELD="autoField";
 	this.LISTREQUIRED=" List required";	
-	this.ENUMLISTURL = "/youNeverWait/ws/ui/auth/getEnumsList";
-	this.CONFIGDATAURL = "/youNeverWait/ws/ui/config/getConfigData";
-	this.DEFAULTDATAURL = "/youNeverWait/ws/ui/order/getDefaultData";
 	this.SPECIALTESTSGETURL ="/youNeverWait/ws/ui/test/getSpecimenOnDemandTests";
 	this.GETSPECIMENSURL = "/youNeverWait/ws/ui/order/getSpecimens";
 	this.PERMISSIONURL = "/youNeverWait/ws/ui/admin/pageControles/";	
@@ -68,29 +78,10 @@ function Constants() {
 	this.EQUALSOPERATOR = "eq";
 	this.LIKEOPERATOR ='like';
 	this.ERROR = "Error";
-	this.HOLD = "Hold";
-	this.CANCELLED= "Cancelled";
-	this.DELIVERED ="Delivered";
-	this.PARTIALRESULTS="Partial Results";
-	this.RESULTSREADY="Results Ready";
 	this.STATUSENUM="StatusEnum";
 	this.PAYSTATUSENUM = "CollectStatusEnum";
 	this.PRIORITYENUM="PriorityEnum";
-	this.MR = "Mr.";
-	this.MRS = "Mrs.";
-	this.MS = "Ms.";
-	this.DR ="Dr.";
-	this.MASTER = "Master";
-	this.BABYOF = "B/o";
-	this.BABY = "Baby";
-	this.FR = "Fr.";
-	this.SR = "Sr.";
-	this.BR = "Br.";
-	this.ANIMAL="Animal";
-	this.NURSE = "Nurse";
-	this.NOTPAID = "Not Paid";
-	this.FULLYPAID = "Fully Paid";
-	this.PARTIALLYPAID = "Partially Paid";
+	
 	this.DEFAULTCOLLECTEDAT = "Jeeva";
 	this.LISTDUPLICATION=" List already entered"
 	this.COLLECTED="Collected";
@@ -151,33 +142,7 @@ function Constants() {
 	this.SELECTONESPECIMENONLY = "Select only one specimen";
 	this.SPECIMENDELETECONFIRM = "Do you really want to delete specimen ";
 	/*****************-----------------------------------****************/
-	/*****************---------------Area----------------****************/
-	this.AREAFILTERKEY = "AreaPropertyEnum";
-	this.AREANAME = "areaName";
-	this.AREALISTURL="/youNeverWait/ws/ui/admin/area/list";
-	this.AREALISTTABLEURL="/weblims/json/tables/areaTable.json";
-	this.VIEWAREAPAGEURL = "/weblims/json/viewArea.json";
-	this.AREAGENERALPTBURL='/weblims/json/toolbars/viewGeneralToolbar.json';
-	this.AREA="area";
-	this.AREAPAGETOOLBAR="areaPageToolBar";
-	this.AREAGENERAL = "areaGeneral";
-	this.AREABUTTONSCONTAINER = 'areaViewButtonsDiv';
-	this.AREAVIEWINFOBUTTONS = "areaViewButtons";
-	this.AREAVIEWINFO = "Area - ";
-	this.AREAS = "Areas";
-	this.CREATEAREAUI = "/weblims/json/newArea.json";
-	this.CREATEAREAURL = "/youNeverWait/ws/ui/admin/createArea";
-	this.UPDATEAREAURL = "/youNeverWait/ws/ui/admin/updateArea";
-	this.DELETEAREAURL = "/youNeverWait/ws/ui/admin/deleteArea/";
-	this.VIEWAREAURL = "/youNeverWait/ws/ui/admin/viewArea/";
-	this.AREAMODAL = "areaModal";
-	this.AREACREATESUCCESS = "Area created successfully";
-	this.AREADELETESUCCESS = "Area deleted successfully";
-	this.AREAUPDATESUCCESS = "Area updated successfully";
-	this.SELECTONEAREA = "Select atleast one area";
-	this.SELECTONEAREAONLY = "Select only one area";
-	this.AREADELETECONFIRM = "Do you really want to delete area ";
-	/*****************-----------------------------------****************/
+	
 	/*****************---------------Order----------------****************/
 	this.JV="JV";
 	this.AG="AG";
@@ -204,8 +169,8 @@ function Constants() {
 	this.ORDERCREATESUCCESS = "Order created successfully";
 	this.ORDERDELETESUCCESS = "Order deleted successfully";
 	this.ORDERUPDATESUCCESS = "Order updated successfully";
-	this.SELECTONEORDER = "Select atleast one order";
-	this.SELECTONEORDERONLY = "Select only one order";
+	this.SELECTONEBRANCH = "Select atleast one branch";
+	this.SELECTONEBRANCHONLY = "Select only one branch";
 	this.ORDERDELETECONFIRM = "Do you really want to delete specimen ";
 	this.ORDERBUTTONSCONTAINER = 'orderViewButtonsDiv';
 	this.ORDERVIEWINFOBUTTONS = "orderViewButtons";
@@ -255,40 +220,7 @@ function Constants() {
 	this.DAILY = "Daily";
 	this.MONTHLY = "Monthly";
 	this.SELECTPAYMENTMODE = "Select mode";
-	this.ENTERVALIDTEST_PACKAGE="Enter Valid Test/package";
-	this.COLLECTEDATNOTBENULL = "Collected At not be null";
-	this.CANTADDSPECIALPACKAGE = "Test Already exists in one of the Package/can't add more than one specialtestPackage";
-	this.MINIMUMTESTREQUIRED="Sorry can't delete,since order must contain atleast one test";
-	this.RESULTTESTCANTDELETE="Result entry completed test can't delete";
-	this.TESTALREADYENTERED = "Test already entered";
-	this.ORDERURLPREFIX = "/youNeverWait/ws/ui/order/";
-	this.GETTESTRESULTSTATUS = "/youNeverWait/ws/ui/result/getTestResultStatus/";
-	this.REFCOLLECTINFOBUTTONS= "doctorCollectedButtons";
-	this.REFOCOLLECTINFOBUTTONSDIV= "doctorCollectedButtonDiv";
-	this.ORDERINFOBUTTONS = "orderInfoButtons";
-	this.ORDERINFOBUTTONSDIV = "infoButtonsDiv";
-	this.ORDERSPECIMENBUTTONS = "orderSpecimenButtons";
-	this.ORDERSPECIMENBUTTONSDIV ="specimenButtonsDiv";
-	this.PAYMENTBUTTONSDIV = "paymentButtonsDiv";
-	this.ORDERPAYMENTBUTTONS = "orderPaymentButtons";
-	this.ORDERDISCOUNTBUTTONSDIV = "orderDiscountButtonsDiv";
-	this.ORDERDISCOUNTBUTTONS="orderDiscountButtons";
-	this.ORDERPRINTBUTTONSDIV = "resultButtonsDiv";
-	this.ORDERPRINTBUTTONS = "orderPrintButton";
-	this.UPDATEPATIENTURL="/youNeverWait/ws/ui/order/updateOrderHeader";
-	this.UPDATEREFERRALURL="/youNeverWait/ws/ui/order/updateOrderReferral";
-	this.UPDATESPECIMENSTATUS="/youNeverWait/ws/ui/order/updateSpecimenCollectStatus";
-	this.UPDATEORDERDISCOUNT="/youNeverWait/ws/ui/order/updateOrderDiscount";
-	this.UPDATEORDERTEST="/youNeverWait/ws/ui/order/updateTest";
-	this.SAVEORDERRESULT="/youNeverWait/ws/ui/result/saveOrderResult";
-	this.NEW="New";
-	this.INPROGRESS="In-Progress";
-	this.RESULTREADY="Result Ready";
-	this.DELIVERED="Delivered";
-	this.HOLD="Hold";
-	this.CANCELLED="Cancelled";
-	this.SPECIALPACKAGENOTALLOWED="Special package can't enter";
-	this.TESTUPDATESUCCESS = "Test updated successfully";
+	
 	this.CREATESPECIMENSTATUSUI="/weblims/json/changeSpecimenStatus.json";
 	this.SPECIMENSTATUSMODAL="specimenStatusModal";
 	this.NOSPECIMEN = "No specimen";
@@ -316,36 +248,7 @@ function Constants() {
 	this.BILLFOOTER1 = "BillFooter1";
 	this.BILLFOOTER2 = "BillFooter2";
 	/*****************-----------------------------------****************/
-	/*****************---------------User----------------****************/
-	this.USERFILTERKEY = "UserPropertyEnum";
-	this.USERNAME = "userName";
-	this.USERLISTURL="/youNeverWait/ws/ui/admin/getUsers";
-	this.USERLISTTABLEURL="/weblims/json/tables/userTable.json";
-	this.VIEWUSERPAGEURL = "/weblims/json/viewUser.json";
-	this.USERGENERALPTBURL='/weblims/json/toolbars/viewGeneralToolbar.json';
-	this.USER="user";
-	this.USERPAGETOOLBAR="userPageToolBar";
-	this.USERGENERAL = "userGeneral";
-	this.USERBUTTONSCONTAINER = 'userViewButtonDiv';
-	this.USERVIEWINFOBUTTONS = "userViewInfoButtons";
-	this.USERVIEWINFO = "User - ";
-	this.USERS = "Users";
-	this.CREATEUSERUI = "/weblims/json/newUser.json";
-	this.CREATEUSERURL = "/youNeverWait/ws/ui/admin/createUser";
-	this.UPDATEUSERURL = "/youNeverWait/ws/ui/admin/updateUser";
-	this.DELETEUSERURL = "/youNeverWait/ws/ui/admin/deleteUser/";
-	this.VIEWUSERURL = "/youNeverWait/ws/ui/admin/viewUser/";
-	this.USERMODAL = "userModal";
-	this.USERCREATESUCCESS = "User created successfully";
-	this.USERDELETESUCCESS = "User deleted successfully";
-	this.USERUPDATESUCCESS = "User updated successfully";
-	this.SELECTONEUSER = "Select atleast one user";
-	this.SELECTONEUSERONLY = "Select only one user";
-	/*****************-----------------------------------****************/
-	/*****************---------------Role----------------****************/
-	this.GETROLES = "/youNeverWait/ws/ui/admin/listRoles";
-	this.VIEWROLEURL = "/youNeverWait/ws/ui/admin/viewRole/";
-	/*****************-----------------------------------****************/
+	
 	/*****************---------------Referral----------------****************/
 	this.VIEWREFERRALURL = "/youNeverWait/ws/ui/referral/view/";
 	this.REFERRALCREATESUCCESS ="Referral created successfully";
@@ -409,23 +312,5 @@ function Constants() {
 	this.SETTINGDELETECONFIRM="Do you really want to delete  ";
 	this.SETTINGDELETESUCCESS="Setting deleted successfully"
 	/*************--------------------------------------------------**********/
-	/*****************---------------FacilityDailyPayment----------------****************/
-	/*sample testing*/
-	this.FACILITYDAILYPAYMENT="facilityDailyPayment";
-	this.FACILITYDAILYPAYMENTVIEWINFO="Facility Payments";
-	this.FACILITYDAILYPAYMENTPAGETOOLBAR="facilityDailyPaymentPageToolBar";
-	this.FACILITYDAILYPAYMENTLISTTABLEURL="/weblims/json/facilityDailyPayment.json";
-	this.GETFACILITYPAYMENTLISTURL="/youNeverWait/ws/ui/agent/getPayableOrders";
-	this.GETFACILITYPAYABLELISTURL ="/youNeverWait/ws/ui/agent/getPayableOrdersList";
-	this.GETFACILITYBYAREA="/youNeverWait/ws/ui/agent/getFacilityByArea/";
-	this.UPDATEPAYMENTLIST = "/youNeverWait/ws/ui/agent/saveDailyPayment";
-	this.PAYMENTLISTUPDATESUCCESS = "Payment updated successfully";
-	/*************--------------------------------------------------**********/
-	/*************-----------------Discount------------------------------*****/
-	this.Fixed="Fixed";
-	this.SELECTDISCOUNT = "Please select discount";
-	this.SAMEDISCOUNTEXIST="Discount exists";
-	this.ENTERDISCOUNTVALUE="Please enter discount value";
-	this.DISCOUNTGREAT100PERC="Discount not be greater than 100%";
-	this.DISCOUNTUPDATESUCCESS="Discount updated successfully";
+	
 }

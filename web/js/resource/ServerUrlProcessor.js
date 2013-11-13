@@ -1,7 +1,9 @@
 function ServerUrlProcessor() {
 	
-	this.setUrl=function(url) {
+	
+	 this.setUrl=function(url) {
 		this.url = url;
+		
 	}
 
 	this.post = function(param) {
@@ -47,5 +49,5 @@ function ServerUrlProcessor() {
 		//	location.reload();
 		}
 		return response;	
-	}
+	} 
 }	
