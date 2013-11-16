@@ -3,6 +3,12 @@ function BranchNetlimsDTO(name) {
 		this.name=name;
 	}	
 }
+BranchNetlimsDTO.prototype.setglobalId= function(globalId) {
+	this.globalId=globalId;
+}
+BranchNetlimsDTO.prototype.getglobalId = function() {
+	return this.globalId;
+}
 BranchNetlimsDTO.prototype.setlabId= function(labId) {
 	this.labId=labId;
 }

@@ -1,22 +1,21 @@
 function netlimsAccountUIStartup() {
 	this.pgTableName = "#branchNetlimsAcc";
 	this.pgTableContainer="#branchNetlimsAccTableCont"; 
+	this.pgTableNameorderList="#branchOrderNetlimsAcc";
 	this.pageTitle = $j('#pageTitle');
-	this.ptbCreate=$j('#branchNetlimsAccPTBContainer #btn_new_ptb_id');
-	this.ptbView=$j('#branchNetlimsAccPTBContainer #btn_view_ptb_id');
-	this.ptbDelete=$j('#branchNetlimsAccPTBContainer #btn_delete_ptb_id');
-	this.ptbSync=$j('#branchNetlimsAccPTBContainer #btn_change_ptb_id');
+	this.ptbCreate=$j('#BRANCHPTBContainer #btn_new_ptb_id');
+	this.ptbView=$j('#BRANCHPTBContainer #btn_view_ptb_id');
+	this.ptbDelete=$j('#BRANCHPTBContainer #btn_delete_ptb_id');
+	this.ptbSync=$j('#BRANCHPTBContainer #btn_change_ptb_id');
 	this.errorData = $j('#errorDivData');
 	this.errorHeader = $j('#errorDivHeader');
 	this.netlimsId=userdata.labId;
 	this.pgTableRowClass = this.pgTableName + ' .branchNetlimsAccIdCol';
 	this.exp = new ExpressionListDTO();
 	this.netlimsAccService = new NetlimsAccServiceImpl();
-	//this.testService = new TestServiceImpl();
 	this.listUrl = constants.NETLIMSACCBRANCHLISTURL;
 	this.netlimsAccTableNavigator = new DataTableNavigator(this.pgTableName,this.listUrl,this.pgTableContainer,this.netlimsAccService,this.exp);
-	
-	//this.viewReferralUI = new ViewReferralUI(this);
+	this.viewNetlimsBranchUI = new ViewNetlimsBranchUI(this);
 }
 
 netlimsAccountUIStartup.prototype.setnetlimsAccTableNavigator = function(netlimsAccTableNavigator) {
@@ -25,32 +24,19 @@ netlimsAccountUIStartup.prototype.setnetlimsAccTableNavigator = function(netlims
 netlimsAccountUIStartup.prototype.getnetlimsAccTableNavigator = function() {
 	return this.netlimsAccTableNavigator;
 }
-netlimsAccountUIStartup.prototype.getBranchService = function() {
+netlimsAccountUIStartup.prototype.getViewNetlimsBranchUI = function() {
+	return this.viewNetlimsBranchUI;
+}
+netlimsAccountUIStartup.prototype.getBranchId = function() {
+	return this.BranchId;
+}
+netlimsAccountUIStartup.prototype.setBranchId = function(BranchId) {
+	this.BranchId=BranchId;
+}
+netlimsAccountUIStartup.prototype.getNetlimsUIService = function() {
 	return this.netlimsAccService;
 }
-/* OrderUIStartup.prototype.getViewHistoryUI = function() {
-	return this.viewHistoryUI;
-}
-OrderUIStartup.prototype.getViewOrderUI = function() {
-	return this.viewOrderUI;
-}
-OrderUIStartup.prototype.setOrderTableNavigator = function(orderTableNavigator) {
-	this.orderTableNavigator = orderTableNavigator;
-}
 
-OrderUIStartup.prototype.getOrderTableNavigator = function() {
-	return this.orderTableNavigator;
-}
-
-OrderUIStartup.prototype.getTestPackageService = function() {
-	return this.testPackageService;
-}
-OrderUIStartup.prototype.getTestService = function() {
-	return this.testService;
-}
-OrderUIStartup.prototype.getOrderId = function() {
-	return this.orderId;
-} */
 
 //Set the page title of the order ui page
 netlimsAccountUIStartup.prototype.setPageTitle = function(value) {
@@ -106,12 +92,38 @@ netlimsAccountUIStartup.prototype.createBranchModal = function(obj) {
 	return newBranchUI;
 }
 
+netlimsAccountUIStartup.prototype.branchorderlist = function() {
+	var self = this;
+	commonMethodInvoker.removeErrors();
+	self.setPageTitle(constants.TODAYSORDERLIST);
+	ajaxProcessor.setUrl(constants.NETLIMSACCTODAYSORDERLISTURL);
+	var branchTable=ajaxProcessor.get();
+	var contentForm = new form(branchTable);
+	$j('#tabs-1').html(contentForm.result);	
+	dataTableProcessor.setCustomTable(self.pgTableNameorderList);
+	ajaxProcessor.setUrl(constants.NETLIMSACCTODAYSORDERLISTTABLEURL + self.netlimsId);
+	var pgDataList = ajaxProcessor.get();
+	self.netlimsAccService.setTableValuesOrderList(self.pgTableNameorderList,pgDataList);
+	 
+	
+}
+
 netlimsAccountUIStartup.prototype.bindToolBarEvents = function() {
 	var self=this;
+	self.ptbCreate.die('click').live('click',function() {
+		var obj=$j(this);
+		self.createBranchModal(obj);
+	});	
+	self.ptbView.die('click').live('click',function() {
+		removeErrors();
+		var branchId=self.getSelectedbranchId(self.pgTableName);
+		if(branchId!="") {
+			var viewNetlimsBranchUI = self.getViewNetlimsBranchUI();
+			viewNetlimsBranchUI.init(branchId);
+		}	
+	});
 	
 	
-	
-	/*Page Tool Bar Events ends here*/
 	
 	
 	

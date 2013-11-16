@@ -67,22 +67,23 @@ GlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 		});
 	}
 	
-	
-	
-	/*if($j(self.editRateButton)) {
-		$j(self.editRateButton).die('click').live("click",function() {	
-			var obj=$j(this);
-			commonMethodInvoker.removeErrors();
-			if(pageHandler.isTestPackageClassLoaded()!=true){
-				var testPackageClass = new TestPackageClassLoader();
-				testPackageClass.load();
-				pageHandler.setTestPackageClassLoaded(true);
+	if($j(self.netlimsdownLoad)) {
+		$j(self.netlimsdownLoad).die('click').live("click",function() {		
+			$j.ajax({
+			type: 'GET',
+			url: serverPath + "/youNeverWait/ws/ui/lab/download",
+			dataType: 'html',
+			contentType: 'text/html',
+			success: function (html) {
+			var w = window.open();
+			w.document.writeln(html);
+			//w.location.reload();
 			}
-			var testPackageUI = new TestPackageUIStartup();
-			testPackageUI.createRateModal(obj);
+			});
 		});
 	}
-	 */
+	
+	
 }
 GlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 	var self=this;
@@ -101,45 +102,20 @@ GlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 		});
 	}	
 	
-	
-	/*if($j(self.dashboardButton)){
-		$j(self.dashboardButton).die('click').live("click",function() {	
+	if($j(self.netlimsAccbranchorders)) {
+		$j(self.netlimsAccbranchorders).die('click').live("click",function() {
+			 var obj=$j(this);
 			commonMethodInvoker.removeErrors();
-			pageHandler.setHomePage(constants.DASHBOARDPAGE);
-			self.reset();
-			var dashboardUI = new DashboardUIStartup();
-			dashboardUI.init();
-		});
-	}
-	
-	if($j(self.facilityButton))	{
-		$j(self.facilityButton).die('click').live("click",function() {
-			commonMethodInvoker.removeErrors();
-			pageHandler.setHomePage(constants.FACILITYPAGE);
-			self.reset();
-			if(pageHandler.isFacilityClassLoaded()!=true){
-				var facilityClass = new FacilityClassLoader();
-				facilityClass.load();
-				pageHandler.setFacilityClassLoaded(true);
+			$j('#pageToolBar-Container').html("")
+			if(pageHandler.isnetlimsAccClassLoaded()!=true){
+				var netlimsAccClass = new netlimsAccClassLoader();
+				netlimsAccClass.load();
+				pageHandler.setnetlimsAccClassLoaded(true);
 			}
-			var facilityUI = new FacilityUIStartup();			
-			facilityUI.init();
-		});
-	}
-	if($j(self.orderButton)){
-		$j(self.orderButton).die('click').live("click",function() {
-			commonMethodInvoker.removeErrors();
-			pageHandler.setHomePage(constants.ORDERPAGE);
-			self.reset();
-			if(pageHandler.isOrderClassLoaded()!=true){
-				var orderClass = new OrderClassLoader();
-				orderClass.load();
-				pageHandler.setOrderClassLoaded(true);
-			}
-			var orderUI = new OrderUIStartup();			
-			orderUI.init();
+			var netlimsAccUI = new netlimsAccountUIStartup();	
+			netlimsAccUI.branchorderlist(); 
 		});
 	}	
 	
-	 */
+	
 }

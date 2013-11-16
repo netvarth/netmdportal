@@ -6,10 +6,10 @@ function netlimsAccClassLoader() {
 		})
 		$j.getScript("/youNeverWait/js/youneverwait/ui/netlimsAccount/newBranchUI.js").done(function(script,textStatus){
 		})
-		//$j.getScript("/youNeverWait/js/youneverwait/ui/referral/ViewReferralUI.js").done(function(script,textStatus){
-		//})
-		//$j.getScript("/youNeverWait/js/youneverwait/ui/referral/ViewReferralPTB.js").done(function(script,textStatus){
-		//})
+		$j.getScript("/youNeverWait/js/youneverwait/ui/netlimsAccount/ViewNetlimsBranchUI.js").done(function(script,textStatus){
+		})
+		$j.getScript("/youNeverWait/js/youneverwait/ui/netlimsAccount/ViewNetlimsBranchPTB.js").done(function(script,textStatus){
+		})
 		$j.getScript("/youNeverWait/js/validation/NetlimsBranchValidator.js").done(function(script,textStatus){
 		}) 
 	}

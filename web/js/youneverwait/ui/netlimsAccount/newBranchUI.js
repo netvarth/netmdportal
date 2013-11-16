@@ -29,9 +29,9 @@ NewBranchUI.prototype.getnetlimsAccTableNavigator = function() {
 	var branchUIStartup = this.getBranchUIStartup();
 	return branchUIStartup.getnetlimsAccTableNavigator();
 }
-NewBranchUI.prototype.getBranchService = function() {
+NewBranchUI.prototype.getNetlimsUIService = function() {
 	var branchUIStartup = this.getBranchUIStartup();
-	return branchUIStartup.getBranchService();
+	return branchUIStartup.getNetlimsUIService();
 }
 
 NewBranchUI.prototype.init = function() {
@@ -88,7 +88,7 @@ NewBranchUI.prototype.create = function() {
 	var error  = branchValidator.validate(branch,self);
 	//alert("Error"+error);
 	if(error.errorStatus==false) {
-		var branchService = self.getBranchService();
+		var branchService = self.getNetlimsUIService();
 		var branchResponse =branchService.createBranchNetlims(branch);
 		//alert(JSON.stringify(branchResponse));
 		if(branchResponse.error==null) {

@@ -10,6 +10,8 @@ function Constants() {
 	/*****************-------------General-----------**----*************/
 	this.BRANCHLIST="BRANCH LIST";
 	this.BRANCHCREATESUCCESS="Branch created successfully";
+	this.GENERALPTBURL="/youNeverWait/json/toolbars/viewBranchGeneralToolbar1.json";
+	this.BRANCHUPDATESUCCESS="Branch updated successfully";
 	/*****************-------------netlimsaccount-----------**----*************/
 	this.NETLIMSACCRIBBONURL="/youNeverWait/json/toolbars/netlimsGlobalToolbar.json";
 	this.NETLIMSACCLEFTPANEURL="/youNeverWait/json/toolbars/netlimsLeftPaneToolbar.json";
@@ -20,6 +22,14 @@ function Constants() {
 	this.NETLIMSACCPAGEBRANCHJSON="/youNeverWait/json/toolbars/netlimsAccBranchPageToolBar.json";
 	this.NETLIMSACCBRANCHLISTJSON="/youNeverWait/json/list/netlimsAccBranchTable.json";
 	this.CREATENETLIMSACCBRANCHURL="/youNeverWait/ws/ui/lab/createBranch";
+	this.TODAYSORDERLIST="Today's Branch Orders";
+	this.NETLIMSACCTODAYSORDERLISTURL="/youNeverWait/json/list/netlimsAccBranchOrdersTable.json";
+	this.NETLIMSACCTODAYSORDERLISTTABLEURL="/youNeverWait/ws/ui/lab/viewBranchOrders/";
+	this.VIEWNETLIMSACCBRCHPAGEURL="/youNeverWait/json/view/viewNetlimsAccBranchDetails.json";
+	this.VIEWNETLIMSACCBRCHURL="/youNeverWait/ws/ui/lab/viewBranch/";
+	this.NETLIMSACCBRCHGENERAL="netlimsaccbrach";
+	this.UPDATENETLIMSACCBRCHURL="/youNeverWait/ws/ui/lab/updateBranch"
+	
 	/*****************-------------General-----------**----*************/
 	this.NAME = "name";
 	this.ADDRESS = "address";
@@ -27,7 +37,6 @@ function Constants() {
 	this.MOBILE = "mobile";
 	this.DESIGNATION = "designation";
 	this.LOGINID = "loginid";
-	this.ROLE = "role";
 	this.PASSWORD = "password";
 	this.EMAIL = "email";
 	this.STDRATE="stdRate";
