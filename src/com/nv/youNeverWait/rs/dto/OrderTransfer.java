@@ -10,6 +10,14 @@
  */
 package com.nv.youNeverWait.rs.dto;
 
+import java.io.IOException;
+
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+
 /**
  *
  *
@@ -20,7 +28,7 @@ public class OrderTransfer {
 	private int destinationLabId;
 	private int sourceLabBranchId;
 	private int destinationLabBranchId;
-	private String orderDetails;
+	private Object orderDetails;
 	private String orderUid;
 	private HeaderDTO header;
 	
@@ -102,13 +110,43 @@ public class OrderTransfer {
 	 * @return the orderDetails
 	 */
 	public String getOrderDetails() {
-		return orderDetails;
+		
+		return (String) orderDetails;
 	}
 	/**
 	 * @param orderDetails the orderDetails to set
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonGenerationException 
 	 */
-	public void setOrderDetails(String orderDetails) {
+	public void setOrderDetails(Object orderDetails) {
+		ObjectMapper maper = new ObjectMapper();
+		String jsonRequest = null;
+		try {
+			jsonRequest = maper.writeValueAsString(orderDetails);
+		} catch (Exception e) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidSyncTime);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		this.orderDetails = jsonRequest;
+
+	}
+	
+	public void setTransferOrderDetails(String order) {
+		ObjectMapper maper = new ObjectMapper();
+		Object orderDetails;
+		try {
+			orderDetails = maper.readValue(order, Object.class);
+		} catch (Exception e) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidSyncTime);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
 		this.orderDetails = orderDetails;
+
 	}
 	
 

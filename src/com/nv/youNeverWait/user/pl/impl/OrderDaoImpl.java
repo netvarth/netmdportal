@@ -28,7 +28,6 @@ import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
-import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
 import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
@@ -83,7 +82,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			newOrder.setSourceLabId(order.getSourceLab().getId());
 			newOrder.setSourceLabBranchId(order.getSourceBranch().getId());
 			newOrder.setOrderUid(order.getOrderUid());
-			newOrder.setOrderDetails(order.getOrderDetails());
+			newOrder.setTransferOrderDetails(order.getOrderDetails());
 			orderList.add(newOrder);
 		}
 		orderDetail.setOrders(orderList);
@@ -196,19 +195,6 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		orderType.setOrderTypeCodes(lab.getOrderTypeCode());
 		return orderType;
 	}
-	/**
-	 * @return
-	 */
-	private Integer getLastRecordId() {
-
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_LAST_UNIQUE_ID);
-		Integer lastId = (Integer) query.getSingleResult();
-		if (lastId == null)
-			lastId = 0;
-		return lastId;
-	}
-
 	/**
 	 * 
 	 * @param branchId
