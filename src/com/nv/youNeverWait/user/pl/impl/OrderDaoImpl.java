@@ -82,7 +82,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			OrderTransfer newOrder = new OrderTransfer();
 			newOrder.setSourceLabId(order.getSourceLab().getId());
 			newOrder.setSourceLabBranchId(order.getSourceBranch().getId());
-			newOrder.setUniqueId(order.getUniqueId());
+			newOrder.setOrderUid(order.getOrderUid());
 			newOrder.setOrderDetails(order.getOrderDetails());
 			orderList.add(newOrder);
 		}
@@ -132,11 +132,14 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		orderTransferTbl.setOrderDetails(orderTranfer.getOrderDetails());
 
 		/** Setting unique id if there is no unique id given from **/
-		if (orderTranfer.getUniqueId() <= 0) {
-			Integer lstRecordId = getLastRecordId();
-			orderTransferTbl.setUniqueId(lstRecordId + 1);
+		if (orderTranfer.getOrderUid()==null && orderTranfer.getOrderUid().equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.OrderUidNull);
+
+			se.setDisplayErrMsg(true);
+			throw se;
 		} else {
-			orderTransferTbl.setUniqueId(orderTranfer.getUniqueId());
+			orderTransferTbl.setOrderUid(orderTranfer.getOrderUid());
 		}
 
 		Date createdTime = new Date();
@@ -144,7 +147,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		orderTransferTbl.setUpdatedDateTime(createdTime);
 		save(orderTransferTbl);
 
-		response.setUniqueId(orderTransferTbl.getUniqueId());
+		response.setOrderUid(orderTransferTbl.getOrderUid());
 		response.setSuccess(true);
 		return response;
 	}
