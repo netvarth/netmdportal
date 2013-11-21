@@ -41,6 +41,12 @@ function PageHandler() {
 	this.setnetlimsAccClassLoaded=function(status){
 		this.netlimsAccClassLoaded=status;
 	}
+	this.isnetlimsAccSettingsClassLoaded=function(){
+		return this.netlimsAccSettingsClassLoaded;
+	}
+	this.setnetlimsAccSettingsClassLoaded=function(status){
+		this.netlimsAccSettingsClassLoaded=status;
+	}
 	/* this.isOrderClassLoaded=function(){
 		return this.orderClassLoaded;
 	}
