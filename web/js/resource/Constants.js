@@ -12,6 +12,14 @@ function Constants() {
 	this.BRANCHCREATESUCCESS="Branch created successfully";
 	this.GENERALPTBURL="/youNeverWait/json/toolbars/viewBranchGeneralToolbar1.json";
 	this.BRANCHUPDATESUCCESS="Branch updated successfully";
+	this.NETLIMSBRANCHDELETESUCCESS="Inactivated Branch Successfully";
+	this.ADMINTOOLBARJSON ="/youNeverWait/json/toolbars/netlimsAccChangePwd.json";
+	this.OLDPASSWRDREQUIRED="Old Password Required";
+	this.NEWPASSWRDREQUIRED="New Password Required";
+	this.CONFIRMPASSWRDREQUIRED="Confirm Password Required";
+	this.PASSWRDMISMATCH="Password Do Not Match";
+	this.PASSWRDCHANGDSUCCES="Password changed successfully";
+	
 	/*****************-------------netlimsaccount-----------**----*************/
 	this.NETLIMSACCRIBBONURL="/youNeverWait/json/toolbars/netlimsGlobalToolbar.json";
 	this.NETLIMSACCLEFTPANEURL="/youNeverWait/json/toolbars/netlimsLeftPaneToolbar.json";
@@ -28,8 +36,11 @@ function Constants() {
 	this.VIEWNETLIMSACCBRCHPAGEURL="/youNeverWait/json/view/viewNetlimsAccBranchDetails.json";
 	this.VIEWNETLIMSACCBRCHURL="/youNeverWait/ws/ui/lab/viewBranch/";
 	this.NETLIMSACCBRCHGENERAL="netlimsaccbrach";
-	this.UPDATENETLIMSACCBRCHURL="/youNeverWait/ws/ui/lab/updateBranch"
-	
+	this.UPDATENETLIMSACCBRCHURL="/youNeverWait/ws/ui/lab/updateBranch";
+	this.DELETENETLIMSBRANCHURL="/youNeverWait/ws/ui/lab/deleteBranch";
+	this.NEWNETLIMSACCPASWRDCHGMODAL="changepwdModalNetLims";
+	this.NEWNETLIMSACCPASWRDCHGJSON="/youNeverWait/json/changepassword/netlimsAccChangePassword.json";
+	this.CHANGEPASSWORDURL="/youNeverWait/ws/ui/lab/changePassword";
 	/*****************-------------General-----------**----*************/
 	this.NAME = "name";
 	this.ADDRESS = "address";

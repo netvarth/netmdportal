@@ -43,8 +43,13 @@ NetlimsAccServiceImpl.prototype.viewNetlimsBranchDetails=function(netlimsBrchId)
 	ajaxProcessor.setUrl(constants.VIEWNETLIMSACCBRCHURL + netlimsBrchId);
 	return ajaxProcessor.get();
 }
-/*
-ReferralServiceImpl.prototype.deleteReferral=function(netlimsId) {
-	ajaxProcessor.setUrl(constants.DELETEREFERRALURL + netlimsId);
-	return ajaxProcessor.get();
-}*/
+
+NetlimsAccServiceImpl.prototype.deleteNetlimsBranch=function(netlimsObj) {
+	ajaxProcessor.setUrl(constants.DELETENETLIMSBRANCHURL);
+	return ajaxProcessor.post(netlimsObj);
+}
+
+NetlimsAccServiceImpl.prototype.changePasswrdNetlims=function(changePasswrd) {
+	ajaxProcessor.setUrl(constants.CHANGEPASSWORDURL);
+	return ajaxProcessor.post(changePasswrd);
+}

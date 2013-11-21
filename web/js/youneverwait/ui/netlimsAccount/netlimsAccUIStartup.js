@@ -122,7 +122,25 @@ netlimsAccountUIStartup.prototype.bindToolBarEvents = function() {
 			viewNetlimsBranchUI.init(branchId);
 		}	
 	});
-	
+	self.ptbDelete.die('click').live('click',function() {
+		removeErrors();
+		var branchId=self.getSelectedbranchId(self.pgTableName);
+		if(branchId!="") {
+			var netlimsUIService = self.getNetlimsUIService();
+			var netlimsResponse = netlimsUIService.viewNetlimsBranchDetails(branchId);
+				var netlimsBranchDel=netlimsResponse.branch;	
+				 var netlimsDelResponse = netlimsUIService.deleteNetlimsBranch(netlimsBranchDel);
+				//alert(JSON.stringify(netlimsDelResponse));	
+				if(netlimsDelResponse.error==null) {
+					showTip(constants.NETLIMSBRANCHDELETESUCCESS);//For showing the global Tip
+				} else {
+					commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netlimsDelResponse.error));
+				}
+				var netlimsAccTableNavigator = self.getnetlimsAccTableNavigator();
+				netlimsAccTableNavigator.list();
+			 
+		}	
+	});
 	
 	
 	

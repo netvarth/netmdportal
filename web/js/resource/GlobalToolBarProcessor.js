@@ -116,6 +116,14 @@ GlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 			netlimsAccUI.branchorderlist(); 
 		});
 	}	
-	
+	if($j(self.netlimsAccbranchsettings)) {
+		$j(self.netlimsAccbranchsettings).die('click').live("click",function() {
+			 var obj=$j(this);
+			commonMethodInvoker.removeErrors();
+			$j('#pageToolBar-Container').html("");
+			var adminUI = new SettingsToolBarProcessor();
+			adminUI.init(); 
+		});
+	}	
 	
 }

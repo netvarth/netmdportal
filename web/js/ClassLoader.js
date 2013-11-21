@@ -18,6 +18,8 @@ function ClassLoader() {
 		})
 		$j.getScript("/youNeverWait/js/resource/GlobalToolBarProcessor.js").done(function(script,textStatus){
 		})
+		$j.getScript("/youNeverWait/js/resource/SettingsToolBarProcessor.js").done(function(script,textStatus){
+		})
 		 $j.getScript("/youNeverWait/js/resource/PageToolBarProcessor.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/resource/FilterToolBarProcessor.js").done(function(script,textStatus){
@@ -71,6 +73,8 @@ $j.getScript("/youNeverWait/js/framework/login.js").done(function(script, textSt
 		})
 		$j.getScript("/youNeverWait/js/dto/CreateBranchDTO.js").done(function(script,textStatus){
 		})
+		$j.getScript("/youNeverWait/js/dto/ChangePasswrdDTO.js").done(function(script,textStatus){
+		})
 		$j.getScript("/youNeverWait/js/impl/GlobalServiceImpl.js").done(function(script, textStatus) {
 		})	
 		/*--------------------------------*/
@@ -105,6 +109,7 @@ $j.getScript("/youNeverWait/js/framework/login.js").done(function(script, textSt
 		})
 		$j.getScript("/youNeverWait/js/youneverwait/ui/netlimsAccount/netlimsAccClassLoader.js").done(function(script,textStatus){
 		})
-		
+		$j.getScript("/youNeverWait/js/youneverwait/settings/netlimsAccSettings/NetlimsAccSettingsClassLoader.js").done(function(script,textStatus){
+		})
 	}
 }

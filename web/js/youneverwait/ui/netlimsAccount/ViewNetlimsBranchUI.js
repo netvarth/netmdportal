@@ -153,7 +153,7 @@ ViewNetlimsBranchUI.prototype.bindEvents = function() {
 				self.viewNetlimsBranchDetails(branchInfo.branch.globalId);
 				self.readable();
 			} else
-				commonMethodInvoker.createServerError(self.errorHeader,self.errorData, netlimsResponse.errorMessage);
+				commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netlimsResponse.error));
 		} else
 			self.createError(error);	
 	}); 

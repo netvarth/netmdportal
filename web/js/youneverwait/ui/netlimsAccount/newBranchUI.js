@@ -96,7 +96,7 @@ NewBranchUI.prototype.create = function() {
 			showTip(constants.BRANCHCREATESUCCESS);//For showing the global Tip			
 			self.clearFields();
 		} else 
-			commonMethodInvoker.createServerError(self.errorHeader,self.errorData, branchResponse.displayErrMsg);
+			commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(branchResponse.error));
 	} else 
 		self.createError(error); 
 }
