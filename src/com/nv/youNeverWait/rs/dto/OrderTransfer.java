@@ -21,7 +21,7 @@ public class OrderTransfer {
 	private int sourceLabBranchId;
 	private int destinationLabBranchId;
 	private String orderDetails;
-	private int uniqueId;
+	private String orderUid;
 	private HeaderDTO header;
 	
 	
@@ -37,17 +37,18 @@ public class OrderTransfer {
 	public void setHeader(HeaderDTO header) {
 		this.header = header;
 	}
+	
 	/**
-	 * @return the uniqueId
+	 * @return the orderUid
 	 */
-	public int getUniqueId() {
-		return uniqueId;
+	public String getOrderUid() {
+		return orderUid;
 	}
 	/**
-	 * @param uniqueId the uniqueId to set
+	 * @param orderUid the orderUid to set
 	 */
-	public void setUniqueId(int uniqueId) {
-		this.uniqueId = uniqueId;
+	public void setOrderUid(String orderUid) {
+		this.orderUid = orderUid;
 	}
 	/**
 	 * @return the sourceLabId

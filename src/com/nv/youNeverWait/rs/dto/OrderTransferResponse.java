@@ -19,7 +19,7 @@ public class OrderTransferResponse {
 
 	ErrorDTO error;
 	boolean success;
-	int uniqueId;
+	String orderUid;
 	/**
 	 * @return the error
 	 */
@@ -45,15 +45,16 @@ public class OrderTransferResponse {
 		this.success = success;
 	}
 	/**
-	 * @return the uniqueId
+	 * @return the orderUid
 	 */
-	public int getUniqueId() {
-		return uniqueId;
+	public String getOrderUid() {
+		return orderUid;
 	}
 	/**
-	 * @param uniqueId the uniqueId to set
+	 * @param orderUid the orderUid to set
 	 */
-	public void setUniqueId(int uniqueId) {
-		this.uniqueId = uniqueId;
+	public void setOrderUid(String orderUid) {
+		this.orderUid = orderUid;
 	}
+	
 }

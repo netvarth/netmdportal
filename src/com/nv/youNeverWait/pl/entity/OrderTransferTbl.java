@@ -27,8 +27,9 @@ public class OrderTransferTbl implements Serializable {
 	@Column(name="order_details", nullable=false)
 	private String orderDetails;
 
-	@Column(name="unique_id", nullable=false)
-	private int uniqueId;
+
+	@Column(name="order_uid", nullable=false, length=45)
+	private String orderUid;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="updated_date_time", nullable=false)
@@ -81,12 +82,19 @@ public class OrderTransferTbl implements Serializable {
 		this.orderDetails = orderDetails;
 	}
 
-	public int getUniqueId() {
-		return this.uniqueId;
+	
+	/**
+	 * @return the orderUid
+	 */
+	public String getOrderUid() {
+		return orderUid;
 	}
 
-	public void setUniqueId(int uniqueId) {
-		this.uniqueId = uniqueId;
+	/**
+	 * @param orderUid the orderUid to set
+	 */
+	public void setOrderUid(String orderUid) {
+		this.orderUid = orderUid;
 	}
 
 	public Date getUpdatedDateTime() {
