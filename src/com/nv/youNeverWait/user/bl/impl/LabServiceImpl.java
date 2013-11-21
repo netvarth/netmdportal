@@ -1156,12 +1156,12 @@ public class LabServiceImpl implements LabService {
 	 * @see com.nv.youNeverWait.user.bl.service.LabService#transferOrder(com.nv.youNeverWait.rs.dto.OrderTransfer)
 	 */
 	@Override
-	public OrderTransferResponse transferOrder(OrderTransfer orderTranfer) {
+	public ResponseDTO transferOrder(OrderTransfer orderTranfer) {
 	
 		validator.validateHeaderDetails(orderTranfer.getHeader());
 		validator.validateLabBranchIds(orderTranfer.getHeader().getHeadOfficeId(),
 				orderTranfer.getHeader().getBranchId());
-		OrderTransferResponse response= orderService.transferOrder(orderTranfer);
+		ResponseDTO response= orderService.transferOrder(orderTranfer);
 		return response;
 	}
 	

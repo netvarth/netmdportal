@@ -30,7 +30,7 @@ public interface OrderDao {
 	 * @param orderTranfer
 	 * @return
 	 */
-	public OrderTransferResponse transferOrder(OrderTransfer orderTranfer);
+	public ResponseDTO transferOrder(OrderTransfer orderTranfer);
 	
 	/**
 	 * @param header

@@ -58,10 +58,10 @@ public class OrderManager implements OrderService {
 	 * youNeverWait.rs.dto.OrderTransfer)
 	 */
 	@Override
-	public OrderTransferResponse transferOrder(OrderTransfer orderTranfer) {
+	public ResponseDTO transferOrder(OrderTransfer orderTranfer) {
 
 		validator.validateOrderTransferDetails(orderTranfer);
-		OrderTransferResponse response = orderDao.transferOrder(orderTranfer);
+		ResponseDTO response = orderDao.transferOrder(orderTranfer);
 		return response;
 	}
 

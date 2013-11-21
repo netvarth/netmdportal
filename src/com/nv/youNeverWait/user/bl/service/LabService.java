@@ -101,7 +101,7 @@ public interface LabService {
 	 * @param orderTranferDto
 	 * @return
 	 */
-	public OrderTransferResponse transferOrder(OrderTransfer orderTranferDto);
+	public ResponseDTO transferOrder(OrderTransfer orderTranferDto);
 	/**
 	 * @param header
 	 * @param lastSyncTime

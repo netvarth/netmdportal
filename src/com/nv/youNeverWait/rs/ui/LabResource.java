@@ -881,9 +881,9 @@ public class LabResource {
 
 	@RequestMapping(value = "orderTransfer", method = RequestMethod.POST)
 	@ResponseBody
-	public OrderTransferResponse orderTransfer(
+	public ResponseDTO orderTransfer(
 			@RequestBody OrderTransfer orderTranfer) {
-		OrderTransferResponse response = new OrderTransferResponse();
+		ResponseDTO response = new ResponseDTO();
 		try {
 			response = labService.transferOrder(orderTranfer);
 		} catch (ServiceException e) {

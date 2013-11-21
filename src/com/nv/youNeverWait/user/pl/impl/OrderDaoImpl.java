@@ -100,8 +100,8 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 	 */
 	@Override
 	@Transactional
-	public OrderTransferResponse transferOrder(OrderTransfer orderTranfer) {
-		OrderTransferResponse response = new OrderTransferResponse();
+	public ResponseDTO transferOrder(OrderTransfer orderTranfer) {
+		ResponseDTO response = new ResponseDTO();
 		LabBranchTbl sourceLabBranch = getLabBranchId(
 				orderTranfer.getSourceLabBranchId(),
 				orderTranfer.getSourceLabId());
@@ -147,7 +147,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		orderTransferTbl.setUpdatedDateTime(createdTime);
 		save(orderTransferTbl);
 
-		response.setOrderUid(orderTransferTbl.getOrderUid());
+		response.setGlobalId(orderTransferTbl.getId());
 		response.setSuccess(true);
 		return response;
 	}
