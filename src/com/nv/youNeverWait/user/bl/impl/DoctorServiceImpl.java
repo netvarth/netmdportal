@@ -24,8 +24,6 @@ import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
-import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
-import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.DoctorDetailsForPatient;
 import com.nv.youNeverWait.rs.dto.DoctorListResponseDTO;
@@ -76,43 +74,13 @@ public class DoctorServiceImpl implements DoctorService {
 
 		validator.validateCreateDoctor(doctor, header);
 		ResponseDTO response = doctorDao.create(doctor, header);
-		NetmdBranchTbl netmdBranch = doctorDao.getById(NetmdBranchTbl.class,
+		NetmdBranchTbl netmdBranchTbl = doctorDao.getById(NetmdBranchTbl.class,
 				header.getBranchId());
-		NetmdLoginTbl netmdLogin = doctorDao.DoctorLoginDetails(
-				doctor.getEmail(), NetmdUserTypeEnum.Doctor.getDisplayName());
-		if (netmdLogin == null) {
-			sendEmailToDoctor(Constants.DOCTOR_REGISTER, doctor);
-		} else {
-			if (netmdLogin.getPassword() != null
-					&& !netmdLogin.getPassword().equals("")) {
-				sendCredentialsMailToDoctor(Constants.DOCTOR_CREDENTIALS,
-						doctor, netmdBranch.getName());
-			} else {
-				sendRemainderToDoctor(Constants.DOCTOR_REMAINDER, doctor);
-			}
-		}
+		String netmdBranch= netmdBranchTbl.getName();
+		/*Sending mail to doctor*/
+			sendEmailToDoctor(Constants.DOCTOR_REGISTER, doctor,netmdBranch);
+		
 		return response;
-	}
-
-	private void sendRemainderToDoctor(String subject, DoctorDetail doctor) {
-		String msgBody = "";
-		URL url = null;
-		try {
-			url = new URL("http://" + netMdServerIpAddress
-					+ "/youNeverWait/EmailFormat/DoctorRemainder.html");
-			msgBody = createDefaultEmailBody(url, doctor);
-
-			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,
-					doctor.getEmail(), mailFrom, 0, 0, null,
-					SendMsgCallbackEnum.DOCTOR_REMINDER.getId(), null);
-			mailThread.addSendMsgObj(obj);
-
-		} catch (IOException e) {
-			log.error("Error while sendig Email to Doctor", e);
-			e.printStackTrace();
-
-		}
-
 	}
 
 	/**
@@ -162,16 +130,17 @@ public class DoctorServiceImpl implements DoctorService {
 	 * folder 2.Create email body 3.Send email to the lab owner.
 	 * 
 	 * @param subject
-	 * @param netMd
+	 * @param doctor 
+	 * @param netmdBranch
 	 * @return
 	 */
-	private void sendEmailToDoctor(String subject, DoctorDetail doctor) {
+	private void sendEmailToDoctor(String subject, DoctorDetail doctor, String netmdBranch) {
 		String msgBody = "";
 		URL url = null;
 		try {
 			url = new URL("http://" + netMdServerIpAddress
 					+ "/youNeverWait/EmailFormat/DoctorRegistration.html");
-			msgBody = createDefaultEmailBody(url, doctor);
+			msgBody = createDefaultEmailBody(url, doctor,netmdBranch);
 
 			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,
 					doctor.getEmail(), mailFrom, 0, 0, null,
@@ -179,7 +148,7 @@ public class DoctorServiceImpl implements DoctorService {
 			mailThread.addSendMsgObj(obj);
 
 		} catch (IOException e) {
-			log.error("Error while sendig Email to Doctor", e);
+			log.error("Error while sending Email to Doctor", e);
 			e.printStackTrace();
 
 		}
@@ -190,10 +159,11 @@ public class DoctorServiceImpl implements DoctorService {
 	 * 
 	 * @param url
 	 * @param doctor
+	 * @param netmdBranch 
 	 * 
 	 * @return email message body
 	 */
-	private String createDefaultEmailBody(URL url, DoctorDetail doctor)
+	private String createDefaultEmailBody(URL url, DoctorDetail doctor, String netmdBranch)
 			throws IOException {
 
 		StringBuffer msgBodyBfr = new StringBuffer();
@@ -220,6 +190,10 @@ public class DoctorServiceImpl implements DoctorService {
 		fullMsgBody = fullMsgBody.replace("{ResetLink}", resetPasswordLink);
 		fullMsgBody = fullMsgBody.replace("{serverIpAddress}",
 				netMdServerIpAddress);
+		fullMsgBody = fullMsgBody.replace("{email}",
+				doctor.getEmail());
+		fullMsgBody = fullMsgBody.replace("{netmd}",
+				netmdBranch);
 		return fullMsgBody;
 	}
 
@@ -285,74 +259,6 @@ public class DoctorServiceImpl implements DoctorService {
 		List<DoctorLoginDTO> response = doctorDao.DoctorPasswordList(
 				lastSyncTime, passPhrase, netmdBranchId, currentSyncTime);
 		return response;
-	}
-
-	/**
-	 * Send mail to remind doctor to use same credentials as used for all login
-	 * 
-	 * @param subject
-	 * @param doctor
-	 * @param password
-	 */
-	private void sendCredentialsMailToDoctor(String subject,
-			DoctorDetail doctor,String  netmdName) {
-		String msgBody = "";
-		URL url = null;
-		try {
-			url = new URL("http://" + netMdServerIpAddress
-					+ "/youNeverWait/EmailFormat/DoctorCredentials.html");
-			msgBody = createDefaultEmailBodyForCredentialUse(url, doctor,netmdName);
-			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,
-					doctor.getEmail(), mailFrom, 0, 0, null,
-					SendMsgCallbackEnum.DOCTOR_CREDENTIALS.getId(), null);
-			mailThread.addSendMsgObj(obj);
-		} catch (IOException e) {
-			log.error("Error while sendig Email to Doctor", e);
-			e.printStackTrace();
-
-		}
-	}
-
-	/**
-	 * Create mail body for reminding doctor to use same login info as used
-	 * before
-	 * 
-	 * @param url
-	 * @param doctor
-	 * @param password
-	 * @return
-	 * @throws IOException
-	 */
-	private String createDefaultEmailBodyForCredentialUse(URL url,
-			DoctorDetail doctor,String netmdName)
-			throws IOException {
-		StringBuffer msgBodyBfr = new StringBuffer();
-		String fullMsgBody = "";
-		String encryptedUserName = StringEncoder.encryptWithStaticKey(doctor
-				.getEmail());
-		String resetPasswordLink = "http://"
-				+ netMdServerIpAddress
-				+ "/youNeverWait/EmailFormat/DoctorResetPassword.html?userName="
-				+ encryptedUserName;
-		java.net.URLConnection openConnection = url.openConnection();
-		InputStream inputStream = openConnection.getInputStream();
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				inputStream));
-		String readLine = "";
-		while ((readLine = in.readLine()) != null) {
-			msgBodyBfr.append(readLine).append("\n");
-		}
-		in.close();
-		fullMsgBody = msgBodyBfr.toString();
-		fullMsgBody = fullMsgBody.replace("{firstName}", doctor.getFirstName());
-		fullMsgBody = fullMsgBody.replace("{lastName}", doctor.getLastName());
-		fullMsgBody = fullMsgBody.replace("{userName}", doctor.getEmail()
-				.trim());
-		fullMsgBody = fullMsgBody.replace("{NetmdBranch}", netmdName);
-		fullMsgBody = fullMsgBody.replace("{ResetLink}", resetPasswordLink);
-		fullMsgBody = fullMsgBody.replace("{serverIpAddress}",
-				netMdServerIpAddress);
-		return fullMsgBody;
 	}
 
 	public DoctorDaoImpl getDoctorDaoImpl() {

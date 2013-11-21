@@ -13,5 +13,7 @@ public interface LogService {
 	public void saveUserDetails(String ipAddress, String userName,
 			String userType, Date loginTime, Date logoutTime,
 			String applicationName, String actionName);
+	public void saveSyncDetails(String ipAddress,String applicationName, String lastSyncTime,
+			int branchId,int headOfficeId);
 
 }

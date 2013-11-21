@@ -98,13 +98,13 @@ public class DoctorServiceTest {
 				.getBean("doctor.service");
 		DoctorDTO doctor = new DoctorDTO();
 		DoctorDetail doctorDetail = new DoctorDetail();
-		doctorDetail.setAddress("Peramangalam");
-		doctorDetail.setEmail("linakerLouis@netvarth.com");
-		doctorDetail.setFirstName("linakerLouis");
-		doctorDetail.setLastName("Jaya");
+		doctorDetail.setAddress("vazhappilly");
+		doctorDetail.setEmail("luciya.jose@netvarth.com");
+		doctorDetail.setFirstName("winson");
+		doctorDetail.setLastName("grace");
 		doctorDetail.setDateOfBirth("1988-03-29");
 		doctorDetail.setConsultationInterval("20");
-		doctorDetail.setGender("FeMale");
+		doctorDetail.setGender("Male");
 		
 		 List<DoctorExperienceDTO> doctorExperience= new
 		 ArrayList<DoctorExperienceDTO>();
@@ -145,7 +145,7 @@ public class DoctorServiceTest {
 		 
 		 
 		LoginDTO login = new LoginDTO();
-		login.setUserName("linakerlouisd@netvarth.com");
+		login.setUserName("luciya.jose@netvarth.com");
 		login.setUserType("doctor");
 		doctorDetail.setLogin(login);
 

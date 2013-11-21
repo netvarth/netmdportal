@@ -203,17 +203,17 @@ public class PatientServiceTest {
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 		header.setMacId("00-80-48-6E-E1-E2");
 		LoginDTO login = new LoginDTO();
-		login.setUserName("maneesha@netvarth.com");
+		login.setUserName("luciya.jose@netvarth.com");
 		login.setUserType("patient");
 		PatientDetail detail = new PatientDetail();
 		detail.setBranchId(5);
-		detail.setFirstName("maneesha");
+		detail.setFirstName("lucia");
 		detail.setLastName("joyson");
 		detail.setPhone("01224242442");
 		detail.setAddress("Vadakkan");
 		detail.setGender("Male");
 		detail.setAge(20);
-		detail.setEmail("maneesha@netvarth.com");
+		detail.setEmail("luciya.jose@netvarth.com");
 		detail.setMobile("9234567821");
 		detail.setLogin(login);
 		

@@ -42,4 +42,15 @@ public class LogServiceImpl implements LogService {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.LogService#saveSyncDetails(java.lang.String, java.lang.String, java.lang.String, int, int)
+	 */
+	@Override
+	public void saveSyncDetails(String ipAddress, String applicationName,
+			String lastSyncTime, int branchId, int headOfficeId) {
+		logDao.saveSyncDetails(ipAddress, applicationName, lastSyncTime,
+				branchId, headOfficeId);
+	}
+
+
 }

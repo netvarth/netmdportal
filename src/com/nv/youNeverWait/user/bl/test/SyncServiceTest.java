@@ -128,7 +128,7 @@ private ApplicationContext applicationContext;
 			HeaderDTO header = new HeaderDTO();
 			header.setHeadOfficeId(3);
 			header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
-			header.setMacId("00-19-DB-E0-7C-E1");
+			header.setMacId("00-80-48-6E-E1-E2");
 			header.setBranchId(5);
 			
 			sync.setHeader(header);
@@ -137,10 +137,10 @@ private ApplicationContext applicationContext;
 			
 			List<DoctorDetail> doctor = new ArrayList<DoctorDetail>();
 			DoctorDetail doctorDetail1= new DoctorDetail();
-			doctorDetail1.setAddress("vadakkan");
-			doctorDetail1.setEmail("rakhi.vasudevan@netvarth.com");
-			doctorDetail1.setFirstName("ash");
-			doctorDetail1.setLastName("pauly");
+			doctorDetail1.setAddress("palayur");
+			doctorDetail1.setEmail("luciya.jose@netvarth.com");
+			doctorDetail1.setFirstName("luciMol");
+			doctorDetail1.setLastName("Mahan");
 			doctorDetail1.setDateOfBirth("1989-10-10");
 			doctorDetail1.setConsultationInterval("15");
 			

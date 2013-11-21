@@ -159,7 +159,7 @@ public class OrderServiceTest {
 		orderTranferDto.setSourceLabBranchId(123);
 		orderTranferDto.setDestinationLabId(193);
 		orderTranferDto.setDestinationLabBranchId(123);
-		orderTranferDto.setUniqueId(1);
+		orderTranferDto.setOrderUid("JV001");
 		orderTranferDto.setOrderDetails("orderUidThird");
 		try{
 		
