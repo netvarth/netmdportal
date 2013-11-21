@@ -126,7 +126,7 @@ public class OrderTransfer {
 			jsonRequest = maper.writeValueAsString(orderDetails);
 		} catch (Exception e) {
 			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidSyncTime);
+					ErrorCodeEnum.OrderTransferException);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
@@ -141,7 +141,7 @@ public class OrderTransfer {
 			orderDetails = maper.readValue(order, Object.class);
 		} catch (Exception e) {
 			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidSyncTime);
+					ErrorCodeEnum.OrderTransferException);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}

@@ -148,6 +148,7 @@ public enum ErrorCodeEnum {
 	OrderDetailsNull("569","No order details to transfer"),
 	OrderDateNull("570","Order date should be given"),
 	OrderUidNull("571","Order Uid is empty"),
+	OrderTransferException("572","Order transfer exception"),
 	//InvalidDestinationNetMd("571","The destination NetMd id {id} you given is incorrect"),
 	//InvalidDestinationNetMdBranch("572","The destination  NetMd branch id {id} you given is incorrect"),
 /*

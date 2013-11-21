@@ -93,6 +93,8 @@ public class Constants {
 	public static final String SUPER_ADMIN_LOGOUT = "Super Admin Logout";
 	public static final String SUPER_ADMIN_CHANGE_PASSWORD = "Super Admin Change Password";	
 	public static final String FORGOT_PWD = "Forgot Password";
+	public static final String NETLIMS = "netlims";
+
 	/*NetRx*/
 	public static final String NETRX_REGISTER ="NetRx Registration";
 	public static final String NETRX ="netrx";
@@ -112,7 +114,7 @@ public class Constants {
 	public static final String SPECIMENUID = "SpecimenUid";
 	public static final String TESTUID = "TestUid";
 	public static final String MESSAGE = "Synchronization disabled.";
-	
+		
 	
 	
 	
