@@ -147,7 +147,7 @@ public enum ErrorCodeEnum {
 	OrderTypeNull("568","Nomenclature order types given empty."),
 	OrderDetailsNull("569","No order details to transfer"),
 	OrderDateNull("570","Order date should be given"),
-	
+	OrderUidNull("571","Order Uid is empty"),
 	//InvalidDestinationNetMd("571","The destination NetMd id {id} you given is incorrect"),
 	//InvalidDestinationNetMdBranch("572","The destination  NetMd branch id {id} you given is incorrect"),
 /*
@@ -232,6 +232,7 @@ public enum ErrorCodeEnum {
 	QualificationNotExist("1181","Requested  qualification not exist"),
 	DoctorNotFound("1182","Unknown doctor with id {id}"),
 	NetmdBranchSystemInfoNull("1183","Default system information for this device does not exist"),
+	
 	/*netRx*/
 	InvalidNetRxName("2000","You must enter valid name for netmd"),
 	NetRxAccountAlreadyExists("2001","There is another netrx account with given username"),
@@ -248,7 +249,7 @@ public enum ErrorCodeEnum {
 	InvalidNetRxBranchId("2012","Given netRx branch id is invalid"),
 	InvalidNetRxUser("2013","User with id {id} does not exists in this netrx branch"),
 	InvalidNetRxUserName("2014","Please enter valid user name"),
-	NetRxIdNull("2015","Netrx Id should not be null")  
+	NetRxIdNull("2015","Netrx Id should not be null") 
 	  
 	;
 	private String errCode;
