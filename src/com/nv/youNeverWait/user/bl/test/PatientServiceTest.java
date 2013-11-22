@@ -207,7 +207,7 @@ public class PatientServiceTest {
 		login.setUserType("patient");
 		PatientDetail detail = new PatientDetail();
 		detail.setBranchId(5);
-		detail.setFirstName("lucia");
+		detail.setFirstName("precious");
 		detail.setLastName("joyson");
 		detail.setPhone("01224242442");
 		detail.setAddress("Vadakkan");
