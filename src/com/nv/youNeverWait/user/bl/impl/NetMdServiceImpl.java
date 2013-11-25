@@ -359,7 +359,7 @@ public class NetMdServiceImpl implements NetMdService {
 		fullMsgBody = fullMsgBody.replace("{primaryPassPhrase}",
 				branchDetail.getPrimaryPassPhrase());
 		if (branchDetail.getPassPhrase().size() > 0) {
-			String htmlTd = "<tr><td>Passphrase for other devices :-</td></tr>";
+			String htmlTd = "<tr><td>Other devices :-</td></tr>";
 			for (String passPhrase : branchDetail.getPassPhrase()) {
 				htmlTd = htmlTd + "<tr><td>&nbsp;</td></tr><tr><td><b> "
 						+ passPhrase + "</b></td></tr>";
