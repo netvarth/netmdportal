@@ -18,7 +18,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.rs.dto.OrderDTO;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
 import com.nv.youNeverWait.user.bl.service.LabService;
