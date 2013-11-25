@@ -41,6 +41,11 @@ function Constants() {
 	this.NEWNETLIMSACCPASWRDCHGMODAL="changepwdModalNetLims";
 	this.NEWNETLIMSACCPASWRDCHGJSON="/youNeverWait/json/changepassword/netlimsAccChangePassword.json";
 	this.CHANGEPASSWORDURL="/youNeverWait/ws/ui/lab/changePassword";
+	this.ORDERTYPEMODAL="orderTypeModalNetLims";
+	this.NEWNETLIMSORDERTYPEJSON="/youNeverWait/json/OrderType.json";
+	this.VIEWNETLIMSORDERTYPEURL="/youNeverWait/ws/ui/order/getOrderType/";
+	this.VIEWNETLIMSSETORDERTYPEURL="/youNeverWait/ws/ui/order/setOrderType";
+	
 	/*****************-------------General-----------**----*************/
 	this.NAME = "name";
 	this.ADDRESS = "address";

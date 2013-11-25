@@ -53,3 +53,11 @@ NetlimsAccServiceImpl.prototype.changePasswrdNetlims=function(changePasswrd) {
 	ajaxProcessor.setUrl(constants.CHANGEPASSWORDURL);
 	return ajaxProcessor.post(changePasswrd);
 }
+NetlimsAccServiceImpl.prototype.orderTypeNetlims=function(netlimsBrchId) {
+	ajaxProcessor.setUrl(constants.VIEWNETLIMSORDERTYPEURL + netlimsBrchId);
+	return ajaxProcessor.get();
+}
+NetlimsAccServiceImpl.prototype.setOrderTypeNetlims=function(orderTypeJson) {
+	ajaxProcessor.setUrl(constants.VIEWNETLIMSSETORDERTYPEURL);
+	return ajaxProcessor.post(orderTypeJson);
+}

@@ -6,9 +6,9 @@ function NetlimsAccSettingsClassLoader() {
 		})
 		$j.getScript("/youNeverWait/js/validation/ChangePasswrdValidator.js").done(function(script,textStatus){
 		}) 
-		/* $j.getScript("/youNeverWait/js/youneverwait/settings/netlimsAccSettings/newBranchUI.js").done(function(script,textStatus){
+		$j.getScript("/youNeverWait/js/youneverwait/settings/netlimsAccSettings/NetlimsOrderTypeUIStartup.js").done(function(script,textStatus){
 		})
-		$j.getScript("/youNeverWait/js/youneverwait/settings/netlimsAccSettings/ViewNetlimsBranchUI.js").done(function(script,textStatus){
+		/* $j.getScript("/youNeverWait/js/youneverwait/settings/netlimsAccSettings/ViewNetlimsBranchUI.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/youneverwait/settings/netlimsAccSettings/ViewNetlimsBranchPTB.js").done(function(script,textStatus){
 		})

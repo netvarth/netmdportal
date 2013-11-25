@@ -50,13 +50,16 @@ SettingsToolBarProcessor.prototype.createChangePasswrdModal = function(obj) {
 	newNetlimsAccCngPswdUI.init();
 	return newNetlimsAccCngPswdUI; 
 }
-/* SettingsToolBarProcessor.prototype.reset = function() {
-	var self=this;
-	self.filter.hide();
-	self.filterBench.hide();
-	self.ftbContainer.empty().html("");
-	self.ptbContainer.empty().html("");
-} */
+SettingsToolBarProcessor.prototype.createorderTypeModal = function(obj) {
+	var self = this;
+	commonMethodInvoker.removeErrors();
+	createModal(constants.NEWNETLIMSORDERTYPEJSON,constants.ORDERTYPEMODAL);		
+	openModalBox(obj,constants.ORDERTYPEMODAL);
+	var netlimsOrderTypeUI = new NetlimsOrderTypeUIStartup();
+	netlimsOrderTypeUI.init();
+	return netlimsOrderTypeUI; 
+}
+
 SettingsToolBarProcessor.prototype.bindAdminTBEvents=function() {
 	var self=this;
 	$j(self.changePasswrdButton).die('click').click(function(){
@@ -69,7 +72,15 @@ SettingsToolBarProcessor.prototype.bindAdminTBEvents=function() {
 		self.createChangePasswrdModal(obj);
 	});
 	
-	
+	$j(self.orderTypeButton).die('click').click(function(){
+		var obj=$j(this);
+		if(pageHandler.isnetlimsAccSettingsClassLoaded()!=true){
+				var NetlimsAccSettingsClass = new NetlimsAccSettingsClassLoader();
+				NetlimsAccSettingsClass.load();
+				pageHandler.setnetlimsAccSettingsClassLoaded(true);
+			} 
+		self.createorderTypeModal(obj);
+	});
 	
 	
 	
