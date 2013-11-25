@@ -97,8 +97,7 @@ public class LabServiceImpl implements LabService {
 	private static final Log log = LogFactory.getLog(LabServiceImpl.class);
 	private OrderService orderService;
 	private HealthMonitorService healthService;
-	
-	
+
 	/**
 	 * Create user in Lab
 	 * 
@@ -769,7 +768,8 @@ public class LabServiceImpl implements LabService {
 	public ResultTransferResponseDTO transferResultToNetMd(
 			TransferNetMdResultDTO resultTranfer) {
 		validator.validateNetMdResultDetails(resultTranfer);
-		ResultTransferResponseDTO response = labDao.transferResultToNetMd(resultTranfer);
+		ResultTransferResponseDTO response = labDao
+				.transferResultToNetMd(resultTranfer);
 		return response;
 
 	}
@@ -786,7 +786,8 @@ public class LabServiceImpl implements LabService {
 			ResultTransferDTO resultTranferDto) {
 
 		validator.validateResultDetails(resultTranferDto);
-		ResultTransferResponseDTO response =  labDao.transferResult(resultTranferDto);
+		ResultTransferResponseDTO response = labDao
+				.transferResult(resultTranferDto);
 		return response;
 	}
 
@@ -800,7 +801,8 @@ public class LabServiceImpl implements LabService {
 	public ResultRetrievalResponseDTO getResult(HeaderDTO header,
 			String lastSyncTime, Date currentTime) {
 		// validator.validateLabDetails(resultRetrievalDTO);
-		ResultRetrievalResponseDTO response = labDao.getResult(header, lastSyncTime, currentTime);
+		ResultRetrievalResponseDTO response = labDao.getResult(header,
+				lastSyncTime, currentTime);
 		return response;
 	}
 
@@ -813,8 +815,8 @@ public class LabServiceImpl implements LabService {
 	@Override
 	public LabBranchListResponseDTO retrieveLabBranchList(HeaderDTO header,
 			String lastSyncTime, Date currentTime) {
-		 LabBranchListResponseDTO response = labDao.retrieveLabBranchList(header, lastSyncTime,
-				currentTime);
+		LabBranchListResponseDTO response = labDao.retrieveLabBranchList(
+				header, lastSyncTime, currentTime);
 		return response;
 	}
 
@@ -828,7 +830,8 @@ public class LabServiceImpl implements LabService {
 	public RetrieveLabListResponseDTO retrieveLabList(HeaderDTO header,
 			String lastSyncTm, Date currentTime) {
 
-		 RetrieveLabListResponseDTO response = labDao.retrieveLabList(header, lastSyncTm, currentTime);
+		RetrieveLabListResponseDTO response = labDao.retrieveLabList(header,
+				lastSyncTm, currentTime);
 		return response;
 	}
 
@@ -842,7 +845,8 @@ public class LabServiceImpl implements LabService {
 	public RetrieveUserListResponseDTO retrieveUserList(HeaderDTO header,
 			String lastSyncTime, Date currentTime) {
 
-		 RetrieveUserListResponseDTO response =labDao.retrieveUserList(header, lastSyncTime, currentTime);
+		RetrieveUserListResponseDTO response = labDao.retrieveUserList(header,
+				lastSyncTime, currentTime);
 		return response;
 	}
 
@@ -989,8 +993,10 @@ public class LabServiceImpl implements LabService {
 		validator.validateHeaderDetails(header);
 		validator.validateLabBranchIds(header.getHeadOfficeId(),
 				header.getBranchId());
-		validator.validateOrderDetails(branchOrders);
-		response = labDao.createTotalOrders(header, branchOrders);
+		if (branchOrders != null) {
+			validator.validateOrderDetails(branchOrders);
+			response = labDao.createTotalOrders(header, branchOrders);
+		}
 		return response;
 	}
 
@@ -1001,30 +1007,39 @@ public class LabServiceImpl implements LabService {
 	 * getHealthMonitor()
 	 */
 	@Override
-	public HealthMonitorResponse checkSystemHealth(SystemHealthDetails systemHealthDetails) {
+	public HealthMonitorResponse checkSystemHealth(
+			SystemHealthDetails systemHealthDetails) {
 		HealthMonitorResponse response = new HealthMonitorResponse();
-		/**Validates pssphrase and mac id empty or not**/
+		/** Validates pssphrase and mac id empty or not **/
 		validator.validateHeaderDetails(systemHealthDetails.getHeader());
-		
-		/**Validates lab and branch ids**/
-		validator.validateLabBranchIds(systemHealthDetails.getHeader().getHeadOfficeId(),
-				systemHealthDetails.getHeader().getBranchId());
-				
-		/**Checking header details whether given correctly or not**/
-		labDao.CheckHeaderDetails(systemHealthDetails.getHeader()); 
-	
-		/**Calling method for checking system in critical stage or not**/
-		SystemHealthResponse healthMonitorResponse= healthService.checkSystemHealth(systemHealthDetails);
-		if(healthMonitorResponse.getSystemHealth().isCritical()){
-			/*Getting branch owner details and sending mail*/
-			BranchOwnerDetails branchOwnerDetails=labDao.getBranchOwners(systemHealthDetails.getHeader().getBranchId());
-			sendEmailToLabOwner(branchOwnerDetails, Constants.LAB_SYSTEM_FAILURE,
-					healthMonitorResponse,systemHealthDetails);
-		
+
+		/** Validates lab and branch ids **/
+		validator.validateLabBranchIds(systemHealthDetails.getHeader()
+				.getHeadOfficeId(), systemHealthDetails.getHeader()
+				.getBranchId());
+
+		/** Checking header details whether given correctly or not **/
+		labDao.CheckHeaderDetails(systemHealthDetails.getHeader());
+
+		/** Calling method for checking system in critical stage or not **/
+		SystemHealthResponse healthMonitorResponse = healthService
+				.checkSystemHealth(systemHealthDetails);
+		if (healthMonitorResponse.getSystemHealth().isCritical()) {
+			/* Getting branch owner details and sending mail */
+			BranchOwnerDetails branchOwnerDetails = labDao
+					.getBranchOwners(systemHealthDetails.getHeader()
+							.getBranchId());
+			sendEmailToLabOwner(branchOwnerDetails,
+					Constants.LAB_SYSTEM_FAILURE, healthMonitorResponse,
+					systemHealthDetails);
+
 		}
-		response.setFreqPeriod(healthMonitorResponse.getSystemHealth().getFreqPeriod());
-		response.setIntervalTime(healthMonitorResponse.getSystemHealth().getIntervalTime());
-		response.setCritical(healthMonitorResponse.getSystemHealth().isCritical());
+		response.setFreqPeriod(healthMonitorResponse.getSystemHealth()
+				.getFreqPeriod());
+		response.setIntervalTime(healthMonitorResponse.getSystemHealth()
+				.getIntervalTime());
+		response.setCritical(healthMonitorResponse.getSystemHealth()
+				.isCritical());
 		response.setSuccess(true);
 		return response;
 	}
@@ -1059,17 +1074,17 @@ public class LabServiceImpl implements LabService {
 
 	}
 
-
-	
 	/**
 	 * @param url
 	 * @param branchOwnerDetails
-	 * @param response.getIntervalTime()
+	 * @param response
+	 *            .getIntervalTime()
 	 * @param systemHealthDetails
 	 * @return
 	 */
 	private String createEmailBody(URL url,
-			BranchOwnerDetails branchOwnerDetails, SystemHealthResponse response,
+			BranchOwnerDetails branchOwnerDetails,
+			SystemHealthResponse response,
 			SystemHealthDetails systemHealthDetails) throws IOException {
 		StringBuffer msgBodyBfr = new StringBuffer();
 		String fullMsgBody = "";
@@ -1079,7 +1094,7 @@ public class LabServiceImpl implements LabService {
 		BufferedReader in = new BufferedReader(new InputStreamReader(
 				inputStream));
 		String readLine = "";
-		
+
 		while ((readLine = in.readLine()) != null) {
 			msgBodyBfr.append(readLine).append("\n");
 		}
@@ -1097,50 +1112,58 @@ public class LabServiceImpl implements LabService {
 				branchOwnerDetails.getLabName());
 		fullMsgBody = fullMsgBody.replace("{branchName}",
 				branchOwnerDetails.getBranchName());
-		fullMsgBody = fullMsgBody.replace("{hardDiskSpace}",Long.toString(response.getFreeHardDiskSpaceInPercent()));
-		fullMsgBody = fullMsgBody.replace("{memoryDiskSpace}",Long.toString(response.getFreeMemorySpaceInPercent()));
-		fullMsgBody = fullMsgBody.replace("{cpuUsage}",Long.toString(response.getFreeCpuSpaceInPercent()));
-		fullMsgBody = fullMsgBody.replace("{intervalTime}", response.getSystemHealth().getIntervalTime());
-		fullMsgBody = fullMsgBody.replace("{frequencyPeriod}", response.getSystemHealth().getFreqPeriod());
+		fullMsgBody = fullMsgBody.replace("{hardDiskSpace}",
+				Long.toString(response.getFreeHardDiskSpaceInPercent()));
+		fullMsgBody = fullMsgBody.replace("{memoryDiskSpace}",
+				Long.toString(response.getFreeMemorySpaceInPercent()));
+		fullMsgBody = fullMsgBody.replace("{cpuUsage}",
+				Long.toString(response.getFreeCpuSpaceInPercent()));
+		fullMsgBody = fullMsgBody.replace("{intervalTime}", response
+				.getSystemHealth().getIntervalTime());
+		fullMsgBody = fullMsgBody.replace("{frequencyPeriod}", response
+				.getSystemHealth().getFreqPeriod());
 		return fullMsgBody;
 	}
-	
+
 	/**
 	 * Method for viewing branch default system details
+	 * 
 	 * @param branchId
 	 * @return
 	 */
 	@Override
 	public BranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId) {
-		if(branchId<=0){
+		if (branchId <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidBranch);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(branchId)));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		BranchSystemInfoDetails response=labDao.viewBranchSystemInfoDetails(branchId);
+		BranchSystemInfoDetails response = labDao
+				.viewBranchSystemInfoDetails(branchId);
 		return response;
 	}
-	
+
 	/**
- 	 * Method for updating the branch default system details
+	 * Method for updating the branch default system details
+	 * 
 	 * @param details
- 	 * @return
-     */
+	 * @return
+	 */
 	@Override
-	public ResponseDTO updateLabBranchSystemInfo(
-			BranchSystemInfoDetails details) {
+	public ResponseDTO updateLabBranchSystemInfo(BranchSystemInfoDetails details) {
 		validator.validateSystemDefaultDetails(details);
-		ResponseDTO response =labDao.updateLabBranchSystemInfo(details);
+		ResponseDTO response = labDao.updateLabBranchSystemInfo(details);
 		return response;
 	}
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.LabService#retrieveBranchOrders(com.nv.youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, java.util.Date)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.LabService#retrieveBranchOrders(com
+	 * .nv.youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, java.util.Date)
 	 */
 	@Override
 	public OrderDetails retrieveBranchOrders(HeaderDTO header,
@@ -1148,55 +1171,73 @@ public class LabServiceImpl implements LabService {
 		validator.validateHeaderDetails(header);
 		validator.validateLabBranchIds(header.getHeadOfficeId(),
 				header.getBranchId());
-		OrderDetails orderDetail=orderService.retrieveBranchOrders(header, lastSyncTime, currentSyncTime);
+		OrderDetails orderDetail = orderService.retrieveBranchOrders(header,
+				lastSyncTime, currentSyncTime);
 		return orderDetail;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.LabService#transferOrder(com.nv.youNeverWait.rs.dto.OrderTransfer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#transferOrder(com.nv.
+	 * youNeverWait.rs.dto.OrderTransfer)
 	 */
 	@Override
 	public ResponseDTO transferOrder(OrderTransfer orderTranfer) {
-	
+
 		validator.validateHeaderDetails(orderTranfer.getHeader());
-		validator.validateLabBranchIds(orderTranfer.getHeader().getHeadOfficeId(),
-				orderTranfer.getHeader().getBranchId());
-		ResponseDTO response= orderService.transferOrder(orderTranfer);
+		validator.validateLabBranchIds(orderTranfer.getHeader()
+				.getHeadOfficeId(), orderTranfer.getHeader().getBranchId());
+		ResponseDTO response = orderService.transferOrder(orderTranfer);
 		return response;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.LabService#getLab(com.nv.youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, java.util.Date)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.LabService#getLab(com.nv.youNeverWait
+	 * .rs.dto.LabHeaderDTO, java.lang.String, java.util.Date)
 	 */
 	@Override
 	public LabDTO getLab(HeaderDTO header, String lastSyncTime,
 			Date currentSyncTime) {
-		LabDTO labDetails= labDao.getLab(header,lastSyncTime,currentSyncTime);
+		LabDTO labDetails = labDao
+				.getLab(header, lastSyncTime, currentSyncTime);
 		return labDetails;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.LabService#setBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#setBranchSync(com.nv.
+	 * youNeverWait.rs.dto.SyncFreqDTO)
 	 */
 	@Override
 	public SyncFreqResponseDTO setBranchSync(SyncFreqDTO sync) {
-		if(sync.getLabBranchId()<=0){
-			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidBranchId);
+		if (sync.getLabBranchId() <= 0) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
 			se.setDisplayErrMsg(true);
-			throw se;	
+			throw se;
 		}
 		SyncFreqResponseDTO response = labDao.setBranchSync(sync);
 		return response;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.LabService#setLabSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.LabService#setLabSync(com.nv.youNeverWait
+	 * .rs.dto.SyncFreqDTO)
 	 */
 	@Override
 	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync) {
-		if(sync.getLabId()<=0){
+		if (sync.getLabId() <= 0) {
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidLab);
-			se.addParam(new Parameter(Constants.ID, Integer.toString(sync.getLabId())));
+			se.addParam(new Parameter(Constants.ID, Integer.toString(sync
+					.getLabId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
@@ -1204,9 +1245,11 @@ public class LabServiceImpl implements LabService {
 		return response;
 	}
 
-
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.LabService#getLabSyncDetails(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.LabService#getLabSyncDetails(int)
 	 */
 	@Override
 	public SyncFreqDTO getLabSyncDetails(int labId) {
@@ -1216,33 +1259,42 @@ public class LabServiceImpl implements LabService {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		SyncFreqDTO response=  labDao.getLabSyncDetails(labId);
+		SyncFreqDTO response = labDao.getLabSyncDetails(labId);
 		return response;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.LabService#getBranchSyncDetails(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.LabService#getBranchSyncDetails(int)
 	 */
 	@Override
 	public SyncFreqDTO getBranchSyncDetails(int branchId) {
 		if (branchId <= 0) {
-			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidBranchId);
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		SyncFreqDTO response=  labDao.getBranchSyncDetails(branchId);
+		SyncFreqDTO response = labDao.getBranchSyncDetails(branchId);
 		return response;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.LabService#syncEnableStatus(com.nv.youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, int)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.LabService#syncEnableStatus(com.nv
+	 * .youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, int)
 	 */
 	@Override
 	public SyncFreqDTO syncEnableStatus(HeaderDTO header, String freqType,
 			int interval) {
-		validator.validateSyncDetail(freqType,interval);
-		/*Getting frequency details from table*/
-		SyncFreqDTO syncFreqDetails=  labDao.getBranchSyncDetails(header.getBranchId());
+		validator.validateSyncDetail(freqType, interval);
+		/* Getting frequency details from table */
+		SyncFreqDTO syncFreqDetails = labDao.getBranchSyncDetails(header
+				.getBranchId());
 		return syncFreqDetails;
 	}
 
@@ -1365,6 +1417,7 @@ public class LabServiceImpl implements LabService {
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
 	}
+
 	/**
 	 * @return the orderService
 	 */
@@ -1373,7 +1426,8 @@ public class LabServiceImpl implements LabService {
 	}
 
 	/**
-	 * @param orderService the orderService to set
+	 * @param orderService
+	 *            the orderService to set
 	 */
 	public void setOrderService(OrderService orderService) {
 		this.orderService = orderService;
@@ -1387,12 +1441,11 @@ public class LabServiceImpl implements LabService {
 	}
 
 	/**
-	 * @param healthService the healthService to set
+	 * @param healthService
+	 *            the healthService to set
 	 */
 	public void setHealthService(HealthMonitorService healthService) {
 		this.healthService = healthService;
 	}
-
-	
 
 }
