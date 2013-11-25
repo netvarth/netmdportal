@@ -142,8 +142,7 @@ public class OrderServiceTest {
 		orderTranferDto.setSourceLabBranchId(123);
 		orderTranferDto.setDestinationLabId(193);
 		orderTranferDto.setDestinationLabBranchId(123);
-		OrderDTO myOrder= new OrderDTO();
-		orderTranferDto.setOrderDetails(myOrder);
+		orderTranferDto.setOrderDetails("fsdfs");
 		try{
 		
 			service.transferOrder(orderTranferDto);
