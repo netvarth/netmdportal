@@ -92,6 +92,16 @@ netlimsAccountUIStartup.prototype.createBranchModal = function(obj) {
 	return newBranchUI;
 }
 
+netlimsAccountUIStartup.prototype.createSyncModal = function(obj,branchId) {
+	var self = this;
+	commonMethodInvoker.removeErrors();
+	createModal(constants.NETLIMSACCSYNCJSON,constants.NETLIMSACCSYNCMODAL);		
+	openModalBox(obj,constants.NETLIMSACCSYNCMODAL);
+	var netlimsAccSyncUI = new NetlimsAccSyncUI(self,branchId);
+	netlimsAccSyncUI.init();
+	return netlimsAccSyncUI; 
+}
+
 netlimsAccountUIStartup.prototype.branchorderlist = function() {
 	var self = this;
 	commonMethodInvoker.removeErrors();
@@ -120,6 +130,14 @@ netlimsAccountUIStartup.prototype.bindToolBarEvents = function() {
 		if(branchId!="") {
 			var viewNetlimsBranchUI = self.getViewNetlimsBranchUI();
 			viewNetlimsBranchUI.init(branchId);
+		}	
+	});
+	self.ptbSync.die('click').live('click',function() {
+		removeErrors();
+		var branchId=self.getSelectedbranchId(self.pgTableName);
+		if(branchId!="") {
+			var obj=$j(this);
+			self.createSyncModal(obj,branchId);
 		}	
 	});
 	self.ptbDelete.die('click').live('click',function() {
@@ -157,47 +175,16 @@ netlimsAccountUIStartup.prototype.bindEvents = function() {
 			$j(this).attr('style','background:#DCDCDC;');
 		}	
 		removeErrors();
-	});		
-	/* $j(parent.pgTableRowClass).die('click').live('click',function(){
-	   var referralId= $j(this).parent().attr('id');
-	   $j('#' + constants.REFERRAL + '-filter-cont').hide();
-	   $j(parent.filter).hide();
-		if(referralId!="") {
-			$j('#referral-filter-wb').hide();
-			var viewReferralUI = parent.getViewReferralUI();
-			viewReferralUI.init(referralId);
-		}	
-	}); */
-}
-
-
-
-/* netlimsAccountUIStartup.prototype.getPrevId = function(curId,orderResult) {
-	var prevId;
-	$j(orderResult.order).each(function (index, rowOrder) {
-		if(curId==rowOrder.uid)	{
-			var arrayLength=(orderResult.order).length;
-			var comp=arrayLength-1;
-			if(index==0)
-				prevId = curId;
-			else
-				prevId=orderResult.order[index-1].uid;
-		}
-	});
-	return prevId;	
-}
-netlimsAccountUIStartup.prototype.getNextId = function(curId,orderResult) {
-	var nextId;
-	$j(orderResult.order).each(function (index, roworder) {
-		if(curId==roworder.uid)	{
-			var arrayLength=(orderResult.order).length;
-			var comp=arrayLength-1;
-			if(index==comp){
-				nextId = curId;
-			}else{
-					nextId=orderResult.order[index+1].uid;
-			}	
-		}
 	});	
-	return nextId;	
-} */
+	
+	$j(parent.pgTableRowClass).die('click').live('click',function(){
+	   var branchId= $j(this).parent().attr('id');
+		if(branchId!="") {
+			var viewNetlimsBranchUI = parent.getViewNetlimsBranchUI();
+			viewNetlimsBranchUI.init(branchId);
+		}	
+	}); 
+}
+
+
+

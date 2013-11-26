@@ -19,6 +19,7 @@ function Constants() {
 	this.CONFIRMPASSWRDREQUIRED="Confirm Password Required";
 	this.PASSWRDMISMATCH="Password Do Not Match";
 	this.PASSWRDCHANGDSUCCES="Password changed successfully";
+	this.SYNCINTERVALREQUIRED="Synchronisation Interval Required";
 	
 	/*****************-------------netlimsaccount-----------**----*************/
 	this.NETLIMSACCRIBBONURL="/youNeverWait/json/toolbars/netlimsGlobalToolbar.json";
@@ -45,6 +46,10 @@ function Constants() {
 	this.NEWNETLIMSORDERTYPEJSON="/youNeverWait/json/OrderType.json";
 	this.VIEWNETLIMSORDERTYPEURL="/youNeverWait/ws/ui/order/getOrderType/";
 	this.VIEWNETLIMSSETORDERTYPEURL="/youNeverWait/ws/ui/order/setOrderType";
+	this.NETLIMSACCSYNCMODAL="netlimsAccSycSetModal";
+	this.NETLIMSACCSYNCJSON="/youNeverWait/json/new/netlimsAccsetSync.json";
+	this.SYNCDATANETLIMSACCURL="/youNeverWait/ws/ui/lab/getBranchSyncDetails/";
+	this.SETACCBRACHSYCURL="/youNeverWait/ws/ui/lab/setBranchSync";
 	
 	/*****************-------------General-----------**----*************/
 	this.NAME = "name";

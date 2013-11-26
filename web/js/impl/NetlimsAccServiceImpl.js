@@ -61,3 +61,11 @@ NetlimsAccServiceImpl.prototype.setOrderTypeNetlims=function(orderTypeJson) {
 	ajaxProcessor.setUrl(constants.VIEWNETLIMSSETORDERTYPEURL);
 	return ajaxProcessor.post(orderTypeJson);
 }
+NetlimsAccServiceImpl.prototype.syncdata=function(branchId) {
+	ajaxProcessor.setUrl(constants.SYNCDATANETLIMSACCURL + branchId);
+	return ajaxProcessor.get();
+}
+NetlimsAccServiceImpl.prototype.syncBranchNetlims=function(syncData) {
+	ajaxProcessor.setUrl(constants.SETACCBRACHSYCURL);
+	return ajaxProcessor.post(syncData);
+}

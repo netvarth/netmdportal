@@ -11,6 +11,8 @@ function netlimsAccClassLoader() {
 		$j.getScript("/youNeverWait/js/youneverwait/ui/netlimsAccount/ViewNetlimsBranchPTB.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/validation/NetlimsBranchValidator.js").done(function(script,textStatus){
-		}) 
+		})
+		$j.getScript("/youNeverWait/js/youneverwait/ui/netlimsAccount/netlimsAccSyncUI.js").done(function(script,textStatus){
+		})
 	}
 }
