@@ -134,6 +134,30 @@ public class SuperAdminResource {
 		return response;
 	}
 
+
+	/**
+	 * To get the status of user enable log
+	 * 
+	 */
+	@RequestMapping(value = "getSyncLogStatus", method = RequestMethod.GET)
+	@ResponseBody
+	public EnableLogStatusResponseDTO getSyncLogStatus() {
+		EnableLogStatusResponseDTO response= new EnableLogStatusResponseDTO();
+		try{
+			response=service.getSyncLogStatus();
+		}catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+		return response;
+	}
+
 	/**
 	 * To show all the total orders and its related details of each branch in the lab
 	 * 

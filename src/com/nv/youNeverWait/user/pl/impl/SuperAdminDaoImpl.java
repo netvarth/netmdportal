@@ -216,7 +216,7 @@ SuperAdminDao {
 		
 			if(request!=null)
 				request.getSession().getServletContext()
-				.setAttribute("logEnabled", superAdmin.getEnableLog());
+				.setAttribute("syncLogEnabled", superAdmin.getEnableLog());
 		}
 		ResponseDTO response = new ResponseDTO();
 		response.setSuccess(true);
@@ -320,6 +320,24 @@ SuperAdminDao {
 
 	public void setEm(EntityManager em) {
 		this.em = em;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.SuperAdminDao#getSyncLogStatus()
+	 */
+	@Override
+	public EnableLogStatusResponseDTO getSyncLogStatus() {
+		EnableLogStatusResponseDTO response= new EnableLogStatusResponseDTO();
+		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+		if (superAdmin == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUser);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		response.setStatus(superAdmin.getEnableSyncLog());
+		response.setSuccess(true);
+		return response;
 	}
 
 	

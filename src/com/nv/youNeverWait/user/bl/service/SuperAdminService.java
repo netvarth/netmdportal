@@ -151,6 +151,10 @@ public interface SuperAdminService {
 			BranchSystemInfoDetails systemCriticalDetails);
 	
 	public SyncLogListResponseDTO syncLogList(FilterDTO filter);
+	/**
+	 * @return
+	 */
+	public EnableLogStatusResponseDTO getSyncLogStatus();
 	
 
 	

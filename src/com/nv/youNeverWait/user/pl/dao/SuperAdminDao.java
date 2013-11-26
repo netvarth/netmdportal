@@ -49,5 +49,9 @@ public interface SuperAdminDao {
 	 * @return
 	 */
 	public SyncFreqDTO getSyncDetails();
+	/**
+	 * @return
+	 */
+	public EnableLogStatusResponseDTO getSyncLogStatus();
 
 }

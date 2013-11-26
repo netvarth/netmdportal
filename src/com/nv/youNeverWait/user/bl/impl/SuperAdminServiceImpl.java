@@ -478,7 +478,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public NetMdBranchListResponseDTO getBranchList(FilterDTO filter) {
-		NetMdBranchListResponseDTO response = netMdService.getBranchList(filter);
+		NetMdBranchListResponseDTO response = netMdService
+				.getBranchList(filter);
 		return response;
 	}
 
@@ -787,10 +788,10 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 				.viewBranchOrders(globalId);
 		return response;
 	}
-	
+
 	/**
 	 * Method for listing orders
- 	 */
+	 */
 	@Override
 	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO) {
 		BranchOrdersResponseDTO response = labService.orderList(orderDTO);
@@ -799,103 +800,125 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 
 	/**
 	 * Method for viewing branch default system details
+	 * 
 	 * @param branchId
 	 * @return
 	 */
 	@Override
 	public BranchSystemInfoDetails viewBranchSystemInfo(int branchId) {
-		BranchSystemInfoDetails response= labService.viewBranchSystemInfoDetails(branchId);
-	return response;
-	}
-	
-	/**
- 	 * Method for updating the branch default system details
-	 * @param details
- 	 * @return
-     */
-	@Override
-	public ResponseDTO updateLabBranchSystemInfo(
-			BranchSystemInfoDetails details) {
-		ResponseDTO response= labService.updateLabBranchSystemInfo(details);
+		BranchSystemInfoDetails response = labService
+				.viewBranchSystemInfoDetails(branchId);
 		return response;
 	}
-	
 
+	/**
+	 * Method for updating the branch default system details
+	 * 
+	 * @param details
+	 * @return
+	 */
+	@Override
+	public ResponseDTO updateLabBranchSystemInfo(BranchSystemInfoDetails details) {
+		ResponseDTO response = labService.updateLabBranchSystemInfo(details);
+		return response;
+	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#testList(com.nv.youNeverWait.rs.dto.FilterDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#testList(com.nv
+	 * .youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
 	public TestListResponseDTO testList(FilterDTO filter) {
-		TestListResponseDTO response= testService.testList(filter);
+		TestListResponseDTO response = testService.testList(filter);
 		return response;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#specimenList(com.nv.youNeverWait.rs.dto.FilterDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#specimenList(com
+	 * .nv.youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
 	public SpecimenListResponseDTO testSpecimenList(FilterDTO filter) {
-		SpecimenListResponseDTO response= specimenService.testSpecimenList(filter);
+		SpecimenListResponseDTO response = specimenService
+				.testSpecimenList(filter);
 		return response;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#enableSyncLog(com.nv.youNeverWait.rs.dto.LogDTO, javax.servlet.http.HttpServletRequest)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#enableSyncLog(com
+	 * .nv.youNeverWait.rs.dto.LogDTO, javax.servlet.http.HttpServletRequest)
 	 */
 	@Override
-	public ResponseDTO enableSyncLog(SyncLogDTO syncLog, HttpServletRequest request) {
+	public ResponseDTO enableSyncLog(SyncLogDTO syncLog,
+			HttpServletRequest request) {
 		ResponseDTO response = superAdminDao.enableSyncLog(syncLog, request);
 		return response;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#setSyncFreq(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#setSyncFreq(com
+	 * .nv.youNeverWait.rs.dto.SyncFreqDTO)
 	 */
 	@Override
 	public ResponseDTO setSync(SyncFreqDTO sync) {
-//		validator.validateSyncDetails(sync);
+		// validator.validateSyncDetails(sync);
 		ResponseDTO response = superAdminDao.setSync(sync);
 		return response;
 	}
-	
+
 	@Override
 	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync) {
-		SyncFreqResponseDTO response=labService.setLabSync(sync);
+		SyncFreqResponseDTO response = labService.setLabSync(sync);
 		return response;
 	}
-	
+
 	@Override
 	public SyncFreqResponseDTO setBranchSync(SyncFreqDTO sync) {
-		SyncFreqResponseDTO response=labService.setBranchSync(sync);
+		SyncFreqResponseDTO response = labService.setBranchSync(sync);
 		return response;
 	}
-	
+
 	@Override
 	public SyncFreqResponseDTO setNetMdSync(SyncFreqDTO sync) {
-		SyncFreqResponseDTO response=netMdService.setNetMdSync(sync);
+		SyncFreqResponseDTO response = netMdService.setNetMdSync(sync);
 		return response;
 	}
+
 	@Override
 	public SyncFreqResponseDTO setNetMdBranchSync(SyncFreqDTO sync) {
-		SyncFreqResponseDTO response=netMdService.setNetMdBranchSync(sync);
+		SyncFreqResponseDTO response = netMdService.setNetMdBranchSync(sync);
 		return response;
 	}
 
 	@Override
 	public SyncFreqResponseDTO setNetRxSync(SyncFreqDTO sync) {
-		SyncFreqResponseDTO response=netRxService.setNetRxSync(sync);
+		SyncFreqResponseDTO response = netRxService.setNetRxSync(sync);
 		return response;
 	}
+
 	@Override
 	public SyncFreqResponseDTO setNetRxBranchSync(SyncFreqDTO sync) {
-		SyncFreqResponseDTO response=netRxService.setNetRxBranchSync(sync);
+		SyncFreqResponseDTO response = netRxService.setNetRxBranchSync(sync);
 		return response;
 	}
 
-
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncDetails()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncDetails()
 	 */
 	@Override
 	public SyncFreqDTO getSyncDetails() {
@@ -903,28 +926,37 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return response;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#viewNetMdBranchSystemInfo(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#
+	 * viewNetMdBranchSystemInfo(java.lang.String)
 	 */
 	@Override
 	public BranchSystemInfoDetails viewNetMdBranchSystemInfo(String passphrase) {
-		BranchSystemInfoDetails response= netMdService.viewNetmdBranchSystemInfoDetails(passphrase);
+		BranchSystemInfoDetails response = netMdService
+				.viewNetmdBranchSystemInfoDetails(passphrase);
 		return response;
 	}
 
 	@Override
 	public BranchBillListResponseDTO billList(BranchBillListDTO listDTO) {
-		BranchBillListResponseDTO response=netMdService.billList(listDTO);
+		BranchBillListResponseDTO response = netMdService.billList(listDTO);
 		return response;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#updateNetmdBranchSystemInfo(com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#
+	 * updateNetmdBranchSystemInfo
+	 * (com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails)
 	 */
 	@Override
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails) {
-		ResponseDTO response= netMdService.updateNetmdBranchSystemInfo(systemCriticalDetails);
+		ResponseDTO response = netMdService
+				.updateNetmdBranchSystemInfo(systemCriticalDetails);
 		return response;
 	}
 
@@ -968,37 +1000,50 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		response.setSuccess(true);
 		return response;
 	}
-	
-private SyncLogListResponseDTO getSyncLogList(List<SyncLogTbl> logs) {
-	SyncLogListResponseDTO response = new SyncLogListResponseDTO();
-	if (logs == null) {
+
+	private SyncLogListResponseDTO getSyncLogList(List<SyncLogTbl> logs) {
+		SyncLogListResponseDTO response = new SyncLogListResponseDTO();
+		if (logs == null) {
+			return response;
+		}
+		List<SyncLogDetail> syncLogList = new ArrayList<SyncLogDetail>();
+		for (SyncLogTbl synclogTbl : logs) {
+
+			String lastsyncTime = null;
+			SimpleDateFormat df = new SimpleDateFormat(
+					Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+			if (synclogTbl.getLastSyncTime() != null) {
+				lastsyncTime = df.format(synclogTbl.getLastSyncTime());
+			}
+			syncLogList.add(new SyncLogDetail(synclogTbl, lastsyncTime));
+
+		}
+		response.setSyncLog(syncLogList);
 		return response;
 	}
-	List<SyncLogDetail> syncLogList = new ArrayList<SyncLogDetail>();
-	for (SyncLogTbl synclogTbl : logs) {
-		
-		String lastsyncTime=null;
-		SimpleDateFormat df = new SimpleDateFormat(
-				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
-		if (synclogTbl.getLastSyncTime() != null) {
-			lastsyncTime = df.format(synclogTbl.getLastSyncTime());
-		}
-		syncLogList.add(new SyncLogDetail(synclogTbl,lastsyncTime));
-		
-	}
-	response.setSyncLog(syncLogList);
-	return response;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncLogStatus()
+	 */
+	@Override
+	public EnableLogStatusResponseDTO getSyncLogStatus() {
+		EnableLogStatusResponseDTO response  = superAdminDao.getSyncLogStatus();
+		return response;
 	}
 
-	//	/* (non-Javadoc)
-//	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
-//	 */
-//	@Override
-//	public ResponseDTO enableSync(SyncFreqDTO sync) {
-//		ResponseDTO response = superAdminDao.enableSync(sync);
-//		return response;
-//	}
-//	
+	// /* (non-Javadoc)
+	// * @see
+	// com.nv.youNeverWait.user.bl.service.SuperAdminService#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	// */
+	// @Override
+	// public ResponseDTO enableSync(SyncFreqDTO sync) {
+	// ResponseDTO response = superAdminDao.enableSync(sync);
+	// return response;
+	// }
+	//
 	/**
 	 * @return the netMdService
 	 */
@@ -1157,7 +1202,8 @@ private SyncLogListResponseDTO getSyncLogList(List<SyncLogTbl> logs) {
 	}
 
 	/**
-	 * @param testService the testService to set
+	 * @param testService
+	 *            the testService to set
 	 */
 	public void setTestService(TestService testService) {
 		this.testService = testService;
@@ -1171,29 +1217,11 @@ private SyncLogListResponseDTO getSyncLogList(List<SyncLogTbl> logs) {
 	}
 
 	/**
-	 * @param specimenService the specimenService to set
+	 * @param specimenService
+	 *            the specimenService to set
 	 */
 	public void setSpecimenService(SpecimenService specimenService) {
 		this.specimenService = specimenService;
 	}
-
-	
-
-	
-	
-
-	
-	
-
-	
-
-	
-	
-
-
-
-	
-	
-	
 
 }
