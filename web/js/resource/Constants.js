@@ -50,6 +50,9 @@ function Constants() {
 	this.NETLIMSACCSYNCJSON="/youNeverWait/json/new/netlimsAccsetSync.json";
 	this.SYNCDATANETLIMSACCURL="/youNeverWait/ws/ui/lab/getBranchSyncDetails/";
 	this.SETACCBRACHSYCURL="/youNeverWait/ws/ui/lab/setBranchSync";
+	this.SHOWORDERMODAL="ShowOrdersModal";
+	this.BRANCHNETLIMSORDERLIST='/youNeverWait/json/BranchNetlimsOrders.json';
+	this.GETORDERLISTURL="/youNeverWait/ws/ui/lab/orderList";
 	
 	/*****************-------------General-----------**----*************/
 	this.NAME = "name";

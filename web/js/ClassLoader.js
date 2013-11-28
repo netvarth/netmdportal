@@ -81,6 +81,8 @@ $j.getScript("/youNeverWait/js/framework/login.js").done(function(script, textSt
 		$j.getScript("/youNeverWait/js/dto/OrderTypePassDTO.js").done(function(script,textStatus){
 		}) 
 		$j.getScript("/youNeverWait/js/dto/netlimsBrchSyncDTO.js").done(function(script,textStatus){
+		}) 
+		$j.getScript("/youNeverWait/js/dto/OrderListDTO.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/impl/GlobalServiceImpl.js").done(function(script, textStatus) {
 		})	

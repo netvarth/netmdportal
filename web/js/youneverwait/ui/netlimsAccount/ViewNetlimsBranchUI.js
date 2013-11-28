@@ -1,8 +1,12 @@
  function ViewNetlimsBranchUI(netlimsUIStartup){
 	this.viewNetlimsAccBrchPage = "#viewNetlimsAccBranchHeader";
 	this.errorHeader = $j('#errorDivHeader');
-	this.errorData = $j('#errorDivvwNetlimsAccData');
+	this.errorData = $j('#errorDivData');
 	this.pageTitle = $j('#pageTitle');
+	this.fromDate="#branchNetlimsAccViewForm #fromDate";
+	this.toDate="#branchNetlimsAccViewForm #toDate";
+	this.orderButton="#branchNetlimsAccViewForm #btnShowOrders";
+	this.orderListTable="#ordersnetlimsaccViewTable";
 	this.updateButton = this.viewNetlimsAccBrchPage + " #branchvwbtnDone";
 	this.editButton = this.viewNetlimsAccBrchPage + " #branchvwbtnCreate";
 	this.cancelButton = this.viewNetlimsAccBrchPage + " #branchvwbtnCancel";  
@@ -112,10 +116,12 @@ ViewNetlimsBranchUI.prototype.init = function(branchId) {
 	var viewNetlimsBranchPTB = self.getviewNetlimsBranchPTB();
 	viewNetlimsBranchPTB.init(self);
 	pageHandler.create(constants.VIEWNETLIMSACCBRCHPAGEURL);
-	self.bindEvents();
 	self.readable();
 	self.viewNetlimsBranchDetails(branchId);
 	pageHandler.setActivePage(self);
+	self.bindEvents();
+	$j(self.fromDate).datepicker();
+	$j(self.toDate).datepicker();
 }
 ViewNetlimsBranchUI.prototype.bindEvents = function() {
 	self = this;
@@ -157,6 +163,23 @@ ViewNetlimsBranchUI.prototype.bindEvents = function() {
 		} else
 			self.createError(error);	
 	}); 
+	$j(self.orderButton).die('click').live('click',function(){
+ 		self=parent;
+		self.errorHeader.hide();
+		var obj=$j(this);
+		commonMethodInvoker.removeErrors();
+		var orderlistData=self.getOrderDetail();
+		var netlimsUIService = self.getNetlimsUIService();
+		var netlimsOrderListResponse = netlimsUIService.BranchOrderlistNetlims(orderlistData);
+		alert(JSON.stringify(netlimsOrderListResponse));
+		if(netlimsOrderListResponse.success==true) {
+		createModal(constants.BRANCHNETLIMSORDERLIST,constants.SHOWORDERMODAL);		
+		openModalBox(obj,constants.SHOWORDERMODAL);
+		dataTableProcessor.setCustomTable(self.orderListTable);
+		//self.netlimsUIService.setTableValueBranchOrderList(self.orderListTable,netlimsOrderListResponse);
+		}else
+			commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netlimsOrderListResponse.error));
+	});
 }
 ViewNetlimsBranchUI.prototype.viewNetlimsBranchDetails = function(branchId) {
 	self=this;
@@ -196,6 +219,15 @@ ViewNetlimsBranchUI.prototype.getBranchRequest = function() {
 	branch.setPhone($j(self.phone).val());
 	branch.setMobile($j(self.mobile).val());
 	return branch;
+}
+ViewNetlimsBranchUI.prototype.getOrderDetail = function() {
+	var self=this;
+	var orderData=new OrderListDTO();
+	orderData.setfromDate($j(self.fromDate).val());
+	orderData.setToDate($j(self.toDate).val());
+	orderData.setlabId($j(self.id).val());
+	orderData.setlabBranchId($j(self.brachId).val());
+	return orderData;
 }
 ViewNetlimsBranchUI.prototype.getPrevId = function(curId,branchResult) {
 	var prevId;

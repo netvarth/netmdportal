@@ -28,6 +28,20 @@ function NetlimsAccServiceImpl () {
 		} 
 	 
 		} 
+		
+		this.setTableValueBranchOrderList = function(tableObj, branchResult) {
+		$j(tableObj).dataTable().fnClearTable();
+		if(branchResult.branchOrders.length>0) {			
+				$j(branchResult.branchOrders).each(function (index, lab) {
+					var id=lab.branchId;
+					var rowData=$j(tableObj).dataTable().fnAddData([lab.orderDate,lab.totalOrders,lab.netAmount,lab.paidAmount,lab.lastOrderdTime]);
+					var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+					$j(row).attr('id',id);	
+					//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
+					});	
+		}
+	 
+		} 
 }
  NetlimsAccServiceImpl.prototype.createBranchNetlims=function (netlimsObj) {
 	ajaxProcessor.setUrl(constants.CREATENETLIMSACCBRANCHURL);
@@ -68,4 +82,9 @@ NetlimsAccServiceImpl.prototype.syncdata=function(branchId) {
 NetlimsAccServiceImpl.prototype.syncBranchNetlims=function(syncData) {
 	ajaxProcessor.setUrl(constants.SETACCBRACHSYCURL);
 	return ajaxProcessor.post(syncData);
+}
+
+NetlimsAccServiceImpl.prototype.BranchOrderlistNetlims=function(orderlistData) {
+	ajaxProcessor.setUrl(constants.GETORDERLISTURL);
+	return ajaxProcessor.post(orderlistData);
 }
