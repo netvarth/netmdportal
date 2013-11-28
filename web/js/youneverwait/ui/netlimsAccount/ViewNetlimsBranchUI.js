@@ -171,7 +171,7 @@ ViewNetlimsBranchUI.prototype.bindEvents = function() {
 		var orderlistData=self.getOrderDetail();
 		var netlimsUIService = self.getNetlimsUIService();
 		var netlimsOrderListResponse = netlimsUIService.BranchOrderlistNetlims(orderlistData);
-		alert(JSON.stringify(netlimsOrderListResponse));
+		//alert(JSON.stringify(netlimsOrderListResponse));
 		if(netlimsOrderListResponse.success==true) {
 		createModal(constants.BRANCHNETLIMSORDERLIST,constants.SHOWORDERMODAL);		
 		openModalBox(obj,constants.SHOWORDERMODAL);
