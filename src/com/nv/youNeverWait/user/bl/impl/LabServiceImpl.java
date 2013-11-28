@@ -11,8 +11,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,7 +18,6 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.transaction.annotation.Transactional;
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
 import com.nv.framework.sendmsg.email.SendMailMsgObj;
@@ -40,6 +37,7 @@ import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabOrderHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
@@ -55,7 +53,6 @@ import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
-import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
@@ -1166,13 +1163,14 @@ public class LabServiceImpl implements LabService {
 	 * .nv.youNeverWait.rs.dto.LabHeaderDTO, java.lang.String, java.util.Date)
 	 */
 	@Override
-	public OrderDetails retrieveBranchOrders(HeaderDTO header,
-			String lastSyncTime, Date currentSyncTime) {
-		validator.validateHeaderDetails(header);
-		validator.validateLabBranchIds(header.getHeadOfficeId(),
-				header.getBranchId());
-		OrderDetails orderDetail = orderService.retrieveBranchOrders(header,
-				lastSyncTime, currentSyncTime);
+	public OrderDetails retrieveBranchOrders(LabOrderHeaderDTO orderHeader) {
+		validator.validateHeaderDetails(orderHeader.getHeader());
+		validator.validateLabBranchIds(orderHeader.getHeader().getHeadOfficeId(),
+				orderHeader.getHeader().getBranchId());
+		validator.validateLastSyncTime(orderHeader.getLastSyncTime());
+		Date currentSyncTime= new Date();
+		OrderDetails orderDetail = orderService.retrieveBranchOrders(orderHeader.getHeader(),
+				orderHeader.getLastSyncTime(),currentSyncTime);
 		return orderDetail;
 	}
 
@@ -1191,6 +1189,8 @@ public class LabServiceImpl implements LabService {
 		ResponseDTO response = orderService.transferOrder(orderTranfer);
 		return response;
 	}
+
+	
 
 	/*
 	 * (non-Javadoc)
@@ -1298,6 +1298,7 @@ public class LabServiceImpl implements LabService {
 		return syncFreqDetails;
 	}
 
+	
 	/**
 	 * @return the labDao
 	 */
@@ -1448,4 +1449,5 @@ public class LabServiceImpl implements LabService {
 		this.healthService = healthService;
 	}
 
+	
 }

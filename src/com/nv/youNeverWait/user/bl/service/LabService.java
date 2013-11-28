@@ -19,6 +19,7 @@ import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabOrderHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
@@ -94,8 +95,7 @@ public interface LabService {
 	 * @param currentSyncTime
 	 * @return
 	 */
-	public OrderDetails retrieveBranchOrders(HeaderDTO header,
-			String lastSyncTime, Date currentSyncTime);
+	public OrderDetails retrieveBranchOrders(LabOrderHeaderDTO orderHeader);
 	
 	/**
 	 * @param orderTranferDto
@@ -140,4 +140,5 @@ public interface LabService {
 	 */
 	public SyncFreqDTO syncEnableStatus(HeaderDTO header, String freqType,
 			int interval);
+	
 }

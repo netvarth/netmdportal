@@ -28,6 +28,7 @@ import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
+import com.nv.youNeverWait.rs.dto.LabOrderHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
@@ -2869,6 +2870,26 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 
 		try{
 			service.viewBranchSystemInfoDetails(121);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void retrieveBranchOrders(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		LabOrderHeaderDTO orderHeader= new LabOrderHeaderDTO();
+		HeaderDTO header = new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		orderHeader.setHeader(header);
+		orderHeader.setLastSyncTime("2013-09-24 12:00:57");
+		try{
+			service.retrieveBranchOrders(orderHeader);
 		}
 		catch (ServiceException e) {
 			System.out.println(e.isDisplayErrMsg());

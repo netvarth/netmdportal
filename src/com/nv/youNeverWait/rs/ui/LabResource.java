@@ -33,10 +33,12 @@ import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabOrderHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
+import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
 import com.nv.youNeverWait.rs.dto.Parameter;
@@ -900,6 +902,25 @@ public class LabResource {
 		return response;
 	}
 
+	@RequestMapping(value = "retrieveBranchOrders", method = RequestMethod.POST)
+	@ResponseBody
+	public  OrderDetails retrieveBranchOrders(@RequestBody LabOrderHeaderDTO orderHeader ) {
+		OrderDetails response = new OrderDetails();
+		try {
+			response = labService.retrieveBranchOrders(orderHeader);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+
+		}
+		return response;
+	}
 //	/**
 //	 * To enable/disable  sync process
 //	 * 

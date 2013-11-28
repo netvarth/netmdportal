@@ -20,7 +20,6 @@ public class LabSyncResponseDTO {
 	private ResultRetrievalResponseDTO getResult = new ResultRetrievalResponseDTO();
 	private RetrieveTestResponse retrieveTests= new RetrieveTestResponse();
 	private RetrieveSpecimenResponse retrieveSpecimens = new RetrieveSpecimenResponse();
-	private OrderDetails retrieveOrders= new OrderDetails();
 	private LabDTO labDetails= new LabDTO();
 //	private String freqType;
 //	private int intervalTime;
@@ -170,26 +169,6 @@ public class LabSyncResponseDTO {
 	public RetrieveSpecimenResponse getRetrieveSpecimens() {
 		return retrieveSpecimens;
 	}
-
-
-
-	/**
-	 * @return the retrieveOrders
-	 */
-	public OrderDetails getRetrieveOrders() {
-		return retrieveOrders;
-	}
-
-
-
-	/**
-	 * @param retrieveOrders the retrieveOrders to set
-	 */
-	public void setRetrieveOrders(OrderDetails retrieveOrders) {
-		this.retrieveOrders = retrieveOrders;
-	}
-
-	
 
 	/**
 	 * @param retrieveSpecimens the retrieveSpecimens to set

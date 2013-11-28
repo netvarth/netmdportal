@@ -48,6 +48,7 @@ public class LabValidator extends FilterValidator {
 
 	/**
 	 * Validate user details
+	 * 
 	 * @param user
 	 * @return error
 	 */
@@ -62,8 +63,7 @@ public class LabValidator extends FilterValidator {
 					error.setDisplayErrMsg(true);
 					return error;
 				} else {
-					ActionNameEnum
-					.getEnum(userBranch.getActionName());
+					ActionNameEnum.getEnum(userBranch.getActionName());
 				}
 			}
 		}
@@ -114,8 +114,7 @@ public class LabValidator extends FilterValidator {
 				return error;
 			}
 		}
-		LabUserTypeEnum.getEnum(user
-				.getUserType());
+		LabUserTypeEnum.getEnum(user.getUserType());
 		if (user.getLogin().getUserType()
 				.equals(LabUserTypeEnum.Owner.getDisplayName())
 				|| user.getUserType().equals(
@@ -237,6 +236,7 @@ public class LabValidator extends FilterValidator {
 	/**
 	 * 
 	 * Validate UserName and password
+	 * 
 	 * @param userName
 	 * @param password
 	 */
@@ -257,6 +257,7 @@ public class LabValidator extends FilterValidator {
 
 	/**
 	 * Validte lab branch details
+	 * 
 	 * @param branch
 	 */
 	public void validateBranchDetails(LabBranchDTO branch) {
@@ -290,16 +291,18 @@ public class LabValidator extends FilterValidator {
 				throw se;
 			}
 		}
-//		if(branch.getBranchCode()==null  && branch.getBranchCode().equals("")){
-//			ServiceException se = new ServiceException(
-//					ErrorCodeEnum.BranchCodeNull);
-//			se.setDisplayErrMsg(true);
-//			throw se;
-//		}
+		// if(branch.getBranchCode()==null &&
+		// branch.getBranchCode().equals("")){
+		// ServiceException se = new ServiceException(
+		// ErrorCodeEnum.BranchCodeNull);
+		// se.setDisplayErrMsg(true);
+		// throw se;
+		// }
 	}
 
 	/**
 	 * Validate lab branch id
+	 * 
 	 * @param branch
 	 */
 	public void validateBranchId(LabBranchDTO branch) {
@@ -318,9 +321,9 @@ public class LabValidator extends FilterValidator {
 		}
 	}
 
-
 	/**
 	 * Method which return false if value is null/empty
+	 * 
 	 * @param value
 	 * @return
 	 */
@@ -430,8 +433,9 @@ public class LabValidator extends FilterValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-	
-		if(resultTranfer.getDoctorEmail()==null ||resultTranfer.getDoctorEmail().isEmpty()){
+
+		if (resultTranfer.getDoctorEmail() == null
+				|| resultTranfer.getDoctorEmail().isEmpty()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.DoctorEmailNull);
 			se.setDisplayErrMsg(true);
@@ -472,7 +476,7 @@ public class LabValidator extends FilterValidator {
 			throw se;
 		}
 
-		if(resultTranfer.getOrderDate()==null){
+		if (resultTranfer.getOrderDate() == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.OrderDateNull);
 			se.setDisplayErrMsg(true);
@@ -480,7 +484,7 @@ public class LabValidator extends FilterValidator {
 		}
 		DateFormat df = new SimpleDateFormat(
 
-				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		try {
 			df.parse(resultTranfer.getOrderDate());
 		} catch (ParseException e) {
@@ -492,12 +496,14 @@ public class LabValidator extends FilterValidator {
 			throw se;
 		}
 
-		if (resultTranfer.getHeader().getMacId() == null || resultTranfer.getHeader().getMacId().equals("")) {
+		if (resultTranfer.getHeader().getMacId() == null
+				|| resultTranfer.getHeader().getMacId().equals("")) {
 			ServiceException se = new ServiceException(ErrorCodeEnum.MacIdNull);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (resultTranfer.getHeader().getPassPhrase() == null || resultTranfer.getHeader().getPassPhrase().equals("")) {
+		if (resultTranfer.getHeader().getPassPhrase() == null
+				|| resultTranfer.getHeader().getPassPhrase().equals("")) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.PassPhraseNull);
 			se.setDisplayErrMsg(true);
@@ -510,6 +516,7 @@ public class LabValidator extends FilterValidator {
 
 	/**
 	 * Validating lab header details
+	 * 
 	 * @param header
 	 */
 	public void validateHeaderDetails(HeaderDTO header) {
@@ -527,7 +534,7 @@ public class LabValidator extends FilterValidator {
 		}
 
 	}
-	
+
 	public void validateLabBranchIds(int labId, int branchId) {
 		if (labId <= 0) {
 			ServiceException se = new ServiceException(
@@ -543,7 +550,7 @@ public class LabValidator extends FilterValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		
+
 	}
 
 	public void validateBranchStatus(String status) {
@@ -565,28 +572,32 @@ public class LabValidator extends FilterValidator {
 		}
 		return false;
 	}
+
 	public void validateOrderDate(BranchOrderDTO orderDTO) {
 		String orderFromDate = orderDTO.getFromDate();
-		String orderToDate = orderDTO.getToDate();	
+		String orderToDate = orderDTO.getToDate();
 
-		if(orderFromDate==null || orderFromDate.equals("")){
-			ServiceException se = new ServiceException(ErrorCodeEnum.FromDateNull);
+		if (orderFromDate == null || orderFromDate.equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.FromDateNull);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if(orderToDate==null ||orderToDate.equals("")){
+		if (orderToDate == null || orderToDate.equals("")) {
 			ServiceException se = new ServiceException(ErrorCodeEnum.ToDateNull);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if(!orderFromDate.matches("\\d{4}-\\d{2}-\\d{2}")){
-			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidDateFormat);
+		if (!orderFromDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDateFormat);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if(!orderToDate.matches("\\d{4}-\\d{2}-\\d{2}")){
+		if (!orderToDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
 
-			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidDateFormat);
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDateFormat);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
@@ -595,11 +606,12 @@ public class LabValidator extends FilterValidator {
 		try {
 			Date fromDate = df.parse(orderFromDate);
 			Date toDate = df.parse(orderToDate);
-			if(fromDate.after(toDate)){
-				ServiceException se = new ServiceException(ErrorCodeEnum.InvalidFromToDate);
+			if (fromDate.after(toDate)) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidFromToDate);
 				se.setDisplayErrMsg(true);
 				throw se;
-			}	
+			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 			ServiceException se = new ServiceException(
@@ -612,63 +624,71 @@ public class LabValidator extends FilterValidator {
 
 	public void validateOrderDetails(BranchOrderDetail branchOrders) {
 
-		if(branchOrders.getLastOrderdTime()==null && branchOrders.getLastOrderdTime().equals("") ){
-			ServiceException se = new ServiceException(ErrorCodeEnum.OrderedTimeNull);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		
-		if (branchOrders.getOrderDate() == null && !branchOrders.getOrderDate().matches("\\d{4}-\\d{2}-\\d{2}")) {
-			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidDateFormat);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		if (branchOrders.getId()<= 0) {
+		if (branchOrders.getLastOrderdTime() == null
+				&& branchOrders.getLastOrderdTime().equals("")) {
 			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidId);
+					ErrorCodeEnum.OrderedTimeNull);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		
+
+		if (branchOrders.getOrderDate() == null
+				&& !branchOrders.getOrderDate().matches("\\d{4}-\\d{2}-\\d{2}")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDateFormat);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (branchOrders.getId() <= 0) {
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
 	}
 
 	public void validateSystemDefaultDetails(BranchSystemInfoDetails details) {
-		if(details.getBranchId()<=0){
+		if (details.getBranchId() <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidBranch);
-			se.addParam(new Parameter(Constants.ID, Integer.toString(details.getBranchId())));
+			se.addParam(new Parameter(Constants.ID, Integer.toString(details
+					.getBranchId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if(details.getCriticalCpuLevel()==null && details.getCriticalCpuLevel().equals("")){
+		if (details.getCriticalCpuLevel() == null
+				&& details.getCriticalCpuLevel().equals("")) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.CriticalCpuLevelNull);
 			se.setDisplayErrMsg(true);
 			throw se;
-			
+
 		}
-		if(details.getCriticalHardDiskSpaceLevel()== null && details.getCriticalHardDiskSpaceLevel().equals("")){
+		if (details.getCriticalHardDiskSpaceLevel() == null
+				&& details.getCriticalHardDiskSpaceLevel().equals("")) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.CriticalHardDiskSPaceLevelNull);
 			se.setDisplayErrMsg(true);
 			throw se;
-			
+
 		}
-		if(details.getCriticalMemoryLevel()==null && details.getCriticalMemoryLevel().equals("")){
+		if (details.getCriticalMemoryLevel() == null
+				&& details.getCriticalMemoryLevel().equals("")) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.CriticalMemoryLevelNull);
 			se.setDisplayErrMsg(true);
 			throw se;
-			
+
 		}
-		if(details.getFreqType()==null){
+		if (details.getFreqType() == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.FrequencyNull);
 			se.setDisplayErrMsg(true);
 			throw se;
-			
+
 		}
-		if(details.getIntervalTime()==null && details.getIntervalTime().equals("")){
+		if (details.getIntervalTime() == null
+				&& details.getIntervalTime().equals("")) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.IntervalTimeNull);
 			se.setDisplayErrMsg(true);
@@ -681,16 +701,49 @@ public class LabValidator extends FilterValidator {
 	 * @param interval
 	 */
 	public void validateSyncDetail(String freqType, int interval) {
-		if(freqType==null || freqType.equals("")){
-			ServiceException se = new ServiceException(ErrorCodeEnum.SyncFreqNull);
+		if (freqType == null || freqType.equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.SyncFreqNull);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if(interval<=0){
-			ServiceException se = new ServiceException(ErrorCodeEnum.SyncIntervalTimeNull);
+		if (interval <= 0) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.SyncIntervalTimeNull);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		
+
 	}
+
+	/**
+	 * Method to validate last synchronization time
+	 * 
+	 * @param syncTime
+	 */
+	public void validateLastSyncTime(String syncTime) {
+		if (!isValidName(syncTime)) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.SyncTimeNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (syncTime != null) {
+
+			DateFormat df = new SimpleDateFormat(
+					Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+			try {
+				Date synTime = df.parse(syncTime);
+
+			} catch (ParseException e) {
+				e.printStackTrace();
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidDateFormat);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+
+		}
+	}
+
 }
