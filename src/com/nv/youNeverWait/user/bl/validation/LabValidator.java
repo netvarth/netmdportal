@@ -31,9 +31,7 @@ import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
-import com.nv.youNeverWait.rs.dto.ResultRetrievalDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
-import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserBranchDTO;
 import com.nv.youNeverWait.util.filter.core.Property;
@@ -716,34 +714,5 @@ public class LabValidator extends FilterValidator {
 
 	}
 
-	/**
-	 * Method to validate last synchronization time
-	 * 
-	 * @param syncTime
-	 */
-	public void validateLastSyncTime(String syncTime) {
-		if (!isValidName(syncTime)) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.SyncTimeNull);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		if (syncTime != null) {
-
-			DateFormat df = new SimpleDateFormat(
-					Constants.DATE_FORMAT_WITH_TIME_SECONDS);
-			try {
-				Date synTime = df.parse(syncTime);
-
-			} catch (ParseException e) {
-				e.printStackTrace();
-				ServiceException se = new ServiceException(
-						ErrorCodeEnum.InvalidDateFormat);
-				se.setDisplayErrMsg(true);
-				throw se;
-			}
-
-		}
-	}
-
+	
 }

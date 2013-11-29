@@ -17,7 +17,7 @@ package com.nv.youNeverWait.rs.dto;
  */
 public class LabOrderHeaderDTO {
 private HeaderDTO header;
-private String lastSyncTime;
+private String lastOrderSyncTime;
 /**
  * @return the header
  */
@@ -31,16 +31,17 @@ public void setHeader(HeaderDTO header) {
 	this.header = header;
 }
 /**
- * @return the lastSyncTime
+ * @return the lastOrderSyncTime
  */
-public String getLastSyncTime() {
-	return lastSyncTime;
+public String getLastOrderSyncTime() {
+	return lastOrderSyncTime;
 }
 /**
- * @param lastSyncTime the lastSyncTime to set
+ * @param lastOrderSyncTime the lastOrderSyncTime to set
  */
-public void setLastSyncTime(String lastSyncTime) {
-	this.lastSyncTime = lastSyncTime;
+public void setLastOrderSyncTime(String lastOrderSyncTime) {
+	this.lastOrderSyncTime = lastOrderSyncTime;
 }
+
 
 }

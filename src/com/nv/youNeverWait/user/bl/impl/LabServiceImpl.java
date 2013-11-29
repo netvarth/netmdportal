@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -1167,10 +1169,17 @@ public class LabServiceImpl implements LabService {
 		validator.validateHeaderDetails(orderHeader.getHeader());
 		validator.validateLabBranchIds(orderHeader.getHeader().getHeadOfficeId(),
 				orderHeader.getHeader().getBranchId());
-		validator.validateLastSyncTime(orderHeader.getLastSyncTime());
+		DateFormat df = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+
+		/*Setting last sync time when the syncData calling for the first time*/
+		if(orderHeader.getLastOrderSyncTime()==null){
+			orderHeader.setLastOrderSyncTime(df.format(new Date(0)));
+
+		}
 		Date currentSyncTime= new Date();
 		OrderDetails orderDetail = orderService.retrieveBranchOrders(orderHeader.getHeader(),
-				orderHeader.getLastSyncTime(),currentSyncTime);
+				orderHeader.getLastOrderSyncTime(),currentSyncTime);
 		return orderDetail;
 	}
 

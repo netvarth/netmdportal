@@ -2887,7 +2887,27 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
 		orderHeader.setHeader(header);
-		orderHeader.setLastSyncTime("2013-09-24 12:00:57");
+		orderHeader.setLastOrderSyncTime("2013-09-24 12:00:57");
+		try{
+			service.retrieveBranchOrders(orderHeader);
+		}
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void retrieveBranchOrdersWrongLabId(){	
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		LabOrderHeaderDTO orderHeader= new LabOrderHeaderDTO();
+		HeaderDTO header = new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
+		orderHeader.setHeader(header);
+		orderHeader.setLastOrderSyncTime("2013-09-24 12:00:57");
 		try{
 			service.retrieveBranchOrders(orderHeader);
 		}

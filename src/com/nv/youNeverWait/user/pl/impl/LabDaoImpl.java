@@ -102,13 +102,12 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		LabBranchTbl branch = null;
 
 		/* checking whether the user already exists */
-		LabUserTbl labUser = (LabUserTbl) getNetlimsUserByEmail(user.getEmail());
+	LabUserTbl labUser = (LabUserTbl) getNetlimsUserByEmail(user.getEmail());
 		if (labUser != null) {
 			ServiceException se = new ServiceException(ErrorCodeEnum.UserExists);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-
 		/* Saving username and password in login tbl */
 
 		String password = StringEncoder.encryptWithKey(user.getLogin()
@@ -167,6 +166,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		}
 		response.setGlobalId(newUser.getId());
 		response.setSuccess(true);
+		
+		
 		return response;
 
 	}

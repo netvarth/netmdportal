@@ -21,9 +21,24 @@ import java.util.List;
 
 public class OrderDetails {
 	
+	
 	private List<Object> orders= new ArrayList<Object>();
+	private String lastOrderSyncTime;
 	private ErrorDTO error;
 	private boolean success;
+	
+	/**
+	 * @return the lastOrderSyncTime
+	 */
+	public String getLastOrderSyncTime() {
+		return lastOrderSyncTime;
+	}
+	/**
+	 * @param lastOrderSyncTime the lastOrderSyncTime to set
+	 */
+	public void setLastOrderSyncTime(String lastOrderSyncTime) {
+		this.lastOrderSyncTime = lastOrderSyncTime;
+	}
 	
 	/**
 	 * @return the orders
