@@ -50,6 +50,15 @@
 		<class>com.nv.youNeverWait.pl.entity.SuperAdminTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.TestSpecimenTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.TestTbl</class>
+		<class>com.nv.youneverwait.pl.entity.DeptJsonTbl</class>
+		<class>com.nv.youneverwait.pl.entity.DeptTbl</class>
+		<class>com.nv.youneverwait.pl.entity.QuestionTbl</class>
+		<class>com.nv.youneverwait.pl.entity.QusAnsTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetposBranchTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetposTblLoginTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetposTblPassphraseTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetposTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetposTblUserTbl</class>
 
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
