@@ -18,21 +18,23 @@ import java.util.List;
  *
  * @author Luciya Jose
  */
+
 public class OrderDetails {
-	private List<OrderTransfer> orders= new ArrayList<OrderTransfer>();
+	
+	private List<Object> orders= new ArrayList<Object>();
 	private ErrorDTO error;
 	private boolean success;
 	
 	/**
 	 * @return the orders
 	 */
-	public List<OrderTransfer> getOrders() {
+	public List<Object> getOrders() {
 		return orders;
 	}
 	/**
 	 * @param orders the orders to set
 	 */
-	public void setOrders(List<OrderTransfer> orders) {
+	public void setOrders(List<Object> orders) {
 		this.orders = orders;
 	}
 	/**

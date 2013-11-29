@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.transaction.annotation.Transactional;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
@@ -73,17 +75,22 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		List<OrderTransfer> orderList = new ArrayList<OrderTransfer>();
+		List<Object> orderList = new ArrayList<Object>();
 		List<OrderTransferTbl> recievedOrders = getTransferredOrders(
 				header.getHeadOfficeId(), header.getBranchId(), syncTime,
 				currentSyncTime);
 		for (OrderTransferTbl order : recievedOrders) {
-			OrderTransfer newOrder = new OrderTransfer();
-			newOrder.setSourceLabId(order.getSourceLab().getId());
-			newOrder.setSourceLabBranchId(order.getSourceBranch().getId());
-			newOrder.setOrderUid(order.getOrderUid());
-			newOrder.setTransferOrderDetails(order.getOrderDetails());
-			orderList.add(newOrder);
+			Object orderDetails = new Object();
+			ObjectMapper maper = new ObjectMapper();
+			try {
+				orderDetails = maper.readValue(order.getOrderDetails(), Object.class);
+			} catch (Exception e) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.OrderTransferException);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			orderList.add(orderDetails);
 		}
 		orderDetail.setOrders(orderList);
 		orderDetail.setSuccess(true);
