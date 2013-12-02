@@ -24,10 +24,6 @@ function ClassLoader() {
 		})
 		$j.getScript("/youNeverWait/js/resource/SettingsToolBarProcessor.js").done(function(script,textStatus){
 		})
-		
-		
-		
-		 
 	    $j.getScript("/youNeverWait/js/ClassInitializer.js").done(function(script, textStatus) {
 		})
 		
@@ -46,8 +42,6 @@ $j.getScript("/youNeverWait/js/framework/validations.js").done(function(script, 
 $j.getScript("/youNeverWait/js/framework/notifier.js").done(function(script, textStatus) {
 })
 $j.getScript("/youNeverWait/js/framework/logout.js").done(function(script, textStatus) {
-})
-$j.getScript("/youNeverWait/js/framework/login.js").done(function(script, textStatus) {
 })
 
 		$j.getScript("/youNeverWait/js/dto/SpecimenListDTO.js").done(function(script, textStatus) {
@@ -71,6 +65,8 @@ $j.getScript("/youNeverWait/js/framework/login.js").done(function(script, textSt
 		$j.getScript("/youNeverWait/js/dto/TestSpecimenDTO.js").done(function(script,textStatus){
 		}) 
 		$j.getScript("/youNeverWait/js/dto/BranchNetlimsDTO.js").done(function(script,textStatus){
+		})
+		$j.getScript("/youNeverWait/js/dto/BranchNetmdDTO.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/dto/CreateBranchDTO.js").done(function(script,textStatus){
 		})
@@ -116,9 +112,13 @@ $j.getScript("/youNeverWait/js/framework/login.js").done(function(script, textSt
 		})
 		$j.getScript("/youNeverWait/js/impl/NetlimsAccServiceImpl.js").done(function(script,textStatus){
 		})
+		$j.getScript("/youNeverWait/js/impl/NetmdAccServiceImpl.js").done(function(script,textStatus){
+		})
 		$j.getScript("/youNeverWait/js/youneverwait/ui/netlimsAccount/netlimsAccClassLoader.js").done(function(script,textStatus){
 		})
-		$j.getScript("/youNeverWait/js/youneverwait/settings/netlimsAccSettings/NetlimsAccSettingsClassLoader.js").done(function(script,textStatus){
+		$j.getScript("/youNeverWait/js/youneverwait/ui/netmdAccount/netmdAccClassLoader.js").done(function(script,textStatus){
 		})
+		$j.getScript("/youNeverWait/js/youneverwait/settings/netlimsAccSettings/NetlimsAccSettingsClassLoader.js").done(function(script,textStatus){
+		}) 
 	}
 }

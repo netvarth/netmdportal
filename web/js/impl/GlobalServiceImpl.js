@@ -11,5 +11,13 @@ function GlobalServiceImpl () {
 		ajaxProcessor.setUrl(constants.ADMINTOOLBARJSON);
 		return ajaxProcessor.get();
 	}
+	this.getnetMdAccRibbonTBData=function () {
+		ajaxProcessor.setUrl(constants.NETMDACCRIBBONURL);
+		return ajaxProcessor.get();
+	}
+	this.getnetMdAccLeftPaneTBData = function() {
+		ajaxProcessor.setUrl(constants.NETMDACCLEFTPANEURL);
+		return ajaxProcessor.get();
+	}
 	
 }

@@ -13,6 +13,7 @@ function Constants() {
 	this.GENERALPTBURL="/youNeverWait/json/toolbars/viewBranchGeneralToolbar1.json";
 	this.BRANCHUPDATESUCCESS="Branch updated successfully";
 	this.NETLIMSBRANCHDELETESUCCESS="Inactivated Branch Successfully";
+	this.NETMDBRANCHDELETESUCCESS="Inactivated Branch Successfully";
 	this.ADMINTOOLBARJSON ="/youNeverWait/json/toolbars/netlimsAccChangePwd.json";
 	this.OLDPASSWRDREQUIRED="Old Password Required";
 	this.NEWPASSWRDREQUIRED="New Password Required";
@@ -53,7 +54,22 @@ function Constants() {
 	this.SHOWORDERMODAL="ShowOrdersModal";
 	this.BRANCHNETLIMSORDERLIST='/youNeverWait/json/BranchNetlimsOrders.json';
 	this.GETORDERLISTURL="/youNeverWait/ws/ui/lab/orderList";
-	
+	/*****************-------------netmdAccount-----------**----*************/
+	this.NETMDACCRIBBONURL="/youNeverWait/json/toolbars/netMdGlobalTool Bar.json";
+	this.NETMDACCLEFTPANEURL="/youNeverWait/json/toolbars/netMdLeftPaneToolBar.json";
+	this.NETMDACCBRANCHLISTURL="/youNeverWait/ws/ui/netMd/netmdBranchList";
+	this.NETMDBRANCH="BRANCHNETMD";
+	this.NETMDACCPAGEBRANCHJSON="/youNeverWait/json/toolbars/netmdAccBranchPageToolBar.json";
+	this.NETMDACCBRANCHLISTJSON="/youNeverWait/json/list/netmdAccBranchTable.json";
+	this.NEWNETMDACCBRANCHJSON="/youNeverWait/json/new/newBranchNetmdAcc.json";
+	this.NEWNETMDACCBRANCHMODAL="netmdAccBranchModal";
+	this.DEVICENUMBERREQUIRED="Number of devices Required";
+	this.CREATENETMDACCBRANCHURL="/youNeverWait/ws/ui/netMd/createNetMdBranch";
+	this.VIEWNETMDACCBRCHURL="/youNeverWait/ws/ui/netMd/viewNetMdBranch/";
+	this.VIEWNETMDACCBRCHPAGEURL="/youNeverWait/json/view/viewNetmdAccBranchDetails.json";
+	this.NETMDACCBRCHGENERAL="netmdaccbrach";
+	this.UPDATENETMDACCBRCHURL="/youNeverWait/ws/ui/netMd/updateNetMdBranch";
+	this.DELETENETMDACCBRANCHURL="/youNeverWait/ws/ui/netMd/deleteNetMdBranch/";
 	/*****************-------------General-----------**----*************/
 	this.NAME = "name";
 	this.ADDRESS = "address";

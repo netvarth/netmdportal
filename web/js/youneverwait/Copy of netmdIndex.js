@@ -33,57 +33,55 @@ $j.cachedScript("/youNeverWait/js/framework/logout.js").done(function(script, te
 $j.cachedScript("/youNeverWait/js/framework/login.js").done(function(script, textStatus) {
 })
 var errorData = getErrorData();
-var userdata="";
 $j(document).ready(function(){
-	createLeftpaneToolBarNetlims();
-	createGlobalToolBarNetlims();
+	createLeftpaneToolBarNetmd();
+	createGlobalToolBarNetmd();
 	$j('#tabs-1').removeClass('ui-widget-content');
-	userdata =getRequestData('/youNeverWait/ws/ui/auth/getUser');
+	var userdata =getRequestData('/youNeverWait/ws/ui/auth/getUser');
 	var usetType=userdata.userType;
 	var ownerName=userdata.userName;
 	var otherUserName=userdata.name;
 	if(usetType=='owner')
-	$j('#userName').html(ownerName);
+	$j('#Nameofuser').html(ownerName);
 	else
-	$j('#userName').html(otherUserName);
+	$j('#Nameofuser').html(otherUserName);
 	
 	
-	$j('#leftPaneNetlimsBranch').die('click').live("click",function() {
+	
+	$j('#leftPaneNetMdBranch').die('click').live("click",function() {
 		removeErrors();
-		$j.cachedScript(constant_NetLimsAccEntry_Url).done(function(script, textStatus) {
+		$j.cachedScript(constant_NetMdAccEntry_Url).done(function(script, textStatus) {
 		})
 	});
 	
-	$j('#leftPaneNetlimsOrders').die('click').live("click",function() {
-		removeErrors();
-		$j('#pageToolBar-Container').html("");
-		$j.cachedScript(constant_NetLimsAccbranchorder_Url).done(function(script, textStatus) {
-		})
-	});
 	
-	$j('#leftPaneNetlimsSettings').die('click').live("click",function() {
+	
+	$j('#leftPaneNetMdSettings').die('click').live("click",function() {
 		removeErrors();
 		$j('#pageToolBar-Container').html("");
-		$j.cachedScript(constant_SettingsNetlimsAccEntry_Url).done(function(script, textStatus) {
+		$j.cachedScript(constant_netMdaccSettingsEntry_Url).done(function(script, textStatus) {
 		})
 	});
 	
 	
-	$j('#ribbonNewNetlimsBranch').die('click').live("click",function() {
+
+	
+	$j('#ribbonNewNetMdBranch').die('click').live("click",function() {
 		removeErrors();
 		var obj=$j(this);
-		createModal(constants_newBranchNetLimsAccJson,'netlimsAccBranchModal');	
-		openModalBox(obj,'netlimsAccBranchModal')
-		$j.cachedScript(constants_newNetLimsAccBranch).done(function(script, textStatus) {
+		createModal(constants_newBranchNetMdAccJson,'netmdAccBranchModal');	
+		openModalBox(obj,'netmdAccBranchModal')
+		$j.cachedScript(constants_newNetmdAccBranch).done(function(script, textStatus) {
 		})
 	});
-	
-	$j('#ribbonNetlimsDownload').die('click').live("click",function() {
+		
+	$j('#ribbonDownload').die('click').live("click",function() {
+		
 		removeErrors();
 		
 		$j.ajax({
 			type: 'GET',
-			url: serverPath + "/youNeverWait/ws/ui/lab/download",
+			url: serverPath + "/youNeverWait/ws/ui/netMd/download",
 			dataType: 'html',
 			contentType: 'text/html',
 			success: function (html) {
@@ -92,10 +90,10 @@ $j(document).ready(function(){
 			//w.location.reload();
 			}
 		});
-
 	});
-		
-
 });	
+
+
+
 
 

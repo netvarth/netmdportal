@@ -1,16 +1,18 @@
 function GlobalToolBarProcessor() {
 	this.globalService = new GlobalServiceImpl();
+	
 	this.netlimsAccbranchlist="#leftPaneNetlimsBranch";
 	this.netlimsAccbranchorders="#leftPaneNetlimsOrders";
 	this.netlimsAccbranchsettings="#leftPaneNetlimsSettings";
-	this.newBranch="#ribbonNewNetlimsBranch";
+	this.newnetlimsBranch="#ribbonNewNetlimsBranch";
 	this.netlimsdownLoad="#ribbonNetlimsDownload";
-	/* this.referralButton ="#leftPaneDoctor";
-	this.dashboardButton="#leftPaneDashBoard";
-	this.orderButton="#leftPaneAllOrders";
-	this.facilityButton="#leftPaneFacilities";
-	this.agentButton="#leftPaneAgents";
-	this.blanketOrderButton="#leftPaneBlanketOrder";
+	
+	this.netmdAccbranchlist="#leftPaneNetMdBranch";
+	this.netmdAccbranchsettings="#leftPaneNetMdSettings";
+	this.newnetmdBranch="#ribbonNewNetMdBranch";
+	this.netmddownLoad="#ribbonDownload";
+	
+	/*this.blanketOrderButton="#leftPaneBlanketOrder";
 	this.reportButton= "#leftPaneReports";
 	this.adminButton = "#leftPaneAdmin";
 	this.filter = $j('#filter');
@@ -41,7 +43,17 @@ GlobalToolBarProcessor.prototype.init = function() {
 	self.bindRibbonTBEvents();
 	
 }
-
+GlobalToolBarProcessor.prototype.netMdAccinit = function() {
+	var self=this;
+	var globalService = self.getGlobalService();
+	var globalTbInfo = globalService.getnetMdAccRibbonTBData();
+	self.createGlobalTB(globalTbInfo);
+	var leftTBInfo=globalService.getnetMdAccLeftPaneTBData();
+	self.createLeftPaneTB(leftTBInfo);
+	self.bindnetMdAccLeftPaneEvents();
+	self.bindnetMdAccRibbonTBEvents();
+	
+}
 GlobalToolBarProcessor.prototype.createGlobalTB=function(globalTbInfo) {
 	var globalTB = new GlobalToolBar(globalTbInfo);
 	$j('.global-bar-tab .controlB').html(globalTB.result);		
@@ -53,8 +65,8 @@ GlobalToolBarProcessor.prototype.createLeftPaneTB=function(leftTBInfo) {
 
 GlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 	var self=this;
-	if($j(self.newBranch)) {
-		$j(self.newBranch).die('click').live("click",function() {		
+	if($j(self.newnetlimsBranch)) {
+		$j(self.newnetlimsBranch).die('click').live("click",function() {		
 			var obj=$j(this);
 			commonMethodInvoker.removeErrors();
 			if(pageHandler.isnetlimsAccClassLoaded()!=true){
@@ -71,7 +83,41 @@ GlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 		$j(self.netlimsdownLoad).die('click').live("click",function() {		
 			$j.ajax({
 			type: 'GET',
-			url: serverPath + "/youNeverWait/ws/ui/lab/download",
+			url: "/youNeverWait/ws/ui/lab/download",
+			dataType: 'html',
+			contentType: 'text/html',
+			success: function (html) {
+			var w = window.open();
+			w.document.writeln(html);
+			//w.location.reload();
+			}
+			});
+		});
+	}
+	
+	
+}
+GlobalToolBarProcessor.prototype.bindnetMdAccRibbonTBEvents=function() {
+	var self=this;
+	if($j(self.newnetmdBranch)) {
+		$j(self.newnetmdBranch).die('click').live("click",function() {		
+			var obj=$j(this);
+			commonMethodInvoker.removeErrors();
+			if(pageHandler.isnetmdAccClassLoaded()!=true){
+				var netmdAccClass = new netmdAccClassLoader();
+				netmdAccClass.load();
+				pageHandler.setnetmdAccClassLoaded(true);
+			}
+			var netmdAccUI = new netmdAccountUIStartup();			
+			netmdAccUI.createBranchModal(obj);
+		});
+	}
+	
+	if($j(self.netmddownLoad)) {
+		$j(self.netmddownLoad).die('click').live("click",function() {		
+			$j.ajax({
+			type: 'GET',
+			url: "/youNeverWait/ws/ui/netMd/download",
 			dataType: 'html',
 			contentType: 'text/html',
 			success: function (html) {
@@ -125,5 +171,25 @@ GlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 			adminUI.init(); 
 		});
 	}	
+	
+}
+GlobalToolBarProcessor.prototype.bindnetMdAccLeftPaneEvents=function() {
+	var self=this;
+	
+	if($j(self.netmdAccbranchlist)) {
+		$j(self.netmdAccbranchlist).die('click').live("click",function() {	
+			var obj=$j(this);
+			commonMethodInvoker.removeErrors();
+			if(pageHandler.isnetmdAccClassLoaded()!=true){
+				var netmdAccClass = new netmdAccClassLoader();
+				netmdAccClass.load();
+				pageHandler.setnetmdAccClassLoaded(true);
+			}
+			var netmdAccUI = new netmdAccountUIStartup();			
+			netmdAccUI.init();
+		});
+	}	
+	
+	
 	
 }
