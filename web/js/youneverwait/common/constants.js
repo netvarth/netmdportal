@@ -169,7 +169,7 @@ constants_userNameInvalidMessage="Enter Valid User Name"
 
 
 //Netlims Account
-constant_NetLimsAccEntry_Url="/youNeverWait/js/youneverwait/netlimsAcc/netlimsAccEntryPoint.js";
+/* constant_NetLimsAccEntry_Url="/youNeverWait/js/youneverwait/netlimsAcc/netlimsAccEntryPoint.js";
 constant_NetLimsAccbranchorder_Url="/youNeverWait/js/youneverwait/netlimsAcc/netlimsAccBranchOrders.js";
 constant_NetLimsAccFunctions_Url ="/youNeverWait/js/youneverwait/netlimsAcc/netlimsAccFunctions.js";
 constant_NetLimsAccList_Msg="BRANCH LIST";
@@ -195,7 +195,7 @@ constants_ViewNetlimsAccBranchValidation="/youNeverWait/js/youneverwait/netlimsA
 
 constant_BranchNetlimsAccView_Msg="View NetLims Branch";
 constant_newNetLimsAccBranch_Delete_Url="/youNeverWait/ws/ui/lab/deleteBranch";
-constants_ShowOrdersModalJson='/youNeverWait/json/BranchNetlimsOrders.json';
+constants_ShowOrdersModalJson='/youNeverWait/json/BranchNetlimsOrders.json'; */
 //NetMd Account
 constant_netMdaccSettingsEntry_Url="/youNeverWait/js/youneverwait/settings/netMdAccChangePwd.js";
 constants_netMdAccChangePwdJson='/youNeverWait/json/changepassword/netMdAccChangePassword.json';
