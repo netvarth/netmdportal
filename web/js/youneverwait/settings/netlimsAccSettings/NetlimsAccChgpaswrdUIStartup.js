@@ -21,7 +21,7 @@ NetlimsAccChgpaswrdUIStartup.prototype.init = function() {
 	self.bindEvents();
 }
  NetlimsAccChgpaswrdUIStartup.prototype.clearFields = function() {
-	$j(this.netlimsAccChgpaswrdPage + " input[type=text]").val("");
+	$j(this.netlimsAccChgpaswrdModal  + " input[type=password]").val("");
 }
 NetlimsAccChgpaswrdUIStartup.prototype.removecolors = function(cl) {
 	commonMethodInvoker.removeErrorColor(self.oldpassword);
@@ -39,7 +39,7 @@ NetlimsAccChgpaswrdUIStartup.prototype.cancel = function() {
 	var self=this;
 	self.errorHeader.hide();
 	commonMethodInvoker.removeErrors();
-	$j(self.netlimsAccChgpaswrdModal + self.netlimsAccChgpaswrdPage + " input[type=text]").val("");	
+	$j(self.netlimsAccChgpaswrdModal + " input[type=password]").val("");	
 	$j(self.netlimsAccChgpaswrdModal).trigger('reveal:close');
 	$j(self.netlimsAccChgpaswrdModal).remove();
 	

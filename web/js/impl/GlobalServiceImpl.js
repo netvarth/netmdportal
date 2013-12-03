@@ -19,5 +19,8 @@ function GlobalServiceImpl () {
 		ajaxProcessor.setUrl(constants.NETMDACCLEFTPANEURL);
 		return ajaxProcessor.get();
 	}
-	
+	this.getAdminTBnetmdACcData = function() {
+		ajaxProcessor.setUrl(constants.ADMINNETMDACCTOOLBARJSON);
+		return ajaxProcessor.get();
+	}
 }

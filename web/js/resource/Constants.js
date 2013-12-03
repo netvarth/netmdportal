@@ -70,6 +70,10 @@ function Constants() {
 	this.NETMDACCBRCHGENERAL="netmdaccbrach";
 	this.UPDATENETMDACCBRCHURL="/youNeverWait/ws/ui/netMd/updateNetMdBranch";
 	this.DELETENETMDACCBRANCHURL="/youNeverWait/ws/ui/netMd/deleteNetMdBranch/";
+	this.ADMINNETMDACCTOOLBARJSON="/youNeverWait/json/toolbars/netMdAccChangePwd.json";
+	this.NEWNETMDACCPASWRDCHGMODAL="changepwdModalNetMd";
+	this.NEWNETMDACCPASWRDCHGJSON="/youNeverWait/json/changepassword/netMdAccChangePassword.json";
+	this.CHANGEPASSWORDNETMDURL="/youNeverWait/ws/ui/netMd/changePassword";
 	/*****************-------------General-----------**----*************/
 	this.NAME = "name";
 	this.ADDRESS = "address";

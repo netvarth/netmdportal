@@ -68,14 +68,14 @@ netmdAccountUIStartup.prototype.init = function() {
 	var exp = new ExpressionListDTO();
 	var expr = new ExpressionDTO(selName,selValue,selOperator);
 	exp.add(expr);
-	var netmdAccTableNavigator = self.getnetmdAccTableNavigator();
-	netmdAccTableNavigator.setExp(exp);
+	var netmdAccntTableNavigator = self.getnetmdAccTableNavigator();
+	netmdAccntTableNavigator.setExp(exp);
 	var ptbProcessor = new PageToolBarProcessor();
 	ptbProcessor.create(constants.NETMDBRANCH, constants.NETMDACCPAGEBRANCHJSON); //Create the Page tool Bar for Order
 	self.bindToolBarEvents();
 	dataTableProcessor.create(self.pgTableName,constants.NETMDACCBRANCHLISTJSON);//Create Table for Listing Order
 	dataTableProcessor.setCustomTable(self.pgTableName);
-	netmdAccTableNavigator.list();
+	netmdAccntTableNavigator.list();
 	self.bindEvents();
 	pageHandler.setActivePage(self);
 }

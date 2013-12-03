@@ -15,19 +15,7 @@ function NetmdAccServiceImpl () {
 	 
 		} 
 		
-		this.setTableValuesOrderList = function(tableObj, branchResult) {
-		$j(tableObj).dataTable().fnClearTable();
-		if(branchResult.branchOrders.length>0) {			
-			$j(branchResult.branchOrders).each(function (index, lab) {
-				var id=lab.branchId;
-				var rowData=$j(tableObj).dataTable().fnAddData([id,lab.branchName,lab.orderDate,lab.totalOrders,lab.netAmount,lab.paidAmount,lab.lastOrderdTime]);
-				var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
-				$j(row).attr('id',id);	
-				//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
-				});	
-		} 
-	 
-		} 
+		
 		
 		this.setTableValueBranchOrderList = function(tableObj, branchResult) {
 		$j(tableObj).dataTable().fnClearTable();
@@ -63,18 +51,11 @@ NetmdAccServiceImpl.prototype.deleteNetmdBranch=function(netmdBrchId) {
 	return ajaxProcessor.get();
 }
 
-NetmdAccServiceImpl.prototype.changePasswrdNetlims=function(changePasswrd) {
-	ajaxProcessor.setUrl(constants.CHANGEPASSWORDURL);
+NetmdAccServiceImpl.prototype.changePasswrdNetmd=function(changePasswrd) {
+	ajaxProcessor.setUrl(constants.CHANGEPASSWORDNETMDURL);
 	return ajaxProcessor.post(changePasswrd);
 }
-NetmdAccServiceImpl.prototype.orderTypeNetlims=function(netlimsBrchId) {
-	ajaxProcessor.setUrl(constants.VIEWNETLIMSORDERTYPEURL + netlimsBrchId);
-	return ajaxProcessor.get();
-}
-NetmdAccServiceImpl.prototype.setOrderTypeNetlims=function(orderTypeJson) {
-	ajaxProcessor.setUrl(constants.VIEWNETLIMSSETORDERTYPEURL);
-	return ajaxProcessor.post(orderTypeJson);
-}
+
 NetmdAccServiceImpl.prototype.syncdata=function(branchId) {
 	ajaxProcessor.setUrl(constants.SYNCDATANETLIMSACCURL + branchId);
 	return ajaxProcessor.get();

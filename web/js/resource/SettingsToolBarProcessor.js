@@ -2,6 +2,7 @@ function SettingsToolBarProcessor() {
 	this.globalService = new GlobalServiceImpl();
 	this.changePasswrdButton ="#btnNetlimsChangePwd";
 	this.orderTypeButton="#btnNetlimsOrdertype";
+	this.changePasswrdnetMdbutton="#btnNetMdChangePwd";
 	this.pageTitle = $j('#pageTitle');
 	/* this.testButton="#btnTest";
 	this.testpackageButton="#btnTestPkg";
@@ -27,6 +28,14 @@ SettingsToolBarProcessor.prototype.getGlobalService = function() {
 //Set the page title of the agent ui page
 SettingsToolBarProcessor.prototype.setPageTitle = function(value) {
 	this.pageTitle.empty().html(value);
+}
+SettingsToolBarProcessor.prototype.netmdAccinit = function() {
+	var self=this;
+	var globalService = self.getGlobalService();
+	var adminTbInfo = globalService.getAdminTBnetmdACcData();
+	self.setPageTitle(constants.SETTINGTITLE);
+	self.createAdminTB(adminTbInfo);
+	self.bindAdminTBEvents();
 }
 SettingsToolBarProcessor.prototype.init = function() {
 	var self=this;
@@ -59,7 +68,15 @@ SettingsToolBarProcessor.prototype.createorderTypeModal = function(obj) {
 	netlimsOrderTypeUI.init();
 	return netlimsOrderTypeUI; 
 }
-
+SettingsToolBarProcessor.prototype.createChangePasswrdnetMdModal = function(obj) {
+	var self = this;
+	commonMethodInvoker.removeErrors();
+	createModal(constants.NEWNETMDACCPASWRDCHGJSON,constants.NEWNETMDACCPASWRDCHGMODAL);		
+	openModalBox(obj,constants.NEWNETMDACCPASWRDCHGMODAL);
+	var newNetmdAccCngPswdUI = new NetmdAccChgpaswrdUIStartup();
+	newNetmdAccCngPswdUI.init();
+	return newNetmdAccCngPswdUI; 
+}
 SettingsToolBarProcessor.prototype.bindAdminTBEvents=function() {
 	var self=this;
 	$j(self.changePasswrdButton).die('click').click(function(){
@@ -80,6 +97,15 @@ SettingsToolBarProcessor.prototype.bindAdminTBEvents=function() {
 				pageHandler.setnetlimsAccSettingsClassLoaded(true);
 			} 
 		self.createorderTypeModal(obj);
+	});
+	$j(self.changePasswrdnetMdbutton).die('click').click(function(){
+		var obj=$j(this);
+		if(pageHandler.isnetmdAccSettingsClassLoaded()!=true){
+				var NetmdAccSettingsClass = new NetmdAccSettingsClassLoader();
+				NetmdAccSettingsClass.load();
+				pageHandler.setnetmdAccSettingsClassLoaded(true);
+			}
+		self.createChangePasswrdnetMdModal(obj);
 	});
 	
 	

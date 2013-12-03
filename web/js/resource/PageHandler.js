@@ -41,11 +41,23 @@ function PageHandler() {
 	this.setnetlimsAccClassLoaded=function(status){
 		this.netlimsAccClassLoaded=status;
 	}
+	this.isnetmdAccClassLoaded=function(){
+		return this.netmdAccClassLoaded;
+	}
+	this.setnetmdAccClassLoaded=function(status){
+		this.netmdAccClassLoaded=status;
+	}
 	this.isnetlimsAccSettingsClassLoaded=function(){
 		return this.netlimsAccSettingsClassLoaded;
 	}
 	this.setnetlimsAccSettingsClassLoaded=function(status){
 		this.netlimsAccSettingsClassLoaded=status;
+	}
+	this.isnetmdAccSettingsClassLoaded=function(){
+		return this.netmdAccSettingsClassLoaded;
+	}
+	this.setnetmdAccSettingsClassLoaded=function(status){
+		this.netmdAccSettingsClassLoaded=status;
 	}
 	/* this.isOrderClassLoaded=function(){
 		return this.orderClassLoaded;

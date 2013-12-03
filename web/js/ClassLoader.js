@@ -119,6 +119,8 @@ $j.getScript("/youNeverWait/js/framework/logout.js").done(function(script, textS
 		$j.getScript("/youNeverWait/js/youneverwait/ui/netmdAccount/netmdAccClassLoader.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/youneverwait/settings/netlimsAccSettings/NetlimsAccSettingsClassLoader.js").done(function(script,textStatus){
-		}) 
+		})  
+		$j.getScript("/youNeverWait/js/youneverwait/settings/netmdAccSettings/NetmdAccSettingsClassLoader.js").done(function(script,textStatus){
+		})
 	}
 }
