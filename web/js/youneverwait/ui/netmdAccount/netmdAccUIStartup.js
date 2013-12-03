@@ -10,7 +10,7 @@ function netmdAccountUIStartup() {
 	this.errorData = $j('#errorDivData');
 	this.errorHeader = $j('#errorDivHeader');
 	this.netmdId=userdata.netmdId;
-	this.pgTableRowClass = this.pgTableName + ' .branchIdCol';
+	this.pgTableRowClass = this.pgTableName + ' .branchNetlimsAccIdCol';
 	this.exp = new ExpressionListDTO();
 	this.netmdAccService = new NetmdAccServiceImpl();
 	this.listUrl = constants.NETMDACCBRANCHLISTURL;
@@ -92,15 +92,15 @@ netmdAccountUIStartup.prototype.createBranchModal = function(obj) {
 	return newBranchUI;
 }
 
-/* netmdAccountUIStartup.prototype.createSyncModal = function(obj,branchId) {
+ netmdAccountUIStartup.prototype.createSyncModal = function(obj,branchId) {
 	var self = this;
 	commonMethodInvoker.removeErrors();
-	createModal(constants.NETLIMSACCSYNCJSON,constants.NETLIMSACCSYNCMODAL);		
-	openModalBox(obj,constants.NETLIMSACCSYNCMODAL);
-	var netlimsAccSyncUI = new NetlimsAccSyncUI(self,branchId);
-	netlimsAccSyncUI.init();
-	return netlimsAccSyncUI; 
-} */
+	createModal(constants.NETMDACCSYNCJSON,constants.NETMDACCSYNCMODAL);		
+	openModalBox(obj,constants.NETMDACCSYNCMODAL);
+	var netmdAccSyncUI = new NetmdAccSyncUI(self,branchId);
+	netmdAccSyncUI.init();
+	return netmdAccSyncUI; 
+} 
 
 
 netmdAccountUIStartup.prototype.bindToolBarEvents = function() {
@@ -117,14 +117,14 @@ netmdAccountUIStartup.prototype.bindToolBarEvents = function() {
 			viewNetmdBranchUI.init(branchId);
 		}	
 	});
-	/*self.ptbSync.die('click').live('click',function() {
+	self.ptbSync.die('click').live('click',function() {
 		removeErrors();
 		var branchId=self.getSelectedbranchId(self.pgTableName);
 		if(branchId!="") {
 			var obj=$j(this);
 			self.createSyncModal(obj,branchId);
 		}	
-	}); */
+	}); 
 	self.ptbDelete.die('click').live('click',function() {
 		removeErrors();
 		var branchId=self.getSelectedbranchId(self.pgTableName);
@@ -160,13 +160,13 @@ netmdAccountUIStartup.prototype.bindEvents = function() {
 		removeErrors();
 	});	
 	
-	/* $j(parent.pgTableRowClass).die('click').live('click',function(){
+	$j(parent.pgTableRowClass).die('click').live('click',function(){
 	   var branchId= $j(this).parent().attr('id');
 		if(branchId!="") {
-			var viewNetlimsBranchUI = parent.getViewNetmdBranchUI();
-			viewNetlimsBranchUI.init(branchId);
+			var viewNetmdBranchUI = parent.getViewNetmdBranchUI();
+			viewNetmdBranchUI.init(branchId);
 		}	
-	});  */
+	});  
 }
 
 

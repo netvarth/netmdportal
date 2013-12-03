@@ -17,17 +17,17 @@ function NetmdAccServiceImpl () {
 		
 		
 		
-		this.setTableValueBranchOrderList = function(tableObj, branchResult) {
+		this.setTableValueBranchBillList = function(tableObj, billResult) {
 		$j(tableObj).dataTable().fnClearTable();
-		if(branchResult.branchOrders.length>0) {			
-				$j(branchResult.branchOrders).each(function (index, lab) {
-					var id=lab.branchId;
-					var rowData=$j(tableObj).dataTable().fnAddData([lab.orderDate,lab.totalOrders,lab.netAmount,lab.paidAmount,lab.lastOrderdTime]);
+		if(billResult.branchBillList.length>0) {			
+				$j(billResult.branchBillList).each(function (index, netmd) {
+					var id=netmd.branchId;
+					var rowData=$j(tableObj).dataTable().fnAddData([netmd.uid,netmd.orderDate,netmd.patientName,netmd.payStatus,netmd.billAmount,netmd.amountPaid]);
 					var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 					$j(row).attr('id',id);	
 					//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
 					});	
-		}
+			}
 	 
 		} 
 }
@@ -57,15 +57,15 @@ NetmdAccServiceImpl.prototype.changePasswrdNetmd=function(changePasswrd) {
 }
 
 NetmdAccServiceImpl.prototype.syncdata=function(branchId) {
-	ajaxProcessor.setUrl(constants.SYNCDATANETLIMSACCURL + branchId);
+	ajaxProcessor.setUrl(constants.SYNCDATANETMDACCURL + branchId);
 	return ajaxProcessor.get();
 }
-NetmdAccServiceImpl.prototype.syncBranchNetlims=function(syncData) {
-	ajaxProcessor.setUrl(constants.SETACCBRACHSYCURL);
+NetmdAccServiceImpl.prototype.syncBranchNetmd=function(syncData) {
+	ajaxProcessor.setUrl(constants.SETNETMDACCBRACHSYCURL);
 	return ajaxProcessor.post(syncData);
 }
 
-NetmdAccServiceImpl.prototype.BranchOrderlistNetlims=function(orderlistData) {
-	ajaxProcessor.setUrl(constants.GETORDERLISTURL);
-	return ajaxProcessor.post(orderlistData);
+NetmdAccServiceImpl.prototype.BranchBilllistNetmd=function(billlistData) {
+	ajaxProcessor.setUrl(constants.GETBILLLISTURL);
+	return ajaxProcessor.post(billlistData);
 }

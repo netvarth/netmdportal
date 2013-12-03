@@ -76,9 +76,11 @@ $j.getScript("/youNeverWait/js/framework/logout.js").done(function(script, textS
 		})
 		$j.getScript("/youNeverWait/js/dto/OrderTypePassDTO.js").done(function(script,textStatus){
 		}) 
-		$j.getScript("/youNeverWait/js/dto/netlimsBrchSyncDTO.js").done(function(script,textStatus){
+		$j.getScript("/youNeverWait/js/dto/BranchSyncDTO.js").done(function(script,textStatus){
 		}) 
 		$j.getScript("/youNeverWait/js/dto/OrderListDTO.js").done(function(script,textStatus){
+		}) 
+		$j.getScript("/youNeverWait/js/dto/BillListDTO.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/impl/GlobalServiceImpl.js").done(function(script, textStatus) {
 		})	

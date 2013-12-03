@@ -1,37 +1,37 @@
 
-function NetlimsAccSyncUI(BranchUIStartup,branchId) {
-	this.netlimsAccSycSetModal = " #netlimsAccSycSetModal";
-	this.netlimsAccSycSetPage =  " #newAccBranchsetSyncForm";
-	this.radioCheck=this.netlimsAccSycSetPage + " input[type=radio]:checked ";
-	this.createButton = $j(this.netlimsAccSycSetPage + " #btnnetlimsAccBranchSubmit");
-	this.enableRadio=$j(this.netlimsAccSycSetPage + " #netlimsAccBrchEnable");
-	this.disableRadio=$j(this.netlimsAccSycSetPage + " #netlimsAccBrchDisable");
-	this.selectHeader=$j(this.netlimsAccSycSetPage + " #syctxtAccBranchEnTime");
-	this.select=$j(this.netlimsAccSycSetPage + " #NetlimsAccBranchSyncTime");
-	this.intervalHead=$j(this.netlimsAccSycSetPage + " #syctxtAccBranchEnInr");
-	this.interval=$j(this.netlimsAccSycSetPage + " #NetlimsAccBranchSyncInterval");
-	this.errorHeader = $j(this.netlimsAccSycSetPage + " #errorDivHeader");
-	this.errorData = $j(this.netlimsAccSycSetPage + " #errorDivNewNetlimsAccBranchData");
+function NetmdAccSyncUI(BranchUIStartup,branchId) {
+	this.netmdAccSycSetModal = " #netMdAccSycSetModal";
+	this.netmdAccSycSetPage =  " #newnetmdAccBranchsetSyncForm";
+	this.radioCheck=this.netmdAccSycSetPage + " input[type=radio]:checked ";
+	this.createButton = $j(this.netmdAccSycSetPage + " #btnnetmdAccbrchSubmit");
+	this.enableRadio=$j(this.netmdAccSycSetPage + " #netmdAccbrchEnable");
+	this.disableRadio=$j(this.netmdAccSycSetPage + " #netmdAccbrchDisable");
+	this.selectHeader=$j(this.netmdAccSycSetPage + " #syctxtnetmdAccBranchEnTime");
+	this.select=$j(this.netmdAccSycSetPage + " #NetmdAccBranchSyncTime");
+	this.intervalHead=$j(this.netmdAccSycSetPage + " #syctxtnetmdAccBranchEnInr");
+	this.interval=$j(this.netmdAccSycSetPage + " #NetmdAccBranchSyncInterval");
+	this.errorHeader = $j(this.netmdAccSycSetPage + " #errorDivHeader");
+	this.errorData = $j(this.netmdAccSycSetPage + " #errorDivNewNetmdAccBranchData");
 	this.branchId=branchId;
 	this.branchUIStartup = BranchUIStartup; 
 	
 }
 
 
- NetlimsAccSyncUI.prototype.getBranchUIStartup = function() {
+ NetmdAccSyncUI.prototype.getBranchUIStartup = function() {
 	return this.branchUIStartup;
 }
 
-NetlimsAccSyncUI.prototype.getNetlimsUIService = function() {
+NetmdAccSyncUI.prototype.getNetmdUIService = function() {
 	var branchUIStartup = this.getBranchUIStartup();
-	return branchUIStartup.getNetlimsUIService();
+	return branchUIStartup.getNetmdUIService();
 }
 
-NetlimsAccSyncUI.prototype.init = function() {
+NetmdAccSyncUI.prototype.init = function() {
 	self =this;
 	fillTimeList(self.select);
 	commonMethodInvoker.validateNumber(self.interval);
-	var syncdetails = self.getNetlimsUIService();
+	var syncdetails = self.getNetmdUIService();
 	var getSyncdetails=syncdetails.syncdata(self.branchId);
 	//alert(JSON.stringify(getSyncdetails));
 	var radioStatus=getSyncdetails.enableSync;
@@ -69,7 +69,7 @@ NetlimsAccSyncUI.prototype.init = function() {
 	});	
 	self.bindEvents();
 } 
-NetlimsAccSyncUI.prototype.bindEvents = function() {
+NetmdAccSyncUI.prototype.bindEvents = function() {
 self = this;	
 	
 	self.createButton.die('click').live('click',function(){
@@ -77,14 +77,14 @@ self = this;
 	});	
 }
 
-NetlimsAccSyncUI.prototype.create = function() {
+NetmdAccSyncUI.prototype.create = function() {
 	var self=this;
 	self.errorHeader.hide();
 	commonMethodInvoker.removeErrors();
 	var syncData = self.getSyncDetail();
-	if(validateNetlimsAccBrchSync()) {
-		var syncService = self.getNetlimsUIService();
-		var syncServiceResponse =syncService.syncBranchNetlims(syncData);
+	if(validateNetmdAccBrchSync()) {
+		var syncService = self.getNetmdUIService();
+		var syncServiceResponse =syncService.syncBranchNetmd(syncData);
 		//alert(JSON.stringify(syncServiceResponse));
 		if(syncServiceResponse.success==true){
 			var messge=syncServiceResponse.msg;
@@ -99,7 +99,7 @@ NetlimsAccSyncUI.prototype.create = function() {
 		} 
 	} 
 }
-NetlimsAccSyncUI.prototype.getSyncDetail = function() {
+NetmdAccSyncUI.prototype.getSyncDetail = function() {
 	var self=this;
 	var intr=self.interval.val();
 	var status=false;
@@ -108,7 +108,7 @@ NetlimsAccSyncUI.prototype.getSyncDetail = function() {
 	var BrchSync = new BranchSyncDTO();
 	BrchSync.setenableSync(status);
 	BrchSync.setsyncTime(parseInt(self.interval.val()));
-	BrchSync.setlabBranchId(parseInt(self.branchId));
+	BrchSync.setnetmdBranchId(parseInt(self.branchId));
 	BrchSync.setsyncFreqType(self.select.val());
 	return BrchSync;
 }	
@@ -122,8 +122,8 @@ function fillTimeList(controlobj)
 
 		
 	} 
-function validateNetlimsAccBrchSync(){
-	var syncInterval=$j('#newAccBranchsetSyncForm #NetlimsAccBranchSyncInterval');
+function validateNetmdAccBrchSync(){
+	var syncInterval=$j('#newnetmdAccBranchsetSyncForm #NetmdAccBranchSyncInterval');
 	var OrgNameValid;
 	OrgNameValid = checkNull(syncInterval,constants.SYNCINTERVALREQUIRED);
 	return OrgNameValid;

@@ -197,7 +197,7 @@ constant_BranchNetlimsAccView_Msg="View NetLims Branch";
 constant_newNetLimsAccBranch_Delete_Url="/youNeverWait/ws/ui/lab/deleteBranch";
 constants_ShowOrdersModalJson='/youNeverWait/json/BranchNetlimsOrders.json'; */
 //NetMd Account
-constant_netMdaccSettingsEntry_Url="/youNeverWait/js/youneverwait/settings/netMdAccChangePwd.js";
+/* constant_netMdaccSettingsEntry_Url="/youNeverWait/js/youneverwait/settings/netMdAccChangePwd.js";
 constants_netMdAccChangePwdJson='/youNeverWait/json/changepassword/netMdAccChangePassword.json';
 constant_netMdAccChangePassword_Url="/youNeverWait/ws/ui/netMd/changePassword";
 constant_NetMdAccEntry_Url="/youNeverWait/js/youneverwait/netmdAcc/netmdAccEntryPoint.js";
@@ -211,7 +211,7 @@ constants_ViewNetmdAccBranchFunction="/youNeverWait/js/youneverwait/netmdAcc/Bra
 constants_ViewNetmdAccBranchAction="/youNeverWait/js/youneverwait/netmdAcc/Branch/View/viewBranchNetmdAccActions.js";
 constants_ViewNetmdAccBranchValidation="/youNeverWait/js/youneverwait/netmdAcc/Branch/View/viewBranchNetmdAccValidations.js";
 constant_BranchNetmdAccView_Msg="View NetMd Branch";
-constant_newNetmdAccBranch_Delete_Url="/youNeverWait/ws/ui/netMd/deleteNetMdBranch/";
+constant_newNetmdAccBranch_Delete_Url="/youNeverWait/ws/ui/netMd/deleteNetMdBranch/"; */
 
 //user log
 constant_UserLogEntry_Url="/youNeverWait/js/youneverwait/userlog/userlogEntryPoint.js";

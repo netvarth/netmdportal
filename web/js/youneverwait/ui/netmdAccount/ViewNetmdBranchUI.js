@@ -3,12 +3,12 @@
 	this.errorHeader = $j('#errorDivHeader');
 	this.errorData = $j('#errorDivData');
 	this.pageTitle = $j('#pageTitle');
-	this.fromDate="#netmdAccbranchViewForm #fromDate";
-	this.toDate="#netmdAccbranchViewForm #toDate";
-	this.orderButton="#netmdAccbranchViewForm #btnShowOrders";
+	this.fromDate="#netmdAccbranchViewForm #BranchBillfromDate";
+	this.toDate="#netmdAccbranchViewForm #BranchBilltoDate";
+	this.billButton="#netmdAccbranchViewForm #BranchBillbtn";
 	this.primaryTable="#passphrasePrimaryViewTableAcc";
 	this.secondaryTable="#passphraseViewTableAcc"
-	//this.orderListTable="#ordersnetlimsaccViewTable";
+	this.billListTable="#accBillDetailsViewTable";
 	this.updateButton = this.viewNetmdAccBrchPage + " #netmdAccbranchvwbtnDone";
 	this.editButton = this.viewNetmdAccBrchPage + " #netmdAccbranchvwbtnEdit";
 	this.cancelButton = this.viewNetmdAccBrchPage + " #netmdAccbranchvwbtnCancel";  
@@ -159,23 +159,23 @@ ViewNetmdBranchUI.prototype.bindEvents = function() {
 		} else
 			self.createError(error);	
 	}); 
-	/* $j(self.orderButton).die('click').live('click',function(){
+	 $j(self.billButton).die('click').live('click',function(){
  		self=parent;
 		self.errorHeader.hide();
 		var obj=$j(this);
 		commonMethodInvoker.removeErrors();
-		var orderlistData=self.getOrderDetail();
+		var billlistData=self.getBillDetail();
 		var netmdUIService = self.getNetmdUIService();
-		var netlimsOrderListResponse = netmdUIService.BranchOrderlistNetlims(orderlistData);
-		//alert(JSON.stringify(netlimsOrderListResponse));
-		if(netlimsOrderListResponse.success==true) {
-		createModal(constants.BRANCHNETLIMSORDERLIST,constants.SHOWORDERMODAL);		
-		openModalBox(obj,constants.SHOWORDERMODAL);
-		dataTableProcessor.setCustomTable(self.orderListTable);
-		//self.netmdUIService.setTableValueBranchOrderList(self.orderListTable,netlimsOrderListResponse);
+		var netmdbillListResponse = netmdUIService.BranchBilllistNetmd(billlistData);
+		//alert(JSON.stringify(netmdbillListResponse));
+		if(netmdbillListResponse.success==true) {
+		createModal(constants.BRANCHNETMDBILLLISTJSON,constants.SHOWBILLLISTMODAL);		
+		openModalBox(obj,constants.SHOWBILLLISTMODAL);
+		dataTableProcessor.setCustomTable(self.billListTable);
+		//self.netmdUIService.setTableValueBranchBillList(self.billListTable,netmdbillListResponse);
 		}else
-			commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netlimsOrderListResponse.error));
-	}); */
+			commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netmdbillListResponse.error));
+	}); 
 }
 ViewNetmdBranchUI.prototype.viewNetmdBranchDetails = function(branchId) {
 	self=this;
@@ -263,14 +263,14 @@ ViewNetmdBranchUI.prototype.getBranchRequest = function() {
 	branch.setnumberOfDevices(parseInt(device));
 	return branch;
 }
-ViewNetmdBranchUI.prototype.getOrderDetail = function() {
+ViewNetmdBranchUI.prototype.getBillDetail = function() {
 	var self=this;
-	var orderData=new OrderListDTO();
-	orderData.setfromDate($j(self.fromDate).val());
-	orderData.setToDate($j(self.toDate).val());
-	orderData.setlabId($j(self.id).val());
-	orderData.setlabBranchId($j(self.brachId).val());
-	return orderData;
+	var billData=new BillListDTO();
+	billData.setfromDate($j(self.fromDate).val());
+	billData.setToDate($j(self.toDate).val());
+	billData.setnetmdId($j(self.id).val());
+	billData.setnetmdBranchId($j(self.brachId).val());
+	return billData;
 }
 ViewNetmdBranchUI.prototype.getPrevId = function(curId,branchResult) {
 	var prevId;
