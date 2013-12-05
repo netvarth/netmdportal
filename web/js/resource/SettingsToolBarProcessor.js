@@ -3,20 +3,14 @@ function SettingsToolBarProcessor() {
 	this.changePasswrdButton ="#btnNetlimsChangePwd";
 	this.orderTypeButton="#btnNetlimsOrdertype";
 	this.changePasswrdnetMdbutton="#btnNetMdChangePwd";
+	this.changePasswrdnetRxbutton="#btnNetRxChangePwd";
 	this.pageTitle = $j('#pageTitle');
 	/* this.testButton="#btnTest";
-	this.testpackageButton="#btnTestPkg";
-	this.referralButton="#btnDoctors";
-	this.facilityButton="#btnFacilities";
-	this.agentButton= "#btnAgents";
 	this.discountButton = "#btnDiscounts";
 	this.backupButton = "#btnBackUP";
 	this.configButton = "#btnConfig";
 	this.areaButton = "#btnArea";
 	this.specimenButton = "#btnSpecimens";
-	this.departmentButton="#btnDepartments";
-	this.settingsButton="#btnSettings";
-	this.btnConfigSave="#btnConfigSave";
 	this.filter = $j('#filter');
 	this.filterBench=$j('#filterWorkBench');
 	this.ftbContainer=$j('#filterToolBar-Container'); */
@@ -33,6 +27,14 @@ SettingsToolBarProcessor.prototype.netmdAccinit = function() {
 	var self=this;
 	var globalService = self.getGlobalService();
 	var adminTbInfo = globalService.getAdminTBnetmdACcData();
+	self.setPageTitle(constants.SETTINGTITLE);
+	self.createAdminTB(adminTbInfo);
+	self.bindAdminTBEvents();
+}
+SettingsToolBarProcessor.prototype.netrxAccinit = function() {
+	var self=this;
+	var globalService = self.getGlobalService();
+	var adminTbInfo = globalService.getAdminTBnetrxACcData();
 	self.setPageTitle(constants.SETTINGTITLE);
 	self.createAdminTB(adminTbInfo);
 	self.bindAdminTBEvents();
@@ -77,6 +79,15 @@ SettingsToolBarProcessor.prototype.createChangePasswrdnetMdModal = function(obj)
 	newNetmdAccCngPswdUI.init();
 	return newNetmdAccCngPswdUI; 
 }
+SettingsToolBarProcessor.prototype.createChangePasswrdnetrxModal = function(obj) {
+	var self = this;
+	commonMethodInvoker.removeErrors();
+	createModal(constants.NEWNETRXACCPASWRDCHGJSON,constants.NEWNETRXACCPASWRDCHGMODAL);		
+	openModalBox(obj,constants.NEWNETRXACCPASWRDCHGMODAL);
+	var newNetrxAccCngPswdUI = new NetrxAccChgpaswrdUIStartup();
+	newNetrxAccCngPswdUI.init();
+	return newNetrxAccCngPswdUI; 
+}
 SettingsToolBarProcessor.prototype.bindAdminTBEvents=function() {
 	var self=this;
 	$j(self.changePasswrdButton).die('click').click(function(){
@@ -107,7 +118,15 @@ SettingsToolBarProcessor.prototype.bindAdminTBEvents=function() {
 			}
 		self.createChangePasswrdnetMdModal(obj);
 	});
-	
+	$j(self.changePasswrdnetRxbutton).die('click').click(function(){
+		var obj=$j(this);
+		if(pageHandler.isnetrxAccSettingsClassLoaded()!=true){
+				var NetrxAccSettingsClass = new NetrxAccSettingsClassLoader();
+				NetrxAccSettingsClass.load();
+				pageHandler.setnetrxAccSettingsClassLoaded(true);
+			}
+		self.createChangePasswrdnetrxModal(obj);
+	});
 	
 	
 }

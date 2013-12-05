@@ -65,24 +65,15 @@ function PageHandler() {
 	this.setnetmdAccSettingsClassLoaded=function(status){
 		this.netmdAccSettingsClassLoaded=status;
 	}
+	this.isnetrxAccSettingsClassLoaded=function(){
+		return this.netrxAccSettingsClassLoaded;
+	}
+	this.setnetrxAccSettingsClassLoaded=function(status){
+		this.netrxAccSettingsClassLoaded=status;
+	}
 	/* 
 	
-	this.isFacilityClassLoaded=function(){
-		return this.facilityClassLoaded;
-	}
-	this.setFacilityClassLoaded=function(status){
-		this.facilityClassLoaded=status;
-	}
-	this.isReferralClassLoaded=function(){
-		return this.referralClassLoaded;
-	}
-	this.setReferralClassLoaded=function(status){
-		this.referralClassLoaded=status;
-	}
 	
-	this.isSettingClassLoaded=function(){
-		return this.settingClassLoaded;
-	}
 	this.setSettingClassLoaded=function(status){
 		this.settingClassLoaded=status;
 	}

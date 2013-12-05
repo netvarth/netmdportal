@@ -130,5 +130,7 @@ $j.getScript("/youNeverWait/js/framework/logout.js").done(function(script, textS
 		})  
 		$j.getScript("/youNeverWait/js/youneverwait/settings/netmdAccSettings/NetmdAccSettingsClassLoader.js").done(function(script,textStatus){
 		})
+		$j.getScript("/youNeverWait/js/youneverwait/settings/netrxAccSettings/NetrxAccSettingsClassLoader.js").done(function(script,textStatus){
+		})
 	}
 }

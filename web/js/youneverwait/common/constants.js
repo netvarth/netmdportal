@@ -251,7 +251,7 @@ constants_ViewNetrxBranchAction="/youNeverWait/js/youneverwait/netrx/branchview/
 constants_ViewNetrxBranchValidation="/youNeverWait/js/youneverwait/netrx/branchview/viewNetrxBranchValidations.js";
 constant_NetrxBranchView_Msg="View NetRx Branch";
 
-//NetRx Account
+/* //NetRx Account
 constant_NetRxAccFunctions_Url="/youNeverWait/js/youneverwait/netrxAcc/netrxAccFunctions.js";
 constant_NetRxAccList_Msg="BRANCH LIST";
 constant_NetRxAccEntry_Url="/youNeverWait/js/youneverwait/netrxAcc/netrxAccEntryPoint.js";
@@ -266,4 +266,4 @@ constants_ViewNetrxAccBranchValidation="/youNeverWait/js/youneverwait/netrxAcc/B
 constant_BranchNetrxAccView_Msg="View NetRx Branch";
 constant_netRxaccSettingsEntry_Url="/youNeverWait/js/youneverwait/settings/netRxAccChangePwd.js";
 constants_netRxAccChangePwdJson='/youNeverWait/json/changepassword/netRxAccChangePassword.json';
-constant_netRxAccChangePassword_Url="/youNeverWait/ws/ui/netRx/changePassword";
+constant_netRxAccChangePassword_Url="/youNeverWait/ws/ui/netRx/changePassword"; */

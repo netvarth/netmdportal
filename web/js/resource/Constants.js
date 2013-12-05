@@ -100,6 +100,10 @@ function Constants() {
 	this.NETRXACCSYNCMODAL="netrxAccBranchSycSetModal";
 	this.SYNCDATANETRXACCURL="/youNeverWait/ws/ui/netRx/getBranchSyncDetails/";
 	this.SETNETRXACCBRACHSYCURL="/youNeverWait/ws/ui/netRx/setNetRxBranchSync";
+	this.ADMINNETRXACCTOOLBARJSON="/youNeverWait/json/toolbars/netRxAccChangePwd.json";
+	this.NEWNETRXACCPASWRDCHGJSON="/youNeverWait/json/changepassword/netRxAccChangePassword.json";
+	this.NEWNETRXACCPASWRDCHGMODAL="changepwdModalNetrx";
+	this.CHANGEPASSWORDNETRXURL="/youNeverWait/ws/ui/netRx/changePassword";
 	/*****************-------------General-----------**----*************/
 	this.NAME = "name";
 	this.ADDRESS = "address";

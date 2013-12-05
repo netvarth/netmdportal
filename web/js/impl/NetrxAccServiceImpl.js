@@ -39,7 +39,7 @@ NetrxAccServiceImpl.prototype.deleteNetrxBranch=function(netrxBrchId) {
 }
 
 NetrxAccServiceImpl.prototype.changePasswrdNetmd=function(changePasswrd) {
-	ajaxProcessor.setUrl(constants.CHANGEPASSWORDNETMDURL);
+	ajaxProcessor.setUrl(constants.CHANGEPASSWORDNETRXURL);
 	return ajaxProcessor.post(changePasswrd);
 }
 

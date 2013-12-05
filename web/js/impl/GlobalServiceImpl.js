@@ -32,7 +32,7 @@ function GlobalServiceImpl () {
 		return ajaxProcessor.get();
 	}
 	this.getAdminTBnetrxACcData = function() {
-		ajaxProcessor.setUrl(constants.ADMINNETMDACCTOOLBARJSON);
+		ajaxProcessor.setUrl(constants.ADMINNETRXACCTOOLBARJSON);
 		return ajaxProcessor.get();
 	}
 }

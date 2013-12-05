@@ -260,15 +260,15 @@ GlobalToolBarProcessor.prototype.bindnetRxAccLeftPaneEvents=function() {
 			netrxAccUI.init();
 		});
 	}
-	/* if($j(self.netmdAccbranchsettings)) {
-		$j(self.netmdAccbranchsettings).die('click').live("click",function() {
+	 if($j(self.netrxAccbranchsettings)) {
+		$j(self.netrxAccbranchsettings).die('click').live("click",function() {
 			 var obj=$j(this);
 			commonMethodInvoker.removeErrors();
 			$j('#pageToolBar-Container').html("");
 			var adminUI = new SettingsToolBarProcessor();
-			adminUI.netmdAccinit(); 
+			adminUI.netrxAccinit(); 
 		});
-	}	 */
+	}	 
 	
 	
 	
