@@ -47,6 +47,12 @@ function PageHandler() {
 	this.setnetmdAccClassLoaded=function(status){
 		this.netmdAccClassLoaded=status;
 	}
+	this.isnetrxAccClassLoaded=function(){
+		return this.netrxAccClassLoaded;
+	}
+	this.setnetrxAccClassLoaded=function(status){
+		this.netrxAccClassLoaded=status;
+	}
 	this.isnetlimsAccSettingsClassLoaded=function(){
 		return this.netlimsAccSettingsClassLoaded;
 	}
@@ -59,42 +65,8 @@ function PageHandler() {
 	this.setnetmdAccSettingsClassLoaded=function(status){
 		this.netmdAccSettingsClassLoaded=status;
 	}
-	/* this.isOrderClassLoaded=function(){
-		return this.orderClassLoaded;
-	}
-	this.setOrderClassLoaded=function(status){
-		this.orderClassLoaded=status;
-	}
-	this.isAgentClassLoaded=function(){
-		return this.agentClassLoaded;
-	}
-	this.setAgentClassLoaded=function(status){
-		this.agentClassLoaded=status;
-	}
-	this.isAreaClassLoaded=function(){
-		return this.areaClassLoaded;
-	}
-	this.setAreaClassLoaded=function(status){
-		this.areaClassLoaded=status;
-	}
-	this.isBlanketClassLoaded=function(){
-		return this.blanketClassLoaded;
-	}
-	this.setBlanketClassLoaded=function(status){
-		this.blanketClassLoaded=status;
-	}
-	this.isDepartmentClassLoaded=function(){
-		return this.departmentClassLoaded;
-	}
-	this.setDepartmentClassLoaded=function(status){
-		this.departmentClassLoaded=status;
-	}
-	this.isDiscountClassLoaded=function(){
-		return this.discountClassLoaded;
-	}
-	this.setDiscountClassLoaded=function(status){
-		this.discountClassLoaded=status;
-	}
+	/* 
+	
 	this.isFacilityClassLoaded=function(){
 		return this.facilityClassLoaded;
 	}
@@ -107,12 +79,7 @@ function PageHandler() {
 	this.setReferralClassLoaded=function(status){
 		this.referralClassLoaded=status;
 	}
-	this.isRoleClassLoaded=function(){
-		return this.roleClassLoaded;
-	}
-	this.setRoleClassLoaded=function(status){
-		this.roleClassLoaded=status;
-	}
+	
 	this.isSettingClassLoaded=function(){
 		return this.settingClassLoaded;
 	}
@@ -131,16 +98,5 @@ function PageHandler() {
 	this.setTestClassLoaded=function(status){
 		this.testClassLoaded=status;
 	}
-	this.isTestPackageClassLoaded=function(){
-		return this.testPackageClassLoaded;
-	}
-	this.setTestPackageClassLoaded=function(status){
-		this.testPackageClassLoaded=status;
-	}
-	this.isUserClassLoaded=function(){
-		return this.userClassLoaded;
-	}
-	this.setUserClassLoaded=function(status){
-		this.userClassLoaded=status;
-	} */
+	 */
 }

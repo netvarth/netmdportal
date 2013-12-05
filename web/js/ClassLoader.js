@@ -68,6 +68,8 @@ $j.getScript("/youNeverWait/js/framework/logout.js").done(function(script, textS
 		})
 		$j.getScript("/youNeverWait/js/dto/BranchNetmdDTO.js").done(function(script,textStatus){
 		})
+		$j.getScript("/youNeverWait/js/dto/BranchNetrxDTO.js").done(function(script,textStatus){
+		})
 		$j.getScript("/youNeverWait/js/dto/CreateBranchDTO.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/dto/ChangePasswrdDTO.js").done(function(script,textStatus){
@@ -116,9 +118,13 @@ $j.getScript("/youNeverWait/js/framework/logout.js").done(function(script, textS
 		})
 		$j.getScript("/youNeverWait/js/impl/NetmdAccServiceImpl.js").done(function(script,textStatus){
 		})
+		$j.getScript("/youNeverWait/js/impl/NetrxAccServiceImpl.js").done(function(script,textStatus){
+		})
 		$j.getScript("/youNeverWait/js/youneverwait/ui/netlimsAccount/netlimsAccClassLoader.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/youneverwait/ui/netmdAccount/netmdAccClassLoader.js").done(function(script,textStatus){
+		})
+		$j.getScript("/youNeverWait/js/youneverwait/ui/netrxAccount/netrxAccClassLoader.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/youneverwait/settings/netlimsAccSettings/NetlimsAccSettingsClassLoader.js").done(function(script,textStatus){
 		})  

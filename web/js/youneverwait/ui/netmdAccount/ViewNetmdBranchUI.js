@@ -198,7 +198,7 @@ ViewNetmdBranchUI.prototype.viewNetmdBranchDetails = function(branchId) {
 		self.viewPassPhraseTableAcc(netmdResponse);
 	} else 
 		commonMethodInvoker.createServerError(self.errorHeader,self.errorData,netmdResponse.errorMessage);
-	self.setPageTitle("View NetLims Branch");
+	self.setPageTitle("View Netmd Branch");
 }
 
 ViewNetmdBranchUI.prototype.viewPassPhraseTableAcc = function(netmdResponse) {

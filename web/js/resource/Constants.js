@@ -55,7 +55,7 @@ function Constants() {
 	this.BRANCHNETLIMSORDERLIST='/youNeverWait/json/BranchNetlimsOrders.json';
 	this.GETORDERLISTURL="/youNeverWait/ws/ui/lab/orderList";
 	/*****************-------------netmdAccount-----------**----*************/
-	this.NETMDACCRIBBONURL="/youNeverWait/json/toolbars/netMdGlobalTool Bar.json";
+	this.NETMDACCRIBBONURL="/youNeverWait/json/toolbars/netMdGlobalToolBar.json";
 	this.NETMDACCLEFTPANEURL="/youNeverWait/json/toolbars/netMdLeftPaneToolBar.json";
 	this.NETMDACCBRANCHLISTURL="/youNeverWait/ws/ui/netMd/netmdBranchList";
 	this.NETMDBRANCH="BRANCHNETMD";
@@ -81,7 +81,25 @@ function Constants() {
 	this.NETMDACCSYNCJSON="/youNeverWait/json/new/netmdAccBranchsetSync.json";
 	this.SYNCDATANETMDACCURL="/youNeverWait/ws/ui/netMd/getBranchSyncDetails/";
 	this.SETNETMDACCBRACHSYCURL="/youNeverWait/ws/ui/netMd/setNetMdBranchSync";
-	
+	/*****************-------------netrxAccount-----------**----*************/
+	this.NETRXACCRIBBONURL="/youNeverWait/json/toolbars/netRxGlobalToolBar.json";
+	this.NETRXACCLEFTPANEURL="/youNeverWait/json/toolbars/netRxLeftPaneToolBar.json";
+	this.NETRXACCBRANCHLISTURL="/youNeverWait/ws/ui/netRx/netRxBranchList";
+	this.NETRXBRANCH="BRANCHNETRX";
+	this.NETRXACCPAGEBRANCHJSON="/youNeverWait/json/toolbars/netrxAccBranchPageToolBar.json";
+	this.NETRXACCBRANCHLISTJSON="/youNeverWait/json/list/netrxAccBranchTable.json";
+	this.NEWNETRXACCBRANCHJSON="/youNeverWait/json/new/newBranchNetrxAcc.json";
+	this.NEWNETRXBRANCHMODAL="netrxAccBranchModal";
+	this.CREATENETRXACCBRANCHURL="/youNeverWait/ws/ui/netRx/createNetRxBranch";
+	this.VIEWNETRXACCBRCHPAGEURL="/youNeverWait/json/view/viewNetrxAccBranchDetails.json";
+	this.NETRXACCBRCHGENERAL="netrxaccbrach";
+	this.UPDATENETRXACCBRCHURL="/youNeverWait/ws/ui/netRx/updateNetRxBranch";
+	this.VIEWNETRXACCBRCHURL="/youNeverWait/ws/ui/netRx/viewNetRxBranch/";
+	this.DELETENETRXACCBRANCHURL="/youNeverWait/ws/ui/netRx/deleteNetRxBranch/";
+	this.NETRXACCSYNCJSON="/youNeverWait/json/new/netrxAccBranchsetSync.json";
+	this.NETRXACCSYNCMODAL="netrxAccBranchSycSetModal";
+	this.SYNCDATANETRXACCURL="/youNeverWait/ws/ui/netRx/getBranchSyncDetails/";
+	this.SETNETRXACCBRACHSYCURL="/youNeverWait/ws/ui/netRx/setNetRxBranchSync";
 	/*****************-------------General-----------**----*************/
 	this.NAME = "name";
 	this.ADDRESS = "address";

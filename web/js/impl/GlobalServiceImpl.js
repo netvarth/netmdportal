@@ -23,4 +23,16 @@ function GlobalServiceImpl () {
 		ajaxProcessor.setUrl(constants.ADMINNETMDACCTOOLBARJSON);
 		return ajaxProcessor.get();
 	}
+	this.getnetRxAccRibbonTBData=function () {
+		ajaxProcessor.setUrl(constants.NETRXACCRIBBONURL);
+		return ajaxProcessor.get();
+	}
+	this.getnetRxAccLeftPaneTBData = function() {
+		ajaxProcessor.setUrl(constants.NETRXACCLEFTPANEURL);
+		return ajaxProcessor.get();
+	}
+	this.getAdminTBnetrxACcData = function() {
+		ajaxProcessor.setUrl(constants.ADMINNETMDACCTOOLBARJSON);
+		return ajaxProcessor.get();
+	}
 }
