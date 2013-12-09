@@ -274,7 +274,7 @@ public class AuthenticationServiceimpl implements AuthenticationService {
 		byte[] image = null;
 		try {
 			image = drawImage(secretCode);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			log.error("Error while getting captcha", e);
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.ImageCreationFailed);
