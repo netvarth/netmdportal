@@ -29,6 +29,10 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
 import com.nv.youNeverWait.pl.entity.LabTbl;
+import com.nv.youNeverWait.pl.entity.NetmdBillTbl;
+import com.nv.youNeverWait.pl.entity.OrderAmountTbl;
+import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
@@ -75,7 +79,6 @@ import com.nv.youNeverWait.user.bl.service.HealthMonitorService;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.service.OrderService;
-import com.nv.youNeverWait.user.bl.validation.HealthMonitorValidator;
 import com.nv.youNeverWait.user.bl.validation.LabValidator;
 import com.nv.youNeverWait.user.pl.dao.LabDao;
 import com.nv.youNeverWait.user.pl.impl.BranchOwnerDetails;
@@ -973,13 +976,62 @@ public class LabServiceImpl implements LabService {
 	 * Show the list of orders for a given period
 	 */
 	@Override
-	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO) {
+	public BranchOrdersResponseDTO orderList(FilterDTO filterDTO) {
 		BranchOrdersResponseDTO response = new BranchOrdersResponseDTO();
-		validator.validateOrderDate(orderDTO);
-		validator.validateLabBranchIds(orderDTO.getLabId(),
-				orderDTO.getLabBranchId());
-		response = labDao.orderList(orderDTO);
+		// validate filterDTO to identify invalid expressions and if there is
+		// any,return result with appropriate error code
+		ErrorDTO error = validator.validateOrderFilter(filterDTO);
+		if (error != null) {
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+
+		// get queryBuilder for netmd branch from builder factory
+		QueryBuilder queryBuilder = queryBuilderFactory
+				.getQueryBuilder(Constants.NETLIMS_ORDER);
+		if (queryBuilder == null) {
+			return response;
+		}
+		for (ExpressionDTO exp : filterDTO.getExp()) {
+
+			// get filter from filter factory by setting expression name and
+			// value to filter
+			Filter filter = filterFactory.getFilter(exp);
+			queryBuilder.addFilter(filter);
+		}
+		// build query
+		TypedQuery<OrderAmountTbl> q = queryBuilder.buildQuery(filterDTO.isAsc(),
+				filterDTO.getFrom(), filterDTO.getCount());
+
+		// get count
+		Long count = queryBuilder.getCount();
+
+		// execute query
+		List<OrderAmountTbl> orderAmountList = queryBuilder.executeQuery(q);
+		response = getNetLimsOrderList(orderAmountList);
+		response.setCount(count);
+		response.setSuccess(true);
 		return response;
+	}
+
+	
+	/**
+	 * @param orderAmountList
+	 * @return
+	 */
+	private BranchOrdersResponseDTO getNetLimsOrderList(List<OrderAmountTbl> orderAmountList) {
+		BranchOrdersResponseDTO response = new BranchOrdersResponseDTO();
+		if (orderAmountList == null) {
+			return response;
+		}
+		
+		List<BranchOrderDetail> labOrderList = new ArrayList<BranchOrderDetail>();
+		for (OrderAmountTbl labOrder : orderAmountList) {
+			labOrderList.add(new BranchOrderDetail(labOrder));
+		}
+		response.setBranchOrders(labOrderList);
+		return response; 
 	}
 
 	/**
