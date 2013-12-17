@@ -10,10 +10,7 @@ package com.nv.youNeverWait.user.bl.service;
 import javax.servlet.http.HttpServletRequest;
 
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
-
-import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.EnableLogStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
@@ -99,9 +96,9 @@ public interface SuperAdminService {
 	public ResponseDTO updateNetRxBranch(NetRxBranchDetail branch);
 	public EnableLogStatusResponseDTO enableLogStatus();
 	public BranchOrdersResponseDTO viewBranchOrders(int globalId);
-	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO);
+	public BranchOrdersResponseDTO orderList(FilterDTO filterDTO);
 	public BranchSystemInfoDetails viewBranchSystemInfo(int branchId);
-	public BranchBillListResponseDTO billList(BranchBillListDTO listDTO);
+	public BranchBillListResponseDTO billList(FilterDTO filterDTO);
 	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync);
 	public SyncFreqResponseDTO setBranchSync(SyncFreqDTO sync);
 	public SyncFreqResponseDTO setNetMdSync(SyncFreqDTO sync);
@@ -110,50 +107,15 @@ public interface SuperAdminService {
 	public SyncFreqResponseDTO setNetRxBranchSync(SyncFreqDTO sync);
 	public ResponseDTO updateLabBranchSystemInfo(
 			BranchSystemInfoDetails details);
-	
 	public TestListResponseDTO testList(FilterDTO filter);
-	/**
-	 * @param filter
-	 * @return
-	 */
 	public SpecimenListResponseDTO testSpecimenList(FilterDTO filter);
-	/**
-	 * @param syncLog
-	 * @param request
-	 * @return
-	 */
 	public ResponseDTO enableSyncLog(SyncLogDTO syncLog, HttpServletRequest request);
-
-	/**
-	 * @param sync
-	 * @return
-	 */
 	public ResponseDTO setSync(SyncFreqDTO sync);
-//	/**
-//	 * @param sync
-//	 * @return
-//	 */
-//	public ResponseDTO enableSync(SyncFreqDTO sync);
-	/**
-	 * @return
-	 */
 	public SyncFreqDTO getSyncDetails();
-	/**
-	 * @param passphrase
-	 * @return
-	 */
 	public BranchSystemInfoDetails viewNetMdBranchSystemInfo(String passphrase);
-	/**
-	 * @param systemCriticalDetails
-	 * @return
-	 */
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails);
-	
 	public SyncLogListResponseDTO syncLogList(FilterDTO filter);
-	/**
-	 * @return
-	 */
 	public EnableLogStatusResponseDTO getSyncLogStatus();
 	
 
