@@ -38,6 +38,7 @@ import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserBranchDTO;
 import com.nv.youNeverWait.user.bl.service.LabService;
+import com.nv.youNeverWait.user.bl.service.NetMdService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 
@@ -1111,795 +1112,795 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 			System.out.println(e.getParamList());
 		}
 	}
-	@Test
-	public void orderList(){
-		System.out.println("view Branch orders list by date");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		BranchOrderDTO orderDTO= new BranchOrderDTO ();
-		orderDTO.setFromDate("2013-06-24");
-		orderDTO.setToDate("2013-06-25");
-		try{
-			
-			service.orderList(orderDTO);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	
-	@Test
-	public void createTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(25251);
-		detail.setPaidAmount(5000);
-		detail.setNetAmount(45451);
-		detail.setLastOrderdTime("2013-07-05 09:29:15");
-		detail.setOrderDate("2013-07-05");
-		detail.setId(5);
-		header.setHeadOfficeId(238);
-		header.setBranchId(152);
-		header.setPassPhrase("Z6z2gmRFYN5zK4h6BlENgQ==");
-		header.setMacId("123");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void updateTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime("2013-06-26 12:12:12");
-		detail.setOrderDate("2013-06-26");
-		detail.setId(5);
-		header.setHeadOfficeId(238);
-		header.setBranchId(152);
-		header.setPassPhrase("Z6z2gmRFYN5zK4h6BlENgQ==");
-		header.setMacId("123");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-
-	@Test
-	public void wrongPassPhraseTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime("2013-04-26 12:12:12");
-		detail.setOrderDate("2013-04-26");
-		detail.setId(5);
-		header.setHeadOfficeId(49);
-		header.setBranchId(50);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==pops");
-		header.setMacId("123");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void wrongMacIdTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime("2013-04-26 12:12:12");
-		detail.setOrderDate("2013-04-26");
-		detail.setId(5);
-		header.setHeadOfficeId(49);
-		header.setBranchId(50);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
-		header.setMacId("123XXXXXX");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-
-	@Test
-	public void wrongLabIdTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime("2013-04-26 12:12:12");
-		detail.setOrderDate("2013-04-26");
-		detail.setId(5);
-		header.setHeadOfficeId(49000);
-		header.setBranchId(50);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
-		header.setMacId("123");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void wrongLabBranchIdTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime("2013-04-26 12:12:12");
-		detail.setOrderDate("2013-04-26");
-		detail.setId(5);
-		header.setHeadOfficeId(49);
-		header.setBranchId(50111111);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
-		header.setMacId("123");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	
-	@Test
-	public void OrderDateEmptyTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime("2013-04-26 12:12:12");
-		detail.setOrderDate("");
-		detail.setId(5);
-		header.setHeadOfficeId(49);
-		header.setBranchId(50);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
-		header.setMacId("123");
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	
-	@Test
-	public void OrderDateNullTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setId(5);
-		detail.setLastOrderdTime("2013-04-26 12:12:12");
-		detail.setOrderDate(null);
-		header.setHeadOfficeId(49);
-		header.setBranchId(50);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
-		header.setMacId("123");
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	
-	@Test
-	public void wrongOrderDateFormatTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setId(5);
-		detail.setLastOrderdTime("2013-04-26 12:12:12");
-		detail.setOrderDate("2007-03-T1");
-		header.setHeadOfficeId(49);
-		header.setBranchId(50);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
-		header.setMacId("123");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	
-	@Test
-	public void wrongRexOrderDateTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime("2013-04-26 12:12:12");
-		detail.setId(5);
-		detail.setOrderDate("2013-2123-45");
-		header.setHeadOfficeId(49);
-		header.setBranchId(50);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
-		header.setMacId("123");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	
-	@Test
-	public void lastOrderTimeEmptyTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setId(5);
-		detail.setLastOrderdTime("");
-		detail.setOrderDate("2013-04-05");
-		header.setHeadOfficeId(49);
-		header.setBranchId(50);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
-		header.setMacId("123");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void lastOrderTimeNullTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime(null);
-		detail.setOrderDate("2013-04-05");
-		detail.setId(5);
-		header.setHeadOfficeId(49);
-		header.setBranchId(50);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
-		header.setMacId("123");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	
-	@Test
-	public void MacIdNullTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime(null);
-		detail.setOrderDate("2013-04-05");
-		detail.setId(5);
-		header.setHeadOfficeId(49);
-		header.setBranchId(50);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
-		header.setMacId(null);
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void MacIdEmptyTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime(null);
-		detail.setOrderDate("2013-04-05");
-		detail.setId(5);
-		header.setHeadOfficeId(49);
-		header.setBranchId(50);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
-		header.setMacId("");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void PassPhraseNullTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime(null);
-		detail.setOrderDate("2013-04-05");
-		detail.setId(5);
-		header.setHeadOfficeId(49);
-		header.setBranchId(50);
-		header.setPassPhrase(null);
-		header.setMacId("123");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void passphraseEmptyTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime(null);
-		detail.setOrderDate("2013-04-05");
-		detail.setId(5);
-		header.setHeadOfficeId(49);
-		header.setBranchId(50);
-		header.setPassPhrase("");
-		header.setMacId("123");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	
-	@Test
-	public void labBranchIdNegativeValTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime(null);
-		detail.setOrderDate("2013-04-05");
-		detail.setId(5);
-		header.setHeadOfficeId(49);
-		header.setBranchId(-50);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
-		header.setMacId("123");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void labBranchIdZeroTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime(null);
-		detail.setId(5);
-		detail.setOrderDate("2013-04-05");
-		header.setHeadOfficeId(49);
-		header.setBranchId(0);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
-		header.setMacId("123");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void labIdNegativeValTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime(null);
-		detail.setOrderDate("2013-04-05");
-		detail.setId(5);
-		header.setHeadOfficeId(-45);
-		header.setBranchId(50);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
-		header.setMacId("123");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void labIdZeroTotalOrders(){
-		System.out.println("Creating brnch total orders.....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		HeaderDTO header=new HeaderDTO();
-		BranchOrderDetail detail= new BranchOrderDetail();
-		detail.setTotalOrders(12000);
-		detail.setPaidAmount(12500);
-		detail.setNetAmount(25000);
-		detail.setLastOrderdTime(null);
-		detail.setOrderDate("2013-04-05");
-		detail.setId(5);
-		header.setHeadOfficeId(0);
-		header.setBranchId(50);
-		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
-		header.setMacId("123");
-	
-
-		try{
-			service.createTotalOrders(header, detail);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	
-	@Test
-	public void OrderListSuccess(){
-		System.out.println("Showing orders list....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		BranchOrderDTO orderDTO = new BranchOrderDTO();
-		orderDTO.setLabId(49);
-		orderDTO.setLabBranchId(50);
-		orderDTO.setFromDate("2013-07-01");
-		orderDTO.setToDate("2013-07-05");
-
-		try{
-			service.orderList(orderDTO);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void OrderListFromDateEmpty(){
-		System.out.println("Showing orders list....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		BranchOrderDTO orderDTO = new BranchOrderDTO();
-		orderDTO.setLabId(49);
-		orderDTO.setLabBranchId(50);
-		orderDTO.setFromDate("");
-		orderDTO.setToDate("2013-06-24");
-
-		try{
-			service.orderList(orderDTO);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void OrderListFromDateNull(){
-		System.out.println("Showing orders list....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		BranchOrderDTO orderDTO = new BranchOrderDTO();
-		orderDTO.setLabId(49);
-		orderDTO.setLabBranchId(50);
-		orderDTO.setFromDate(null);
-		orderDTO.setToDate("2013-06-24");
-
-		try{
-			service.orderList(orderDTO);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void OrderListToDateEmpty(){
-		System.out.println("Showing orders list....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		BranchOrderDTO orderDTO = new BranchOrderDTO();
-		orderDTO.setLabId(49);
-		orderDTO.setLabBranchId(50);
-		orderDTO.setFromDate("2013-04-26");
-		orderDTO.setToDate("");
-
-		try{
-			service.orderList(orderDTO);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void OrderListToDateNull(){
-		System.out.println("Showing orders list....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		BranchOrderDTO orderDTO = new BranchOrderDTO();
-		orderDTO.setLabId(49);
-		orderDTO.setLabBranchId(50);
-		orderDTO.setFromDate("2013-04-26");
-		orderDTO.setToDate(null);
-
-		try{
-			service.orderList(orderDTO);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void OrderListFromandToEmpty(){
-		System.out.println("Showing orders list....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		BranchOrderDTO orderDTO = new BranchOrderDTO();
-		orderDTO.setLabId(49);
-		orderDTO.setLabBranchId(50);
-		orderDTO.setFromDate("");
-		orderDTO.setToDate("");
-
-		try{
-			service.orderList(orderDTO);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void OrderListFromAndToNull(){
-		System.out.println("Showing orders list....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		BranchOrderDTO orderDTO = new BranchOrderDTO();
-		orderDTO.setLabId(49);
-		orderDTO.setLabBranchId(50);
-		orderDTO.setFromDate(null);
-		orderDTO.setToDate(null);
-
-		try{
-			service.orderList(orderDTO);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	
-	@Test
-	public void OrderListToDateWrongRex(){
-		System.out.println("Showing orders list....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		BranchOrderDTO orderDTO = new BranchOrderDTO();
-		orderDTO.setLabId(49);
-		orderDTO.setLabBranchId(50);
-		orderDTO.setFromDate("2013-04-26");
-		orderDTO.setToDate("2013-0445-26");
-
-		try{
-			service.orderList(orderDTO);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	
-	@Test
-	public void OrderListFromDateWrongREx(){
-		System.out.println("Showing orders list....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		BranchOrderDTO orderDTO = new BranchOrderDTO();
-		orderDTO.setLabId(49);
-		orderDTO.setLabBranchId(50);
-		orderDTO.setFromDate("2013-1204-26");
-		orderDTO.setToDate("2013-04-26");
-
-		try{
-			service.orderList(orderDTO);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void OrderListFromDateGreaterThanToDate(){
-		System.out.println("Showing orders list....");
-		LabService service =(LabService) applicationContext.getBean("lab.service");
-		BranchOrderDTO orderDTO = new BranchOrderDTO();
-		orderDTO.setLabId(49);
-		orderDTO.setLabBranchId(50);
-		orderDTO.setFromDate("2013-06-26");
-		orderDTO.setToDate("2013-04-26");
-
-		try{
-			service.orderList(orderDTO);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
+//	@Test
+//	public void orderList(){
+//		System.out.println("view Branch orders list by date");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		BranchOrderDTO orderDTO= new BranchOrderDTO ();
+//		orderDTO.setFromDate("2013-06-24");
+//		orderDTO.setToDate("2013-06-25");
+//		try{
+//			
+//			service.orderList(orderDTO);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	
+//	@Test
+//	public void createTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(25251);
+//		detail.setPaidAmount(5000);
+//		detail.setNetAmount(45451);
+//		detail.setLastOrderdTime("2013-07-05 09:29:15");
+//		detail.setOrderDate("2013-07-05");
+//		detail.setId(5);
+//		header.setHeadOfficeId(238);
+//		header.setBranchId(152);
+//		header.setPassPhrase("Z6z2gmRFYN5zK4h6BlENgQ==");
+//		header.setMacId("123");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void updateTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime("2013-06-26 12:12:12");
+//		detail.setOrderDate("2013-06-26");
+//		detail.setId(5);
+//		header.setHeadOfficeId(238);
+//		header.setBranchId(152);
+//		header.setPassPhrase("Z6z2gmRFYN5zK4h6BlENgQ==");
+//		header.setMacId("123");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//
+//	@Test
+//	public void wrongPassPhraseTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime("2013-04-26 12:12:12");
+//		detail.setOrderDate("2013-04-26");
+//		detail.setId(5);
+//		header.setHeadOfficeId(49);
+//		header.setBranchId(50);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==pops");
+//		header.setMacId("123");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void wrongMacIdTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime("2013-04-26 12:12:12");
+//		detail.setOrderDate("2013-04-26");
+//		detail.setId(5);
+//		header.setHeadOfficeId(49);
+//		header.setBranchId(50);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
+//		header.setMacId("123XXXXXX");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//
+//	@Test
+//	public void wrongLabIdTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime("2013-04-26 12:12:12");
+//		detail.setOrderDate("2013-04-26");
+//		detail.setId(5);
+//		header.setHeadOfficeId(49000);
+//		header.setBranchId(50);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
+//		header.setMacId("123");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void wrongLabBranchIdTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime("2013-04-26 12:12:12");
+//		detail.setOrderDate("2013-04-26");
+//		detail.setId(5);
+//		header.setHeadOfficeId(49);
+//		header.setBranchId(50111111);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
+//		header.setMacId("123");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	
+//	@Test
+//	public void OrderDateEmptyTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime("2013-04-26 12:12:12");
+//		detail.setOrderDate("");
+//		detail.setId(5);
+//		header.setHeadOfficeId(49);
+//		header.setBranchId(50);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
+//		header.setMacId("123");
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	
+//	@Test
+//	public void OrderDateNullTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setId(5);
+//		detail.setLastOrderdTime("2013-04-26 12:12:12");
+//		detail.setOrderDate(null);
+//		header.setHeadOfficeId(49);
+//		header.setBranchId(50);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
+//		header.setMacId("123");
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	
+//	@Test
+//	public void wrongOrderDateFormatTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setId(5);
+//		detail.setLastOrderdTime("2013-04-26 12:12:12");
+//		detail.setOrderDate("2007-03-T1");
+//		header.setHeadOfficeId(49);
+//		header.setBranchId(50);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
+//		header.setMacId("123");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	
+//	@Test
+//	public void wrongRexOrderDateTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime("2013-04-26 12:12:12");
+//		detail.setId(5);
+//		detail.setOrderDate("2013-2123-45");
+//		header.setHeadOfficeId(49);
+//		header.setBranchId(50);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
+//		header.setMacId("123");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	
+//	@Test
+//	public void lastOrderTimeEmptyTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setId(5);
+//		detail.setLastOrderdTime("");
+//		detail.setOrderDate("2013-04-05");
+//		header.setHeadOfficeId(49);
+//		header.setBranchId(50);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
+//		header.setMacId("123");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void lastOrderTimeNullTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime(null);
+//		detail.setOrderDate("2013-04-05");
+//		detail.setId(5);
+//		header.setHeadOfficeId(49);
+//		header.setBranchId(50);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
+//		header.setMacId("123");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	
+//	@Test
+//	public void MacIdNullTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime(null);
+//		detail.setOrderDate("2013-04-05");
+//		detail.setId(5);
+//		header.setHeadOfficeId(49);
+//		header.setBranchId(50);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
+//		header.setMacId(null);
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void MacIdEmptyTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime(null);
+//		detail.setOrderDate("2013-04-05");
+//		detail.setId(5);
+//		header.setHeadOfficeId(49);
+//		header.setBranchId(50);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
+//		header.setMacId("");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void PassPhraseNullTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime(null);
+//		detail.setOrderDate("2013-04-05");
+//		detail.setId(5);
+//		header.setHeadOfficeId(49);
+//		header.setBranchId(50);
+//		header.setPassPhrase(null);
+//		header.setMacId("123");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void passphraseEmptyTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime(null);
+//		detail.setOrderDate("2013-04-05");
+//		detail.setId(5);
+//		header.setHeadOfficeId(49);
+//		header.setBranchId(50);
+//		header.setPassPhrase("");
+//		header.setMacId("123");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	
+//	@Test
+//	public void labBranchIdNegativeValTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime(null);
+//		detail.setOrderDate("2013-04-05");
+//		detail.setId(5);
+//		header.setHeadOfficeId(49);
+//		header.setBranchId(-50);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
+//		header.setMacId("123");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void labBranchIdZeroTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime(null);
+//		detail.setId(5);
+//		detail.setOrderDate("2013-04-05");
+//		header.setHeadOfficeId(49);
+//		header.setBranchId(0);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
+//		header.setMacId("123");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void labIdNegativeValTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime(null);
+//		detail.setOrderDate("2013-04-05");
+//		detail.setId(5);
+//		header.setHeadOfficeId(-45);
+//		header.setBranchId(50);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
+//		header.setMacId("123");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void labIdZeroTotalOrders(){
+//		System.out.println("Creating brnch total orders.....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		HeaderDTO header=new HeaderDTO();
+//		BranchOrderDetail detail= new BranchOrderDetail();
+//		detail.setTotalOrders(12000);
+//		detail.setPaidAmount(12500);
+//		detail.setNetAmount(25000);
+//		detail.setLastOrderdTime(null);
+//		detail.setOrderDate("2013-04-05");
+//		detail.setId(5);
+//		header.setHeadOfficeId(0);
+//		header.setBranchId(50);
+//		header.setPassPhrase("lKbN2WxYPZWPJ73TLgPLVQ==");
+//		header.setMacId("123");
+//	
+//
+//		try{
+//			service.createTotalOrders(header, detail);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	
+//	@Test
+//	public void OrderListSuccess(){
+//		System.out.println("Showing orders list....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		BranchOrderDTO orderDTO = new BranchOrderDTO();
+//		orderDTO.setLabId(49);
+//		orderDTO.setLabBranchId(50);
+//		orderDTO.setFromDate("2013-07-01");
+//		orderDTO.setToDate("2013-07-05");
+//
+//		try{
+//			service.orderList(orderDTO);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void OrderListFromDateEmpty(){
+//		System.out.println("Showing orders list....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		BranchOrderDTO orderDTO = new BranchOrderDTO();
+//		orderDTO.setLabId(49);
+//		orderDTO.setLabBranchId(50);
+//		orderDTO.setFromDate("");
+//		orderDTO.setToDate("2013-06-24");
+//
+//		try{
+//			service.orderList(orderDTO);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void OrderListFromDateNull(){
+//		System.out.println("Showing orders list....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		BranchOrderDTO orderDTO = new BranchOrderDTO();
+//		orderDTO.setLabId(49);
+//		orderDTO.setLabBranchId(50);
+//		orderDTO.setFromDate(null);
+//		orderDTO.setToDate("2013-06-24");
+//
+//		try{
+//			service.orderList(orderDTO);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void OrderListToDateEmpty(){
+//		System.out.println("Showing orders list....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		BranchOrderDTO orderDTO = new BranchOrderDTO();
+//		orderDTO.setLabId(49);
+//		orderDTO.setLabBranchId(50);
+//		orderDTO.setFromDate("2013-04-26");
+//		orderDTO.setToDate("");
+//
+//		try{
+//			service.orderList(orderDTO);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void OrderListToDateNull(){
+//		System.out.println("Showing orders list....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		BranchOrderDTO orderDTO = new BranchOrderDTO();
+//		orderDTO.setLabId(49);
+//		orderDTO.setLabBranchId(50);
+//		orderDTO.setFromDate("2013-04-26");
+//		orderDTO.setToDate(null);
+//
+//		try{
+//			service.orderList(orderDTO);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void OrderListFromandToEmpty(){
+//		System.out.println("Showing orders list....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		BranchOrderDTO orderDTO = new BranchOrderDTO();
+//		orderDTO.setLabId(49);
+//		orderDTO.setLabBranchId(50);
+//		orderDTO.setFromDate("");
+//		orderDTO.setToDate("");
+//
+//		try{
+//			service.orderList(orderDTO);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void OrderListFromAndToNull(){
+//		System.out.println("Showing orders list....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		BranchOrderDTO orderDTO = new BranchOrderDTO();
+//		orderDTO.setLabId(49);
+//		orderDTO.setLabBranchId(50);
+//		orderDTO.setFromDate(null);
+//		orderDTO.setToDate(null);
+//
+//		try{
+//			service.orderList(orderDTO);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	
+//	@Test
+//	public void OrderListToDateWrongRex(){
+//		System.out.println("Showing orders list....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		BranchOrderDTO orderDTO = new BranchOrderDTO();
+//		orderDTO.setLabId(49);
+//		orderDTO.setLabBranchId(50);
+//		orderDTO.setFromDate("2013-04-26");
+//		orderDTO.setToDate("2013-0445-26");
+//
+//		try{
+//			service.orderList(orderDTO);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	
+//	@Test
+//	public void OrderListFromDateWrongREx(){
+//		System.out.println("Showing orders list....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		BranchOrderDTO orderDTO = new BranchOrderDTO();
+//		orderDTO.setLabId(49);
+//		orderDTO.setLabBranchId(50);
+//		orderDTO.setFromDate("2013-1204-26");
+//		orderDTO.setToDate("2013-04-26");
+//
+//		try{
+//			service.orderList(orderDTO);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void OrderListFromDateGreaterThanToDate(){
+//		System.out.println("Showing orders list....");
+//		LabService service =(LabService) applicationContext.getBean("lab.service");
+//		BranchOrderDTO orderDTO = new BranchOrderDTO();
+//		orderDTO.setLabId(49);
+//		orderDTO.setLabBranchId(50);
+//		orderDTO.setFromDate("2013-06-26");
+//		orderDTO.setToDate("2013-04-26");
+//
+//		try{
+//			service.orderList(orderDTO);
+//		}
+//		catch(ServiceException e){
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
 	
 	@Test
 	public void viewBranchOrdersSuccess(){
@@ -2917,5 +2918,32 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 			System.out.println(e.getParamList());
 		}
 	}
+	
+	@Test
+	public void viewOrderSuccess() {
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		FilterDTO filterDTO = new FilterDTO();
+		List<ExpressionDTO> expressionList = new ArrayList<ExpressionDTO>();
+		ExpressionDTO exp1 = new ExpressionDTO();
+		exp1.setName("orderDate");
+		exp1.setOperator("ge");
+		exp1.setValue("2013-06-01");
+		expressionList.add(exp1);
+		ExpressionDTO exp2 = new ExpressionDTO();
+		exp2.setName("orderDate");
+		exp2.setOperator("le");
+		exp2.setValue("2013-08-11");
+		expressionList.add(exp2);
+filterDTO.setExp(expressionList);
+		try {
+			service.orderList(filterDTO);
+  		} catch (ServiceException e) {
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+
 }
 
