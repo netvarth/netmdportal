@@ -22,10 +22,8 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
-import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.EnableLogStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
@@ -190,11 +188,10 @@ public class SuperAdminResource {
 	 */
 	@RequestMapping(value = "orderList", method = RequestMethod.POST)
 	@ResponseBody
-	public BranchOrdersResponseDTO orderList(@RequestBody BranchOrderDTO orderDTO) {
-
+	public BranchOrdersResponseDTO orderList(@RequestBody FilterDTO filterDTO){
 		BranchOrdersResponseDTO response=	new BranchOrdersResponseDTO();	
 		try{
-			response=service.orderList(orderDTO);	
+			response=service.orderList(filterDTO);	
 		}
 		catch(ServiceException e){
 			List<Parameter> parameters =e.getParamList();
@@ -1000,13 +997,18 @@ public class SuperAdminResource {
 		return response;
 	}
 	
+	/**
+	 * Filter method for getting list of bills in netmd
+	 * @param filter
+	 * @return BranchBillListResponseDTO
+	 */
 	@RequestMapping(value = "billList", method = RequestMethod.POST)
 	@ResponseBody
-	public BranchBillListResponseDTO billList(@RequestBody BranchBillListDTO listDTO) {
+	public BranchBillListResponseDTO billList(@RequestBody FilterDTO filter) {
 
 		BranchBillListResponseDTO response=	new BranchBillListResponseDTO();	
 		try{
-			response=service.billList(listDTO);
+			response=service.billList(filter);
 		}
 		catch(ServiceException e){
 			List<Parameter> parameters =e.getParamList();
@@ -1647,31 +1649,7 @@ public class SuperAdminResource {
 		}
 		return response;
 	}
-	/**
-//	 * To enable/disable  sync process
-//	 * 
-//	 * @param log
-//	 * @return ResponseDTO
-//	 */
-//	@RequestMapping(value = "enableSync", method = RequestMethod.POST)
-//	@ResponseBody
-//	public ResponseDTO enableSync(@RequestBody SyncFreqDTO sync) {
-//
-//		ResponseDTO response = new ResponseDTO();
-//		try {
-//			response = service.enableSync(sync);
-//		} catch (ServiceException e) {
-//			List<Parameter> parameters = e.getParamList();
-//			ErrorDTO error = new ErrorDTO();
-//			error.setErrCode(e.getError().getErrCode());
-//			error.setParams(parameters);
-//			error.setDisplayErrMsg(e.isDisplayErrMsg());
-//			response.setError(error);
-//			response.setSuccess(false);
-//		}
-//		return response;
-//	}
-	
+
 	/**
 	 * @return the service
 	 */
