@@ -188,8 +188,10 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 				</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.SyncLogPropertyEnum
 				</value>
-
-
+					<value>com.nv.youNeverWait.util.filter.queryBuilder.BillPropertyEnum
+				</value>
+					<value>com.nv.youNeverWait.util.filter.queryBuilder.OrderPropertyEnum
+				</value>
 			</list>
 		</property>
 	</bean>
@@ -443,7 +445,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="healthService">
 			<ref bean="health.service" />
 		</property>
-		
+
 	</bean>
 
 	<bean id="netMd.validator" class="com.nv.youNeverWait.user.bl.validation.NetMdValidator"></bean>
@@ -465,7 +467,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="healthService">
 			<ref bean="health.service" />
 		</property>
-		
+
 		<property name="netlimsServerIpAddress">
 			<value>${netlims.server.ip.address}</value>
 		</property>
@@ -526,6 +528,10 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 					value="com.nv.youNeverWait.util.filter.queryBuilder.SpecimenQueryBuilder" />
 				<entry key="syncLog"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.SyncLogQueryBuilder" />
+				<entry key="bill"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.NetmdBillQueryBuilder" />
+				<entry key="order"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.LabOrderQueryBuilder" />
 			</map>
 		</property>
 
@@ -678,9 +684,10 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="healthMonitor.validator" />
 		</property>
 	</bean>
-	<bean id="healthMonitor.validator" class="com.nv.youNeverWait.user.bl.validation.HealthMonitorValidator"></bean>
-	<bean id="healthMonitor.dao" class="com.nv.youNeverWait.user.pl.impl.HealthMonitorDaoImpl">
-		
-	</bean>
+	<bean id="healthMonitor.validator"
+		class="com.nv.youNeverWait.user.bl.validation.HealthMonitorValidator"></bean>
+	<bean id="healthMonitor.dao" class="com.nv.youNeverWait.user.pl.impl.HealthMonitorDaoImpl"></bean>
+	
+
 </beans>		
 	
