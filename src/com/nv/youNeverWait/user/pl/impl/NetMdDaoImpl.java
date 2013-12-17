@@ -24,10 +24,6 @@ import com.nv.youNeverWait.pl.entity.BranchStatusEnum;
 import com.nv.youNeverWait.pl.entity.DoctorScheduleTbl;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
-import com.nv.youNeverWait.pl.entity.LabBranchSystemInfoTbl;
-import com.nv.youNeverWait.pl.entity.LabBranchTbl;
-import com.nv.youNeverWait.pl.entity.LabHealthMonitorTbl;
-import com.nv.youNeverWait.pl.entity.LabTbl;
 import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBillTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBranchSystemInfoTbl;
@@ -38,7 +34,6 @@ import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
-import com.nv.youNeverWait.pl.entity.OrderAmountTbl;
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.StatusEnum;
@@ -48,8 +43,6 @@ import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.AppointmentDTO;
 import com.nv.youNeverWait.rs.dto.BillResponseDTO;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
-import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
-import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
@@ -66,13 +59,9 @@ import com.nv.youNeverWait.rs.dto.PassPhraseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrievalDoctorResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrievalPatientResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrievalScheduleResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
-import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
 import com.nv.youNeverWait.rs.dto.ScheduleDetail;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
@@ -1206,7 +1195,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	}
 
 	/**
-	 * 
+	 * Method for making device primary
 	 */
 	@Override
 	@Transactional
@@ -1229,19 +1218,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		return response;
 	}
 
-	/**
-	 * get passphrase table list
-	 * 
-	 * @param branchId
-	 * @return NetmdPassphraseTbl
-	 */
-	public List<NetmdPassphraseTbl> getPassPhraseByBranch(int branchId) {
-		javax.persistence.Query query = em
-				.createQuery(Query.NETMD_PASSPHRASE_BY_BRANCH);
-		query.setParameter("param1", branchId);
-		return executeQuery(NetmdPassphraseTbl.class, query);
-	}
-
+	
 	/**
 	 * Method which clears mac Id
 	 * 
@@ -1334,8 +1311,6 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	@Transactional
 	public BillResponseDTO createBill(BillSummaryDTO newBill, HeaderDTO header) {
 		BillResponseDTO response = new BillResponseDTO();
-		DateFormat df = new SimpleDateFormat(
-				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		DateFormat sdf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITHOUT_TIME);
 		NetmdPassphraseTbl passPhrase = null;
@@ -1407,8 +1382,6 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	public BillResponseDTO updateBill(BillSummaryDTO updatedBill,
 			HeaderDTO header) {
 		BillResponseDTO response = new BillResponseDTO();
-		DateFormat df = new SimpleDateFormat(
-				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		DateFormat sdf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITHOUT_TIME);
 		NetmdPassphraseTbl passPhrase = null;
@@ -1784,93 +1757,6 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		}
 	}
 
-	@Override
-	@Transactional
-	public BranchBillListResponseDTO billList(BranchBillListDTO listDTO) {
-		BranchBillListResponseDTO response = new BranchBillListResponseDTO();
-		List<BillSummaryDTO> branchBill = new
-
-		ArrayList<BillSummaryDTO>();
-		SimpleDateFormat sdf = new SimpleDateFormat(
-				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
-		SimpleDateFormat df = new SimpleDateFormat(
-				Constants.DATE_FORMAT_WITHOUT_TIME);
-
-		try {
-
-			List<NetmdBillTbl> netMdBranchBillList = getBillsByDate(
-					df.parse(listDTO.getFromDate()),
-					df.parse(listDTO.getToDate()), listDTO.getNetmdId(),
-					listDTO.getNetmdBranchId());
-			for (NetmdBillTbl bill : netMdBranchBillList) {
-				BillSummaryDTO billDetail = new
-
-				BillSummaryDTO();
-
-				billDetail.setPatientName(bill.getPatientTbl().getFirstName());
-				billDetail.setUid(bill.getUid());
-				billDetail.setPayStatus(bill.getPayStatus());
-
-				billDetail.setBillAmount(bill.getBillAmount());
-
-				billDetail.setAmountPaid(bill.getAmountPaid());
-
-				billDetail.setOrderDate(df.format(bill.getOrderDate()));
-				branchBill.add(billDetail);
-			}
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		response.setbranchBillList(branchBill);
-		response.setSuccess(true);
-		return response;
-	}
-
-	//
-	// /* (non-Javadoc)
-	// * @see
-	// com.nv.youNeverWait.user.pl.dao.NetMdDao#enableBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
-	// */
-	// @Override
-	// public ResponseDTO enableBranchSync(SyncFreqDTO sync) {
-	// NetmdBranchTbl netMdBranch = getById(NetmdBranchTbl.class,
-	// sync.getNetmdBranchId());
-	// if (netMdBranch != null) {
-	// netMdBranch.setEnableSync(sync.isEnableSync());
-	// update(netMdBranch);
-	// }
-	// ResponseDTO response = new ResponseDTO();
-	// response.setSuccess(true);
-	// return response;
-	// }
-	//
-	// /* (non-Javadoc)
-	// * @see
-	// com.nv.youNeverWait.user.pl.dao.NetMdDao#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
-	// */
-	// @Override
-	// public ResponseDTO enableSync(SyncFreqDTO sync) {
-	// NetmdTbl netmd = getById(NetmdTbl.class, sync.getNetmdId());
-	// if (netmd != null) {
-	// netmd.setEnableSync(sync.isEnableSync());
-	// update(netmd);
-	// }
-	// ResponseDTO response = new ResponseDTO();
-	// response.setSuccess(true);
-	// return response;
-	// }
-
-	private List<NetmdBillTbl> getBillsByDate(Date fromDate, Date toDate,
-			int netmdId, int netmdBranchId) {
-		javax.persistence.Query query = em.createQuery(Query.GET_BILL_BY_DATE);
-		query.setParameter("param1", fromDate);
-		query.setParameter("param2", toDate);
-		query.setParameter("param3", netmdId);
-		query.setParameter("param4", netmdBranchId);
-		return executeQuery(NetmdBillTbl.class, query);
-	}
 
 	private List<NetmdHealthMonitorTbl> getMonitorDetailsByBranchId(
 			int passPhraseId, int startIndex) {
@@ -1880,6 +1766,19 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		query.setFirstResult(startIndex);
 		query.setMaxResults(10);
 		return executeQuery(NetmdHealthMonitorTbl.class, query);
+	}
+
+	/**
+	 * get passphrase table list
+	 * 
+	 * @param branchId
+	 * @return NetmdPassphraseTbl
+	 */
+	public List<NetmdPassphraseTbl> getPassPhraseByBranch(int branchId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.NETMD_PASSPHRASE_BY_BRANCH);
+		query.setParameter("param1", branchId);
+		return executeQuery(NetmdPassphraseTbl.class, query);
 	}
 
 	/**

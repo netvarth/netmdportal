@@ -19,8 +19,6 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.BranchStatusEnum;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetRxUserTypeEnum;
-import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
-import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.NetrxBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetrxLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetrxPassphraseTbl;
