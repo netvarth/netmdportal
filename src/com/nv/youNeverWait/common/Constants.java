@@ -57,6 +57,7 @@ public class Constants {
 	public static final String RESULT_LIST = "Result List";
 	public static final String APPOINTMENTS = "appointments";
 	public static final String SYNC_LOG = "syncLog";
+	public static final String NETMD_BILL = "bill";
 	
 	
 	/* Log */
@@ -114,7 +115,8 @@ public class Constants {
 	public static final String SPECIMENUID = "SpecimenUid";
 	public static final String TESTUID = "TestUid";
 	public static final String MESSAGE = "Synchronization disabled.";
-		
+	public static final String NETLIMS_ORDER = "order";
+	
 	
 	
 	
