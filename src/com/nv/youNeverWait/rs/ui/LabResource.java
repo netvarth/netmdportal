@@ -22,7 +22,6 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
-import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
@@ -40,7 +39,6 @@ import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
-import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
@@ -53,7 +51,6 @@ import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.LogService;
-import com.nv.youNeverWait.user.bl.service.OrderService;
 
 @Controller
 @RequestMapping("ui/lab/")
@@ -839,11 +836,11 @@ public class LabResource {
 	@RequestMapping(value = "orderList", method = RequestMethod.POST)
 	@ResponseBody
 	public BranchOrdersResponseDTO orderList(
-			@RequestBody BranchOrderDTO orderDTO) {
+			@RequestBody FilterDTO filterDTO) {
 
 		BranchOrdersResponseDTO response = new BranchOrdersResponseDTO();
 		try {
-			response = labService.orderList(orderDTO);
+			response = labService.orderList(filterDTO);
 		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();
@@ -881,6 +878,11 @@ public class LabResource {
 		return response;
 	}
 
+	/**
+	 * Method performed for netLims inter branch order transfer
+	 * @param orderTranfer
+	 * @return ResponseDTO
+	 */
 	@RequestMapping(value = "orderTransfer", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseDTO orderTransfer(
@@ -902,6 +904,11 @@ public class LabResource {
 		return response;
 	}
 
+	/**
+	 * Method performed for gettting all orders for a Netlims branch
+	 * @param orderHeader
+	 * @return
+	 */
 	@RequestMapping(value = "retrieveBranchOrders", method = RequestMethod.POST)
 	@ResponseBody
 	public  OrderDetails retrieveBranchOrders(@RequestBody LabOrderHeaderDTO orderHeader ) {
@@ -921,57 +928,6 @@ public class LabResource {
 		}
 		return response;
 	}
-//	/**
-//	 * To enable/disable  sync process
-//	 * 
-//	 * @param log
-//	 * @return ResponseDTO
-//	 */
-//	@RequestMapping(value = "enableLabSync", method = RequestMethod.POST)
-//	@ResponseBody
-//	public ResponseDTO enableSync(@RequestBody SyncFreqDTO sync) {
-//
-//		ResponseDTO response = new ResponseDTO();
-//		try {
-//			response = labService.enableLabSync(sync);
-//		} catch (ServiceException e) {
-//			List<Parameter> parameters = e.getParamList();
-//			ErrorDTO error = new ErrorDTO();
-//			error.setErrCode(e.getError().getErrCode());
-//			error.setParams(parameters);
-//			error.setDisplayErrMsg(e.isDisplayErrMsg());
-//			response.setError(error);
-//			response.setSuccess(false);
-//		}
-//		return response;
-//	}
-	
-//	/**
-//	 * To enable/disable  sync process
-//	 * 
-//	 * @param log
-//	 * @return ResponseDTO
-//	 */
-//	@RequestMapping(value = "enableBranchSync", method = RequestMethod.POST)
-//	@ResponseBody
-//	public ResponseDTO enableBranchSync(@RequestBody SyncFreqDTO sync) {
-//
-//		ResponseDTO response = new ResponseDTO();
-//		try {
-//			response = labService.enableBranchSync(sync);
-//		} catch (ServiceException e) {
-//			List<Parameter> parameters = e.getParamList();
-//			ErrorDTO error = new ErrorDTO();
-//			error.setErrCode(e.getError().getErrCode());
-//			error.setParams(parameters);
-//			error.setDisplayErrMsg(e.isDisplayErrMsg());
-//			response.setError(error);
-//			response.setSuccess(false);
-//		}
-//		return response;
-//	}
-//	
-	
 	
 	/**
 	 * To set synchronization frequency for a lab branch
