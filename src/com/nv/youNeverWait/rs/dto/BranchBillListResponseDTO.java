@@ -7,12 +7,8 @@ public class BranchBillListResponseDTO {
 	private List<BillSummaryDTO> branchBillList=new ArrayList<BillSummaryDTO>();
 	private ErrorDTO error;
 	private boolean success;
-	public List<BillSummaryDTO> getbranchBillList() {
-		return branchBillList;
-	}
-	public void setbranchBillList(List<BillSummaryDTO> branchBillList) {
-		this.branchBillList = branchBillList;
-	}
+	private Long count;
+	
 	public ErrorDTO getError() {
 		return error;
 	}
@@ -24,6 +20,30 @@ public class BranchBillListResponseDTO {
 	}
 	public void setSuccess(boolean success) {
 		this.success = success;
+	}
+	/**
+	 * @return the branchBillList
+	 */
+	public List<BillSummaryDTO> getBranchBillList() {
+		return branchBillList;
+	}
+	/**
+	 * @param branchBillList the branchBillList to set
+	 */
+	public void setBranchBillList(List<BillSummaryDTO> branchBillList) {
+		this.branchBillList = branchBillList;
+	}
+	/**
+	 * @return the count
+	 */
+	public Long getCount() {
+		return count;
+	}
+	/**
+	 * @param count the count to set
+	 */
+	public void setCount(Long count) {
+		this.count = count;
 	}
 	
 	
