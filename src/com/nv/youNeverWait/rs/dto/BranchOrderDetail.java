@@ -6,6 +6,11 @@
  */
 package com.nv.youNeverWait.rs.dto;
 
+import java.text.SimpleDateFormat;
+
+import com.nv.youNeverWait.common.Constants;
+import com.nv.youNeverWait.pl.entity.OrderAmountTbl;
+
 /**
  * @author Luciya Jos
  *
@@ -116,6 +121,33 @@ public class BranchOrderDetail {
 	 */
 	public void setLastOrderdTime(String lastOrderdTime) {
 		this.lastOrderdTime = lastOrderdTime;
+	}
+	/**
+	 * @param id
+	 * @param branchName
+	 * @param branchId
+	 * @param totalOrders
+	 * @param paidAmount
+	 * @param netAmount
+	 * @param lastOrderdTime
+	 * @param orderDate
+	 */
+	public BranchOrderDetail(OrderAmountTbl orderAmt) {
+		SimpleDateFormat sdf= new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
+		this.id = orderAmt.getId();
+		this.branchName = orderAmt.getLabBranchTbl().getName();
+		this.branchId = orderAmt.getLabBranchTbl().getId();
+		this.totalOrders = orderAmt.getTotalOrders();
+		this.paidAmount = orderAmt.getPaidAmount();
+		this.netAmount = orderAmt.getNetAmount();
+		this.lastOrderdTime = sdf.format(orderAmt.getLastOrderedTime());
+		this.orderDate = sdf.format(orderAmt.getOrderDate());
+	}
+	/**
+	 * 
+	 */
+	public BranchOrderDetail() {
+		// TODO Auto-generated constructor stub
 	}
 
 }
