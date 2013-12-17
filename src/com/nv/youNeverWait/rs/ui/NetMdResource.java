@@ -23,7 +23,6 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
-import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
@@ -428,13 +427,18 @@ public class NetMdResource {
 		return response;
 	}
 	
+	/**
+	 * Filter method for getting list of bills in netmd
+	 * @param filter
+	 * @return BranchBillListResponseDTO
+	 */
 	@RequestMapping(value = "billList", method = RequestMethod.POST)
 	@ResponseBody
-	public BranchBillListResponseDTO billList(@RequestBody BranchBillListDTO listDTO) {
+	public BranchBillListResponseDTO billList(@RequestBody FilterDTO filter) {
 
 		BranchBillListResponseDTO response=	new BranchBillListResponseDTO();	
 		try{
-			response=netMdService.billList(listDTO);
+			response=netMdService.billList(filter);
 		}
 		catch(ServiceException e){
 			List<Parameter> parameters =e.getParamList();
@@ -447,7 +451,6 @@ public class NetMdResource {
 		}
 		return response;
 	}
-	
 	
 	/**
 	 * Deletes a netmd branch
@@ -851,58 +854,6 @@ public class NetMdResource {
 		}
 		return response;
 	}
-
-//	/**
-//	 * To enable/disable  sync process
-//	 * 
-//	 * @param log
-//	 * @return ResponseDTO
-//	 */
-//	@RequestMapping(value = "enableSync", method = RequestMethod.POST)
-//	@ResponseBody
-//	public ResponseDTO enableSync(@RequestBody SyncFreqDTO sync) {
-//
-//		ResponseDTO response = new ResponseDTO();
-//		try {
-//			response = netMdService.enableSync(sync);
-//		} catch (ServiceException e) {
-//			List<Parameter> parameters = e.getParamList();
-//			ErrorDTO error = new ErrorDTO();
-//			error.setErrCode(e.getError().getErrCode());
-//			error.setParams(parameters);
-//			error.setDisplayErrMsg(e.isDisplayErrMsg());
-//			response.setError(error);
-//			response.setSuccess(false);
-//		}
-//		return response;
-//	}
-//	
-//	/**
-//	 * To enable/disable  sync process
-//	 * 
-//	 * @param log
-//	 * @return ResponseDTO
-//	 */
-//	@RequestMapping(value = "enableBranchSync", method = RequestMethod.POST)
-//	@ResponseBody
-//	public ResponseDTO enableBranchSync(@RequestBody SyncFreqDTO sync) {
-//
-//		ResponseDTO response = new ResponseDTO();
-//		try {
-//			response = netMdService.enableBranchSync(sync);
-//		} catch (ServiceException e) {
-//			List<Parameter> parameters = e.getParamList();
-//			ErrorDTO error = new ErrorDTO();
-//			error.setErrCode(e.getError().getErrCode());
-//			error.setParams(parameters);
-//			error.setDisplayErrMsg(e.isDisplayErrMsg());
-//			response.setError(error);
-//			response.setSuccess(false);
-//		}
-//		return response;
-//	}
-//	
-//	
 
 	/**
 	 * @return the netMdService
