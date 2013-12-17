@@ -28,6 +28,7 @@ import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.NetMdDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.util.filter.core.Property;
+import com.nv.youNeverWait.util.filter.queryBuilder.BillPropertyEnum;
 import com.nv.youNeverWait.util.filter.queryBuilder.NetMDBranchPropertyEnum;
 import com.nv.youNeverWait.util.filter.queryBuilder.NetMdPropertyEnum;
 import com.nv.youNeverWait.util.filter.validation.FilterValidator;
@@ -525,6 +526,28 @@ public class NetMdValidator extends FilterValidator {
 				se.setDisplayErrMsg(true);
 				throw se;
 			}
+		}
+
+		/**
+		 * @param filter
+		 * @return
+		 */
+		public ErrorDTO validateBillFilter(FilterDTO filter) {
+			ErrorDTO error = new ErrorDTO();
+			for (ExpressionDTO exp : filter.getExp()) {
+				Property property = null;
+				try {
+					property = BillPropertyEnum.valueOf(exp.getName());
+				} catch (IllegalArgumentException e) {
+					error = getInvalidExpNameError(exp);
+					return error;
+				}
+				error = validateExp(exp, property);
+				if (error != null) {
+					return error;
+				}
+			}
+			return null;
 		}
 
 

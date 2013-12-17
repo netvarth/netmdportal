@@ -37,6 +37,7 @@ import com.nv.youNeverWait.rs.dto.UserBranchDTO;
 import com.nv.youNeverWait.util.filter.core.Property;
 import com.nv.youNeverWait.util.filter.queryBuilder.BranchPropertyEnum;
 import com.nv.youNeverWait.util.filter.queryBuilder.LabPropertyEnum;
+import com.nv.youNeverWait.util.filter.queryBuilder.OrderPropertyEnum;
 import com.nv.youNeverWait.util.filter.validation.FilterValidator;
 
 /**
@@ -714,5 +715,26 @@ public class LabValidator extends FilterValidator {
 
 	}
 
-	
+	/**
+	 * @param filterDTO
+	 * @return
+	 */
+	public ErrorDTO validateOrderFilter(FilterDTO filter) {
+		ErrorDTO error = new ErrorDTO();
+		for (ExpressionDTO exp : filter.getExp()) {
+			Property property = null;
+			try {
+				property = OrderPropertyEnum.valueOf(exp.getName());
+			} catch (IllegalArgumentException e) {
+				error = getInvalidExpNameError(exp);
+				return error;
+			}
+			error = validateExp(exp, property);
+			if (error != null) {
+				return error;
+			}
+		}
+		return null;
+	}
+
 }
