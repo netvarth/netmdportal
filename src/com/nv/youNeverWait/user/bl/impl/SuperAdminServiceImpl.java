@@ -17,10 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
@@ -31,10 +29,8 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LogTbl;
 import com.nv.youNeverWait.pl.entity.SyncLogTbl;
-import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.EnableLogStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
@@ -793,8 +789,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * Method for listing orders
 	 */
 	@Override
-	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO) {
-		BranchOrdersResponseDTO response = labService.orderList(orderDTO);
+	public BranchOrdersResponseDTO orderList(FilterDTO filterDTO) {
+		BranchOrdersResponseDTO response = labService.orderList(filterDTO);
 		return response;
 	}
 
@@ -878,36 +874,56 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return response;
 	}
 
+	/**
+	 * Method to set synchronization interval time for a  NetLims
+	 */
 	@Override
 	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync) {
 		SyncFreqResponseDTO response = labService.setLabSync(sync);
 		return response;
 	}
 
+
+	/**
+	 * Method to set synchronization interval time for a  NetLims branch
+	 */
 	@Override
 	public SyncFreqResponseDTO setBranchSync(SyncFreqDTO sync) {
 		SyncFreqResponseDTO response = labService.setBranchSync(sync);
 		return response;
 	}
 
+
+	/**
+	 * Method to set synchronization interval time for a  NetMd
+	 */
 	@Override
 	public SyncFreqResponseDTO setNetMdSync(SyncFreqDTO sync) {
 		SyncFreqResponseDTO response = netMdService.setNetMdSync(sync);
 		return response;
 	}
 
+	/**
+	 * Method to set synchronization interval time for a  NetMd branch
+	 */
 	@Override
 	public SyncFreqResponseDTO setNetMdBranchSync(SyncFreqDTO sync) {
 		SyncFreqResponseDTO response = netMdService.setNetMdBranchSync(sync);
 		return response;
 	}
 
+	/**
+	 * Method to set synchronization interval time for a  NetRx
+	 */
 	@Override
 	public SyncFreqResponseDTO setNetRxSync(SyncFreqDTO sync) {
 		SyncFreqResponseDTO response = netRxService.setNetRxSync(sync);
 		return response;
 	}
 
+	/** 
+	 * Method to set synchronization interval time for a  NetRx branch
+	 */
 	@Override
 	public SyncFreqResponseDTO setNetRxBranchSync(SyncFreqDTO sync) {
 		SyncFreqResponseDTO response = netRxService.setNetRxBranchSync(sync);
@@ -939,9 +955,14 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return response;
 	}
 
+	/**
+	 * Filter method for getting list of bills in netmd
+	 * @param filter
+	 * @return BranchBillListResponseDTO
+	 */
 	@Override
-	public BranchBillListResponseDTO billList(BranchBillListDTO listDTO) {
-		BranchBillListResponseDTO response = netMdService.billList(listDTO);
+	public BranchBillListResponseDTO billList(FilterDTO filterDTO) {
+		BranchBillListResponseDTO response = netMdService.billList(filterDTO);
 		return response;
 	}
 
@@ -960,6 +981,12 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return response;
 	}
 
+	/**
+	 * Shows a list of all sync logs
+	 * 
+	 * @param filter
+	 * @return SyncLogListResponseDTO
+	 */
 	@Override
 	public SyncLogListResponseDTO syncLogList(FilterDTO filterDTO) {
 		SyncLogListResponseDTO response = new SyncLogListResponseDTO();
