@@ -1,5 +1,5 @@
 /**
- * NetLimsDao.java
+ * LabDao.java
  *
  * Jan 3, 2013
  *
@@ -10,11 +10,9 @@ package com.nv.youNeverWait.user.pl.dao;
 
 import java.util.Date;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
-import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
-import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
@@ -33,7 +31,6 @@ import com.nv.youNeverWait.rs.dto.RetrieveLabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
-import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.pl.impl.BranchOwnerDetails;
@@ -70,52 +67,16 @@ public interface LabDao {
 	public ResultTransferResponseDTO transferResultToNetMd(TransferNetMdResultDTO resultTranfer);
 	public void CheckHeaderDetails(HeaderDTO header);
 	public BranchOrdersResponseDTO viewBranchOrders(int globalId);
-	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO);
 	public BranchOrderCountResponseDTO createTotalOrders(HeaderDTO header,
 			BranchOrderDetail branchOrders);
-	
 	public BranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId);
 	public ResponseDTO updateLabBranchSystemInfo(
 			BranchSystemInfoDetails details);
-	/**
-	 * @param header
-	 * @param lastSyncTime
-	 * @param currentSyncTime
-	 * @return
-	 */
 	public LabDTO getLab(HeaderDTO header, String lastSyncTime,
 			Date currentSyncTime);
-
-	/**
-	 * @param sync
-	 * @return
-	 */
 	public SyncFreqResponseDTO setBranchSync(SyncFreqDTO sync);
-	/**
-	 * @param sync
-	 * @return
-	 */
 	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync);
-	/**
-	 * @param labId
-	 * @return
-	 */
 	public SyncFreqDTO getLabSyncDetails(int labId);
-	/**
-	 * @param branchId
-	 * @return
-	 */
 	public SyncFreqDTO getBranchSyncDetails(int branchId);
-	
-//	/**
-//	 * @param sync
-//	 * @return
-//	 */
-//	public ResponseDTO enableLabSync(SyncFreqDTO sync);
-//	/**
-//	 * @param sync
-//	 * @return
-//	 */
-//	public ResponseDTO enableBranchSync(SyncFreqDTO sync);
-	
+
 }

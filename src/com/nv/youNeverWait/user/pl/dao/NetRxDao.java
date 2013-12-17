@@ -49,25 +49,9 @@ public interface NetRxDao {
 	public ResponseDTO resetPassword(LoginDTO login);
 	public ResponseDTO changePassword(@RequestBody PasswordDTO passwords);
 	public ResponseDTO clearMacId(NetRxHeaderDTO header);
-	/**
-	 * @param sync
-	 * @return
-	 */
 	public SyncFreqResponseDTO setNetRxSync(SyncFreqDTO sync);
-	/**
-	 * @param sync
-	 * @return
-	 */
 	public SyncFreqResponseDTO setNetRxBranchSync(SyncFreqDTO sync);
-	/**
-	 * @param branchId
-	 * @return
-	 */
 	public SyncFreqDTO getBranchSyncDetails(int branchId);
-	/**
-	 * @param netrxId
-	 * @return
-	 */
 	public SyncFreqDTO getNetrxSyncDetails(int netrxId);
 
 }

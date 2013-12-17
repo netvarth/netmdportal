@@ -11,8 +11,6 @@ import java.util.Date;
 
 import com.nv.youNeverWait.rs.dto.BillResponseDTO;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
-import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
-import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
@@ -59,60 +57,14 @@ public interface NetMdDao {
 	public ResponseDTO clearMacId(HeaderDTO header);
 	public ResponseDTO makePrimary(HeaderDTO header);
 	public ResponseDTO changePassword(PasswordDTO passwords);
-	public BranchBillListResponseDTO billList(BranchBillListDTO listDTO);
-	/**
-	 * @param newBill
-	 * @param header
-	 * @return
-	 */
 	public BillResponseDTO createBill(BillSummaryDTO newBill, HeaderDTO header);
-	/**
-	 * @param updatedBill
-	 * @param header
-	 * @return
-	 */
 	public BillResponseDTO updateBill(BillSummaryDTO updatedBill, HeaderDTO header);
-	/**
-	 * @param sync
-	 * @return
-	 */
 	public SyncFreqResponseDTO setNetMdSync(SyncFreqDTO sync);
-	/**
-	 * @param sync
-	 * @return
-	 */
 	public SyncFreqResponseDTO setNetMdBranchSync(SyncFreqDTO sync);
-	/**
-	 * @param netmdId
-	 * @return
-	 */
 	public SyncFreqDTO getNetmdSyncDetails(int netmdId);
-	/**
-	 * @param branchId
-	 * @return
-	 */
 	public SyncFreqDTO getBranchSyncDetails(int branchId);
-
 	public void checkHeader(HeaderDTO header);
-//	/**
-//	 * @param sync
-//	 * @return
-//	 */
-//	public ResponseDTO enableBranchSync(SyncFreqDTO sync);
-//	/**
-//	 * @param sync
-//	 * @return
-//	 */
-//	public ResponseDTO enableSync(SyncFreqDTO sync);
-	/**
-	 * @param passphrase
-	 * @return
-	 */
 	public BranchSystemInfoDetails viewBranchSystemInfoDetails(String passphrase);
-	/**
-	 * @param systemCriticalDetails
-	 * @return
-	 */
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails);
 	

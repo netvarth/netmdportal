@@ -28,30 +28,9 @@ public interface SuperAdminDao {
 	public ResponseDTO resetPassword(LoginDTO login);
 	public ResponseDTO enableLog(LogDTO log, HttpServletRequest request);
 	public EnableLogStatusResponseDTO enableLogStatus();
-	/**
-	 * @param syncLog
-	 * @param request
-	 * @return
-	 */
 	public ResponseDTO enableSyncLog(SyncLogDTO syncLog, HttpServletRequest request);
-
-	/**
-	 * @param sync
-	 * @return
-	 */
 	public ResponseDTO setSync(SyncFreqDTO sync);
-//	/**
-//	 * @param sync
-//	 * @return
-//	 */
-//	public ResponseDTO enableSync(SyncFreqDTO sync);
-	/**
-	 * @return
-	 */
 	public SyncFreqDTO getSyncDetails();
-	/**
-	 * @return
-	 */
 	public EnableLogStatusResponseDTO getSyncLogStatus();
 
 }
