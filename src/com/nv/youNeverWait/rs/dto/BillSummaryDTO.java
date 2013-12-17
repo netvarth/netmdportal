@@ -10,6 +10,11 @@
  */
 package com.nv.youNeverWait.rs.dto;
 
+import java.text.SimpleDateFormat;
+
+import com.nv.youNeverWait.common.Constants;
+import com.nv.youNeverWait.pl.entity.NetmdBillTbl;
+
 /**
  *
  *
@@ -60,6 +65,22 @@ public BillSummaryDTO(int globalId, String uid, String payStatus,
 	this.success = success;
 	this.error = error;
 }
+/**
+ * @param netmdBillTbl
+ */
+public BillSummaryDTO(NetmdBillTbl netmdBillTbl) {
+	
+	SimpleDateFormat sdf= new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
+	this.globalId = netmdBillTbl.getId();
+	this.uid = netmdBillTbl.getUid();
+	this.payStatus = netmdBillTbl.getPayStatus();
+	this.patientName = netmdBillTbl.getPatientName();
+	this.patientGlobalId = Integer.toString(netmdBillTbl.getPatientTbl().getId());
+	this.billAmount = netmdBillTbl.getBillAmount();
+	this.amountPaid = netmdBillTbl.getAmountPaid();
+	this.orderDate = sdf.format(netmdBillTbl.getOrderDate());
+}
+
 /**
  * @return the globalId
  */
