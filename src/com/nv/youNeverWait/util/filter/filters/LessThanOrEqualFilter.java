@@ -1,5 +1,5 @@
 /**
- * LessThanOrEqualFilter.java
+  * LessThanOrEqualFilter.java
  *
  * Jan 23,2013
  *
@@ -85,12 +85,12 @@ public class LessThanOrEqualFilter implements Filter{
 		}
 		if(type.getSimpleName().equals("Date")){
 			Path<Date> pathDate = (Path<Date>) path;
-			SimpleDateFormat df =new SimpleDateFormat(Constants.DATE_FORMAT_WITH_TIME);
+			SimpleDateFormat df =new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
 			Date date =null;
 			try {
-				value1 = value.concat(" 23:59:59");
-				System.out.println(value1);
-				date = df.parse(value1);
+				//value1 = value.concat(" 23:59:59");
+				System.out.println(value);
+				date = df.parse(value);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
