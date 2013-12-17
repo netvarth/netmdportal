@@ -1,5 +1,5 @@
 /**
- * AuthenticationDaoImpl.java
+ * SuperAdminDaoImpl.java
  * 
  * @Author Linu Paul
  *
@@ -151,7 +151,7 @@ SuperAdminDao {
 	}
 
 	/**
-	 * Super Admin details
+	 *  To get Super Admin details
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -262,18 +262,27 @@ SuperAdminDao {
 		}
 		return sync;
 	}
-	
-//	/* (non-Javadoc)
-//	 * @see com.nv.youNeverWait.user.pl.dao.SuperAdminDao#enableSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
-//	 */
-//	@Override
-//	@Transactional
-//	public ResponseDTO enableSync(SyncFreqDTO sync) {
-//		
-//		ResponseDTO response = new ResponseDTO();
-//		response.setSuccess(true);
-//		return response;
-//	}
+
+
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.SuperAdminDao#getSyncLogStatus()
+	 */
+	@Override
+	@Transactional
+	public EnableLogStatusResponseDTO getSyncLogStatus() {
+		EnableLogStatusResponseDTO response= new EnableLogStatusResponseDTO();
+		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+		if (superAdmin == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUser);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		response.setStatus(superAdmin.getEnableSyncLog());
+		response.setSuccess(true);
+		return response;
+	}
 
 	/**
 	 * get User By LoginId And Password
@@ -321,26 +330,6 @@ SuperAdminDao {
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.pl.dao.SuperAdminDao#getSyncLogStatus()
-	 */
-	@Override
-	public EnableLogStatusResponseDTO getSyncLogStatus() {
-		EnableLogStatusResponseDTO response= new EnableLogStatusResponseDTO();
-		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
-		if (superAdmin == null) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidUser);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		response.setStatus(superAdmin.getEnableSyncLog());
-		response.setSuccess(true);
-		return response;
-	}
-
-	
 
 	
 
