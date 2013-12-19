@@ -63,8 +63,5 @@ public interface PatientService {
 			Appointment appointment);
 	public AppointmentResponse deleteAppointmentFromNetmd(int id);
 	public PastAppointmentListResponseDTO getPastAppointments(FilterDTO filter);
-	public ResponseDTO save( QuestionAnswer questionAnswer);
-	public QuestionAnswer view( int caseId);
-	
 	
 	}

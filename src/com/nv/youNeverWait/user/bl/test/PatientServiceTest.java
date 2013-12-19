@@ -676,54 +676,6 @@ public class PatientServiceTest {
 		}
 	}
 	
-	@Test
-	public void saveAnswer(){
-		PatientService service = (PatientService) applicationContext
-				.getBean("patient.service");
-		
-		try {
-		QuestionAnswer questionAnswer = new QuestionAnswer();
-		questionAnswer.setCaseId(2);
-		questionAnswer.setDeptId(2);
-		List<AnswerDTO> answerList = new ArrayList<AnswerDTO>();
-		AnswerDTO answer1= new AnswerDTO();
-		answer1.setQuestionKey("name");
-		answer1.setAnswer("leo");
-		AnswerDTO answer2= new AnswerDTO();
-		answer2.setQuestionKey("age");
-		answer2.setAnswer("24");
-		AnswerDTO answer3= new AnswerDTO();
-		answer3.setQuestionKey("height");
-		answer3.setAnswer("");
-		AnswerDTO answer4= new AnswerDTO();
-		answer4.setQuestionKey("weight");
-		answer4.setAnswer("select");
-		answerList.add(answer3);
-		answerList.add(answer4);
-		answerList.add(answer2);
-		answerList.add(answer1);
-		questionAnswer.setAnswerList(answerList );
-		service.save(questionAnswer );
-		}catch (ServiceException e) {
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void viewAnswer(){
-		PatientService service = (PatientService) applicationContext
-				.getBean("patient.service");
-		
-		try {
-			service.view(2);
-		}catch (ServiceException e) {
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-		}
+	
 		
 }

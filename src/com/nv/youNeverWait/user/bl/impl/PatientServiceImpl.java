@@ -39,6 +39,7 @@ import com.nv.youNeverWait.rs.dto.PastAppointmentListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PatientOrderDTO;
+import com.nv.youNeverWait.rs.dto.QuestionAnswer;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
@@ -46,6 +47,7 @@ import com.nv.youNeverWait.rs.dto.RetrievalPatientResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.bl.service.AppointmentService;
 import com.nv.youNeverWait.user.bl.service.DoctorService;
+import com.nv.youNeverWait.user.bl.service.GynaService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.service.PatientService;
 import com.nv.youNeverWait.user.bl.service.ScheduleService;
@@ -69,6 +71,7 @@ public class PatientServiceImpl implements PatientService {
 	private String mailFrom;
 	private String ynwServerIpAddress;
 	private SendEmailMsgWorkerThread mailThread;
+	private GynaService gynService;
 	private static final Log log = LogFactory.getLog(PatientServiceImpl.class);
 
 	public DoctorService getDoctorService() {
@@ -726,6 +729,20 @@ public class PatientServiceImpl implements PatientService {
 	 */
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
+	}
+
+	/**
+	 * @return the gynService
+	 */
+	public GynaService getGynService() {
+		return gynService;
+	}
+
+	/**
+	 * @param gynService the gynService to set
+	 */
+	public void setGynService(GynaService gynService) {
+		this.gynService = gynService;
 	}
 
 }
