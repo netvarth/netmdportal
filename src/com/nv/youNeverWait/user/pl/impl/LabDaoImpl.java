@@ -2089,13 +2089,15 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 				update(lab);
 
 			} else {
+				if (sync.isEnableSync())
+					response.setMsg(Constants.MESSAGE);
 				/****** Setting all branches of the lab as disabled *******/
 				for (LabBranchTbl labBranch : lab.getLabBranchTbls()) {
 					labBranch.setEnableSync(lab.getEnableSync());
 					labBranch.setUpdateDateTime(newDate);
 					update(labBranch);
-					if (sync.isEnableSync())
-						response.setMsg(Constants.MESSAGE);
+					
+					
 				}// end of for loop
 			}
 
@@ -2106,7 +2108,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-
+		
 		response.setSuccess(true);
 		return response;
 	}

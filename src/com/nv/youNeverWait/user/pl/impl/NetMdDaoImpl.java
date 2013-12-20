@@ -1480,13 +1480,14 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				netmd.setUpdateDateTime(newDate);
 				update(netmd);
 			} else {
+				if (sync.isEnableSync())
+					response.setMsg(Constants.MESSAGE);
 				/****** Setting all branches of the lab as disabled *******/
 				for (NetmdBranchTbl netmdBranch : netmd.getNetmdBranchTbls()) {
 					netmdBranch.setEnableSync(netmd.getEnableSync());
 					netmdBranch.setUpdateDateTime(newDate);
 					update(netmdBranch);
-					if (sync.isEnableSync())
-						response.setMsg(Constants.MESSAGE);
+					
 				}// end of for loop
 			}
 
@@ -1498,7 +1499,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-
+		
 		response.setSuccess(true);
 		return response;
 	}

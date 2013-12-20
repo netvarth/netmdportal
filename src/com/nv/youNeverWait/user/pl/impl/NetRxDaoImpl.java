@@ -928,13 +928,14 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 				netrx.setUpdateDateTime(newDate);
 				update(netrx);
 			} else {
+				if (sync.isEnableSync())
+					response.setMsg(Constants.MESSAGE);
 				/****** Setting all branches of the lab as disabled *******/
 				for (NetrxBranchTbl netrxBranch : netrx.getNetrxBranchTbls()) {
 					netrxBranch.setEnableSync(netrx.getEnableSync());
 					netrxBranch.setUpdateDateTime(newDate);
 					update(netrxBranch);
-					if (sync.isEnableSync())
-						response.setMsg(Constants.MESSAGE);
+					
 				}// end of for loop
 			}
 
