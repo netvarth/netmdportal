@@ -43,7 +43,6 @@ import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PatientLoginDTO;
 import com.nv.youNeverWait.rs.dto.PatientOrderDTO;
-import com.nv.youNeverWait.rs.dto.QuestionAnswer;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;

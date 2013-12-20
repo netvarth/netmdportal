@@ -675,7 +675,5 @@ public class PatientServiceTest {
 			System.out.println(e.getParamList());
 		}
 	}
-	
-	
 		
 }

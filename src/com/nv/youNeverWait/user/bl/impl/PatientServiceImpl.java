@@ -71,7 +71,6 @@ public class PatientServiceImpl implements PatientService {
 	private String mailFrom;
 	private String ynwServerIpAddress;
 	private SendEmailMsgWorkerThread mailThread;
-	private GynaService gynService;
 	private static final Log log = LogFactory.getLog(PatientServiceImpl.class);
 
 	public DoctorService getDoctorService() {
@@ -731,18 +730,6 @@ public class PatientServiceImpl implements PatientService {
 		this.mailThread = mailThread;
 	}
 
-	/**
-	 * @return the gynService
-	 */
-	public GynaService getGynService() {
-		return gynService;
-	}
-
-	/**
-	 * @param gynService the gynService to set
-	 */
-	public void setGynService(GynaService gynService) {
-		this.gynService = gynService;
-	}
+	
 
 }
