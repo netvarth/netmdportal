@@ -276,4 +276,20 @@ public class Query {
 	public static final String GET_ID_BY_KEY = " from QuestionTbl as q where q.questionKey=:param1";
 	public static final String GET_BY_DEPT = "from QuestionTbl as qTbl where qTbl.deptTbl.id=:param1";
 	public static final String GET_BY_CASE = "from QusAnsTbl as qaTbl where qaTbl.caseTbl.id=:param1";
+	
+/**************NetPos******************/
+
+	
+	/*NetPosLoginTbl */
+	public static final String GET_NETPOS_LOGIN_BY_USERNAME = "from NetposLoginTbl as login where login.userName=:param1";
+	
+	/* NetposTbl */
+	
+	public static final String GET_NETPOS_BY_NAME = "from NetposTbl as netpos where  REPLACE(TRIM(UPPER(netpos.name)),' ','')=:param1";
+	
+	/*NetposUserTbl*/
+	public static final String GET_NETPOS_USERS = "from NetposUserTbl as netposUsers where  netposUsers.NetposUserTbl.id=:param1";
+
+	/*NetposBranchTbl*/
+	public static final String GET_NETPOS_BRANCHES = "from NetposBranchTbl as netposBranch where  netposBranch.NetposTbl.id=:param1";
 }
