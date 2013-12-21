@@ -32,6 +32,7 @@ import com.nv.youNeverWait.pl.entity.SyncLogTbl;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.EnableLogStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
@@ -39,7 +40,6 @@ import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
-import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
@@ -54,6 +54,8 @@ import com.nv.youNeverWait.rs.dto.NetMdDTO;
 import com.nv.youNeverWait.rs.dto.NetMdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
 import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
+import com.nv.youNeverWait.rs.dto.NetPosDTO;
+import com.nv.youNeverWait.rs.dto.NetPosViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchDetail;
 import com.nv.youNeverWait.rs.dto.NetRxBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchResponseDTO;
@@ -74,6 +76,7 @@ import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
+import com.nv.youNeverWait.user.bl.service.NetPosService;
 import com.nv.youNeverWait.user.bl.service.NetRxService;
 import com.nv.youNeverWait.user.bl.service.SpecimenService;
 import com.nv.youNeverWait.user.bl.service.SuperAdminService;
@@ -98,8 +101,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	private NetRxService netRxService;
 	private TestService testService;
 	private SpecimenService specimenService;
-	private static final Log log = LogFactory
-			.getLog(SuperAdminServiceImpl.class);
+	private NetPosService netPosService;
+	private static final Log log = LogFactory.getLog(SuperAdminServiceImpl.class);
 
 	/**
 	 * Shows a list of all Netlims App
@@ -219,15 +222,17 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public ResponseDTO forgotPassword(LoginDTO login) {
 		ResponseDTO response = new ResponseDTO();
 		if (login.getUserName() == null || login.getUserName().equals("")) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidUserName);
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidUserName);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		UserCredentials user = superAdminDao.getUserCredentials(login);
-		if (user.getEmailId() == null || user.getEmailId().equals("")) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidMailId);
+		UserCredentials user = 
+
+superAdminDao.getUserCredentials(login);
+		if (user.getEmailId() == null || user.getEmailId().equals("")) 
+
+{
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidMailId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
@@ -238,7 +243,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	}
 
 	/**
-	 * Method to send email for resetting password.It will perform the following
+	 * Method to send email for resetting password.It will perform the 
+
+following
 	 * operations. 1.Take default email HTML template from Apache folder
 	 * 2.Create email body 3.Send email to the superAdmin.
 	 */
@@ -247,17 +254,13 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		String msgBody = "";
 		URL url = null;
 		try {
-			url = new URL("http://" + netlimsServerIpAddress
-					+ "/youNeverWait/EmailFormat/ForgotPassword.html");
+			url = new URL("http://" + netlimsServerIpAddress +  "/youNeverWait/EmailFormat/ForgotPassword.html");
 			msgBody = createDefaultEmailBody(url, user);
 			// EmailSender.sendEmail(emailId, mailFrom, subject, msgBody);
-			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,
-					user.getEmailId(), mailFrom, 0, 0, null,
-					SendMsgCallbackEnum.SUPERADMIN_RESET_PWD.getId(), null);
+			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,user.getEmailId(), mailFrom, 0, 0, null,SendMsgCallbackEnum.SUPERADMIN_RESET_PWD.getId(), null);
 			mailThread.addSendMsgObj(obj);
 		} catch (IOException e) {
-			log.error(
-					"Error while sending forgot password mail to SuperAdmin ",
+			log.error("Error while sending forgot password mail to SuperAdmin ",
 					e);
 			e.printStackTrace();
 		}
@@ -266,36 +269,30 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	/**
 	 * Method to create email body for Reset password
 	 */
-	private String createDefaultEmailBody(URL url, UserCredentials user)
-			throws IOException {
+	private String createDefaultEmailBody(URL url, UserCredentials user)throws IOException {
 
 		StringBuffer msgBodyBfr = new StringBuffer();
 		String fullMsgBody = "";
-		String encryptedUserName = StringEncoder.encryptWithStaticKey(user
-				.getUserName());
-		String resetPasswordLink = "http://" + netlimsServerIpAddress
-				+ "/youNeverWait/EmailFormat/ResetPassword.html?userName="
-				+ encryptedUserName;
+		String encryptedUserName = 
+
+StringEncoder.encryptWithStaticKey(user.getUserName());
+		String resetPasswordLink = "http://" + netlimsServerIpAddress+ "/youNeverWait/EmailFormat/ResetPassword.html?userName=" + encryptedUserName;
 		java.net.URLConnection openConnection = url.openConnection();
 		InputStream inputStream = openConnection.getInputStream();
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				inputStream));
+		BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
 		String readLine = "";
-		while ((readLine = in.readLine()) != null) {
-			msgBodyBfr.append(readLine).append("\n");
+		while ((readLine = in.readLine()) != null) {msgBodyBfr.append(readLine).append("\n");
 		}
 		in.close();
 		fullMsgBody = msgBodyBfr.toString();
 		if (user.getFirstName() != null && !user.getFirstName().equals("")) {
-			fullMsgBody = fullMsgBody.replace("{firstname}",
-					user.getFirstName());
+			fullMsgBody = fullMsgBody.replace("{firstname}",user.getFirstName());
 		} else {
 			fullMsgBody = fullMsgBody.replace("{firstname}", "admin,");
 		}
 
-		fullMsgBody = fullMsgBody.replace("{ResetLink}", resetPasswordLink);
-		fullMsgBody = fullMsgBody.replace("{serverIpAddress}",
-				netlimsServerIpAddress);
+		fullMsgBody = fullMsgBody.replace("{ResetLink}",resetPasswordLink);
+		fullMsgBody = fullMsgBody.replace("{serverIpAddress}",netlimsServerIpAddress);
 
 		return fullMsgBody;
 	}
@@ -307,7 +304,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	public ResponseDTO changePassword(@RequestBody PasswordDTO passwords) {
+	public ResponseDTO changePassword(@RequestBody PasswordDTO passwords) 
+
+{
 		validator.validatePasswords(passwords);
 		ResponseDTO response = superAdminDao.changePassword(passwords);
 		return response;
@@ -326,6 +325,18 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	}
 
 	/**
+	 * Create netPos account
+	 * 
+	 * @param netpos
+	 * @return ResponseDTO
+	 */
+	@Override
+	public ResponseDTO createNetPos(NetPosDTO netPos) {
+		ResponseDTO response = netPosService.createNetPos(netPos);
+ 		return response;
+	}
+	
+	/**
 	 * Update netmd account
 	 * 
 	 * @param netMd
@@ -337,7 +348,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		ResponseDTO response = netMdService.updateNetMd(netMd);
 		return response;
 	}
-
+	
+	
 	/**
 	 * Method to delete a NetMd account
 	 */
@@ -345,6 +357,16 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	@Override
 	public ResponseDTO deleteNetMd(int netMdId) {
 		ResponseDTO response = netMdService.deleteNetMd(netMdId);
+		return response;
+	}
+	
+	/**
+	 * Method to delete a NetPos account
+	 */
+
+	@Override
+	public ResponseDTO deleteNetPos(int netPosId) {
+		ResponseDTO response = netPosService.deleteNetPos(netPosId);
 		return response;
 	}
 
@@ -438,8 +460,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		validator.validateLogin(login);
 		String userName = login.getUserName().trim();
 		login.setUserName(userName);
-		String encPassword = StringEncoder.encryptWithKey(login.getPassword()
-				.trim());
+		String encPassword = StringEncoder.encryptWithKey(login.getPassword().trim());
 		login.setPassword(encPassword);
 		response = superAdminDao.login(login);
 		return response;
@@ -474,8 +495,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public NetMdBranchListResponseDTO getBranchList(FilterDTO filter) {
-		NetMdBranchListResponseDTO response = netMdService
-				.getBranchList(filter);
+		NetMdBranchListResponseDTO response = netMdService.getBranchList(filter);
 		return response;
 	}
 
@@ -569,7 +589,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#userLogList(com
+	 * 
+
+com.nv.youNeverWait.user.bl.service.SuperAdminService#userLogList(com
 	 * .nv.youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
@@ -601,7 +623,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 			queryBuilder.addFilter(filter);
 		}
 		// build query
-		TypedQuery<LogTbl> q = queryBuilder.buildQuery(filterDTO.isAsc(),
+		TypedQuery<LogTbl> q = 
+
+queryBuilder.buildQuery(filterDTO.isAsc(),
 				filterDTO.getFrom(), filterDTO.getCount());
 
 		Long count = queryBuilder.getCount();
@@ -631,8 +655,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 			String logOutTime = null;
 			String loginTime = null;
 			String actionDate = null;
-			SimpleDateFormat df = new SimpleDateFormat(
-					Constants.DATE_FORMAT_DAY_FIRST);
+			SimpleDateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT_DAY_FIRST);
 			if (logTbl.getLoginTime() != null) {
 				loginTime = df.format(logTbl.getLoginTime());
 			}
@@ -686,15 +709,18 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	}
 
 	/**
-	 * To retrieve a list of netRx branches which satisfy all filter conditions
+	 * To retrieve a list of netRx branches which satisfy all filter 
+
+conditions
 	 * 
 	 * @param filter
 	 * @return NetMdBranchListResponseDTO
 	 */
 	@Override
-	public NetRxBranchListResponseDTO getNetRxBranchList(FilterDTO filter) {
-		NetRxBranchListResponseDTO response = netRxService
-				.getNetRxBranchList(filter);
+	public NetRxBranchListResponseDTO getNetRxBranchList(FilterDTO filter) 
+
+{
+		NetRxBranchListResponseDTO response = netRxService.getNetRxBranchList(filter);
 		return response;
 	}
 
@@ -744,8 +770,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public NetRxBranchResponseDTO viewNetRxBranch(int netrxBranchId) {
-		NetRxBranchResponseDTO response = netRxService
-				.viewBranch(netrxBranchId);
+		NetRxBranchResponseDTO response = netRxService.viewBranch(netrxBranchId);
 		return response;
 	}
 
@@ -772,7 +797,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	}
 
 	/**
-	 * To show all the total orders and its related details of each branch in
+	 * To show all the total orders and its related details of each branch 
+
+in
 	 * the lab
 	 * 
 	 * @param globalId
@@ -780,14 +807,13 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public BranchOrdersResponseDTO viewBranchOrders(int globalId) {
-		BranchOrdersResponseDTO response = labService
-				.viewBranchOrders(globalId);
+		BranchOrdersResponseDTO response = labService.viewBranchOrders(globalId);
 		return response;
 	}
-
+	
 	/**
 	 * Method for listing orders
-	 */
+ 	 */
 	@Override
 	public BranchOrdersResponseDTO orderList(FilterDTO filterDTO) {
 		BranchOrdersResponseDTO response = labService.orderList(filterDTO);
@@ -802,8 +828,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 */
 	@Override
 	public BranchSystemInfoDetails viewBranchSystemInfo(int branchId) {
-		BranchSystemInfoDetails response = labService
-				.viewBranchSystemInfoDetails(branchId);
+		BranchSystemInfoDetails response = labService.viewBranchSystemInfoDetails(branchId);
 		return response;
 	}
 
@@ -814,7 +839,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @return
 	 */
 	@Override
-	public ResponseDTO updateLabBranchSystemInfo(BranchSystemInfoDetails details) {
+	public ResponseDTO updateLabBranchSystemInfo(BranchSystemInfoDetails 
+
+details) {
 		ResponseDTO response = labService.updateLabBranchSystemInfo(details);
 		return response;
 	}
@@ -823,7 +850,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#testList(com.nv
+	 * 
+
+com.nv.youNeverWait.user.bl.service.SuperAdminService#testList(com.nv
 	 * .youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
@@ -836,7 +865,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#specimenList(com
+	 * 
+
+com.nv.youNeverWait.user.bl.service.SuperAdminService#specimenList(com
 	 * .nv.youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
@@ -850,13 +881,19 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#enableSyncLog(com
-	 * .nv.youNeverWait.rs.dto.LogDTO, javax.servlet.http.HttpServletRequest)
+	 * 
+
+com.nv.youNeverWait.user.bl.service.SuperAdminService#enableSyncLog(com
+	 * .nv.youNeverWait.rs.dto.LogDTO, 
+
+javax.servlet.http.HttpServletRequest)
 	 */
 	@Override
 	public ResponseDTO enableSyncLog(SyncLogDTO syncLog,
 			HttpServletRequest request) {
-		ResponseDTO response = superAdminDao.enableSyncLog(syncLog, request);
+		ResponseDTO response = superAdminDao.enableSyncLog(syncLog, 
+
+request);
 		return response;
 	}
 
@@ -864,7 +901,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#setSyncFreq(com
+	 * 
+
+com.nv.youNeverWait.user.bl.service.SuperAdminService#setSyncFreq(com
 	 * .nv.youNeverWait.rs.dto.SyncFreqDTO)
 	 */
 	@Override
@@ -934,7 +973,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncDetails()
+	 * 
+
+com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncDetails()
 	 */
 	@Override
 	public SyncFreqDTO getSyncDetails() {
@@ -949,9 +990,10 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * viewNetMdBranchSystemInfo(java.lang.String)
 	 */
 	@Override
-	public BranchSystemInfoDetails viewNetMdBranchSystemInfo(String passphrase) {
-		BranchSystemInfoDetails response = netMdService
-				.viewNetmdBranchSystemInfoDetails(passphrase);
+	public BranchSystemInfoDetails viewNetMdBranchSystemInfo(String 
+
+passphrase) {
+		BranchSystemInfoDetails response = netMdService.viewNetmdBranchSystemInfoDetails(passphrase);
 		return response;
 	}
 
@@ -976,8 +1018,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	@Override
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails) {
-		ResponseDTO response = netMdService
-				.updateNetmdBranchSystemInfo(systemCriticalDetails);
+		ResponseDTO response = netMdService.updateNetmdBranchSystemInfo(systemCriticalDetails);
 		return response;
 	}
 
@@ -1015,7 +1056,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 			queryBuilder.addFilter(filter);
 		}
 		// build query
-		TypedQuery<SyncLogTbl> q = queryBuilder.buildQuery(filterDTO.isAsc(),
+		TypedQuery<SyncLogTbl> q = 
+
+queryBuilder.buildQuery(filterDTO.isAsc(),
 				filterDTO.getFrom(), filterDTO.getCount());
 
 		Long count = queryBuilder.getCount();
@@ -1029,16 +1072,22 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	}
 
 	private SyncLogListResponseDTO getSyncLogList(List<SyncLogTbl> logs) {
-		SyncLogListResponseDTO response = new SyncLogListResponseDTO();
+		SyncLogListResponseDTO response = new 
+
+SyncLogListResponseDTO();
 		if (logs == null) {
 			return response;
 		}
-		List<SyncLogDetail> syncLogList = new ArrayList<SyncLogDetail>();
+		List<SyncLogDetail> syncLogList = new 
+
+ArrayList<SyncLogDetail>();
 		for (SyncLogTbl synclogTbl : logs) {
 
 			String lastsyncTime = null;
 			SimpleDateFormat df = new SimpleDateFormat(
-					Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+					
+
+Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 			if (synclogTbl.getLastSyncTime() != null) {
 				lastsyncTime = df.format(synclogTbl.getLastSyncTime());
 			}
@@ -1053,7 +1102,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncLogStatus()
+	 * 
+
+com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncLogStatus()
 	 */
 	@Override
 	public EnableLogStatusResponseDTO getSyncLogStatus() {
@@ -1187,7 +1238,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	 * @param queryBuilderFactory
 	 *            the queryBuilderFactory to set
 	 */
-	public void setQueryBuilderFactory(QueryBuilderFactory queryBuilderFactory) {
+	public void setQueryBuilderFactory(QueryBuilderFactory 
+
+queryBuilderFactory) {
 		this.queryBuilderFactory = queryBuilderFactory;
 	}
 
@@ -1250,5 +1303,59 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public void setSpecimenService(SpecimenService specimenService) {
 		this.specimenService = specimenService;
 	}
+
+	
+
+	/* (non-Javadoc)
+	 * @see 
+
+com.nv.youNeverWait.user.bl.service.SuperAdminService#updateNetPos(com.nv.youNeverWait.rs.dto.NetPosDTO)
+	 */
+	@Override
+	public ResponseDTO updateNetPos(NetPosDTO netPos) {
+		ResponseDTO response = netPosService.updateNetPos(netPos);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see 
+
+com.nv.youNeverWait.user.bl.service.SuperAdminService#viewNetPos(int)
+	 */
+	@Override
+	public NetPosViewResponseDTO viewNetPos(int netPosId) {
+		NetPosViewResponseDTO response = 
+
+netPosService.viewNetPos(netPosId);
+		return response;
+	
+	}
+
+	public NetPosService getNetPosService() {
+		return netPosService;
+	}
+
+	public void setNetPosService(NetPosService netPosService) {
+		this.netPosService = netPosService;
+	}
+
+	
+
+	
+	
+
+	
+	
+
+	
+
+	
+	
+
+
+
+	
+	
+	
 
 }
