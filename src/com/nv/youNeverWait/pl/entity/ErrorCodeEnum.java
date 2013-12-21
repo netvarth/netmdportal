@@ -250,8 +250,18 @@ public enum ErrorCodeEnum {
 	InvalidNetRxBranchId("2012","Given netRx branch id is invalid"),
 	InvalidNetRxUser("2013","User with id {id} does not exists in this netrx branch"),
 	InvalidNetRxUserName("2014","Please enter valid user name"),
-	NetRxIdNull("2015","Netrx Id should not be null") 
+	NetRxIdNull("2015","Netrx Id should not be null"),
 	  
+	
+	/*netPos*/
+	
+	
+	InvalidnetPosName("3000","You must enter valid pos name"),
+	netPosAccountAlreadyExists("3001","There is another netpos account with given username"),
+	DuplicateNetPos("3002","Netpos with name {name} already exists"),
+	InvalidnetPos("3003","There is no netmpos with id {id}"),
+	netPosNameExists("3004","NetPos with name {name} already exists!"),
+	InvalidNetPosId("3005","You must give valid netpos id"),
 	;
 	private String errCode;
 	private String errMsg;
