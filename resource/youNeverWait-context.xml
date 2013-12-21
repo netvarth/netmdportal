@@ -411,6 +411,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="filterFactory">
 			<ref bean="filter.Factory" />
 		</property>
+		<property name="netPosService">
+			<ref bean="netPos.service" />
+		</property>
 	</bean>
 
 	<bean id="superAdmin.validator"
@@ -447,6 +450,18 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 
 	</bean>
+	
+	<bean id="netPos.service" class="com.nv.youNeverWait.user.bl.impl.NetPosManager">
+	<property name="netPosValidator">
+			<ref bean="netpos.validator" />
+		</property>
+		<property name="netPosDao">
+			<ref bean="netpos.dao" />
+		</property>
+	
+</bean>
+<bean id="netpos.dao" class="com.nv.youNeverWait.user.pl.impl.NetPosDaoImpl"></bean>
+<bean id="netpos.validator" class="com.nv.youNeverWait.user.bl.validation.NetPosValidator"></bean>
 
 	<bean id="netMd.validator" class="com.nv.youNeverWait.user.bl.validation.NetMdValidator"></bean>
 	<bean id="lab.dao" class="com.nv.youNeverWait.user.pl.impl.LabDaoImpl"
