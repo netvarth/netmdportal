@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.EnableLogStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
@@ -31,6 +32,8 @@ import com.nv.youNeverWait.rs.dto.NetMdDTO;
 import com.nv.youNeverWait.rs.dto.NetMdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
 import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
+import com.nv.youNeverWait.rs.dto.NetPosDTO;
+import com.nv.youNeverWait.rs.dto.NetPosViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchDetail;
 import com.nv.youNeverWait.rs.dto.NetRxBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchResponseDTO;
@@ -116,6 +119,10 @@ public interface SuperAdminService {
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails);
 	public SyncLogListResponseDTO syncLogList(FilterDTO filter);
+	public ResponseDTO createNetPos(NetPosDTO netPos);
+	public ResponseDTO updateNetPos(NetPosDTO netPos);
+	public ResponseDTO deleteNetPos(int globalId);
+	public NetPosViewResponseDTO viewNetPos(int netPosId);
 	public EnableLogStatusResponseDTO getSyncLogStatus();
 	
 
@@ -125,3 +132,4 @@ public interface SuperAdminService {
 	
 
 }
+ 
