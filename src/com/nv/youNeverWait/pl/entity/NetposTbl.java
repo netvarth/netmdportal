@@ -25,7 +25,7 @@ public class NetposTbl implements Serializable {
 	private Date createDateTime;
 
 	@Column(name="enable_sync", nullable=false)
-	private byte enableSync;
+	private boolean enableSync;
 
 	@Column(name="head_office_address", length=145)
 	private String headOfficeAddress;
@@ -104,11 +104,11 @@ public class NetposTbl implements Serializable {
 		this.createDateTime = createDateTime;
 	}
 
-	public byte getEnableSync() {
+	public boolean getEnableSync() {
 		return this.enableSync;
 	}
 
-	public void setEnableSync(byte enableSync) {
+	public void setEnableSync(boolean enableSync) {
 		this.enableSync = enableSync;
 	}
 
@@ -269,5 +269,10 @@ public class NetposTbl implements Serializable {
 	public void setNetposLoginTbl(NetposLoginTbl netposLoginTbl) {
 		this.netposLoginTbl = netposLoginTbl;
 	}
+
+	
+	
+
+	
 
 }
