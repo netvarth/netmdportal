@@ -301,13 +301,13 @@ public class AuthenticationResource {
 			response.setSuccess(false);
 			return response;
 		}
-//		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
-//				.currentRequestAttributes();
-//		HttpServletRequest request = t.getRequest();
-//		logService.saveUserDetails(request.getRemoteAddr(),
-//				user.getName(), user.getUserType(), user.getLoginTime(), null,
-//				ApplicationNameEnum.Patient.getDisplayName(),
-//				Constants.LOGIN);
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		logService.saveUserDetails(request.getRemoteAddr(),
+				user.getName(), user.getUserType(), user.getLoginTime(), null,
+				ApplicationNameEnum.Patient.getDisplayName(),
+				Constants.LOGIN);
 		return response;
 	}
 
