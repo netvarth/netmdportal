@@ -13,7 +13,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.rs.dto.AnswerDTO;
 import com.nv.youNeverWait.rs.dto.Appointment;
 import com.nv.youNeverWait.rs.dto.AppointmentDetailsDTO;
 import com.nv.youNeverWait.rs.dto.AppointmentsDTO;
@@ -27,7 +26,6 @@ import com.nv.youNeverWait.rs.dto.PastAppointmentListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PatientDTO;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientOrderDTO;
-import com.nv.youNeverWait.rs.dto.QuestionAnswer;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.user.bl.service.PatientService;
@@ -597,6 +595,7 @@ public class PatientServiceTest {
 			System.out.println(e.getParamList());
 		}
 	}
+	
 	@Test
 	public void patientTestResultWrongPatientId() {
 
