@@ -70,11 +70,14 @@ DataTableNavigator.prototype.setInterval=function(interval) {
 
 DataTableNavigator.prototype.next = function() {
 	var self = this;
+	//alert("next");
 	if(self.curPage!=self.maxPage && self.curPage<self.maxPage) {
 		self.setStartValue(self.interval * (self.curPage));
 		self.setCurPage(self.curPage+1);
 		self.filterDTO = new FilterDTO(self.exp.getExpressionList(),self.startValue,self.interval,false);
+		//alert(JSON.stringify(self.filterDTO));
 		self.list();
+		self.BillList();
 		self.setPaginationFields(self.sourceContainer);
 	}	
 }
@@ -132,6 +135,7 @@ DataTableNavigator.prototype.BillList = function() {
 	self.pgDataList = ajaxProcessor.post(self.filterDTO);
 	//alert(JSON.stringify(self.pgDataList));
 	self.setMaxPage(self.pgDataList.count);
+	//alert(self.pgDataList.count);
 	self.setPaginationFields(self.sourceContainer);
 	self.tableObj.setTableValueBranchBillList(self.sourceTable,self.pgDataList);
 }
