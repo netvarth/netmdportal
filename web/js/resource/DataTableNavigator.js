@@ -123,10 +123,24 @@ DataTableNavigator.prototype.list = function() {
 	self.tableObj.setTableValues(self.sourceTable,self.pgDataList);
 }
 
+DataTableNavigator.prototype.BillList = function() {
+	var self=this;
+	//alert("fgfg"+self.url);
+	ajaxProcessor.setUrl(self.url);
+	//alert(self.url);
+	self.setFilterDTO();
+	self.pgDataList = ajaxProcessor.post(self.filterDTO);
+	//alert(JSON.stringify(self.pgDataList));
+	self.setMaxPage(self.pgDataList.count);
+	self.setPaginationFields(self.sourceContainer);
+	self.tableObj.setTableValueBranchBillList(self.sourceTable,self.pgDataList);
+}
+
 DataTableNavigator.prototype.get = function() {
 	var self=this;
 	ajaxProcessor.setUrl(self.url);
 	self.pgDataList = ajaxProcessor.get();
+	//alert(JSON.stringify(pgDataList));
 	self.setMaxPage(self.pgDataList.count);
 	self.setPaginationFields(self.sourceContainer);
 	self.tableObj.setTableValues(self.sourceTable,self.pgDataList);
