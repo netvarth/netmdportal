@@ -19,7 +19,9 @@ import com.nv.youNeverWait.util.filter.core.Property;
  * @author Luciya Jose
  */
 public enum BillPropertyEnum implements EnumDisplay,Property {
-	orderDate("orderDate","orderDate","com.nv.youNeverWait.pl.entity.NetmdBillTbl","","")
+	orderDate("orderDate","orderDate","com.nv.youNeverWait.pl.entity.NetmdBillTbl","",""),
+	netmdId("netmdId","id","com.nv.youNeverWait.pl.entity.NetmdTbl","netmdTbl",""),
+	netmdBranchId("netmdBranchId","id","com.nv.youNeverWait.pl.entity.NetmdBranchTbl","netmdBranchTbl","")
 	
 	;
 	String displayName;
