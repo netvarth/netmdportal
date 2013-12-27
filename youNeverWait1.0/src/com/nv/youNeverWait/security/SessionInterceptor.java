@@ -1,8 +1,11 @@
+/**
+ * SessionInterceptor.java
+ * @author Luciya Jos
+ */
 package com.nv.youNeverWait.security;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class SessionInterceptor extends HandlerInterceptorAdapter {
@@ -34,9 +37,10 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 					request.getRequestDispatcher("/ws/ui/patient/pForm")
 							.forward(request, response);
 					return false;
+					// response.sendRedirect("/youNeverWait/ws/ui/patient/pForm");
+
 				}
-				return true;
-			}
+			} // end of if loop of youNeverWait domain
 
 			/* netLims domain */
 			if (request.getServerName().equals("www.netlims.in")) {
@@ -61,15 +65,19 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/ws/ui/auth/getErrorCodes")
 							&& !request.getRequestURI().equals(
-									"/youNeverWait/ws/ui/auth/getEnumsList")) {
+									"/youNeverWait/ws/ui/auth/getEnumsList")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/auth/getCaptcha")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/auth/verifyCaptcha")) {
 
 						request.getRequestDispatcher("/ws/ui/superAdmin/sForm")
 								.forward(request, response);
 						return false;
-					}
-					return true;
-				}
+						// response.sendRedirect("/youNeverWait/ws/ui/superAdmin/sForm");
 
+					}
+				}
 				/* netLims login */
 				else {
 
@@ -98,12 +106,20 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/ws/ui/lab/pricing")
 							&& !request.getRequestURI().equals(
-									"/youNeverWait/ws/ui/lab/privacyPolicy")) {
+									"/youNeverWait/ws/ui/lab/privacyPolicy")
+							&& !request
+									.getRequestURI()
+									.equals("/youNeverWait/ws/ui/lab/checkSystemHealth")
+							&& !request
+									.getRequestURI()
+									.equals("/youNeverWait/ws/ui/lab/retrieveBranchOrders")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/lab/orderTransfer")) {
 						request.getRequestDispatcher("/ws/ui/lab/lForm")
 								.forward(request, response);
 						return false;
+						// response.sendRedirect("/youNeverWait/ws/ui/lab/lForm");
 					}
-					return true;
 				}
 			} // end of netlims if loop
 
@@ -121,12 +137,17 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 						&& !request.getRequestURI().equals(
 								"/youNeverWait/ws/ui/auth/getErrorCodes")
 						&& !request.getRequestURI().equals(
-								"/youNeverWait/ws/ui/auth/getEnumsList")) {
+								"/youNeverWait/ws/ui/auth/getEnumsList")
+						&& !request.getRequestURI().equals(
+								"/youNeverWait/ws/ui/netRx/resetPassword")
+						&& !request.getRequestURI().equals(
+								"/youNeverWait/ws/ui/netRx/forgotPassword")) {
 					request.getRequestDispatcher("/ws/ui/netRx/rForm").forward(
 							request, response);
 					return false;
+					// response.sendRedirect("/youNeverWait/ws/ui/netRx/rForm");
 				}
-				return true;
+
 			} // end of netrx if loop
 
 			/* netMd domain */
@@ -152,12 +173,15 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 						&& !request.getRequestURI().equals(
 								"/youNeverWait/ws/ui/auth/getErrorCodes")
 						&& !request.getRequestURI().equals(
-								"/youNeverWait/ws/ui/auth/getEnumsList")) {
+								"/youNeverWait/ws/ui/auth/getEnumsList")
+						&& !request.getRequestURI().equals(
+								"/youNeverWait/ws/ui/netMd/privacyPolicy")) {
 					request.getRequestDispatcher("/ws/ui/netMd/mForm").forward(
 							request, response);
 					return false;
+					// response.sendRedirect("/youNeverWait/ws/ui/netMd/mForm");
 				}
-				return true;
+
 			}// end of netmd if loop
 		}
 		return true;

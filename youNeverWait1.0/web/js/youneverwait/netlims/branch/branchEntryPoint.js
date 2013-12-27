@@ -26,7 +26,7 @@ $j('#pageTitle1').show();
 		maxPages = parseInt(maxRecords/interval) + 1;
 	else
 		maxPages = parseInt(maxRecords/interval);	
-	//setPaginationFields(curPage, maxPages, pgTableContainer);
+	setPaginationFields(curPage, maxPages, pgTableContainer);
 	$j(pgTableContainer +' #next').die('click').click(function() {
 		if(curPage!=maxPages && curPage<maxPages) {
 			curPage+=1;
@@ -88,6 +88,44 @@ $j('#pageTitle1').show();
 		}	
 	});
 	
+	$j('#branchPTBContainer #btn_health_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	  var branchId = getSelectedBranchId(pgTableName);
+	    if(branchId!="") {
+	    	//var healtMontr=getRequestData('/youNeverWait/ws/ui/superAdmin/viewBranchSystemInfo/'+branchId);
+			//alert(JSON.stringify(healtMontr));
+	    	var tableobj="#healthMonitorTable";
+	    	var obj=$j(this);
+		createModal(constants_graphHealthmonitorJson,'graphHealthmonitorModal');	
+		openModalBox(obj,'graphHealthmonitorModal');
+		$j.cachedScript(constant_Healthmonitor_Url).done(function(script, textStatus) {
+})
+		//makeDataTable(tableobj);
+		//fillhealthmonitortable(tableobj,branchId);
+		viewHealthmonitor(branchId);
+
+			/*var healtMontr=getRequestData('/youNeverWait/ws/ui/superAdmin/viewBranchSystemInfo/'+branchId);
+			alert(JSON.stringify(healtMontr));
+			var obj=$j(this);
+		createModal(constants_netlimsHealthmonitorJson,'netlimsHealthmonitorModal');	
+		openModalBox(obj,'netlimsHealthmonitorModal')
+		viewHealthmonitor(healtMontr);*/
+		}	
+	});
+	
+	$j('#branchPTBContainer #btn_change_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	  var branchId = getSelectedBranchId(pgTableName);
+	    if(branchId!="") {
+			var obj=$j(this);
+			createModal(constants_netlimsBranchSycSetJson,'netlimsBrachSycSetModal');	
+			openModalBox(obj,'netlimsBrachSycSetModal')
+		$j.cachedScript(constant_NetLimsBranchSyncSet_Url).done(function(script, textStatus) {
+		getNetlimsBrchId(branchId)
+		})
+		}	
+	});
+	
 	$j('#branchPTBContainer #btn_view_ptb_id').die('click').live("click",function() {
 	removeErrors();
 	  var branchId = getSelectedBranchId(pgTableName);
@@ -122,23 +160,96 @@ $j('#pageTitle1').show();
 		//updateTipsNew(getErrorName(response.error),$j('#errorDivData'),$j('#errorDivHeader'));
 		}
 	});	
-	/*$j('#branchPTBContainer #btn_newuser_ptb_id').die('click').live("click",function() {
-	alert("new user");
+	$j('#newHealthForm #healthbtnedit').die('click').live('click',function(){
+		validateNumber("#newHealthForm #criticalCpuLevel");
+		validateNumber("#newHealthForm #criticalMemoryLevel");
+		validateNumber("#newHealthForm #criticalHardDiskSpaceLevel");
+		validateNumber("#newHealthForm #intervalTime");
+		clearNilFields(newHealthForm);
+		removeErrors();
+		
+		$j('#newHealthForm #texfrequencyType').hide();
+		$j('#newHealthForm #selfrequencyType').show();
+		$j('#newHealthForm #healthbtnedit').hide();
+		$j('#newHealthForm #healthbtnDone').show();
+		$j('#newHealthForm #healthbtnCancel').show();
+			
+		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').removeClass('newBox'); // make box 
+		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').removeAttr('readonly');
+		$j('#newHealthForm #branchid').addClass('newBox');
+		$j('#newHealthForm #branchid').attr('readonly','readonly');
+		$j('#newHealthForm #selectfrequencyType').empty();
+		fillFrequencyList("#selectfrequencyType");
+	});
+
+	$j('#newHealthForm #healthbtnCancel').die('click').live('click',function(){
 	removeErrors();
-		var branchid= getSelectedBranchId(pgTableName);
-		if(branchid!="") {
-		var obj=$j(this);
-		createModal(constants_newNetUserJson,'netlimsModal');	
-		openModalBox(obj,'netlimsModal')
-		$j.cachedScript(constants_newNetLimsUser).done(function(script, textStatus) {
-		createUser(branchid);
-		})
-		}
-	});*/
+		
+		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').addClass('newBox');
+		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').attr('readonly','readonly');	
+		$j('#newHealthForm #texfrequencyType').show();
+		$j('#newHealthForm #selfrequencyType').hide();
+		$j('#newHealthForm #healthbtnDone').hide();
+		$j('#newHealthForm #healthbtnCancel').hide();
+		$j('#newHealthForm #healthbtnedit').show();
+		 var branchId = $j("#newHealthForm #branchid").val();
+		 viewHealthmonitor(branchId);
+
 	
+	});
+
+	$j('#newHealthForm #healthbtnDone').die('click').live('click',function(){
+	removeErrors();
+		var response = submitHealthmonitorInfo();
+		if(response.success==true) {
+		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').addClass('newBox');
+		$j('#viewBranchHeader input[type=text],#viewBranchHeader textarea').attr('readonly','readonly');	
+		$j('#newHealthForm #healthbtnDone').hide();
+		$j('#newHealthForm #healthbtnCancel').hide();
+		$j('#newHealthForm #healthbtnedit').show();
+		$j('#newHealthForm #texfrequencyType').show();
+		$j('#newHealthForm #selfrequencyType').hide();
+		var branchId = getSelectedBranchId(pgTableName);
+		 viewHealthmonitor(branchId);
+		showTip("Healthmonitor updated successfully");					
+	}	
+	else
+		updateTipsNew(getErrorName(response.error),$j('#errorDivData'),$j('#errorDivHeader'));
+		
+
 	
+	});
+
 }
-	
+	function fillhealthmonitortable(tableobj,branchId) {
+	$j(tableobj).dataTable().fnClearTable();
+	var healtMontr=getRequestData('/youNeverWait/ws/ui/superAdmin/viewBranchSystemInfo/'+branchId);
+	//alert(JSON.stringify(healtMontr));
+		if(healtMontr.healthMonitorList.length>0) {			
+			$j(healtMontr.healthMonitorList).each(function (index, lab) {
+				
+				var rowData=$j(tableobj).dataTable().fnAddData([lab.createdDateTime,lab.cpuUsage,lab.memoryUsage,lab.hardDiskSpaceUasge]);
+				var row=$j(tableobj).dataTable().fnSettings().aoData[rowData].nTr;
+				//$j(row).attr('id',id);	
+				//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
+				});	
+		}
+	//}	 
+	return healtMontr;
+}
+
+	function fillFrequencyList(controlobj)
+	{
+		
+		var list=["daily","hourly","minutes"];
+		$j(list).each(function (Index, List) {
+			var freqlist=List;
+			$j(controlobj).append('<option  value="'+freqlist+'">'+freqlist+'</option>');
+		});
+
+		
+	}
+
 	function createDeleteJson(branchId,netlimsId){
 		var BranchDetails = '{"globalId":'+branchId+',';
 			BranchDetails +='"labId":' + netlimsId + '}';
@@ -159,3 +270,16 @@ $j('#pageTitle1').show();
 		}		
 		return branchId;
 	}
+
+	function makeDataTable(tableObj) {
+	$j(tableObj).dataTable( {
+		"sPaginationType": "full_numbers",
+		"bFilter":false,
+		"bInfo":false,
+		"bPaginate":false,
+		"bSort": false,
+		"bDestroy": true,
+		"bAutoWidth": false,
+		"sDom": '<"top"Hip>'
+	});
+}

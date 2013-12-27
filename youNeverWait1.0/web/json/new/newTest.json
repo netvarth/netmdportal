@@ -1,0 +1,454 @@
+{
+    "title": "New Test",
+    "style": "width:60%;margin:0 20%",
+    "data": [
+        {
+            "name": "newTest",
+            "id": "newTest",
+            "content": [
+                {
+                    "className": "sep-div",
+                    "style": "display:none",
+                    "id": "errorDivHeader",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "id": "errorDivNewTestData"
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "txtTestName",
+                                            "id": "txtTestName",
+                                            "type": "text",
+                                            "className": "large capital",
+                                            "required": "true",
+                                            "title": "Test Name"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "data": [
+                                        
+                                        {
+                                            "className": "column-left",
+                                            "elements": [
+                                                {
+                                                    "name": "txtTestTimeRq",
+                                                    "id": "txtTestTimeRq",
+                                                    "type": "text",
+                                                    "className": "large",
+                                                    "title": "Time Required"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "txtTestGenericName",
+                                            "id": "txtTestGenericName",
+                                            "type": "text",
+                                            "className": "large",
+                                            "title": "Generic Name"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "data": [
+                                        {
+                                            "className": "column-left",
+                                            "elements": [
+                                                {
+                                                    "name": "txtTestAbbr",
+                                                    "id": "txtTestAbbr",
+                                                    "type": "text",
+                                                    "className": "dlarge",
+                                                    "title": "Abbreviation"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "className": "column-left",
+                                            "elements": [
+                                                {
+                                                    "name": "txtNormalUnit",
+                                                    "id": "txtNormalUnit",
+                                                    "type": "text",
+                                                    "className": "dlarge",
+                                                    "title": "Normal Unit"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "name": "lblspecimen",
+                                    "id": "lblspecimen",
+                                    "type": "label",
+                                    "className": "large",
+                                    "title": "Select specimen ",
+                                    "data": [
+                                        {
+                                            "className": "five_sixth",
+                                            "id": "workBench",
+                                            "elements": [
+                                                {
+                                                    "name": "workBench",
+                                                    "id": "workBench",
+                                                    "type": "combined",
+                                                    "items": [
+                                                        {
+                                                            "name": "selectTestSpecimen",
+                                                            "id": "selectTestSpecimen",
+                                                            "type": "select",
+                                                            "className": "select",
+                                                            "value": [
+                                                                {
+                                                                    "title": "Select type"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "button",
+                                                            "content": {
+                                                                "buttons": [
+                                                                    {
+                                                                        "name": "Addspecimen",
+                                                                        "id": "Addspecimen",
+                                                                        "title": "Add",
+                                                                        "type": "button",
+                                                                        "className": "stdbtn btn_black",
+                                                                        "style": "opacity:1;"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "className": "five_sixth",
+                                            "elements": [
+                                                {
+                                                    "type": "table",
+                                                    "content": {
+                                                        "name": "tblTestSpecimen",
+                                                        "idProperty": "tblTestSpecimen",
+                                                        "className": "stdtable",
+                                                        "colHeaders": [
+                                                            {
+                                                                "className": "head0",
+                                                                "name": "Specimen",
+                                                                "style": "width:45%"
+                                                            },
+                                                            {
+                                                                "className": "head1",
+                                                                "name": "",
+                                                                "style": "width:8%;"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "column-right",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "specEntry",
+                                            "type": "checkbox",
+                                            "title": "Specimen Entry",
+                                            "value": [
+                                                {
+                                                    "id": "specEntryStatus",
+                                                    "title": "On Order"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+								{
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "machEntry",
+                                            "type": "checkbox",
+                                            "title": "Machine Status",
+                                            "value": [
+                                                {
+                                                    "id": "machEntryStatus",
+                                                    "title": "Readable"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "five_sixth",
+                                    "elements": [
+                                        {
+                                            "name": "txtareaNormalRange",
+                                            "id": "txtareaNormalRange",
+                                            "type": "textarea",
+                                            "className": "large",
+                                            "title": "Normal Range",
+                                            "style": "height:90px;padding:none;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "elements": [
+                                {
+                                    "name": "lblremarks",
+                                    "id": "lblremarks",
+                                    "type": "label",
+                                    "className": "large",
+                                    "title": "Select Remarks ",
+                                    "data": [
+                                        {
+                                            "className": "five_sixth",
+                                            "elements": [
+                                                {
+                                                    "name": "selectTestRemarks",
+                                                    "id": "selectTestRemarks",
+                                                    "type": "select",
+                                                    "className": "select",
+                                                    "style": "width:100%",
+                                                    "value": [
+                                                        {
+                                                            "title": "Select Remarks"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "className": "five_sixth",
+                                            "elements": [
+                                                {
+                                                    "name": "txtareaTestRemarks",
+                                                    "id": "txtareaTestRemarks",
+                                                    "type": "textarea",
+                                                    "style": "height:90px;padding:none;"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "name": "lblLayout",
+                                    "id": "lblLayout",
+                                    "type": "label",
+                                    "className": "large",
+                                    "title": "Select Layout ",
+                                    "data": [
+                                        {
+                                            "className": "five-sixth",
+                                            "elements": [
+                                                {
+                                                    "name": "selectTestLayout",
+                                                    "id": "selectTestLayout",
+                                                    "type": "select",
+                                                    "className": "select",
+                                                    "style": "width:100%",
+                                                    "value": [
+                                                        {
+                                                            "title": "Select Layout"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "column-right",
+                            "id": "enterHdrDiv",
+                            "style": "display:none",
+                            "elements": [
+                                {
+                                    "name": "lblEnterheaders",
+                                    "id": "lblEnterheaders",
+                                    "type": "label",
+                                    "className": "large",
+                                    "title": "Enter Headers ",
+                                    "data": [
+                                        {
+                                            "className": "column-left",
+                                            "elements": [
+                                                {
+                                                    "name": "selectTableHeader",
+                                                    "id": "selectTableHeader",
+                                                    "type": "select",
+                                                    "className": "select",
+                                                    "style": "width:100%",
+                                                    "value": [
+                                                        {
+                                                            "title": "Select Header"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "className": "column-one-verysmall",
+                                            "elements": [
+                                                {
+                                                    "type": "button",
+                                                    "content": {
+                                                        "buttons": [
+                                                            {
+                                                                "name": "btncreateTblHdr",
+                                                                "id": "btncreateTblHdr",
+                                                                "type": "button",
+                                                                "className": "stdbtn btn_black",
+                                                                "title": "Add",
+                                                                "style": "opacity:1;"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div",
+                    "id": "testReportSample",
+                    "style": "display:none",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "elements": [
+                                {
+                                    "type": "table",
+                                    "content": {
+                                        "name": "tbltestReport",
+                                        "idProperty": "tbltestReport",
+                                        "className": "stdtable",
+                                        "colHeaders": [
+                                            {
+                                                "className": "head0",
+                                                "name": "Header",
+                                                "style": "width:45%"
+                                            },
+                                            {
+                                                "className": "head0",
+                                                "name": "value",
+                                                "style": "width:15%"
+                                            },
+                                            {
+                                                "className": "head1",
+                                                "name": "",
+                                                "style": "width:8%;"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div-view",
+                    "id": "previewDiv",
+                    "style": "display:none"
+                },
+                {
+                    "className": "sep-div",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "elements": [
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                            {
+                                                "name": "btnSaveTest",
+                                                "id": "btnSaveTest",
+                                                "title": "Create",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;"
+                                            },
+                                            {
+                                                "name": "btnCancelTest",
+                                                "id": "btnCancelTest",
+                                                "title": "Cancel",
+                                                "type": "button",
+                                                "className": "stdbtn",
+                                                "style": "opacity:1;"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,5 +1,6 @@
 {
 	"buttons":	[
-		{"title" 	: 	"Change Password","className":"d2",  "name":"btnNetlimsChangePwd"}
+		{"title" 	: 	"Change Password","className":"d2",  "name":"btnNetlimsChangePwd"},
+		{"title" 	: 	"Order Type","className":"d14",  "name":"btnNetlimsOrdertype"}
 	]
 }

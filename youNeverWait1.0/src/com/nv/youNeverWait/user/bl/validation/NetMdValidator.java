@@ -7,10 +7,17 @@
  */
 package com.nv.youNeverWait.user.bl.validation;
 
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
+import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
@@ -21,6 +28,7 @@ import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.NetMdDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.util.filter.core.Property;
+import com.nv.youNeverWait.util.filter.queryBuilder.BillPropertyEnum;
 import com.nv.youNeverWait.util.filter.queryBuilder.NetMDBranchPropertyEnum;
 import com.nv.youNeverWait.util.filter.queryBuilder.NetMdPropertyEnum;
 import com.nv.youNeverWait.util.filter.validation.FilterValidator;
@@ -280,14 +288,14 @@ public class NetMdValidator extends FilterValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (header.getNetMdId() <= 0) {
+		if (header.getHeadOfficeId() <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetMd);
-			se.addParam(new Parameter(Constants.ID, Integer.toString(header.getNetMdId())));
+			se.addParam(new Parameter(Constants.ID, Integer.toString(header.getHeadOfficeId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (header.getNetMdBranchId() <= 0) {
+		if (header.getBranchId() <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetMdBranchId);
 			se.setDisplayErrMsg(true);
@@ -383,30 +391,164 @@ public class NetMdValidator extends FilterValidator {
 		 * @param header
 		 * @return ErrorDTO
 		 */
-		public void validateHeader(HeaderDTO header) {
+		public void validateNetmdBranchIds(HeaderDTO header) {
 
-			if (header.getNetMdId() <= 0) {
+			if (header.getHeadOfficeId() <= 0) {
 
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.NetMdIdNull);
 				se.setDisplayErrMsg(true);
 				throw se;
 			}
-			if (header.getPassPhrase() == null || header.getPassPhrase().equals("")) {
-
-				ServiceException se = new ServiceException(
-						ErrorCodeEnum.PassPhraseNull);
-				se.setDisplayErrMsg(true);
-				throw se;
-			}
-			if (header.getNetMdBranchId() <= 0) {
+//			if (header.getPassPhrase() == null || header.getPassPhrase().equals("")) {
+//
+//				ServiceException se = new ServiceException(
+//						ErrorCodeEnum.PassPhraseNull);
+//				se.setDisplayErrMsg(true);
+//				throw se;
+//			}
+			if (header.getBranchId() <= 0) {
 
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.BranchMissMatch);
-				se.addParam(new Parameter(Constants.ID, Integer.toString(header.getNetMdBranchId())));
+				se.addParam(new Parameter(Constants.ID, Integer.toString(header.getBranchId())));
 				se.setDisplayErrMsg(true);
 				throw se;
 			}
 		}
+		
+		public void validateNetMdBillDate(BranchBillListDTO listDTO) {
+			String billFromDate = listDTO.getFromDate();
+			String billToDate = listDTO.getToDate();	
+
+			if(billFromDate==null || billFromDate.equals("")){
+				ServiceException se = new ServiceException(ErrorCodeEnum.FromDateNull);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			if(billToDate==null ||billToDate.equals("")){
+				ServiceException se = new ServiceException(ErrorCodeEnum.ToDateNull);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			if(!billFromDate.matches("\\d{4}-\\d{2}-\\d{2}")){
+				ServiceException se = new ServiceException(ErrorCodeEnum.InvalidDateFormat);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			if(!billToDate.matches("\\d{4}-\\d{2}-\\d{2}")){
+
+				ServiceException se = new ServiceException(ErrorCodeEnum.InvalidDateFormat);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			DateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
+
+			try {
+				Date fromDate = df.parse(billFromDate);
+				Date toDate = df.parse(billToDate);
+				if(fromDate.after(toDate)){
+					ServiceException se = new ServiceException(ErrorCodeEnum.InvalidFromToDate);
+					se.setDisplayErrMsg(true);
+					throw se;
+				}	
+			} catch (ParseException e) {
+				e.printStackTrace();
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidDateFormat);
+				se.setDisplayErrMsg(true);
+				throw se;
+
+			}
+		}
+		
+		public void validateNetMdBranchBillIds(int NetMdId, int NetMdbranchId) {
+			if (NetMdId <= 0) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidLabId);
+				se.addParam(new Parameter(Constants.ID, Integer.toString(NetMdId)));
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			if (NetMdbranchId <= 0) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidBranch);
+				se.addParam(new Parameter(Constants.ID, Integer.toString(NetMdbranchId)));
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			
+		}
+
+		/**
+		 * @param systemCriticalDetails
+		 */
+		public void validateSystemDefaultDetails(
+				BranchSystemInfoDetails systemCriticalDetails) {
+			if(systemCriticalDetails.getBranchId()<=0){
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidBranch);
+				se.addParam(new Parameter(Constants.ID, Integer.toString(systemCriticalDetails.getBranchId())));
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			if(systemCriticalDetails.getCriticalCpuLevel()==null && systemCriticalDetails.getCriticalCpuLevel().equals("")){
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.CriticalCpuLevelNull);
+				se.setDisplayErrMsg(true);
+				throw se;
+				
+			}
+			if(systemCriticalDetails.getCriticalHardDiskSpaceLevel()== null && systemCriticalDetails.getCriticalHardDiskSpaceLevel().equals("")){
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.CriticalHardDiskSPaceLevelNull);
+				se.setDisplayErrMsg(true);
+				throw se;
+				
+			}
+			if(systemCriticalDetails.getCriticalMemoryLevel()==null && systemCriticalDetails.getCriticalMemoryLevel().equals("")){
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.CriticalMemoryLevelNull);
+				se.setDisplayErrMsg(true);
+				throw se;
+				
+			}
+			if(systemCriticalDetails.getFreqType()==null){
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.FrequencyNull);
+				se.setDisplayErrMsg(true);
+				throw se;
+				
+			}
+			if(systemCriticalDetails.getIntervalTime()==null && systemCriticalDetails.getIntervalTime().equals("")){
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.IntervalTimeNull);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+		}
+
+		/**
+		 * @param filter
+		 * @return
+		 */
+		public ErrorDTO validateBillFilter(FilterDTO filter) {
+			ErrorDTO error = new ErrorDTO();
+			for (ExpressionDTO exp : filter.getExp()) {
+				Property property = null;
+				try {
+					property = BillPropertyEnum.valueOf(exp.getName());
+				} catch (IllegalArgumentException e) {
+					error = getInvalidExpNameError(exp);
+					return error;
+				}
+				error = validateExp(exp, property);
+				if (error != null) {
+					return error;
+				}
+			}
+			return null;
+		}
+
 
 }

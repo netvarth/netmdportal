@@ -16,7 +16,7 @@ function createGlobalToolBarNetmd () {
 	$j('.global-bar-tab .controlB').html(globalTB.result);		
 }
 function createLeftpaneToolBarNetrx() {
-	var response= getRequestData("/youNeverWait/json/toolbars/netMdLeftPaneToolBar.json");
+	var response= getRequestData("/youNeverWait/json/toolbars/netRxLeftPaneToolBar.json");
 	var leftpaneTB = new leftpaneToolBar(response.buttons);
 	$j('.leftmenu').html(leftpaneTB.result);		
 }
@@ -84,6 +84,15 @@ function getNetMdBranchAccData(netmdbranchId) {
 	var response= getRequestData('/youNeverWait/ws/ui/netMd/viewNetMdBranch/'+ netmdbranchId);
 	return response;
 }
+
+function getNetRxBranchAccData(netrxbranchId) {
+	var response= getRequestData('/youNeverWait/ws/ui/netRx/viewNetRxBranch/'+ netrxbranchId);
+	return response;
+}
+function getTestData(testId){
+	response=getRequestData('/youNeverWait/ws/ui/test/viewTest/'+testId);
+	return response;
+}
  
 function getErrorName(error) {
 	var errorcode = error.errCode;
@@ -138,3 +147,51 @@ function setReportFilterValues(referalName) {
 	}
 
 }
+
+function checkRowIdDuplication(tableObj, rowId) {
+	var status=false;
+	if($j(tableObj).dataTable().fnGetData().length>0) {
+		var curTable = $j(tableObj + " tr:gt(0)"); //this will not include the header row
+		curTable.each(function() {
+			var curId=$j(this).attr('id');
+			if(rowId==curId) {
+				status=true;
+				return false;
+			}
+		});	
+	}	
+	return status;
+}
+
+function fillLayoutToControl(controlObj) {
+	$j(controlObj).empty();
+	$j(controlObj).append('<option value="None">None</option><option value="General">General</option><option value="GeneralOne">GeneralOne</option>><option value="Layout1">Layout1</option><option value="WaterCultureReport">WaterCultureReport</option><option value="AFB">AFB</option><option value="Stone Analysis">Stone Analysis</option><option value="Osmotic">Osmotic</option><option value="Urine">Urine</option><option value="HistoPath">HistoPath</option><option value="Peripheral">Peripheral</option><option value="GTT">GTT</option><option value="Aminoacidogram">Aminoacidogram</option><option value="Stool Analysis">Stool Analysis</option><option value="CD">CD</option><option value="Haemogram">Haemogram</option><option value="HaemogramESR">HaemogramESR</option><option value="ANA">ANA</option><option value="Culture Report">Culture Report</option><option value="ENA">ENA</option><option value="Semen Layout">Semen Layout</option><option value="PT">PT</option><option value="APPT">APPT</option><option value="DC">DC</option><option value="LipidLayout">LipidLayout</option><option value="LFT">LFT</option>');
+}
+
+function fillRemarksValToControl(selectoptins){
+	var remarks=getRequestData('/youNeverWait/json/remarksList.json');
+	$j(selectoptins).empty();
+    $j(remarks).each(function(index,rem){ 
+		$j(selectoptins).append('<option value='+rem.value+'>'+rem.value+'</option>');
+	});
+}
+
+function fillSpecimenToControl(controlObj) {
+	$j(controlObj).empty();
+	$j(controlObj).append('<option value="select">select specimen</option>');
+	var configData=getRequestData('/youNeverWait/ws/ui/specimen/specimenList');
+	//alert(JSON.stringify(configData));
+	$j(configData.specimenList).each(function(index,specimen){
+	$j(controlObj).append('<option value="'+specimen.uid+'">'+specimen.specimenName+'</option>');
+	});
+}
+
+
+function fillHeaderDataToControl(controlObj){
+	var headerList=[{"name":"OBSERVED VALUE","value":"PatientValue"}, {"name":"REFERENCE RANGE&UNIT","value":"NormalRange"},{"name": "RESULT","value":"Result"}];
+	$j(controlObj).empty();
+	$j(headerList).each(function (index,item) {
+		$j(controlObj).append('<option value="' + item.value+ '">' + item.name+ '</option>');
+	});
+}
+

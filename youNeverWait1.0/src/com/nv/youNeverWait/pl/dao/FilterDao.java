@@ -8,7 +8,6 @@
 package com.nv.youNeverWait.pl.dao;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
 
 /**
  * 

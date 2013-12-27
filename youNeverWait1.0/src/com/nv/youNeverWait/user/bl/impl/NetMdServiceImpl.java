@@ -19,7 +19,6 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.transaction.annotation.Transactional;
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
 import com.nv.framework.sendmsg.email.SendMailMsgObj;
@@ -27,12 +26,18 @@ import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.pl.entity.NetmdBillTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetmdTbl;
+import com.nv.youNeverWait.rs.dto.BillResponseDTO;
+import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetMdActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
@@ -46,12 +51,18 @@ import com.nv.youNeverWait.rs.dto.NetMdResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
 import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
+import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
+import com.nv.youNeverWait.rs.dto.SystemHealthResponse;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
+import com.nv.youNeverWait.user.bl.service.HealthMonitorService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.validation.NetMdValidator;
 import com.nv.youNeverWait.user.pl.dao.NetMdDao;
@@ -70,6 +81,7 @@ public class NetMdServiceImpl implements NetMdService {
 	private String mailFrom;
 	private SendEmailMsgWorkerThread mailThread;
 	private static final Log log = LogFactory.getLog(NetMdServiceImpl.class);
+	private HealthMonitorService healthService;
 
 	/**
 	 * Retrieves all Netmd list after last synchronization time
@@ -78,18 +90,17 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return RetrieveNetmdListResponseDTO
 	 */
 	@Override
-	@Transactional
 	public RetrieveNetmdListResponseDTO retrieveNetmdList(String syncTime,
 			Date currentTime) {
 
-		RetrieveNetmdListResponseDTO response = new RetrieveNetmdListResponseDTO();
 		if (syncTime == null || syncTime.equals("")) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidSyncTime);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response = netMdDao.retrieveNetmdList(syncTime, currentTime);
+		RetrieveNetmdListResponseDTO response = netMdDao.retrieveNetmdList(
+				syncTime, currentTime);
 		return response;
 	}
 
@@ -100,18 +111,17 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return RetrieveNetmdBranchListResponseDTO
 	 */
 	@Override
-	@Transactional
 	public RetrieveNetmdBranchListResponseDTO retrieveNetmdBranchList(
 			String syncTime, Date currentTime) {
 
-		RetrieveNetmdBranchListResponseDTO response = new RetrieveNetmdBranchListResponseDTO();
 		if (syncTime == null || syncTime.equals("")) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidSyncTime);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response = netMdDao.retrieveNetmdBranchList(syncTime, currentTime);
+		RetrieveNetmdBranchListResponseDTO response = netMdDao
+				.retrieveNetmdBranchList(syncTime, currentTime);
 		return response;
 	}
 
@@ -122,7 +132,6 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return NetMdBranchListResponseDTO
 	 */
 	@Override
-	@Transactional
 	public NetMdBranchListResponseDTO getBranchList(FilterDTO filterDTO) {
 
 		NetMdBranchListResponseDTO response = new NetMdBranchListResponseDTO();
@@ -193,11 +202,10 @@ public class NetMdServiceImpl implements NetMdService {
 
 	@Override
 	public ResponseDTO createNetMd(NetMdDTO netMd) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateNetMdAccount(netMd);
 		validator.validateUserNameAndPassword(netMd.getUserName(),
 				netMd.getPassword());
-		response = netMdDao.create(netMd);
+		ResponseDTO response = netMdDao.create(netMd);
 		sendEmailToNetMdOwner(Constants.NETMD_REGISTER, netMd);
 		return response;
 	}
@@ -281,9 +289,8 @@ public class NetMdServiceImpl implements NetMdService {
 
 	@Override
 	public ResponseDTO createBranch(NetMdBranchDTO branch) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateBranchDetails(branch);
-		response = netMdDao.createBranch(branch);
+		ResponseDTO response = netMdDao.createBranch(branch);
 		NetMdBranchOwnerDetails branchDetail = netMdDao
 				.getBranchOwners(response.getGlobalId());
 		sendEmailToNetMdOwner(Constants.NETMD_BRANCH_REGISTER, branchDetail);
@@ -352,7 +359,7 @@ public class NetMdServiceImpl implements NetMdService {
 		fullMsgBody = fullMsgBody.replace("{primaryPassPhrase}",
 				branchDetail.getPrimaryPassPhrase());
 		if (branchDetail.getPassPhrase().size() > 0) {
-			String htmlTd = "<tr><td>Passphrase for other devices :-</td></tr>";
+			String htmlTd = "<tr><td>Other devices :-</td></tr>";
 			for (String passPhrase : branchDetail.getPassPhrase()) {
 				htmlTd = htmlTd + "<tr><td>&nbsp;</td></tr><tr><td><b> "
 						+ passPhrase + "</b></td></tr>";
@@ -374,13 +381,11 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param branch
 	 * @return ResponseDTO
 	 */
-	@Transactional
 	@Override
 	public ResponseDTO updateBranch(NetMdBranchDTO branch) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateBranchDetails(branch);
 		validator.validateBranchId(branch);
-		response = netMdDao.updateBranch(branch);
+		ResponseDTO response = netMdDao.updateBranch(branch);
 		return response;
 	}
 
@@ -390,11 +395,9 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param globalId
 	 * @return BranchResponseDTO
 	 */
-	@Transactional
 	@Override
 	public NetMdBranchResponseDTO viewBranch(int globalId) {
-		NetMdBranchResponseDTO response = new NetMdBranchResponseDTO();
-		response = netMdDao.viewBranch(globalId);
+		NetMdBranchResponseDTO response = netMdDao.viewBranch(globalId);
 		return response;
 	}
 
@@ -404,11 +407,10 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param branch
 	 * @return ResponseDTO
 	 */
-	@Transactional
+
 	@Override
 	public ResponseDTO deleteBranch(int globalId) {
-		ResponseDTO response = new ResponseDTO();
-		response = netMdDao.deleteBranch(globalId);
+		ResponseDTO response = netMdDao.deleteBranch(globalId);
 		return response;
 	}
 
@@ -419,7 +421,6 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param passPhrase
 	 * @return ResponseDTO
 	 */
-	@Transactional(readOnly = false)
 	@Override
 	public NetMdResponseDTO getMacStatus(String passPhrase) {
 		NetMdResponseDTO response = new NetMdResponseDTO();
@@ -447,12 +448,10 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param header
 	 * @return
 	 */
-	@Transactional
 	@Override
 	public NetMdActivationResponseDTO activateNetMd(HeaderDTO header) {
-		NetMdActivationResponseDTO response = new NetMdActivationResponseDTO();
 		validator.validateHeaderDetails(header);
-		response = netMdDao.activateNetMd(header);
+		NetMdActivationResponseDTO response = netMdDao.activateNetMd(header);
 		return response;
 	}
 
@@ -463,11 +462,9 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ResponseDTO updateNetMd(NetMdDTO netMd) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateNetMdAccount(netMd);
-		response = netMdDao.update(netMd);
+		ResponseDTO response = netMdDao.update(netMd);
 		return response;
 	}
 
@@ -479,8 +476,7 @@ public class NetMdServiceImpl implements NetMdService {
 	 */
 	@Override
 	public ResponseDTO deleteNetMd(int netMdId) {
-		ResponseDTO response = new ResponseDTO();
-		response = netMdDao.delete(netMdId);
+		ResponseDTO response = netMdDao.delete(netMdId);
 		return response;
 	}
 
@@ -492,10 +488,9 @@ public class NetMdServiceImpl implements NetMdService {
 	 */
 	@Override
 	public ResponseDTO createUser(HeaderDTO header, NetMdUserDetail user) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateUserDetails(header, user);
 		validator.validateNetMdUserLoginDetails(user);
-		response = netMdDao.createUser(header, user);
+		ResponseDTO response = netMdDao.createUser(header, user);
 		String netMdName = netMdDao.getNetMdName(user.getNetMdId());
 		String netMdBranchName = netMdDao.getNetMdBranchName(user
 				.getNetMdBranchId());
@@ -511,9 +506,8 @@ public class NetMdServiceImpl implements NetMdService {
 	 */
 	@Override
 	public ResponseDTO updateUser(HeaderDTO header, NetMdUserDetail user) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateUserDetails(header, user);
-		response = netMdDao.updateUser(header, user);
+		ResponseDTO response = netMdDao.updateUser(header, user);
 		return response;
 	}
 
@@ -524,11 +518,9 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ResponseDTO deleteUser(int globalId) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateGlobalId(globalId);
-		response = netMdDao.deleteUser(globalId);
+		ResponseDTO response = netMdDao.deleteUser(globalId);
 		return response;
 	}
 
@@ -536,10 +528,8 @@ public class NetMdServiceImpl implements NetMdService {
 	 * Method to make a device primary
 	 */
 	@Override
-	@Transactional
 	public ResponseDTO makePrimary(HeaderDTO header) {
-		ResponseDTO response = new ResponseDTO();
-		response = netMdDao.makePrimary(header);
+		ResponseDTO response = netMdDao.makePrimary(header);
 		return response;
 	}
 
@@ -549,13 +539,10 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param header
 	 * @return ResponseDTO
 	 */
-	@Transactional
 	@Override
 	public ResponseDTO clearMacId(HeaderDTO header) {
-
-		ResponseDTO response = new ResponseDTO();
-		validator.validateHeader(header);
-		response = netMdDao.clearMacId(header);
+		validator.validateNetmdBranchIds(header);
+		ResponseDTO response = netMdDao.clearMacId(header);
 		return response;
 	}
 
@@ -566,11 +553,9 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public NetMdUserDTO viewUser(int globalId) {
-		NetMdUserDTO response = new NetMdUserDTO();
 		validator.validateGlobalId(globalId);
-		response = netMdDao.viewUser(globalId);
+		NetMdUserDTO response = netMdDao.viewUser(globalId);
 		return response;
 	}
 
@@ -580,7 +565,6 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param filterDTO
 	 * @return NetMdListResponseDTO
 	 */
-	@Transactional
 	@Override
 	public NetMdListResponseDTO getNetMdList(FilterDTO filterDTO) {
 		NetMdListResponseDTO response = new NetMdListResponseDTO();
@@ -630,7 +614,7 @@ public class NetMdServiceImpl implements NetMdService {
 	 */
 	private NetMdListResponseDTO getNetmdList(List<NetmdTbl> netmdList) {
 		NetMdListResponseDTO response = new NetMdListResponseDTO();
-		if (netmdList == null) {
+		if (netmdList.isEmpty()) {
 			return response;
 		}
 		List<NetMdDetail> netMdDetails = new ArrayList<NetMdDetail>();
@@ -717,16 +701,14 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return NetMdViewResponseDTO
 	 */
 	@Override
-	@Transactional
 	public NetMdViewResponseDTO viewNetMd(int netMdId) {
-		NetMdViewResponseDTO response = new NetMdViewResponseDTO();
 		if (netMdId <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetMdId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response = netMdDao.view(netMdId);
+		NetMdViewResponseDTO response = netMdDao.view(netMdId);
 		return response;
 	}
 
@@ -736,7 +718,6 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param login
 	 * @return ResponseDTO
 	 */
-	@Transactional
 	@Override
 	public ResponseDTO forgotPassword(LoginDTO login) {
 
@@ -871,6 +852,351 @@ public class NetMdServiceImpl implements NetMdService {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nv.youNeverWait.user.bl.service.NetMdService#createBill(com.nv.
+	 * youNeverWait.rs.dto.BillSummaryDTO, com.nv.youNeverWait.rs.dto.HeaderDTO)
+	 */
+	@Override
+	public BillResponseDTO createBill(BillSummaryDTO newBill, HeaderDTO header) {
+		BillResponseDTO response = netMdDao.createBill(newBill, header);
+		return response;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.NetMdService#updatedBills(com.nv.
+	 * youNeverWait.rs.dto.BillSummaryDTO, com.nv.youNeverWait.rs.dto.HeaderDTO)
+	 */
+	@Override
+	public BillResponseDTO updateBills(BillSummaryDTO updatedBill,
+			HeaderDTO header) {
+		BillResponseDTO response = netMdDao.updateBill(updatedBill, header);
+		return response;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.NetMdService#setNetMdSync(com.nv.
+	 * youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	public SyncFreqResponseDTO setNetMdSync(SyncFreqDTO sync) {
+		if (sync.getNetmdId() <= 0) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMd);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(sync
+					.getNetmdId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		SyncFreqResponseDTO response = netMdDao.setNetMdSync(sync);
+		return response;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.NetMdService#setNetMdBranchSync(com
+	 * .nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	public SyncFreqResponseDTO setNetMdBranchSync(SyncFreqDTO sync) {
+		if (sync.getNetmdBranchId() <= 0) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMdBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		SyncFreqResponseDTO response = netMdDao.setNetMdBranchSync(sync);
+		return response;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.LabService#getLabSyncDetails(int)
+	 */
+	@Override
+	public SyncFreqDTO getNetmdSyncDetails(int netmdId) {
+		if (netmdId <= 0) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetMd);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(netmdId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		SyncFreqDTO response = netMdDao.getNetmdSyncDetails(netmdId);
+		return response;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.LabService#getBranchSyncDetails(int)
+	 */
+	@Override
+	public SyncFreqDTO getBranchSyncDetails(int branchId) {
+		if (branchId <= 0) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		SyncFreqDTO response = netMdDao.getBranchSyncDetails(branchId);
+		return response;
+	}
+
+	/**
+	 * Method for viewing branch default system details
+	 * 
+	 * @param branchId
+	 * @return
+	 */
+	@Override
+	public BranchSystemInfoDetails viewNetmdBranchSystemInfoDetails(
+			String passphrase) {
+		if (passphrase == null || passphrase.equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.PassPhraseNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		BranchSystemInfoDetails response = netMdDao
+				.viewBranchSystemInfoDetails(passphrase);
+		return response;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.NetMdService#checkSystemHealth(com
+	 * .nv.youNeverWait.rs.dto.SystemHealthDetails)
+	 */
+	@Override
+	public HealthMonitorResponse checkSystemHealth(
+			SystemHealthDetails systemHealthDetails) {
+		HealthMonitorResponse response = new HealthMonitorResponse();
+		/** Validates pssphrase and mac id empty or not **/
+		validator.validateHeaderDetails(systemHealthDetails.getHeader());
+
+		/** Validates lab and branch ids **/
+		validator.validateNetmdBranchIds(systemHealthDetails.getHeader());
+
+		/** Checking header details whether given correctly or not **/
+		netMdDao.checkHeader(systemHealthDetails.getHeader());
+
+		/** Calling method for checking system in critical stage or not **/
+		SystemHealthResponse healthMonitorResponse = healthService
+				.checkSystemHealth(systemHealthDetails);
+		if (healthMonitorResponse.getSystemHealth().isCritical()) {
+			/**Getting branch owner details and sending mail **/
+			NetMdBranchOwnerDetails branchOwnerDetails = netMdDao
+					.getBranchOwners(systemHealthDetails.getHeader()
+							.getBranchId());
+			sendEmailToNetMdOwner(branchOwnerDetails,
+					Constants.NETMD_SYSTEM_FAILURE, healthMonitorResponse,
+					systemHealthDetails);
+
+		}
+		response.setFreqPeriod(healthMonitorResponse.getSystemHealth()
+				.getFreqPeriod());
+		response.setIntervalTime(healthMonitorResponse.getSystemHealth()
+				.getIntervalTime());
+		response.setCritical(healthMonitorResponse.getSystemHealth()
+				.isCritical());
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * @param branchOwnerDetails
+	 * @param labSystemFailure
+	 * @param response
+	 * @param systemHealthDetails
+	 */
+	private void sendEmailToNetMdOwner(
+			NetMdBranchOwnerDetails branchOwnerDetails, String subject,
+			SystemHealthResponse response,
+			SystemHealthDetails systemHealthDetails) {
+		String msgBody = "";
+		URL url = null;
+		try {
+			url = new URL("http://" + netMdServerIpAddress
+					+ "/youNeverWait/EmailFormat/NetmdBranchHealthMonitor.html");
+			msgBody = createEmailBody(url, branchOwnerDetails, response,
+					systemHealthDetails);
+			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,
+					branchOwnerDetails.getOwnerEmail(), mailFrom, 0, 0, null,
+					SendMsgCallbackEnum.NETMD_FAILURE_ALERT.getId(), null);
+			mailThread.addSendMsgObj(obj);
+		} catch (IOException e) {
+			log.error("Error while sending  branch health monitor email to the owner's email id"
+					+ e);
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * @param url
+	 * @param branchOwnerDetails
+	 * @param response
+	 *            .getIntervalTime()
+	 * @param systemHealthDetails
+	 * @return
+	 */
+	private String createEmailBody(URL url,
+			NetMdBranchOwnerDetails branchOwnerDetails,
+			SystemHealthResponse response,
+			SystemHealthDetails systemHealthDetails) throws IOException {
+		StringBuffer msgBodyBfr = new StringBuffer();
+		String fullMsgBody = "";
+
+		java.net.URLConnection openConnection = url.openConnection();
+		InputStream inputStream = openConnection.getInputStream();
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				inputStream));
+		String readLine = "";
+
+		while ((readLine = in.readLine()) != null) {
+			msgBodyBfr.append(readLine).append("\n");
+		}
+		in.close();
+		fullMsgBody = msgBodyBfr.toString();
+		fullMsgBody = fullMsgBody.replace("{firstName}",
+				branchOwnerDetails.getOwnerFirstName());
+		if (branchOwnerDetails.getOwnerLastName() == null) {
+			fullMsgBody = fullMsgBody.replace("{lastName}", "");
+		} else {
+			fullMsgBody = fullMsgBody.replace("{lastName}",
+					branchOwnerDetails.getOwnerLastName());
+		}
+		fullMsgBody = fullMsgBody.replace("{NetmdName}",
+				branchOwnerDetails.getBranchName());
+		fullMsgBody = fullMsgBody.replace("{branchName}",
+				branchOwnerDetails.getBranchName());
+		fullMsgBody = fullMsgBody.replace("{passphrase}", systemHealthDetails
+				.getHeader().getPassPhrase());
+		fullMsgBody = fullMsgBody.replace("{macId}", systemHealthDetails
+				.getHeader().getMacId());
+		fullMsgBody = fullMsgBody.replace("{hardDiskSpace}",
+				Long.toString(response.getFreeHardDiskSpaceInPercent()));
+		fullMsgBody = fullMsgBody.replace("{memoryDiskSpace}",
+				Long.toString(response.getFreeMemorySpaceInPercent()));
+		fullMsgBody = fullMsgBody.replace("{cpuUsage}",
+				Long.toString(response.getFreeCpuSpaceInPercent()));
+		fullMsgBody = fullMsgBody.replace("{intervalTime}", response
+				.getSystemHealth().getIntervalTime());
+		fullMsgBody = fullMsgBody.replace("{frequencyPeriod}", response
+				.getSystemHealth().getFreqPeriod());
+		return fullMsgBody;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.NetMdService#syncEnableStatus(com
+	 * .nv.youNeverWait.rs.dto.HeaderDTO, java.lang.String, int)
+	 */
+	@Override
+	public SyncFreqDTO syncEnableStatus(HeaderDTO header, String freqType,
+			int interval) {
+		SyncFreqDTO response = netMdDao.getBranchSyncDetails(header
+				.getBranchId());
+		return response;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.NetMdService#updateNetmdBranchSystemInfo
+	 * (com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails)
+	 */
+	@Override
+	public ResponseDTO updateNetmdBranchSystemInfo(
+			BranchSystemInfoDetails systemCriticalDetails) {
+		validator.validateSystemDefaultDetails(systemCriticalDetails);
+		ResponseDTO response = netMdDao
+				.updateNetmdBranchSystemInfo(systemCriticalDetails);
+		return response;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.NetMdService#billList(com.nv.youNeverWait
+	 * .rs.dto.FilterDTO)
+	 */
+	@Override
+	public BranchBillListResponseDTO billList(FilterDTO filterDTO) {
+		BranchBillListResponseDTO response = new BranchBillListResponseDTO();
+		// validate filterDTO to identify invalid expressions and if there is
+		// any,return result with appropriate error code
+		ErrorDTO error = validator.validateBillFilter(filterDTO);
+		if (error != null) {
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+
+		// get queryBuilder for netmd branch from builder factory
+		QueryBuilder queryBuilder = queryBuilderFactory
+				.getQueryBuilder(Constants.NETMD_BILL);
+		if (queryBuilder == null) {
+			return response;
+		}
+		for (ExpressionDTO exp : filterDTO.getExp()) {
+
+			// get filter from filter factory by setting expression name and
+			// value to filter
+			Filter filter = filterFactory.getFilter(exp);
+			queryBuilder.addFilter(filter);
+		}
+		// build query
+		TypedQuery<NetmdBillTbl> q = queryBuilder.buildQuery(filterDTO.isAsc(),
+				filterDTO.getFrom(), filterDTO.getCount());
+
+		// get count
+		Long count = queryBuilder.getCount();
+
+		// execute query
+		List<NetmdBillTbl> bills = queryBuilder.executeQuery(q);
+		response = getNetMdBillList(bills);
+		response.setCount(count);
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * @param bills
+	 * @return
+	 */
+	private BranchBillListResponseDTO getNetMdBillList(List<NetmdBillTbl> bills) {
+		BranchBillListResponseDTO response = new BranchBillListResponseDTO();
+		if (bills == null) {
+			return response;
+		}
+		List<BillSummaryDTO> netMdBillDetails = new ArrayList<BillSummaryDTO>();
+		for (NetmdBillTbl netmdBillTbl : bills) {
+			netMdBillDetails.add(new BillSummaryDTO(netmdBillTbl));
+		}
+		response.setBranchBillList(netMdBillDetails);
+		return response;
+	}
+
 	/**
 	 * @return the netMdDao
 	 */
@@ -974,6 +1300,21 @@ public class NetMdServiceImpl implements NetMdService {
 	 */
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
+	}
+
+	/**
+	 * @return the healthService
+	 */
+	public HealthMonitorService getHealthService() {
+		return healthService;
+	}
+
+	/**
+	 * @param healthService
+	 *            the healthService to set
+	 */
+	public void setHealthService(HealthMonitorService healthService) {
+		this.healthService = healthService;
 	}
 
 }

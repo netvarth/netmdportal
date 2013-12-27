@@ -28,7 +28,7 @@ $j('#pageTitle1').html('['+a.netMd.name.toUpperCase()+']');
 		maxPages = parseInt(maxRecords/interval) + 1;
 	else
 		maxPages = parseInt(maxRecords/interval);	
-	//setPaginationFields(curPage, maxPages, pgTableContainer);
+	setPaginationFields(curPage, maxPages, pgTableContainer);
 	$j(pgTableContainer +' #next').die('click').click(function() {
 		if(curPage!=maxPages && curPage<maxPages) {
 			curPage+=1;
@@ -99,6 +99,20 @@ $j('#pageTitle1').html('['+a.netMd.name.toUpperCase()+']');
 			})
 		}
 	});
+	
+	$j('#branchPTBContainer #btn_change_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	  var branchId = getSelectedNetmdBranchId(pgTableName);
+	    if(branchId!="") {
+			var obj=$j(this);
+			createModal(constants_netmdBranchSycSetJson,'netmdBrachSycSetModal');	
+			openModalBox(obj,'netmdBrachSycSetModal')
+		$j.cachedScript(constant_NetmdBranchSyncSet_Url).done(function(script, textStatus) {
+		getNetmdBrchId(branchId)
+		})
+		}	
+	});
+	
 	$j('#branchPTBContainer #btn_back_ptb_id').die('click').live("click",function() {
 	removeErrors();
 	$j('#pageTitle1').hide();

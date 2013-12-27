@@ -4,28 +4,118 @@
 		<title>patient</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width">
-		<link href="/youNeverWait/css/style.css" type="text/css" rel="stylesheet" />
+		<link href="/youNeverWait/css/ynwstyle.css" type="text/css" rel="stylesheet" />
 		<link href="/youNeverWait/css/ui-lightness/jquery-ui-1.8.20.custom.css" type="text/css" rel="stylesheet" />
 		<link href="/youNeverWait/css/fullcalendar.css" type="text/css" rel="stylesheet">
 		<link href="/youNeverWait/css/jquery.timepicker.css"type="text/css" rel="stylesheet">	
 		
-		<script type="text/javascript" src="/youNeverWait/js/plugins/jquery-1.7.min.js"></script>
+		
+		
+	</head>
+	<body id="patientBody">
+		<!-- START OF HEADER -->
+		<div class="headerPatient">
+		<div>	<img src="/youNeverWait/images/ynwLogo1.png">
+			</div>
+			<div class="column-three-fourth"style="width:80%;margin: -40px 0px 0px 70px;"><span style="vertical-align: middle;font-size: 11pt;margin-left:-5%;"><b>Patient</b></span>
+  <select id="select" class="select" style="font-size: 10pt;font-weight:bold">
+	</select>  
+	</div>  
+			<div class="headright">
+				<!--<div class="button-profile-2"><a id="btnLogout" href="#"><span class="exit-icon"></span><span class="desc">Logout</span></a></div> -->      			
+			    <div style="float:left; padding:10px; font-weight:bold;" >Welcome <span id="userloged"class="namecolor"></span></div>	
+				
+			    <div class="wrapper-demo" id="dropdownOne1">
+					<div id="dd1" class="wrapper-dropdown-5" tabindex="1">Themes
+						<ul class="dropdown" id="dropdownTwo1" style="z-index: 1000;">
+							<li id="normaltheme"><a href="#"><i class="icon-user"></i>Normal</a></li>
+							<li id="browntheme"><a href="#">
+								<i class="icon-user"></i>
+								Brown</a></li>
+								<li id="greentheme"><a href="#">
+								<i class="icon-user"></i>
+								Green</a></li>
+							
+						</ul>
+					</div>
+				</div> 
+
+
+
+				<div class="wrapper-demo" id="dropdownOne">
+					<div id="dd" class="wrapper-dropdown-5" tabindex="2">Settings
+						<ul class="dropdown" id="dropdownTwo" style="z-index: 1000;">
+							<li id="settings"><a href="#"><i class="icon-user"></i>Change Password</a></li>
+							
+							<li id="btnLogout"><a href="#" ><i class="icon-remove" ></i>Log out</a></li>
+						</ul>
+					</div>
+				</div> 
+				<!--<label  ><span>welcome<span class="descset"id="userloged"></span></label>--> 
+				<!--<label ><a id="settings" href="#"><span></span><span class="descset">Settings</span></a></label>--> 
+				<!--<div class="boldtabledoc" style="width:30%"></div> -->  
+			</div>
+			       
+		</div>
+		<!-- END OF HEADER --> 
+		
+		<!-- START OF GLOBAL TOOL BAR -->
+		<div id="dvLoading" class="dvLoading"></div>
+		
+		
+		<!-- END OF GLOBAL TOOLBAR -->
+		<!-- START OF MAIN CONTENT -->
+		<div class="mainwrapper">
+		
+			<div class="mainwrapperinner">
+				
+				<div class="maincontentdv">
+					<div class="maincontentinner">
+						<div class="content"style="width: 70%;margin: 0px auto;">
+						
+							<div id="tabs">
+								
+								<div class="error-main" id="errorDivHeader" style="display:none"><div id="errorDivData"></div></div> 
+								<div id="tabs-1" style="border:0px"> 
+								<div>
+								<!-- <ul >
+									<h1 id="pageTitle"></h1>
+									<div id="pageToolBar-Container"></div>
+								</ul> -->
+
+								</div>  
+								</div>                           
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="BeeperBox" class="UIBeeper">
+			 <div class="UIBeeper_Full">
+				<div class="Beeps">
+				   <div class="UIBeep UIBeep_Top UIBeep_Bottom UIBeep_Selected" style="opacity: 1; ">
+				   <!-- Below Is The Link To Which Bepper Will Point To (replace # with the required link) -->
+						<a class="UIBeep_NonIntentional" href="#">                     
+							 <span class="beeper_x">&nbsp;</span>
+							 <div class="UIBeep_Title">
+								This is a notification
+							 </div>
+						</a>
+				   </div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="/youNeverWait/js/plugins/jquery-1.7.min.js"></script>
 		<script type="text/javascript" src="/youNeverWait/js/plugins/jquery-ui-1.8.16.custom.min.js"></script>
 		<script type="text/javascript" src="/youNeverWait/js/plugins/colorpicker.js"></script>
 		<script type="text/javascript" src="/youNeverWait/js/plugins/jquery.timepicker.js"></script>
-		<script type="text/javascript" src="/youNeverWait/js/plugins/jquery.jgrowl.js"></script>
-		<script type="text/javascript" src="/youNeverWait/js/plugins/jquery.alerts.js"></script>
 		<script type="text/javascript" src="/youNeverWait/js/plugins/jquery.dataTables.min.js"></script>
-		<script type="text/javascript" src="/youNeverWait/js/plugins/jquery.effects.core.min.js"></script>
-		<script type="text/javascript" src="/youNeverWait/js/plugins/jquery.effects.explode.min.js"></script>
-		<script type="text/javascript" src="/youNeverWait/js/plugins/jquery.colorbox-min.js"></script>
-		<script type="text/javascript" src="/youNeverWait/js/custom/tables.js"></script>
-		<script type="text/javascript" src="/youNeverWait/js/custom/general.js"></script>
 		<script type="text/javascript" src="/youNeverWait/js/custom/elements.js"></script>
-		<script type="text/javascript" src="/youNeverWait/js/custom/media.js"></script>
 		<script src="/youNeverWait/js/custom/jquery.reveal.js" type="text/javascript"></script>  
 		<script src="/youNeverWait/js/youneverwait/patientindex.js" type="text/javascript"></script> 
-		<script type="text/javascript" src="/youNeverWait/js/custom/notifier.js"></script> 	
+		
 		<script type="text/javascript">
 			$j(document).ready(function() {
 				$j(window).load(function(){
@@ -73,82 +163,4 @@
 				
 			});
 		</script>
-		
-	</head>
-	<body>
-		<!-- START OF HEADER -->
-		<div class="header">
-		<div>	<font style="font-family:Freestyle Script;color:#123D8C;font-weight:bold;font-size:40px;">You Never Wait</font>
-			</div>
-			<div class="column-three-fourth"style="width:80%;margin: -40px 0px 0px 70px;"><span style="vertical-align: middle;font-size: 11pt;"><b>Patient</b></span>
-  <select id="select" class="select" style="font-size: 10pt;font-weight:bold">
-	</select>  
-	</div>  
-			<div class="headright">
-				<!--<div class="button-profile-2"><a id="btnLogout" href="#"><span class="exit-icon"></span><span class="desc">Logout</span></a></div> -->      			
-			    <div style="float:left; padding:10px; font-weight:bold;" >Welcome <span id="userloged"class="namecolor"></span></div>	
-				<div class="wrapper-demo" id="dropdownOne">
-					<div id="dd" class="wrapper-dropdown-5" tabindex="1">Settings
-						<ul class="dropdown" id="dropdownTwo" style="z-index: 1000;">
-							<li id="settings"><a href="#"><i class="icon-user"></i>Change Password</a></li>
-							<li id="btnLogout"><a href="#" ><i class="icon-remove" ></i>Log out</a></li>
-						</ul>
-					</div>
-				</div> 
-				<!--<label  ><span>welcome<span class="descset"id="userloged"></span></label>--> 
-				<!--<label ><a id="settings" href="#"><span></span><span class="descset">Settings</span></a></label>--> 
-				<!--<div class="boldtabledoc" style="width:30%"></div> -->  
-			</div>
-			       
-		</div>
-		<!-- END OF HEADER --> 
-		
-		<!-- START OF GLOBAL TOOL BAR -->
-		<div id="dvLoading" class="dvLoading"></div>
-		
-		
-		<!-- END OF GLOBAL TOOLBAR -->
-		<!-- START OF MAIN CONTENT -->
-		<div class="mainwrapper">
-		
-			<div class="mainwrapperinner">
-				
-				<div class="maincontentdv">
-					<div class="maincontentinner">
-						<div class="content">
-						
-							<div id="tabs">
-								
-								<div class="error-main" id="errorDivHeader" style="display:none"><div id="errorDivData"></div></div> 
-								<div id="tabs-1"> 
-								<div>
-								<!-- <ul >
-									<h1 id="pageTitle"></h1>
-									<div id="pageToolBar-Container"></div>
-								</ul> -->
-
-								</div>  
-								</div>                           
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="BeeperBox" class="UIBeeper">
-			 <div class="UIBeeper_Full">
-				<div class="Beeps">
-				   <div class="UIBeep UIBeep_Top UIBeep_Bottom UIBeep_Selected" style="opacity: 1; ">
-				   <!-- Below Is The Link To Which Bepper Will Point To (replace # with the required link) -->
-						<a class="UIBeep_NonIntentional" href="#">                     
-							 <span class="beeper_x">&nbsp;</span>
-							 <div class="UIBeep_Title">
-								This is a notification
-							 </div>
-						</a>
-				   </div>
-				</div>
-			</div>
-		</div>
-	</body>
 	</html>

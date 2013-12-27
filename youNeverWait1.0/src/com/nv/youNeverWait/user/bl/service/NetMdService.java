@@ -9,9 +9,13 @@ package com.nv.youNeverWait.user.bl.service;
 
 
 import java.util.Date;
-
+import com.nv.youNeverWait.rs.dto.BillResponseDTO;
+import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetMdActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
@@ -28,6 +32,9 @@ import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 
 
 public interface NetMdService {
@@ -55,4 +62,19 @@ public interface NetMdService {
 	public RetrievalUserResponseDTO retrieveUserList(String lastSyncTime,String passPhrase, int netmdBranchId,Date currentSyncTime);
 	public ResponseDTO clearMacId(HeaderDTO header);
 	public ResponseDTO makePrimary(HeaderDTO header);
+	public BranchBillListResponseDTO billList(FilterDTO filter);
+	public BillResponseDTO createBill(BillSummaryDTO newBill, HeaderDTO header);
+	public BillResponseDTO updateBills(BillSummaryDTO updatedBill, HeaderDTO header);
+	public SyncFreqResponseDTO setNetMdSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setNetMdBranchSync(SyncFreqDTO sync);
+	public SyncFreqDTO getBranchSyncDetails(int branchId);
+	public SyncFreqDTO getNetmdSyncDetails(int netmdId);
+	public HealthMonitorResponse checkSystemHealth(
+			SystemHealthDetails systemHealthDetails);
+	BranchSystemInfoDetails viewNetmdBranchSystemInfoDetails(String passphrase);
+	public SyncFreqDTO syncEnableStatus(HeaderDTO header, String freqType,
+			int interval);
+	public ResponseDTO updateNetmdBranchSystemInfo(
+			BranchSystemInfoDetails systemCriticalDetails);
+
 }

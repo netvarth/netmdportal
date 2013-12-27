@@ -11,6 +11,21 @@ $j('#tabs-1').html(adminTB.result);
 		createModal(constants_adminChangePwdJsonas,'changepwdModal');	
 		openModalBox(obj,'changepwdModal');
 	});
+
+	$j('#btnTestList').die('click').live("click",function() {
+		removeErrors();
+		$j.cachedScript("/youNeverWait/js/youneverwait/netlims/test/testEntryPoint.js").done(function(script, textStatus) {
+			
+		})
+	
+	});
+
+	$j('#btnSpecimenList').die('click').live("click",function() {
+		//alert("btnSpecimen click")
+		var specimenUI = new SpecimenUIStartup();			
+		specimenUI.init();
+	
+	});
 	
 	$j('#btn_userlogcontrol_ptb_id').die('click').live("click",function() {
 	var currentstatus=getRequestData('/youNeverWait/ws/ui/superAdmin/enableLogStatus');
@@ -33,12 +48,29 @@ $j('#tabs-1').html(adminTB.result);
 
 	});
 	
+	$j('#syncLogPTBContainer #btn_back_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	//$j('#pageToolBar-Container').html("");
+	$j.cachedScript(constant_SettingsEntry_Url).done(function(script, textStatus) {
+	})
+	$j('#filter').hide();
+	$j('#syncLogPTBContainer').hide();
+	$j('#sync-filter-toolbar').hide();
+
+	})
+	
 	$j('#btnUserLogList').die('click').live("click",function() {
 	removeErrors();
 	$j.cachedScript(constant_UserLogEntry_Url).done(function(script, textStatus) {
 	})
 	});
 	
+	$j('#btnSyncLogList').die('click').live("click",function() {
+	removeErrors();
+	$j.cachedScript(constant_SyncLogEntry_Url).done(function(script, textStatus) {
+	})
+	});	
+
 			
 	$j('#changePasswordForm #btnChangePwdSubmit').die('click').live('click',function(){
 	removeErrors();	
@@ -115,12 +147,12 @@ function validateAdminChangePassword(){
 	/*if((isEmpty(userName)))
 	userNameregValid =  checkRegexp(userName, /^[a-zA-Z]'?([a-zA-Z]|\.| |-)+$/, constants_userNameInvalidMessage ,$j('#errorDivNewNetlimsData'));
 	userNameregValid=userNameregValid&&confirmPassword;*/
-	
+	if((newPassword1!="")&&(confirmPassword1!="")){
 	if(newPassword1!=confirmPassword1)
 	{
 		createError(constants_passwordMismatch,newPassword);
 		PwdCompValid=false;
-	}
+	}}
 	PwdCompValid=PwdCompValid&&confirmPassword;
 	
 	bValid=bValid && PwdCompValid;

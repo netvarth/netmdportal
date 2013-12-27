@@ -16,6 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
@@ -29,6 +30,7 @@ import com.nv.youNeverWait.rs.dto.NetMdResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -40,44 +42,43 @@ public class NetMdServiceTest {
 	private ApplicationContext applicationContext;
 
 	@Test
-	public void clearMac(){
+	public void clearMac() {
 		System.out.println("Clear Mac");
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
-		HeaderDTO header= new HeaderDTO();
-		header.setNetMdId(17);
-		header.setNetMdBranchId(20);
+		HeaderDTO header = new HeaderDTO();
+		header.setHeadOfficeId(17);
+		header.setBranchId(20);
 		header.setPassPhrase("V4WueKvId5iyYsvi8gtPYA==");
-		try{
+		try {
 			service.clearMacId(header);
-		}
-		catch(ServiceException e){
+		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
 		}
 	}
+
 	@Test
-	public void clearMacWrong(){
+	public void clearMacWrong() {
 		System.out.println("Clear Mac");
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
-		HeaderDTO header= new HeaderDTO();
-		header.setNetMdId(17);
-		header.setNetMdBranchId(20);
+		HeaderDTO header = new HeaderDTO();
+		header.setHeadOfficeId(17);
+		header.setBranchId(20);
 		header.setPassPhrase("V4WueKvId5iyYsvi8gtPYA==jjjjjj");
-		try{
+		try {
 			service.clearMacId(header);
-		}
-		catch(ServiceException e){
+		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
 		}
 	}
-	
+
 	@Test
 	public void createuserAlreadyExists() {
 		NetMdService service = (NetMdService) applicationContext
@@ -98,13 +99,14 @@ public class NetMdServiceTest {
 		user.setNetMdBranchId(11);
 		userCreationDTO.setUser(user);
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdBranchId(17);
-		header.setNetMdId(25);
+		header.setBranchId(17);
+		header.setHeadOfficeId(25);
 		header.setMacId("5646opiopiop");
 		header.setPassPhrase("");
 		userCreationDTO.setHeader(header);
 		try {
-			service.createUser(userCreationDTO.getHeader(),userCreationDTO.getUser());
+			service.createUser(userCreationDTO.getHeader(),
+					userCreationDTO.getUser());
 		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
@@ -133,13 +135,14 @@ public class NetMdServiceTest {
 		user.setNetMdBranchId(86);
 		userCreationDTO.setUser(user);
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdBranchId(86);
-		header.setNetMdId(89);
+		header.setBranchId(86);
+		header.setHeadOfficeId(89);
 		header.setMacId("123");
 		header.setPassPhrase("Dzpl8VvTlrHGzjdSCfTqMw==");
 		userCreationDTO.setHeader(header);
 		try {
-			service.createUser(userCreationDTO.getHeader(),userCreationDTO.getUser());
+			service.createUser(userCreationDTO.getHeader(),
+					userCreationDTO.getUser());
 		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
@@ -193,6 +196,7 @@ public class NetMdServiceTest {
 			System.out.println(e.getParamList());
 		}
 	}
+
 	@Test
 	public void updateBranchWrong() {
 		System.out.println("update branch");
@@ -253,7 +257,7 @@ public class NetMdServiceTest {
 			System.out.println(e.getParamList());
 		}
 	}
-	
+
 	@Test
 	public void deleteBranchSuccess() {
 		System.out.println("delete Branch");
@@ -289,8 +293,8 @@ public class NetMdServiceTest {
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdBranchId(5);
-		header.setNetMdId(3);
+		header.setBranchId(5);
+		header.setHeadOfficeId(3);
 		header.setMacId("00-80-48-6E-E1-E2");
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 		try {
@@ -443,6 +447,7 @@ public class NetMdServiceTest {
 			System.out.println(e.getParamList());
 		}
 	}
+
 	@Test
 	public void updateuser() {
 		NetMdService service = (NetMdService) applicationContext
@@ -461,13 +466,14 @@ public class NetMdServiceTest {
 		user.setGlobalId(1);
 		userCreationDTO.setUser(user);
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdBranchId(17);
-		header.setNetMdId(25);
+		header.setBranchId(17);
+		header.setHeadOfficeId(25);
 		header.setMacId("");
 		header.setPassPhrase("");
 		userCreationDTO.setHeader(header);
 		try {
-			service.updateUser(userCreationDTO.getHeader(),userCreationDTO.getUser());
+			service.updateUser(userCreationDTO.getHeader(),
+					userCreationDTO.getUser());
 		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
@@ -475,69 +481,69 @@ public class NetMdServiceTest {
 			System.out.println(e.getParamList());
 		}
 	}
+
 	@Test
-	public void forgotPassword(){
+	public void forgotPassword() {
 		System.out.println("Forgot Password");
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
-		LoginDTO login =new LoginDTO();
+		LoginDTO login = new LoginDTO();
 		login.setUserName("netMd1");
-		try{
+		try {
 			service.forgotPassword(login);
-		}
-		catch(ServiceException e){
+		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
 		}
 	}
+
 	@Test
-	public void deleteUser(){
+	public void deleteUser() {
 		System.out.println("deleteUser");
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
-		
-		try{
+
+		try {
 			service.deleteUser(7);
-		}
-		catch(ServiceException e){
+		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
 		}
 	}
+
 	@Test
-	public void viewUser(){
+	public void viewUser() {
 		System.out.println("viewUser");
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
-		
-		try{
+
+		try {
 			NetMdUserDTO user = service.viewUser(7);
 			System.out.println(user);
-		}
-		catch(ServiceException e){
+		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
 		}
 	}
+
 	@Test
-	public void changePasswordWithOldAndNewPasswordNull(){
+	public void changePasswordWithOldAndNewPasswordNull() {
 		System.out.println("change password");
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
-		PasswordDTO passwords=new PasswordDTO();
+		PasswordDTO passwords = new PasswordDTO();
 		passwords.setOldPassword(null);
 		passwords.setNewPassword(null);
 		passwords.setUsername("mohini");
-		try{
+		try {
 			service.changePassword(passwords);
-		}
-		catch(ServiceException e){
+		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
@@ -546,175 +552,233 @@ public class NetMdServiceTest {
 	}
 
 	@Test
-	public void changePasswordWithNewPasswordNull(){
+	public void changePasswordWithNewPasswordNull() {
 		System.out.println("change password");
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
-		PasswordDTO passwords=new PasswordDTO();
+		PasswordDTO passwords = new PasswordDTO();
 		passwords.setOldPassword("netvarth");
 		passwords.setNewPassword(null);
 		passwords.setUsername("mohini");
-		try{
+		try {
 			service.changePassword(passwords);
-		}
-		catch(ServiceException e){
+		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
 		}
 	}
+
 	@Test
-	public void changePasswordWithOldPasswordNull(){
+	public void changePasswordWithOldPasswordNull() {
 		System.out.println("change password");
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
-		PasswordDTO passwords=new PasswordDTO();
+		PasswordDTO passwords = new PasswordDTO();
 		passwords.setOldPassword(null);
 		passwords.setNewPassword("mohini");
 		passwords.setUsername("mohini");
-		try{
+		try {
 			service.changePassword(passwords);
-		}
-		catch(ServiceException e){
+		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
 		}
 	}
+
 	@Test
-	public void changePasswordWithOldPasswordStringEmpty(){
+	public void changePasswordWithOldPasswordStringEmpty() {
 		System.out.println("change password");
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
-		PasswordDTO passwords=new PasswordDTO();
+		PasswordDTO passwords = new PasswordDTO();
 		passwords.setOldPassword("");
 		passwords.setNewPassword("sdfsf");
 		passwords.setUsername("mohini");
-		try{
+		try {
 			service.changePassword(passwords);
-		}
-		catch(ServiceException e){
+		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
 		}
 	}
+
 	@Test
-	public void changePasswordWithNewPasswordStringEmpty(){
+	public void changePasswordWithNewPasswordStringEmpty() {
 		System.out.println("change password");
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
-		PasswordDTO passwords=new PasswordDTO();
+		PasswordDTO passwords = new PasswordDTO();
 		passwords.setOldPassword("netvarth");
 		passwords.setNewPassword("");
 		passwords.setUsername("mohini");
-		try{
+		try {
 			service.changePassword(passwords);
-		}
-		catch(ServiceException e){
+		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
 		}
 	}
+
 	@Test
-	public void changePasswordWithNewPasswordAndOldPasswordStringEmpty(){
+	public void changePasswordWithNewPasswordAndOldPasswordStringEmpty() {
 		System.out.println("change password");
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
-		PasswordDTO passwords=new PasswordDTO();
+		PasswordDTO passwords = new PasswordDTO();
 		passwords.setOldPassword("");
 		passwords.setNewPassword("");
 		passwords.setUsername("mohini");
-		try{
+		try {
 			service.changePassword(passwords);
-		}
-		catch(ServiceException e){
+		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
 		}
 	}
-	
+
 	@Test
-	public void changePasswordWrongOldPwd(){
+	public void changePasswordWrongOldPwd() {
 		System.out.println("change password");
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
-		PasswordDTO passwords=new PasswordDTO();
+		PasswordDTO passwords = new PasswordDTO();
 		passwords.setOldPassword("netvarthkkkk");
 		passwords.setNewPassword("netvarth");
 		passwords.setUsername("mohini");
-		try{
+		try {
 			service.changePassword(passwords);
-		}
-		catch(ServiceException e){
+		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
 		}
 	}
+
 	@Test
-	public void changePasswordWrongUserName(){
+	public void changePasswordWrongUserName() {
 		System.out.println("change password");
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
-		PasswordDTO passwords=new PasswordDTO();
+		PasswordDTO passwords = new PasswordDTO();
 		passwords.setOldPassword("thara");
 		passwords.setNewPassword("netvarth");
 		passwords.setUsername("abcd");
-		try{
+		try {
 			service.changePassword(passwords);
-		}
-		catch(ServiceException e){
+		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
 		}
 	}
+
 	@Test
-	public void changePasswordWithUserNameNullOrEmpty(){
+	public void changePasswordWithUserNameNullOrEmpty() {
 		System.out.println("change password");
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
-		PasswordDTO passwords=new PasswordDTO();
+		PasswordDTO passwords = new PasswordDTO();
 		passwords.setOldPassword("netvarth");
 		passwords.setNewPassword("mohini");
 		passwords.setUsername("");
-		try{
+		try {
 			service.changePassword(passwords);
-		}
-		catch(ServiceException e){
+		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
 		}
 	}
+
 	@Test
-	public void changePasswordSuccess(){
+	public void changePasswordSuccess() {
 		System.out.println("change password");
 		NetMdService service = (NetMdService) applicationContext
 				.getBean("netMd.service");
-		PasswordDTO passwords=new PasswordDTO();
+		PasswordDTO passwords = new PasswordDTO();
 		passwords.setOldPassword("mohini");
 		passwords.setNewPassword("netvarth");
 		passwords.setUsername("mohini");
-		try{
+		try {
 			service.changePassword(passwords);
-		}
-		catch(ServiceException e){
+		} catch (ServiceException e) {
 
 			System.out.println(e.isDisplayErrMsg());
 			System.out.println(e.getError());
 			System.out.println(e.getParamList());
 		}
 	}
+
+	@Test
+	public void checkSystemHealth() {
+		System.out.println("checkSystemHealth");
+		NetMdService service = (NetMdService) applicationContext
+				.getBean("netMd.service");
+		SystemHealthDetails systemHealthDetails = new SystemHealthDetails();
+		systemHealthDetails.setAppType("netmd");
+		systemHealthDetails.setCpuUsage("50");
+		systemHealthDetails.setHardDiskUsed("50");
+		systemHealthDetails.setMemoryUsed("50");
+		systemHealthDetails.setTotalCpuSpace("100");
+		systemHealthDetails.setTotalHardDiskSpace("100");
+		systemHealthDetails.setTotalMemorySpace("100");
+
+		HeaderDTO netmdHeader = new HeaderDTO();
+		netmdHeader.setMacId("00-80-48-6E-E1-E2");
+		netmdHeader.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
+		netmdHeader.setHeadOfficeId(3);
+		netmdHeader.setBranchId(5);
+
+		systemHealthDetails.setHeader(netmdHeader);
+		try {
+
+			service.checkSystemHealth(systemHealthDetails);
+		} catch (ServiceException e) {
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+
+	@Test
+	public void viewBillSuccess() {
+		NetMdService service = (NetMdService) applicationContext
+				.getBean("netMd.service");
+		FilterDTO filterDTO = new FilterDTO();
+		List<ExpressionDTO> expressionList = new ArrayList<ExpressionDTO>();
+		ExpressionDTO exp1 = new ExpressionDTO();
+		exp1.setName("orderDate");
+		exp1.setOperator("ge");
+		exp1.setValue("2013-10-01");
+		expressionList.add(exp1);
+		ExpressionDTO exp2 = new ExpressionDTO();
+		exp2.setName("orderDate");
+		exp2.setOperator("le");
+		exp2.setValue("2013-10-11");
+		expressionList.add(exp2);
+filterDTO.setExp(expressionList);
+		try {
+			service.billList(filterDTO);
+  		} catch (ServiceException e) {
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+
 }

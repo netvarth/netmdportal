@@ -24,6 +24,10 @@
 		{
 			"name" 	: 	"brannchlist",
 			"title"	:	"Branch List"
+		},
+		{
+			"name" 	: 	"change",
+			"title"	:	"Sync Set"
 		}
 	]
 }

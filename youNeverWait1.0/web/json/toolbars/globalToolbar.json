@@ -18,6 +18,12 @@
             "className": "big-link",
             "name": "ribbonNewNetRx",
             "image": "/youNeverWait/images/icon/dashboard/3.PNG"
-        } 	
+        },
+		{
+            "title": "Set Sync",
+            "className": "big-link",
+            "name": "ribbonSetSync",
+            "image": "/youNeverWait/images/icon/dashboard/4.png"
+        }	
     ]
 }

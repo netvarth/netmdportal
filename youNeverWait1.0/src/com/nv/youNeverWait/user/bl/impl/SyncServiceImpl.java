@@ -14,12 +14,16 @@ import java.util.Date;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.nv.youNeverWait.rs.dto.BillSyncResponseDTO;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ActionNameEnum;
 import com.nv.youNeverWait.rs.dto.Appointment;
 import com.nv.youNeverWait.rs.dto.AppointmentDetailsDTO;
 import com.nv.youNeverWait.rs.dto.AppointmentResponse;
+import com.nv.youNeverWait.rs.dto.BillResponseDTO;
+import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.DoctorLoginDTO;
@@ -28,9 +32,11 @@ import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.HeaderResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
+import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientResponse;
@@ -42,21 +48,27 @@ import com.nv.youNeverWait.rs.dto.RetrievalPatientResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalScheduleResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveSpecimenResponse;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
 import com.nv.youNeverWait.rs.dto.ScheduleDetail;
 import com.nv.youNeverWait.rs.dto.ScheduleResponse;
 import com.nv.youNeverWait.rs.dto.ScheduleResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncResponseDTO;
+import com.nv.youNeverWait.rs.dto.RetrieveTestResponse;
 import com.nv.youNeverWait.rs.dto.UserResponse;
 import com.nv.youNeverWait.user.bl.service.AppointmentService;
 import com.nv.youNeverWait.user.bl.service.DoctorService;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
+import com.nv.youNeverWait.user.bl.service.OrderService;
 import com.nv.youNeverWait.user.bl.service.PatientService;
 import com.nv.youNeverWait.user.bl.service.ResultService;
 import com.nv.youNeverWait.user.bl.service.ScheduleService;
+import com.nv.youNeverWait.user.bl.service.SpecimenService;
 import com.nv.youNeverWait.user.bl.service.SyncService;
+import com.nv.youNeverWait.user.bl.service.TestService;
 import com.nv.youNeverWait.user.bl.validation.SyncValidator;
 import com.nv.youNeverWait.user.pl.dao.SyncDao;
 
@@ -74,6 +86,9 @@ public class SyncServiceImpl implements SyncService {
 	private AppointmentService appointmentService;
 	private ResultService resultService;
 	private LabService labService;
+	private SpecimenService specimenService;
+	private TestService testService;
+	
 	private static final Log log = LogFactory.getLog(SyncServiceImpl.class);
 
 	/**
@@ -92,11 +107,18 @@ public class SyncServiceImpl implements SyncService {
 		Date currentSyncTime = new Date(); // setting current date time
 
 		/* Validating header details */
-		validator.validateHeaderDetails(sync.getHeader());
+		validator.validateNetMdHeaderDetails(sync.getHeader());
 
 		/* Validating last sync time */
 		validator.validateLastSyncTime(sync.getLastSyncTime());
 
+		/*Checking whether sync is enabled or disabled*/
+//		SyncFreqDTO syncDetails=netMdService.syncEnableStatus(sync.getHeader(),sync.getFreqType(),sync.getInterval());
+//		syncResponse.setSyncFreqType(syncDetails.getSyncFreqType());
+//		syncResponse.setSyncInterval(syncDetails.getSyncTime());
+//		syncResponse.setSyncStatus(syncDetails.isEnableSync());
+//		validator.checkSyncFreq(syncDetails,sync.getFreqType(),sync.getInterval());
+		
 		/*Setting last sync time when the syncData calling for the first time*/
 		if(sync.getLastSyncTime()==null){
 			sync.setLastSyncTime(df.format(new Date(0)));
@@ -144,9 +166,16 @@ public class SyncServiceImpl implements SyncService {
 			RetrievalAppointmentResponseDTO retrievalAppointmentDTOForPrimary = appointmentService
 					.retrieveAppointmentForPrimary(sync.getLastSyncTime(), sync
 							.getHeader().getPassPhrase(), sync.getHeader()
-							.getNetMdBranchId(), currentSyncTime);
+							.getBranchId(), currentSyncTime);
 			syncResponse.setRetrievalAppointmentListForPrimary(retrievalAppointmentDTOForPrimary);
 
+			/*Synchronizing bill details*/
+			List<BillSyncResponseDTO> billResponseList = getBillResponseList(
+					sync.getHeader(), sync.getNewBillList(),
+					sync.getUpdateBillList());
+
+			syncResponse.setBillResponse(billResponseList);
+			
 		}// end of if loop
 
 		/*Retrieve appointments for secondary devices*/
@@ -155,43 +184,43 @@ public class SyncServiceImpl implements SyncService {
 			RetrievalAppointmentResponseDTO retrievalAppointmentDTO = appointmentService
 					.retrieveAppointmentForSecondary(sync.getLastSyncTime(), sync
 							.getHeader().getPassPhrase(), sync.getHeader()
-							.getNetMdBranchId(), currentSyncTime);
+							.getBranchId(), currentSyncTime);
 			syncResponse.setRetrievalAppointmentList(retrievalAppointmentDTO);
 
 		}
 		/* Retrieving Doctor Password List */
 		List<DoctorLoginDTO> doctorPasswordList = doctorService
 				.DoctorPasswordList(sync.getLastSyncTime(), sync.getHeader()
-						.getPassPhrase(), sync.getHeader().getNetMdBranchId(),
+						.getPassPhrase(), sync.getHeader().getBranchId(),
 						currentSyncTime);
 		syncResponse.setDoctorLogin(doctorPasswordList);
 
 		/*Get  Result from resultTbl*/
 		List<RetrieveResultsResponseDTO> retrieveResults= resultService.getPatientResults(sync.getLastSyncTime(),sync.getHeader()
-				.getPassPhrase(), sync.getHeader().getNetMdBranchId(),currentSyncTime);
+				.getPassPhrase(), sync.getHeader().getBranchId(),currentSyncTime);
 
 		/* Retrieving Doctor List */
 		RetrievalDoctorResponseDTO retrieveDoctors = doctorService
 				.retrieveDoctorList(sync.getLastSyncTime(), sync.getHeader()
-						.getPassPhrase(), sync.getHeader().getNetMdBranchId(),
+						.getPassPhrase(), sync.getHeader().getBranchId(),
 						currentSyncTime);
 
 		/* Retrieving User List */
 		RetrievalUserResponseDTO retrieveUsers = netMdService.retrieveUserList(
 				sync.getLastSyncTime(), sync.getHeader().getPassPhrase(), sync
-				.getHeader().getNetMdBranchId(), currentSyncTime);
+				.getHeader().getBranchId(), currentSyncTime);
 
 		/* Synchronizing patients back to netMD */
 		RetrievalPatientResponseDTO retrievalPatientDTO = patientService
 				.retrievePatientsForNetMd(sync.getLastSyncTime(), sync
 						.getHeader().getPassPhrase(), sync.getHeader()
-						.getNetMdBranchId(), currentSyncTime);
+						.getBranchId(), currentSyncTime);
 
 		
 		/* Retrieving Schedule List */
 		RetrievalScheduleResponseDTO retrieveSchedules = scheduleService.retrieveScheduleList(
 				sync.getLastSyncTime(), sync.getHeader().getPassPhrase(), sync
-				.getHeader().getNetMdBranchId(), currentSyncTime);
+				.getHeader().getBranchId(), currentSyncTime);
 
 		syncResponse.setRetrieveResults(retrieveResults);
 		syncResponse.setRetrievalPatientDTO(retrievalPatientDTO);
@@ -202,6 +231,111 @@ public class SyncServiceImpl implements SyncService {
 		syncResponse.setHeaderResponse(headerResponse);
 		syncResponse.setSuccess(true);
 		return syncResponse;
+	}
+
+	/**
+	 * @param header
+	 * @param newBillList
+	 * @param updateBillList
+	 * @return
+	 */
+	private List<BillSyncResponseDTO> getBillResponseList(HeaderDTO header,
+			List<BillSummaryDTO> newBillList,
+			List<BillSummaryDTO> updateBillList) {
+		
+		List<BillSyncResponseDTO> billResponseList = new ArrayList<BillSyncResponseDTO>();
+
+		List<BillSyncResponseDTO> newBillResponseList = syncNewBills(
+				newBillList, header);
+		List<BillSyncResponseDTO> updatedBillResponseList = syncUpdatedBills(
+				updateBillList, header);
+		billResponseList.addAll(newBillResponseList);
+		billResponseList.addAll(updatedBillResponseList);
+
+		return billResponseList;
+	}
+
+	/**
+	 * @param updateBillList
+	 * @param header
+	 * @return
+	 */
+	private List<BillSyncResponseDTO> syncUpdatedBills(
+			List<BillSummaryDTO> updateBillList, HeaderDTO header) {
+		List<BillSyncResponseDTO> updatedBillResponseList = new ArrayList<BillSyncResponseDTO>();
+		for (BillSummaryDTO updatedBill : updateBillList) {
+			try {
+
+				BillResponseDTO response = netMdService.updateBills(updatedBill,
+						header);
+				BillSyncResponseDTO billResponse = new BillSyncResponseDTO();
+				billResponse.setActionName(ActionNameEnum.UPDATE.getDisplayName());
+				billResponse.setUpdateDateTime(response.getUpdateDateTime());
+				billResponse.setGlobalId(response.getGlobalId());
+				billResponse.setUid(response.getUid());
+				billResponse.setSuccess(true);
+
+				updatedBillResponseList.add(billResponse);
+			} catch (ServiceException se) {
+				log.error("Error while saving updated bills into portal ", se);
+				List<Parameter> parameters = se.getParamList();
+				ErrorDTO error = new ErrorDTO();
+				error.setErrCode(se.getError().getErrCode());
+				error.setParams(parameters);
+				error.setDisplayErrMsg(se.isDisplayErrMsg());
+				BillSyncResponseDTO billResponse = new BillSyncResponseDTO();
+				billResponse.setError(error);
+				billResponse.setSuccess(false);
+				billResponse.setUid(updatedBill.getUid());
+				billResponse.setGlobalId(updatedBill.getGlobalId());
+				billResponse.setActionName(ActionNameEnum.UPDATE
+						.getDisplayName());
+
+				updatedBillResponseList.add(billResponse);
+			}
+		}
+		return updatedBillResponseList;
+	}
+
+	/**
+	 * @param newBillList
+	 * @param header
+	 * @return
+	 */
+	private List<BillSyncResponseDTO> syncNewBills(
+			List<BillSummaryDTO> newBillList, HeaderDTO header) {
+		List<BillSyncResponseDTO> newBillResponseList = new ArrayList<BillSyncResponseDTO>();
+		for (BillSummaryDTO newBill : newBillList) {
+			try {
+
+				BillResponseDTO response = netMdService.createBill(newBill, header);
+				BillSyncResponseDTO billResponse = new BillSyncResponseDTO();
+				billResponse.setActionName(ActionNameEnum.ADD
+						.getDisplayName());
+				billResponse.setCreateDateTime(response.getCreateDateTime());
+				billResponse.setUpdateDateTime(response.getUpdateDateTime());
+				billResponse.setGlobalId(response.getGlobalId());
+				billResponse.setUid(response.getUid());
+				billResponse.setSuccess(true);
+
+				newBillResponseList.add(billResponse);
+			} catch (ServiceException se) {
+				log.error("Error while saving new bills into portal ", se);
+				List<Parameter> parameters = se.getParamList();
+				ErrorDTO error = new ErrorDTO();
+				error.setErrCode(se.getError().getErrCode());
+				error.setParams(parameters);
+				error.setDisplayErrMsg(se.isDisplayErrMsg());
+				BillSyncResponseDTO billResponse = new BillSyncResponseDTO();
+				billResponse.setError(error);
+				billResponse.setSuccess(false);
+				billResponse.setUid(newBill.getUid());
+				billResponse.setActionName(ActionNameEnum.ADD
+						.getDisplayName());
+				newBillResponseList.add(billResponse);
+			}
+		}
+		return newBillResponseList;
 	}
 
 	/**
@@ -954,7 +1088,7 @@ public class SyncServiceImpl implements SyncService {
 		List<UserResponse> deleteUserResponseList = new ArrayList<UserResponse>();
 		for (NetMdUserDetail deletedUser : deleteUsers) {
 			try {
-				ResponseDTO response = netMdService.deleteUser(deletedUser
+				 netMdService.deleteUser(deletedUser
 						.getGlobalId());
 				UserResponse userResponse = new UserResponse();
 				userResponse.setActionName(ActionNameEnum.DELETE
@@ -1008,7 +1142,14 @@ public class SyncServiceImpl implements SyncService {
 			sync.setLastSyncTime(df.format(new Date(0)));
 		
 		Date currentSyncTime = new Date(); // setting current date time
-
+		
+//		/*Checking whether sync is enabled or disabled*/
+//		SyncFreqDTO syncDetails=labService.syncEnableStatus(sync.getHeader(),sync.getFreqType(),sync.getInterval());
+//		syncResponse.setSyncStatus(syncDetails.isEnableSync());
+//		syncResponse.setFreqType(syncDetails.getSyncFreqType());
+//		syncResponse.setIntervalTime(syncDetails.getSyncTime());
+//		validator.checkSyncFreq(syncDetails,sync.getFreqType(),sync.getInterval());
+		
 		/*Retrieving all lab branches in the portal*/
 		LabBranchListResponseDTO retrieveLabBranchList=labService.retrieveLabBranchList(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
 		syncResponse.setRetrieveLabBranchList(retrieveLabBranchList);
@@ -1017,13 +1158,29 @@ public class SyncServiceImpl implements SyncService {
 		RetrieveUserListResponseDTO retrieveUserList= labService.retrieveUserList(sync.getHeader(), sync.getLastSyncTime(), currentSyncTime);
 		syncResponse.setRetrieveUserList(retrieveUserList);
 
-		/*Get all results from other branches of same lab*/
+		/*Retrieving  newly added and updated lab test*/
+		 RetrieveTestResponse getTests= testService.getTests(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
+		 syncResponse.setRetrieveTests(getTests);
+		 
+		 /*Retrieving newly added and updated test specimen*/
+		 RetrieveSpecimenResponse retreiveSpecimens= specimenService.getSpecimens(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
+		 syncResponse.setRetrieveSpecimens(retreiveSpecimens);
+		 
+		 /*Get all results from other branches of same lab*/
 		ResultRetrievalResponseDTO getResult = labService.getResult(sync.getHeader(), sync.getLastSyncTime(), currentSyncTime);
 		syncResponse.setGetResult(getResult);
 		
 		/* Save total orders and its related details of a branch*/
 		BranchOrderCountResponseDTO response= labService.createTotalOrders(sync.getHeader(),sync.getBranchOrders());
 		syncResponse.setOrderAmount(response);
+		
+//		/* Retrieving orders from other branches*/
+//		OrderDetails orderDetail= labService.retrieveBranchOrders(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
+//		syncResponse.setRetrieveOrders(orderDetail);
+		
+		/* Retrieving lab details*/
+		LabDTO labDetails= labService.getLab(sync.getHeader(),sync.getLastSyncTime(),currentSyncTime);
+		syncResponse.setLabDetails(labDetails);
 		
 		syncResponse.setLastSynctime(df.format(currentSyncTime));
 		return syncResponse;
@@ -1154,6 +1311,36 @@ public class SyncServiceImpl implements SyncService {
 	public void setResultService(ResultService resultService) {
 		this.resultService = resultService;
 	}
+
+	/**
+	 * @return the specimenService
+	 */
+	public SpecimenService getSpecimenService() {
+		return specimenService;
+	}
+
+	/**
+	 * @param specimenService the specimenService to set
+	 */
+	public void setSpecimenService(SpecimenService specimenService) {
+		this.specimenService = specimenService;
+	}
+
+	/**
+	 * @return the testService
+	 */
+	public TestService getTestService() {
+		return testService;
+	}
+
+	/**
+	 * @param testService the testService to set
+	 */
+	public void setTestService(TestService testService) {
+		this.testService = testService;
+	}
+
+	
 
 
 }

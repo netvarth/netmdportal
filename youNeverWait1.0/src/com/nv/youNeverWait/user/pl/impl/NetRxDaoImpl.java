@@ -25,6 +25,8 @@ import com.nv.youNeverWait.pl.entity.NetrxPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.NetrxTbl;
 import com.nv.youNeverWait.pl.entity.NetrxUserTbl;
 import com.nv.youNeverWait.pl.entity.StatusEnum;
+import com.nv.youNeverWait.pl.entity.SuperAdminTbl;
+import com.nv.youNeverWait.pl.entity.SyncFreqTypeEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchDetail;
@@ -39,6 +41,8 @@ import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PassPhraseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.NetRxDao;
@@ -61,6 +65,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 	@Override
 	public ResponseDTO create(NetRxDTO netRx) {
 		ResponseDTO response = new ResponseDTO();
+		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
 		NetrxLoginTbl loginTbl = getLoginByUserName(netRx.getUserName());
 		if (loginTbl != null) {
 			ServiceException se = new ServiceException(
@@ -111,6 +116,13 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		Date createdTime = new Date();
 		netRxTbl.setCreateDateTime(createdTime);
 		netRxTbl.setUpdateDateTime(createdTime);
+		if (superAdmin.getEnableSync() == false) {
+			netRxTbl.setEnableSync(false);
+		} else {
+			netRxTbl.setEnableSync(true);
+			netRxTbl.setSyncFreqType(superAdmin.getSyncFreqType());
+			netRxTbl.setSyncTime(superAdmin.getSyncTime());
+		}
 		save(netRxTbl);
 		response.setGlobalId(netRxTbl.getId());
 		response.setSuccess(true);
@@ -720,6 +732,14 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		netRxBranch.setMobile(branch.getMobile());
 		netRxBranch.setEmail(branch.getEmail());
 		netRxBranch.setNetrxTbl(netRx);
+		if(netRx.getEnableSync()==false){
+			netRxBranch.setEnableSync(false);
+		}
+		else{
+			netRxBranch.setEnableSync(true);
+			netRxBranch.setSyncFreqType(netRx.getSyncFreqType());
+			netRxBranch.setSyncTime(netRx.getSyncTime());
+		}
 		save(netRxBranch);
 		NetrxPassphraseTbl netRxPassPhrase = new NetrxPassphraseTbl();
 		String passphrase = StringEncoder.getKeyvalue(StringEncoder.getKey());
@@ -879,6 +899,211 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		return response;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.NetRxDao#setNetRxSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	@Transactional
+	public SyncFreqResponseDTO setNetRxSync(SyncFreqDTO sync) {
+ 		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		Date newDate= new Date();
+		NetrxTbl netrx = getById(NetrxTbl.class, sync.getNetrxId());
+		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+		if (netrx != null) {
+			if (superAdmin.getEnableSync() == false) {
+				netrx.setEnableSync(false);
+			} else
+				netrx.setEnableSync(sync.isEnableSync());
+			netrx.setUpdateDateTime(newDate);
+			update(netrx);
+			/**** Setting values when the sync is enabled ****/
+			if (netrx.getEnableSync() == true) {
+
+				/****** Checking sync values with global sync time *****/
+				checkSync(superAdmin.getSyncFreqType(), sync.getSyncFreqType(),
+						sync.getSyncTime(), superAdmin.getSyncTime());
+
+				netrx.setSyncTime(sync.getSyncTime());
+				netrx.setSyncFreqType(sync.getSyncFreqType());
+				netrx.setUpdateDateTime(newDate);
+				update(netrx);
+			} else {
+				if (sync.isEnableSync())
+					response.setMsg(Constants.MESSAGE);
+				/****** Setting all branches of the lab as disabled *******/
+				for (NetrxBranchTbl netrxBranch : netrx.getNetrxBranchTbls()) {
+					netrxBranch.setEnableSync(netrx.getEnableSync());
+					netrxBranch.setUpdateDateTime(newDate);
+					update(netrxBranch);
+					
+				}// end of for loop
+			}
+
+		} else {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetRx);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(sync
+					.getNetrxId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
+		response.setSuccess(true);
+		return response;
+	}
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.NetRxDao#setNetRxBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	@Transactional
+	public SyncFreqResponseDTO setNetRxBranchSync(SyncFreqDTO sync) {
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		Date newDate= new Date();
+		NetrxBranchTbl netrxBranch = getById(NetrxBranchTbl.class,
+				sync.getNetrxBranchId());
+		if (netrxBranch != null) {
+			if (netrxBranch.getNetrxTbl().getEnableSync() == false) {
+				netrxBranch.setEnableSync(false);
+			} else {
+				SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+				if (superAdmin.getEnableSync() == false) {
+					netrxBranch.setEnableSync(false);
+				} else {
+					netrxBranch.setEnableSync(sync.isEnableSync());
+				}
+			}
+			netrxBranch.setUpdateDateTime(newDate);
+			update(netrxBranch);
+			if (netrxBranch.getEnableSync()==true) {
+				/**
+				 * Checking whether branch sync time is greater than netrx sync
+				 * time
+				 **/
+				checkSync(netrxBranch.getNetrxTbl().getSyncFreqType(),
+						sync.getSyncFreqType(), sync.getSyncTime(), netrxBranch
+								.getNetrxTbl().getSyncTime());
+
+				netrxBranch.setSyncTime(sync.getSyncTime());
+				netrxBranch.setSyncFreqType(sync.getSyncFreqType());
+				netrxBranch.setUpdateDateTime(newDate);
+				update(netrxBranch);
+			} else {
+				if (sync.isEnableSync())
+				response.setMsg(Constants.MESSAGE);
+			}
+		} else {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * @param priorSyncFreqType
+	 * @param syncFreqType
+	 * @param syncTime
+	 * @param priorSyncTime
+	 */
+	private void checkSync(String priorSyncFreqType, String syncFreqType,
+			int syncTime, int priorSyncTime) {
+		if (priorSyncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
+			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
+				if (syncTime > priorSyncTime) {
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.SynctimeExceeds);
+					se.setDisplayErrMsg(true);
+					throw se;
+				}
+			}
+		} // end of daily if loop
+		if (priorSyncFreqType.equals(SyncFreqTypeEnum.HOURLY.getDisplayName())) {
+			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.SynctimeExceeds);
+				se.setDisplayErrMsg(true);
+				throw se;
+			} else if (syncFreqType.equals(SyncFreqTypeEnum.HOURLY
+					.getDisplayName())) {
+				if (syncTime > priorSyncTime) {
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.SynctimeExceeds);
+					se.setDisplayErrMsg(true);
+					throw se;
+				}
+			}
+		} // end of hourly if loop
+		if (priorSyncFreqType.equals(SyncFreqTypeEnum.MINUTES.getDisplayName())) {
+			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())
+					|| syncFreqType.equals(SyncFreqTypeEnum.HOURLY
+							.getDisplayName())) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.SynctimeExceeds);
+				se.setDisplayErrMsg(true);
+				throw se;
+			} else if (syncFreqType.equals(SyncFreqTypeEnum.MINUTES
+					.getDisplayName())) {
+				if (syncTime > priorSyncTime) {
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.SynctimeExceeds);
+					se.setDisplayErrMsg(true);
+					throw se;
+				}
+			}
+		} // end of minutes if loop
+	}
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.NetRxDao#getBranchSyncDetails(int)
+	 */
+	@Override
+	@Transactional
+	public SyncFreqDTO getBranchSyncDetails(int branchId) {
+		SyncFreqDTO sync = new SyncFreqDTO();
+		NetrxBranchTbl netrxBranch = getById(NetrxBranchTbl.class, branchId);
+		if (netrxBranch != null) {
+			sync.setSyncFreqType(netrxBranch.getSyncFreqType());
+			sync.setSyncTime(netrxBranch.getSyncTime());
+			sync.setEnableSync(netrxBranch.getEnableSync());
+			sync.setSuccess(true);
+		} else {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranch);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(branchId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		return sync;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.NetRxDao#getNetrxSyncDetails(int)
+	 */
+	@Override
+	@Transactional
+	public SyncFreqDTO getNetrxSyncDetails(int netrxId) {
+		SyncFreqDTO sync = new SyncFreqDTO();
+		NetrxTbl netrx = getById(NetrxTbl.class, netrxId);
+		if (netrx != null) {
+			sync.setSyncFreqType(netrx.getSyncFreqType());
+			sync.setSyncTime(netrx.getSyncTime());
+			sync.setEnableSync(netrx.getEnableSync());
+			sync.setSuccess(true);
+		} else {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidNetRx);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(netrxId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		return sync;
+	}
+	
+	
 	/**
 	 * 
 	 * @param loginId
@@ -1008,4 +1233,10 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
+
+	
+
+	
+
+	
 }

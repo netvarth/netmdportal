@@ -81,7 +81,8 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 					appointmentTbl.getPatientTbl().getId(), appointmentTbl
 							.getDoctorTbl().getId(), appointmentTbl
 							.getDoctorScheduleTbl().getId(),
-					appointmentTbl.getDate(), appointmentTbl.getStartingTime(),
+					appointmentTbl.getAppointmentDate(),
+					appointmentTbl.getStartingTime(),
 					appointmentTbl.getCreateDateTime(),
 					appointmentTbl.getUpdateDateTime(), appointmentTbl
 							.getPatientTbl().getFirstName(),
@@ -129,18 +130,19 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		List<PatientAppointmentTbl> appointmentList = retrieveAppointmentsForPrimary(
-				lastSyncTime, netMdBranchId, currentSyncTime);
-//		List<PatientAppointmentTbl> appointmentListPortal = retrieveAppointmentsCreatedInPortal(
-//				lastSyncTime, netMdBranchId, currentSyncTime);
-//		appointmentList.addAll(appointmentListPortal);
+		List<PatientAppointmentTbl> appointmentList = retrieveAppointmentsForPrimary(lastSyncTime, netMdBranchId, currentSyncTime);
+		// List<PatientAppointmentTbl> appointmentListPortal =
+		// retrieveAppointmentsCreatedInPortal(
+		// lastSyncTime, netMdBranchId, currentSyncTime);
+		// appointmentList.addAll(appointmentListPortal);
 		for (PatientAppointmentTbl appointmentTbl : appointmentList) {
 			AppointmentDTO appointmentDto = new AppointmentDTO(
 					appointmentTbl.getId(), appointmentTbl.getId(),
 					appointmentTbl.getPatientTbl().getId(), appointmentTbl
 							.getDoctorTbl().getId(), appointmentTbl
 							.getDoctorScheduleTbl().getId(),
-					appointmentTbl.getDate(), appointmentTbl.getStartingTime(),
+					appointmentTbl.getAppointmentDate(),
+					appointmentTbl.getStartingTime(),
 					appointmentTbl.getCreateDateTime(),
 					appointmentTbl.getUpdateDateTime(), appointmentTbl
 							.getPatientTbl().getFirstName(),
@@ -168,7 +170,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 		query.setParameter("param2", currentSyncTime);
 		query.setParameter("param3", netMdBranchId);
 		return executeQuery(PatientAppointmentTbl.class, query);
-		
+
 	}
 
 	/*
@@ -221,7 +223,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 	}
 
 	/**
-	 * delete appointment 
+	 * delete appointment
 	 * 
 	 * @param id
 	 * @return ResponseDTO
@@ -308,9 +310,9 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 					|| !passPhrase.getMacId().equals(
 							appointment.getHeader().getMacId())
 					|| passPhrase.getNetmdBranchTbl().getId() != appointment
-							.getHeader().getNetMdBranchId()
+							.getHeader().getBranchId()
 					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != appointment
-							.getHeader().getNetMdId()) {
+							.getHeader().getHeadOfficeId()) {
 
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.InvalidNetMdAccount);
@@ -365,6 +367,8 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 				Constants.DATE_FORMAT_WITHOUT_TIME);
 		DateFormat df3 = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		DateFormat df4 = new SimpleDateFormat(
+				Constants.NEWTIME_FORMAT_FOR_APPOINTMENT);
 		Date startsDate;
 		Date startTime;
 
@@ -428,16 +432,29 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 			throw se;
 
 		}
-
+		
+		/**
+		 * combining appointmnet date and starting time to fill the appointment
+		 * time field in patient appointmnet tbl
+		 **/
+		String newAppointmentDateTime = appointment.getAppointmentDetails().getStartDate() + " " + df4.format(startTime);
+		Date newAppointmentTime = null;
+		try {
+			newAppointmentTime = df3.parse(newAppointmentDateTime);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		NetmdBranchTbl netmdbranchTbl = (NetmdBranchTbl) getById(
 				NetmdBranchTbl.class, appointment.getHeader()
-						.getNetMdBranchId());
+						.getBranchId());
 		appointmentTbl.setNetmdBranchTbl(netmdbranchTbl);
-		appointmentTbl.setDate(startsDate);
+		appointmentTbl.setAppointmentDate(startsDate);
 		appointmentTbl.setStartingTime(startTime);
 		appointmentTbl.setDoctorScheduleTbl(schedule);
 		appointmentTbl.setAppointmentStatus("Confirmed");
 		appointmentTbl.setStatus("active");
+		appointmentTbl.setAppointmentTime(newAppointmentTime);
 		Date newDate = new Date();
 		appointmentTbl.setCreateDateTime(newDate);
 		appointmentTbl.setUpdateDateTime(newDate);
@@ -494,6 +511,11 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 		DateFormat df1 = new SimpleDateFormat(Constants.TIMEWITHFORMAT);
 		SimpleDateFormat df = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITHOUT_TIME);
+		DateFormat df3 = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		DateFormat df4 = new SimpleDateFormat(
+				Constants.NEWTIME_FORMAT_FOR_APPOINTMENT);
+		Date newAppointmentTime = null;
 		PatientAppointmentTbl patientAppointmentTbl;
 		if (appointment.getHeader().getMacId() != null
 				&& appointment.getHeader().getPassPhrase() != null
@@ -514,9 +536,9 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 					|| !passPhrase.getMacId().equals(
 							appointment.getHeader().getMacId())
 					|| passPhrase.getNetmdBranchTbl().getId() != appointment
-							.getHeader().getNetMdBranchId()
+							.getHeader().getBranchId()
 					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != appointment
-							.getHeader().getNetMdId()) {
+							.getHeader().getHeadOfficeId()) {
 
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.InvalidNetMdAccount);
@@ -548,7 +570,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 		}
 		patientAppointmentTbl.setPatientTbl(patientTbl);
 		try {
-			patientAppointmentTbl.setDate(df.parse(appointment
+			patientAppointmentTbl.setAppointmentDate(df.parse(appointment
 					.getAppointmentDetails().getStartDate()));
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -556,12 +578,21 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 		try {
 			patientAppointmentTbl.setStartingTime(df1.parse(appointment
 					.getAppointmentDetails().getStartTime()));
+			/**
+			 * combining appointmnet date and starting time to fill the appointment
+			 * time field in patient appointmnet tbl
+			 **/
+			String newAppointmentDateTime = appointment.getAppointmentDetails().getStartDate() + " " + df4.format(df1.parse(appointment.getAppointmentDetails()
+					.getStartTime()));
+			newAppointmentTime = df3.parse(newAppointmentDateTime);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		patientAppointmentTbl.setUpdateDateTime(new Date());
 		patientAppointmentTbl.setAppointmnetLevel(flag);
+		patientAppointmentTbl.setAppointmentDate(newAppointmentTime);
 		update(patientAppointmentTbl);
 		response.setStartTime(df1.format(patientAppointmentTbl
 				.getStartingTime()));
@@ -582,9 +613,8 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 	 * @param currentSyncTime
 	 * @return
 	 */
-	private List<PatientAppointmentTbl> retrieveAppointments(
-			Date lastSyncTime, int netmdBranchId, Date currentSyncTime,
-			int netmdPassphraseId) {
+	private List<PatientAppointmentTbl> retrieveAppointments(Date lastSyncTime,
+			int netmdBranchId, Date currentSyncTime, int netmdPassphraseId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.RETRIEVE_APPOINTMENTS);
 		query.setParameter("param1", lastSyncTime);
@@ -695,21 +725,22 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 				PatientAppointmentTbl.class, query);
 	}
 
-//	/**
-//	 * get past appointments
-//	 * 
-//	 * @return
-//	 */
-//	@Override
-//	public List<PatientAppointmentTbl> getPastAppointments(String patientId) {
-//		javax.persistence.Query query = em
-//				.createQuery(Query.GET_PAST_APPOINTMENTS);
-//		query.setParameter("param1", Integer.parseInt(patientId));
-//		query.setParameter("param2", getCurrentDate());
-//
-//		return (List<PatientAppointmentTbl>) executeQuery(
-//				PatientAppointmentTbl.class, query);
-//	}
+	// /**
+	// * get past appointments
+	// *
+	// * @return
+	// */
+	// @Override
+	// public List<PatientAppointmentTbl> getPastAppointments(String patientId)
+	// {
+	// javax.persistence.Query query = em
+	// .createQuery(Query.GET_PAST_APPOINTMENTS);
+	// query.setParameter("param1", Integer.parseInt(patientId));
+	// query.setParameter("param2", getCurrentDate());
+	//
+	// return (List<PatientAppointmentTbl>) executeQuery(
+	// PatientAppointmentTbl.class, query);
+	// }
 
 	/**
 	 * get past appointments
@@ -726,6 +757,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 		return (List<PatientAppointmentTbl>) executeQuery(
 				PatientAppointmentTbl.class, query);
 	}
+
 	private Date getCurrentDateByTime() {
 		DateFormat sdf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
@@ -738,6 +770,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 		}
 		return newDate;
 	}
+
 	private Date getCurrentDate() {
 
 		Date newDate = null;

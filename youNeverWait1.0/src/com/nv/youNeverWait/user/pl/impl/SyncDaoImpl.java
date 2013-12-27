@@ -52,15 +52,10 @@ public class SyncDaoImpl extends GenericDaoHibernateImpl implements SyncDao{
 					|| passPhrase.getMacId() == null
 					|| !passPhrase.getMacId().equals(header.getMacId())
 					|| passPhrase.getNetmdBranchTbl().getId() != header
-							.getNetMdBranchId()
+							.getBranchId()
 					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != header
-							.getNetMdId()) {
-//				ErrorDTO error = new ErrorDTO();
-//				error.setErrCode(ErrorCodeEnum.InvalidNetMdAccount.getErrCode());
-//				error.setDisplayErrMsg(true);
-//				response.setError(error);
-//				response.setSuccess(false);
-//				response.setPrimaryDevice(false);
+							.getHeadOfficeId()) {
+
 				ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetMdAccount);
 				se.setDisplayErrMsg(true);
 				throw se;

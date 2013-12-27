@@ -23,9 +23,11 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
+import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
+import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdActivationResponseDTO;
@@ -39,6 +41,9 @@ import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.LogService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
@@ -49,6 +54,24 @@ public class NetMdResource {
 	private NetMdService netMdService;
 	private LogService logService;
 
+	/**
+	 * Shows Privacy and policy details
+	 * @return pricing html
+	 */
+	@RequestMapping(value = "privacyPolicy", method = RequestMethod.GET)
+	public String privacyPolicy() {
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		logService
+				.saveUserDetails(request.getRemoteAddr(), null,
+						LogUserTypeEnum.Nil.getDisplayName(), null, null,
+						ApplicationNameEnum.NetMd.getDisplayName(),
+						Constants.NETMD_POLICY);
+
+		return "privacyPolicynetMd";
+	}
+	
 	/**
 	 * To show login page for netmd user
 	 * 
@@ -116,7 +139,7 @@ public class NetMdResource {
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
 		logService.saveUserDetails(request.getRemoteAddr(),
-				login.getUserName(), login.getUserType(), null, null,
+				null, login.getUserType(), null, null,
 				ApplicationNameEnum.NetMd.getDisplayName(),
 				Constants.RESET_PSWD);
 		return response;
@@ -403,7 +426,32 @@ public class NetMdResource {
 		}
 		return response;
 	}
+	
+	/**
+	 * Filter method for getting list of bills in netmd
+	 * @param filter
+	 * @return BranchBillListResponseDTO
+	 */
+	@RequestMapping(value = "billList", method = RequestMethod.POST)
+	@ResponseBody
+	public BranchBillListResponseDTO billList(@RequestBody FilterDTO filter) {
 
+		BranchBillListResponseDTO response=	new BranchBillListResponseDTO();	
+		try{
+			response=netMdService.billList(filter);
+		}
+		catch(ServiceException e){
+			List<Parameter> parameters =e.getParamList();
+			ErrorDTO error=new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
 	/**
 	 * Deletes a netmd branch
 	 * 
@@ -675,7 +723,7 @@ public class NetMdResource {
 		logService.saveUserDetails(request.getRemoteAddr(), null,
 				LogUserTypeEnum.Nil.getDisplayName(), null, null,
 				ApplicationNameEnum.NetMd.getDisplayName(),
-				Constants.RESET_PSWD);
+				Constants.FORGOT_PWD);
 
 		return response;
 	}
@@ -707,6 +755,106 @@ public class NetMdResource {
 	}
 
 	
+	/**
+	 * To set synchronization frequency for a NetMd branch
+	 * 
+	 * @param sync
+	 * @return SyncFreqResponseDTO
+	 */
+	@RequestMapping(value = "setNetMdBranchSync", method = RequestMethod.POST)
+	
+	@ResponseBody
+	public SyncFreqResponseDTO setNetMdBranchSync(@RequestBody SyncFreqDTO sync) {
+
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		try {
+			response = netMdService.setNetMdBranchSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To get synchronization frequency details of a netmd 
+	 * 
+	 * @param netmdId
+	 * @return SyncFreqDTO
+	 */
+	@RequestMapping(value = "getNetmdSyncDetails/{netmdId}", method = RequestMethod.GET)
+	@ResponseBody
+	public SyncFreqDTO getNetmdSyncDetails(@PathVariable int netmdId) {
+
+		SyncFreqDTO response = new SyncFreqDTO();
+		try {
+			response = netMdService.getNetmdSyncDetails(netmdId);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To get synchronization frequency of a netmd branch 
+	 * 
+	 * @param branchId
+	 * @return SyncFreqDTO
+	 */
+	@RequestMapping(value = "getBranchSyncDetails/{branchId}", method = RequestMethod.GET)
+	@ResponseBody
+	public SyncFreqDTO getBranchSyncDetails(@PathVariable int branchId) {
+
+		SyncFreqDTO response = new SyncFreqDTO();
+		try {
+			response = netMdService.getBranchSyncDetails(branchId);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	/**
+	 * Method performed for system health monitor
+	 * 
+	 * @return HealthMonitorResponse
+	 */
+	@RequestMapping(value = "checkSystemHealth", method = RequestMethod.POST)
+	@ResponseBody
+	public HealthMonitorResponse checkSystemHealth(
+			@RequestBody SystemHealthDetails systemHealthDetails) {
+
+		HealthMonitorResponse response = new HealthMonitorResponse();
+		try {
+			response = netMdService.checkSystemHealth(systemHealthDetails);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+
 	/**
 	 * @return the netMdService
 	 */

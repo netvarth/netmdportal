@@ -21,6 +21,8 @@ import com.nv.youNeverWait.rs.dto.NetRxUserListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 
 
 
@@ -45,5 +47,9 @@ public interface NetRxService {
 	public ResponseDTO resetPassword(LoginDTO login);
 	public ResponseDTO changePassword(PasswordDTO passwords);
 	public ResponseDTO clearMacId(NetRxHeaderDTO header);
+	public SyncFreqResponseDTO setNetRxSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setNetRxBranchSync(SyncFreqDTO sync);
+	public SyncFreqDTO getBranchSyncDetails(int branchId);
+	public SyncFreqDTO getNetrxSyncDetails(int netrxId);
 				
 }

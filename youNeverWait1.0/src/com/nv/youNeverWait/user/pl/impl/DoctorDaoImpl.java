@@ -140,9 +140,9 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 					|| passPhrase.getMacId() == null
 					|| !passPhrase.getMacId().equals(header.getMacId())
 					|| passPhrase.getNetmdBranchTbl().getId() != header
-							.getNetMdBranchId()
+							.getBranchId()
 					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != header
-							.getNetMdId()) {
+							.getHeadOfficeId()) {
 
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.InvalidNetMdAccount);
@@ -161,7 +161,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 		if (existingUser != null) {
 			/* Checking doctor with same login exists */
 			DoctorTbl DoctorLogin = getExistingDoctorWithLogin(
-					existingUser.getId(), header.getNetMdBranchId());
+					existingUser.getId(), header.getBranchId());
 			if (DoctorLogin != null) {
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.LoginExists);
@@ -181,7 +181,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 
 		/* Checking doctor duplication */
 		List<DoctorTbl> existingDoc = getExistingDoctors(doctor.getEmail(),
-				header.getNetMdBranchId());
+				header.getBranchId());
 		if (existingDoc.size() != 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.DoctorEmailExists);
@@ -320,9 +320,9 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 					|| passPhrase.getMacId() == null
 					|| !passPhrase.getMacId().equals(header.getMacId())
 					|| passPhrase.getNetmdBranchTbl().getId() != header
-							.getNetMdBranchId()
+							.getBranchId()
 					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != header
-							.getNetMdId()) {
+							.getHeadOfficeId()) {
 
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.InvalidNetMdAccount);
@@ -335,7 +335,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 
 			/* Checking doctor duplication */
 			List<DoctorTbl> existingDoctrs = getExistingDoctors(
-					doctor.getEmail(), header.getNetMdBranchId());
+					doctor.getEmail(), header.getBranchId());
 			if (existingDoctrs.size() != 0) {
 				for (DoctorTbl doc : existingDoctrs) {
 					if (doctor.getGlobalId() != doc.getId()) {

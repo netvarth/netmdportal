@@ -34,6 +34,8 @@ import com.nv.youNeverWait.rs.dto.NetRxViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.LogService;
 import com.nv.youNeverWait.user.bl.service.NetRxService;
@@ -570,12 +572,90 @@ public class NetRxResource {
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
 		logService.saveUserDetails(request.getRemoteAddr(),
-				login.getUserName(), login.getUserType(), null, null,
+				null, login.getUserType(), null, null,
 				ApplicationNameEnum.NetRx.getDisplayName(),
 				Constants.RESET_PSWD);
 		return response;
 	}
 
+	
+	/**
+	 * To set synchronization frequency for a NetRx branch
+	 * 
+	 * @param sync
+	 * @return SyncFreqResponseDTO
+	 */
+	@RequestMapping(value = "setNetRxBranchSync", method = RequestMethod.POST)
+	
+	@ResponseBody
+	public SyncFreqResponseDTO setNetRxBranchSync(@RequestBody SyncFreqDTO sync) {
+
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		try {
+			response = netRxService.setNetRxBranchSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To get synchronization frequency details of a netrx 
+	 * 
+	 * @param netmdId
+	 * @return SyncFreqDTO
+	 */
+	@RequestMapping(value = "getNetrxSyncDetails/{netrxId}", method = RequestMethod.GET)
+	@ResponseBody
+	public SyncFreqDTO getNetrxSyncDetails(@PathVariable int netrxId) {
+
+		SyncFreqDTO response = new SyncFreqDTO();
+		try {
+			response = netRxService.getNetrxSyncDetails(netrxId);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To get synchronization frequency of a netrx branch 
+	 * 
+	 * @param branchId
+	 * @return SyncFreqDTO
+	 */
+	@RequestMapping(value = "getBranchSyncDetails/{branchId}", method = RequestMethod.GET)
+	@ResponseBody
+	public SyncFreqDTO getBranchSyncDetails(@PathVariable int branchId) {
+
+		SyncFreqDTO response = new SyncFreqDTO();
+		try {
+			response = netRxService.getBranchSyncDetails(branchId);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	
 	/**
 	 * @return the netRxService
 	 */

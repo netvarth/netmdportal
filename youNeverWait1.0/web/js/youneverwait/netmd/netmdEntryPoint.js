@@ -55,7 +55,20 @@ $j(document).ready(function() {
 			})
 		}
 	});
-		
+	
+	$j('#netmdPTBContainer #btn_change_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	//alert("list");
+	var netmdId= getSelectedNetMdId(pgTableName);
+		if(netmdId!="") {
+		var obj=$j(this);
+		createModal(constants_netmdSycSetJson,'netmdSycSetModal');	
+		openModalBox(obj,'netmdSycSetModal')
+		$j.cachedScript(constant_NetmdSyncSet_Url).done(function(script, textStatus) {
+		getNetmdId(netmdId)
+		})
+		}
+	});
 		
 	//To select row from the table
 	$j("#netmd" + ' tbody tr').die('click').live('click',function(){		

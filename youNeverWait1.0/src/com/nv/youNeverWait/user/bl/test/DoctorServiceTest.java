@@ -75,10 +75,10 @@ public class DoctorServiceTest {
 		doctorDetail.setLogin(login);
 
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(76);
+		header.setHeadOfficeId(76);
 		header.setPassPhrase("bab5TqPDNCbFCy7LWRffyg==");
 		header.setMacId("20-CF-30-D9-9C-04");
-		header.setNetMdBranchId(72);
+		header.setBranchId(72);
 		doctor.setHeader(header);
 		doctor.setDoctor(doctorDetail);
 		try {
@@ -98,13 +98,13 @@ public class DoctorServiceTest {
 				.getBean("doctor.service");
 		DoctorDTO doctor = new DoctorDTO();
 		DoctorDetail doctorDetail = new DoctorDetail();
-		doctorDetail.setAddress("Peramangalam");
-		doctorDetail.setEmail("linakerLouis@netvarth.com");
-		doctorDetail.setFirstName("linakerLouis");
-		doctorDetail.setLastName("Jaya");
+		doctorDetail.setAddress("vazhappilly");
+		doctorDetail.setEmail("luciya.jose@netvarth.com");
+		doctorDetail.setFirstName("winson");
+		doctorDetail.setLastName("grace");
 		doctorDetail.setDateOfBirth("1988-03-29");
 		doctorDetail.setConsultationInterval("20");
-		doctorDetail.setGender("FeMale");
+		doctorDetail.setGender("Male");
 		
 		 List<DoctorExperienceDTO> doctorExperience= new
 		 ArrayList<DoctorExperienceDTO>();
@@ -145,15 +145,15 @@ public class DoctorServiceTest {
 		 
 		 
 		LoginDTO login = new LoginDTO();
-		login.setUserName("linakerlouisd@netvarth.com");
+		login.setUserName("luciya.jose@netvarth.com");
 		login.setUserType("doctor");
 		doctorDetail.setLogin(login);
 
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(76);
+		header.setHeadOfficeId(76);
 		header.setPassPhrase("bab5TqPDNCbFCy7LWRffyg==");
 		header.setMacId("20-CF-30-D9-9C-04");
-		header.setNetMdBranchId(72);
+		header.setBranchId(72);
 		doctor.setHeader(header);
 		doctor.setDoctor(doctorDetail);
 		try {
@@ -191,10 +191,10 @@ public class DoctorServiceTest {
 		 doctorDetail.setLogin(login);
 
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("123");
 		header.setMacId("5646opiopiop");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		doctor.setHeader(header);
 		doctor.setDoctor(doctorDetail);
 		try {
@@ -233,10 +233,10 @@ public class DoctorServiceTest {
 		 doctorDetail.setLogin(login);
 
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("123");
 		header.setMacId("5646opiopiop");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		doctor.setHeader(header);
 		doctor.setDoctor(doctorDetail);
 		try {
@@ -260,10 +260,10 @@ public class DoctorServiceTest {
 		doctorDetail.setGlobalId(3);
 
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("123");
 		header.setMacId("5646opiopiop");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		doctor.setHeader(header);
 		doctor.setDoctor(doctorDetail);
 		try {
@@ -287,10 +287,10 @@ public class DoctorServiceTest {
 		doctorDetail.setGlobalId(23);
 
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("123");
 		header.setMacId("5646opiopiop");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		doctor.setHeader(header);
 		doctor.setDoctor(doctorDetail);
 		try {

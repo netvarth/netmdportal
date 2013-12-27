@@ -2,9 +2,7 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.Date;
-import java.util.Set;
 
 
 /**
@@ -46,7 +44,7 @@ public class LogTbl implements Serializable {
 	@Column(name="logout_time")
 	private Date logoutTime;
     
-    @Column(nullable=false,name="application_name", length=45)
+    @Column(nullable=false,name="application_name", length=100)
 	private String applicationName;
     
     @Column(name="user_type", length=45)

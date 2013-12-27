@@ -270,3 +270,6 @@ function createSearchDiv(id) {
 	searchDiv.html(searchbox);
 	return searchDiv;
 }
+function space2tab(str) {
+	return str.replace(/&nbsp;/g, ' ');
+}

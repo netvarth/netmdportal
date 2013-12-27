@@ -24,7 +24,10 @@ import com.nv.youNeverWait.pl.entity.ActionNameEnum;
 import com.nv.youNeverWait.pl.entity.BranchStatusEnum;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.pl.entity.FrequencyEnum;
+import com.nv.youNeverWait.pl.entity.LabBranchSystemInfoTbl;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
+import com.nv.youNeverWait.pl.entity.LabHealthMonitorTbl;
 import com.nv.youNeverWait.pl.entity.LabLoginTbl;
 import com.nv.youNeverWait.pl.entity.LabPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.LabStatusEnum;
@@ -38,15 +41,17 @@ import com.nv.youNeverWait.pl.entity.OrderAmountTbl;
 import com.nv.youNeverWait.pl.entity.OrderTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
+import com.nv.youNeverWait.pl.entity.SuperAdminTbl;
+import com.nv.youNeverWait.pl.entity.SyncFreqTypeEnum;
 import com.nv.youNeverWait.pl.entity.UserStatusEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
-import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
@@ -62,6 +67,9 @@ import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveLabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthMonitorDetailList;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserBranchDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
@@ -86,77 +94,81 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	public ResponseDTO createUser(LabUserDTO user) {
 
 		ResponseDTO response = new ResponseDTO();
-		LabBranchTbl branch = null;
+		 LabBranchTbl branch = null;
+		
+		 /* checking whether the user already exists */
+		 LabUserTbl labUser = (LabUserTbl)
+		 getNetlimsUserByEmail(user.getEmail());
+		 if (labUser != null) {
+		 ServiceException se = new ServiceException(ErrorCodeEnum.UserExists);
+		 se.setDisplayErrMsg(true);
+		 throw se;
+		 }
+		 /* Saving username and password in login tbl */
+		
+		 String password = StringEncoder.encryptWithKey(user.getLogin()
+		 .getPassword());
+		 LabLoginTbl existingUser = (LabLoginTbl) getNetlimsUser(password,
+		 user
+		 .getLogin().getUserName().trim());
+		 if (existingUser != null) {
+		
+		 ServiceException se = new ServiceException(ErrorCodeEnum.UserExists);
+		 se.setDisplayErrMsg(true);
+		 throw se;
+		 }
+		 LabLoginTbl loginTbl = new LabLoginTbl();
+		 loginTbl.setUserName(user.getLogin().getUserName());
+		 loginTbl.setPassword(password);
+		 loginTbl.setUserType(user.getLogin().getUserType());
+		 save(loginTbl);
+		
+		 Date createdTime = new Date();
+		 LabUserTbl newUser = new LabUserTbl();
+		 newUser.setFirstName(user.getFirstName());
+		 newUser.setLastName(user.getLastName());
+		 newUser.setPhone(user.getPhone());
+		 newUser.setEmail(user.getEmail());
+		 newUser.setMobile(user.getMobile());
+		 newUser.setAddress(user.getAddress());
+		 newUser.setUserType(user.getUserType());
+		 newUser.setLabLoginTbl(loginTbl);
+		 newUser.setCreateDateTime(createdTime);
+		 newUser.setUpdateDateTime(createdTime);
+		 save(newUser);
+		
+		 for (UserBranchDTO labBranch : user.getBranchIds()) {
+		 branch = (LabBranchTbl) getById(LabBranchTbl.class,
+		 labBranch.getBranchId());
+		 if (branch == null) {
+		 ServiceException se = new ServiceException(
+		 ErrorCodeEnum.InvalidBranchId);
+		 se.setDisplayErrMsg(true);
+		 throw se;
+		 } else {
+		 if (user.getLabId() != branch.getLabTbl().getId()) {
+		 ServiceException se = new ServiceException(
+		 ErrorCodeEnum.InvalidLab);
+		 se.addParam(new Parameter(Constants.ID, Integer
+		 .toString(user.getLabId())));
+		 se.setDisplayErrMsg(true);
+		 throw se;
+		 }
+		 LabUserBranchTbl newUserBranch = new LabUserBranchTbl();
+		 newUserBranch.setLabUserTbl(newUser);
+		 newUserBranch.setLabBranchTbl(branch);
+		 newUserBranch.setStatus(UserStatusEnum.Active.getDisplayName());
+		 save(newUserBranch);
+		 }
+		 }
+		 response.setGlobalId(newUser.getId());
+		 response.setSuccess(true);
 
-		/* checking whether the user already exists */
-		LabUserTbl labUser = (LabUserTbl) getNetlimsUserByEmail(user.getEmail());
-		if (labUser != null) {
-			ServiceException se = new ServiceException(ErrorCodeEnum.UserExists);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-
-		/* Saving username and password in login tbl */
-
-		String password = StringEncoder.encryptWithKey(user.getLogin()
-				.getPassword());
-		LabLoginTbl existingUser = (LabLoginTbl) getNetlimsUser(password, user
-				.getLogin().getUserName().trim());
-		if (existingUser != null) {
-
-			ServiceException se = new ServiceException(ErrorCodeEnum.UserExists);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		LabLoginTbl loginTbl = new LabLoginTbl();
-		loginTbl.setUserName(user.getLogin().getUserName());
-		loginTbl.setPassword(password);
-		loginTbl.setUserType(user.getLogin().getUserType());
-		save(loginTbl);
-
-		Date createdTime = new Date();
-		LabUserTbl newUser = new LabUserTbl();
-		newUser.setFirstName(user.getFirstName());
-		newUser.setLastName(user.getLastName());
-		newUser.setPhone(user.getPhone());
-		newUser.setEmail(user.getEmail());
-		newUser.setMobile(user.getMobile());
-		newUser.setAddress(user.getAddress());
-		newUser.setUserType(user.getUserType());
-		newUser.setLabLoginTbl(loginTbl);
-		newUser.setCreateDateTime(createdTime);
-		newUser.setUpdateDateTime(createdTime);
-		save(newUser);
-
-		for (UserBranchDTO labBranch : user.getBranchIds()) {
-			branch = (LabBranchTbl) getById(LabBranchTbl.class,
-					labBranch.getBranchId());
-			if (branch == null) {
-				ServiceException se = new ServiceException(
-						ErrorCodeEnum.InvalidBranchId);
-				se.setDisplayErrMsg(true);
-				throw se;
-			} else {
-				if (user.getLabId() != branch.getLabTbl().getId()) {
-					ServiceException se = new ServiceException(
-							ErrorCodeEnum.InvalidLab);
-					se.addParam(new Parameter(Constants.ID, Integer
-							.toString(user.getLabId())));
-					se.setDisplayErrMsg(true);
-					throw se;
-				}
-				LabUserBranchTbl newUserBranch = new LabUserBranchTbl();
-				newUserBranch.setLabUserTbl(newUser);
-				newUserBranch.setLabBranchTbl(branch);
-				newUserBranch.setStatus(UserStatusEnum.Active.getDisplayName());
-				save(newUserBranch);
-			}
-		}
-		response.setGlobalId(newUser.getId());
-		response.setSuccess(true);
 		return response;
 
 	}
+
+	
 
 	/**
 	 * update a user in Lab
@@ -491,6 +503,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 
 		ResponseDTO response = new ResponseDTO();
 
+		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
 		LabLoginTbl login = getLoginByUserName(lab.getUserName());
 		if (login != null) {
 			ServiceException se = new ServiceException(
@@ -526,6 +539,20 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		}
 		Date createdTime = new Date();
 
+		/**
+		 * Generating random alpha numeric value for lab code with length two
+		 * char
+		 **/
+		// String CHARACTER_SET = "123456789ABCDEFGHIJKLMNPQRSTUVWXYZ";
+		// Random random = new Random();
+		// StringBuilder builder = new StringBuilder();
+		// for(int i = 0; i < 2; i++){
+		// builder.append(CHARACTER_SET.charAt(random.nextInt(CHARACTER_SET.length())));
+		// }
+		// System.out.println("alpha numeric value for lab code is  "+builder.toString());
+		//
+		// labTbl.setLabCode(builder.toString());
+
 		labTbl.setOwnerFirstName(lab.getOwnerFirstName());
 		labTbl.setOwnerLastName(lab.getOwnerLastName());
 		labTbl.setOwnerEmail(lab.getOwnerEmail());
@@ -541,6 +568,14 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labTbl.setStatus(LabStatusEnum.Active.getDisplayName());
 		labTbl.setCreateDateTime(createdTime);
 		labTbl.setUpdateDateTime(createdTime);
+
+		if (superAdmin.getEnableSync() == false) {
+			labTbl.setEnableSync(false);
+		} else {
+			labTbl.setEnableSync(true);
+			labTbl.setSyncFreqType(superAdmin.getSyncFreqType());
+			labTbl.setSyncTime(superAdmin.getSyncTime());
+		}
 		save(labTbl);
 		response.setGlobalId(labTbl.getId());
 		response.setSuccess(true);
@@ -577,8 +612,15 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labBranch.setPhone(branch.getPhone());
 		labBranch.setMobile(branch.getMobile());
 		labBranch.setEmail(branch.getEmail());
-
+		// labBranch.setBranchCode(branch.getBranchCode());
 		labBranch.setLabTbl(lab);
+		if (lab.getEnableSync() == false) {
+			labBranch.setEnableSync(false);
+		} else {
+			labBranch.setEnableSync(true);
+			labBranch.setSyncFreqType(lab.getSyncFreqType());
+			labBranch.setSyncTime(lab.getSyncTime());
+		}
 		save(labBranch);
 		response.setGlobalId(labBranch.getId());
 
@@ -590,6 +632,15 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labPassPhrase.setLabBranchTbl(labBranch);
 		save(labPassPhrase);
 
+		/* Saving default system details in lab branch system info tbl */
+		LabBranchSystemInfoTbl systemDetails = new LabBranchSystemInfoTbl();
+		systemDetails.setCriticalHardDiskSpaceLevel(1);
+		systemDetails.setCriticalCpuLevel(1);
+		systemDetails.setCriticalMemoryLevel(2);
+		systemDetails.setFreqType(FrequencyEnum.Daily.getDisplayName());
+		systemDetails.setIntervalTime(1);
+		systemDetails.setLabBranchTbl(labBranch);
+		save(systemDetails);
 		response.setSuccess(true);
 		response.setGlobalId(labBranch.getId());
 		return response;
@@ -759,6 +810,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		branch.setLabId(labBranch.getLabTbl().getId());
 		branch.setEmail(labBranch.getEmail());
 		branch.setStatus(labBranch.getStatus());
+		// branch.setBranchCode(labBranch.getBranchCode());
 		LabPassphraseTbl branchHeader = (LabPassphraseTbl) getMacPassPhraseByBranch(labBranch
 				.getId());
 		if (branchHeader != null) {
@@ -801,6 +853,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labBranch.setPhone(branch.getPhone());
 		labBranch.setMobile(branch.getMobile());
 		labBranch.setEmail(branch.getEmail());
+		// labBranch.setBranchCode(branch.getBranchCode());
 		labBranch.setUpdateDateTime(new Date());
 		update(labBranch);
 		response.setGlobalId(labBranch.getId());
@@ -839,6 +892,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		lab.setHeadOfficeName(labTbl.getHeadOfficeName());
 		lab.setHeadOfficePhone(labTbl.getHeadOfficePhone());
 		lab.setStatus(labTbl.getStatus());
+		// lab.setLabCode(labTbl.getLabCode());
 		if (labTbl.getLabLoginTbl() != null) {
 			LabLoginTbl ownerLogin = getById(LabLoginTbl.class, labTbl
 					.getLabLoginTbl().getId());
@@ -863,7 +917,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	 */
 	@Override
 	@Transactional
-	public LabActivationResponseDTO activateLab(LabHeaderDTO header) {
+	public LabActivationResponseDTO activateLab(HeaderDTO header) {
 		LabActivationResponseDTO response = new LabActivationResponseDTO();
 		LabPassphraseTbl branchpassPhrase = (LabPassphraseTbl) getLabBranchByPassphrase(header
 				.getPassPhrase());
@@ -926,7 +980,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 
 		LabTbl lab = getById(LabTbl.class, branchpassPhrase.getLabBranchTbl()
 				.getLabTbl().getId());
-		// setting netmd details
+		// setting lab details
 		LabDTO newLab = new LabDTO();
 		if (lab.getLabLoginTbl() != null) {
 			LabLoginTbl ownerLogin = getById(LabLoginTbl.class, lab
@@ -960,6 +1014,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		newLab.setHeadOfficeName(lab.getHeadOfficeName());
 		newLab.setHeadOfficePhone(lab.getHeadOfficePhone());
 		newLab.setAuthToSent(lab.isAuthToSentResult());
+		// newLab.setLabCode(lab.getLabCode());
+		newLab.setOrderType(lab.getOrderTypeCode());
 		response.setLab(newLab);
 
 		// setting branch details
@@ -969,6 +1025,10 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		if (!branches.isEmpty()) {
 			for (LabBranchTbl branch : branches) {
 				LabBranchDTO newBranch = new LabBranchDTO();
+				if (branch.getId() == branchpassPhrase.getLabBranchTbl()
+						.getId()) {
+					newBranch.setHomeBranch(true);
+				}
 				newBranch.setGlobalId(branch.getId());
 				newBranch.setName(branch.getName());
 				newBranch.setStatus(branch.getStatus());
@@ -976,6 +1036,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 				newBranch.setPhone(branch.getPhone());
 				newBranch.setMobile(branch.getMobile());
 				newBranch.setEmail(branch.getEmail());
+				// newBranch.setBranchCode(branch.getBranchCode());
 				if (branch.getId() == branchpassPhrase.getLabBranchTbl()
 						.getId()) {
 					newBranch.setHomeBranch(true);
@@ -1020,14 +1081,14 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			throw se;
 		}
 		if (passPhrase.getLabBranchTbl().getId() != resultTranfer.getHeader()
-				.getLabBranchId()) {
+				.getBranchId()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetLimsAccount);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
 		if (passPhrase.getLabBranchTbl().getLabTbl().getId() != resultTranfer
-				.getHeader().getLabId()) {
+				.getHeader().getHeadOfficeId()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetLimsAccount);
 			se.setDisplayErrMsg(true);
@@ -1211,14 +1272,14 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			throw se;
 		}
 		if (passPhrase.getLabBranchTbl().getId() != resultTranferDto
-				.getHeader().getLabBranchId()) {
+				.getHeader().getBranchId()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetLimsAccount);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
 		if (passPhrase.getLabBranchTbl().getLabTbl().getId() != resultTranferDto
-				.getHeader().getLabId()) {
+				.getHeader().getHeadOfficeId()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetLimsAccount);
 			se.setDisplayErrMsg(true);
@@ -1289,11 +1350,11 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	 */
 	@Transactional
 	@Override
-	public ResultRetrievalResponseDTO getResult(LabHeaderDTO header,
+	public ResultRetrievalResponseDTO getResult(HeaderDTO header,
 			String lastSyncTm, Date currentTime) {
 
 		ResultRetrievalResponseDTO response = new ResultRetrievalResponseDTO();
-		validateHeader(header);
+		CheckHeaderDetails(header);
 		SimpleDateFormat sf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		Date dat = null;
@@ -1305,8 +1366,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		List<OrderTbl> orders = getOrders(dat, header.getLabId(),
-				header.getLabBranchId());
+		List<OrderTbl> orders = getOrders(dat, header.getHeadOfficeId(),
+				header.getBranchId());
 		List<ResultTransferDTO> resultTransferDTOs = new ArrayList<ResultTransferDTO>();
 		String lastSyncTime = null;
 
@@ -1337,11 +1398,11 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	 */
 	@Override
 	@Transactional
-	public LabBranchListResponseDTO retrieveLabBranchList(LabHeaderDTO header,
+	public LabBranchListResponseDTO retrieveLabBranchList(HeaderDTO header,
 			String lastSyncTme, Date currentTime) {
 
 		LabBranchListResponseDTO response = new LabBranchListResponseDTO();
-		validateHeader(header);
+		CheckHeaderDetails(header);
 		SimpleDateFormat sdf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		Date syncTime = null;
@@ -1353,9 +1414,10 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
+
 		List<LabBranchDTO> ownBranchList = new ArrayList<LabBranchDTO>();
 		List<LabBranchTbl> ownBranches = getOwnBranches(syncTime,
-				header.getLabId(), currentTime);
+				header.getHeadOfficeId(), currentTime);
 		for (LabBranchTbl labBranchTbl : ownBranches) {
 
 			LabBranchDTO branch = new LabBranchDTO();
@@ -1369,9 +1431,44 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			branch.setPassPhrase(header.getPassPhrase());
 			branch.setPhone(labBranchTbl.getPhone());
 			branch.setStatus(labBranchTbl.getStatus());
+			// branch.setBranchCode(labBranchTbl.getBranchCode());
 			ownBranchList.add(branch);
 
 		}
+
+		List<LabBranchDTO> newBranchList = new ArrayList<LabBranchDTO>();
+		List<LabBranchTbl> newBranches = getNewBranches(syncTime,
+				header.getHeadOfficeId(), currentTime);
+		for (LabBranchTbl labBranchTbl : newBranches) {
+			LabBranchDTO branch = new LabBranchDTO();
+			branch.setAddress(labBranchTbl.getAddress());
+			branch.setEmail(labBranchTbl.getEmail());
+			branch.setGlobalId(labBranchTbl.getId());
+			branch.setLabId(labBranchTbl.getLabTbl().getId());
+			branch.setMacId(header.getMacId());
+			branch.setMobile(labBranchTbl.getMobile());
+			branch.setName(labBranchTbl.getName());
+			branch.setPassPhrase(header.getPassPhrase());
+			branch.setPhone(labBranchTbl.getPhone());
+			branch.setStatus(labBranchTbl.getStatus());
+			// branch.setBranchCode(labBranchTbl.getBranchCode());
+			newBranchList.add(branch);
+		}
+		List<LabBranchDTO> updatedBranchList = new ArrayList<LabBranchDTO>();
+		List<LabBranchTbl> updatedBranches = getUpdatedBranches(syncTime,
+				header.getHeadOfficeId(), currentTime);
+		for (LabBranchTbl labBranchTbl : updatedBranches) {
+			LabBranchDTO branch = new LabBranchDTO();
+			branch.setGlobalId(labBranchTbl.getId());
+			branch.setLabId(labBranchTbl.getLabTbl().getId());
+			branch.setMacId(header.getMacId());
+			branch.setPassPhrase(header.getPassPhrase());
+			branch.setStatus(labBranchTbl.getStatus());
+			// branch.setBranchCode(labBranchTbl.getBranchCode());
+			updatedBranchList.add(branch);
+		}
+		response.setNewBranchList(newBranchList);
+		response.setUpdatedBranchList(updatedBranchList);
 		response.setOwnBranchList(ownBranchList);
 		response.setSuccess(true);
 		return response;
@@ -1385,7 +1482,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	 */
 	@Transactional
 	@Override
-	public RetrieveLabListResponseDTO retrieveLabList(LabHeaderDTO header,
+	public RetrieveLabListResponseDTO retrieveLabList(HeaderDTO header,
 			String lastSyncTm, Date currentTime) {
 
 		RetrieveLabListResponseDTO response = new RetrieveLabListResponseDTO();
@@ -1401,12 +1498,12 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			throw se;
 		}
 		/* Valdates header details */
-		validateHeader(header);
+		CheckHeaderDetails(header);
 
 		List<LabDTO> newLabList = new ArrayList<LabDTO>();
 		List<LabDTO> updatedLabList = new ArrayList<LabDTO>();
 		/* Query to get new labs */
-		List<LabTbl> newLabs = getNewLabs(header.getLabId(), syncTime,
+		List<LabTbl> newLabs = getNewLabs(header.getHeadOfficeId(), syncTime,
 				currentTime);
 		// Date lastSyncTime = null;
 		for (LabTbl labTbl : newLabs) {
@@ -1431,7 +1528,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 
 		}
 		/* Query for getting own labs */
-		LabTbl ownLab = getOwnLab(header.getLabId(), syncTime, currentTime);
+		LabTbl ownLab = getOwnLab(header.getHeadOfficeId(), syncTime,
+				currentTime);
 		if (ownLab == null) {
 			response.setOwnLab(null);
 		} else {
@@ -1455,8 +1553,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			response.setOwnLab(lab);
 		}
 		/* Query to get updated labs */
-		List<LabTbl> updatedLabs = getUpdatedLabs(header.getLabId(), syncTime,
-				currentTime);
+		List<LabTbl> updatedLabs = getUpdatedLabs(header.getHeadOfficeId(),
+				syncTime, currentTime);
 		for (LabTbl labTbl : updatedLabs) {
 			LabDTO lab = new LabDTO();
 			lab.setGlobalId(labTbl.getId());
@@ -1491,7 +1589,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	 */
 	@Transactional
 	@Override
-	public RetrieveUserListResponseDTO retrieveUserList(LabHeaderDTO header,
+	public RetrieveUserListResponseDTO retrieveUserList(HeaderDTO header,
 			String lastSyncTime, Date currentTime) {
 
 		RetrieveUserListResponseDTO response = new RetrieveUserListResponseDTO();
@@ -1507,12 +1605,12 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			throw se;
 		}
 		/* Valdates header details */
-		validateHeader(header);
+		CheckHeaderDetails(header);
 
 		List<UserInfoDetail> newUserList = new ArrayList<UserInfoDetail>();
 		List<UserInfoDetail> updatedUserList = new ArrayList<UserInfoDetail>();
 		List<LabUserBranchTbl> userBranches = (List<LabUserBranchTbl>) getUsersInBranch(header
-				.getLabBranchId());
+				.getBranchId());
 
 		if (!userBranches.isEmpty()) {
 			for (LabUserBranchTbl labUserBranch : userBranches) {
@@ -1558,7 +1656,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	/**
 	 * Method to validate the header details
 	 */
-	public void validateHeader(LabHeaderDTO header) {
+	public void CheckHeaderDetails(HeaderDTO header) {
 
 		LabPassphraseTbl passPhrase = getLabBranchByPassphrase(header
 				.getPassPhrase());
@@ -1575,14 +1673,14 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (passPhrase.getLabBranchTbl().getId() != header.getLabBranchId()) {
+		if (passPhrase.getLabBranchTbl().getId() != header.getBranchId()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetLimsAccount);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
 		if (passPhrase.getLabBranchTbl().getLabTbl().getId() != header
-				.getLabId()) {
+				.getHeadOfficeId()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetLimsAccount);
 			se.setDisplayErrMsg(true);
@@ -1653,52 +1751,11 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	}
 
 	/**
-	 * Method to show the branch order list for a given period
-	 */
-	@Override
-	@Transactional
-	public BranchOrdersResponseDTO orderList(BranchOrderDTO orderDTO) {
-		BranchOrdersResponseDTO response = new BranchOrdersResponseDTO();
-		List<BranchOrderDetail> branchOrdersList = new ArrayList<BranchOrderDetail>();
-		SimpleDateFormat sdf = new SimpleDateFormat(
-				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
-		SimpleDateFormat df = new SimpleDateFormat(
-				Constants.DATE_FORMAT_WITHOUT_TIME);
-
-		try {
-
-			List<OrderAmountTbl> labBranchOrdersList = getBranchOrdersByDate(
-					df.parse(orderDTO.getFromDate()),
-					df.parse(orderDTO.getToDate()), orderDTO.getLabId(),
-					orderDTO.getLabBranchId());
-			for (OrderAmountTbl orderAmts : labBranchOrdersList) {
-				BranchOrderDetail detail = new BranchOrderDetail();
-				detail.setBranchId(orderAmts.getLabBranchTbl().getId());
-				detail.setBranchName(orderAmts.getLabBranchTbl().getName());
-				detail.setLastOrderdTime(sdf.format(orderAmts
-						.getLastOrderedTime()));
-				detail.setNetAmount(orderAmts.getNetAmount());
-				detail.setPaidAmount(orderAmts.getPaidAmount());
-				detail.setTotalOrders(orderAmts.getTotalOrders());
-				detail.setOrderDate(df.format(orderAmts.getOrderDate()));
-				branchOrdersList.add(detail);
-			}
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		response.setBranchOrders(branchOrdersList);
-		response.setSuccess(true);
-		return response;
-	}
-
-	/**
 	 * Create total orders in a branch
 	 */
 	@Override
 	@Transactional
-	public BranchOrderCountResponseDTO createTotalOrders(LabHeaderDTO header,
+	public BranchOrderCountResponseDTO createTotalOrders(HeaderDTO header,
 			BranchOrderDetail branchOrders) {
 		BranchOrderCountResponseDTO response = new BranchOrderCountResponseDTO();
 		DateFormat df = new SimpleDateFormat(
@@ -1720,14 +1777,14 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (passPhrase.getLabBranchTbl().getId() != header.getLabBranchId()) {
+		if (passPhrase.getLabBranchTbl().getId() != header.getBranchId()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetLimsAccount);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
 		if (passPhrase.getLabBranchTbl().getLabTbl().getId() != header
-				.getLabId()) {
+				.getHeadOfficeId()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetLimsAccount);
 			se.setDisplayErrMsg(true);
@@ -1741,7 +1798,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			e1.printStackTrace();
 		}
 		OrderAmountTbl branchOrdrs = getOrdersByBranchOrderDate(
-				header.getLabId(), header.getLabBranchId(), orderDte);
+				header.getHeadOfficeId(), header.getBranchId(), orderDte);
 		if (branchOrdrs == null) {
 			OrderAmountTbl newBranchOrdrs = new OrderAmountTbl();
 			newBranchOrdrs.setLabBranchTbl(passPhrase.getLabBranchTbl());
@@ -1779,7 +1836,431 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	}
 
 	/**
+	 * Method for viewing branch default system details
+	 * 
+	 * @param branchId
+	 * @return
+	 */
+	@Override
+	@Transactional
+	public BranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId) {
+		BranchSystemInfoDetails details = new BranchSystemInfoDetails();
+		List<SystemHealthMonitorDetailList> healthMonitorList = new ArrayList<SystemHealthMonitorDetailList>();
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		LabBranchTbl labBranch = getById(LabBranchTbl.class, branchId);
+		if (labBranch == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		/*
+		 * Getting system default information like critical memory level, freq
+		 * type and so on
+		 */
+		LabBranchSystemInfoTbl systemInfo = getSystemDetailsByBranchId(branchId);
+		if (systemInfo == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.BranchSystemInfoNull);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(labBranch
+					.getId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		details.setBranchId(labBranch.getId());
+		details.setBranchName(systemInfo.getLabBranchTbl().getName());
+		details.setCriticalCpuLevel(Float.toString(systemInfo
+				.getCriticalCpuLevel()));
+		details.setCriticalHardDiskSpaceLevel(Float.toString(systemInfo
+				.getCriticalHardDiskSpaceLevel()));
+		details.setCriticalMemoryLevel(Float.toString(systemInfo
+				.getCriticalMemoryLevel()));
+		details.setFreqType(systemInfo.getFreqType());
+		details.setIntervalTime(Integer.toString(systemInfo.getIntervalTime()));
+		/** Query for getting total number of records */
+		int totalRecords = getTotalHealthMonitorRecords(branchId);
+		int startIndex = 0;
+		if (totalRecords > 10)
+			startIndex = totalRecords - 10;
+
+		/* Getting last 10 records of system health monitor details */
+		List<LabHealthMonitorTbl> healthMonitorTblList = getMonitorDetailsByBranchId(
+				branchId, startIndex);
+		if (healthMonitorTblList.isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.SystemMonitorDetailsNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		for (LabHealthMonitorTbl hMonitor : healthMonitorTblList) {
+			SystemHealthMonitorDetailList systemHealth = new SystemHealthMonitorDetailList();
+
+			systemHealth.setCpuUsage(hMonitor.getFreeCpuSpace());
+			systemHealth.setHardDiskSpaceUasge(hMonitor.getFreeHardDiskSpace());
+			systemHealth.setMemoryUsage(hMonitor.getFreeMemorySpace());
+			systemHealth.setCreatedDateTime(sdf.format(hMonitor
+					.getCreatedDateTime()));
+			healthMonitorList.add(systemHealth);
+			details.setTotalCpu(hMonitor.getTotalCpu());
+			details.setTotalHardDisk(hMonitor.getTotalHardDisk());
+			details.setTotalMemory(hMonitor.getTotalMemory());
+		}
+		details.setHealthMonitorList(healthMonitorList);
+
+		details.setSuccess(true);
+		return details;
+	}
+
+	/**
+	 * Method for updating the branch default system details
+	 * 
+	 * @param details
+	 * @return
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO updateLabBranchSystemInfo(BranchSystemInfoDetails details) {
+		ResponseDTO response = new ResponseDTO();
+		LabBranchTbl labBranch = getById(LabBranchTbl.class,
+				details.getBranchId());
+		if (labBranch == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		LabBranchSystemInfoTbl systemInfo = getSystemDetailsByBranchId(labBranch
+				.getId());
+		if (systemInfo == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.BranchSystemInfoNull);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(labBranch
+					.getId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		systemInfo.setCriticalHardDiskSpaceLevel(Float.parseFloat(details
+				.getCriticalHardDiskSpaceLevel()));
+		systemInfo.setCriticalCpuLevel(Float.parseFloat(details
+				.getCriticalCpuLevel()));
+		systemInfo.setCriticalMemoryLevel(Float.parseFloat(details
+				.getCriticalMemoryLevel()));
+		systemInfo.setFreqType(details.getFreqType());
+		systemInfo.setIntervalTime(Integer.parseInt(details.getIntervalTime()));
+		update(systemInfo);
+
+		response.setSuccess(true);
+		return response;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.pl.dao.LabDao#getLab(com.nv.youNeverWait.rs.
+	 * dto.LabHeaderDTO, java.lang.String, java.util.Date)
+	 */
+	@Override
+	@Transactional
+	public LabDTO getLab(HeaderDTO header, String lastSyncTime,
+			Date currentSyncTime) {
+		LabDTO labDetails = new LabDTO();
+		CheckHeaderDetails(header);
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		Date syncTime = null;
+		try {
+			syncTime = sdf.parse(lastSyncTime);
+		} catch (ParseException e) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidSyncTime);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		LabTbl labTbl = getlabDetailsByTime(header.getHeadOfficeId(), syncTime,
+				currentSyncTime);
+		if (labTbl != null) {
+			labDetails.setGlobalId(labTbl.getId());
+			labDetails.setName(labTbl.getName());
+			labDetails.setOwnerAddress(labTbl.getOwnerAddress());
+			labDetails.setOwnerEmail(labTbl.getOwnerEmail());
+			labDetails.setOwnerMobile(labTbl.getOwnerMobile());
+			labDetails.setOwnerFirstName(labTbl.getOwnerFirstName());
+			labDetails.setOwnerLastName(labTbl.getOwnerLastName());
+			labDetails.setOwnerPhone(labTbl.getOwnerPhone());
+			labDetails.setHeadOfficeAddress(labTbl.getHeadOfficeAddress());
+			labDetails.setHeadOfficeEmail(labTbl.getHeadOfficeEmail());
+			labDetails.setHeadOfficeMobile(labTbl.getHeadOfficeMobile());
+			labDetails.setHeadOfficeName(labTbl.getHeadOfficeName());
+			labDetails.setHeadOfficePhone(labTbl.getHeadOfficePhone());
+			labDetails.setStatus(labTbl.getStatus());
+			// labDetails.setLabCode(labTbl.getLabCode());
+			labDetails.setOrderType(labTbl.getOrderTypeCode());
+		}
+		return labDetails;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nv.youNeverWait.user.pl.dao.LabDao#getLabSyncDetails(int)
+	 */
+	@Override
+	@Transactional
+	public SyncFreqDTO getLabSyncDetails(int labId) {
+		SyncFreqDTO sync = new SyncFreqDTO();
+		LabTbl lab = getById(LabTbl.class, labId);
+		if (lab != null) {
+			sync.setSyncFreqType(lab.getSyncFreqType());
+			sync.setSyncTime(lab.getSyncTime());
+			sync.setEnableSync(lab.getEnableSync());
+			sync.setSuccess(true);
+		} else {
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidLab);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(labId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		return sync;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nv.youNeverWait.user.pl.dao.LabDao#getBranchSyncDetails(int)
+	 */
+	@Override
+	@Transactional
+	public SyncFreqDTO getBranchSyncDetails(int branchId) {
+		SyncFreqDTO sync = new SyncFreqDTO();
+		LabBranchTbl labBranch = getById(LabBranchTbl.class, branchId);
+		if (labBranch != null) {
+			sync.setSyncFreqType(labBranch.getSyncFreqType());
+			sync.setSyncTime(labBranch.getSyncTime());
+			sync.setEnableSync(labBranch.getEnableSync());
+			sync.setSuccess(true);
+		} else {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranch);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(branchId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		return sync;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.pl.dao.LabDao#setLabSync(com.nv.youNeverWait
+	 * .rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	@Transactional
+	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync) {
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		Date newDate = new Date();
+		LabTbl lab = getById(LabTbl.class, sync.getLabId());
+		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+		if (lab != null) {
+			if (superAdmin.getEnableSync() == false) {
+				lab.setEnableSync(false);
+			} else {
+				lab.setEnableSync(sync.isEnableSync());
+			}
+			lab.setUpdateDateTime(newDate);
+			update(lab);
+			/**** Setting values when the sync is enabled ****/
+			if (lab.getEnableSync() == true) {
+
+				/****** Checking sync values with global sync time *****/
+				checkSync(superAdmin.getSyncFreqType(), sync.getSyncFreqType(),
+						sync.getSyncTime(), superAdmin.getSyncTime());
+
+				lab.setSyncTime(sync.getSyncTime());
+				lab.setSyncFreqType(sync.getSyncFreqType());
+				lab.setUpdateDateTime(newDate);
+				update(lab);
+
+			} else {
+				if (sync.isEnableSync())
+					response.setMsg(Constants.MESSAGE);
+				/****** Setting all branches of the lab as disabled *******/
+				for (LabBranchTbl labBranch : lab.getLabBranchTbls()) {
+					labBranch.setEnableSync(lab.getEnableSync());
+					labBranch.setUpdateDateTime(newDate);
+					update(labBranch);
+					
+					
+				}// end of for loop
+			}
+
+		} else {
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidLab);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(sync
+					.getLabId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
+		response.setSuccess(true);
+		return response;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.pl.dao.LabDao#setBranchSync(com.nv.youNeverWait
+	 * .rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	@Transactional
+	public SyncFreqResponseDTO setBranchSync(SyncFreqDTO sync) {
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		Date newDate = new Date();
+		LabBranchTbl labBranch = getById(LabBranchTbl.class,
+				sync.getLabBranchId());
+		if (labBranch != null) {
+			if (labBranch.getLabTbl().getEnableSync() == false) {
+				labBranch.setEnableSync(false);
+			} else {
+				SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+				if (superAdmin.getEnableSync() == false) {
+					labBranch.setEnableSync(false);
+				} else {
+					labBranch.setEnableSync(sync.isEnableSync());
+				}
+			}
+			labBranch.setUpdateDateTime(newDate);
+			update(labBranch);
+			if (labBranch.getEnableSync() == true) {
+				/**
+				 * Checking whether branch sync time is greater than lab sync
+				 * time
+				 **/
+				checkSync(labBranch.getLabTbl().getSyncFreqType(),
+						sync.getSyncFreqType(), sync.getSyncTime(), labBranch
+								.getLabTbl().getSyncTime());
+
+				labBranch.setSyncTime(sync.getSyncTime());
+				labBranch.setSyncFreqType(sync.getSyncFreqType());
+				labBranch.setUpdateDateTime(newDate);
+				update(labBranch);
+			} else {
+				if (sync.isEnableSync())
+					response.setMsg(Constants.MESSAGE);
+			}
+		} else {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * @param labId
+	 * @param syncFreqType
+	 * @param syncTime
+	 */
+	private void checkSync(String priorSyncFreqType, String syncFreqType,
+			int syncTime, int priorSyncTime) {
+		if (priorSyncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
+			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
+				if (syncTime > priorSyncTime) {
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.SynctimeExceeds);
+					se.setDisplayErrMsg(true);
+					throw se;
+				}
+			}
+		} // end of daily if loop
+		if (priorSyncFreqType.equals(SyncFreqTypeEnum.HOURLY.getDisplayName())) {
+			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.SynctimeExceeds);
+				se.setDisplayErrMsg(true);
+				throw se;
+			} else if (syncFreqType.equals(SyncFreqTypeEnum.HOURLY
+					.getDisplayName())) {
+				if (syncTime > priorSyncTime) {
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.SynctimeExceeds);
+					se.setDisplayErrMsg(true);
+					throw se;
+				}
+			}
+		} // end of hourly if loop
+		if (priorSyncFreqType.equals(SyncFreqTypeEnum.MINUTES.getDisplayName())) {
+			if (syncFreqType.equals(SyncFreqTypeEnum.DAILY.getDisplayName())
+					|| syncFreqType.equals(SyncFreqTypeEnum.HOURLY
+							.getDisplayName())) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.SynctimeExceeds);
+				se.setDisplayErrMsg(true);
+				throw se;
+			} else if (syncFreqType.equals(SyncFreqTypeEnum.MINUTES
+					.getDisplayName())) {
+				if (syncTime > priorSyncTime) {
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.SynctimeExceeds);
+					se.setDisplayErrMsg(true);
+					throw se;
+				}
+			}
+		} // end of minutes if loop
+	}
+
+	/**
+	 * @param branchId
+	 * @return
+	 */
+	private int getTotalHealthMonitorRecords(int branchId) {
+		int totalRecords = 0;
+		javax.persistence.Query query = em.createQuery(Query.GET_TOTAL_RECORDS);
+		query.setParameter("param1", branchId);
+		totalRecords = ((Number) query.getSingleResult()).intValue();
+		return totalRecords;
+	}
+
+	/**
+	 * @param labId
+	 * @param syncTime
+	 * @param currentSyncTime
+	 * @return
+	 */
+	private LabTbl getlabDetailsByTime(int labId, Date lastSyncTime,
+			Date currentSyncTime) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_LAB_DETAILS_BY_TIME);
+		query.setParameter("param1", labId);
+		query.setParameter("param2", lastSyncTime);
+		query.setParameter("param3", currentSyncTime);
+		return executeUniqueQuery(LabTbl.class, query);
+	}
+
+	private List<LabHealthMonitorTbl> getMonitorDetailsByBranchId(int branchId,
+			int startIndex) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_MONITORING_DETAILS_BY_BRANCH_ID);
+		query.setParameter("param1", branchId);
+		query.setFirstResult(startIndex);
+		query.setMaxResults(10);
+		return executeQuery(LabHealthMonitorTbl.class, query);
+	}
+
+	/**
 	 * Get Orders By Branch OrderDate
+	 * 
 	 * @param labId
 	 * @param labBranchId
 	 * @param orderDate
@@ -1796,26 +2277,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	}
 
 	/**
-	 * Get Branch Orders ByDate
-	 * @param fromDate
-	 * @param toDate
-	 * @param labId
-	 * @param labBranchId
-	 * @return
-	 */
-	private List<OrderAmountTbl> getBranchOrdersByDate(Date fromDate,
-			Date toDate, int labId, int labBranchId) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_BRANCH_ORDERS_BY_DATE);
-		query.setParameter("param1", fromDate);
-		query.setParameter("param2", toDate);
-		query.setParameter("param3", labId);
-		query.setParameter("param4", labBranchId);
-		return executeQuery(OrderAmountTbl.class, query);
-	}
-
-	/**
 	 * Get current date
+	 * 
 	 * @return newDate
 	 */
 	private Date getCurrentDate() {
@@ -1964,6 +2427,19 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 
 		return executeQuery(OrderTbl.class, query);
 
+	}
+
+	/**
+	 * 
+	 * @param branchId
+	 * @param labId
+	 * @return LabBranchTbl
+	 */
+	public LabBranchTbl getByLabId(int branchId, int labId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_BRANCH);
+		query.setParameter("param1", branchId);
+		query.setParameter("param2", labId);
+		return executeUniqueQuery(LabBranchTbl.class, query);
 	}
 
 	/**
@@ -2137,19 +2613,6 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	}
 
 	/**
-	 * 
-	 * @param branchId
-	 * @param labId
-	 * @return LabBranchTbl
-	 */
-	public LabBranchTbl getByLabId(int branchId, int labId) {
-		javax.persistence.Query query = em.createQuery(Query.GET_BRANCH);
-		query.setParameter("param1", branchId);
-		query.setParameter("param2", labId);
-		return executeUniqueQuery(LabBranchTbl.class, query);
-	}
-
-	/**
 	 * Method to get Mac Id using passphrase
 	 */
 	public String getMacByPassphrase(String passPhrase) {
@@ -2264,6 +2727,42 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		query.setParameter("param5", sourceLabId);
 		query.setParameter("param6", sourceLabBranchId);
 		return executeUniqueQuery(ResultTbl.class, query);
+	}
+
+	private LabBranchSystemInfoTbl getSystemDetailsByBranchId(int branchId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_SYSTEM_DETAILS_BY_BRANCH_ID);
+		query.setParameter("param1", branchId);
+		return executeUniqueQuery(LabBranchSystemInfoTbl.class, query);
+	}
+
+	/**
+	 * @param syncTime
+	 * @param labId
+	 * @return LabBranchTbl
+	 */
+	private List<LabBranchTbl> getNewBranches(Date syncTime, int labId,
+			Date currentTime) {
+		javax.persistence.Query query = em.createQuery(Query.GET_NEW_BRANCHES);
+		query.setParameter("param1", labId);
+		query.setParameter("param2", syncTime);
+		query.setParameter("param3", currentTime);
+		return executeQuery(LabBranchTbl.class, query);
+	}
+
+	/**
+	 * @param syncTime
+	 * @param labId
+	 * @return LabBranchTbl
+	 */
+	private List<LabBranchTbl> getUpdatedBranches(Date syncTime, int labId,
+			Date currentTime) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_UPDATED_BRANCHES);
+		query.setParameter("param1", labId);
+		query.setParameter("param2", syncTime);
+		query.setParameter("param3", currentTime);
+		return executeQuery(LabBranchTbl.class, query);
 	}
 
 	/**

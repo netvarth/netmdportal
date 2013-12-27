@@ -1,0 +1,511 @@
+{
+    "name": "viewTestForm",
+    "id": "viewTestForm",
+    "content": [
+        {
+            "className": "sep-div-view",
+            "style": "display:none",
+            "id": "errorDivHeader",
+            "data": [
+                {
+                    "className": "five_sixth",
+                    "id": "errorDivViewTestData"
+                }
+            ]
+        },
+        {
+            "className": "sep-div-view",
+            "data": [
+                {
+                    "className": "five_sixth",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "data": [
+                                {
+                                    "className": "column-one-verysmall",
+                                    "elements": [
+                                        {
+                                            "name": "lblViewTestId",
+                                            "id": "lblViewTestId",
+                                            "type": "newlabel",
+                                            "title": "Id"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-one-verysmallopp",
+                                    "elements": [
+                                        {
+                                            "name": "txtViewTestName",
+                                            "id": "txtViewTestName",
+                                            "type": "text",
+                                            "className": " newBox large",
+                                            "required": "true",
+                                            "title": "Test Name"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "column-right",
+                            "data": [
+                                
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "txtViewTestTimeRq",
+                                            "id": "txtViewTestTimeRq",
+                                            "type": "text",
+                                            "className": "newBox large",
+                                            "title": "Time Required"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "five_sixth",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "name": "txtViewTestGenericName",
+                                    "id": "txtViewTestGenericName",
+                                    "type": "text",
+                                    "className": "newBox large",
+                                    "title": "Generic Name"
+                                }
+                            ]
+                        },
+                        {
+                            "className": "column-right",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "txtViewTestAbbr",
+                                            "id": "txtViewTestAbbr",
+                                            "type": "text",
+                                            "className": "newBox dlarge",
+                                            "title": "Abbreviation"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "txtViewNormalUnit",
+                                            "id": "txtViewNormalUnit",
+                                            "type": "text",
+                                            "className": "dlarge newBox ",
+                                            "title": "Normal Unit"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "className": "sep-div-view",
+            "data": [
+                {
+                    "className": "column-left",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "id": "workBenchSpecimen",
+                            "style": "display:none;",
+                            "elements": [
+                                {
+                                    "name": "lblspecimen",
+                                    "id": "lblspecimen",
+                                    "type": "label",
+                                    "className": "large",
+                                    "title": "Select specimen "
+                                },
+                                {
+                                    "name": "workBench",
+                                    "id": "workBench",
+                                    "type": "combined",
+                                    "items": [
+                                        {
+                                            "name": "viewSelectTestSpecimen",
+                                            "id": "viewSelectTestSpecimen",
+                                            "type": "select",
+                                            "className": "select",
+                                            "style": "width:79%",
+                                            "value": [
+                                                {
+                                                    "title": "Select type"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "button",
+                                            "content": {
+                                                "buttons": [
+                                                    {
+                                                        "name": "updateSpecimen",
+                                                        "id": "updateSpecimen",
+                                                        "title": "Add",
+                                                        "type": "button",
+                                                        "className": "stdbtn btn_black",
+                                                        "style": "opacity:1;"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five_sixth",
+                            "elements": [
+                                {
+                                    "type": "table",
+                                    "content": {
+                                        "name": "tblViewTestSpecimen",
+                                        "idProperty": "tblViewTestSpecimen",
+                                        "className": "stdtable",
+                                        "colHeaders": [
+                                            {
+                                                "className": "head0",
+                                                "name": "Specimen",
+                                                "style": "width:45%"
+                                            },
+                                            {
+                                                "className": "head1",
+                                                "name": "",
+                                                "style": "width:8%;"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "column-right",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "id": "specimenEntryDiv",
+                            "style": "display:none;",
+                            "elements": [
+                                {
+                                    "name": "specEntry",
+                                    "type": "checkbox",
+                                    "title": "Specimen Entry",
+                                    "value": [
+                                        {
+                                            "id": "specEntryStatus",
+                                            "title": "On Order"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "column-left",
+                            "id": "specimenEntryDisplayDiv",							
+                            "elements": [
+                                {
+                                    "name": "specimenEntryDispValue",
+                                    "id": "specimenEntryDispValue",
+                                    "type": "newlabel",
+                                    "className": "large",
+                                    "title": "Specimen Entry"
+                                }
+                            ]
+                        },
+						 {
+                            "className": "column-right",
+                            "id": "machineEntryDiv",
+                            "style": "display:none;",
+                            "elements": [
+                                {
+                                    "name": "machEntry",
+                                    "type": "checkbox",
+                                    "title": "Machine Entry",
+                                    "value": [
+                                        {
+                                            "id": "machEntryStatus",
+                                            "title": "Readable"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "column-right",
+                            "id": "machineEntryDisplayDiv",							
+                            "elements": [
+                                {
+                                    "name": "machineEntryDispValue",
+                                    "id": "machineEntryDispValue",
+                                    "type": "newlabel",
+                                    "className": "large",
+                                    "title": "Machine Entry"
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five_sixth",
+                            "elements": [
+                                {
+                                    "name": "txtareaViewNormalRange",
+                                    "id": "txtareaViewNormalRange",
+                                    "type": "textarea",
+                                    "className": "newBox large",
+                                    "title": "Normal Range",
+                                    "style": "height:90px;padding:none;"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "five_sixth",
+                    "id": "selectRemarks",
+                    "style": "display:none;",
+                    "elements": [
+                        {
+                            "name": "lblselectremarks",
+                            "id": "lblselectremarks",
+                            "type": "label",
+                            "className": "large",
+                            "title": "Select Remarks "
+                        },
+                        {
+                            "name": "viewSelectTestRemarks",
+                            "id": "viewSelectTestRemarks",
+                            "type": "select",
+                            "className": "select",
+                            "style": "width:100%",
+                            "value": [
+                                {
+                                    "title": "Select Remarks"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "five_sixth",
+                    "elements": [
+                        {
+                            "name": "txtViewareaTestRemarks",
+                            "id": "txtViewareaTestRemarks",
+                            "type": "textarea",
+                            "className": "newBox",
+                            "title": "Remarks",
+                            "style": "height:90px;padding:none;"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "className": "sep-div-view",
+            "data": [
+                {
+                    "className": "column-left",
+                    "id": "viewlayout",
+                    "elements": [
+                        {
+                            "name": "layoutHeading",
+                            "id": "layoutHeading",
+                            "type": "label",
+                            "className": "large",
+                            "title": "Layout "
+                        },
+                        {
+                            "name": "lblViewLayout",
+                            "id": "lblViewLayout",
+                            "type": "newlabel",
+                            "className": "large"
+                        }
+                    ]
+                },
+                {
+                    "className": "column-left",
+                    "id": "editselectLayout",
+                    "style": "display:none;",
+                    "elements": [
+                        {
+                            "name": "lblLayout",
+                            "id": "lblLayout",
+                            "type": "label",
+                            "className": "large",
+                            "title": "Select Layout ",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "viewSelectTestLayout",
+                                            "id": "viewSelectTestLayout",
+                                            "type": "select",
+                                            "className": "select",
+                                            "style": "width:100%",
+                                            "value": [
+                                                {
+                                                    "title": "Select Layout"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "column-right",
+                    "id": "viewEnterHdrDiv",
+                    "style": "display:none",
+                    "elements": [
+                        {
+                            "name": "lblEnterheaders",
+                            "id": "lblEnterheaders",
+                            "type": "label",
+                            "className": "large",
+                            "title": "Enter Headers ",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "viewSelectTableHeader",
+                                            "id": "viewSelectTableHeader",
+                                            "type": "select",
+                                            "className": "select",
+                                            "style": "width:100%",
+                                            "value": [
+                                                {
+                                                    "title": "Select Header"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-one-verysmall",
+                                    "elements": [
+                                        {
+                                            "type": "button",
+                                            "content": {
+                                                "buttons": [
+                                                    {
+                                                        "name": "btnViewCreateTblHdr",
+                                                        "id": "btnViewCreateTblHdr",
+                                                        "type": "button",
+                                                        "className": "stdbtn btn_black",
+                                                        "title": "Add",
+                                                        "style": "opacity:1;"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "five_sixth",
+                    "id": "viewTestReportSample",
+                    "style": "display:none;",
+                    "elements": [
+                        {
+                            "type": "table",
+                            "content": {
+                                "name": "viewTbltestReport",
+                                "idProperty": "viewTbltestReport",
+                                "className": "stdtable",
+                                "colHeaders": [
+                                    {
+                                        "className": "head0",
+                                        "name": "Header",
+                                        "style": "width:60%"
+                                    },
+                                    {
+                                        "className": "head0",
+                                        "name": "value",
+                                        "style": "width:38%"
+                                    },
+                                    {
+                                        "className": "head1",
+                                        "name": "",
+                                        "style": "width:2%;"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                
+                {
+                    "className": "five_sixth",
+                    "id": "viewpreviewDiv",
+                    "style": "display:none"
+                }
+            ]
+        },
+        {
+            "className": "sep-div-view",
+            "data": [
+                {
+                    "className": "five_sixth",
+                    "elements": [
+                        {
+                            "type": "button",
+                            "content": {
+                                "buttons": [
+                                    {
+                                        "name": "btnEditTest",
+                                        "id": "btnEditTest",
+                                        "title": "Edit",
+                                        "type": "button",
+                                        "className": "stdbtn btn_black",
+                                        "style": "opacity:1;"
+                                    },
+                                    {
+                                        "name": "btnViewSaveTest",
+                                        "id": "btnViewSaveTest",
+                                        "title": "Save",
+                                        "type": "button",
+                                        "className": "stdbtn btn_black",
+                                        "style": "opacity:1;display:none;"
+                                    },
+                                    {
+                                        "name": "btnViewCancelTest",
+                                        "id": "btnViewCancelTest",
+                                        "title": "Cancel",
+                                        "type": "button",
+                                        "className": "stdbtn",
+                                        "style": "opacity:1;display:none;"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

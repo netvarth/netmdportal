@@ -4,13 +4,18 @@ $j.ajaxSetup({async:false});
 var serverPath = "";
 var secretcode="";
 $j.getScript("/youNeverWait/js/framework/RequestHandler.js").done(function(script, textStatus) {
+})
+$j.getScript("/youNeverWait/js/youneverwait/common/common.js").done(function(script, textStatus) {
 }) 
 $j(document).ready(function() { 
 	
-	var response = postdataToServer("/youNeverWait/ws/ui/auth/getCaptcha");
+	var response = getRequestData("/youNeverWait/ws/ui/auth/getCaptcha");
+	if(response.success==true){
 	$j("#log").html('<img src="data:image/png;base64,'+response.image + '"/>');
 	$j('#ancap').show();
 	secretcode=response.secretCode;
+	}
+	else{errorTips(getErrorName(response.error),'',$j('#loginError'));}
 	
 	$j("#userName").bind("keypress", function (e) {
 		if (e.keyCode == 13) {
@@ -35,7 +40,7 @@ $j(document).ready(function() {
 	});
 	
 	$j('#captcha').die('click').live("click",function(){
-		var response = postdataToServer("/youNeverWait/ws/ui/auth/getCaptcha");
+		var response = getRequestData("/youNeverWait/ws/ui/auth/getCaptcha");
 		$j("#log").html('<img src="data:image/png;base64,'+response.image + '"/>');
 		$j('#ancap').show();
 		secretcode=response.secretCode;

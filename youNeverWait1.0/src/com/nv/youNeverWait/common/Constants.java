@@ -9,6 +9,7 @@ package com.nv.youNeverWait.common;
 
 
 public class Constants {
+	public static final String NEWTIME_FORMAT_FOR_APPOINTMENT ="HH:mm:ss";
 	public static final String NEWDATE_FORMAT_FOR_APPOINTMENT ="E dd/MMM/yyyy";
 	public static final String DATE_FORMAT_WITH_TIME = "hh:mm a";
 	public static final String TIME="HH:mm";
@@ -55,6 +56,9 @@ public class Constants {
 	public static final String PAST_APPOINTMENTS = "Past Appointments";
 	public static final String RESULT_LIST = "Result List";
 	public static final String APPOINTMENTS = "appointments";
+	public static final String SYNC_LOG = "syncLog";
+	public static final String NETMD_BILL = "bill";
+	
 	
 	/* Log */
 	public static final String STARTUP = "Show login page";
@@ -85,8 +89,14 @@ public class Constants {
 	public static final String DELETE_PATIENT = "Delete patient";
 	public static final String NETMD_BRANCH_LIST = "Netmd branch list";
 	public static final String NETMD_DOWNLOAD = "Download netmd application";
-	
-    /*NetRx*/
+	public static final String NETMD_SYSTEM_FAILURE = "System in Critical Stage ";
+	public static final String SUPER_ADMIN_LOGIN = "Super Admin Login";
+	public static final String SUPER_ADMIN_LOGOUT = "Super Admin Logout";
+	public static final String SUPER_ADMIN_CHANGE_PASSWORD = "Super Admin Change Password";	
+	public static final String FORGOT_PWD = "Forgot Password";
+	public static final String NETLIMS = "netlims";
+
+	/*NetRx*/
 	public static final String NETRX_REGISTER ="NetRx Registration";
 	public static final String NETRX ="netrx";
 	public static final String NETRX_BRANCH ="netrxBranch";
@@ -98,5 +108,19 @@ public class Constants {
 	public static final String CONTACT_US = "Show Contact Page";
 	public static final String PRICING = "Shows NetLims Pricing Page";
 	public static final String POLICY = "Shows NetLims privacyPolicy page";
+	public static final String NETMD_POLICY = "Shows NetMd privacyPolicy page";
+	public static final String LAB_SYSTEM_FAILURE = "System in Critical Stage ";
+	public static final String TEST = "tests";
+	public static final String SPECIMEN = "specimens";
+	public static final String SPECIMENUID = "SpecimenUid";
+	public static final String TESTUID = "TestUid";
+	public static final String MESSAGE = "Synchronization disabled.";
+	public static final String NETLIMS_ORDER = "order";
+	
+	
+	
+	
+	
+	
 	
 }

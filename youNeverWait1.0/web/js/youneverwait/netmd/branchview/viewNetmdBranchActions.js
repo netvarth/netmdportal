@@ -138,6 +138,13 @@
 				
 	});
 	
+	$j("#netmdbranchViewForm #btnBill").die('click').live('click',function(){
+		removeErrors();
+		var obj=$j(this);
+		var branchBill=superBillDetaillist();
+		//alert(branchBill);
+		fillSuperNetmdEachBranchBillDetailTable(branchBill,obj)
+	});
 	
 	function createMacJson(passPhrase,macid){
 	
@@ -145,8 +152,8 @@
 	var branchId =$j('#netmdbranchViewForm #branchid').val();
 	var netmdId= $j('#netmdbranchViewForm #netmdid').val();
 	
-	submitdata = '{'+'"netMdBranchId"' + ':'+branchId+',';
-	submitdata +='"netMdId":' +netmdId+',';
+	submitdata = '{'+'"branchId"' + ':'+branchId+',';
+	submitdata +='"headOfficeId":' +netmdId+',';
 	submitdata +='"passPhrase":"' +passPhrase+'",';
 	submitdata +='"macId":"' + macid+ '"}';
 	

@@ -1,11 +1,11 @@
 function appointment(contents) {
 this.result =function(){ 
-		var content =$j('<div/>');
-		var div=$j('<div></div>');
-		var todaydiv=$j('<div class="todaysapp  "><label style="font-weight: bold;margin-top: -4px;display: block;text-align: center;">Today'+"'"+'s Appointment(s)</label></div>');
-		var currweekdiv=$j('<div class="todaysapp "><label style="font-weight: bold;margin-top: -4px;display: block;text-align: center;">This Week'+"'"+'s Appointment(s)</label></div>');
-		var futurediv=$j('<div class="todaysapp " ><label style="font-weight: bold;margin-top: -4px;display: block;text-align: center;">Future Appointment(s)</label></div>');
-		var pastdiv=$j('<div class="todaysapp " ><label style="font-weight: bold;margin-top: -4px;display: block;text-align: center;">Past Appointment(s)</label></div>');
+		var content =$j('<div id="contentappointment"></div>');
+		var div=$j('<div id="subcontentappointment"></div>');
+		var todaydiv=$j('<div class="todaysapp" name="appointments" ><label style="font-weight: bold;margin-top: -4px;display: block;text-align: center;">Today'+"'"+'s Appointment(s)</label></div>');
+		var currweekdiv=$j('<div class="todaysapp "name="appointments"><label style="font-weight: bold;margin-top: -4px;display: block;text-align: center;">This Week'+"'"+'s Appointment(s)</label></div>');
+		var futurediv=$j('<div class="todaysapp "name="appointments" ><label style="font-weight: bold;margin-top: -4px;display: block;text-align: center;">Future Appointment(s)</label></div>');
+		var pastdiv=$j('<div class="todaysapp "name="appointments" ><label style="font-weight: bold;margin-top: -4px;display: block;text-align: center;">Past Appointment(s)</label></div>');
 		if((contents.todaysAppointment)!=""){
 			div.append(todaydiv);
 			var subdiv=$j('<div class=" list"style="overflow: hidden;"><label class="dochead">Doctor</label><label class="doctime">Time Slot</label></div>');
@@ -24,7 +24,7 @@ this.result =function(){
           div.append(subdiv);			
 		 }
 		 else{div.append(todaydiv);
-			var subdiv=$j('<div style="font-weight: bold;" align="center">There are no appointments</div>');
+			var subdiv=$j('<div class=" list backstyle"style="font-weight: bold; " align="center">There are no appointments</div>');
 				div.append(subdiv);	
 		 }
 		 if((contents.currentWeeksAppointment)!=""){
@@ -45,7 +45,7 @@ this.result =function(){
 		 div.append(subdivcurr);
 		 }
 		 else{div.append(currweekdiv);
-		 var subdiv=$j('<div style="font-weight: bold;" align="center">There are no appointments</div>');
+		 var subdiv=$j('<div class=" list backstyle" style="font-weight: bold;" align="center">There are no appointments</div>');
 				div.append(subdiv);	
 		 }
 		
@@ -67,7 +67,7 @@ this.result =function(){
 		 div.append(subdivfutur);
 		 }
 		 else{div.append(futurediv);
-		 var subdiv=$j('<div style="font-weight: bold;" align="center">There are no appointments</div>');
+		 var subdiv=$j('<div class=" list backstyle" style="font-weight: bold;" align="center">There are no appointments</div>');
 				div.append(subdiv);	
 		 }
 		

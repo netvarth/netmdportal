@@ -8,26 +8,10 @@
 package com.nv.youNeverWait.rs.dto;
 
 public class HeaderDTO {
-	private int netMdId;
-	private int netRxId;
+	private int headOfficeId;
 	private String passPhrase;
 	private String macId;
-	private int netMdBranchId;
-	private int netRxBranchId;
-	
-	/**
-	 * @return the netMdBranchId
-	 */
-	public int getNetMdBranchId() {
-		return netMdBranchId;
-	}
-
-	/**
-	 * @param netMdBranchId the netMdBranchId to set
-	 */
-	public void setNetMdBranchId(int netMdBranchId) {
-		this.netMdBranchId = netMdBranchId;
-	}
+	private int branchId;
 
 	/**
 	 * @return the macId
@@ -44,20 +28,6 @@ public class HeaderDTO {
 	}
 
 	/**
-	 * @return the netMdId
-	 */
-	public int getNetMdId() {
-		return netMdId;
-	}
-
-	/**
-	 * @param netMdId the netMdId to set
-	 */
-	public void setNetMdId(int netMdId) {
-		this.netMdId = netMdId;
-	}
-
-	/**
 	 * @return the passPhrase
 	 */
 	public String getPassPhrase() {
@@ -71,20 +41,34 @@ public class HeaderDTO {
 		this.passPhrase = passPhrase;
 	}
 
-	public int getNetRxId() {
-		return netRxId;
+	/**
+	 * @return the headOfficeId
+	 */
+	public int getHeadOfficeId() {
+		return headOfficeId;
 	}
 
-	public void setNetRxId(int netRxId) {
-		this.netRxId = netRxId;
+	/**
+	 * @param headOfficeId the headOfficeId to set
+	 */
+	public void setHeadOfficeId(int headOfficeId) {
+		this.headOfficeId = headOfficeId;
 	}
 
-	public int getNetRxBranchId() {
-		return netRxBranchId;
+	/**
+	 * @return the branchId
+	 */
+	public int getBranchId() {
+		return branchId;
 	}
 
-	public void setNetRxBranchId(int netRxBranchId) {
-		this.netRxBranchId = netRxBranchId;
+	/**
+	 * @param branchId the branchId to set
+	 */
+	public void setBranchId(int branchId) {
+		this.branchId = branchId;
 	}
+
+	
 
 }

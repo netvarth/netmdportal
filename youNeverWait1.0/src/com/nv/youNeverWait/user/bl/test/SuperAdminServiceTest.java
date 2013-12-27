@@ -33,6 +33,10 @@ import com.nv.youNeverWait.rs.dto.NetRxDTO;
 import com.nv.youNeverWait.rs.dto.NetRxDetail;
 import com.nv.youNeverWait.rs.dto.NetRxListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
+import com.nv.youNeverWait.rs.dto.SpecimenDTO;
+import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
+import com.nv.youNeverWait.rs.dto.TestDTO;
+import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
 import com.nv.youNeverWait.user.bl.service.DoctorService;
 import com.nv.youNeverWait.user.bl.service.SuperAdminService;
@@ -120,7 +124,7 @@ public class SuperAdminServiceTest {
 		doctorDetail.setLogin(login);
 
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(1);
+		header.setHeadOfficeId(1);
 		header.setPassPhrase("123");
 		doctor.setHeader(header);
 		doctor.setDoctor(doctorDetail);
@@ -472,8 +476,8 @@ public class SuperAdminServiceTest {
 		user.setGlobalId(3);
 		userCreationDTO.setUser(user);
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdBranchId(5);
-		header.setNetMdId(3);
+		header.setBranchId(5);
+		header.setHeadOfficeId(3);
 		header.setMacId("");
 		header.setPassPhrase("");
 		userCreationDTO.setHeader(header);
@@ -618,6 +622,62 @@ public class SuperAdminServiceTest {
 			NetRxListResponseDTO response = service.getNetRxList(filter);
 			for (NetRxDetail b : response.getNetRx()) {
 				System.out.println(b.getName());
+			}
+		} catch (ServiceException e) {
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	
+	@Test
+	public void testList() {
+		SuperAdminService service = (SuperAdminService) applicationContext
+				.getBean("superAdmin.service");
+		try {
+			FilterDTO filter = new FilterDTO();
+			ExpressionDTO exp = new ExpressionDTO();
+			exp.setName("uid");
+			exp.setOperator("eq");
+			exp.setValue("152");
+			List<ExpressionDTO> exps = new ArrayList<ExpressionDTO>();
+			exps.add(exp);
+			filter.setExp(exps);
+			filter.setCount(10);
+			filter.setFrom(0);
+			filter.setAsc(true);
+			TestListResponseDTO response = service.testList(filter);
+			for (TestDTO b : response.getTestList()) {
+				System.out.println(b.getTestName());
+			}
+		} catch (ServiceException e) {
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	
+	@Test
+	public void specimenList() {
+		SuperAdminService service = (SuperAdminService) applicationContext
+				.getBean("superAdmin.service");
+		try {
+			FilterDTO filter = new FilterDTO();
+			ExpressionDTO exp = new ExpressionDTO();
+			exp.setName("specimenUid");
+			exp.setOperator("eq");
+			exp.setValue("1");
+			List<ExpressionDTO> exps = new ArrayList<ExpressionDTO>();
+			exps.add(exp);
+			filter.setExp(exps);
+			filter.setCount(10);
+			filter.setFrom(0);
+			filter.setAsc(true);
+			SpecimenListResponseDTO response = service.testSpecimenList(filter);
+			for (SpecimenDTO b : response.getSpecimenList()) {
+				System.out.println(b.getSpecimenName());
 			}
 		} catch (ServiceException e) {
 

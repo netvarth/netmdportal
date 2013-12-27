@@ -15,20 +15,21 @@ public class Query {
 	/*** NETMD ***/
 	
 	/* PatientAppointmentTbl */
-	public static final String GET_APPOINTMENT = "from PatientAppointmentTbl as appointment where appointment.doctorTbl.id=:param1 and appointment.date=:param2 and appointment.startingTime=:param3 and appointment.status='active'";
+	public static final String GET_APPOINTMENT = "from PatientAppointmentTbl as appointment where appointment.doctorTbl.id=:param1 and appointment.appointmentDate=:param2 and appointment.startingTime=:param3 and appointment.status='active'";
 	public static final String GET_APPOINTMENTLIST_BY_SCHEDULE = "from PatientAppointmentTbl as appointment where appointment.doctorScheduleTbl.id=:param1 and appointment.status='active'";
-	public static final String GET_PAST_APPOINTMENTS = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.date <:param2 order by appointment.date";
-	public static final String GET_PAST_APPOINTMENTS_BY_TIME = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.startingTime <:param2 order by appointment.date";
-	public static final String GET_FUTURE_APPOINTMENTS = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.date >=:param2 and appointment.status='active'";
+	public static final String GET_PAST_APPOINTMENTS = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.appointmentDate <:param2 order by appointment.appointmentDate";
+	public static final String GET_PAST_APPOINTMENTS_BY_TIME = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.startingTime <:param2 order by appointment.appointmentDate";
+	public static final String GET_FUTURE_APPOINTMENTS = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.appointmentDate >=:param2 and appointment.status='active'";
 	public static final String GET_WAITINGFORAPPROVAL_APPOINTMENTS = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.appointmentStatus = 'Waiting for approval'";
-	public static final String GET_APPOINTMENTS_OF_CURRENTDAY = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.date=:param2 and appointment.status='active'";
-	public static final String GET_APPOINTMENTS_OF_THE_WEEK = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.date >=:param2 and  appointment.date <=:param3 and appointment.status='active'";
+	public static final String GET_APPOINTMENTS_OF_CURRENTDAY = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.appointmentDate=:param2 and appointment.status='active'";
+	public static final String GET_APPOINTMENTS_OF_THE_WEEK = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.appointmentDate >=:param2 and  appointment.appointmentDate <=:param3 and appointment.status='active'";
 	public static final String GET_REJECTED_APPOINTMENTS = "from PatientAppointmentTbl as appointment left join fetch appointment.doctorTbl where appointment.patientTbl.id=:param1 and appointment.appointmentStatus = 'Rejected'";
 	public static final String GET_APPOINTMENTS_BY_NETMD_BRANCH = "from PatientAppointmentTbl as appointment where appointment.netmdBranchTbl.id=:param1 and appointment.status='active'";
 	public static final String RETRIEVE_APPOINTMENTS = "from PatientAppointmentTbl as appointment where appointment.updateDateTime>:param1 and appointment.updateDateTime<=:param2 and appointment.netmdBranchTbl.id=:param3 and appointment.netmdPassphraseTbl.id!=:param4";
 	public static final String RETRIEVE_APPOINTMENTS_CREATED_IN_PORTAL = "from PatientAppointmentTbl as appointment where appointment.updateDateTime>:param1 and appointment.updateDateTime<=:param2 and appointment.netmdBranchTbl.id=:param3 and appointment.netmdPassphraseTbl.id is null";
 	public static final String RETRIEVE_APPOINTMENTS_FOR_PRIMARY ="from PatientAppointmentTbl as appointment where appointment.updateDateTime>:param1 and appointment.updateDateTime<=:param2 and appointment.netmdBranchTbl.id=:param3 and appointment.appointmnetLevel=true";
-	public static final String GET_APPOINTMENTS = "from PatientAppointmentTbl as appointment where appointment.updateDateTime>=:param1 and appointment.netmdPassphraseTbl.id=:param2 and appointment.netmdBranchTbl.id=:param3 and appointment.updateDateTime<=:param4 order by updateDateTime";
+	public static final String GET_APPOINTMENTS = "from PatientAppointmentTbl as appointment where appointment.updateDateTime>=:param1 and appointment.netmdPassphraseTbl.id=:param2 and appointment.netmdBranchTbl.id=:param3 and appointment.updateDateTime<=:param4 and appointment.appointmnetLevel=false order by updateDateTime";
+	
 	
 	/* NetmdUserTbl */
 	public static final String GET_USER = "from NetmdUserTbl as user where user.netmdLoginTbl.id= :param1";
@@ -49,7 +50,7 @@ public class Query {
 	public static final String GET_DOCTORS_BY_CLINIC = "from DoctorTbl as doctor where doctor.netmdBranchTbl.id=:param1 and doctor.status='active'";
 	public static final String GET_DOCTOR_BY_LOGIN_ID = "from DoctorTbl as doctor where doctor.netmdLoginTbl.id=:param1";
 	public static final String GET_EXISTING_DOCTOR = "from DoctorTbl as doctor where doctor.email =:param1 and doctor.netmdBranchTbl.id =:param2";
-	public static final String GET_DOCTOR_WITH_LOGIN = "from DoctorTbl as doctor where doctor.netmdLoginTbl.id =:param1 and doctor.netmdBranchTbl.id =:param2";
+	public static final String GET_DOCTOR_WITH_LOGIN = "from DoctorTbl as doctor where doctor.netmdLoginTbl.id =:param1 and doctor.netmdBranchTbl.id =:param2 and doctor.status='active'";
 	public static final String RETRIEVE_DOCTORS = "from DoctorTbl as doctor where  doctor.updateDateTime>:param1 and doctor.netmdPassphraseTbl.id!=:param2 and doctor.netmdBranchTbl.id=:param3 and doctor.updateDateTime<:param4 order by updateDateTime";
 	public static final String GET_DOCTORS_BY_NETMD_BRANCH = "from DoctorTbl as doctor where doctor.netmdBranchTbl.id=:param1";
 	public static final String RETRIEVE__UPDATED_DOCTORS = "from DoctorTbl as doctor where  doctor.updateDateTime>:param1 and doctor.netmdPassphraseTbl.id=:param2 and doctor.netmdBranchTbl.id=:param3 and doctor.updateDateTime<=:param4 order by updateDateTime";
@@ -75,7 +76,7 @@ public class Query {
 	/* DoctorScheduleTbl */
 	public static final String GET_SCHEDULE_BY_DOCTORID = "  from DoctorScheduleTbl as schedule where schedule.doctorTbl.id= :param1";
 	public static final String GET_SCHEDULE_BY_DATE_DOC = "from DoctorScheduleTbl as schedule where schedule.date=:param1 and schedule.doctorTbl.id=:param2 and schedule.status='active' ";
-	public static final String GET_SCHEDULE_BY_DATE_DOC_BRANCH = "from DoctorScheduleTbl as schedule where schedule.date=:param1 and schedule.netmdBranchTbl.id=:param2 and schedule.doctorTbl.id=:param3";
+	public static final String GET_SCHEDULE_BY_DATE_DOC_BRANCH = "from DoctorScheduleTbl as schedule where schedule.date=:param1 and schedule.netmdBranchTbl.id=:param2 and schedule.doctorTbl.id=:param3 and schedule.status='active'";
 	public static final String GET_SCHEDULE = "from DoctorScheduleTbl as schedule where schedule.doctorTbl.id=:param1 and schedule.date=:param2 and schedule.status='active'";
 	public static final String GET_SCHEDULE_BY_NETMD_BRANCH = "from DoctorScheduleTbl as schedule where schedule.netmdBranchTbl.id=:param1";
 	public static final String RETRIEVE_SCHEDULES = "from DoctorScheduleTbl as schedule where  schedule.updateDateTime>:param1 and schedule.netmdPassphraseTbl.id!=:param2 and schedule.netmdBranchTbl.id=:param3 and schedule.updateDateTime<:param4 order by updateDateTime";
@@ -144,6 +145,15 @@ public class Query {
 	/* SeriesTbl */
 	public static final String GET_EXISTING_SERIES = "from SeriesTbl as series where series.seriesId= :param1 and series.netmdPassphraseTbl.id=:param2";
 
+	/*NetmdBranchSystemInfoTbl*/
+	public static final String GET_NETMD_BRANCH_SYSTEM_DETAILS = " from NetmdBranchSystemInfoTbl as details where details.netmdBranchTbl.id=:param1 and details.netmdPassphraseTbl.id=:param2";
+	
+	/*NetmdHealthMonitorTbl*/
+	public static final String GET_NETMD_TOTAL_RECORDS = "select count(*) from NetmdHealthMonitorTbl as h where h.netmdPassphraseTbl.id =:param1";
+	public static final String GET_NETMD_HEALTH_MONITORING_DETAILS = "from NetmdHealthMonitorTbl as health where health.netmdPassphraseTbl.id =:param1  order by health.id ";
+	
+	/*NetMdBilltbl*/
+	public static final String GET_BILL_BY_DATE ="from NetmdBillTbl as bill where bill.orderDate>=:param1 and bill.orderDate<=:param2 and bill.netmdTbl.id=:param3 and bill.netmdBranchTbl.id=:param4  order by orderDate";
 	/*** NETLIMS ***/
 
 	/* LabUserTbl */
@@ -172,7 +182,8 @@ public class Query {
 	public static final String GET_HOME_BRANCH = "from LabBranchTbl as branch where branch.homeBranch=true and branch.labTbl.id=:param1";
 	public static final String GET_BRANCHES = "from LabBranchTbl as branch where  branch.labTbl.id=:param1";
 	public static final String GET_BRANCH = "from LabBranchTbl as branch where branch.id=:param1 and branch.labTbl.id=:param2";
-
+	public static final String GET_LAB_BRANCH= " from LabBranchTbl as labBranch where labBranch.id =:param1 and labBranch.labTbl.id=:param2";
+	
 	/* LabPassphraseTbl */
 	public static final String GET_NETLIMS_MAC_BY_PASSPHRASE = " select lab.macId from LabPassphraseTbl as lab where lab.passPhrase=:param1";
 	public static final String GET_NETLIMS_BRANCH_BY_PASSPHRASE = " from LabPassphraseTbl as lab where lab.passPhrase=:param1";
@@ -190,7 +201,8 @@ public class Query {
 	public static final String GET_UPDATED_LABS = "from LabTbl as lab where lab.id!=:param1 and lab.createDateTime < lab.updateDateTime and lab.updateDateTime>:param2 and lab.updateDateTime<:param3 order by updateDateTime";
 	public static final String GET_OWN_LAB = "from LabTbl as lab where  lab.id=:param1 and lab.updateDateTime>:param2 and lab.updateDateTime<:param3 order by updateDateTime";
 	public static final String GET_LAB_BY_LOGIN_ID = "from LabTbl as lab where  lab.labLoginTbl.id=:param1";
-
+	public static final String GET_LAB_DETAILS_BY_TIME = "from LabTbl as lab where lab.id=:param1 and lab.updateDateTime >=:param2 and lab.updateDateTime<:param3";
+	
 	/* ResultTbl */
 	public static final String GET_RESULT_BY_PATIENTID = "from ResultTbl as result where result.patientTbl.id=:param1";
 	public static final String GET_RESULTS = "from ResultTbl as patientResults where patientResults.netmdTbl.id=:param1 and patientResults.netmdBranchTbl.id=:param2 and patientResults.updatedDateTime>:param3 and patientResults.updatedDateTime<:param4";
@@ -202,14 +214,43 @@ public class Query {
 	public static final String GET_BRANCH_ORDERS_BY_DATE = "from OrderAmountTbl as orders where orders.orderDate>=:param1 and orders.orderDate<=:param2 and orders.labTbl.id=:param3 and orders.labBranchTbl.id=:param4 ";
 	public static final String GET_BRANCH_ORDERS_BY_LAB ="from OrderAmountTbl as orders where orders.labTbl.id=:param1 and orders.labBranchTbl.id=:param2 and orders.orderDate=:param3";
 	
+	/*LabBranchSystemInfoTbl*/
+	public static final String GET_SYSTEM_DETAILS_BY_BRANCH_ID = " from LabBranchSystemInfoTbl as details where details.labBranchTbl.id=:param1";
+
+	/*LabHealthMonitorTbl*/
+	public static final String GET_MONITORING_DETAILS_BY_BRANCH_ID = "from LabHealthMonitorTbl as health where health.labBranchTbl.id =:param1  order by health.id ";
+	public static final String GET_TOTAL_RECORDS = "select COUNT(*) from LabHealthMonitorTbl as h where h.labBranchTbl.id =:param1";
+	
 	/********** Email *******/
 	public static final String GET_INQUEUE_FROM_TABLE = "from PendingMessageTbl as msg where msg.status=:param3 and msg.communicationType=:param1 and msg.applicationSpecifier=:param2 ORDER BY lastAttemptOn ASC";
 	public static final String GET_COUNT_NEW_FROM_TABLE = "from PendingMessageTbl as msg where msg.status=:param3 and msg.communicationType=:param1  and msg.applicationSpecifier=:param2";
 	public static final String GET_NEW_MSG = "from PendingMessageTbl as msg where msg.status=:param3 and msg.communicationType=:param1 and msg.applicationSpecifier=:param2 ORDER BY lastAttemptOn ASC";
 	
-	/**************NetRx******************/
-	/*netRxTbl*/
+	/*OrderTransferTbl*/
+	public static final String GET_LAST_UNIQUE_ID = "select MAX(u.uniqueId) from OrderTransferTbl as u"; 
+	public static final String GET_ORDERS = "from OrderTransferTbl as order where order.destinationLab.id=:param1 and order.destinationBranch.id=:param2 and order.updatedDateTime>=:param3 and order.updatedDateTime<:param4";
 	
+
+	/*SpecimenTbl*/
+	public static final String GET_SPECIMEN_BY_NAME="from SpecimenTbl as specimen where TRIM(UPPER(specimen.name)) = :param1";
+	public static final String GET_LAST_UID = "select MAX(u.uid) from SpecimenTbl as u";   
+	public static final String GET_SPECIMEN_BY_DATE = "from SpecimenTbl as specimen where specimen.updatedDateTime >=:param1 and specimen.updatedDateTime<:param2 order by updatedDateTime";
+	
+	/*TestTbl*/
+	public static final String GET_TEST_BY_NAME = "from TestTbl as test where TRIM(UPPER(test.testName)) = :param1";
+	public static final String GET_TEST_BY_ABBREVIATION = "from TestTbl as test where TRIM(UPPER(test.abbreviation)) = :param1";
+	public static final String GET_LAST_TEST_UID = "select MAX(u.uid) from TestTbl as u";   
+	public static final String GET_TEST_BY_DATE = " from TestTbl as test where test.updatedDateTime >= :param1 and test.updatedDateTime <:param2 order by updatedDateTime";
+	
+	/*TestSpecimenTbl*/
+	public static final String GET_TEST_SPECIMEN_BY_SPECIMEN_UID ="from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid = :param1 and testSpecimen.specimenTbl.uid = :param2";
+	public static final String GET_TEST_SPECIMEN = "from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid = :param1";
+	public static final String GET_SPECIMEN_BY_TEST_UID = "from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid=:param1";
+	
+	
+	/**************NetRx******************/
+	
+	/*NetRxTbl*/
 	public static final String GET_NETRX_BY_NAME = "from NetrxTbl as netrx where  REPLACE(TRIM(UPPER(netrx.name)),' ','')=:param1";
 	public static final String GET_NETRX_BY_LOGIN_ID = "from NetrxTbl as netmd where  netmd.netrxLoginTbl.id=:param1";
 	
@@ -229,12 +270,26 @@ public class Query {
 	public static final String GET_NETRX_LOGIN_BY_USERNAME = "from NetrxLoginTbl as login where login.userName=:param1";
 	public static final String GET_NETRX_USER_BY_USERNAME_PASSWORD = "from NetrxLoginTbl as login  where login.password =:param1 and login.userName =:param2";
 	public static final String GET_NETRX_PASSPHRASE_BY_BRANCH_ID = "from NetrxPassphraseTbl as branchPassphrase where branchPassphrase.netrxBranchTbl.id=:param1 and branchPassphrase.passPhrase=:param2";
+	//public static final String GET_NAME_BY_AGE = " select (select qaTbl.answer from QusAnsTbl as qaTbl where qaTbl.questionTbl.questionKey='name' and qaTbl.caseTbl.id=q.caseTbl.id) from QusAnsTbl as q where q.questionTbl.questionKey='age' and q.answer=:param1";
+	//public static final String GET_NAME_BY_AGE="select distinct qa1.answer,qa0.caseTbl.id,qa2.answer from(select distinct qa0.caseTbl.id  from QusAnsTbl as qa0) as q0 LEFT OUTER JOIN(select qa1.answer ,qa1.caseTbl.id from QusAnsTbl as qa1 where qa1.questionTbl.questionKey='name') as q1 ON q0.qa0.caseTbl.id = q1.qa1.caseTbl.id LEFT OUTER JOIN (select qa2.answer,qa2.caseTbl.id from QusAnsTbl as qa2 where qa2.questionTbl.questionKey='age') as q2 ON q1.qa1.caseTbl.id = q2.qa2.caseTbl.id where q2.qa2.answer> :param1";
+	public static final String GET_NAME_BY_AGE="select  distinct name,caseId,age from (select distinct case_id  from qus_ans_tbl) as q0 LEFT OUTER JOIN (select answer as name ,case_id as caseId from qus_ans_tbl where quest_id = 5) as q1 ON q0.case_id = q1.caseId LEFT OUTER JOIN (select answer as age,case_id as caseI from qus_ans_tbl where quest_id = 6) as q2 ON q1.caseId = q2.caseI where q2.age>24";
+	public static final String GET_ID_BY_KEY = " from QuestionTbl as q where q.questionKey=:param1";
+	public static final String GET_BY_DEPT = "from QuestionTbl as qTbl where qTbl.deptTbl.id=:param1";
+	public static final String GET_BY_CASE = "from QusAnsTbl as qaTbl where qaTbl.caseTbl.id=:param1";
 	
+/**************NetPos******************/
 
+	
+	/*NetPosLoginTbl */
+	public static final String GET_NETPOS_LOGIN_BY_USERNAME = "from NetposLoginTbl as login where login.userName=:param1";
+	
+	/* NetposTbl */
+	
+	public static final String GET_NETPOS_BY_NAME = "from NetposTbl as netpos where  REPLACE(TRIM(UPPER(netpos.name)),' ','')=:param1";
+	
+	/*NetposUserTbl*/
+	public static final String GET_NETPOS_USERS = "from NetposUserTbl as netposUsers where  netposUsers.NetposUserTbl.id=:param1";
 
-	
-	
-	
-	
+	/*NetposBranchTbl*/
+	public static final String GET_NETPOS_BRANCHES = "from NetposBranchTbl as netposBranch where  netposBranch.NetposTbl.id=:param1";
 }
-

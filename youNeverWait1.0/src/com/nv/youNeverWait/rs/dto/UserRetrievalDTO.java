@@ -8,19 +8,21 @@ package com.nv.youNeverWait.rs.dto;
  *
  */
 public class UserRetrievalDTO {
-	private LabHeaderDTO header;
+	private HeaderDTO header;
 	private String synctime;
 		
+	 
+	
 	/**
 	 * @return the header
 	 */
-	public LabHeaderDTO getHeader() {
+	public HeaderDTO getHeader() {
 		return header;
 	}
 	/**
 	 * @param header the header to set
 	 */
-	public void setHeader(LabHeaderDTO header) {
+	public void setHeader(HeaderDTO header) {
 		this.header = header;
 	}
 	/**
@@ -45,7 +47,7 @@ public class UserRetrievalDTO {
 	 * @param header
 	 * @param synctime
 	 */
-	public UserRetrievalDTO(LabHeaderDTO header, String synctime) {
+	public UserRetrievalDTO(HeaderDTO header, String synctime) {
 		super();
 		this.header = header;
 		this.synctime = synctime;

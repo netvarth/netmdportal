@@ -22,25 +22,31 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
-import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabOrderHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
+import com.nv.youNeverWait.rs.dto.OrderDetails;
+import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
+import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.LabService;
@@ -54,6 +60,7 @@ public class LabResource {
 
 	/**
 	 * Shows NetLims Detail page
+	 * 
 	 * @return aboutNetLims html
 	 */
 	@RequestMapping(value = "aboutNetLims", method = RequestMethod.GET)
@@ -61,17 +68,17 @@ public class LabResource {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
-		logService
-				.saveUserDetails(request.getRemoteAddr(), null,
-						LogUserTypeEnum.Nil.getDisplayName(), null, null,
-						ApplicationNameEnum.NetLims.getDisplayName(),
-						Constants.ABOUT_NETLIMS);
+		logService.saveUserDetails(request.getRemoteAddr(), null,
+				LogUserTypeEnum.Nil.getDisplayName(), null, null,
+				ApplicationNameEnum.NetLims.getDisplayName(),
+				Constants.ABOUT_NETLIMS);
 
 		return "aboutNetLims";
 	}
 
 	/**
 	 * Shows NetLims Contact Details
+	 * 
 	 * @return contactUs html
 	 */
 	@RequestMapping(value = "contactUs", method = RequestMethod.GET)
@@ -79,17 +86,17 @@ public class LabResource {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
-		logService
-				.saveUserDetails(request.getRemoteAddr(), null,
-						LogUserTypeEnum.Nil.getDisplayName(), null, null,
-						ApplicationNameEnum.NetLims.getDisplayName(),
-						Constants.CONTACT_US);
+		logService.saveUserDetails(request.getRemoteAddr(), null,
+				LogUserTypeEnum.Nil.getDisplayName(), null, null,
+				ApplicationNameEnum.NetLims.getDisplayName(),
+				Constants.CONTACT_US);
 
 		return "contactUs";
 	}
-	
+
 	/**
 	 * Shows Pricing Details
+	 * 
 	 * @return pricing html
 	 */
 	@RequestMapping(value = "pricing", method = RequestMethod.GET)
@@ -105,9 +112,10 @@ public class LabResource {
 
 		return "pricing";
 	}
-	
+
 	/**
 	 * Shows Privacy and policy details
+	 * 
 	 * @return pricing html
 	 */
 	@RequestMapping(value = "privacyPolicy", method = RequestMethod.GET)
@@ -115,16 +123,13 @@ public class LabResource {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
-		logService
-				.saveUserDetails(request.getRemoteAddr(), null,
-						LogUserTypeEnum.Nil.getDisplayName(), null, null,
-						ApplicationNameEnum.NetLims.getDisplayName(),
-						Constants.POLICY);
+		logService.saveUserDetails(request.getRemoteAddr(), null,
+				LogUserTypeEnum.Nil.getDisplayName(), null, null,
+				ApplicationNameEnum.NetLims.getDisplayName(), Constants.POLICY);
 
 		return "privacyPolicy";
 	}
-	
-	
+
 	/**
 	 * Method performed for session logout
 	 * 
@@ -178,7 +183,7 @@ public class LabResource {
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
 		logService.saveUserDetails(request.getRemoteAddr(),
-				login.getUserName(), login.getUserType(), null, null,
+				null, login.getUserType(), null, null,
 				ApplicationNameEnum.NetLims.getDisplayName(),
 				Constants.RESET_PSWD);
 		return response;
@@ -481,7 +486,7 @@ public class LabResource {
 		logService.saveUserDetails(request.getRemoteAddr(), null,
 				LogUserTypeEnum.Nil.getDisplayName(), null, null,
 				ApplicationNameEnum.NetLims.getDisplayName(),
-				Constants.RESET_PSWD);
+				Constants.FORGOT_PWD);
 
 		return response;
 	}
@@ -546,7 +551,7 @@ public class LabResource {
 	 */
 	@RequestMapping(value = "activateLab", method = RequestMethod.POST)
 	@ResponseBody
-	public LabActivationResponseDTO activateLab(@RequestBody LabHeaderDTO header) {
+	public LabActivationResponseDTO activateLab(@RequestBody HeaderDTO header) {
 		LabActivationResponseDTO response = new LabActivationResponseDTO();
 		try {
 			response = labService.activateLab(header);
@@ -824,17 +829,18 @@ public class LabResource {
 
 	/**
 	 * List all recorde of Report Tbl for given From and To date
+	 * 
 	 * @param report
 	 * @return ReportResponseDTO
 	 */
 	@RequestMapping(value = "orderList", method = RequestMethod.POST)
 	@ResponseBody
 	public BranchOrdersResponseDTO orderList(
-			@RequestBody BranchOrderDTO orderDTO) {
+			@RequestBody FilterDTO filterDTO) {
 
 		BranchOrdersResponseDTO response = new BranchOrdersResponseDTO();
 		try {
-			response = labService.orderList(orderDTO);
+			response = labService.orderList(filterDTO);
 		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();
@@ -847,6 +853,160 @@ public class LabResource {
 		return response;
 	}
 
+	/**
+	 * Method performed for system health monitor
+	 * 
+	 * @return HealthMonitorResponse
+	 */
+	@RequestMapping(value = "checkSystemHealth", method = RequestMethod.POST)
+	@ResponseBody
+	public HealthMonitorResponse checkSystemHealth(
+			@RequestBody SystemHealthDetails systemHealthDetails) {
+
+		HealthMonitorResponse response = new HealthMonitorResponse();
+		try {
+			response = labService.checkSystemHealth(systemHealthDetails);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+
+	/**
+	 * Method performed for netLims inter branch order transfer
+	 * @param orderTranfer
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "orderTransfer", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO orderTransfer(
+			@RequestBody OrderTransfer orderTranfer) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = labService.transferOrder(orderTranfer);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+
+		}
+		return response;
+	}
+
+	/**
+	 * Method performed for gettting all orders for a Netlims branch
+	 * @param orderHeader
+	 * @return
+	 */
+	@RequestMapping(value = "retrieveBranchOrders", method = RequestMethod.POST)
+	@ResponseBody
+	public  OrderDetails retrieveBranchOrders(@RequestBody LabOrderHeaderDTO orderHeader ) {
+		OrderDetails response = new OrderDetails();
+		try {
+			response = labService.retrieveBranchOrders(orderHeader);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+
+		}
+		return response;
+	}
+	
+	/**
+	 * To set synchronization frequency for a lab branch
+	 * 
+	 * @param sync
+	 * @return SyncFreqResponseDTO
+	 */
+	@RequestMapping(value = "setBranchSync", method = RequestMethod.POST)
+	@ResponseBody
+	public SyncFreqResponseDTO setBranchSync(@RequestBody SyncFreqDTO sync) {
+
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		try {
+			response = labService.setBranchSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	
+	/**
+	 * To get synchronization frequency of a lab 
+	 * 
+	 * @param labId
+	 * @return SyncFreqDTO
+	 */
+	@RequestMapping(value = "getLabSyncDetails/{labId}", method = RequestMethod.GET)
+	@ResponseBody
+	public SyncFreqDTO getLabSyncDetails(@PathVariable int labId) {
+
+		SyncFreqDTO response = new SyncFreqDTO();
+		try {
+			response = labService.getLabSyncDetails(labId);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To get synchronization frequency of a lab 
+	 * 
+	 * @param branchId
+	 * @return SyncFreqDTO
+	 */
+	@RequestMapping(value = "getBranchSyncDetails/{branchId}", method = RequestMethod.GET)
+	@ResponseBody
+	public SyncFreqDTO getBranchSyncDetails(@PathVariable int branchId) {
+
+		SyncFreqDTO response = new SyncFreqDTO();
+		try {
+			response = labService.getBranchSyncDetails(branchId);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	
+	
 	/**
 	 * @return the labService
 	 */

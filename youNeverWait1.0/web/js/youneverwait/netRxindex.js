@@ -12,42 +12,28 @@ $j.cachedScript = function(url, options) {
   return $j.ajax(options);
 };
 
-$j.cachedScript("/youNeverWait/js/youneverwait/common/constants.js").done(function(script, textStatus) {
-}) 
-$j.cachedScript("/youNeverWait/js/framework/RequestHandler.js").done(function(script, textStatus) {
-}) 
-$j.cachedScript("/youNeverWait/js/framework/general.js").done(function(script, textStatus) {
-})
-$j.cachedScript("/youNeverWait/js/youneverwait/common/common.js").done(function(script, textStatus) {
-})
-$j.cachedScript("/youNeverWait/js/framework/invokeUIControls.js").done(function(script, textStatus) {
-})
-$j.cachedScript("/youNeverWait/js/framework/createModal.js").done(function(script, textStatus) {
-})
-$j.cachedScript("/youNeverWait/js/framework/validations.js").done(function(script, textStatus) {
-})
-$j.cachedScript("/youNeverWait/js/framework/notifier.js").done(function(script, textStatus) {
-})
-$j.cachedScript("/youNeverWait/js/framework/logout.js").done(function(script, textStatus) {
-})
-$j.cachedScript("/youNeverWait/js/framework/login.js").done(function(script, textStatus) {
-})
-var errorData = getErrorData();
+
+
+var userdata="";
 $j(document).ready(function(){
-	createLeftpaneToolBarNetrx();
-	createGlobalToolBarNetrx();
-	$j('#tabs-1').removeClass('ui-widget-content');
-	var userdata =getRequestData('/youNeverWait/ws/ui/auth/getUser');
+
+	var classLoader = new ClassLoader();
+		classLoader.load();
+	var globalToolbar = new GlobalToolBarProcessor();
+		globalToolbar.netRxAccinit();
+		$j('#tabs-1').removeClass('ui-widget-content');
+		
+	userdata =getRequestData('/youNeverWait/ws/ui/auth/getUser');
 	var usetType=userdata.userType;
 	var ownerName=userdata.userName;
 	var otherUserName=userdata.name;
+	
 	if(usetType=='owner')
-	$j('#Nameofnetrxuser').html(ownerName);
+		$j('#Nameofnetrxuser').html(ownerName);
 	else
-	$j('#Nameofnetrxuser').html(otherUserName);
+		$j('#Nameofnetrxuser').html(otherUserName);
+		$j("#leftPaneNetRxBranch").trigger('click');
+	
+	
+
 });	
-
-
-
-
-

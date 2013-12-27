@@ -60,6 +60,8 @@ $j.cachedScript("/youNeverWait/js/framework/patientLogout.js").done(function(scr
 })
 $j.cachedScript("/youNeverWait/js/framework/patientChangePwd.js").done(function(script, textStatus) {
 })
+$j.cachedScript("/youNeverWait/js/framework/patientChangeTheme.js").done(function(script, textStatus) {
+})
 
 var errorData = getErrorData();
 var constant = new Constants();
@@ -80,6 +82,11 @@ $j(document).ready(function(){
 
 	});
 	
+	$j(".headright #dropdownOne1 #dd1").die('click').live("click",function() {
+		$j(this).toggleClass('active');
+
+	});
+
 	$j('.todaysapp').die('click').live('click',function(){
 		$j(this).next('div').toggle();
 	});

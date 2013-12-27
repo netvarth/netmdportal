@@ -9,9 +9,7 @@ package com.nv.youNeverWait.rs.ui;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +20,10 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
+import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
+import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.EnableLogStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
@@ -31,6 +31,7 @@ import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LogDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
@@ -43,6 +44,8 @@ import com.nv.youNeverWait.rs.dto.NetMdBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdDTO;
 import com.nv.youNeverWait.rs.dto.NetMdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
+import com.nv.youNeverWait.rs.dto.NetPosDTO;
+import com.nv.youNeverWait.rs.dto.NetPosViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchDetail;
 import com.nv.youNeverWait.rs.dto.NetRxBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchResponseDTO;
@@ -52,16 +55,24 @@ import com.nv.youNeverWait.rs.dto.NetRxViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncLogListResponseDTO;
+import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncLogDTO;
 import com.nv.youNeverWait.security.User;
+import com.nv.youNeverWait.user.bl.service.LogService;
 import com.nv.youNeverWait.user.bl.service.SuperAdminService;
 
 @Controller
 @RequestMapping("ui/superAdmin/")
 public class SuperAdminResource {
 	private SuperAdminService service;
-
+	private LogService logService;
+	
 	@RequestMapping(value = "sForm", method = RequestMethod.GET)
 	public String sForm() {
 		return "superadminLoginPage";
@@ -70,31 +81,6 @@ public class SuperAdminResource {
 	@RequestMapping(value = "startUp", method = RequestMethod.GET)
 	public String check() {
 		return "index";
-	}
-
-	/**
-	 * Shows a list of all user logs
-	 * 
-	 * @param filter
-	 * @return UserLogListResponseDTO
-	 */
-	@RequestMapping(value = "userLogList", method = RequestMethod.POST)
-	@ResponseBody
-	public UserLogListResponseDTO list(@RequestBody FilterDTO filter) {
-		UserLogListResponseDTO response = new UserLogListResponseDTO();
-		try {
-			response = service.userLogList(filter);
-		} catch (ServiceException e) {
-
-			List<Parameter> parameters = e.getParamList();
-			ErrorDTO error = new ErrorDTO();
-			error.setErrCode(e.getError().getErrCode());
-			error.setParams(parameters);
-			error.setDisplayErrMsg(e.isDisplayErrMsg());
-			response.setError(error);
-			response.setSuccess(false);
-		}
-		return response;
 	}
 
 	/**
@@ -108,8 +94,7 @@ public class SuperAdminResource {
 	public ResponseDTO enableLog(@RequestBody LogDTO log) {
 
 		ResponseDTO response = new ResponseDTO();
-		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
-				.currentRequestAttributes();
+		ServletRequestAttributes t = (ServletRequestAttributes)RequestContextHolder.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
 		try {
 			response = service.enableLog(log, request);
@@ -148,8 +133,36 @@ public class SuperAdminResource {
 		return response;
 	}
 
+
 	/**
-	 * To show all the total orders and its related details of each branch in the lab
+	 * To get the status of user enable log
+	 * 
+	 */
+	@RequestMapping(value = "getSyncLogStatus", method = 
+
+RequestMethod.GET)
+	@ResponseBody
+	public EnableLogStatusResponseDTO getSyncLogStatus() {
+		EnableLogStatusResponseDTO response= new EnableLogStatusResponseDTO();
+		try{
+			response=service.getSyncLogStatus();
+		}catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+		return response;
+	}
+
+	/**
+	 * To show all the total orders and its related details of each branch 
+
+in the lab
 	 * 
 	 * @param globalId
 	 * @return BranchOrdersResponseDTO
@@ -180,11 +193,12 @@ public class SuperAdminResource {
 	 */
 	@RequestMapping(value = "orderList", method = RequestMethod.POST)
 	@ResponseBody
-	public BranchOrdersResponseDTO orderList(@RequestBody BranchOrderDTO orderDTO) {
+	public BranchOrdersResponseDTO orderList(@RequestBody FilterDTO 
 
+filterDTO){
 		BranchOrdersResponseDTO response=	new BranchOrdersResponseDTO();	
 		try{
-			response=service.orderList(orderDTO);	
+			response=service.orderList(filterDTO);	
 		}
 		catch(ServiceException e){
 			List<Parameter> parameters =e.getParamList();
@@ -204,7 +218,9 @@ public class SuperAdminResource {
 	 * @param branch
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "updateNetMdBranch", method = RequestMethod.POST)
+	@RequestMapping(value = "updateNetMdBranch", method = 
+
+RequestMethod.POST)
 	@ResponseBody
 	public ResponseDTO updateNetMdBranch(@RequestBody NetMdBranchDTO branch) {
 		ResponseDTO response = new ResponseDTO();
@@ -259,9 +275,9 @@ public class SuperAdminResource {
 	public LoginResponseDTO logout() {
 
 		LoginResponseDTO response = new LoginResponseDTO();
-		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
-				.currentRequestAttributes();
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		HttpServletRequest req = t.getRequest();
+		logService.saveUserDetails(req.getRemoteAddr(), null,LogUserTypeEnum.Nil.getDisplayName(), null,null,ApplicationNameEnum.SuperAdmin.getDisplayName(),Constants.SUPER_ADMIN_LOGOUT);
 		req.getSession().setAttribute(Constants.USER, null);
 		response.setSuccess(true);
 		response.setError(null);
@@ -350,8 +366,23 @@ public class SuperAdminResource {
 	 */
 	@RequestMapping(value = "changePassword", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseDTO changePassword(@RequestBody PasswordDTO passwords) {
+	public ResponseDTO changePassword(@RequestBody PasswordDTO passwords) 
+
+{
 		ResponseDTO response = new ResponseDTO();
+		ServletRequestAttributes t = (ServletRequestAttributes) 
+
+RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		logService.saveUserDetails(request.getRemoteAddr(), null,
+				LogUserTypeEnum.Nil.getDisplayName(), null, 
+
+null,
+				
+
+ApplicationNameEnum.SuperAdmin.getDisplayName(),
+				Constants.SUPER_ADMIN_CHANGE_PASSWORD);
 		try {
 			response = service.changePassword(passwords);
 		} catch (ServiceException e) {
@@ -389,8 +420,11 @@ public class SuperAdminResource {
 
 		}
 		return response;
-
 	}
+		
+
+		
+
 	/**
 	 * Create netRx account
 	 * @param netRx
@@ -448,7 +482,9 @@ public class SuperAdminResource {
 	 * @param netRxId
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "deleteNetRx/{netRxId}", method = RequestMethod.GET)
+	@RequestMapping(value = "deleteNetRx/{netRxId}", method = 
+
+RequestMethod.GET)
 	@ResponseBody
 	public ResponseDTO deleteNetRx(@PathVariable int netRxId) {
 		ResponseDTO response = new ResponseDTO();
@@ -467,16 +503,22 @@ public class SuperAdminResource {
 	}
 	
 	/**
-	 * To retrieve a list of netRx branches which satisfy all filter conditions
+	 * To retrieve a list of netRx branches which satisfy all filter 
+
+conditions
 	 * 
 	 * @param filter
 	 * @return NetMdBranchListResponseDTO
 	 */
-	@RequestMapping(value = "netRxBranchList", method = RequestMethod.POST)
+	@RequestMapping(value = "netRxBranchList", method = 
+
+RequestMethod.POST)
 	@ResponseBody
 	public NetRxBranchListResponseDTO getNetRxBranchList(
 			@RequestBody FilterDTO filter) {
-		NetRxBranchListResponseDTO response = new NetRxBranchListResponseDTO();
+		NetRxBranchListResponseDTO response = new 
+
+NetRxBranchListResponseDTO();
 		try {
 			response = service.getNetRxBranchList(filter);
 		} catch (ServiceException e) {
@@ -502,7 +544,9 @@ public class SuperAdminResource {
 	 */
 	@RequestMapping(value = "netrxList", method = RequestMethod.POST)
 	@ResponseBody
-	public NetRxListResponseDTO getNetRxList(@RequestBody FilterDTO filter) {
+	public NetRxListResponseDTO getNetRxList(@RequestBody FilterDTO 
+
+filter) {
 		NetRxListResponseDTO response = new NetRxListResponseDTO();
 		try {
 			response = service.getNetRxList(filter);
@@ -552,7 +596,7 @@ public class SuperAdminResource {
 	@RequestMapping(value = "createLab", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseDTO createLab(@RequestBody LabDTO lab) {
-		System.out.println("createNetLims....");
+
 		ResponseDTO response = new ResponseDTO();
 		try {
 			response = service.createLab(lab);
@@ -604,7 +648,9 @@ public class SuperAdminResource {
 	 * @param labId
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "deleteLab/{labId}", method = RequestMethod.GET)
+	@RequestMapping(value = "deleteLab/{labId}", method = 
+
+RequestMethod.GET)
 	@ResponseBody
 	public ResponseDTO deleteLab(@PathVariable int labId) {
 		System.out.println("deletelab....");
@@ -631,7 +677,9 @@ public class SuperAdminResource {
 	 * @param branch
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "deleteNetRxBranch/{globalId}", method = RequestMethod.GET)
+	@RequestMapping(value = "deleteNetRxBranch/{globalId}", method = 
+
+RequestMethod.GET)
 	@ResponseBody
 	public ResponseDTO deleteNetRxBranch(@PathVariable int globalId) {
 		ResponseDTO response = new ResponseDTO();
@@ -658,7 +706,9 @@ public class SuperAdminResource {
 	 * @param netRxId
 	 * @return NetRxViewResponseDTO
 	 */
-	@RequestMapping(value = "viewNetRx/{netRxId}", method = RequestMethod.GET)
+	@RequestMapping(value = "viewNetRx/{netRxId}", method = 
+
+RequestMethod.GET)
 	@ResponseBody
 	public NetRxViewResponseDTO viewNetRx(@PathVariable int netRxId) {
 		NetRxViewResponseDTO response = new NetRxViewResponseDTO();
@@ -684,10 +734,16 @@ public class SuperAdminResource {
 	 * @param globalId
 	 * @return NetRxBranchResponseDTO
 	 */
-	@RequestMapping(value = "viewNetRxBranch/{netrxBranchId}", method = RequestMethod.GET)
+	@RequestMapping(value = "viewNetRxBranch/{netrxBranchId}", method = 
+
+RequestMethod.GET)
 	@ResponseBody
-	public NetRxBranchResponseDTO viewNetRxBranch(@PathVariable int netrxBranchId) {
-		NetRxBranchResponseDTO response = new NetRxBranchResponseDTO();
+	public NetRxBranchResponseDTO viewNetRxBranch(@PathVariable int 
+
+netrxBranchId) {
+		NetRxBranchResponseDTO response = new 
+
+NetRxBranchResponseDTO();
 		try {
 			response = service.viewNetRxBranch(netrxBranchId);
 		} catch (ServiceException e) {
@@ -748,9 +804,9 @@ public class SuperAdminResource {
 
 			response = service.login(login);
 			if (response.isSuccess()) {
-				ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
-						.currentRequestAttributes();
+				ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 				HttpServletRequest req = t.getRequest();
+				logService.saveUserDetails(req.getRemoteAddr(), null,LogUserTypeEnum.Nil.getDisplayName(), null, null,ApplicationNameEnum.SuperAdmin.getDisplayName(),Constants.SUPER_ADMIN_LOGIN);
 				User user = new User();
 				UserDetails userDetail = service.getUser(login.getUserName());
 				if (userDetail != null) {
@@ -781,7 +837,9 @@ public class SuperAdminResource {
 	 */
 	@RequestMapping(value = "netmdList", method = RequestMethod.POST)
 	@ResponseBody
-	public NetMdListResponseDTO getNetMdList(@RequestBody FilterDTO filter) {
+	public NetMdListResponseDTO getNetMdList(@RequestBody FilterDTO 
+
+filter) {
 		NetMdListResponseDTO response = new NetMdListResponseDTO();
 		try {
 			response = service.getNetMdList(filter);
@@ -880,7 +938,9 @@ public class SuperAdminResource {
 	 * @param globalId
 	 * @return BranchResponseDTO
 	 */
-	@RequestMapping(value = "viewBranch/{globalId}", method = RequestMethod.GET)
+	@RequestMapping(value = "viewBranch/{globalId}", method = 
+
+RequestMethod.GET)
 	@ResponseBody
 	public LabBranchResponseDTO viewBranch(@PathVariable int globalId) {
 		LabBranchResponseDTO response = new LabBranchResponseDTO();
@@ -958,7 +1018,9 @@ public class SuperAdminResource {
 	 */
 	@RequestMapping(value = "branchList", method = RequestMethod.POST)
 	@ResponseBody
-	public BranchListResponseDTO branchList(@RequestBody FilterDTO filter) {
+	public BranchListResponseDTO branchList(@RequestBody FilterDTO filter) 
+
+{
 		BranchListResponseDTO response = new BranchListResponseDTO();
 		try {
 			response = service.branchList(filter);
@@ -974,7 +1036,35 @@ public class SuperAdminResource {
 		}
 		return response;
 	}
+	
+	/**
+	 * Filter method for getting list of bills in netmd
+	 * @param filter
+	 * @return BranchBillListResponseDTO
+	 */
+	@RequestMapping(value = "billList", method = RequestMethod.POST)
+	@ResponseBody
+	public BranchBillListResponseDTO billList(@RequestBody FilterDTO 
 
+filter) {
+
+		BranchBillListResponseDTO response=	new 
+
+BranchBillListResponseDTO();	
+		try{
+			response=service.billList(filter);
+		}
+		catch(ServiceException e){
+			List<Parameter> parameters =e.getParamList();
+			ErrorDTO error=new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
 	/**
 	 * Update netmd account
 	 * 
@@ -999,6 +1089,9 @@ public class SuperAdminResource {
 		}
 		return response;
 	}
+	
+	
+	
 
 	/**
 	 * View netmd account
@@ -1006,7 +1099,9 @@ public class SuperAdminResource {
 	 * @param netMd
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "viewNetMd/{netMdId}", method = RequestMethod.GET)
+	@RequestMapping(value = "viewNetMd/{netMdId}", method = 
+
+RequestMethod.GET)
 	@ResponseBody
 	public NetMdViewResponseDTO view(@PathVariable int netMdId) {
 		NetMdViewResponseDTO response = new NetMdViewResponseDTO();
@@ -1025,13 +1120,20 @@ public class SuperAdminResource {
 		return response;
 	}
 
+	
+
+	
+	
+	
 	/**
 	 * Creates a netmd branch
 	 * 
 	 * @param branch
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "createNetMdBranch", method = RequestMethod.POST)
+	@RequestMapping(value = "createNetMdBranch", method = 
+
+RequestMethod.POST)
 	@ResponseBody
 	public ResponseDTO createBranch(@RequestBody NetMdBranchDTO branch) {
 		ResponseDTO response = new ResponseDTO();
@@ -1055,11 +1157,15 @@ public class SuperAdminResource {
 	 * @param globalId
 	 * @return BranchResponseDTO
 	 */
-	@RequestMapping(value = "viewNetMdBranch/{netmdBranchId}", method = RequestMethod.GET)
+	@RequestMapping(value = "viewNetMdBranch/{netmdBranchId}", method = 
+
+RequestMethod.GET)
 	@ResponseBody
 	public NetMdBranchResponseDTO viewNetMdBranch(
 			@PathVariable int netmdBranchId) {
-		NetMdBranchResponseDTO response = new NetMdBranchResponseDTO();
+		NetMdBranchResponseDTO response = new 
+
+NetMdBranchResponseDTO();
 		try {
 			response = service.viewNetMdBranch(netmdBranchId);
 		} catch (ServiceException e) {
@@ -1074,13 +1180,17 @@ public class SuperAdminResource {
 		return response;
 	}
 
+	
+	
 	/**
 	 * Deletes a netmd branch
 	 * 
 	 * @param branch
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "deleteNetMdBranch/{netmdBranchId}", method = RequestMethod.GET)
+	@RequestMapping(value = "deleteNetMdBranch/{netmdBranchId}", method = 
+
+RequestMethod.GET)
 	@ResponseBody
 	public ResponseDTO deleteBranch(@PathVariable int netmdBranchId) {
 		ResponseDTO response = new ResponseDTO();
@@ -1104,7 +1214,9 @@ public class SuperAdminResource {
 	 * @param globalId
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "deleteNetMd/{globalId}", method = RequestMethod.GET)
+	@RequestMapping(value = "deleteNetMd/{globalId}", method = 
+
+RequestMethod.GET)
 	@ResponseBody
 	public ResponseDTO deleteNetMd(@PathVariable int globalId) {
 		ResponseDTO response = new ResponseDTO();
@@ -1122,14 +1234,22 @@ public class SuperAdminResource {
 		return response;
 	}
 
+	
+	
+	
+	
 	/**
-	 * To clear mac Id for the purpose of uninstalling netMd application from
+	 * To clear mac Id for the purpose of uninstalling netMd application 
+
+from
 	 * device
 	 * 
 	 * @param HeaderDTO
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "clearNetMdMacId", method = RequestMethod.POST)
+	@RequestMapping(value = "clearNetMdMacId", method = 
+
+RequestMethod.POST)
 	@ResponseBody
 	public ResponseDTO clearNetMdMacId(@RequestBody HeaderDTO header) {
 		ResponseDTO response = new ResponseDTO();
@@ -1148,15 +1268,21 @@ public class SuperAdminResource {
 		return response;
 	}
 	/**
-	 * To clear mac Id for the purpose of uninstalling netlims application from
+	 * To clear mac Id for the purpose of uninstalling netlims application 
+
+from
 	 * device
 	 * 
 	 * @param LabBranchDTO
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "clearNetlimsMacId", method = RequestMethod.POST)
+	@RequestMapping(value = "clearNetlimsMacId", method = 
+
+RequestMethod.POST)
 	@ResponseBody
-	public ResponseDTO clearNetlimsMacId(@RequestBody LabBranchDTO branch) {
+	public ResponseDTO clearNetlimsMacId(@RequestBody LabBranchDTO branch) 
+
+{
 		ResponseDTO response = new ResponseDTO();
 		try {
 			response = service.clearNetlimsMacId(branch);
@@ -1173,6 +1299,567 @@ public class SuperAdminResource {
 		return response;
 	}
 
+	/**
+	 * Method for viewing branch default system details
+	 * @param branchId
+	 * @return
+	 */
+	@RequestMapping (value="viewBranchSystemInfo/{branchId}", 
+
+method=RequestMethod.GET)
+	@ResponseBody
+	public BranchSystemInfoDetails viewBranchSystemInfo(@PathVariable int branchId){
+		BranchSystemInfoDetails details= new BranchSystemInfoDetails();
+		try{
+			details= service.viewBranchSystemInfo(branchId);
+		}
+		catch(ServiceException e){
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			details.setError(error);
+			details.setSuccess(false);
+		}
+		return details;
+		
+	}
+	
+	/**
+	 * Method for viewing branch default system details
+	 * @param branchId
+	 * @return
+	 */
+	@RequestMapping (value="viewNetMdBranchSystemInfo/{passphrase}", 
+
+method=RequestMethod.GET)
+	@ResponseBody
+	public BranchSystemInfoDetails viewNetMdBranchSystemInfo(@PathVariable String passphrase){
+		BranchSystemInfoDetails details= new BranchSystemInfoDetails();
+		try{
+			details= service.viewNetMdBranchSystemInfo(passphrase);
+		}
+		catch(ServiceException e){
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			details.setError(error);
+			details.setSuccess(false);
+		}
+		return details;
+		
+	}
+
+	/**
+ 	 * Method for updating the branch default system details of a lab
+	 * @param details
+ 	 * @return
+     */
+	@RequestMapping(value = "updateLabBranchSystemInfo", method = 
+
+RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO updateLabBranchSystemInfo(@RequestBody 
+
+BranchSystemInfoDetails details) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = service.updateLabBranchSystemInfo(details);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+
+		return response;
+	}
+
+	/**
+ 	 * Method for updating the branch default system details of a netmd
+	 * @param details
+ 	 * @return
+     */
+	@RequestMapping(value = "updateNetmdBranchSystemInfo", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO updateNetmdBranchSystemInfo(@RequestBody BranchSystemInfoDetails systemCriticalDetails) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = service.updateNetmdBranchSystemInfo(systemCriticalDetails);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+
+		return response;
+	}
+
+	
+	/**
+	 * Shows a list of all user logs
+	 * 
+	 * @param filter
+	 * @return UserLogListResponseDTO
+	 */
+	@RequestMapping(value = "userLogList", method = RequestMethod.POST)
+	@ResponseBody
+	public UserLogListResponseDTO userLogList(@RequestBody FilterDTO filter) {
+		UserLogListResponseDTO response = new UserLogListResponseDTO();
+		try {
+			response = service.userLogList(filter);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * Shows a list of all sync logs
+	 * 
+	 * @param filter
+	 * @return SyncLogListResponseDTO
+	 */
+	@RequestMapping(value = "syncLogList", method = RequestMethod.POST)
+	@ResponseBody
+	public SyncLogListResponseDTO syncLogList(@RequestBody FilterDTO filter) {
+		SyncLogListResponseDTO response = new SyncLogListResponseDTO();
+		try {
+			response = service.syncLogList(filter);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+
+	/**
+	 * Shows a list of all tests
+	 * 
+	 * @param filter
+	 * @return TestListResponseDTO
+	 */
+	@RequestMapping(value = "testList", method = RequestMethod.POST)
+	@ResponseBody
+	public TestListResponseDTO testList(@RequestBody FilterDTO filter) {
+		TestListResponseDTO response = new TestListResponseDTO();
+		try {
+			response = service.testList(filter);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	/**
+	 * Shows a list of all test specimens
+	 * 
+	 * @param filter
+	 * @return SpecimenListResponseDTO
+	 */
+	@RequestMapping(value = "testSpecimenList", method = 
+
+RequestMethod.POST)
+	@ResponseBody
+	public SpecimenListResponseDTO testSpecimenList(@RequestBody FilterDTO filter) {
+		SpecimenListResponseDTO response = new SpecimenListResponseDTO();
+		try {
+			response = service.testSpecimenList(filter);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+
+	/**
+	 * To enable/disable  sync log process
+	 * 
+	 * @param log
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "enableSyncLog", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO enableSyncLog(@RequestBody SyncLogDTO syncLog) {
+
+		ResponseDTO response = new ResponseDTO();
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		try {
+			response = service.enableSyncLog(syncLog, request);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+//	
+	
+	/**
+	 * To enable/disable  sync process
+	 * 
+	 * @param log
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "setSync", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO setSync(@RequestBody SyncFreqDTO sync) {
+
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = service.setSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To set synchronization frequency for a lab 
+	 * 
+	 * @param sync
+	 * @return SyncFreqResponseDTO
+	 */
+	@RequestMapping(value = "setLabSync", method = RequestMethod.POST)
+	@ResponseBody
+	public SyncFreqResponseDTO setLabSync(@RequestBody SyncFreqDTO sync) {
+
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		try {
+			response = service.setLabSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To set synchronization frequency for a lab branch
+	 * 
+	 * @param sync
+	 * @return SyncFreqResponseDTO
+	 */
+	@RequestMapping(value = "setBranchSync", method = RequestMethod.POST)
+	@ResponseBody
+	public SyncFreqResponseDTO setBranchSync(@RequestBody SyncFreqDTO sync) {
+
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		try {
+			response = service.setBranchSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To set synchronization frequency for a NetMd 
+	 * 
+	 * @param sync
+	 * @return SyncFreqResponseDTO
+	 */
+	@RequestMapping(value = "setNetMdSync", method = RequestMethod.POST)
+	
+	@ResponseBody
+	public SyncFreqResponseDTO setNetMdSync(@RequestBody SyncFreqDTO sync) 
+
+{
+
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		try {
+			response = service.setNetMdSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To set synchronization frequency for a NetMd branch
+	 * 
+	 * @param sync
+	 * @return SyncFreqResponseDTO
+	 */
+	@RequestMapping(value = "setNetMdBranchSync", method = 
+
+RequestMethod.POST)
+	
+	@ResponseBody
+	public SyncFreqResponseDTO setNetMdBranchSync(@RequestBody SyncFreqDTO 
+
+sync) {
+
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		try {
+			response = service.setNetMdBranchSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	/**
+	 * To set synchronization frequency for a NetRx 
+	 * 
+	 * @param sync
+	 * @return SyncFreqResponseDTO
+	 */
+	@RequestMapping(value = "setNetRxSync", method = RequestMethod.POST)
+	
+	@ResponseBody
+	public SyncFreqResponseDTO setNetRxSync(@RequestBody SyncFreqDTO sync) 
+
+{
+
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		try {
+			response = service.setNetRxSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	/**
+	 * To set synchronization frequency for a NetRx branch
+	 * 
+	 * @param sync
+	 * @return SyncFreqResponseDTO
+	 */
+	@RequestMapping(value = "setNetRxBranchSync", method = 
+
+RequestMethod.POST)
+	
+	@ResponseBody
+	public SyncFreqResponseDTO setNetRxBranchSync(@RequestBody SyncFreqDTO 
+
+sync) {
+
+		SyncFreqResponseDTO response = new SyncFreqResponseDTO();
+		try {
+			response = service.setNetRxBranchSync(sync);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	
+	/**
+	 * To get synchronization frequency of a lab 
+	 * 
+	 * @param log
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "getSyncDetails", method = RequestMethod.GET)
+	@ResponseBody
+	public SyncFreqDTO getSyncDetails() {
+
+		SyncFreqDTO response = new SyncFreqDTO();
+		try {
+			response = service.getSyncDetails();
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+
+	
+	
+	
+	/**
+	 * Creates a NetPos account
+	 * @param netPos
+	 * @return
+	 */
+	@RequestMapping(value = "createNetPos", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO createNetPos(@RequestBody NetPosDTO netPos) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = service.createNetPos(netPos);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+
+		}
+		return response;
+	
+	
+	}
+	
+	/**
+	 * Update netPos account
+	 * @param netPos
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "updateNetPos", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO updateNetPos(@RequestBody NetPosDTO netPos) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = service.updateNetPos(netPos);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+
+		}
+		return response;
+
+	}
+	
+	/**
+	 * Delete netPos account
+	 * @param netPos
+	 * @return ResponseDTO
+	 */
+	
+	@RequestMapping(value = "deleteNetPos/{globalId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseDTO deleteNetPos(@PathVariable int globalId) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = service.deleteNetPos(globalId);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	
+	/**
+	 * View netpos account
+	 * 
+	 * @param netPos
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "viewNetPos/{netPosId}", method = 
+
+RequestMethod.GET)
+	@ResponseBody
+	public NetPosViewResponseDTO viewNetPos(@PathVariable int netPosId) {
+		NetPosViewResponseDTO response = new NetPosViewResponseDTO();
+		try {
+			response = service.viewNetPos(netPosId);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
 	
 	/**
 	 * @return the service
@@ -1188,4 +1875,20 @@ public class SuperAdminResource {
 	public void setService(SuperAdminService service) {
 		this.service = service;
 	}
+
+	/**
+	 * @return the logService
+	 */
+	public LogService getLogService() {
+		return logService;
+	}
+
+	/**
+	 * @param logService the logService to set
+	 */
+	public void setLogService(LogService logService) {
+		this.logService = logService;
+	}
+	
+	
 }

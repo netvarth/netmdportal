@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class BranchOrdersResponseDTO {
 	private List<BranchOrderDetail> branchOrders=new ArrayList<BranchOrderDetail>();
+	private long count;
 	private ErrorDTO error;
 	private boolean success;
 	
@@ -54,6 +55,18 @@ public class BranchOrdersResponseDTO {
 	 */
 	public void setSuccess(boolean success) {
 		this.success = success;
+	}
+	/**
+	 * @return the count
+	 */
+	public long getCount() {
+		return count;
+	}
+	/**
+	 * @param count the count to set
+	 */
+	public void setCount(long count) {
+		this.count = count;
 	}
 	
 }

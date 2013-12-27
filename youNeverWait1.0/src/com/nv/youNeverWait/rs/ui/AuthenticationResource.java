@@ -74,7 +74,7 @@ public class AuthenticationResource {
 	 * 
 	 * @return CaptchaResponseDTO
 	 */
-	@RequestMapping(value = "getCaptcha", method = RequestMethod.POST)
+	@RequestMapping(value = "getCaptcha", method = RequestMethod.GET)
 	@ResponseBody
 	public CaptchaResponseDTO getCaptcha() {
 
@@ -304,10 +304,10 @@ public class AuthenticationResource {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
-//		logService.saveUserDetails(request.getRemoteAddr(),
-//				user.getName(), user.getUserType(), user.getLoginTime(), null,
-//				ApplicationNameEnum.Patient.getDisplayName(),
-//				Constants.LOGIN);
+		logService.saveUserDetails(request.getRemoteAddr(),
+				user.getName(), user.getUserType(), user.getLoginTime(), null,
+				ApplicationNameEnum.Patient.getDisplayName(),
+				Constants.LOGIN);
 		return response;
 	}
 

@@ -120,7 +120,11 @@ function setpastAppointmentlistStructure() {
 			$j(pastAppointmentList.pastAppointments).each(function (index, past) {
 				var id=past.globalId;
 				var specialisation="";
-				if(past.doctorSpecialisation==null){specialisation="";}else{specialisation="("+past.doctorSpecialisation+")";}
+				if(!past.doctorSpecialisation=="")
+				{
+					specialisation="("+past.doctorSpecialisation+")";
+				}
+				
 				var doctorDetail="Dr."+past.doctorFirstName+specialisation;
 				var timeDetail=past.startingTime+" "+past.date;
 				var rowData=$j(tableObj).dataTable().fnAddData([doctorDetail,timeDetail]);

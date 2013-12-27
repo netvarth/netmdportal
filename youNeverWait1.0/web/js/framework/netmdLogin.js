@@ -6,7 +6,21 @@ $j.getScript("/youNeverWait/js/framework/RequestHandler.js").done(function(scrip
 }) 
 
 $j(document).ready(function() {
+	$j('.Home').die('click').live("click",function(){
+		
+		$j.get('/youNeverWait/ws/ui/netMd/startUp', function(data){
+		$j('html').html(data);
+		});
 
+	});
+	
+	$j('.PrivacyPolicy').die('click').live("click",function(){
+		$j.get('/youNeverWait/ws/ui/netMd/privacyPolicy', function(data){
+		$j('html').html(data);
+		});
+	
+	});
+	
 	$j("#userNameNetmd").bind("keypress", function (e) {
 		if (e.keyCode == 13) {
 			if($j("#userNameNetmd").val()=="")

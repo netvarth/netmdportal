@@ -8,6 +8,10 @@
 package com.nv.youNeverWait.user.pl.dao;
 
 import java.util.Date;
+
+import com.nv.youNeverWait.rs.dto.BillResponseDTO;
+import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
+import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetMdActivationResponseDTO;
@@ -22,6 +26,8 @@ import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalUserResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.pl.impl.NetMdBranchOwnerDetails;
 
@@ -51,4 +57,16 @@ public interface NetMdDao {
 	public ResponseDTO clearMacId(HeaderDTO header);
 	public ResponseDTO makePrimary(HeaderDTO header);
 	public ResponseDTO changePassword(PasswordDTO passwords);
+	public BillResponseDTO createBill(BillSummaryDTO newBill, HeaderDTO header);
+	public BillResponseDTO updateBill(BillSummaryDTO updatedBill, HeaderDTO header);
+	public SyncFreqResponseDTO setNetMdSync(SyncFreqDTO sync);
+	public SyncFreqResponseDTO setNetMdBranchSync(SyncFreqDTO sync);
+	public SyncFreqDTO getNetmdSyncDetails(int netmdId);
+	public SyncFreqDTO getBranchSyncDetails(int branchId);
+	public void checkHeader(HeaderDTO header);
+	public BranchSystemInfoDetails viewBranchSystemInfoDetails(String passphrase);
+	public ResponseDTO updateNetmdBranchSystemInfo(
+			BranchSystemInfoDetails systemCriticalDetails);
+	
+
 }

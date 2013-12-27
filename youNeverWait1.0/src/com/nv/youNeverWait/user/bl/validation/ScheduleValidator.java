@@ -35,7 +35,7 @@ public class ScheduleValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		validateNetmdBranchIds(header.getNetMdId(), header.getNetMdBranchId());
+		validateNetmdBranchIds(header.getHeadOfficeId(), header.getBranchId());
 		if (scheduleDetail == null) {
 
 			ServiceException se = new ServiceException(

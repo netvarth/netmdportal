@@ -123,6 +123,8 @@
 	$j('.fc-header-left .fc-button-agendaWeek ').die('click').live("click",function() {	
 	$j('#AppointmentPTBContainer #btn_delete_ptb_id').hide();
 	$j('#AppointmentPTBContainer #btn_view_ptb_id').hide();
+	$j('.fc-agenda-slots tr th').nextAll('td').children('div').text("");
+	$j('.fc-agenda-slots tr th').nextAll('td').removeAttr('style');
 	});	
 	
 	$j('.fc-agenda-slots tbody tr td').die('click').live("click",function() {	
@@ -213,11 +215,12 @@
 					$j(this).nextAll('td:first').attr('value',appId);
 					}
 			});
+			showTip("Appointment created Successfully");
 			$j("#newpatintAppointmentForm").trigger('reveal:close');
 		}
 			
 	else {
-			updateTipsNew(getErrorName(appointmentResponse.error),$j('#error'));
+			showTip(getErrorName(appointmentResponse.error));
 		  		   $j("#error").delay(1100).fadeOut(1100);
 		}		
 	 
@@ -309,6 +312,7 @@
 				$j('tr td').removeAttr('selected');
 				}
 			});
+			showTip("Appointment updated Successfully");
 			$j("#viewpatintAppointmentForm").trigger('reveal:close');
 			 }
 			
@@ -377,10 +381,10 @@
 	function patientAppointment(){
 	var netmdId=splitpatientId.split("_")[1];
 	var netmdbranchId=splitpatientId.split("_")[0];
-	var patientappointmentDetails = '{"netMdId":'+ netmdId +',';
+	var patientappointmentDetails = '{"headOfficeId":'+ netmdId +',';
 			patientappointmentDetails += '"passPhrase":"",';
 			patientappointmentDetails +='"macId":"",';
-			patientappointmentDetails +='"netMdBranchId":'+netmdbranchId+'';
+			patientappointmentDetails +='"branchId":'+netmdbranchId+'';
 			patientappointmentDetails += '}';
 		return patientappointmentDetails;
 	

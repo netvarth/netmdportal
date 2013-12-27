@@ -300,7 +300,7 @@
                     "elements": [
                         {
                             "type": "label",
-							"title":"Today's Branchorders",
+							"title":"Today's Branch Orders",
                             "spanstyle": "font-size:15px;"
                         }
                     ]
@@ -319,10 +319,10 @@
 							{ "className" : "head0",	"name" : "BranchId", "style":"width:5%"},
 							{ "className" : "head1",	"name" : "BranchName", "style":"width:10%"},
 							{ "className" : "head0",	"name" : "OrderDate", "style":"width:15%"},
-							{ "className" : "head1",	"name" : "Total orders", "style":"width:10%"},
-							{ "className" : "head0",	"name" : "Net amount", "style":"width:10%"},
-							{ "className" : "head1",	"name" : "Paid amount", "style":"width:10%"},
-							{ "className" : "head0",	"name" : "Last orderedtime", "style":"width:10%"}
+							{ "className" : "head1",	"name" : "Total Orders", "style":"width:10%"},
+							{ "className" : "head0",	"name" : "Net Amount", "style":"width:10%"},
+							{ "className" : "head1",	"name" : "Paid Amount", "style":"width:10%"},
+							{ "className" : "head0",	"name" : "Last Orderedtime", "style":"width:10%"}
 							
 						]
                     }

@@ -28,6 +28,11 @@ function viewnetlimsInfo(netlimsId) {
 		$j("#netlimsViewForm #organizationName").val(netlimsInfo.lab.name);
 	else
 		$j("#netlimsViewForm #organizationName").val('Nil');
+	
+	if(netlimsInfo.lab.labCode)
+		$j("#netlimsViewForm #ownerFirstcode").val(netlimsInfo.lab.labCode);
+	else
+		$j("#netlimsViewForm #ownerFirstcode").val('Nil');
 	if(netlimsInfo.lab.headOfficeEmail)
 		$j("#netlimsViewForm #headOfficeEmail").val(netlimsInfo.lab.headOfficeEmail);
 	else

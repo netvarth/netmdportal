@@ -29,12 +29,64 @@ public class SyncResponseDTO {
 	private RetrievalScheduleResponseDTO retrievalScheduleList= new RetrievalScheduleResponseDTO();
 	private List<RetrieveResultsResponseDTO> retrieveResults= new ArrayList<RetrieveResultsResponseDTO>();
 	private RetrievalAppointmentResponseDTO retrievalAppointmentListForPrimary = new RetrievalAppointmentResponseDTO();
+	private List<BillSyncResponseDTO> billResponse=new ArrayList<BillSyncResponseDTO>();
 	private String lastSynctime;
+//	private boolean syncStatus;
+//	private String syncFreqType;
+//	private int syncInterval;
 	private ErrorDTO error;
 	private boolean success;
 	
-	
-	
+//	
+//	
+//	/**
+//	 * @return the syncStatus
+//	 */
+//	public boolean isSyncStatus() {
+//		return syncStatus;
+//	}
+//	/**
+//	 * @param syncStatus the syncStatus to set
+//	 */
+//	public void setSyncStatus(boolean syncStatus) {
+//		this.syncStatus = syncStatus;
+//	}
+//	/**
+//	 * @return the syncFreqType
+//	 */
+//	public String getSyncFreqType() {
+//		return syncFreqType;
+//	}
+//	/**
+//	 * @param syncFreqType the syncFreqType to set
+//	 */
+//	public void setSyncFreqType(String syncFreqType) {
+//		this.syncFreqType = syncFreqType;
+//	}
+//	/**
+//	 * @return the syncInterval
+//	 */
+//	public int getSyncInterval() {
+//		return syncInterval;
+//	}
+//	/**
+//	 * @param syncInterval the syncInterval to set
+//	 */
+//	public void setSyncInterval(int syncInterval) {
+//		this.syncInterval = syncInterval;
+//	}
+	/**
+	 * @return the billResponse
+	 */
+	public List<BillSyncResponseDTO> getBillResponse() {
+		return billResponse;
+	}
+	/**
+	 * @param billResponse the billResponse to set
+	 */
+	public void setBillResponse(List<BillSyncResponseDTO> billResponse) {
+		this.billResponse = billResponse;
+	}
 	/**
 	 * @return the retrievalAppointmentListForPrimary
 	 */

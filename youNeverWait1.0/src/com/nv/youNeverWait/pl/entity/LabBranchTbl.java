@@ -2,7 +2,6 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.Date;
 import java.util.Set;
 
@@ -37,6 +36,9 @@ public class LabBranchTbl implements Serializable {
 	@Column(length=45)
 	private String email;
 
+//	@Column(name="branch_code", nullable=false, length=45)
+//	private String branchCode;
+	
 	//bi-directional many-to-one association to LabTbl
     @ManyToOne
 	@JoinColumn(name="lab_id", nullable=false)
@@ -62,8 +64,15 @@ public class LabBranchTbl implements Serializable {
 	@Column(name="create_date_time", nullable=false)
 	private Date createDateTime;
 
+    @Column(name="sync_freq_type", length=45)
+	private String syncFreqType;
 
+	@Column(name="sync_time")
+	private int syncTime;
     
+	@Column(name="enable_sync", nullable=false)
+	private boolean enableSync;
+	
 	/**
 	 * @return the status
 	 */
@@ -176,6 +185,14 @@ public class LabBranchTbl implements Serializable {
 		this.labUserBranchTbls = labUserBranchTbls;
 	}
 
+//	public String getBranchCode() {
+//		return this.branchCode;
+//	}
+//
+//	public void setBranchCode(String branchCode) {
+//		this.branchCode = branchCode;
+//	}
+	
 	/**
 	 * @return the email
 	 */
@@ -189,5 +206,27 @@ public class LabBranchTbl implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+	public String getSyncFreqType() {
+		return this.syncFreqType;
+	}
+
+	public void setSyncFreqType(String syncFreqType) {
+		this.syncFreqType = syncFreqType;
+	}
+
+	public int getSyncTime() {
+		return this.syncTime;
+	}
+
+	public void setSyncTime(int syncTime) {
+		this.syncTime = syncTime;
+	}
+	public boolean getEnableSync() {
+		return this.enableSync;
+	}
+
+	public void setEnableSync(boolean enableSync) {
+		this.enableSync = enableSync;
+	}
+
 }

@@ -2,7 +2,6 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.Date;
 import java.util.Set;
 
@@ -59,6 +58,22 @@ public class LabTbl implements Serializable {
 	@Column(name="owner_phone", length=45)
 	private String ownerPhone;
 
+//	@Column(name="lab_code", nullable=false, length=45)
+//	private String labCode;
+	
+	@Lob
+	@Column(name="order_type_code", nullable=false)
+	private String orderTypeCode;
+	
+	@Column(name="enable_sync", nullable=false)
+	private boolean enableSync;
+	
+	@Column(name="sync_freq_type", length=45)
+	private String syncFreqType;
+	
+	@Column(name="sync_time")
+	private int syncTime;
+
 	//bi-directional many-to-one association to LabBranchTbl
 	@OneToMany(mappedBy="labTbl")
 	private Set<LabBranchTbl> labBranchTbls;
@@ -103,12 +118,14 @@ public class LabTbl implements Serializable {
 		this.id = id;
 	}
 
-	
+//	public String getLabCode() {
+//		return this.labCode;
+//	}
+//
+//	public void setLabCode(String labCode) {
+//		this.labCode = labCode;
+//	}
 
-	
-	
-
-	
 	/**
 	 * @return the authToSentResult
 	 */
@@ -269,7 +286,14 @@ public class LabTbl implements Serializable {
 		this.labBranchTbls = labBranchTbls;
 	}
 	
-	
+	public String getOrderTypeCode() {
+		return this.orderTypeCode;
+	}
+
+	public void setOrderTypeCode(String orderTypeCode) {
+		this.orderTypeCode = orderTypeCode;
+	}
+
 
 	/**
 	 * @return the labLoginTbl
@@ -311,6 +335,35 @@ public class LabTbl implements Serializable {
 	 */
 	public void setDestinationLabTbls(Set<OrderTbl> destinationLabTbls) {
 		this.destinationLabTbls = destinationLabTbls;
+	}
+	
+	public boolean getEnableSync() {
+		return this.enableSync;
+	}
+
+	public void setEnableSync(boolean enableSync) {
+		this.enableSync = enableSync;
+	}
+	public String getSyncFreqType() {
+		return this.syncFreqType;
+	}
+
+	public void setSyncFreqType(String syncFreqType) {
+		this.syncFreqType = syncFreqType;
+	}
+
+	/**
+	 * @return the syncTime
+	 */
+	public int getSyncTime() {
+		return syncTime;
+	}
+
+	/**
+	 * @param syncTime the syncTime to set
+	 */
+	public void setSyncTime(int syncTime) {
+		this.syncTime = syncTime;
 	}
 	
 	

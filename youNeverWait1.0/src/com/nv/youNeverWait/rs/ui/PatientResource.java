@@ -261,7 +261,7 @@ public class PatientResource {
 		HttpServletRequest request = t.getRequest();
 		logService.saveUserDetails(request.getRemoteAddr(),
 				login.getUserName(), login.getUserType(), null, null,
-				ApplicationNameEnum.NetMd.getDisplayName(),
+				ApplicationNameEnum.Patient.getDisplayName(),
 				Constants.RESET_PSWD);
 		return response;
 	}
@@ -289,6 +289,13 @@ public class PatientResource {
 			response.setSuccess(false);
 			return response;
 		}
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		logService.saveUserDetails(request.getRemoteAddr(),
+				login.getUserName(), login.getUserType(), null, null,
+				ApplicationNameEnum.Patient.getDisplayName(),
+				Constants.RESET_PSWD);
 		return response;
 	}
 	
@@ -808,7 +815,7 @@ public class PatientResource {
 			logService.saveUserDetails(request.getRemoteAddr(),
 					userObj.getName(), userObj.getUserType(),
 					userObj.getLoginTime(), null,
-					ApplicationNameEnum.NetMd.getDisplayName(),
+					ApplicationNameEnum.Patient.getDisplayName(),
 					Constants.PAST_APPOINTMENTS);
 		}
 		return response;
@@ -846,7 +853,7 @@ public class PatientResource {
 			logService.saveUserDetails(request.getRemoteAddr(),
 					userObj.getName(), userObj.getUserType(),
 					userObj.getLoginTime(), null,
-					ApplicationNameEnum.NetMd.getDisplayName(),
+					ApplicationNameEnum.Patient.getDisplayName(),
 					Constants.RESULT_LIST);
 		}
 		return response;
@@ -877,6 +884,7 @@ public class PatientResource {
 		}
 		return response;
 	}
+	
 	/**
 	 * @return the service
 	 */

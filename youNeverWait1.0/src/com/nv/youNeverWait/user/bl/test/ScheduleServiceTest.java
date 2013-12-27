@@ -59,21 +59,21 @@ public class ScheduleServiceTest {
 		
 		header.setMacId("00-80-48-6E-E1-E2");
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
-		header.setNetMdBranchId(5);
-		header.setNetMdId(3);
+		header.setBranchId(5);
+		header.setHeadOfficeId(3);
 		schedule.setHeader(header);
 		ScheduleDetail scheduleDetail = new ScheduleDetail();
 		scheduleDetail.setDoctorGlobalId(1);
 		SeriesDTO series = new SeriesDTO();
 		series.setOccuranceType("None");
 		series.setRepeat("Daily");
-		series.setEndDate("2014-10-11");
+		series.setEndDate("2015-10-11");
 		series.setSeriesId(1);
 		scheduleDetail.setSeries(series);
 		scheduleDetail.setDoctorGlobalId(1);
 		scheduleDetail.setScheduleStatus("Vacation");
 		scheduleDetail.setEndTime("02:10 pm");
-		scheduleDetail.setStartDate("2013-10-11");
+		scheduleDetail.setStartDate("2014-10-11");
 		scheduleDetail.setStartTime("11:12 am");
 		scheduleDetail.setScheduleStatus("Vacation");
 		schedule.setScheduleDetail(scheduleDetail);

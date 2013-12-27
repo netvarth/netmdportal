@@ -71,6 +71,7 @@ public class GreaterThanOrEqualFilter implements Filter {
 	 */
 	public Predicate createPredicate(QueryBuilder queryBuilder,Path<?> path,Class<?> type, String value){
 		Predicate predicate = null;
+		String value1="";
 		if(type.getSimpleName().equals("Integer")){
 			Path<Integer> pathInt = (Path<Integer>) path;
 			predicate = queryBuilder.getCriteriaBuilder().ge(pathInt,Integer.parseInt(value));
@@ -86,6 +87,8 @@ public class GreaterThanOrEqualFilter implements Filter {
 			SimpleDateFormat df =new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
 			Date date =null;
 			try {
+				//value1 = value.concat(" 23:59:59");
+				System.out.println(value);
 				date = df.parse(value);
 			} catch (ParseException e) {
 				e.printStackTrace();

@@ -230,25 +230,25 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetMdAccount);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(header
-					.getNetMdId())));
+					.getHeadOfficeId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (header.getNetMdBranchId() != netmdBranchPassphrase
+		if (header.getBranchId() != netmdBranchPassphrase
 				.getNetmdBranchTbl().getId()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.BranchMissMatch);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(header
-					.getNetMdBranchId())));
+					.getBranchId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (header.getNetMdId() != netmdBranchPassphrase.getNetmdBranchTbl()
+		if (header.getHeadOfficeId() != netmdBranchPassphrase.getNetmdBranchTbl()
 				.getNetmdTbl().getId()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.BranchMissMatch);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(header
-					.getNetMdId())));
+					.getHeadOfficeId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
@@ -270,7 +270,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		if (loginObj != null) {// if the userid exists in Netmdlogintbl, take it
 								// and set it to patient and save patient
 			PatientTbl patientObj = getPatient(patient.getFirstName(),
-					loginObj.getId(), header.getNetMdBranchId());
+					loginObj.getId(), header.getBranchId());
 			if (patientObj != null) {// if the patient exists in the same branch
 										// throw error
 				ServiceException se = new ServiceException(
@@ -313,7 +313,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		newPatient.setFamilyHistory(patient.getFamilyHistory());
 		newPatient.setEmergencyNo(patient.getEmergencyNo());
 		NetmdBranchTbl netmdbranchTbl = (NetmdBranchTbl) getById(
-				NetmdBranchTbl.class, header.getNetMdBranchId());
+				NetmdBranchTbl.class, header.getBranchId());
 		if (netmdbranchTbl == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.NobranchExists);
@@ -368,25 +368,25 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetMdAccount);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(header
-					.getNetMdId())));
+					.getHeadOfficeId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (header.getNetMdBranchId() != netmdBranch.getNetmdBranchTbl()
+		if (header.getBranchId() != netmdBranch.getNetmdBranchTbl()
 				.getId()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.BranchMissMatch);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(header
-					.getNetMdBranchId())));
+					.getBranchId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (header.getNetMdId() != netmdBranch.getNetmdBranchTbl()
+		if (header.getHeadOfficeId() != netmdBranch.getNetmdBranchTbl()
 				.getNetmdTbl().getId()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.BranchMissMatch);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(header
-					.getNetMdId())));
+					.getHeadOfficeId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}

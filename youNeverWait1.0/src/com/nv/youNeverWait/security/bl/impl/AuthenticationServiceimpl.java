@@ -271,10 +271,12 @@ public class AuthenticationServiceimpl implements AuthenticationService {
 	public CaptchaResponseDTO getCaptcha() {
 
 		String secretCode = encryptString();
+		System.out.println("encrypted secret code"+secretCode);
 		byte[] image = null;
 		try {
 			image = drawImage(secretCode);
-		} catch (IOException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			log.error("Error while getting captcha", e);
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.ImageCreationFailed);

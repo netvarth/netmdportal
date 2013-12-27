@@ -8,7 +8,7 @@ package com.nv.youNeverWait.rs.dto;
  *
  */
 public class TransferNetMdResultDTO {
-	private LabHeaderDTO header;
+	private HeaderDTO header;
 	private int sourceLabId;
 	private int sourceLabBranchId;
 	private String doctorEmail;
@@ -55,16 +55,17 @@ public class TransferNetMdResultDTO {
 	public void setPatient(PatientInfoDetail patient) {
 		this.patient = patient;
 	}
+	
 	/**
 	 * @return the header
 	 */
-	public LabHeaderDTO getHeader() {
+	public HeaderDTO getHeader() {
 		return header;
 	}
 	/**
 	 * @param header the header to set
 	 */
-	public void setHeader(LabHeaderDTO header) {
+	public void setHeader(HeaderDTO header) {
 		this.header = header;
 	}
 	/**

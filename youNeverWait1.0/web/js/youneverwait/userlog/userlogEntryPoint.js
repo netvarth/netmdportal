@@ -20,7 +20,7 @@ $j(document).ready(function() {
 			maxPages = parseInt(maxRecords/interval) + 1;
 		else
 			maxPages = parseInt(maxRecords/interval);	
-		//setPaginationFields(curPage, maxPages, pgTableContainer);
+		setPaginationFields(curPage, maxPages, pgTableContainer);
 		
 	
 	$j('#filter').die('click').live('click',function(){

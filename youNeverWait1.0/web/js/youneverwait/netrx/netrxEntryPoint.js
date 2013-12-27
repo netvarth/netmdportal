@@ -21,7 +21,7 @@ $j(document).ready(function() {
 			maxPages = parseInt(maxRecords/interval) + 1;
 		else
 			maxPages = parseInt(maxRecords/interval);	
-			
+		setPaginationFields(curPage, maxPages, pgTableContainer);	
 			
 				
 	$j('#netrxPTBContainer #btn_new_ptb_id').die('click').live("click",function() {
@@ -56,7 +56,20 @@ $j(document).ready(function() {
 			})
 		}
 	});
-		
+	
+	$j('#netrxPTBContainer #btn_change_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	//alert("list");
+	var netrxId= getSelectedNetRxId(pgTableName);
+		if(netrxId!="") {
+		var obj=$j(this);
+		createModal(constants_netrxSycSetJson,'netrxSycSetModal');	
+		openModalBox(obj,'netrxSycSetModal')
+		$j.cachedScript(constant_NetrxSyncSet_Url).done(function(script, textStatus) {
+		getNetrxId(netrxId)
+		})
+		}
+	});
 		
 	//To select row from the table
 	$j("#netrx" + ' tbody tr').die('click').live('click',function(){		

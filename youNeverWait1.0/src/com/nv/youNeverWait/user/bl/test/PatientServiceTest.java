@@ -157,8 +157,8 @@ public class PatientServiceTest {
 				.getBean("patient.service");
 		
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(10);
-		header.setNetMdBranchId(11);
+		header.setHeadOfficeId(10);
+		header.setBranchId(11);
 		header.setPassPhrase("1TVt2Ao19pbaFyS3e7pNWQ==");
 		header.setMacId("08-00-27-00-18-11");
 		LoginDTO login = new LoginDTO();
@@ -198,22 +198,22 @@ public class PatientServiceTest {
 				.getBean("patient.service");
 		
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
-		header.setNetMdBranchId(5);
+		header.setHeadOfficeId(3);
+		header.setBranchId(5);
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 		header.setMacId("00-80-48-6E-E1-E2");
 		LoginDTO login = new LoginDTO();
-		login.setUserName("maneesha@netvarth.com");
+		login.setUserName("luciya.jose@netvarth.com");
 		login.setUserType("patient");
 		PatientDetail detail = new PatientDetail();
 		detail.setBranchId(5);
-		detail.setFirstName("maneesha");
+		detail.setFirstName("precious");
 		detail.setLastName("joyson");
 		detail.setPhone("01224242442");
 		detail.setAddress("Vadakkan");
 		detail.setGender("Male");
 		detail.setAge(20);
-		detail.setEmail("maneesha@netvarth.com");
+		detail.setEmail("luciya.jose@netvarth.com");
 		detail.setMobile("9234567821");
 		detail.setLogin(login);
 		
@@ -238,15 +238,15 @@ public class PatientServiceTest {
 		Appointment appointment = new Appointment();
 		AppointmentDetailsDTO details = new AppointmentDetailsDTO();
 		HeaderDTO header = new HeaderDTO();
-		details.setScheduleId(166);
-		details.setDoctorId(29);
+		details.setScheduleId(175);
+		details.setDoctorId(1);
 		details.setPatientId(5);
 		details.setPatientName("asha");
-		details.setStartDate("2013-10-11");
+		details.setStartDate("2014-10-11");
 		details.setStartTime("11:12 am");
 		appointment.setAppointmentDetails(details);		
-		header.setNetMdId(3);
-		header.setNetMdBranchId(5);
+		header.setHeadOfficeId(3);
+		header.setBranchId(5);
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 		header.setMacId("00-80-48-6E-E1-E2");
 		appointment.setHeader(header);
@@ -267,10 +267,10 @@ public class PatientServiceTest {
 				.getBean("patient.service");
 		PatientDTO patient = new PatientDTO();
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("123");
 		header.setMacId("56");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		patient.setHeader(header);
 
 		PatientDetail detail = new PatientDetail();
@@ -302,10 +302,10 @@ public class PatientServiceTest {
 				.getBean("patient.service");
 		PatientDTO patient = new PatientDTO();
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("123");
 		header.setMacId("56");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		patient.setHeader(header);
 
 		PatientDetail detail = new PatientDetail();
@@ -338,10 +338,10 @@ public class PatientServiceTest {
 				.getBean("patient.service");
 		PatientDTO patient = new PatientDTO();
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("123");
 		header.setMacId("56");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		patient.setHeader(header);
 
 		PatientDetail detail = new PatientDetail();
@@ -373,10 +373,10 @@ public class PatientServiceTest {
 				.getBean("patient.service");
 		PatientDTO patient = new PatientDTO();
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 		header.setMacId("00-80-48-6E-E1-E2");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		patient.setHeader(header);
 
 		PatientDetail detail = new PatientDetail();
@@ -595,6 +595,7 @@ public class PatientServiceTest {
 			System.out.println(e.getParamList());
 		}
 	}
+	
 	@Test
 	public void patientTestResultWrongPatientId() {
 
@@ -673,5 +674,5 @@ public class PatientServiceTest {
 			System.out.println(e.getParamList());
 		}
 	}
-	
+		
 }

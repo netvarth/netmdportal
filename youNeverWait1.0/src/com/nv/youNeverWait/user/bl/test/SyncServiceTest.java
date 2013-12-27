@@ -17,9 +17,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.AppointmentDetailsDTO;
+import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
-import com.nv.youNeverWait.rs.dto.LabHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
@@ -50,8 +50,8 @@ private ApplicationContext applicationContext;
 			AppointmentDetailsDTO details = new AppointmentDetailsDTO();
 			List<AppointmentDetailsDTO> appointmentDetailsList = new ArrayList<AppointmentDetailsDTO>();
 			HeaderDTO header = new HeaderDTO();
-			header.setNetMdId(3);
-			header.setNetMdBranchId(5);
+			header.setHeadOfficeId(3);
+			header.setBranchId(5);
 			header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 			header.setMacId("00-19-DB-E0-7C-E1");
 			details.setScheduleId(1);
@@ -85,10 +85,10 @@ private ApplicationContext applicationContext;
 			SyncDTO sync=new SyncDTO();
 			sync.setLastSyncTime("2012-10-10 21:12:12");
 			HeaderDTO header = new HeaderDTO();
-			header.setNetMdId(3);
+			header.setHeadOfficeId(3);
 			header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 			header.setMacId("00-19-DB-E0-7C-E1");
-			header.setNetMdBranchId(5);
+			header.setBranchId(5);
 			sync.setHeader(header);
 			LoginDTO login = new LoginDTO();
 			login.setUserType("patient");
@@ -126,21 +126,21 @@ private ApplicationContext applicationContext;
 			SyncDTO sync=new SyncDTO();
 			sync.setLastSyncTime("2012-10-10 21:12:12");
 			HeaderDTO header = new HeaderDTO();
-			header.setNetMdId(3);
+			header.setHeadOfficeId(3);
 			header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
-			header.setMacId("00-19-DB-E0-7C-E1");
-			header.setNetMdBranchId(5);
-			header.setNetMdId(3);
+			header.setMacId("00-80-48-6E-E1-E2");
+			header.setBranchId(5);
+			
 			sync.setHeader(header);
 		
 			
 			
 			List<DoctorDetail> doctor = new ArrayList<DoctorDetail>();
 			DoctorDetail doctorDetail1= new DoctorDetail();
-			doctorDetail1.setAddress("vadakkan");
-			doctorDetail1.setEmail("rakhi.vasudevan@netvarth.com");
-			doctorDetail1.setFirstName("ash");
-			doctorDetail1.setLastName("pauly");
+			doctorDetail1.setAddress("palayur");
+			doctorDetail1.setEmail("luciya.jose@netvarth.com");
+			doctorDetail1.setFirstName("luciMol");
+			doctorDetail1.setLastName("Mahan");
 			doctorDetail1.setDateOfBirth("1989-10-10");
 			doctorDetail1.setConsultationInterval("15");
 			
@@ -259,10 +259,10 @@ private ApplicationContext applicationContext;
 		SyncDTO sync = new SyncDTO();
 		sync.setLastSyncTime("2013-06-03 09:08:21");
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(76);
+		header.setHeadOfficeId(76);
 		header.setPassPhrase("bab5TqPDNCbFCy7LWRffyg==");
 		header.setMacId("20-CF-30-D9-9C-04");
-		header.setNetMdBranchId(72);
+		header.setBranchId(72);
 		sync.setHeader(header);
 
 //		/* New doctors list */
@@ -374,11 +374,11 @@ private ApplicationContext applicationContext;
 		SyncDTO sync = new SyncDTO();
 		sync.setLastSyncTime("2012-10-10 21:12:12");
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 		header.setMacId("00-19-DB-E0-7C-E1");
-		header.setNetMdBranchId(5);
-		header.setNetMdId(3);
+		header.setBranchId(5);
+		
 		sync.setHeader(header);
 
 		LoginDTO login = new LoginDTO();
@@ -417,10 +417,10 @@ private ApplicationContext applicationContext;
 		SyncDTO sync = new SyncDTO();
 		sync.setLastSyncTime("2012-10-10 09:12:12");
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 		header.setMacId("00-19-DB-E0-7C-E1");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		sync.setHeader(header);
 
 		/* new schedule */
@@ -548,10 +548,10 @@ private ApplicationContext applicationContext;
 		SyncDTO sync = new SyncDTO();
 		sync.setLastSyncTime("2012-10-10 09:12:12:12");
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 		header.setMacId("00-19-DB-E0-7C-E1");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		sync.setHeader(header);
 
 		/* new users list */
@@ -628,10 +628,10 @@ private ApplicationContext applicationContext;
 		SyncDTO sync = new SyncDTO();
 		//sync.setLastSyncTime("2013-03-11 16:15:54");
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(3);
+		header.setHeadOfficeId(3);
 		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
 		header.setMacId("00-80-48-6E-E1-E2");
-		header.setNetMdBranchId(5);
+		header.setBranchId(5);
 		sync.setHeader(header);
 		try {
 			service.syncData(sync);
@@ -648,12 +648,12 @@ private ApplicationContext applicationContext;
 		SyncService service = (SyncService) applicationContext
 				.getBean("sync.service");
 		LabSyncDTO sync = new LabSyncDTO();
-		sync.setLastSyncTime("2013-06-20 14:10:32");
-		LabHeaderDTO header = new LabHeaderDTO();
-		header.setLabBranchId(180);
-		header.setLabId(249);
-		header.setMacId("123");
-		header.setPassPhrase("X/Ur2LSUHWS1YRO1F5WPYw==");
+		sync.setLastSyncTime("2013-10-03 11:10:11");
+		HeaderDTO header = new HeaderDTO();
+		header.setHeadOfficeId(192);
+		header.setBranchId(122);
+		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setMacId("00-1C-C0-5A-AA-7B");
 		sync.setHeader(header);
 		try {
 			service.syncNetLimsData(sync);
@@ -673,10 +673,10 @@ private ApplicationContext applicationContext;
 		SyncDTO sync = new SyncDTO();
 		sync.setLastSyncTime(null);
 		HeaderDTO header = new HeaderDTO();
-		header.setNetMdId(83);
+		header.setHeadOfficeId(83);
 		header.setPassPhrase("cT4GAum1sOK/bqOp8h2x4Q==");
 		header.setMacId("20-CF-30-D9-9C-04");
-		header.setNetMdBranchId(81);
+		header.setBranchId(81);
 		sync.setHeader(header);
 		try {
 			service.syncData(sync);
@@ -687,4 +687,78 @@ private ApplicationContext applicationContext;
 			System.out.println(e.getParamList());
 		}
 	}
+	@Test
+	public void createBill (){
+		System.out.println("create bill");
+		SyncService service = (SyncService) applicationContext
+				.getBean("sync.service");
+		SyncDTO sync = new SyncDTO();
+		sync.setLastSyncTime("2013-10-19 10:10:10");
+		HeaderDTO header = new HeaderDTO();
+		header.setHeadOfficeId(3);
+		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
+		header.setMacId("00-80-48-6E-E1-E2");
+		header.setBranchId(5);
+		
+		sync.setHeader(header);
+		 List<BillSummaryDTO> newBillList=new ArrayList<BillSummaryDTO>();
+		 BillSummaryDTO bill= new BillSummaryDTO();
+		 bill.setPatientGlobalId("5");
+		 bill.setPatientName("asha");
+		 bill.setPayStatus("hold");
+		 bill.setAmountPaid(1000);
+		 bill.setOrderDate("2013-10-01");
+		 bill.setBillAmount(2000);
+		 bill.setUid("JV");
+		 newBillList.add(bill);
+		sync.setNewBillList(newBillList);
+//		sync.setFreqType("hourly");
+//		sync.setInterval(1);
+		try {
+			service.syncData(sync);
+		} catch (ServiceException e) {
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+
+@Test
+public void updateBill (){
+	System.out.println("update bill");
+	SyncService service = (SyncService) applicationContext
+			.getBean("sync.service");
+	SyncDTO sync = new SyncDTO();
+	sync.setLastSyncTime("2013-10-19 10:10:10");
+	HeaderDTO header = new HeaderDTO();
+	header.setHeadOfficeId(3);
+	header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
+	header.setMacId("00-80-48-6E-E1-E2");
+	header.setBranchId(56);
+	
+	sync.setHeader(header);
+	 List<BillSummaryDTO> updateBillList=new ArrayList<BillSummaryDTO>();
+	 BillSummaryDTO bill= new BillSummaryDTO();
+	 bill.setGlobalId(7);
+	 bill.setPatientGlobalId("5");
+	 bill.setPatientName("asha");
+	 bill.setPayStatus("progress");
+	 bill.setAmountPaid(1000);
+	 bill.setOrderDate("2013-10-01");
+	 bill.setBillAmount(2000);
+	 bill.setUid("JH01");
+	 updateBillList.add(bill);
+	sync.setNewBillList(updateBillList);
+//	sync.setFreqType("hourly");
+//	sync.setInterval(1);
+	try {
+		service.syncData(sync);
+	} catch (ServiceException e) {
+
+		System.out.println(e.isDisplayErrMsg());
+		System.out.println(e.getError());
+		System.out.println(e.getParamList());
+	}
+}
 }

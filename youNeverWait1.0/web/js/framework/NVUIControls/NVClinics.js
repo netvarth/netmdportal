@@ -1,11 +1,11 @@
 function clinics(contents) {
 this.result =function(){ 
-		var content =$j('<div></div>');
-		var calenderui=$j('<ul class="creteapp" style="margin-left: -1px;display:none;"><h1 id="pageTitle"></h1><div id="pageToolBar-Container"></div></ul>');
+		var content =$j('<div id="contentclinic"></div>');
+		var calenderui=$j('<ul class="creteapp" style="margin-left: -1px;display:none;height:6%;"><h1 id="pageTitle"></h1><div id="pageToolBar-Container"></div></ul>');
 		content.append(calenderui);
 		
 		if(contents.netmdBranch!=""){
-		var nextPrev=$j('<div class="nextprev" style="margin: -1% 0% 1% 0%"><div style="margin-left: 90%;"><input type="button" class="prevbtn"><input type="text"readonly="true" style="width:25%;border:2px solid #a1a1a1;border-radius:5px;" id="prevnext"><input type="button"class="nextbtn"></div></div>');
+		var nextPrev=$j('<div class="nextprev" style="margin: -1% 0% 1% 0%"><div style="margin:1% 0% 0% 90%;"><input type="button" class="prevbtn"><input type="text"readonly="true" style="width:25%;border:2px solid #a1a1a1;border-radius:5px;" id="prevnext"><input type="button"class="nextbtn"></div></div>');
 		 content.append(nextPrev);
 		var table=$j('<div class="branch"> </div>');
 		var subdivcurr;
@@ -23,13 +23,13 @@ this.result =function(){
 				var divright=$j('<div class="clinicright" ></div>');
 				var pTag=$j('<div  style="height: 10%;"><p class="phead">'+netmd.name+'</p>'+'<p>'+addres+'</p>'+'<div class="pMobile"><p>'+mobile+'</p></div>'+'<div class="pPhone"><p>'+phone+'</p></div></div>');
 				divcenter.append(pTag);
-				var buttonTag=$j('<div style="float: right;margin: 10px 10px 0px 0px;"><p><a href="#"><input type="button" name="'+netmd.globalId+'" class="doctor doctorbeforeswitch "></a></p></div>');	
+				var buttonTag=$j('<div class="clinicthme"style="float: right;margin: 10px 10px 0px 0px;"><p class="pTheme"><a class="aTheme" href="#"><input type="button" value="View Doctor(s)" name="'+netmd.globalId+'" class="doctor doctorbeforeswitch "></a></p></div>');	
                 divcenter.append(buttonTag);
                  newrow.append(divleft);
 				 newrow.append(divcenter);
 				 newrow.append(divright);
 				common.append(newrow);
-				subdivcurr=$j('<div id="'+netmd.globalId+'_'+netmd.netmdId+'" class="view boldtabledoc"style="display:none;width: 75%;margin-left: 10%;"></div>');	
+				subdivcurr=$j('<div id="'+netmd.globalId+'_'+netmd.netmdId+'" class="view boldtabledoc"style="display:none;width: 85%;margin-left: 5%;"></div>');	
 				common.append(subdivcurr);
 				table.append(common);		
 		 });
@@ -41,3 +41,4 @@ this.result =function(){
 		return content;
 	};
 }	
+

@@ -23,8 +23,22 @@ public class LabBranchDTO {
 	private String macId;
 	private String passPhrase;
 	private boolean homeBranch;
+//	private String branchCode;
 	
 	
+	
+//	/**
+//	 * @return the branchCode
+//	 */
+//	public String getBranchCode() {
+//		return branchCode;
+//	}
+//	/**
+//	 * @param branchCode the branchCode to set
+//	 */
+//	public void setBranchCode(String branchCode) {
+//		this.branchCode = branchCode;
+//	}
 	/**
 	 * @return the status
 	 */

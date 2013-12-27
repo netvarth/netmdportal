@@ -5,7 +5,7 @@ function patienttabs(jsondata) {
 		maindiv.attr('id','tabs-nohdr');
 		if(jsondata!=null)
 		{
-		var ulTag=$j('<ul style="height:13%">');
+		var ulTag=$j('<ul style="height:10%;margin-left:30%">');
 			$j(jsondata).each(function(index,subcontent){
 				var divTag = $j('<div/>');
 				var pTag=$j('<p>');
@@ -16,11 +16,11 @@ function patienttabs(jsondata) {
 				divTag.append(pTag);
 				maindiv.append(divTag)
 				var liTag=$j('<li></li>');
-				var aTag=$j('<a href="#'+subcontent.id +'"class="aTag'+subcontent.id +'"> </a>');
-				if(subcontent.image){
-				   var image=$j('<div align="center"><img src='+subcontent.image+' class="icon'+subcontent.id +'">'+subcontent.title+'</div>');
+				var aTag=$j('<a href="#'+subcontent.id +'"class="aTag'+subcontent.id +'"><div class="imagediv"></div><div class="divcontent">'+subcontent.title+'</div></a>');
+				/*if(subcontent.image){
+				   var image=$j('<div><img src='+subcontent.image+' class="icon'+subcontent.id +'"></div>');
 				   aTag.append(image);
-				   }
+				   }*/
 				
 				liTag.append(aTag);
 				liTag.attr('class',subcontent.id);

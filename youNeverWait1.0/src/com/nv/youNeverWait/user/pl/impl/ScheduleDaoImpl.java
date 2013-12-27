@@ -79,9 +79,9 @@ public class ScheduleDaoImpl extends GenericDaoHibernateImpl implements
 					|| passPhrase.getMacId() == null
 					|| !passPhrase.getMacId().equals(header.getMacId())
 					|| passPhrase.getNetmdBranchTbl().getId() != header
-							.getNetMdBranchId()
+							.getBranchId()
 					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != header
-							.getNetMdId()) {
+							.getHeadOfficeId()) {
 
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.InvalidNetMdAccount);
@@ -138,7 +138,7 @@ public class ScheduleDaoImpl extends GenericDaoHibernateImpl implements
 		// While creating schedule from portal
 		else {
 			NetmdBranchTbl netmdBranch = getById(NetmdBranchTbl.class,
-					header.getNetMdBranchId());
+					header.getBranchId());
 			if (netmdBranch == null) {
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.InvalidNetMdAccount);
@@ -236,9 +236,9 @@ public class ScheduleDaoImpl extends GenericDaoHibernateImpl implements
 					|| passPhrase.getMacId() == null
 					|| !passPhrase.getMacId().equals(header.getMacId())
 					|| passPhrase.getNetmdBranchTbl().getId() != header
-							.getNetMdBranchId()
+							.getBranchId()
 					|| passPhrase.getNetmdBranchTbl().getNetmdTbl().getId() != header
-							.getNetMdId()) {
+							.getHeadOfficeId()) {
 
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.InvalidNetMdAccount);
@@ -249,7 +249,7 @@ public class ScheduleDaoImpl extends GenericDaoHibernateImpl implements
 		// While updating schedule from portal
 		else {
 			NetmdBranchTbl netmdBranch = getById(NetmdBranchTbl.class,
-					header.getNetMdBranchId());
+					header.getBranchId());
 			if (netmdBranch == null) {
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.InvalidNetMdAccount);
@@ -481,13 +481,13 @@ public class ScheduleDaoImpl extends GenericDaoHibernateImpl implements
 			return true;
 		} else {
 			for (DoctorScheduleTbl doctorScheduleTbl : scheduleList) {
-				if (!fromTime.before(doctorScheduleTbl.getStartingTime())) {
-					if (!fromTime.after(doctorScheduleTbl.getEndingTime())) {
+				if(fromTime.before(doctorScheduleTbl.getStartingTime())){
+					if(toTime.after(doctorScheduleTbl.getStartingTime())){
 						test++;
 					}
 				}
-				if (!toTime.before(doctorScheduleTbl.getEndingTime())) {
-					if (!toTime.after(doctorScheduleTbl.getEndingTime())) {
+				if(fromTime.after(doctorScheduleTbl.getStartingTime())){
+					if(	fromTime.before(doctorScheduleTbl.getEndingTime())){
 						test++;
 					}
 				}

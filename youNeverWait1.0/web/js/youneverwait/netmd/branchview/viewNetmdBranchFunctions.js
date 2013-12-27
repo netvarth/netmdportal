@@ -14,6 +14,8 @@ function viewNetmdBranch(netmdbranchId,tableObj,tableObj1) {
 	var contentForm = new form(viewdata);
 	$j('#tabs-1').html(contentForm.result);	
 	viewnetmdbranchInfo(netmdbranchId,tableObj,tableObj1);
+	$j("#netmdbranchViewForm #BillfromDate").datepicker();
+	$j("#netmdbranchViewForm #BilltoDate").datepicker();
 }
 
 
@@ -66,6 +68,43 @@ function viewnetmdbranchInfo(netmdbranchId,tableObj,tableObj1) {
 
 }
 
+function superBillDetaillist() {
+		
+	var submitdata;
+	submitdata = '{'+'"fromDate"' + ':"'+$j('#netmdbranchViewForm #BillfromDate').val()+'",';
+	submitdata+='"toDate"' +':"' +$j('#netmdbranchViewForm #BilltoDate').val() +'",';
+	submitdata +='"netmdId":' + $j('#netmdbranchViewForm #netmdid').val() + ',';
+	submitdata +='"netmdBranchId":' + $j('#netmdbranchViewForm #branchid').val() + '}';
+	//var response = postdataToServer("/youNeverWait/ws/ui/lab/orderList",submitdata);
+	//alert(JSON.stringify(response));
+	return submitdata;
+}
+
+function fillSuperNetmdEachBranchBillDetailTable(branchBill,obj) {
+	
+	var billResult=postdataToServer("/youNeverWait/ws/ui/superAdmin/billList",branchBill);
+	//alert(JSON.stringify(billResult));
+	if(billResult.success==true) {
+		createModal(constants_SuperadBillListModalJson,'SuperadBillListModal');	
+		openModalBox(obj,'SuperadBillListModal');
+		 var tableObj="#superBillDetailsViewTable";
+		makeDataTable(tableObj);
+		$j(tableObj).dataTable().fnClearTable();
+			if(billResult.branchBillList.length>0) {			
+				$j(billResult.branchBillList).each(function (index, lab) {
+					var id=lab.uid;
+					var rowData=$j(tableObj).dataTable().fnAddData([lab.uid,lab.orderDate,lab.patientName,lab.payStatus,lab.billAmount,lab.amountPaid]);
+					var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+					$j(row).attr('id',id);	
+					//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
+					});	
+			} 
+	}
+	else
+		updateTipsNew(getErrorName(billResult.error),$j('#errorDivData'),$j('#errorDivHeader'));
+	
+	return billResult; 
+}
 
 function submitBranchInfo(){
 	var resultJson = createSubmitJson();

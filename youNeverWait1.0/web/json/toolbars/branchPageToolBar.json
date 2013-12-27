@@ -15,7 +15,12 @@
 			"name" 	: 	"view",
 			"title"	:	"View"
 			
+		},
+		{
+			"name" 	: 	"change",
+			"title"	:	"Sync Set"
 		}
+
 
 	]
 }

@@ -30,7 +30,6 @@ import com.nv.youNeverWait.pl.entity.NetrxUserTbl;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
-import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchDetail;
 import com.nv.youNeverWait.rs.dto.NetRxBranchListResponseDTO;
@@ -47,6 +46,8 @@ import com.nv.youNeverWait.rs.dto.NetRxViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.bl.service.NetRxService;
 import com.nv.youNeverWait.user.bl.validation.NetRxValidator;
@@ -78,11 +79,11 @@ public class NetRxServiceImpl implements NetRxService {
 	 */
 	@Override
 	public ResponseDTO create(NetRxDTO netRx) {
-		ResponseDTO response = new ResponseDTO();
+
 		validator.validateNetRxAccount(netRx);
 		validator.validateUserNameAndPassword(netRx.getUserName(),
 				netRx.getPassword());
-		response = netRxDao.create(netRx);
+		ResponseDTO response = netRxDao.create(netRx);
 		sendEmailToNetRxOwner(Constants.NETRX_REGISTER, netRx);
 		return response;
 	}
@@ -93,13 +94,11 @@ public class NetRxServiceImpl implements NetRxService {
 	 * @param header
 	 * @return ResponseDTO
 	 */
-	@Transactional
 	@Override
 	public ResponseDTO clearMacId(NetRxHeaderDTO header) {
 
-		ResponseDTO response = new ResponseDTO();
 		validator.validateHeader(header);
-		response = netRxDao.clearMacId(header);
+		ResponseDTO response = netRxDao.clearMacId(header);
 		return response;
 	}
 
@@ -125,9 +124,8 @@ public class NetRxServiceImpl implements NetRxService {
 	 */
 	@Override
 	public ResponseDTO update(NetRxDTO netRx) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateNetRxAccount(netRx);
-		response = netRxDao.update(netRx);
+		ResponseDTO response = netRxDao.update(netRx);
 		return response;
 	}
 
@@ -139,10 +137,10 @@ public class NetRxServiceImpl implements NetRxService {
 	 */
 	@Override
 	public ResponseDTO createUser(NetRxHeaderDTO header, NetRxUserDetail user) {
-		ResponseDTO response = new ResponseDTO();
+
 		validator.validateUserDetails(header, user);
 		validator.validateNetRxUserCreation(user);
-		response = netRxDao.createUser(header, user);
+		ResponseDTO response = netRxDao.createUser(header, user);
 		String netRxName = netRxDao.getNetRxName(user.getNetRxId());
 		String netRxBranchName = netRxDao.getNetRxBranchName(user
 				.getNetRxBranchId());
@@ -158,9 +156,9 @@ public class NetRxServiceImpl implements NetRxService {
 	 */
 	@Override
 	public ResponseDTO updateUser(NetRxHeaderDTO header, NetRxUserDetail user) {
-		ResponseDTO response = new ResponseDTO();
+		
 		validator.validateUserDetails(header, user);
-		response = netRxDao.updateUser(header, user);
+		ResponseDTO response = netRxDao.updateUser(header, user);
 		return response;
 	}
 
@@ -238,11 +236,9 @@ public class NetRxServiceImpl implements NetRxService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public ResponseDTO deleteUser(int globalId) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateGlobalId(globalId);
-		response = netRxDao.deleteUser(globalId);
+		ResponseDTO response = netRxDao.deleteUser(globalId);
 		return response;
 	}
 
@@ -253,7 +249,6 @@ public class NetRxServiceImpl implements NetRxService {
 	 * @return NetRxBranchListResponseDTO
 	 */
 	@Override
-	@Transactional
 	public NetRxListResponseDTO list(FilterDTO filterDTO) {
 
 		NetRxListResponseDTO response = new NetRxListResponseDTO();
@@ -460,8 +455,7 @@ public class NetRxServiceImpl implements NetRxService {
 	 */
 	@Override
 	public ResponseDTO deleteNetRx(int netRxId) {
-		ResponseDTO response = new ResponseDTO();
-		response = netRxDao.deleteNetRx(netRxId);
+		ResponseDTO response = netRxDao.deleteNetRx(netRxId);
 		return response;
 	}
 
@@ -472,11 +466,9 @@ public class NetRxServiceImpl implements NetRxService {
 	 * @return ResponseDTO
 	 */
 	@Override
-	@Transactional
 	public NetRxUserDTO viewUser(int globalId) {
-		NetRxUserDTO response = new NetRxUserDTO();
 		validator.validateGlobalId(globalId);
-		response = netRxDao.viewUser(globalId);
+		NetRxUserDTO response = netRxDao.viewUser(globalId);
 		return response;
 	}
 
@@ -484,7 +476,6 @@ public class NetRxServiceImpl implements NetRxService {
 	 * Method to list NetRx users
 	 */
 	@Override
-	@Transactional
 	public NetRxUserListResponseDTO listNetRxUser(FilterDTO filterDTO) {
 		NetRxUserListResponseDTO response = new NetRxUserListResponseDTO();
 		ErrorDTO error = validator.validateNetRxUserFilter(filterDTO);
@@ -549,7 +540,7 @@ public class NetRxServiceImpl implements NetRxService {
 	 */
 	@Override
 	public NetRxViewResponseDTO viewNetRx(int netRxId) {
-		NetRxViewResponseDTO response = new NetRxViewResponseDTO();
+
 		if (netRxId <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetRx);
@@ -557,7 +548,7 @@ public class NetRxServiceImpl implements NetRxService {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response = netRxDao.viewNetRx(netRxId);
+		NetRxViewResponseDTO response = netRxDao.viewNetRx(netRxId);
 		return response;
 	}
 
@@ -569,9 +560,9 @@ public class NetRxServiceImpl implements NetRxService {
 	 */
 	@Override
 	public ResponseDTO createBranch(NetRxBranchDetail branch) {
-		ResponseDTO response = new ResponseDTO();
+		
 		validator.validateBranchDetails(branch);
-		response = netRxDao.createBranch(branch);
+		ResponseDTO response = netRxDao.createBranch(branch);
 		NetRxBranchOwnerDetails branchDetail = netRxDao
 				.getBranchOwners(response.getGlobalId());
 		sendEmailToNetRxOwner(Constants.NETRX_BRANCH_REGISTER, branchDetail);
@@ -662,7 +653,6 @@ public class NetRxServiceImpl implements NetRxService {
 	 */
 	@Override
 	public NetRxBranchResponseDTO viewBranch(int netrxBranchId) {
-		NetRxBranchResponseDTO response = new NetRxBranchResponseDTO();
 		if (netrxBranchId <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidBranch);
@@ -671,7 +661,7 @@ public class NetRxServiceImpl implements NetRxService {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response = netRxDao.viewBranch(netrxBranchId);
+		NetRxBranchResponseDTO response = netRxDao.viewBranch(netrxBranchId);
 		return response;
 	}
 
@@ -683,7 +673,7 @@ public class NetRxServiceImpl implements NetRxService {
 	 */
 	@Override
 	public ResponseDTO deleteBranch(int globalId) {
-		ResponseDTO response = new ResponseDTO();
+		 
 		if (globalId <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidBranch);
@@ -691,7 +681,7 @@ public class NetRxServiceImpl implements NetRxService {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response = netRxDao.deleteBranch(globalId);
+		ResponseDTO response = netRxDao.deleteBranch(globalId);
 		return response;
 	}
 
@@ -703,9 +693,8 @@ public class NetRxServiceImpl implements NetRxService {
 	 */
 	@Override
 	public ResponseDTO updateNetRxBranch(NetRxBranchDetail branch) {
-		ResponseDTO response = new ResponseDTO();
 		validator.validateUpdateBranchDetails(branch);
-		response = netRxDao.updateNetRxBranch(branch);
+		ResponseDTO response = netRxDao.updateNetRxBranch(branch);
 		return response;
 	}
 
@@ -799,6 +788,35 @@ public class NetRxServiceImpl implements NetRxService {
 		return fullMsgBody;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.NetRxService#setNetRxSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	public SyncFreqResponseDTO setNetRxSync(SyncFreqDTO sync) {
+		if(sync.getNetrxId()<=0){
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetRx);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(sync.getNetrxId())));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		SyncFreqResponseDTO response = netRxDao.setNetRxSync(sync);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.NetRxService#setNetRxBranchSync(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	public SyncFreqResponseDTO setNetRxBranchSync(SyncFreqDTO sync) {
+		if(sync.getNetrxBranchId()<=0){
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetRxBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		SyncFreqResponseDTO response = netRxDao.setNetRxBranchSync(sync);
+		return response;
+	}
+	
 	/**
 	 * To reset password of netRx user/owner
 	 * 
@@ -813,6 +831,36 @@ public class NetRxServiceImpl implements NetRxService {
 		return response;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.NetRxService#getBranchSyncDetails(int)
+	 */
+	@Override
+	public SyncFreqDTO getBranchSyncDetails(int branchId) {
+		if (branchId <= 0) {
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		SyncFreqDTO response=  netRxDao.getBranchSyncDetails(branchId);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.NetRxService#getNetrxSyncDetails(int)
+	 */
+	@Override
+	public SyncFreqDTO getNetrxSyncDetails(int netrxId) {
+		if (netrxId <= 0) {
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidNetRx);
+			se.addParam(new Parameter(Constants.ID, Integer.toString(netrxId)));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		SyncFreqDTO response=  netRxDao.getNetrxSyncDetails(netrxId);
+		return response;
+	}
+
+	
 	/**
 	 * @return the netRxDao
 	 */
@@ -917,5 +965,8 @@ public class NetRxServiceImpl implements NetRxService {
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
 	}
+
+	
+	
 
 }

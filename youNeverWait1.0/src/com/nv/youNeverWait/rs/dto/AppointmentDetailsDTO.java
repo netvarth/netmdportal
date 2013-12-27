@@ -47,7 +47,7 @@ public class AppointmentDetailsDTO {
 		this.patientId = patientAppointmentTblObj.getPatientTbl().getId();
 		this.doctorId = patientAppointmentTblObj.getDoctorTbl().getId();
 		this.scheduleId = patientAppointmentTblObj.getDoctorScheduleTbl().getId();
-		this.startDate = sdf.format(patientAppointmentTblObj.getDate());
+		this.startDate = sdf.format(patientAppointmentTblObj.getAppointmentDate());
 		this.startTime = sdf2.format(patientAppointmentTblObj.getStartingTime());
 		this.patientName = patientAppointmentTblObj.getPatientTbl().getFirstName()+" "+patientAppointmentTblObj.getPatientTbl().getLastName();
 	}

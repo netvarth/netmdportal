@@ -1,5 +1,5 @@
 /**
- * AuthenticationDaoImpl.java
+ * SuperAdminDaoImpl.java
  * 
  * @Author Linu Paul
  *
@@ -28,6 +28,8 @@ import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
+import com.nv.youNeverWait.rs.dto.SyncLogDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.security.pl.Query;
@@ -149,7 +151,7 @@ SuperAdminDao {
 	}
 
 	/**
-	 * Super Admin details
+	 *  To get Super Admin details
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -174,7 +176,7 @@ SuperAdminDao {
 		
 			if(request!=null)
 				request.getSession().getServletContext()
-				.setAttribute("logEnabled", superAdmin.isEnableLog());
+				.setAttribute("logEnabled", superAdmin.getEnableLog());
 		}
 		ResponseDTO response = new ResponseDTO();
 		response.setSuccess(true);
@@ -196,7 +198,88 @@ SuperAdminDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response.setStatus(superAdmin.isEnableLog());
+		response.setStatus(superAdmin.getEnableLog());
+		response.setSuccess(true);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.SuperAdminDao#enableSyncLog(com.nv.youNeverWait.rs.dto.LogDTO, javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO enableSyncLog(SyncLogDTO syncLog, HttpServletRequest request) {
+		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+		if (superAdmin != null) {
+			superAdmin.setEnableSyncLog(syncLog.isSyncLogEnable());
+			update(superAdmin);
+		
+			if(request!=null)
+				request.getSession().getServletContext()
+				.setAttribute("syncLogEnabled", superAdmin.getEnableLog());
+		}
+		ResponseDTO response = new ResponseDTO();
+		response.setSuccess(true);
+		return response;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.SuperAdminDao#setSyncFreq(com.nv.youNeverWait.rs.dto.SyncFreqDTO)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO setSync(SyncFreqDTO sync) {
+		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+		if (superAdmin != null) {
+			superAdmin.setEnableSync(sync.isEnableSync());
+			update(superAdmin);
+		}
+		/******Setting sync values when sync is enabled*******/
+		if(superAdmin.getEnableSync()==true){
+			superAdmin.setSyncFreqType(sync.getSyncFreqType());
+			superAdmin.setSyncTime(sync.getSyncTime());
+			update(superAdmin);
+		}
+		ResponseDTO response = new ResponseDTO();
+		response.setSuccess(true);
+		return response;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.SuperAdminDao#getSyncDetails()
+	 */
+	@Override
+	@Transactional
+	public SyncFreqDTO getSyncDetails() {
+		SyncFreqDTO sync = new SyncFreqDTO();
+		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+		if (superAdmin != null) {
+			sync.setSyncFreqType(superAdmin.getSyncFreqType());
+			sync.setSyncTime(superAdmin.getSyncTime());
+			sync.setEnableSync(superAdmin.getEnableSync());
+			sync.setSuccess(true);
+		}
+		return sync;
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.SuperAdminDao#getSyncLogStatus()
+	 */
+	@Override
+	@Transactional
+	public EnableLogStatusResponseDTO getSyncLogStatus() {
+		EnableLogStatusResponseDTO response= new EnableLogStatusResponseDTO();
+		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
+		if (superAdmin == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUser);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		response.setStatus(superAdmin.getEnableSyncLog());
 		response.setSuccess(true);
 		return response;
 	}
@@ -248,5 +331,6 @@ SuperAdminDao {
 		this.em = em;
 	}
 
+	
 
 }

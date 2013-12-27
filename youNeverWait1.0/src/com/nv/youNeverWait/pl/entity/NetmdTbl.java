@@ -80,6 +80,15 @@ public class NetmdTbl implements Serializable {
 	@OneToMany(mappedBy="netmdTbl")
 	private Set<ResultTbl> resultTbls;
 
+	@Column(name="enable_sync", nullable=false)
+	private boolean enableSync;
+
+	@Column(name="sync_freq_type", length=45)
+	private String syncFreqType;
+
+	@Column(name="sync_time")
+	private int syncTime;
+	
     public NetmdTbl() {
     }
 
@@ -234,5 +243,27 @@ public class NetmdTbl implements Serializable {
 	public void setResultTbls(Set<ResultTbl> resultTbls) {
 		this.resultTbls = resultTbls;
 	}
-	
+	public boolean getEnableSync() {
+		return this.enableSync;
+	}
+
+	public void setEnableSync(boolean enableSync) {
+		this.enableSync = enableSync;
+	}
+	public String getSyncFreqType() {
+		return this.syncFreqType;
+	}
+
+	public void setSyncFreqType(String syncFreqType) {
+		this.syncFreqType = syncFreqType;
+	}
+
+	public int getSyncTime() {
+		return this.syncTime;
+	}
+
+	public void setSyncTime(int syncTime) {
+		this.syncTime = syncTime;
+	}
+
 }

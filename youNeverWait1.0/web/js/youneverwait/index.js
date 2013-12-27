@@ -35,6 +35,11 @@ $j.cachedScript("/youNeverWait/js/framework/login.js").done(function(script, tex
 })
 var errorData = getErrorData();
 $j(document).ready(function(){
+	var classLoader = new ClassLoader();
+	classLoader.load();
+	//config upload handling js
+	$j.getScript("/youNeverWait/js/ClassInitializer.js").done(function(script, textStatus) {
+	})
 	createLeftpaneToolBar();
 	createGlobalToolBar();
 	$j('#tabs-1').removeClass('ui-widget-content');
@@ -108,6 +113,17 @@ $j(document).ready(function(){
 		createModal(constants_newNetRxJson,'netrxModal');	
 		openModalBox(obj,'netrxModal');
 		$j.cachedScript(constants_newNetRx).done(function(script, textStatus) {
+		})
+		$j('#filter').hide();
+		$j('#user-filter-toolbar').hide();
+	});
+	
+	$j('#ribbonSetSync').die('click').live("click",function() {
+		removeErrors();
+		var obj=$j(this);
+		createModal(constants_newSetsycJson,'setsycModal');	
+		openModalBox(obj,'setsycModal');
+		$j.cachedScript(constants_newsynctype).done(function(script, textStatus) {
 		})
 		$j('#filter').hide();
 		$j('#user-filter-toolbar').hide();

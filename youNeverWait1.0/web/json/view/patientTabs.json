@@ -3,9 +3,8 @@
     {
         "name": "Cases",
         "title": "APPOINTMENTS",
+        "image":"/youNeverWait/images/appoint.png",
         "id": "appointmentInfoTab",
-		"style":"margin-left:-11px",
-		"image":"/youNeverWait/images/appoint.png",
         "content": [
             {}
         ]
@@ -13,8 +12,8 @@
 	{
         "name": "PersonalInfo",
         "title": "CLINICS",
+        "image":"/youNeverWait/images/clinics.png",
         "id": "clinicsInfoTab",
-		"image":"/youNeverWait/images/clinics.png",
 		
 		       "content": [
             {}
@@ -23,8 +22,9 @@
     {
         "name": "Visits",
         "title": "RESULTS",
+         "style":"margin-left:5%",
+         "image":"/youNeverWait/images/result.png",
         "id": "resultsInfoTab",
-		"image":"/youNeverWait/images/result.png",
         "content": [
             {
 			}

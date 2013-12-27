@@ -8,19 +8,23 @@
 package com.nv.youNeverWait.rs.ui;
 
 import java.util.List;
-
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.SyncDTO;
 import com.nv.youNeverWait.rs.dto.SyncResponseDTO;
+import com.nv.youNeverWait.user.bl.service.LogService;
 import com.nv.youNeverWait.user.bl.service.SyncService;
 
 /**
@@ -31,6 +35,7 @@ import com.nv.youNeverWait.user.bl.service.SyncService;
 @RequestMapping("ui/sync/")
 public class SyncResource {
 	private SyncService service;
+	private LogService logService;
 
 	/**
 	 * Method which performs synchronization  for NetMd
@@ -56,6 +61,11 @@ public class SyncResource {
 			response.setSuccess(false);
 
 		}
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		logService.saveSyncDetails(request.getRemoteAddr(),ApplicationNameEnum.NetMd.getDisplayName(), sync.getLastSyncTime(),
+				sync.getHeader().getBranchId(),sync.getHeader().getHeadOfficeId());
 		return response;
 	}
 	
@@ -83,6 +93,11 @@ public class SyncResource {
 			response.setSuccess(false);
 
 		}
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		logService.saveSyncDetails(request.getRemoteAddr(),ApplicationNameEnum.NetLims.getDisplayName(), sync.getLastSyncTime(),
+				sync.getHeader().getBranchId(),sync.getHeader().getHeadOfficeId());
 		return response;
 	}
 	

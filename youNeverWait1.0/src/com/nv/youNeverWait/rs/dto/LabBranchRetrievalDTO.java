@@ -6,18 +6,20 @@ package com.nv.youNeverWait.rs.dto;
 
 public class LabBranchRetrievalDTO {
 
-	private LabHeaderDTO header;
+	private HeaderDTO header;
 	private String synctime;
+	
+	
 	/**
 	 * @return the header
 	 */
-	public LabHeaderDTO getHeader() {
+	public HeaderDTO getHeader() {
 		return header;
 	}
 	/**
 	 * @param header the header to set
 	 */
-	public void setHeader(LabHeaderDTO header) {
+	public void setHeader(HeaderDTO header) {
 		this.header = header;
 	}
 	/**

@@ -20,6 +20,9 @@
 			return true;
 		}
 	}
+
+
+
  function checkNull(o,msg){
 	if(o.val().length=='0'){
 		o.addClass("error");
@@ -90,3 +93,6 @@
     });
 	}
 	
+	function tab2space(str) {
+	return str.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+}

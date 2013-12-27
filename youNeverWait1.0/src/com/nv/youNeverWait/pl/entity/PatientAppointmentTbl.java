@@ -27,9 +27,13 @@ public class PatientAppointmentTbl implements Serializable {
 	private String appointmentStatus;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	 @Column(nullable=false)
-	private Date date;
+	 @Column(name="appointment_date",nullable=false)
+	private Date appointmentDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	 @Column(name="appointment_time",nullable=false)
+	private Date appointmentTime;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="starting_time", nullable=false)
 	private Date startingTime;
@@ -123,12 +127,33 @@ public class PatientAppointmentTbl implements Serializable {
 		this.updateDateTime = updateDateTime;
 	}
 	
-	public Date getDate() {
-		return this.date;
+	
+	/**
+	 * @return the appointmentTime
+	 */
+	public Date getAppointmentTime() {
+		return appointmentTime;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	/**
+	 * @param appointmentTime the appointmentTime to set
+	 */
+	public void setAppointmentTime(Date appointmentTime) {
+		this.appointmentTime = appointmentTime;
+	}
+
+	/**
+	 * @return the appointmentDate
+	 */
+	public Date getAppointmentDate() {
+		return appointmentDate;
+	}
+
+	/**
+	 * @param appointmentDate the appointmentDate to set
+	 */
+	public void setAppointmentDate(Date appointmentDate) {
+		this.appointmentDate = appointmentDate;
 	}
 
 	public Date getStartingTime() {

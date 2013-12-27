@@ -26,7 +26,7 @@ public class AppointmentsDTO {
 				Constants.NEWDATE_FORMAT_FOR_APPOINTMENT);
 		DateFormat dft = new SimpleDateFormat(Constants.DATE_FORMAT_WITH_TIME);
 		this.id = patientAppointment.getId();
-		this.date = df.format(patientAppointment.getDate());
+		this.date = df.format(patientAppointment.getAppointmentDate());
 		this.startingTime = dft.format(patientAppointment.getStartingTime());
 		this.appointmentStatus = patientAppointment.getAppointmentStatus();
 		this.doctorFirstName = patientAppointment.getDoctorTbl().getFirstName();

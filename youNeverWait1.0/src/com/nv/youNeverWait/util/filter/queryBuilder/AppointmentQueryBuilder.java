@@ -10,11 +10,17 @@
  */
 package com.nv.youNeverWait.util.filter.queryBuilder;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.pl.dao.FilterDao;
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.util.filter.core.Criteria;
 import com.nv.youNeverWait.util.filter.core.Filter;
+import com.nv.youNeverWait.util.filter.filters.LessThanFilter;
+import com.nv.youNeverWait.util.filter.filters.LessThanOrEqualFilter;
 
 /**
  *
@@ -35,6 +41,12 @@ public class AppointmentQueryBuilder extends RootQueryBuilder<PatientAppointment
 	@Override 
 	public void init(FilterDao dao) {
 		super.init(dao, PatientAppointmentTbl.class);
+		SimpleDateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		Filter timeFilter=new LessThanFilter();
+		timeFilter.setName("appointmentTime");
+		timeFilter.setValue(df.format(new Date()));
+		this.addFilter(timeFilter);
+
 	}
 	/**
 	 * Add filter to query builder then generate predicates,

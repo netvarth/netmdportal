@@ -23,7 +23,7 @@ import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalPatientResponseDTO;
-
+ 
 
 
 
@@ -51,45 +51,16 @@ public interface PatientService {
 	public ResponseDTO resetPassword(LoginDTO login) ;
 	public ResultListResponseDTO getresultList(FilterDTO filter);
 	public ResultDTO patientTestResult(PatientOrderDTO patient);
-	/**
-	 * @param id
-	 * @return
-	 */
 	public AppointmentResponse deleteAppointmentFromPortal(int id);
-	/**
-	 * @param appointment
-	 * @return
-	 */
 	public AppointmentResponse createAppointmentFromNetMd(
 			Appointment appointment);
-	/**
-	 * @param appointment
-	 * @return
-	 */
 	public AppointmentResponse createAppointmentFromPortal(
 			Appointment appointment);
-	/**
-	 * @param appointment
-	 * @return
-	 */
 	public AppointmentResponse updateAppointmentFromNetMd(
 			Appointment appointment);
-	/**
-	 * @param appointment
-	 * @return
-	 */
 	public AppointmentResponse updateAppointmentFromPortal(
 			Appointment appointment);
-	/**
-	 * @param id
-	 * @return
-	 */
 	public AppointmentResponse deleteAppointmentFromNetmd(int id);
-	/**
-	 * @param filter
-	 * @return
-	 */
 	public PastAppointmentListResponseDTO getPastAppointments(FilterDTO filter);
-	
 	
 	}
