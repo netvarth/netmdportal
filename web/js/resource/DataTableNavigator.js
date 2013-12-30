@@ -88,7 +88,8 @@ DataTableNavigator.prototype.prev= function() {
 		self.curPage-=1;
 		self.startValue = self.interval*(self.curPage-1);
 		self.filterDTO = new FilterDTO(self.exp.getExpressionList(),self.startValue,self.interval,false);
-		self.list();	
+		self.list();
+		self.BillList();
 		self.setPaginationFields(self.sourceContainer);		
 	}
 }
@@ -100,6 +101,7 @@ DataTableNavigator.prototype.first=function() {
 		self.startValue = 0;
 		self.filterDTO = new FilterDTO(self.exp.getExpressionList(),self.startValue,self.interval,false);
 		self.list();
+		self.BillList();
 		self.setPaginationFields(self.sourceContainer);
 	}	
 }
@@ -111,6 +113,7 @@ DataTableNavigator.prototype.last= function() {
 		self.startValue = (self.curPage-1)*self.interval;
 		self.filterDTO = new FilterDTO(self.exp.getExpressionList(),self.startValue,self.interval,false);
 		self.list();
+		self.BillList();
 		self.setPaginationFields(self.sourceContainer);
 	}
 }
