@@ -80,16 +80,12 @@ function superBillDetaillist() {
 	return submitdata;
 }
 
-function fillSuperNetmdEachBranchBillDetailTable(branchBill,obj) {
+function fillSuperNetmdEachBranchBillDetailTable(branchBill,tableObj) {
 	
 	var billResult=postdataToServer("/youNeverWait/ws/ui/superAdmin/billList",branchBill);
 	//alert(JSON.stringify(billResult));
-	if(billResult.success==true) {
-		createModal(constants_SuperadBillListModalJson,'SuperadBillListModal');	
-		openModalBox(obj,'SuperadBillListModal');
-		 var tableObj="#superBillDetailsViewTable";
-		makeDataTable(tableObj);
-		$j(tableObj).dataTable().fnClearTable();
+	 if(billResult.success==true) {
+			$j(tableObj).dataTable().fnClearTable();
 			if(billResult.branchBillList.length>0) {			
 				$j(billResult.branchBillList).each(function (index, lab) {
 					var id=lab.uid;
@@ -103,7 +99,7 @@ function fillSuperNetmdEachBranchBillDetailTable(branchBill,obj) {
 	else
 		updateTipsNew(getErrorName(billResult.error),$j('#errorDivData'),$j('#errorDivHeader'));
 	
-	return billResult; 
+	return billResult;  
 }
 
 function submitBranchInfo(){
