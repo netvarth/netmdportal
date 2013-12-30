@@ -61,11 +61,11 @@ public class SyncResource {
 			response.setSuccess(false);
 
 		}
-		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
-				.currentRequestAttributes();
-		HttpServletRequest request = t.getRequest();
-		logService.saveSyncDetails(request.getRemoteAddr(),ApplicationNameEnum.NetMd.getDisplayName(), sync.getLastSyncTime(),
-				sync.getHeader().getBranchId(),sync.getHeader().getHeadOfficeId());
+//		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+//				.currentRequestAttributes();
+//		HttpServletRequest request = t.getRequest();
+//		logService.saveSyncDetails(request.getRemoteAddr(),ApplicationNameEnum.NetMd.getDisplayName(), sync.getLastSyncTime(),
+//				sync.getHeader().getBranchId(),sync.getHeader().getHeadOfficeId());
 		return response;
 	}
 	
@@ -93,11 +93,11 @@ public class SyncResource {
 			response.setSuccess(false);
 
 		}
-		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
-				.currentRequestAttributes();
-		HttpServletRequest request = t.getRequest();
-		logService.saveSyncDetails(request.getRemoteAddr(),ApplicationNameEnum.NetLims.getDisplayName(), sync.getLastSyncTime(),
-				sync.getHeader().getBranchId(),sync.getHeader().getHeadOfficeId());
+//		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+//				.currentRequestAttributes();
+//		HttpServletRequest request = t.getRequest();
+//		logService.saveSyncDetails(request.getRemoteAddr(),ApplicationNameEnum.NetLims.getDisplayName(), sync.getLastSyncTime(),
+//				sync.getHeader().getBranchId(),sync.getHeader().getHeadOfficeId());
 		return response;
 	}
 	
