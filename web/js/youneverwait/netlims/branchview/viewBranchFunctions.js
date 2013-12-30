@@ -83,15 +83,11 @@ function superBrachOrderslist() {
 	return submitdata;
 }
 
-function fillSuperNetlimsEachBranchorderTable(branchorder,obj) {
+function fillSuperNetlimsEachBranchorderTable(branchorder,tableObj) {
 	
 	var branchResult=postdataToServer("/youNeverWait/ws/ui/superAdmin/orderList",branchorder);
 	//alert(JSON.stringify(branchResult));
 	if(branchResult.success==true) {
-		createModal(constants_SuperadShowOrdersModalJson,'SuperadShowOrdersModal');	
-		openModalBox(obj,'SuperadShowOrdersModal');
-		var tableObj="#orderssupernetlimsaccViewTable";
-		makeDataTable(tableObj);
 		$j(tableObj).dataTable().fnClearTable();
 			if(branchResult.branchOrders.length>0) {			
 				$j(branchResult.branchOrders).each(function (index, lab) {

@@ -98,8 +98,87 @@
 	$j("#branchViewForm #btnShowOrders").die('click').live('click',function(){
 		removeErrors();
 		var obj=$j(this);
-		var branchorder=superBrachOrderslist();
-		fillSuperNetlimsEachBranchorderTable(branchorder,obj)
+		createModal(constants_SuperadShowOrdersModalJson,'SuperadShowOrdersModal');	
+		openModalBox(obj,'SuperadShowOrdersModal');
+		
+		var pgNetLimsList;
+		var filterExp=[]; //For storing the filter expressions
+		var pgTableName = "#orderssupernetlimsaccViewTable"; // Table showing netlims list
+		pgTableContainer = "#viewBranchHeader"; // Parent container of the netlims list table
+		setCustomDataTable(pgTableName);
+		var maxRecords=0; // Total number of records
+		var maxPages = 0; // Total number of pages
+		var interval = 8;// Interval between pages
+		var curPage = 1;//Current selected page	
+		
+		var netLimsdata;
+		netLimsdata = '{'+'"name"' + ':"'+"labId"+'",';
+		netLimsdata+='"value"' +':"' +$j('#branchViewForm #labid').val() +'",';
+		netLimsdata +='"operator":"' + "eq" +'"}';
+		
+		var netLimsBrchdata;
+		netLimsBrchdata = '{'+'"name"' + ':"'+"labBranchId"+'",';
+		netLimsBrchdata+='"value"' +':"' +$j('#branchViewForm #branchid').val()+'",';
+		netLimsBrchdata +='"operator":"' + "eq" +'"}';
+		
+		var fromData;
+		fromData = '{'+'"name"' + ':"'+"orderDate"+'",';
+		fromData+='"value"' +':"' +$j('#branchViewForm #fromDate').val()+'",';
+		fromData +='"operator":"' + "ge" +'"}';
+		
+		var toData;
+		toData = '{'+'"name"' + ':"'+"orderDate"+'",';
+		toData+='"value"' +':"' +$j('#branchViewForm #toDate').val()+'",';
+		toData +='"operator":"' + "le" +'"}';
+		filterExp=netLimsdata+","+netLimsBrchdata+","+fromData+","+toData;
+		
+		var netlimsListJson= getFilterlistUrl(filterExp,(curPage-1),interval);
+		pgNetLimsList = fillSuperNetlimsEachBranchorderTable(netlimsListJson,pgTableName);
+		if(pgNetLimsList.count)
+			maxRecords = pgNetLimsList.count;	
+		if(maxRecords%interval!=0)
+			maxPages = parseInt(maxRecords/interval) + 1;
+		else
+			maxPages = parseInt(maxRecords/interval);	
+		setPaginationFields(curPage, maxPages, pgTableContainer); 
+		
+		$j(pgTableContainer +' #next').die('click').click(function() {
+		if(curPage!=maxPages && curPage<maxPages) {
+			curPage+=1;
+			var startValue = interval*(curPage-1);
+			netlimsListJson=getFilterlistUrl(filterExp,startValue,interval);
+			pgNetLimsList=fillSuperNetlimsEachBranchorderTable(netlimsListJson,pgTableName);
+			setPaginationFields(curPage, maxPages,pgTableContainer);
+		}
+	});
+	$j(pgTableContainer +' #previous').die('click').click(function() {
+		if(curPage!=1) {
+			curPage-=1;
+			var startValue = interval*(curPage-1);
+			netlimsListJson=getFilterlistUrl(filterExp,startValue,interval);
+			pgNetLimsList=fillSuperNetlimsEachBranchorderTable(netlimsListJson,pgTableName);
+			setPaginationFields(curPage, maxPages,pgTableContainer);
+		}
+	});
+	$j(pgTableContainer +' #first').die('click').click(function() {
+		if(curPage!=1) {
+			curPage=1;
+			startValue = 0;
+			netlimsListJson= getFilterlistUrl(filterExp,startValue,interval);
+			pgNetLimsList=fillSuperNetlimsEachBranchorderTable(netlimsListJson,pgTableName);
+			setPaginationFields(curPage, maxPages, pgTableContainer);
+		}
+	});
+	$j(pgTableContainer +' #last').die('click').click(function() {
+		if(curPage!=maxPages && curPage<maxPages) {
+			curPage =maxPages;
+			startValue = (curPage-1)*interval;
+			netlimsListJson=getFilterlistUrl(filterExp,startValue,interval);
+			pgNetLimsList=fillSuperNetlimsEachBranchorderTable(netlimsListJson,pgTableName);
+			setPaginationFields(curPage, maxPages, pgTableContainer);
+		}
+	});	
+		
 	});
 
 
