@@ -141,9 +141,89 @@
 	$j("#netmdbranchViewForm #btnBill").die('click').live('click',function(){
 		removeErrors();
 		var obj=$j(this);
-		var branchBill=superBillDetaillist();
-		//alert(branchBill);
-		fillSuperNetmdEachBranchBillDetailTable(branchBill,obj)
+		createModal(constants_SuperadBillListModalJson,'SuperadBillListModal');	
+		openModalBox(obj,'SuperadBillListModal');
+		
+		var pgNetMdList;
+		var filterExp=[]; //For storing the filter expressions
+		var pgTableName = "#superBillDetailsViewTable"; // Table showing netlims list
+		pgTableContainer = "#viewBranchHeader"; // Parent container of the netlims list table
+		setCustomDataTable(pgTableName);
+		var maxRecords=0; // Total number of records
+		var maxPages = 0; // Total number of pages
+		var interval = 8;// Interval between pages
+		var curPage = 1;//Current selected page	
+		
+		var netMddata;
+		netMddata = '{'+'"name"' + ':"'+"netmdId"+'",';
+		netMddata+='"value"' +':"' +$j('#netmdbranchViewForm #netmdid').val() +'",';
+		netMddata +='"operator":"' + "eq" +'"}';
+		
+		var netMdBrchdata;
+		netMdBrchdata = '{'+'"name"' + ':"'+"netmdBranchId"+'",';
+		netMdBrchdata+='"value"' +':"' +$j('#netmdbranchViewForm #branchid').val()+'",';
+		netMdBrchdata +='"operator":"' + "eq" +'"}';
+		
+		var fromData;
+		fromData = '{'+'"name"' + ':"'+"orderDate"+'",';
+		fromData+='"value"' +':"' +$j('#netmdbranchViewForm #BillfromDate').val()+'",';
+		fromData +='"operator":"' + "ge" +'"}';
+		
+		var toData;
+		toData = '{'+'"name"' + ':"'+"orderDate"+'",';
+		toData+='"value"' +':"' +$j('#netmdbranchViewForm #BilltoDate').val()+'",';
+		toData +='"operator":"' + "le" +'"}';
+		filterExp=netMddata+","+netMdBrchdata+","+fromData+","+toData;
+		
+		
+		var netmdListJson= getFilterlistUrl(filterExp,(curPage-1),interval);
+		pgNetmdList = fillSuperNetmdEachBranchBillDetailTable(netmdListJson,pgTableName);
+		if(pgNetmdList.count)
+			maxRecords = pgNetmdList.count;	
+		if(maxRecords%interval!=0)
+			maxPages = parseInt(maxRecords/interval) + 1;
+		else
+			maxPages = parseInt(maxRecords/interval);	
+		setPaginationFields(curPage, maxPages, pgTableContainer); 
+		
+		
+		$j(pgTableContainer +' #next').die('click').click(function() {
+		if(curPage!=maxPages && curPage<maxPages) {
+			curPage+=1;
+			var startValue = interval*(curPage-1);
+			netmdListJson=getFilterlistUrl(filterExp,startValue,interval);
+			pgNetmdList=fillSuperNetmdEachBranchBillDetailTable(netmdListJson,pgTableName);
+			setPaginationFields(curPage, maxPages,pgTableContainer);
+		}
+	});
+	$j(pgTableContainer +' #previous').die('click').click(function() {
+		if(curPage!=1) {
+			curPage-=1;
+			var startValue = interval*(curPage-1);
+			netmdListJson=getFilterlistUrl(filterExp,startValue,interval);
+			pgNetmdList=fillSuperNetmdEachBranchBillDetailTable(netmdListJson,pgTableName);
+			setPaginationFields(curPage, maxPages,pgTableContainer);
+		}
+	});
+	$j(pgTableContainer +' #first').die('click').click(function() {
+		if(curPage!=1) {
+			curPage=1;
+			startValue = 0;
+			netmdListJson= getFilterlistUrl(filterExp,startValue,interval);
+			pgNetmdList=fillSuperNetmdEachBranchBillDetailTable(netmdListJson,pgTableName);
+			setPaginationFields(curPage, maxPages, pgTableContainer);
+		}
+	});
+	$j(pgTableContainer +' #last').die('click').click(function() {
+		if(curPage!=maxPages && curPage<maxPages) {
+			curPage =maxPages;
+			startValue = (curPage-1)*interval;
+			netmdListJson=getFilterlistUrl(filterExp,startValue,interval);
+			pgNetmdList=fillSuperNetmdEachBranchBillDetailTable(netmdListJson,pgTableName);
+			setPaginationFields(curPage, maxPages, pgTableContainer);
+		}
+	});	
+		
 	});
 	
 	function createMacJson(passPhrase,macid){
