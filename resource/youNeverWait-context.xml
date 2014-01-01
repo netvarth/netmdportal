@@ -192,6 +192,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 				</value>
 					<value>com.nv.youNeverWait.util.filter.queryBuilder.OrderPropertyEnum
 				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.NetPosPropertyEnum
+				</value>
 			</list>
 		</property>
 	</bean>
@@ -458,6 +460,12 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="netPosDao">
 			<ref bean="netpos.dao" />
 		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
 	
 </bean>
 <bean id="netpos.dao" class="com.nv.youNeverWait.user.pl.impl.NetPosDaoImpl"></bean>
@@ -547,6 +555,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 					value="com.nv.youNeverWait.util.filter.queryBuilder.NetmdBillQueryBuilder" />
 				<entry key="order"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.LabOrderQueryBuilder" />
+					<entry key="netpos"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.NetPosQueryBuilder" />
 			</map>
 		</property>
 
