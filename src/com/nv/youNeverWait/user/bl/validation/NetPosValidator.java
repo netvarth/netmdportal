@@ -7,13 +7,20 @@ package com.nv.youNeverWait.user.bl.validation;
 
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.rs.dto.ErrorDTO;
+import com.nv.youNeverWait.rs.dto.ExpressionDTO;
+import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.NetPosDTO;
+import com.nv.youNeverWait.util.filter.core.Property;
+import com.nv.youNeverWait.util.filter.queryBuilder.NetPosPropertyEnum;
+import com.nv.youNeverWait.util.filter.queryBuilder.NetRxPropertyEnum;
+import com.nv.youNeverWait.util.filter.validation.FilterValidator;
 
 /**
  * @author Mani
  *
  */
-public class NetPosValidator {
+public class NetPosValidator extends FilterValidator{
 
 	/**
 	 * @param netPos
@@ -97,6 +104,28 @@ public class NetPosValidator {
 	{
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 * @param filterDTO
+	 * @return
+	 */
+	public ErrorDTO validateNetPosFilter(FilterDTO filterDTO) {
+		ErrorDTO error = new ErrorDTO();
+		for (ExpressionDTO exp : filterDTO.getExp()) {
+			Property property = null;
+			try {
+				property = NetPosPropertyEnum.valueOf(exp.getName());
+			} catch (IllegalArgumentException e) {
+				error = getInvalidExpNameError(exp);
+				return error;
+			}
+			error = validateExp(exp, property);
+			if (error != null) {
+				return error;
+			}
+		}
+		return null;
 	}
 
 }
