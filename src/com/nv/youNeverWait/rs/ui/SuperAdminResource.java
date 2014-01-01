@@ -9,7 +9,9 @@ package com.nv.youNeverWait.rs.ui;
 
 import java.util.Date;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
@@ -45,6 +48,7 @@ import com.nv.youNeverWait.rs.dto.NetMdDTO;
 import com.nv.youNeverWait.rs.dto.NetMdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetPosDTO;
+import com.nv.youNeverWait.rs.dto.NetPosListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetPosViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchDetail;
 import com.nv.youNeverWait.rs.dto.NetRxBranchListResponseDTO;
@@ -1848,6 +1852,31 @@ RequestMethod.GET)
 		NetPosViewResponseDTO response = new NetPosViewResponseDTO();
 		try {
 			response = service.viewNetPos(netPosId);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * To retrieve a list of netmd which satisfy all filter conditions
+	 * 
+	 * @param filter
+	 * @return NetMdListResponseDTO
+	 */
+	@RequestMapping(value = "netPosList", method = RequestMethod.POST)
+	@ResponseBody
+	public NetPosListResponseDTO getNetPosList(@RequestBody FilterDTO filter) {
+		NetPosListResponseDTO response = new NetPosListResponseDTO();
+		try {
+			response = service.getNetPosList(filter);
 		} catch (ServiceException e) {
 
 			List<Parameter> parameters = e.getParamList();
