@@ -53,6 +53,12 @@ function PageHandler() {
 	this.setnetrxAccClassLoaded=function(status){
 		this.netrxAccClassLoaded=status;
 	}
+	this.isnetlimsClassLoaded=function(){
+		return this.netlimsClassLoaded;
+	}
+	this.setnetlimsClassLoaded=function(status){
+		this.netlimsClassLoaded=status;
+	}
 	this.isnetlimsAccSettingsClassLoaded=function(){
 		return this.netlimsAccSettingsClassLoaded;
 	}
@@ -71,6 +77,17 @@ function PageHandler() {
 	this.setnetrxAccSettingsClassLoaded=function(status){
 		this.netrxAccSettingsClassLoaded=status;
 	}
+	
+	
+	/*---------- netpos---------- */
+	
+	this.isnetposClassLoaded=function(){
+		return this.netposClassLoaded;
+	}
+	this.setnetposClassLoaded=function(status){
+		this.netposClassLoaded=status;
+	}
+	
 	/* 
 	
 	
