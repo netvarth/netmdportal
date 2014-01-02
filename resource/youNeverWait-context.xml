@@ -398,6 +398,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="specimenService">
 			<ref bean="specimen.service" />
 		</property>
+		<property name="organisationService">
+			<ref bean="organisation.service" />
+		</property>
 		<property name="netlimsServerIpAddress">
 			<value>${netlims.server.ip.address}</value>
 		</property>
@@ -712,6 +715,33 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="healthMonitor.validator"
 		class="com.nv.youNeverWait.user.bl.validation.HealthMonitorValidator"></bean>
 	<bean id="healthMonitor.dao" class="com.nv.youNeverWait.user.pl.impl.HealthMonitorDaoImpl"></bean>
+	
+	<bean id="organisation.service" class="com.nv.youNeverWait.user.bl.impl.OrganisationManager">
+		<property name="organisationDao">
+			<ref bean="organisation.dao" />
+		</property>
+		<property name="validator">
+			<ref bean="organisation.validator" />
+		</property>
+		<property name="organisationServerIpAddress">
+			<value>${organisation.server.ip.address}</value>
+		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
+		<property name="mailFrom">
+			<value>${mailFrom}</value>
+		</property>
+		<property name="mailThread">
+			<ref bean="email.worker.thread" />
+		</property>
+	</bean>
+	<bean id="organisation.validator"
+		class="com.nv.youNeverWait.user.bl.validation.OrganisationValidator"></bean>
+	<bean id="organisation.dao" class="com.nv.youNeverWait.user.pl.impl.OrganisationDaoImpl"></bean>
 	
 
 </beans>		
