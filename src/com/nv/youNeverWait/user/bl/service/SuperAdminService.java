@@ -40,6 +40,11 @@ import com.nv.youNeverWait.rs.dto.NetRxBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxDTO;
 import com.nv.youNeverWait.rs.dto.NetRxListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxViewResponseDTO;
+import com.nv.youNeverWait.rs.dto.Organisation;
+import com.nv.youNeverWait.rs.dto.OrganisationListResponseDTO;
+import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
+import com.nv.youNeverWait.rs.dto.OrganisationUsersList;
+import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
@@ -50,6 +55,7 @@ import com.nv.youNeverWait.rs.dto.SyncLogListResponseDTO;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
+import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
 
 /**
  * 
@@ -125,11 +131,37 @@ public interface SuperAdminService {
 	public ResponseDTO deleteNetPos(int globalId);
 	public NetPosViewResponseDTO viewNetPos(int netPosId);
 	public NetPosListResponseDTO getNetPosList(FilterDTO filter);
-	
-
-	
-	
-	
+	public ResponseDTO createOrganisation(Organisation organztion);
+	public ResponseDTO updateOrganisation(Organisation organztion);
+	public OrganizationViewResponseDTO viewOrganisation(int globalId);
+	public ResponseDTO deleteOrganisation(int globalId);
+	public OrganisationListResponseDTO getOrganisationList(FilterDTO filter);
+	/**
+	 * @param organztionUser
+	 * @return
+	 */
+	public ResponseDTO createOrganisationUser(OrganisationUserDetail organztionUser);
+	/**
+	 * @param organztionUser
+	 * @return
+	 */
+	public ResponseDTO updateOrganisationUser(
+			OrganisationUserDetail organztionUser);
+	/**
+	 * @param globalId
+	 * @return
+	 */
+	public ViewOrganisationUser viewOrganisationUser(int globalId);
+	/**
+	 * @param globalId
+	 * @return
+	 */
+	public ResponseDTO deleteOrganisationUser(int globalId);
+	/**
+	 * @param filter
+	 * @return
+	 */
+	public OrganisationUsersList getOrganisationUserList(FilterDTO filter);
 	
 
 }
