@@ -1,5 +1,12 @@
 /**
- * UserTypeEnum.java
+ * DepartmentTypeEnum.java
+ * @author netvarth
+ *
+ * Version 1.0 Jan 26, 2014
+ *
+ * Copyright (c) 2014 Netvarth Technologies, Inc.
+ * All rights reserved.
+ *
  */
 package com.nv.youNeverWait.pl.entity;
 
@@ -7,18 +14,19 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.user.bl.impl.EnumDisplay;
 
 /**
- * @author Luciya Jose
  *
+ *
+ * @author Luciya Jose
  */
-public enum UserTypeEnum implements EnumDisplay{
-	Admin("admin"),Staff("staff"),Nurse("nurse"),Patient("patient"),Owner("owner");
+public enum DepartmentTypeEnum implements EnumDisplay{
+	Obstetrics("obstetrics"),Cardiac("cardiac");
 
 	private String displayName;
 
 	/**
 	 * @param displayName
 	 */
-	private UserTypeEnum(String displayName) {
+	private DepartmentTypeEnum(String displayName) {
 		this.displayName = displayName;
 	}
 
@@ -36,16 +44,16 @@ public enum UserTypeEnum implements EnumDisplay{
 		this.displayName = displayName;
 	}
 
-	public static UserTypeEnum getEnum(String value) {
+	public static DepartmentTypeEnum getEnum(String value) {
 		if(value == null){
-			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidUserType);
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidDepartmentType);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		for(UserTypeEnum v : values()){        	
-			if(value.equalsIgnoreCase(v.getDisplayName())){
+		for(DepartmentTypeEnum v : values()){        	
+			if(value.equals(v.getDisplayName())){
 				return v;}}
-		ServiceException se = new ServiceException(ErrorCodeEnum.InvalidUserType);
+		ServiceException se = new ServiceException(ErrorCodeEnum.InvalidDepartmentType);
 		se.setDisplayErrMsg(true);
 		throw se;
 	}
