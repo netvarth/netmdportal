@@ -5,39 +5,36 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the qus_ans_tbl database table.
+ * The persistent class for the answer_tbl database table.
  * 
  */
 @Entity
-@Table(name="qus_ans_tbl")
-public class QusAnsTbl implements Serializable {
+@Table(name="answer_tbl")
+public class AnswerTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
 	private int id;
 
 	@Lob
-	@Column(nullable=false)
 	private String answer;
 
 	//bi-directional many-to-one association to CaseTbl
 	@ManyToOne
-	@JoinColumn(name="case_id", nullable=false)
+	@JoinColumn(name="case_id")
 	private CaseTbl caseTbl;
 
-	//bi-directional many-to-one association to DeptTbl
+	//bi-directional many-to-one association to DepartmentTbl
 	@ManyToOne
-	@JoinColumn(name="dept_id", nullable=false)
-	private DeptTbl deptTbl;
+	@JoinColumn(name="dept_id")
+	private DepartmentTbl departmentTbl;
 
 	//bi-directional many-to-one association to QuestionTbl
 	@ManyToOne
-	@JoinColumn(name="quest_id", nullable=false)
+	@JoinColumn(name="quest_id")
 	private QuestionTbl questionTbl;
 
-	public QusAnsTbl() {
+	public AnswerTbl() {
 	}
 
 	public int getId() {
@@ -64,12 +61,12 @@ public class QusAnsTbl implements Serializable {
 		this.caseTbl = caseTbl;
 	}
 
-	public DeptTbl getDeptTbl() {
-		return this.deptTbl;
+	public DepartmentTbl getDepartmentTbl() {
+		return this.departmentTbl;
 	}
 
-	public void setDeptTbl(DeptTbl deptTbl) {
-		this.deptTbl = deptTbl;
+	public void setDepartmentTbl(DepartmentTbl departmentTbl) {
+		this.departmentTbl = departmentTbl;
 	}
 
 	public QuestionTbl getQuestionTbl() {
