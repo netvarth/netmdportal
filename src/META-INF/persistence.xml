@@ -50,10 +50,10 @@
 		<class>com.nv.youNeverWait.pl.entity.SuperAdminTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.TestSpecimenTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.TestTbl</class>
-		<class>com.nv.youNeverWait.pl.entity.DeptJsonTbl</class>
-		<class>com.nv.youNeverWait.pl.entity.DeptTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.DepartmentQuestionnaireTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.DepartmentTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.QuestionTbl</class>
-		<class>com.nv.youNeverWait.pl.entity.QusAnsTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.AnswerTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetposBranchTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetposLoginTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetposPassphraseTbl</class>
