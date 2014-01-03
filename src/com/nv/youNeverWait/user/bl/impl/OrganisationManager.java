@@ -41,7 +41,7 @@ import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
 import com.nv.youNeverWait.user.bl.service.OrganisationService;
-import com.nv.youNeverWait.user.bl.test.OrganisationValidator;
+import com.nv.youNeverWait.user.bl.validation.OrganisationValidator;
 import com.nv.youNeverWait.user.pl.dao.OrganisationDao;
 import com.nv.youNeverWait.util.filter.core.Filter;
 import com.nv.youNeverWait.util.filter.core.FilterFactory;
