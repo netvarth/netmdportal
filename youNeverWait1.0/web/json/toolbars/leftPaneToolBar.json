@@ -19,6 +19,12 @@
         },
 		
 		{
+          "title": "NetPos",
+		  "className": "netpos",
+          "name": "leftPaneNetPos"
+        },
+		
+		{
           "title": "Settings",
 		  "className": "admin",
           "name": "leftPaneSettings"

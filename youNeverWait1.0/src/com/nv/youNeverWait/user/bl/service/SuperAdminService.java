@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
-import com.nv.youNeverWait.rs.dto.BranchBillListDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.EnableLogStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
@@ -33,6 +32,7 @@ import com.nv.youNeverWait.rs.dto.NetMdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
 import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetPosDTO;
+import com.nv.youNeverWait.rs.dto.NetPosListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetPosViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchDetail;
 import com.nv.youNeverWait.rs.dto.NetRxBranchListResponseDTO;
@@ -40,6 +40,11 @@ import com.nv.youNeverWait.rs.dto.NetRxBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxDTO;
 import com.nv.youNeverWait.rs.dto.NetRxListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxViewResponseDTO;
+import com.nv.youNeverWait.rs.dto.Organisation;
+import com.nv.youNeverWait.rs.dto.OrganisationListResponseDTO;
+import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
+import com.nv.youNeverWait.rs.dto.OrganisationUsersList;
+import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
@@ -50,6 +55,7 @@ import com.nv.youNeverWait.rs.dto.SyncLogListResponseDTO;
 import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
+import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
 
 /**
  * 
@@ -119,16 +125,43 @@ public interface SuperAdminService {
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails);
 	public SyncLogListResponseDTO syncLogList(FilterDTO filter);
+	public EnableLogStatusResponseDTO getSyncLogStatus();
 	public ResponseDTO createNetPos(NetPosDTO netPos);
 	public ResponseDTO updateNetPos(NetPosDTO netPos);
 	public ResponseDTO deleteNetPos(int globalId);
 	public NetPosViewResponseDTO viewNetPos(int netPosId);
-	public EnableLogStatusResponseDTO getSyncLogStatus();
-	
-
-	
-	
-	
+	public NetPosListResponseDTO getNetPosList(FilterDTO filter);
+	public ResponseDTO createOrganisation(Organisation organztion);
+	public ResponseDTO updateOrganisation(Organisation organztion);
+	public OrganizationViewResponseDTO viewOrganisation(int globalId);
+	public ResponseDTO deleteOrganisation(int globalId);
+	public OrganisationListResponseDTO getOrganisationList(FilterDTO filter);
+	/**
+	 * @param organztionUser
+	 * @return
+	 */
+	public ResponseDTO createOrganisationUser(OrganisationUserDetail organztionUser);
+	/**
+	 * @param organztionUser
+	 * @return
+	 */
+	public ResponseDTO updateOrganisationUser(
+			OrganisationUserDetail organztionUser);
+	/**
+	 * @param globalId
+	 * @return
+	 */
+	public ViewOrganisationUser viewOrganisationUser(int globalId);
+	/**
+	 * @param globalId
+	 * @return
+	 */
+	public ResponseDTO deleteOrganisationUser(int globalId);
+	/**
+	 * @param filter
+	 * @return
+	 */
+	public OrganisationUsersList getOrganisationUserList(FilterDTO filter);
 	
 
 }

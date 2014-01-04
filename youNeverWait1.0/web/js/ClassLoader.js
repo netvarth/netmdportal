@@ -18,6 +18,8 @@ function ClassLoader() {
 		})
 		$j.getScript("/youNeverWait/js/resource/GlobalToolBarProcessor.js").done(function(script,textStatus){
 		})
+		$j.getScript("/youNeverWait/js/resource/SuperAdminGlobalToolBarProcessor.js").done(function(script,textStatus){
+		})
 		$j.getScript("/youNeverWait/js/resource/PageToolBarProcessor.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/resource/FilterToolBarProcessor.js").done(function(script,textStatus){
@@ -63,7 +65,9 @@ $j.getScript("/youNeverWait/js/framework/logout.js").done(function(script, textS
 		$j.getScript("/youNeverWait/js/dto/SpecimenListResponseDTO.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/dto/TestSpecimenDTO.js").done(function(script,textStatus){
-		}) 
+		})
+		$j.getScript("/youNeverWait/js/dto/netlimsDTO.js").done(function(script,textStatus){
+		})
 		$j.getScript("/youNeverWait/js/dto/BranchNetlimsDTO.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/dto/BranchNetmdDTO.js").done(function(script,textStatus){
@@ -85,7 +89,9 @@ $j.getScript("/youNeverWait/js/framework/logout.js").done(function(script, textS
 		$j.getScript("/youNeverWait/js/dto/BillListDTO.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/impl/GlobalServiceImpl.js").done(function(script, textStatus) {
-		})	
+		})
+		$j.getScript("/youNeverWait/js/impl/SuperAdminGlobalServiceImpl.js").done(function(script, textStatus) {
+		})
 		/*--------------------------------*/
 		/* Specimen UI Pages */
 		$j.getScript("/youNeverWait/js/youneverwait/netlims/Specimen/SpecimenUIStartup.js").done(function(script,textStatus){
@@ -116,6 +122,10 @@ $j.getScript("/youNeverWait/js/framework/logout.js").done(function(script, textS
 		})
 		$j.getScript("/youNeverWait/js/impl/NetlimsAccServiceImpl.js").done(function(script,textStatus){
 		})
+		$j.getScript("/youNeverWait/js/impl/NetlimsServiceImpl.js").done(function(script,textStatus){
+		})
+		$j.getScript("/youNeverWait/js/impl/NetlimsbranchServiceImpl.js").done(function(script,textStatus){
+		})
 		$j.getScript("/youNeverWait/js/impl/NetmdAccServiceImpl.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/impl/NetrxAccServiceImpl.js").done(function(script,textStatus){
@@ -126,11 +136,35 @@ $j.getScript("/youNeverWait/js/framework/logout.js").done(function(script, textS
 		})
 		$j.getScript("/youNeverWait/js/youneverwait/ui/netrxAccount/netrxAccClassLoader.js").done(function(script,textStatus){
 		})
+		$j.getScript("/youNeverWait/js/youneverwait/ui/netlims/netlimsClassLoader.js").done(function(script,textStatus){
+		})
 		$j.getScript("/youNeverWait/js/youneverwait/settings/netlimsAccSettings/NetlimsAccSettingsClassLoader.js").done(function(script,textStatus){
 		})  
 		$j.getScript("/youNeverWait/js/youneverwait/settings/netmdAccSettings/NetmdAccSettingsClassLoader.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/youneverwait/settings/netrxAccSettings/NetrxAccSettingsClassLoader.js").done(function(script,textStatus){
 		})
+		
+		/*--------------------------netpos---------*/
+		
+		$j.getScript("/youNeverWait/js/youneverwait/ui/netpos/netposClassLoader.js").done(function(script,textStatus){
+		}).fail(function(xhr,status,exception) {
+			alert("netposClassLoader" + xhr + exception);
+			
+		})
+		
+		$j.getScript("/youNeverWait/js/impl/NetPosServiceImpl.js").done(function(script,textStatus){
+		}).fail(function(xhr,status,exception) {
+			alert("NetPosServiceImpl" + xhr + exception);
+			
+		})
+		
+		$j.getScript("/youNeverWait/js/dto/NetPosDTO.js").
+		done(function(script,textStatus){
+		}).fail(function (xhr, status, exception)
+		{
+        alert("NetPosDTO" + xhr.status + exception);
+		}) 
+
 	}
 }

@@ -262,6 +262,17 @@ public enum ErrorCodeEnum {
 	InvalidnetPos("3003","There is no netmpos with id {id}"),
 	netPosNameExists("3004","NetPos with name {name} already exists!"),
 	InvalidNetPosId("3005","You must give valid netpos id"),
+	
+	/*Organisations*/
+	InvalidOrganisationName("4000","You must give valid name"), 
+	DepartmentTypeEmpty("4001","No department type selected"),
+	InvalidDepartmentType("4002","Invalid department type"),
+	OrganisationAlreadyExists("4003","There is another organisation with given username"),
+	DuplicateOrganisationName("4004","organisation  name {name} already exists"),
+	InvalidOrganisation("4005","There is no organisation with id {id}"),
+	OrganisationNameExists("4006","Organisation with name {name} already exists!"), 
+	UserAlreadyExists("4007","User with name {name} already exists!"),
+
 	;
 	private String errCode;
 	private String errMsg;

@@ -9,7 +9,9 @@ package com.nv.youNeverWait.rs.ui;
 
 import java.util.Date;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
@@ -45,6 +48,7 @@ import com.nv.youNeverWait.rs.dto.NetMdDTO;
 import com.nv.youNeverWait.rs.dto.NetMdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetPosDTO;
+import com.nv.youNeverWait.rs.dto.NetPosListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetPosViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchDetail;
 import com.nv.youNeverWait.rs.dto.NetRxBranchListResponseDTO;
@@ -52,6 +56,11 @@ import com.nv.youNeverWait.rs.dto.NetRxBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxDTO;
 import com.nv.youNeverWait.rs.dto.NetRxListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxViewResponseDTO;
+import com.nv.youNeverWait.rs.dto.Organisation;
+import com.nv.youNeverWait.rs.dto.OrganisationListResponseDTO;
+import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
+import com.nv.youNeverWait.rs.dto.OrganisationUsersList;
+import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
@@ -63,6 +72,7 @@ import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncLogDTO;
+import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
 import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.LogService;
 import com.nv.youNeverWait.user.bl.service.SuperAdminService;
@@ -94,7 +104,9 @@ public class SuperAdminResource {
 	public ResponseDTO enableLog(@RequestBody LogDTO log) {
 
 		ResponseDTO response = new ResponseDTO();
-		ServletRequestAttributes t = (ServletRequestAttributes)RequestContextHolder.currentRequestAttributes();
+		ServletRequestAttributes t = 
+
+(ServletRequestAttributes)RequestContextHolder.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
 		try {
 			response = service.enableLog(log, request);
@@ -275,9 +287,15 @@ RequestMethod.POST)
 	public LoginResponseDTO logout() {
 
 		LoginResponseDTO response = new LoginResponseDTO();
-		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		ServletRequestAttributes t = (ServletRequestAttributes) 
+
+RequestContextHolder.currentRequestAttributes();
 		HttpServletRequest req = t.getRequest();
-		logService.saveUserDetails(req.getRemoteAddr(), null,LogUserTypeEnum.Nil.getDisplayName(), null,null,ApplicationNameEnum.SuperAdmin.getDisplayName(),Constants.SUPER_ADMIN_LOGOUT);
+		logService.saveUserDetails(req.getRemoteAddr(), 
+
+null,LogUserTypeEnum.Nil.getDisplayName(), 
+
+null,null,ApplicationNameEnum.SuperAdmin.getDisplayName(),Constants.SUPER_ADMIN_LOGOUT);
 		req.getSession().setAttribute(Constants.USER, null);
 		response.setSuccess(true);
 		response.setError(null);
@@ -804,9 +822,15 @@ NetRxBranchResponseDTO();
 
 			response = service.login(login);
 			if (response.isSuccess()) {
-				ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+				ServletRequestAttributes t = (ServletRequestAttributes) 
+
+RequestContextHolder.currentRequestAttributes();
 				HttpServletRequest req = t.getRequest();
-				logService.saveUserDetails(req.getRemoteAddr(), null,LogUserTypeEnum.Nil.getDisplayName(), null, null,ApplicationNameEnum.SuperAdmin.getDisplayName(),Constants.SUPER_ADMIN_LOGIN);
+				logService.saveUserDetails(req.getRemoteAddr(), 
+
+null,LogUserTypeEnum.Nil.getDisplayName(), null, 
+
+null,ApplicationNameEnum.SuperAdmin.getDisplayName(),Constants.SUPER_ADMIN_LOGIN);
 				User user = new User();
 				UserDetails userDetail = service.getUser(login.getUserName());
 				if (userDetail != null) {
@@ -837,9 +861,7 @@ NetRxBranchResponseDTO();
 	 */
 	@RequestMapping(value = "netmdList", method = RequestMethod.POST)
 	@ResponseBody
-	public NetMdListResponseDTO getNetMdList(@RequestBody FilterDTO 
-
-filter) {
+	public NetMdListResponseDTO getNetMdList(@RequestBody FilterDTO filter) {
 		NetMdListResponseDTO response = new NetMdListResponseDTO();
 		try {
 			response = service.getNetMdList(filter);
@@ -1096,14 +1118,12 @@ BranchBillListResponseDTO();
 	/**
 	 * View netmd account
 	 * 
-	 * @param netMd
-	 * @return ResponseDTO
+	 * @param netMdId
+	 * @return NetMdViewResponseDTO
 	 */
-	@RequestMapping(value = "viewNetMd/{netMdId}", method = 
-
-RequestMethod.GET)
+	@RequestMapping(value = "viewNetMd/{netMdId}", method = RequestMethod.GET)
 	@ResponseBody
-	public NetMdViewResponseDTO view(@PathVariable int netMdId) {
+	public NetMdViewResponseDTO viewNetMd(@PathVariable int netMdId) {
 		NetMdViewResponseDTO response = new NetMdViewResponseDTO();
 		try {
 			response = service.viewNetMd(netMdId);
@@ -1119,11 +1139,6 @@ RequestMethod.GET)
 		}
 		return response;
 	}
-
-	
-
-	
-	
 	
 	/**
 	 * Creates a netmd branch
@@ -1214,9 +1229,7 @@ RequestMethod.GET)
 	 * @param globalId
 	 * @return ResponseDTO
 	 */
-	@RequestMapping(value = "deleteNetMd/{globalId}", method = 
-
-RequestMethod.GET)
+	@RequestMapping(value = "deleteNetMd/{globalId}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseDTO deleteNetMd(@PathVariable int globalId) {
 		ResponseDTO response = new ResponseDTO();
@@ -1335,7 +1348,9 @@ method=RequestMethod.GET)
 
 method=RequestMethod.GET)
 	@ResponseBody
-	public BranchSystemInfoDetails viewNetMdBranchSystemInfo(@PathVariable String passphrase){
+	public BranchSystemInfoDetails viewNetMdBranchSystemInfo(@PathVariable String 
+
+passphrase){
 		BranchSystemInfoDetails details= new BranchSystemInfoDetails();
 		try{
 			details= service.viewNetMdBranchSystemInfo(passphrase);
@@ -1389,7 +1404,9 @@ BranchSystemInfoDetails details) {
      */
 	@RequestMapping(value = "updateNetmdBranchSystemInfo", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseDTO updateNetmdBranchSystemInfo(@RequestBody BranchSystemInfoDetails systemCriticalDetails) {
+	public ResponseDTO updateNetmdBranchSystemInfo(@RequestBody BranchSystemInfoDetails 
+
+systemCriticalDetails) {
 		ResponseDTO response = new ResponseDTO();
 		try {
 			response = service.updateNetmdBranchSystemInfo(systemCriticalDetails);
@@ -1520,7 +1537,9 @@ RequestMethod.POST)
 	public ResponseDTO enableSyncLog(@RequestBody SyncLogDTO syncLog) {
 
 		ResponseDTO response = new ResponseDTO();
-		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		ServletRequestAttributes t = (ServletRequestAttributes) 
+
+RequestContextHolder.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
 		try {
 			response = service.enableSyncLog(syncLog, request);
@@ -1848,6 +1867,289 @@ RequestMethod.GET)
 		NetPosViewResponseDTO response = new NetPosViewResponseDTO();
 		try {
 			response = service.viewNetPos(netPosId);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	
+	/**
+	 * Creates a Organisation account
+	 * @param organztion
+	 * @return
+	 */
+	@RequestMapping(value = "createOrganisation", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO createOrganisation(@RequestBody Organisation organztion) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = service.createOrganisation(organztion);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+
+		}
+		return response;
+	}
+		
+	/**
+	 * Update organization details
+	 * 
+	 * @param organztion
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "updateOrganisation", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO updateOrganisation(@RequestBody Organisation organztion) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = service.updateOrganisation(organztion);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * View Organization details
+	 * 
+	 * @param globalId
+	 * @return OrganizationViewResponseDTO
+	 */
+	@RequestMapping(value = "viewOrganisation/{globalId}", method = RequestMethod.GET)
+	@ResponseBody
+	public OrganizationViewResponseDTO viewOrganisation(@PathVariable int globalId) {
+		OrganizationViewResponseDTO response = new OrganizationViewResponseDTO();
+		try {
+			response = service.viewOrganisation(globalId);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+
+	/**
+	 * Deletes a organization
+	 * 
+	 * @param globalId
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "deleteOrganisation/{globalId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseDTO deleteOrganisation(@PathVariable int globalId) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = service.deleteOrganisation(globalId);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+
+	
+	/**
+	 * To retrieve a list of organisation which satisfy all filter conditions
+	 * 
+	 * @param filter
+	 * @return OrganisationListResponseDTO
+	 */
+	@RequestMapping(value = "getOrganisationList", method = RequestMethod.POST)
+	@ResponseBody
+	public OrganisationListResponseDTO getOrganisationList(@RequestBody FilterDTO filter) {
+		OrganisationListResponseDTO response = new OrganisationListResponseDTO();
+		try {
+			response = service.getOrganisationList(filter);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+
+	/**
+	 * Creates a Organisation account
+	 * @param organztion
+	 * @return
+	 */
+	@RequestMapping(value = "createOrganisationUser", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO createOrganisationUser(@RequestBody OrganisationUserDetail 
+
+organztionUser) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = service.createOrganisationUser(organztionUser);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+
+		}
+		return response;
+	}
+		
+	/**
+	 * Update organization details
+	 * 
+	 * @param organztion
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "updateOrganisationUser", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO updateOrganisationUser(@RequestBody OrganisationUserDetail 
+
+organztionUser) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = service.updateOrganisationUser(organztionUser);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	/**
+	 * View Organization details
+	 * 
+	 * @param globalId
+	 * @return OrganizationViewResponseDTO
+	 */
+	@RequestMapping(value = "viewOrganisationUser/{globalId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ViewOrganisationUser viewOrganisationUser(@PathVariable int globalId) {
+		ViewOrganisationUser response = new ViewOrganisationUser();
+		try {
+			response = service.viewOrganisationUser(globalId);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+
+	/**
+	 * Deletes a organization
+	 * 
+	 * @param globalId
+	 * @return ResponseDTO
+	 */
+	@RequestMapping(value = "deleteOrganisationUser/{globalId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseDTO deleteOrganisationUser(@PathVariable int globalId) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = service.deleteOrganisationUser(globalId);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+
+	
+	/**
+	 * To retrieve a list of organisation users which satisfy all filter conditions
+	 * 
+	 * @param filter
+	 * @return NetMdListResponseDTO
+	 */
+	@RequestMapping(value = "getOrganisationUserList", method = RequestMethod.POST)
+	@ResponseBody
+	public OrganisationUsersList getOrganisationUserList(@RequestBody FilterDTO filter) {
+		OrganisationUsersList response = new OrganisationUsersList();
+		try {
+			response = service.getOrganisationUserList(filter);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+
+	
+	/**
+	 * To retrieve a list of netmd which satisfy all filter conditions
+	 * 
+	 * @param filter
+	 * @return NetMdListResponseDTO
+	 */
+	@RequestMapping(value = "netPosList", method = RequestMethod.POST)
+	@ResponseBody
+	public NetPosListResponseDTO getNetPosList(@RequestBody FilterDTO filter) {
+		NetPosListResponseDTO response = new NetPosListResponseDTO();
+		try {
+			response = service.getNetPosList(filter);
 		} catch (ServiceException e) {
 
 			List<Parameter> parameters = e.getParamList();

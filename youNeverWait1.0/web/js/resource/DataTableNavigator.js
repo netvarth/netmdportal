@@ -78,6 +78,7 @@ DataTableNavigator.prototype.next = function() {
 		//alert(JSON.stringify(self.filterDTO));
 		self.list();
 		self.BillList();
+		self.orderList();
 		self.setPaginationFields(self.sourceContainer);
 	}	
 }
@@ -90,6 +91,7 @@ DataTableNavigator.prototype.prev= function() {
 		self.filterDTO = new FilterDTO(self.exp.getExpressionList(),self.startValue,self.interval,false);
 		self.list();
 		self.BillList();
+		self.orderList();
 		self.setPaginationFields(self.sourceContainer);		
 	}
 }
@@ -102,6 +104,7 @@ DataTableNavigator.prototype.first=function() {
 		self.filterDTO = new FilterDTO(self.exp.getExpressionList(),self.startValue,self.interval,false);
 		self.list();
 		self.BillList();
+		self.orderList();
 		self.setPaginationFields(self.sourceContainer);
 	}	
 }
@@ -114,6 +117,7 @@ DataTableNavigator.prototype.last= function() {
 		self.filterDTO = new FilterDTO(self.exp.getExpressionList(),self.startValue,self.interval,false);
 		self.list();
 		self.BillList();
+		self.orderList();
 		self.setPaginationFields(self.sourceContainer);
 	}
 }
@@ -141,6 +145,20 @@ DataTableNavigator.prototype.BillList = function() {
 	//alert(self.pgDataList.count);
 	self.setPaginationFields(self.sourceContainer);
 	self.tableObj.setTableValueBranchBillList(self.sourceTable,self.pgDataList);
+}
+
+DataTableNavigator.prototype.orderList = function() {
+	var self=this;
+	//alert("fgfg"+self.url);
+	ajaxProcessor.setUrl(self.url);
+	//alert(self.url);
+	self.setFilterDTO();
+	self.pgDataList = ajaxProcessor.post(self.filterDTO);
+	//alert(JSON.stringify(self.pgDataList));
+	self.setMaxPage(self.pgDataList.count);
+	//alert(self.pgDataList.count);
+	self.setPaginationFields(self.sourceContainer);
+	self.tableObj.setTableValueBranchOrderList(self.sourceTable,self.pgDataList);
 }
 
 DataTableNavigator.prototype.get = function() {

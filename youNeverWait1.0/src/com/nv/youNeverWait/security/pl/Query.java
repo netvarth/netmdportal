@@ -292,4 +292,13 @@ public class Query {
 
 	/*NetposBranchTbl*/
 	public static final String GET_NETPOS_BRANCHES = "from NetposBranchTbl as netposBranch where  netposBranch.NetposTbl.id=:param1";
+	
+	/*OrganisationLoginTbl*/
+	public static final String GET_LOGIN_BY_ORGANISATION_OWNER_USERNAME = "from OrganisationLoginTbl as login where login.userName=:param1 and login.userType='owner'";
+	
+	/*OrganisationTbl*/
+	public static final String GET_ORGANISATION_BY_NAME =  "from OrganisationTbl as orgnstion where  REPLACE(TRIM(UPPER(orgnstion.name)),' ','')=:param1";
+	
+	/*OrganisationUserTbl*/
+	public static final String GET_ORGANISATION_USER_BY_EMAIL_AND_BRANCH = " from OrganisationUserTbl as orgUser where orgUser.email=:param1 and orgUser.organisationTbl.id=:param2";
 }

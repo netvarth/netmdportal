@@ -11,7 +11,7 @@ import com.nv.youNeverWait.user.bl.impl.EnumDisplay;
  *
  */
 public enum UserTypeEnum implements EnumDisplay{
-	Admin("admin"),Staff("staff"),Nurse("nurse"),Patient("patient");
+	Admin("admin"),Staff("staff"),Nurse("nurse"),Patient("patient"),Owner("owner");
 
 	private String displayName;
 

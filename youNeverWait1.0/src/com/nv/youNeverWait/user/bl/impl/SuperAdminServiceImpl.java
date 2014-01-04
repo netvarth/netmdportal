@@ -15,11 +15,14 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.RequestBody;
+
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
 import com.nv.framework.sendmsg.email.SendMailMsgObj;
@@ -55,6 +58,7 @@ import com.nv.youNeverWait.rs.dto.NetMdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
 import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetPosDTO;
+import com.nv.youNeverWait.rs.dto.NetPosListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetPosViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxBranchDetail;
 import com.nv.youNeverWait.rs.dto.NetRxBranchListResponseDTO;
@@ -62,6 +66,11 @@ import com.nv.youNeverWait.rs.dto.NetRxBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxDTO;
 import com.nv.youNeverWait.rs.dto.NetRxListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetRxViewResponseDTO;
+import com.nv.youNeverWait.rs.dto.Organisation;
+import com.nv.youNeverWait.rs.dto.OrganisationListResponseDTO;
+import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
+import com.nv.youNeverWait.rs.dto.OrganisationUsersList;
+import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
@@ -74,10 +83,12 @@ import com.nv.youNeverWait.rs.dto.TestListResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.UserLogListResponseDTO;
+import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.service.NetPosService;
 import com.nv.youNeverWait.user.bl.service.NetRxService;
+import com.nv.youNeverWait.user.bl.service.OrganisationService;
 import com.nv.youNeverWait.user.bl.service.SpecimenService;
 import com.nv.youNeverWait.user.bl.service.SuperAdminService;
 import com.nv.youNeverWait.user.bl.service.TestService;
@@ -103,6 +114,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	private SpecimenService specimenService;
 	private NetPosService netPosService;
 	private static final Log log = LogFactory.getLog(SuperAdminServiceImpl.class);
+	private OrganisationService organisationService;
 
 	/**
 	 * Shows a list of all Netlims App
@@ -222,7 +234,9 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public ResponseDTO forgotPassword(LoginDTO login) {
 		ResponseDTO response = new ResponseDTO();
 		if (login.getUserName() == null || login.getUserName().equals("")) {
-			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidUserName);
+			ServiceException se = new 
+
+ServiceException(ErrorCodeEnum.InvalidUserName);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
@@ -232,7 +246,9 @@ superAdminDao.getUserCredentials(login);
 		if (user.getEmailId() == null || user.getEmailId().equals("")) 
 
 {
-			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidMailId);
+			ServiceException se = new 
+
+ServiceException(ErrorCodeEnum.InvalidMailId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
@@ -254,10 +270,16 @@ following
 		String msgBody = "";
 		URL url = null;
 		try {
-			url = new URL("http://" + netlimsServerIpAddress +  "/youNeverWait/EmailFormat/ForgotPassword.html");
+			url = new URL("http://" + netlimsServerIpAddress +  
+
+"/youNeverWait/EmailFormat/ForgotPassword.html");
 			msgBody = createDefaultEmailBody(url, user);
 			// EmailSender.sendEmail(emailId, mailFrom, subject, msgBody);
-			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,user.getEmailId(), mailFrom, 0, 0, null,SendMsgCallbackEnum.SUPERADMIN_RESET_PWD.getId(), null);
+			SendMailMsgObj obj = new SendMailMsgObj(subject, 
+
+msgBody,user.getEmailId(), mailFrom, 0, 0, 
+
+null,SendMsgCallbackEnum.SUPERADMIN_RESET_PWD.getId(), null);
 			mailThread.addSendMsgObj(obj);
 		} catch (IOException e) {
 			log.error("Error while sending forgot password mail to SuperAdmin ",
@@ -276,7 +298,9 @@ following
 		String encryptedUserName = 
 
 StringEncoder.encryptWithStaticKey(user.getUserName());
-		String resetPasswordLink = "http://" + netlimsServerIpAddress+ "/youNeverWait/EmailFormat/ResetPassword.html?userName=" + encryptedUserName;
+		String resetPasswordLink = "http://" + netlimsServerIpAddress+ 
+
+"/youNeverWait/EmailFormat/ResetPassword.html?userName=" + encryptedUserName;
 		java.net.URLConnection openConnection = url.openConnection();
 		InputStream inputStream = openConnection.getInputStream();
 		BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
@@ -655,7 +679,9 @@ queryBuilder.buildQuery(filterDTO.isAsc(),
 			String logOutTime = null;
 			String loginTime = null;
 			String actionDate = null;
-			SimpleDateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT_DAY_FIRST);
+			SimpleDateFormat df = new 
+
+SimpleDateFormat(Constants.DATE_FORMAT_DAY_FIRST);
 			if (logTbl.getLoginTime() != null) {
 				loginTime = df.format(logTbl.getLoginTime());
 			}
@@ -828,7 +854,9 @@ in
 	 */
 	@Override
 	public BranchSystemInfoDetails viewBranchSystemInfo(int branchId) {
-		BranchSystemInfoDetails response = labService.viewBranchSystemInfoDetails(branchId);
+		BranchSystemInfoDetails response = 
+
+labService.viewBranchSystemInfoDetails(branchId);
 		return response;
 	}
 
@@ -993,7 +1021,9 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncDetails()
 	public BranchSystemInfoDetails viewNetMdBranchSystemInfo(String 
 
 passphrase) {
-		BranchSystemInfoDetails response = netMdService.viewNetmdBranchSystemInfoDetails(passphrase);
+		BranchSystemInfoDetails response = 
+
+netMdService.viewNetmdBranchSystemInfoDetails(passphrase);
 		return response;
 	}
 
@@ -1018,7 +1048,9 @@ passphrase) {
 	@Override
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails) {
-		ResponseDTO response = netMdService.updateNetmdBranchSystemInfo(systemCriticalDetails);
+		ResponseDTO response = 
+
+netMdService.updateNetmdBranchSystemInfo(systemCriticalDetails);
 		return response;
 	}
 
@@ -1309,7 +1341,9 @@ queryBuilderFactory) {
 	/* (non-Javadoc)
 	 * @see 
 
-com.nv.youNeverWait.user.bl.service.SuperAdminService#updateNetPos(com.nv.youNeverWait.rs.dto.NetPosDTO)
+com.nv.youNeverWait.user.bl.service.SuperAdminService#updateNetPos(com.nv.youNeverWait.rs.dto.NetP
+
+osDTO)
 	 */
 	@Override
 	public ResponseDTO updateNetPos(NetPosDTO netPos) {
@@ -1324,13 +1358,140 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#viewNetPos(int)
 	 */
 	@Override
 	public NetPosViewResponseDTO viewNetPos(int netPosId) {
-		NetPosViewResponseDTO response = 
-
-netPosService.viewNetPos(netPosId);
+		NetPosViewResponseDTO response = netPosService.viewNetPos(netPosId);
 		return response;
 	
 	}
 
+	/* (non-Javadoc)
+	 * @see 
+
+com.nv.youNeverWait.user.bl.service.SuperAdminService#createOrganisation(com.nv.youNeverWait.rs.dto.
+
+Organisation)
+	 */
+	@Override
+	public ResponseDTO createOrganisation(Organisation organztion) {
+		ResponseDTO response=organisationService.createOrganisation(organztion);
+		return response;
+	}
+
+	
+	/* (non-Javadoc)
+	 * @see 
+
+com.nv.youNeverWait.user.bl.service.SuperAdminService#updateOrganisation(com.nv.youNeverWait.rs.dto.
+
+Organisation)
+	 */
+	@Override
+	public ResponseDTO updateOrganisation(Organisation organztion) {
+		ResponseDTO response=organisationService.updateOrganisation(organztion);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#viewOrganisation(int)
+	 */
+	@Override
+	public OrganizationViewResponseDTO viewOrganisation(int globalId) {
+		OrganizationViewResponseDTO 
+
+response=organisationService.viewOrganisation(globalId);
+		return response;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#deleteOrganisation(int)
+	 */
+	@Override
+	public ResponseDTO deleteOrganisation(int globalId) {
+		ResponseDTO response=organisationService.deleteOrganisation(globalId);
+		return response;
+	}
+	
+
+	/* (non-Javadoc)
+	 * @see 
+
+com.nv.youNeverWait.user.bl.service.SuperAdminService#getOrganisationList(com.nv.youNeverWait.rs.dto.
+
+FilterDTO)
+	 */
+	@Override
+	public OrganisationListResponseDTO getOrganisationList(FilterDTO filter) {
+		OrganisationListResponseDTO 
+
+response=organisationService.getOrganisationList(filter);
+		return response;
+	}
+	
+	
+	/* (non-Javadoc)
+	 * @see 
+
+com.nv.youNeverWait.user.bl.service.SuperAdminService#createOrganisationUser(com.nv.youNeverWait.rs.
+
+dto.OrganisationUserDetail)
+	 */
+	@Override
+	public ResponseDTO createOrganisationUser(
+			OrganisationUserDetail organztionUser) {
+		ResponseDTO response=organisationService.createUser(organztionUser);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see 
+
+com.nv.youNeverWait.user.bl.service.SuperAdminService#updateOrganisationUser(com.nv.youNeverWait.rs
+
+.dto.OrganisationUserDetail)
+	 */
+	@Override
+	public ResponseDTO updateOrganisationUser(
+			OrganisationUserDetail organztionUser) {
+		ResponseDTO response=organisationService.updateUser(organztionUser);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#viewOrganisationUser(int)
+	 */
+	@Override
+	public ViewOrganisationUser viewOrganisationUser(int globalId) {
+		ViewOrganisationUser response=organisationService.viewUser(globalId);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#deleteOrganisationUser(int)
+	 */
+	@Override
+	public ResponseDTO deleteOrganisationUser(int globalId) {
+		ResponseDTO response=organisationService.deleteUser(globalId);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#getOrganisationUserList(com.nv.youNeverWait.rs.dto.FilterDTO)
+	 */
+	@Override
+	public OrganisationUsersList getOrganisationUserList(FilterDTO filter) {
+		OrganisationUsersList response=organisationService.getUserList(filter);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#getNetPosList(com.nv.youNeverWait.rs.dto.FilterDTO)
+	 */
+	@Override
+	public NetPosListResponseDTO getNetPosList(FilterDTO filter) {
+		NetPosListResponseDTO response = netPosService.list(filter);
+		return response;
+	}
+	
 	public NetPosService getNetPosService() {
 		return netPosService;
 	}
@@ -1339,23 +1500,20 @@ netPosService.viewNetPos(netPosId);
 		this.netPosService = netPosService;
 	}
 
-	
+	/**
+	 * @param organisationService the organisationService to set
+	 */
+	public void setOrganisationService(OrganisationService organisationService) {
+		this.organisationService = organisationService;
+	}
 
-	
-	
+	/**
+	 * @return the organisationService
+	 */
+	public OrganisationService getOrganisationService() {
+		return organisationService;
+	}
 
-	
-	
-
-	
-
-	
-	
-
-
-
-	
-	
 	
 
 }
