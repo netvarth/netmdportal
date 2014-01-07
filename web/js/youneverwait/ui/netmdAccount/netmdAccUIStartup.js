@@ -75,7 +75,7 @@ netmdAccountUIStartup.prototype.init = function() {
 	self.bindToolBarEvents();
 	dataTableProcessor.create(self.pgTableName,constants.NETMDACCBRANCHLISTJSON);//Create Table for Listing Order
 	dataTableProcessor.setCustomTable(self.pgTableName);
-	netmdAccntTableNavigator.list();
+	netmdAccntTableNavigator.list("branchlist");
 	self.bindEvents();
 	pageHandler.setActivePage(self);
 }
@@ -138,7 +138,7 @@ netmdAccountUIStartup.prototype.bindToolBarEvents = function() {
 					commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netmdDelResponse.error));
 				}
 				var netmdAccTableNavigator = self.getnetmdAccTableNavigator();
-				netmdAccTableNavigator.list();
+				netmdAccTableNavigator.list("branchlist");
 			 
 		}	
 	});

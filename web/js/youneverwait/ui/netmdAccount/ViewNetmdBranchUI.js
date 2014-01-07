@@ -200,7 +200,7 @@ ViewNetmdBranchUI.prototype.bindEvents = function() {
 		
 		var netmdAccntTableNavigator = self.netmdBillTableNavigator;
 		netmdAccntTableNavigator.setExp(exp);
-		netmdAccntTableNavigator.BillList();
+		netmdAccntTableNavigator.list("billList");
 	}); 
 }
 ViewNetmdBranchUI.prototype.viewNetmdBranchDetails = function(branchId) {
