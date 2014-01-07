@@ -6,6 +6,7 @@ package com.nv.youNeverWait.user.bl.validation;
 
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.rs.dto.CaseDTO;
 import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
@@ -311,5 +312,25 @@ public class PatientValidator extends FilterValidator{
 			se.setDisplayErrMsg(true);
 			throw se;
 		}	
+	}
+	/**
+	 * @param newPatientCase
+	 */
+	public void validateCase(CaseDTO caseDto) {
+		if (!isValidName(caseDto.getCaseName())) {
+			ServiceException se=new ServiceException(ErrorCodeEnum.InValidCaseName);
+			se.isDisplayErrMsg();
+			throw se;
+		}
+		if (caseDto.getPatientId() <=0) {
+			ServiceException se=new ServiceException(ErrorCodeEnum.InvalidPatientId);
+			se.isDisplayErrMsg();
+			throw se;
+		}
+		if (caseDto.getDepartmentId() <=0) {
+			ServiceException se=new ServiceException(ErrorCodeEnum.InvalidDepartmentId);
+			se.isDisplayErrMsg();
+			throw se;
+		}
 	}
 }
