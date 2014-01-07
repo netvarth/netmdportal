@@ -150,7 +150,7 @@ public class OrganisationManager  implements OrganisationService{
 	 */
 	@Override
 	public ResponseDTO updateOrganisation(Organisation organztion) {
-		validator.validateGlobalId(organztion.getGlobalId());
+		validator.validateGlobalId(organztion.getId());
 		validator.validateOrganisationDetails(organztion);
 		ResponseDTO response=organisationDao.updateOrganisation(organztion);
 		return response;
