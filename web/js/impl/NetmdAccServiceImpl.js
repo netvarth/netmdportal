@@ -1,17 +1,31 @@
 function NetmdAccServiceImpl () {
-		this.setTableValues = function(tableObj, branchResult) {
+		this.setTableValues = function(tableObj, branchResult,key) {
 		$j(tableObj).dataTable().fnClearTable();
-			if(branchResult.netmdBranch) {
-				if(branchResult.netmdBranch.length>0) {			
-					$j(branchResult.netmdBranch).each(function (index, netmdBranch) {
-						var id=netmdBranch.globalId;
-						var rowData=$j(tableObj).dataTable().fnAddData([id,netmdBranch.name,netmdBranch.mobile,netmdBranch.status]);
-						var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
-						$j(row).attr('id',id);	
-						$j(row).children("td:nth-child(1)").attr("class","branchNetlimsAccIdCol Ustyle");
-						});	
+			if(key=="branchlist"){
+					if(branchResult.netmdBranch) {
+						if(branchResult.netmdBranch.length>0) {			
+							$j(branchResult.netmdBranch).each(function (index, netmdBranch) {
+								var id=netmdBranch.globalId;
+								var rowData=$j(tableObj).dataTable().fnAddData([id,netmdBranch.name,netmdBranch.mobile,netmdBranch.status]);
+								var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+								$j(row).attr('id',id);	
+								$j(row).children("td:nth-child(1)").attr("class","branchNetlimsAccIdCol Ustyle");
+							});	
+						}
+					}
 				}
-			}		 
+			else{
+					if(branchResult.branchBillList.length>0) {			
+						$j(branchResult.branchBillList).each(function (index, netmd) {
+							var id=netmd.branchId;
+							var rowData=$j(tableObj).dataTable().fnAddData([netmd.uid,netmd.orderDate,netmd.patientName,netmd.payStatus,netmd.billAmount,netmd.amountPaid]);
+							var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+							$j(row).attr('id',id);	
+							//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
+						});	
+					}
+			
+				}		 
 	 
 		} 
 		

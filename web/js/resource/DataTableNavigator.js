@@ -15,7 +15,12 @@ function DataTableNavigator(sourceTable,url, sourceContainer, tableObj, exp) {
 	this.tableObj = tableObj;
 	this.bindNavigateEvents(sourceContainer);//bind events to next,prev etc.
 }
-
+DataTableNavigator.prototype.getKey=function() {
+	return this.key;
+}
+DataTableNavigator.prototype.setKey=function(key) {
+	this.key=key;
+}
 DataTableNavigator.prototype.getPgDataList=function() {
 	return this.pgDataList;
 }
@@ -70,15 +75,11 @@ DataTableNavigator.prototype.setInterval=function(interval) {
 
 DataTableNavigator.prototype.next = function() {
 	var self = this;
-	//alert("next");
 	if(self.curPage!=self.maxPage && self.curPage<self.maxPage) {
 		self.setStartValue(self.interval * (self.curPage));
 		self.setCurPage(self.curPage+1);
 		self.filterDTO = new FilterDTO(self.exp.getExpressionList(),self.startValue,self.interval,false);
-		//alert(JSON.stringify(self.filterDTO));
-		self.list();
-		self.BillList();
-		self.orderList();
+		self.list(self.getKey());
 		self.setPaginationFields(self.sourceContainer);
 	}	
 }
@@ -89,9 +90,7 @@ DataTableNavigator.prototype.prev= function() {
 		self.curPage-=1;
 		self.startValue = self.interval*(self.curPage-1);
 		self.filterDTO = new FilterDTO(self.exp.getExpressionList(),self.startValue,self.interval,false);
-		self.list();
-		self.BillList();
-		self.orderList();
+		self.list(self.getKey());	
 		self.setPaginationFields(self.sourceContainer);		
 	}
 }
@@ -102,9 +101,7 @@ DataTableNavigator.prototype.first=function() {
 		self.curPage=1;
 		self.startValue = 0;
 		self.filterDTO = new FilterDTO(self.exp.getExpressionList(),self.startValue,self.interval,false);
-		self.list();
-		self.BillList();
-		self.orderList();
+		self.list(self.getKey());
 		self.setPaginationFields(self.sourceContainer);
 	}	
 }
@@ -115,57 +112,25 @@ DataTableNavigator.prototype.last= function() {
 		self.curPage =self.maxPage;
 		self.startValue = (self.curPage-1)*self.interval;
 		self.filterDTO = new FilterDTO(self.exp.getExpressionList(),self.startValue,self.interval,false);
-		self.list();
-		self.BillList();
-		self.orderList();
+		self.list(self.getKey());
 		self.setPaginationFields(self.sourceContainer);
 	}
 }
-DataTableNavigator.prototype.list = function() {
+DataTableNavigator.prototype.list = function(key) {
 	var self=this;
-	//alert("fgfg"+self.url);
+	self.setKey(key);
 	ajaxProcessor.setUrl(self.url);
-	//alert(self.url);
 	self.setFilterDTO();
 	self.pgDataList = ajaxProcessor.post(self.filterDTO);
 	self.setMaxPage(self.pgDataList.count);
 	self.setPaginationFields(self.sourceContainer);
-	self.tableObj.setTableValues(self.sourceTable,self.pgDataList);
-}
-
-DataTableNavigator.prototype.BillList = function() {
-	var self=this;
-	//alert("fgfg"+self.url);
-	ajaxProcessor.setUrl(self.url);
-	//alert(self.url);
-	self.setFilterDTO();
-	self.pgDataList = ajaxProcessor.post(self.filterDTO);
-	//alert(JSON.stringify(self.pgDataList));
-	self.setMaxPage(self.pgDataList.count);
-	//alert(self.pgDataList.count);
-	self.setPaginationFields(self.sourceContainer);
-	self.tableObj.setTableValueBranchBillList(self.sourceTable,self.pgDataList);
-}
-
-DataTableNavigator.prototype.orderList = function() {
-	var self=this;
-	//alert("fgfg"+self.url);
-	ajaxProcessor.setUrl(self.url);
-	//alert(self.url);
-	self.setFilterDTO();
-	self.pgDataList = ajaxProcessor.post(self.filterDTO);
-	//alert(JSON.stringify(self.pgDataList));
-	self.setMaxPage(self.pgDataList.count);
-	//alert(self.pgDataList.count);
-	self.setPaginationFields(self.sourceContainer);
-	self.tableObj.setTableValueBranchOrderList(self.sourceTable,self.pgDataList);
+	self.tableObj.setTableValues(self.sourceTable,self.pgDataList, self.getKey());
 }
 
 DataTableNavigator.prototype.get = function() {
 	var self=this;
 	ajaxProcessor.setUrl(self.url);
 	self.pgDataList = ajaxProcessor.get();
-	//alert(JSON.stringify(pgDataList));
 	self.setMaxPage(self.pgDataList.count);
 	self.setPaginationFields(self.sourceContainer);
 	self.tableObj.setTableValues(self.sourceTable,self.pgDataList);
@@ -182,7 +147,7 @@ DataTableNavigator.prototype.setPaginationFields= function(tableObj) {
 	$j(tableObj + ' #next').addClass('paginate_button');
 	$j(tableObj + ' #previous').addClass('paginate_button');
 	$j(tableObj + ' #last').addClass('paginate_button');
-	$j(tableObj + ' .paginate_active').html(self.curPage);
+	$j(tableObj + ' .paginate_active').empty().html(self.curPage);
 	if(self.curPage==1 && self.maxPage<=1) {
 		$j(tableObj + ' #first').removeClass('paginate_button');
 		$j(tableObj + ' #next').removeClass('paginate_button');
