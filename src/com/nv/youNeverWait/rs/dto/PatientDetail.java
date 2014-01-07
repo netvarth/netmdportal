@@ -33,23 +33,21 @@ public class PatientDetail {
 	private String bloodGroup;
 	private String height;
 	private String weight;
-	private String chronicDisease;	
+	private String chronicDisease;
 	private String allergies;
 	private String familyHistory;
 	private String emergencyNo;
 	private String status;
+	private String dob;
+	private String education;
+	private String rh;
 	private int branchId;
 	private LoginDTO login;
+	
 	private boolean success;
 	private ErrorDTO error;
 	private List<PatientMedicalHistoryDTO> medicalHistory=new ArrayList<PatientMedicalHistoryDTO>();
-	private List<CaseResponseDTO>caseResponseList=new ArrayList<CaseResponseDTO>();
-	public List<CaseResponseDTO> getCaseResponseList() {
-		return caseResponseList;
-	}
-	public void setCaseResponseList(List<CaseResponseDTO> caseResponseList) {
-		this.caseResponseList = caseResponseList;
-	}
+	
 	public PatientDetail(PatientTbl patientTbl) {
 		super();
 		DateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT_WITH_TIME_SECONDS);
@@ -78,6 +76,7 @@ public class PatientDetail {
 		this.branchId = patientTbl.getNetmdBranchTbl().getId();
 		
 	}
+	
 	public String getChronicDisease() {
 		return chronicDisease;
 	}
@@ -385,6 +384,42 @@ public class PatientDetail {
 	}
 	public void setBranchId(int branchId) {
 		this.branchId = branchId;
+	}
+	/**
+	 * @return the dob
+	 */
+	public String getDob() {
+		return dob;
+	}
+	/**
+	 * @param dob the dob to set
+	 */
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+	/**
+	 * @return the education
+	 */
+	public String getEducation() {
+		return education;
+	}
+	/**
+	 * @param education the education to set
+	 */
+	public void setEducation(String education) {
+		this.education = education;
+	}
+	/**
+	 * @return the rh
+	 */
+	public String getRh() {
+		return rh;
+	}
+	/**
+	 * @param rh the rh to set
+	 */
+	public void setRh(String rh) {
+		this.rh = rh;
 	}
 	
 	

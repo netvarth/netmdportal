@@ -30,6 +30,7 @@ public class SyncResponseDTO {
 	private List<RetrieveResultsResponseDTO> retrieveResults= new ArrayList<RetrieveResultsResponseDTO>();
 	private RetrievalAppointmentResponseDTO retrievalAppointmentListForPrimary = new RetrievalAppointmentResponseDTO();
 	private List<BillSyncResponseDTO> billResponse=new ArrayList<BillSyncResponseDTO>();
+	private List<CaseSyncResponseDTO> patientCaseResponse=new ArrayList<CaseSyncResponseDTO>();
 	private String lastSynctime;
 //	private boolean syncStatus;
 //	private String syncFreqType;
@@ -75,6 +76,9 @@ public class SyncResponseDTO {
 //	public void setSyncInterval(int syncInterval) {
 //		this.syncInterval = syncInterval;
 //	}
+	
+	
+	
 	/**
 	 * @return the billResponse
 	 */
@@ -301,6 +305,18 @@ public class SyncResponseDTO {
 	public void setRetrievalPatientDTO(
 			RetrievalPatientResponseDTO retrievalPatientDTO) {
 		this.retrievalPatientDTO = retrievalPatientDTO;
+	}
+	/**
+	 * @return the patientCaseResponse
+	 */
+	public List<CaseSyncResponseDTO> getPatientCaseResponse() {
+		return patientCaseResponse;
+	}
+	/**
+	 * @param patientCaseResponse the patientCaseResponse to set
+	 */
+	public void setPatientCaseResponse(List<CaseSyncResponseDTO> patientCaseResponse) {
+		this.patientCaseResponse = patientCaseResponse;
 	}
 	
 
