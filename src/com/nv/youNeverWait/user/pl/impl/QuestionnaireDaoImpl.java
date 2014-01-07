@@ -78,6 +78,63 @@ public class QuestionnaireDaoImpl extends GenericDaoHibernateImpl implements Que
 	 
 	}
 	
+	@Override
+	@Transactional
+	public ResponseDTO update(QuestionAnswerDTO questionAnswer) {
+		ResponseDTO response = new ResponseDTO();
+		CaseTbl caseTbl= getById(CaseTbl.class,questionAnswer.getCaseId());
+		if(caseTbl==null){
+			ServiceException se=new ServiceException(ErrorCodeEnum.InvalidCaseId);
+			
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		DepartmentTbl departmentTbl= getById(DepartmentTbl.class,questionAnswer.getDepartmentId());
+		if(departmentTbl== null){
+			ServiceException se=new ServiceException(ErrorCodeEnum.InvalidDepartmentId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		List<AnswerTbl> answerlist=getAnswerList(questionAnswer.getCaseId());
+		for(AnswerTbl answer:answerlist){
+			delete(answer);
+		}
+		
+		Map<String, Integer> qMap = new HashMap<String, Integer>();
+		List<QuestionTbl> questionList= getByCaseIdAndDeptId(questionAnswer.getDepartmentId());
+		for(QuestionTbl questionObj:questionList){
+			qMap.put(questionObj.getQuestionKey(), questionObj.getId());
+		}
+		for(AnswerDTO answer: questionAnswer.getAnswerDTO()){
+			String ans=answer.getAnswer().trim();
+			if(!ans.isEmpty() && !ans.contains("select")){
+				AnswerTbl answerTbl= new AnswerTbl();
+				QuestionTbl qtable =new QuestionTbl();
+				qtable.setId(qMap.get(answer.getQuestionKey()));
+				answerTbl.setDepartmentTbl(departmentTbl);
+				answerTbl.setCaseTbl(caseTbl);
+				answerTbl.setQuestionTbl(qtable);
+				answerTbl.setAnswer(answer.getAnswer());
+				save(answerTbl);
+			}
+
+		}
+		response.setSuccess(true);
+		response.setId(caseTbl.getId());
+		return response;
+	}
+	/**
+	 * @param id
+	 * @param id2
+	 * @return
+	 */
+	public List<AnswerTbl> getAnswerList(int caseId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_BY_CASE);
+		query.setParameter("param1", caseId);
+		return executeQuery(AnswerTbl.class, query);
+	}
+	
 	/**
 	* @param deptId
 	* @param caseId
@@ -96,5 +153,7 @@ public class QuestionnaireDaoImpl extends GenericDaoHibernateImpl implements Que
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
+
+	
 
 }

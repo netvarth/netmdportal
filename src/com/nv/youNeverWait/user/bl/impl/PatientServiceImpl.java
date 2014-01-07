@@ -655,7 +655,17 @@ public class PatientServiceImpl implements PatientService {
 	 */
 	@Override
 	public ResponseDTO updateCase(CaseDTO updatedPatientCase, HeaderDTO header) {
-		ResponseDTO response = patientDao.updateCase(updatedPatientCase,header);
+		ResponseDTO response = new ResponseDTO();
+		validator.validateCase(updatedPatientCase);
+		response = patientDao.updateCase(updatedPatientCase, header);
+		if(updatedPatientCase.getDepartmentName().trim().equals(Constants.OBSTETRICS) && response.getGlobalId()!=0){
+			 QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
+			 questionAnswer.setCaseId(response.getId());
+			 questionAnswer.setDepartmentId(updatedPatientCase.getDepartmentId());
+			 questionAnswer.setAnswerDTO(updatedPatientCase.getQuestionAnswerDTO().getAnswerDTO());
+			 response=questionnaireService.update(questionAnswer);
+		}
+		response.setSuccess(true);
 		return response;
 	}
 	

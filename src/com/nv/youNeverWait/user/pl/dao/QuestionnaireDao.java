@@ -14,5 +14,6 @@ import com.nv.youNeverWait.rs.dto.ResponseDTO;
 public interface QuestionnaireDao {
 
 	ResponseDTO create(QuestionAnswerDTO questionAnswer);
+	ResponseDTO update(QuestionAnswerDTO questionAnswer);
 
 }
