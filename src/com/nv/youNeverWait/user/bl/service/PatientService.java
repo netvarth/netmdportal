@@ -8,6 +8,7 @@ import java.util.Date;
 import com.nv.youNeverWait.rs.dto.Appointment;
 import com.nv.youNeverWait.rs.dto.AppointmentListResponseDTO;
 import com.nv.youNeverWait.rs.dto.AppointmentResponse;
+import com.nv.youNeverWait.rs.dto.CaseDTO;
 import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
 import com.nv.youNeverWait.rs.dto.DoctorListResponseDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
@@ -62,5 +63,7 @@ public interface PatientService {
 			Appointment appointment);
 	public AppointmentResponse deleteAppointmentFromNetmd(int id);
 	public PastAppointmentListResponseDTO getPastAppointments(FilterDTO filter);
+	public ResponseDTO createCase(CaseDTO newPatientCase, HeaderDTO header);
+	public ResponseDTO updateCase(CaseDTO updatedCase, HeaderDTO header);
 	
 	}
