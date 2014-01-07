@@ -718,6 +718,18 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		return caseResponse;
 	}
 	
+
+	@Override
+	@Transactional
+	public boolean isEmailExists(String email) {
+		String patientEmail=email.trim();
+		PatientTbl patientTbl = getPatientByEmail(patientEmail);
+		if(patientTbl!=null){
+			return true;
+		}
+		return false;
+	}
+	
 	private ResultTbl getPatientResultsByPatientOrderId(int patientId, String orderId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_PATIENT_RESULTS_BY_ORDERID);
@@ -829,7 +841,4 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
-
-	
-
 }

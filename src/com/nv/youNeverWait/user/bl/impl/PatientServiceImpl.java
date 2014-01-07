@@ -112,6 +112,17 @@ public class PatientServiceImpl implements PatientService {
 		validator.validateUpdatePatient(patient, header);
 
 		ResponseDTO response = patientDao.updatePatient(patient, header);
+		if(patient.getEmail()!=null && !patient.getEmail().isEmpty())
+		{
+			boolean flag=patientDao.isEmailExists(patient.getEmail());
+			if(!flag){
+				String branchName = patientDao.getBranch(header.getBranchId());
+				// send login details and password creation link to the user
+				sendEmailForPatientCreation(patient.getFirstName(),
+						patient.getEmail(), Constants.PATIENT_REGISTRATION,
+						patient.getEmail(), branchName);
+			}
+		}
 		return response;
 	}
 
