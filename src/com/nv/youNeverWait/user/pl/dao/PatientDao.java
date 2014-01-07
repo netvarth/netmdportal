@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
+import com.nv.youNeverWait.rs.dto.CaseDTO;
 import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
@@ -40,4 +41,7 @@ public interface PatientDao {
 	public UserCredentials getUserCredentials(LoginDTO login);
 	public ResponseDTO resetPassword(LoginDTO login);
 	public ResultDTO patientTestResult(PatientOrderDTO patient);
+	public ResponseDTO createCase(CaseDTO newPatientCase, HeaderDTO header);
+	public ResponseDTO updateCase(CaseDTO updatedPatientCase,
+			HeaderDTO header);
 }
