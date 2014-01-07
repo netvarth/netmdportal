@@ -32,6 +32,7 @@ import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
 import com.nv.youNeverWait.rs.dto.NetRxDTO;
 import com.nv.youNeverWait.rs.dto.NetRxDetail;
 import com.nv.youNeverWait.rs.dto.NetRxListResponseDTO;
+import com.nv.youNeverWait.rs.dto.Organisation;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenDTO;
 import com.nv.youNeverWait.rs.dto.SpecimenListResponseDTO;
@@ -686,4 +687,82 @@ public class SuperAdminServiceTest {
 			System.out.println(e.getParamList());
 		}
 	}
+	
+	@Test
+	public void createOrganisationAccount(){
+		SuperAdminService service = (SuperAdminService) applicationContext
+				.getBean("superAdmin.service");
+		try {
+			Organisation org= new Organisation();
+			org.setOwnerFirstName("saga");
+			org.setName("Kerala Gynecology federation");
+			org.setHeadOfficeName("keral gynecology federation");
+			org.setDepartmentType("obstetrics");
+			org.setHeadOfficeEmail("luciya.jose@netvarth.com");
+			org.setOwnerFirstName("Dr.Paily");
+			org.setOwnerEmail("luciya.jose@netvarth.com");
+			org.setUserName("paily");
+			org.setPassword("netvarth");
+			service.createOrganisation(org);
+		} catch (ServiceException e) {
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	
+	@Test
+	public void updateOrganisationAccount(){
+		SuperAdminService service = (SuperAdminService) applicationContext
+				.getBean("superAdmin.service");
+		try {
+			Organisation org= new Organisation();
+			org.setOwnerFirstName("saga");
+			org.setName("Kerala Gynecology federation");
+			org.setHeadOfficeName("keral gynecology federation");
+			org.setDepartmentType("obstetrics");
+			org.setHeadOfficeEmail("luciya.jose@netvarth.com");
+			org.setOwnerFirstName("Dr.Paily");
+			org.setOwnerEmail("luciya.jose@netvarth.com");
+			org.setUserName("paily");
+			org.setPassword("netvarth");
+			org.setId(6);
+			service.updateOrganisation(org);
+		} catch (ServiceException e) {
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	
+	@Test
+	public void viewOrganisationAccount(){
+		SuperAdminService service = (SuperAdminService) applicationContext
+				.getBean("superAdmin.service");
+		try {
+			
+			service.viewOrganisation(6);
+		} catch (ServiceException e) {
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	@Test
+	public void deleteOrganisationAccount(){
+		SuperAdminService service = (SuperAdminService) applicationContext
+				.getBean("superAdmin.service");
+		try {
+			service.deleteOrganisation(6);
+		} catch (ServiceException e) {
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+	
 }
