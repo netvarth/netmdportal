@@ -89,7 +89,7 @@
 		<script src="/youNeverWait/js/youneverwait/netMdIndex.js" type="text/javascript"></script> 
 		<script src="/youNeverWait/js/ClassLoader.js" type="text/javascript"></script>
 		<script type="text/javascript">
-			$j(document).ready(function() {
+			//$j(document).ready(function() {
 				$j(window).load(function(){
 					$j('#dvLoading').fadeOut(200);
 				});
@@ -136,11 +136,11 @@
 					$j(this).closest('li').attr('class','current');
 					$j('.leftmenu li ul').slideUp();	
 				});
-				$j('#leftPaneNetMdBranch').trigger('click');
+				
 				$j('.leftmenu li ul li').live('click',function() {
 					$j('.leftmenu li ul li').removeClass('current1');
 					$j(this).closest('li').attr('class','current1');
 				});
-			});
+			//});
 		</script>
 	</html>

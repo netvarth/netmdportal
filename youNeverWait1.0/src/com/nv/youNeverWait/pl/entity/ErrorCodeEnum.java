@@ -272,7 +272,11 @@ public enum ErrorCodeEnum {
 	InvalidOrganisation("4005","There is no organisation with id {id}"),
 	OrganisationNameExists("4006","Organisation with name {name} already exists!"), 
 	UserAlreadyExists("4007","User with name {name} already exists!"),
-
+	InvalidPatientType("4008","Invalid patient type"),
+	InvalidDepartmentId("4009","Invalid department id"),
+	InvalidCaseId("4010","Invalid case id"),
+	InvalidPatientId("4011","Invalid patient id"), 
+	InValidCaseName("4012","Case name is empty ")
 	;
 	private String errCode;
 	private String errMsg;

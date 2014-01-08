@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.pl.entity.ActionNameEnum;
+import com.nv.youNeverWait.pl.entity.CaseTbl;
+import com.nv.youNeverWait.pl.entity.DepartmentTbl;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
@@ -22,10 +25,13 @@ import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
+import com.nv.youNeverWait.pl.entity.PatientTypeEnum;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
+import com.nv.youNeverWait.pl.entity.StatusEnum;
 import com.nv.youNeverWait.pl.entity.UserTypeEnum;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
+import com.nv.youNeverWait.rs.dto.CaseDTO;
 import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
@@ -223,7 +229,6 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		ResponseDTO response = new ResponseDTO();
 		DateFormat sdf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
-
 		NetmdPassphraseTbl netmdBranchPassphrase = (NetmdPassphraseTbl) getBranchByPassPhrase(
 				header.getPassPhrase(), header.getMacId());
 		if (netmdBranchPassphrase == null) {
@@ -266,6 +271,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		}
 		PatientTbl newPatient = new PatientTbl();
 		NetmdLoginTbl loginTbl = new NetmdLoginTbl();
+		if(patient.getEmail()!=null && !patient.getEmail().isEmpty()){
 		NetmdLoginTbl loginObj = getLoginByUserName(patient.getEmail());
 		if (loginObj != null) {// if the userid exists in Netmdlogintbl, take it
 								// and set it to patient and save patient
@@ -283,14 +289,12 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 			}
 		} else {
 			loginTbl.setUserName(patient.getEmail());
-			loginTbl.setUserType(UserTypeEnum.Patient.getDisplayName());// user
-																		// type
-																		// corresponding
-																		// to
-																		// patient
-			save(loginTbl);
+			loginTbl.setUserType(UserTypeEnum.Patient.getDisplayName());// user type corresponding to patient
+			// 
+			save(loginTbl);		
 			newPatient.setNetmdLoginTbl(loginTbl);
 		}
+	}
 
 		newPatient.setFirstName(patient.getFirstName());
 		newPatient.setLastName(patient.getLastName());
@@ -582,6 +586,150 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		return response;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.PatientDao#createCase(com.nv.youNeverWait.rs.dto.CaseDTO, com.nv.youNeverWait.rs.dto.HeaderDTO)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO createCase(CaseDTO newPatientCase, HeaderDTO header) {
+		ResponseDTO caseResponse= new ResponseDTO();
+		SimpleDateFormat sdf= new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
+		
+		PatientTbl patientTbl= getById(PatientTbl.class, newPatientCase.getPatientId());
+		
+		if (patientTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPatientId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		DepartmentTbl dept= getById(DepartmentTbl.class,newPatientCase.getDepartmentId());
+		if(dept==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDepartmentId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
+		Date currentDate= new Date();
+		/*Saving case for the patient in case tbl*/
+		CaseTbl caseTbl= new CaseTbl();
+		caseTbl.setCaseName(newPatientCase.getCaseName());
+		caseTbl.setPatientTbl(patientTbl);
+		if(newPatientCase.getPatientType().equals(PatientTypeEnum.InPatient.getDisplayName())){
+			caseTbl.setPatientType(PatientTypeEnum.InPatient.getDisplayName());
+		}
+		else{
+			caseTbl.setPatientType(PatientTypeEnum.OutPatient.getDisplayName());
+		}
+		
+		try {
+			caseTbl.setAdmittedDate(sdf.parse(newPatientCase.getAdmittedDate()));
+		} catch (ParseException e) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDateFormat);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		caseTbl.setBmi(newPatientCase.getBmi());
+		caseTbl.setDepartmentTbl(dept);
+		caseTbl.setDescription(newPatientCase.getDescription());
+		caseTbl.setHb(newPatientCase.getHbCount());
+		caseTbl.setWeight(newPatientCase.getWeight());
+		caseTbl.setStatus(StatusEnum.Active.getDisplayName());
+		caseTbl.setCreatedDateTime(currentDate);
+		caseTbl.setUpdatedDateTime(currentDate);
+		save(caseTbl);
+		
+		caseResponse.setGlobalId(caseTbl.getId());
+		caseResponse.setId(newPatientCase.getId());
+		caseResponse.setSuccess(true);
+		return caseResponse;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.PatientDao#updateCase(com.nv.youNeverWait.rs.dto.CaseDTO, com.nv.youNeverWait.rs.dto.HeaderDTO)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO updateCase(CaseDTO updatedPatientCase,
+			HeaderDTO header) {
+		ResponseDTO caseResponse= new ResponseDTO();
+		SimpleDateFormat sdf= new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
+		
+		CaseTbl caseTbl= getById(CaseTbl.class,updatedPatientCase.getGlobalId());
+		if(caseTbl==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidCaseId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		PatientTbl patientTbl= getById(PatientTbl.class, updatedPatientCase.getPatientId());
+		
+		if (patientTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPatientId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		DepartmentTbl dept= getById(DepartmentTbl.class,updatedPatientCase.getDepartmentId());
+		if(dept==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDepartmentId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
+		Date currentDate= new Date(); 
+		/*Updating case for the patient in case tbl*/
+		if(updatedPatientCase.getActionName().equals(ActionNameEnum.UPDATE.getDisplayName())){
+			caseTbl.setCaseName(updatedPatientCase.getCaseName());
+			caseTbl.setPatientTbl(patientTbl);
+			if(updatedPatientCase.getPatientType().equals(PatientTypeEnum.InPatient.getDisplayName())){
+				caseTbl.setPatientType(PatientTypeEnum.InPatient.getDisplayName());
+			}
+			else{
+				caseTbl.setPatientType(PatientTypeEnum.OutPatient.getDisplayName());
+			}
+			
+			try {
+				caseTbl.setAdmittedDate(sdf.parse(updatedPatientCase.getAdmittedDate()));
+			} catch (ParseException e) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidDateFormat);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			caseTbl.setBmi(updatedPatientCase.getBmi());
+			caseTbl.setDepartmentTbl(dept);
+			caseTbl.setDescription(updatedPatientCase.getDescription());
+			caseTbl.setHb(updatedPatientCase.getHbCount());
+			caseTbl.setWeight(updatedPatientCase.getWeight());
+			caseTbl.setStatus(StatusEnum.Active.getDisplayName());	
+		}
+		if(updatedPatientCase.getActionName().equals(ActionNameEnum.DELETE.getDisplayName())){
+			caseTbl.setStatus(StatusEnum.InActive.getDisplayName());
+		}
+		caseTbl.setUpdatedDateTime(currentDate);
+		update(caseTbl);
+		caseResponse.setGlobalId(caseTbl.getId());
+		caseResponse.setId(updatedPatientCase.getId());
+		caseResponse.setSuccess(true);
+		return caseResponse;
+	}
+	
+
+	@Override
+	@Transactional
+	public boolean isEmailExists(String email) {
+		String patientEmail=email.trim();
+		PatientTbl patientTbl = getPatientByEmail(patientEmail);
+		if(patientTbl!=null){
+			return true;
+		}
+		return false;
+	}
+	
 	private ResultTbl getPatientResultsByPatientOrderId(int patientId, String orderId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_PATIENT_RESULTS_BY_ORDERID);
@@ -693,5 +841,4 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
-
 }

@@ -188,9 +188,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 				</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.SyncLogPropertyEnum
 				</value>
-					<value>com.nv.youNeverWait.util.filter.queryBuilder.BillPropertyEnum
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.BillPropertyEnum
 				</value>
-					<value>com.nv.youNeverWait.util.filter.queryBuilder.OrderPropertyEnum
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.OrderPropertyEnum
 				</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.NetPosPropertyEnum
 				</value>
@@ -292,6 +292,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 		<property name="mailThread">
 			<ref bean="email.worker.thread" />
+		</property>
+		<property name="questionnaireService">
+			<ref bean="questionnaire.service" />
 		</property>
 	</bean>
 
@@ -455,9 +458,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 
 	</bean>
-	
+
 	<bean id="netPos.service" class="com.nv.youNeverWait.user.bl.impl.NetPosManager">
-	<property name="netPosValidator">
+		<property name="netPosValidator">
 			<ref bean="netpos.validator" />
 		</property>
 		<property name="netPosDao">
@@ -469,10 +472,10 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="filterFactory">
 			<ref bean="filter.Factory" />
 		</property>
-	
-</bean>
-<bean id="netpos.dao" class="com.nv.youNeverWait.user.pl.impl.NetPosDaoImpl"></bean>
-<bean id="netpos.validator" class="com.nv.youNeverWait.user.bl.validation.NetPosValidator"></bean>
+
+	</bean>
+	<bean id="netpos.dao" class="com.nv.youNeverWait.user.pl.impl.NetPosDaoImpl"></bean>
+	<bean id="netpos.validator" class="com.nv.youNeverWait.user.bl.validation.NetPosValidator"></bean>
 
 	<bean id="netMd.validator" class="com.nv.youNeverWait.user.bl.validation.NetMdValidator"></bean>
 	<bean id="lab.dao" class="com.nv.youNeverWait.user.pl.impl.LabDaoImpl"
@@ -558,7 +561,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 					value="com.nv.youNeverWait.util.filter.queryBuilder.NetmdBillQueryBuilder" />
 				<entry key="order"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.LabOrderQueryBuilder" />
-					<entry key="netpos"
+				<entry key="netpos"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.NetPosQueryBuilder" />
 			</map>
 		</property>
@@ -715,7 +718,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="healthMonitor.validator"
 		class="com.nv.youNeverWait.user.bl.validation.HealthMonitorValidator"></bean>
 	<bean id="healthMonitor.dao" class="com.nv.youNeverWait.user.pl.impl.HealthMonitorDaoImpl"></bean>
-	
+
 	<bean id="organisation.service" class="com.nv.youNeverWait.user.bl.impl.OrganisationManager">
 		<property name="organisationDao">
 			<ref bean="organisation.dao" />
@@ -742,7 +745,13 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="organisation.validator"
 		class="com.nv.youNeverWait.user.bl.validation.OrganisationValidator"></bean>
 	<bean id="organisation.dao" class="com.nv.youNeverWait.user.pl.impl.OrganisationDaoImpl"></bean>
-	
 
+	<bean id="questionnaire.service" class="com.nv.youNeverWait.user.bl.impl.QuestionnaireManager">
+		<property name="questionnaireDao">
+			<ref bean="questionnaire.dao" />
+		</property>
+	</bean>
+	<bean id="questionnaire.dao" class="com.nv.youNeverWait.user.pl.impl.QuestionnaireDaoImpl">
+	</bean>
 </beans>		
 	

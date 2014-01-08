@@ -4,6 +4,8 @@ function netlimsAccClassLoader() {
 		}).fail(function(xhr,status,exception) {
 			alert("netlimsAccUIStartup" + xhr + exception);
 		})
+		$j.getScript("/youNeverWait/js/youneverwait/ui/netlimsAccount/netlimsLoader.js").done(function(script,textStatus){
+		})
 		$j.getScript("/youNeverWait/js/youneverwait/ui/netlimsAccount/newBranchUI.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/youneverwait/ui/netlimsAccount/ViewNetlimsBranchUI.js").done(function(script,textStatus){

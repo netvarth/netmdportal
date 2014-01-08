@@ -11,6 +11,8 @@
 package com.nv.youNeverWait.user.pl.impl;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
@@ -134,7 +136,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 	@Transactional
 	public ResponseDTO updateOrganisation(Organisation organztion) {
 		ResponseDTO response = new ResponseDTO();
-		if (organztion.getGlobalId() <= 0) {
+		if (organztion.getId() <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidOrganisation);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(organztion
@@ -143,7 +145,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 			throw se;
 		}
 		OrganisationTbl organisationTbl = getById(OrganisationTbl.class,
-				organztion.getGlobalId());
+				organztion.getId());
 		if (organisationTbl == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidOrganisation);
@@ -221,6 +223,8 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		organization.setHeadOfficeMobile(organisationTbl.getHeadOfficeMobile());
 		organization.setHeadOfficePhone(organisationTbl.getHeadOfficePhone());
 		organization.setHeadOfficeName(organisationTbl.getHeadOfficeName());
+		organization.setDepartmentType(organisationTbl.getDepartmentType());
+		organization.setStatus(organisationTbl.getStatus());
 		organization.setUserName(organisationTbl.getOrganisationLoginTbl()
 				.getUserName());
 		// organization.setPassword(organisationTbl.getOrganisationLoginTbl().getPassword());
@@ -255,22 +259,31 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		organisationTbl.setStatus(StatusEnum.InActive.getDisplayName());
 		organisationTbl.setUpdateDateTime(updatedTime);
 		/* delete users for the organisation */
-		// List<NetrxBranchTbl> branches= getBranchesByNetRxId(netRxId);
-		// for (NetrxBranchTbl netRxBranchTbl : branches) {
-		// List<NetrxUserTbl> users= getUsersBybranch(netRxBranchTbl.getId());
-		// for (NetrxUserTbl netrxUserTbl :users) {
-		// netrxUserTbl.setStatus(StatusEnum.InActive.getDisplayName());
-		// netrxUserTbl.setUpdateDateTime(updatedTime);
-		// update(netrxUserTbl);
-		// }
-		// netRxBranchTbl.setStatus(StatusEnum.InActive.getDisplayName());
-		// netRxBranchTbl.setUpdateDateTime(updatedTime);
-		// update(netRxBranchTbl);
-		// }
+
+		List<OrganisationUserTbl> users = getUsersByOrganisationId(globalId);
+		for (OrganisationUserTbl user : users) {
+
+			user.setStatus(StatusEnum.InActive.getDisplayName());
+			user.setUpdatedDateTime(updatedTime);
+			update(user);
+		}
+
 		update(organisationTbl);
 		response.setGlobalId(organisationTbl.getId());
 		response.setSuccess(true);
 		return response;
+	}
+
+	/**
+	 * @param globalId
+	 * @return
+	 */
+	private List<OrganisationUserTbl> getUsersByOrganisationId(int globalId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_USERS_BY_ORGANISATION_ID);
+		query.setParameter("param1", globalId);
+
+		return executeQuery(OrganisationUserTbl.class, query);
 	}
 
 	/*
@@ -305,16 +318,18 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		}
 		/* checking whether the email already exists */
 		String organisationUserEmail = organztionUser.getEmail().trim();
-		OrganisationUserTbl duplicateOrgnstionUserTbl = (OrganisationUserTbl) getOrganisationUserByEmail(organisationUserEmail,organisationTbl.getId());
-			if (duplicateOrgnstionUserTbl != null) {
-			 
-				ServiceException se = new ServiceException(
-						ErrorCodeEnum.UserAlreadyExists);
-				se.addParam(new Parameter(Constants.NAME, organztionUser.getFirstName()));
-				se.setDisplayErrMsg(true);
-				throw se;
+		OrganisationUserTbl duplicateOrgnstionUserTbl = (OrganisationUserTbl) getOrganisationUserByEmail(
+				organisationUserEmail, organisationTbl.getId());
+		if (duplicateOrgnstionUserTbl != null) {
+
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.UserAlreadyExists);
+			se.addParam(new Parameter(Constants.NAME, organztionUser
+					.getFirstName()));
+			se.setDisplayErrMsg(true);
+			throw se;
 		}
-			
+
 		// save login details
 		OrganisationLoginTbl login = new OrganisationLoginTbl();
 		login.setUserName(organztionUser.getUserName());
@@ -323,7 +338,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 				.getPassword().trim());
 		login.setPassword(password);
 		save(login);
-		
+
 		OrganisationUserTbl newUser = new OrganisationUserTbl();
 		newUser.setFirstName(organztionUser.getFirstName());
 		newUser.setLastName(organztionUser.getLastName());
@@ -351,8 +366,9 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 	@Override
 	@Transactional
 	public String getOrganisationName(int organisationId) {
-		String organisationName="";
-		OrganisationTbl organisation= getById(OrganisationTbl.class, organisationId);
+		String organisationName = "";
+		OrganisationTbl organisation = getById(OrganisationTbl.class,
+				organisationId);
 		if (organisation == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidOrganisation);
@@ -361,7 +377,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		organisationName=organisation.getName();
+		organisationName = organisation.getName();
 		return organisationName;
 	}
 
@@ -399,12 +415,15 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		}
 		/* checking whether the email already exists */
 		String organisationUserEmail = organztionUser.getEmail().trim();
-		OrganisationUserTbl duplicateOrgnstionUserTbl = (OrganisationUserTbl) getOrganisationUserByEmail(organisationUserEmail,organisationTbl.getId());
-			if (duplicateOrgnstionUserTbl != null) {
-			if (duplicateOrgnstionUserTbl.getId() != organztionUser.getGlobalId()) {
+		OrganisationUserTbl duplicateOrgnstionUserTbl = (OrganisationUserTbl) getOrganisationUserByEmail(
+				organisationUserEmail, organisationTbl.getId());
+		if (duplicateOrgnstionUserTbl != null) {
+			if (duplicateOrgnstionUserTbl.getId() != organztionUser
+					.getGlobalId()) {
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.UserAlreadyExists);
-				se.addParam(new Parameter(Constants.NAME, organztionUser.getFirstName()));
+				se.addParam(new Parameter(Constants.NAME, organztionUser
+						.getFirstName()));
 				se.setDisplayErrMsg(true);
 				throw se;
 			}
@@ -428,13 +447,14 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 	 * @param trim
 	 * @return
 	 */
-	private OrganisationUserTbl getOrganisationUserByEmail(String email,int organisationId) {
+	private OrganisationUserTbl getOrganisationUserByEmail(String email,
+			int organisationId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_ORGANISATION_USER_BY_EMAIL_AND_BRANCH);
 		query.setParameter("param1", email);
 		query.setParameter("param2", organisationId);
 		return executeUniqueQuery(OrganisationUserTbl.class, query);
-		
+
 	}
 
 	/*
@@ -445,18 +465,16 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 	@Override
 	@Transactional
 	public ViewOrganisationUser viewUser(int globalId) {
-		ViewOrganisationUser response= new ViewOrganisationUser();
-		OrganisationUserTbl user = getById(OrganisationUserTbl.class,
-				globalId);
+		ViewOrganisationUser response = new ViewOrganisationUser();
+		OrganisationUserTbl user = getById(OrganisationUserTbl.class, globalId);
 		if (user == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.UserNotExists);
-			se.addParam(new Parameter(Constants.ID, Integer
-					.toString(globalId)));
+			se.addParam(new Parameter(Constants.ID, Integer.toString(globalId)));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		OrganisationUserDetail userDetail= new OrganisationUserDetail();
+		OrganisationUserDetail userDetail = new OrganisationUserDetail();
 		userDetail.setAddress(user.getAddress());
 		userDetail.setEmail(user.getEmail());
 		userDetail.setFirstName(user.getFirstName());
@@ -480,14 +498,12 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 	@Override
 	@Transactional
 	public ResponseDTO deleteUser(int globalId) {
-		ResponseDTO response= new ResponseDTO();
-		OrganisationUserTbl user = getById(OrganisationUserTbl.class,
-				globalId);
+		ResponseDTO response = new ResponseDTO();
+		OrganisationUserTbl user = getById(OrganisationUserTbl.class, globalId);
 		if (user == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.UserNotExists);
-			se.addParam(new Parameter(Constants.ID, Integer
-					.toString(globalId)));
+			se.addParam(new Parameter(Constants.ID, Integer.toString(globalId)));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}

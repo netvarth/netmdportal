@@ -32,6 +32,9 @@ public class SyncDTO {
 	private List<UserInfoDetail> user = new ArrayList<UserInfoDetail>();
 	private List<BillSummaryDTO> newBillList=new ArrayList<BillSummaryDTO>();
 	private List<BillSummaryDTO> updateBillList=new ArrayList<BillSummaryDTO>();
+	private List<CaseDTO> newCaseList= new ArrayList<CaseDTO>();
+	private List<CaseDTO> updateCaseList= new ArrayList<CaseDTO>();
+	
 //	private String freqType;
 //	private int interval;
 	
@@ -60,11 +63,24 @@ public class SyncDTO {
 //		this.interval = interval;
 //	}
 //	
+	
 	/**
 	 * @return the newBillList
 	 */
 	public List<BillSummaryDTO> getNewBillList() {
 		return newBillList;
+	}
+	public List<CaseDTO> getNewCaseList() {
+		return newCaseList;
+	}
+	public void setNewCaseList(List<CaseDTO> newCaseList) {
+		this.newCaseList = newCaseList;
+	}
+	public List<CaseDTO> getUpdateCaseList() {
+		return updateCaseList;
+	}
+	public void setUpdateCaseList(List<CaseDTO> updateCaseList) {
+		this.updateCaseList = updateCaseList;
 	}
 	/**
 	 * @param newBillList the newBillList to set

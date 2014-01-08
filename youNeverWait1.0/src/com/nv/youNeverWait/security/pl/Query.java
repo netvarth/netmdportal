@@ -301,4 +301,5 @@ public class Query {
 	
 	/*OrganisationUserTbl*/
 	public static final String GET_ORGANISATION_USER_BY_EMAIL_AND_BRANCH = " from OrganisationUserTbl as orgUser where orgUser.email=:param1 and orgUser.organisationTbl.id=:param2";
+	public static final String GET_USERS_BY_ORGANISATION_ID = " from OrganisationUserTbl as users where users.organisationTbl.id=:param1 ";
 }

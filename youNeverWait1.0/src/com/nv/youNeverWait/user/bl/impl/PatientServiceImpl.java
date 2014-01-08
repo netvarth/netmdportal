@@ -26,6 +26,7 @@ import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.rs.dto.Appointment;
 import com.nv.youNeverWait.rs.dto.AppointmentListResponseDTO;
 import com.nv.youNeverWait.rs.dto.AppointmentResponse;
+import com.nv.youNeverWait.rs.dto.CaseDTO;
 import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
 import com.nv.youNeverWait.rs.dto.DoctorListResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
@@ -39,6 +40,7 @@ import com.nv.youNeverWait.rs.dto.PastAppointmentListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PatientOrderDTO;
+import com.nv.youNeverWait.rs.dto.QuestionAnswerDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
@@ -48,6 +50,7 @@ import com.nv.youNeverWait.user.bl.service.AppointmentService;
 import com.nv.youNeverWait.user.bl.service.DoctorService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.service.PatientService;
+import com.nv.youNeverWait.user.bl.service.QuestionnaireService;
 import com.nv.youNeverWait.user.bl.service.ScheduleService;
 import com.nv.youNeverWait.user.bl.validation.PatientValidator;
 import com.nv.youNeverWait.user.pl.dao.PatientDao;
@@ -69,6 +72,7 @@ public class PatientServiceImpl implements PatientService {
 	private String mailFrom;
 	private String ynwServerIpAddress;
 	private SendEmailMsgWorkerThread mailThread;
+	private QuestionnaireService questionnaireService;
 	private static final Log log = LogFactory.getLog(PatientServiceImpl.class);
 
 	public DoctorService getDoctorService() {
@@ -88,9 +92,11 @@ public class PatientServiceImpl implements PatientService {
 		ResponseDTO response = patientDao.createPatient(patient, header);
 		String branchName = patientDao.getBranch(header.getBranchId());
 
-		// send login details and password creation link to the user
-		sendEmailForPatientCreation(patient.getFirstName(), patient.getEmail(),
-				Constants.PATIENT_REGISTRATION, patient.getEmail(), branchName);
+		if (patient.getEmail() != null && !patient.getEmail().isEmpty())
+			// send login details and password creation link to the user
+			sendEmailForPatientCreation(patient.getFirstName(),
+					patient.getEmail(), Constants.PATIENT_REGISTRATION,
+					patient.getEmail(), branchName);
 		return response;
 	}
 
@@ -106,6 +112,17 @@ public class PatientServiceImpl implements PatientService {
 		validator.validateUpdatePatient(patient, header);
 
 		ResponseDTO response = patientDao.updatePatient(patient, header);
+		if(patient.getEmail()!=null && !patient.getEmail().isEmpty())
+		{
+			boolean flag=patientDao.isEmailExists(patient.getEmail());
+			if(!flag){
+				String branchName = patientDao.getBranch(header.getBranchId());
+				// send login details and password creation link to the user
+				sendEmailForPatientCreation(patient.getFirstName(),
+						patient.getEmail(), Constants.PATIENT_REGISTRATION,
+						patient.getEmail(), branchName);
+			}
+		}
 		return response;
 	}
 
@@ -530,7 +547,7 @@ public class PatientServiceImpl implements PatientService {
 	 */
 	@Override
 	public ResultDTO patientTestResult(PatientOrderDTO patient) {
-		
+
 		validator.validatePatientOrderDetails(patient);
 		ResultDTO response = patientDao.patientTestResult(patient);
 		return response;
@@ -623,6 +640,46 @@ public class PatientServiceImpl implements PatientService {
 		return response;
 	}
 
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.PatientService#createCase(com.nv.youNeverWait.rs.dto.CaseDTO, com.nv.youNeverWait.rs.dto.HeaderDTO)
+	 */
+	@Override
+	public ResponseDTO createCase(CaseDTO newPatientCase, HeaderDTO header) {
+		validator.validateCase(newPatientCase);
+		ResponseDTO response= new ResponseDTO();
+		response = patientDao.createCase(newPatientCase,header);
+		
+		if(newPatientCase.getDepartmentName().trim().equals(Constants.OBSTETRICS) && response.getGlobalId()!=0){
+			QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
+			 questionAnswer.setCaseId(response.getId());
+			 questionAnswer.setDepartmentId(newPatientCase.getDepartmentId());
+			 questionAnswer.setAnswerDTO(newPatientCase.getQuestionAnswerDTO().getAnswerDTO());
+			 response=questionnaireService.create(questionAnswer);
+		}
+		response.setSuccess(true);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.PatientService#updateCases(com.nv.youNeverWait.rs.dto.CaseDTO, com.nv.youNeverWait.rs.dto.HeaderDTO)
+	 */
+	@Override
+	public ResponseDTO updateCase(CaseDTO updatedPatientCase, HeaderDTO header) {
+		ResponseDTO response = new ResponseDTO();
+		validator.validateCase(updatedPatientCase);
+		response = patientDao.updateCase(updatedPatientCase, header);
+		if(updatedPatientCase.getDepartmentName().trim().equals(Constants.OBSTETRICS) && response.getGlobalId()!=0){
+			 QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
+			 questionAnswer.setCaseId(response.getId());
+			 questionAnswer.setDepartmentId(updatedPatientCase.getDepartmentId());
+			 questionAnswer.setAnswerDTO(updatedPatientCase.getQuestionAnswerDTO().getAnswerDTO());
+			 response=questionnaireService.update(questionAnswer);
+		}
+		response.setSuccess(true);
+		return response;
+	}
+	
 	public QueryBuilderFactory getQueryBuilderFactory() {
 		return queryBuilderFactory;
 	}
@@ -728,6 +785,12 @@ public class PatientServiceImpl implements PatientService {
 		this.mailThread = mailThread;
 	}
 
-	
+	public QuestionnaireService getQuestionnaireService() {
+		return questionnaireService;
+	}
 
+	public void setQuestionnaireService(QuestionnaireService questionnaireService) {
+		this.questionnaireService = questionnaireService;
+	}
+	
 }

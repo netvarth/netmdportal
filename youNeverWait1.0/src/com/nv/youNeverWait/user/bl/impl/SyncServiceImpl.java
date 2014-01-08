@@ -25,6 +25,8 @@ import com.nv.youNeverWait.rs.dto.AppointmentResponse;
 import com.nv.youNeverWait.rs.dto.BillResponseDTO;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
+import com.nv.youNeverWait.rs.dto.CaseDTO;
+import com.nv.youNeverWait.rs.dto.CaseSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.DoctorLoginDTO;
 import com.nv.youNeverWait.rs.dto.DoctorResponse;
@@ -36,7 +38,6 @@ import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
-import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientResponse;
@@ -54,7 +55,6 @@ import com.nv.youNeverWait.rs.dto.ScheduleDetail;
 import com.nv.youNeverWait.rs.dto.ScheduleResponse;
 import com.nv.youNeverWait.rs.dto.ScheduleResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncDTO;
-import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveTestResponse;
 import com.nv.youNeverWait.rs.dto.UserResponse;
@@ -62,7 +62,6 @@ import com.nv.youNeverWait.user.bl.service.AppointmentService;
 import com.nv.youNeverWait.user.bl.service.DoctorService;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
-import com.nv.youNeverWait.user.bl.service.OrderService;
 import com.nv.youNeverWait.user.bl.service.PatientService;
 import com.nv.youNeverWait.user.bl.service.ResultService;
 import com.nv.youNeverWait.user.bl.service.ScheduleService;
@@ -176,6 +175,9 @@ public class SyncServiceImpl implements SyncService {
 
 			syncResponse.setBillResponse(billResponseList);
 			
+			/*Synchronising patient case details*/
+			List<CaseSyncResponseDTO> caseResponseList= getCaseResponseList(sync.getHeader(),sync.getNewCaseList(),sync.getUpdateCaseList());
+			syncResponse.setPatientCaseResponse(caseResponseList);
 		}// end of if loop
 
 		/*Retrieve appointments for secondary devices*/
@@ -231,6 +233,109 @@ public class SyncServiceImpl implements SyncService {
 		syncResponse.setHeaderResponse(headerResponse);
 		syncResponse.setSuccess(true);
 		return syncResponse;
+	}
+
+	/**
+	 * @param header
+	 * @param newCaseList
+	 * @param updateCaseList
+	 * @return
+	 */
+	private List<CaseSyncResponseDTO> getCaseResponseList(HeaderDTO header,
+			List<CaseDTO> newCaseList, List<CaseDTO> updateCaseList) {
+		List<CaseSyncResponseDTO> patientCaseResponseList = new ArrayList<CaseSyncResponseDTO>();
+
+		List<CaseSyncResponseDTO> newCaseResponseList = syncNewPatientCases(
+				newCaseList, header);
+		List<CaseSyncResponseDTO> updatedCaseResponseList = syncUpdatedPatientCases(
+				updateCaseList, header);
+		patientCaseResponseList.addAll(newCaseResponseList);
+		patientCaseResponseList.addAll(updatedCaseResponseList);
+
+		return patientCaseResponseList;
+	}
+
+	/**
+	 * @param updateCaseList
+	 * @param header
+	 * @return
+	 */
+	private List<CaseSyncResponseDTO> syncUpdatedPatientCases(
+			List<CaseDTO> updateCaseList, HeaderDTO header) {
+		List<CaseSyncResponseDTO> updatedCaseResponseList = new ArrayList<CaseSyncResponseDTO>();
+		for (CaseDTO updatedCase : updateCaseList) {
+			try {
+
+				ResponseDTO response = patientService.updateCase(updatedCase,
+						header);
+				CaseSyncResponseDTO caseResponse = new CaseSyncResponseDTO();
+				caseResponse.setActionName(ActionNameEnum.UPDATE.getDisplayName());
+				caseResponse.setUpdateDateTime(response.getUpdateDateTime());
+				caseResponse.setGlobalId(response.getGlobalId());
+				caseResponse.setId(response.getId());
+				caseResponse.setSuccess(true);
+
+				updatedCaseResponseList.add(caseResponse);
+			} catch (ServiceException se) {
+				log.error("Error while saving updated cases into portal ", se);
+				List<Parameter> parameters = se.getParamList();
+				ErrorDTO error = new ErrorDTO();
+				error.setErrCode(se.getError().getErrCode());
+				error.setParams(parameters);
+				error.setDisplayErrMsg(se.isDisplayErrMsg());
+				CaseSyncResponseDTO caseResponse = new CaseSyncResponseDTO();
+				caseResponse.setError(error);
+				caseResponse.setSuccess(false);
+				caseResponse.setId(updatedCase.getId());
+				caseResponse.setGlobalId(updatedCase.getGlobalId());
+				caseResponse.setActionName(ActionNameEnum.UPDATE
+						.getDisplayName());
+
+				updatedCaseResponseList.add(caseResponse);
+			}
+		}
+		return updatedCaseResponseList;
+	}
+
+	/**
+	 * @param newCaseList
+	 * @param header
+	 * @return
+	 */
+	private List<CaseSyncResponseDTO> syncNewPatientCases(
+			List<CaseDTO> newCaseList, HeaderDTO header) {
+		List<CaseSyncResponseDTO> newPatientCaseResponseList = new ArrayList<CaseSyncResponseDTO>();
+		for (CaseDTO newPatientCase : newCaseList) {
+			try {
+
+				ResponseDTO response = patientService.createCase(newPatientCase, header);
+				CaseSyncResponseDTO caseResponse = new CaseSyncResponseDTO();
+				caseResponse.setActionName(ActionNameEnum.ADD
+						.getDisplayName());
+				caseResponse.setCreateDateTime(response.getCreateDateTime());
+				caseResponse.setUpdateDateTime(response.getUpdateDateTime());
+				caseResponse.setGlobalId(response.getGlobalId());
+				caseResponse.setId(response.getId());
+				caseResponse.setSuccess(true);
+
+				newPatientCaseResponseList.add(caseResponse);
+			} catch (ServiceException se) {
+				log.error("Error while saving new patient cases into portal ", se);
+				List<Parameter> parameters = se.getParamList();
+				ErrorDTO error = new ErrorDTO();
+				error.setErrCode(se.getError().getErrCode());
+				error.setParams(parameters);
+				error.setDisplayErrMsg(se.isDisplayErrMsg());
+				CaseSyncResponseDTO caseResponse = new CaseSyncResponseDTO();
+				caseResponse.setError(error);
+				caseResponse.setSuccess(false);
+				caseResponse.setId(newPatientCase.getId());
+				caseResponse.setActionName(ActionNameEnum.ADD
+						.getDisplayName());
+				newPatientCaseResponseList.add(caseResponse);
+			}
+		}
+		return newPatientCaseResponseList;
 	}
 
 	/**

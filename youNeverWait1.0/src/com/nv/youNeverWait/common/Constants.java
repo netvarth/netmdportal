@@ -58,8 +58,7 @@ public class Constants {
 	public static final String APPOINTMENTS = "appointments";
 	public static final String SYNC_LOG = "syncLog";
 	public static final String NETMD_BILL = "bill";
-	
-	
+		
 	/* Log */
 	public static final String STARTUP = "Show login page";
 	public static final String RESET_PSWD = "Reset password";
@@ -121,6 +120,7 @@ public class Constants {
 	public static final String ORGANISATION_REGISTER = "Organisation Registration";
 	public static final String ORGANISATION = "organisation";
 	public static final String NETPOS = "netpos";
+	public static final String OBSTETRICS = "obstetrics";
 	
 	
 	

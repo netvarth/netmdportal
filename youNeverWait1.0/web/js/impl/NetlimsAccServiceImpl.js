@@ -1,16 +1,30 @@
 function NetlimsAccServiceImpl () {
-		this.setTableValues = function(tableObj, branchResult) {
+		this.setTableValues = function(tableObj, branchResult,key) {
 		$j(tableObj).dataTable().fnClearTable();
-			if(branchResult.branch) {
-				if(branchResult.branch.length>0) {			
-					$j(branchResult.branch).each(function (index, branch) {
-						var id=branch.globalId;
-						var rowData=$j(tableObj).dataTable().fnAddData([id,branch.name,branch.mobile,branch.status]);
+			if(key=="branchlist"){
+				if(branchResult.branch) {
+					if(branchResult.branch.length>0) {			
+						$j(branchResult.branch).each(function (index, branch) {
+							var id=branch.globalId;
+							var rowData=$j(tableObj).dataTable().fnAddData([id,branch.name,branch.mobile,branch.status]);
+							var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+							$j(row).attr('id',id);	
+							$j(row).children("td:nth-child(1)").attr("class","branchNetlimsAccIdCol Ustyle");
+							});	
+					}
+				}
+			}
+			else{
+				if(branchResult.branchOrders.length>0) {			
+					$j(branchResult.branchOrders).each(function (index, lab) {
+						var id=lab.branchId;
+						var rowData=$j(tableObj).dataTable().fnAddData([lab.orderDate,lab.totalOrders,lab.netAmount,lab.paidAmount,lab.lastOrderdTime]);
 						var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 						$j(row).attr('id',id);	
-						$j(row).children("td:nth-child(1)").attr("class","branchNetlimsAccIdCol Ustyle");
+						//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
 						});	
 				}
+	 
 			}		 
 	 
 		} 
@@ -29,19 +43,7 @@ function NetlimsAccServiceImpl () {
 	 
 		} 
 		
-		this.setTableValueBranchOrderList = function(tableObj, branchResult) {
-		$j(tableObj).dataTable().fnClearTable();
-		if(branchResult.branchOrders.length>0) {			
-				$j(branchResult.branchOrders).each(function (index, lab) {
-					var id=lab.branchId;
-					var rowData=$j(tableObj).dataTable().fnAddData([lab.orderDate,lab.totalOrders,lab.netAmount,lab.paidAmount,lab.lastOrderdTime]);
-					var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
-					$j(row).attr('id',id);	
-					//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
-					});	
-		}
-	 
-		} 
+		
 }
  NetlimsAccServiceImpl.prototype.createBranchNetlims=function (netlimsObj) {
 	ajaxProcessor.setUrl(constants.CREATENETLIMSACCBRANCHURL);

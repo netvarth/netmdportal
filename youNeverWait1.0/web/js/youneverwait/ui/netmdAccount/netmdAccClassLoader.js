@@ -1,5 +1,7 @@
 function netmdAccClassLoader() {
 	this.load=function() {
+		$j.getScript("/youNeverWait/js/youneverwait/ui/netmdAccount/netMdloader.js").done(function(script,textStatus){
+		})
 		$j.getScript("/youNeverWait/js/youneverwait/ui/netmdAccount/netmdAccUIStartup.js").done(function(script,textStatus){
 		}).fail(function(xhr,status,exception) {
 			alert("netlimsAccUIStartup" + xhr + exception);
