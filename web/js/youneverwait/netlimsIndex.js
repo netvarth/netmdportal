@@ -22,7 +22,8 @@ $j(document).ready(function(){
 		globalToolbar.init();
 		$j('#tabs-1').removeClass('ui-widget-content');
 		
-	userdata =getRequestData('/youNeverWait/ws/ui/auth/getUser');
+	ajaxProcessor.setUrl('/youNeverWait/ws/ui/auth/getUser');
+	userdata =ajaxProcessor.get();
 	var usetType=userdata.userType;
 	var ownerName=userdata.userName;
 	var otherUserName=userdata.name;

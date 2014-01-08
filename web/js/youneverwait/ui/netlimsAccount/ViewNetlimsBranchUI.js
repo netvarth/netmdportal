@@ -204,7 +204,7 @@ ViewNetlimsBranchUI.prototype.bindEvents = function() {
 		
 		var netlimsAccntTableNavigator = self.netlimsOrderTableNavigator;
 		netlimsAccntTableNavigator.setExp(exp);
-		netlimsAccntTableNavigator.orderList();
+		netlimsAccntTableNavigator.list("orderlist");
 		
 		
 	});
