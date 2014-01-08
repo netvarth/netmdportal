@@ -784,4 +784,13 @@ public class PatientServiceImpl implements PatientService {
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
 	}
+
+	public QuestionnaireService getQuestionnaireService() {
+		return questionnaireService;
+	}
+
+	public void setQuestionnaireService(QuestionnaireService questionnaireService) {
+		this.questionnaireService = questionnaireService;
+	}
+	
 }
