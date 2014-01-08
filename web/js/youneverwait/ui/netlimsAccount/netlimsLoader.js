@@ -48,7 +48,6 @@ $j.getScript("/youNeverWait/js/dto/OrderListDTO.js").done(function(script,textSt
 		}) 
 $j.getScript("/youNeverWait/js/impl/NetlimsAccServiceImpl.js").done(function(script,textStatus){
 		})
-$j.getScript("/youNeverWait/js/youneverwait/ui/netlimsAccount/netlimsAccClassLoader.js").done(function(script,textStatus){
-		})
+
 $j.getScript("/youNeverWait/js/youneverwait/settings/netlimsAccSettings/NetlimsAccSettingsClassLoader.js").done(function(script,textStatus){
 		}) 
