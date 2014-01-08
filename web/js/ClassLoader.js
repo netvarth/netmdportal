@@ -61,7 +61,8 @@ function ClassLoader() {
 		})
 		$j.getScript("/youNeverWait/js/youneverwait/ui/netmdAccount/netmdAccClassLoader.js").done(function(script,textStatus){
 		})
-		
+		$j.getScript("/youNeverWait/js/youneverwait/ui/netrxAccount/netrxAccClassLoader.js").done(function(script,textStatus){
+		})
 		
 	}
 }

@@ -1,6 +1,7 @@
 function NetrxAccServiceImpl () {
-		this.setTableValues = function(tableObj, branchResult) {
+		this.setTableValues = function(tableObj, branchResult,key) {
 		$j(tableObj).dataTable().fnClearTable();
+			if(key=="branchlist"){
 			if(branchResult.netRxBranch) {
 				if(branchResult.netRxBranch.length>0) {			
 					$j(branchResult.netRxBranch).each(function (index, netRxBranch) {
@@ -8,10 +9,10 @@ function NetrxAccServiceImpl () {
 						var rowData=$j(tableObj).dataTable().fnAddData([id,netRxBranch.name,netRxBranch.mobile,netRxBranch.status]);
 						var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 						$j(row).attr('id',id);	
-						$j(row).children("td:nth-child(1)").attr("class","branchNetlimsAccIdCol Ustyle");
+						$j(row).children("td:nth-child(1)").attr("class","branchNetrxAccIdCol Ustyle");
 						});	
 				}
-			}		 
+			}	}	 
 	 
 		} 
 		

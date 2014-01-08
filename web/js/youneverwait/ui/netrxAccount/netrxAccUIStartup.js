@@ -9,7 +9,7 @@ function netrxAccountUIStartup() {
 	this.errorData = $j('#errorDivData');
 	this.errorHeader = $j('#errorDivHeader');
 	this.netrxId=userdata.netrxId;
-	this.pgTableRowClass = this.pgTableName + ' .branchIdCol';
+	this.pgTableRowClass = this.pgTableName + ' .branchNetrxAccIdCol';
 	this.exp = new ExpressionListDTO();
 	this.netrxAccService = new NetrxAccServiceImpl();
 	this.listUrl = constants.NETRXACCBRANCHLISTURL;
@@ -74,7 +74,7 @@ netrxAccountUIStartup.prototype.init = function() {
 	self.bindToolBarEvents();
 	dataTableProcessor.create(self.pgTableName,constants.NETRXACCBRANCHLISTJSON);//Create Table for Listing Order
 	dataTableProcessor.setCustomTable(self.pgTableName);
-	netrxAccTableNavigator.list();
+	netrxAccTableNavigator.list("branchlist");
 	self.bindEvents();
 	pageHandler.setActivePage(self);
 }
@@ -137,7 +137,7 @@ netrxAccountUIStartup.prototype.bindToolBarEvents = function() {
 					commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netrxDelResponse.error));
 				}
 				var netrxAccTableNavigator = self.getnetrxAccTableNavigator();
-				netrxAccTableNavigator.list();
+				netrxAccTableNavigator.list("branchlist");
 			 
 		}	
 	}); 
@@ -159,13 +159,13 @@ netrxAccountUIStartup.prototype.bindEvents = function() {
 		removeErrors();
 	});	
 	
-	/* $j(parent.pgTableRowClass).die('click').live('click',function(){
+	$j(parent.pgTableRowClass).die('click').live('click',function(){
 	   var branchId= $j(this).parent().attr('id');
 		if(branchId!="") {
 			var viewNetrxBranchUI = parent.getViewNetrxBranchUI();
 			viewNetrxBranchUI.init(branchId);
 		}	
-	});  */
+	});  
 }
 
 
