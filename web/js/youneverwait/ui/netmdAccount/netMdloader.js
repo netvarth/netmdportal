@@ -38,6 +38,8 @@ $j.cachedScript("/youNeverWait/js/framework/NVUIControls/NVButton.js").done(func
 })
 $j.getScript("/youNeverWait/js/framework/createModal.js").done(function(script, textStatus) {
 })
+$j.getScript("/youNeverWait/js/dto/BranchNetmdDTO.js").done(function(script,textStatus){
+		})
 $j.getScript("/youNeverWait/js/dto/BillListDTO.js").done(function(script,textStatus){
 })
 $j.getScript("/youNeverWait/js/impl/NetmdAccServiceImpl.js").done(function(script,textStatus){
