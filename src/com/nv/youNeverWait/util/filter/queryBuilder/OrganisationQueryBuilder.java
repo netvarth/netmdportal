@@ -40,8 +40,8 @@ public class OrganisationQueryBuilder extends RootQueryBuilder<OrganisationTbl>{
 	 */
 	@Override
 	public void addFilter(Filter filter) {
-		String referenceName = BranchPropertyEnum.valueOf(filter.getName()).getReferenceName();
-		String pathReferenceName =BranchPropertyEnum.valueOf(filter.getName()).getPathReferenceName();
+		String referenceName = OrganisationPropertyEnum.valueOf(filter.getName()).getReferenceName();
+		String pathReferenceName =OrganisationPropertyEnum.valueOf(filter.getName()).getPathReferenceName();
 
 		if(referenceName!=null && !referenceName.equals("")){
 			if(referenceMap.get(referenceName)==null){
@@ -53,7 +53,7 @@ public class OrganisationQueryBuilder extends RootQueryBuilder<OrganisationTbl>{
 				pathReferenceMap.put(pathReferenceName, referenceMap.get(referenceName).get(pathReferenceName));
 			}
 		}
-		Criteria criteria = filter.getPredicate(this, BranchPropertyEnum.valueOf(filter.getName()));
+		Criteria criteria = filter.getPredicate(this, OrganisationPropertyEnum.valueOf(filter.getName()));
 		if(criteria.getPredicate()!=null){
 			predicates.add(criteria.getPredicate());
 		}
