@@ -16,6 +16,7 @@ import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ActionNameEnum;
+import com.nv.youNeverWait.pl.entity.CaseStatusEnum;
 import com.nv.youNeverWait.pl.entity.CaseTbl;
 import com.nv.youNeverWait.pl.entity.DepartmentTbl;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
@@ -41,6 +42,7 @@ import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientOrderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
+import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalPatientResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.security.pl.Query;
@@ -619,10 +621,10 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		if(newPatientCase.getPatientType().equals(PatientTypeEnum.InPatient.getDisplayName())){
 			caseTbl.setPatientType(PatientTypeEnum.InPatient.getDisplayName());
 		}
-		else{
+		if(newPatientCase.getPatientType().equals(PatientTypeEnum.OutPatient.getDisplayName())){
 			caseTbl.setPatientType(PatientTypeEnum.OutPatient.getDisplayName());
 		}
-		
+		if(newPatientCase.getAdmittedDate()!=null){
 		try {
 			caseTbl.setAdmittedDate(sdf.parse(newPatientCase.getAdmittedDate()));
 		} catch (ParseException e) {
@@ -631,12 +633,14 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
+	}
 		caseTbl.setBmi(newPatientCase.getBmi());
 		caseTbl.setDepartmentTbl(dept);
 		caseTbl.setDescription(newPatientCase.getDescription());
 		caseTbl.setHb(newPatientCase.getHbCount());
 		caseTbl.setWeight(newPatientCase.getWeight());
-		caseTbl.setStatus(StatusEnum.Active.getDisplayName());
+		caseTbl.setHeight(newPatientCase.getHeight());
+		caseTbl.setStatus(CaseStatusEnum.Open.getDisplayName());
 		caseTbl.setCreatedDateTime(currentDate);
 		caseTbl.setUpdatedDateTime(currentDate);
 		save(caseTbl);
@@ -827,6 +831,16 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		return null;
 	}
 
+	@Override
+	@Transactional
+	public String getDepartmentNameById(int departmentId) {
+		String departmentName="";
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_DEPARTMENT_NAME_BY_ID);
+		query.setParameter("param1", departmentId);
+		departmentName=(String) query.getSingleResult();
+		return departmentName;
+	}
 	/**
 	 * @return the em
 	 */
@@ -841,4 +855,6 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
+
+	
 }

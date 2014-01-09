@@ -17,9 +17,12 @@ import com.nv.youNeverWait.pl.entity.AnswerTbl;
 import com.nv.youNeverWait.pl.entity.CaseTbl;
 import com.nv.youNeverWait.pl.entity.DepartmentTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
+import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.QuestionTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.AnswerDTO;
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.QuestionAnswerDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.security.pl.Query;
@@ -38,7 +41,7 @@ public class QuestionnaireDaoImpl extends GenericDaoHibernateImpl implements Que
 	
 	@Override
 	@Transactional
-	public ResponseDTO create(QuestionAnswerDTO questionAnswer) {
+	public ResponseDTO create(QuestionAnswerDTO questionAnswer,HeaderDTO header) {
 		ResponseDTO response = new ResponseDTO();
 		CaseTbl caseTbl= getById(CaseTbl.class,questionAnswer.getCaseId());
 		if(caseTbl==null){
@@ -53,6 +56,13 @@ public class QuestionnaireDaoImpl extends GenericDaoHibernateImpl implements Que
 			throw se;
 		}
 		
+		NetmdBranchTbl netmdBranchTbl=  getById(NetmdBranchTbl.class,header.getBranchId());
+		if(netmdBranchTbl==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
 		Map<String, Integer> qMap = new HashMap<String, Integer>();
 		List<QuestionTbl> questionList= getByCaseIdAndDeptId(questionAnswer.getDepartmentId());
 		for(QuestionTbl questionObj:questionList){
@@ -68,6 +78,7 @@ public class QuestionnaireDaoImpl extends GenericDaoHibernateImpl implements Que
 				answerTbl.setCaseTbl(caseTbl);
 				answerTbl.setQuestionTbl(qtable);
 				answerTbl.setAnswer(answer.getAnswer());
+				answerTbl.setNetmdBranchTbl(netmdBranchTbl);
 				save(answerTbl);
 			}
 
