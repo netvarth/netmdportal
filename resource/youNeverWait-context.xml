@@ -196,6 +196,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 				</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.OrganisationPropertyEnum
 				</value>
+				<value>com.nv.youNeverWait.pl.entity.DepartmentTypeEnum
+				</value>
 			</list>
 		</property>
 	</bean>
