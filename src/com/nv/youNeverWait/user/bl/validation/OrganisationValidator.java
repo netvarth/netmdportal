@@ -73,13 +73,7 @@ public class OrganisationValidator extends FilterValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (organztion.getHeadOfficeName() == null
-				|| organztion.getHeadOfficeName().isEmpty()) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidHeadOfficeName);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
+		
 		if (organztion.getHeadOfficeEmail() == null
 				|| organztion.getHeadOfficeEmail().isEmpty()
 				|| !isValidEmail(organztion.getHeadOfficeEmail())) {
