@@ -2,6 +2,7 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,8 @@ public class CaseTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(unique = true, nullable = false)
 	private int id;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -38,7 +41,8 @@ public class CaseTbl implements Serializable {
 
 	@Column(name="patient_type")
 	private String patientType;
-
+	
+	@Column(length = 45)
 	private String status;
 
 	@Temporal(TemporalType.TIMESTAMP)

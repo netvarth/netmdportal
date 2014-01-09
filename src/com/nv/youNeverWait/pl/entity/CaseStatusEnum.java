@@ -1,12 +1,6 @@
 /**
- * PatientTypeEnum.java
- * @author netvarth
- *
- * Version 1.0 Jan 7, 2014
- *
- * Copyright (c) 2014 Netvarth Technologies, Inc.
- * All rights reserved.
- *
+ * CaseStatusEnum.java
+ * January 08, 2013
  */
 package com.nv.youNeverWait.pl.entity;
 
@@ -14,19 +8,18 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.user.bl.impl.EnumDisplay;
 
 /**
- *
- *
  * @author Luciya Jose
+ *
  */
-public enum PatientTypeEnum implements EnumDisplay {
-	InPatient("inpatient"),OutPatient("outpatient");
+public enum CaseStatusEnum implements EnumDisplay{
+	Open("open"), Closed("closed"),Cancelled("cancelled");
 
 	private String displayName;
 
 	/**
 	 * @param displayName
 	 */
-	private PatientTypeEnum(String displayName) {
+	private CaseStatusEnum(String displayName) {
 		this.displayName = displayName;
 	}
 
@@ -44,16 +37,16 @@ public enum PatientTypeEnum implements EnumDisplay {
 		this.displayName = displayName;
 	}
 
-	public static PatientTypeEnum getEnum(String value) {
+	public static CaseStatusEnum getEnum(String value) {
 		if(value == null){
-			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidPatientType);
+			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidCaseStatus);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		for(PatientTypeEnum v : values()){        	
+		for(CaseStatusEnum v : values()){        	
 			if(value.equalsIgnoreCase(v.getDisplayName())){
 				return v;}}
-		ServiceException se = new ServiceException(ErrorCodeEnum.InvalidPatientType);
+		ServiceException se = new ServiceException(ErrorCodeEnum.InvalidCaseStatus);
 		se.setDisplayErrMsg(true);
 		throw se;
 	}
