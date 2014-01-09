@@ -249,6 +249,8 @@ public class OrganisationManager  implements OrganisationService{
 			organization.setHeadOfficeName(organisationTbl.getHeadOfficeName());
 			organization.setUserName(organisationTbl.getOrganisationLoginTbl().getUserName());
 			organization.setUserType(organisationTbl.getOrganisationLoginTbl().getUserType());
+			organization.setDepartmentType(organisationTbl.getDepartmentType());
+			organisationDetails.add(organization);
 		}
 		response.setOrganisation(organisationDetails);
 		return response;
