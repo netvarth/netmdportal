@@ -649,13 +649,13 @@ public class PatientServiceImpl implements PatientService {
 		validator.validateCase(newPatientCase);
 		ResponseDTO response= new ResponseDTO();
 		response = patientDao.createCase(newPatientCase,header);
-		
-		if(newPatientCase.getDepartmentName().trim().equals(Constants.OBSTETRICS) && response.getGlobalId()!=0){
+		String departmentName= patientDao.getDepartmentNameById(newPatientCase.getDepartmentId());
+		if(departmentName.trim().equals(Constants.OBSTETRICS) && response.getGlobalId()!=0){
 			QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
-			 questionAnswer.setCaseId(response.getId());
+			 questionAnswer.setCaseId(response.getGlobalId());
 			 questionAnswer.setDepartmentId(newPatientCase.getDepartmentId());
 			 questionAnswer.setAnswerDTO(newPatientCase.getQuestionAnswerDTO().getAnswerDTO());
-			 response=questionnaireService.create(questionAnswer);
+			 response=questionnaireService.create(questionAnswer,header);
 		}
 		response.setSuccess(true);
 		return response;
