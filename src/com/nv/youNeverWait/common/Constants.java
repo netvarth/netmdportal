@@ -120,7 +120,7 @@ public class Constants {
 	public static final String ORGANISATION_REGISTER = "Organisation Registration";
 	public static final String ORGANISATION = "organisation";
 	public static final String NETPOS = "netpos";
-	public static final String OBSTETRICS = "obstetrics";
+	
 	
 	
 	
