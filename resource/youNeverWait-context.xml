@@ -194,6 +194,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 				</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.NetPosPropertyEnum
 				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.OrganisationPropertyEnum
+				</value>
 			</list>
 		</property>
 	</bean>
@@ -563,6 +565,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 					value="com.nv.youNeverWait.util.filter.queryBuilder.LabOrderQueryBuilder" />
 				<entry key="netpos"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.NetPosQueryBuilder" />
+				<entry key="organisation"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.OrganisationQueryBuilder" />
 			</map>
 		</property>
 
