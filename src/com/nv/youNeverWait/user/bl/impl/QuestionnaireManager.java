@@ -29,8 +29,8 @@ public class QuestionnaireManager implements QuestionnaireService{
 		this.questionnaireDao = questionnaireDao;
 	}
 	@Override
-	public ResponseDTO update(QuestionAnswerDTO questionAnswer) {
-		ResponseDTO response= questionnaireDao.update(questionAnswer);
+	public ResponseDTO update(QuestionAnswerDTO questionAnswer,HeaderDTO header) {
+		ResponseDTO response= questionnaireDao.update(questionAnswer,header);
 		return response;
 	}
 

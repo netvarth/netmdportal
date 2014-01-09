@@ -91,7 +91,7 @@ public class QuestionnaireDaoImpl extends GenericDaoHibernateImpl implements Que
 	
 	@Override
 	@Transactional
-	public ResponseDTO update(QuestionAnswerDTO questionAnswer) {
+	public ResponseDTO update(QuestionAnswerDTO questionAnswer,HeaderDTO header) {
 		ResponseDTO response = new ResponseDTO();
 		CaseTbl caseTbl= getById(CaseTbl.class,questionAnswer.getCaseId());
 		if(caseTbl==null){
@@ -106,6 +106,14 @@ public class QuestionnaireDaoImpl extends GenericDaoHibernateImpl implements Que
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
+		NetmdBranchTbl netmdBranchTbl=  getById(NetmdBranchTbl.class,header.getBranchId());
+		if(netmdBranchTbl==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
 		List<AnswerTbl> answerlist=getAnswerList(questionAnswer.getCaseId());
 		for(AnswerTbl answer:answerlist){
 			delete(answer);
@@ -125,6 +133,7 @@ public class QuestionnaireDaoImpl extends GenericDaoHibernateImpl implements Que
 				answerTbl.setDepartmentTbl(departmentTbl);
 				answerTbl.setCaseTbl(caseTbl);
 				answerTbl.setQuestionTbl(qtable);
+				answerTbl.setNetmdBranchTbl(netmdBranchTbl);
 				answerTbl.setAnswer(answer.getAnswer());
 				save(answerTbl);
 			}

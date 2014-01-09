@@ -5,6 +5,7 @@ package com.nv.youNeverWait.user.bl.validation;
 
 
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.pl.entity.ActionNameEnum;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.rs.dto.CaseDTO;
 import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
@@ -317,6 +318,7 @@ public class PatientValidator extends FilterValidator{
 	 * @param newPatientCase
 	 */
 	public void validateCase(CaseDTO caseDto) {
+		
 		if (!isValidName(caseDto.getCaseName())) {
 			ServiceException se=new ServiceException(ErrorCodeEnum.InValidCaseName);
 			se.isDisplayErrMsg();
@@ -332,5 +334,14 @@ public class PatientValidator extends FilterValidator{
 			se.isDisplayErrMsg();
 			throw se;
 		}
+	}
+	public void validateUpdatedCase(CaseDTO updatedPatientCase) {
+		if(updatedPatientCase.getGlobalId()<=0){
+			ServiceException se=new ServiceException(ErrorCodeEnum.InvalidCaseId);
+			se.isDisplayErrMsg();
+			throw se;
+		}
+		ActionNameEnum action=ActionNameEnum.getEnum(updatedPatientCase.getActionName());
+		
 	}
 }

@@ -692,10 +692,10 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 			if(updatedPatientCase.getPatientType().equals(PatientTypeEnum.InPatient.getDisplayName())){
 				caseTbl.setPatientType(PatientTypeEnum.InPatient.getDisplayName());
 			}
-			else{
+			if(updatedPatientCase.getPatientType().equals(PatientTypeEnum.OutPatient.getDisplayName())){
 				caseTbl.setPatientType(PatientTypeEnum.OutPatient.getDisplayName());
 			}
-			
+			if(updatedPatientCase.getAdmittedDate()!=null){
 			try {
 				caseTbl.setAdmittedDate(sdf.parse(updatedPatientCase.getAdmittedDate()));
 			} catch (ParseException e) {
@@ -704,15 +704,25 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 				se.setDisplayErrMsg(true);
 				throw se;
 			}
+		}
 			caseTbl.setBmi(updatedPatientCase.getBmi());
 			caseTbl.setDepartmentTbl(dept);
+			caseTbl.setHeight(updatedPatientCase.getHeight());
 			caseTbl.setDescription(updatedPatientCase.getDescription());
 			caseTbl.setHb(updatedPatientCase.getHbCount());
 			caseTbl.setWeight(updatedPatientCase.getWeight());
-			caseTbl.setStatus(StatusEnum.Active.getDisplayName());	
+			if(updatedPatientCase.getStatus()!=null && !updatedPatientCase.getStatus().isEmpty()){
+				if(updatedPatientCase.getStatus().equals(CaseStatusEnum.Open.getDisplayName())){
+					caseTbl.setStatus(CaseStatusEnum.Open.getDisplayName());
+				}
+				if(updatedPatientCase.getStatus().equals(CaseStatusEnum.Closed.getDisplayName())){
+					caseTbl.setStatus(CaseStatusEnum.Closed.getDisplayName());
+				}
+			}
+			
 		}
 		if(updatedPatientCase.getActionName().equals(ActionNameEnum.DELETE.getDisplayName())){
-			caseTbl.setStatus(StatusEnum.InActive.getDisplayName());
+			caseTbl.setStatus(CaseStatusEnum.Closed.getDisplayName());
 		}
 		caseTbl.setUpdatedDateTime(currentDate);
 		update(caseTbl);

@@ -787,12 +787,62 @@ public class SyncServiceTest {
 		List<AnswerDTO> answerLists = new ArrayList<AnswerDTO>() ;
 		AnswerDTO answer1= new AnswerDTO();
 		answer1.setQuestionKey("name");
-		answer1.setAnswer("kripa");
+		answer1.setAnswer("johanna");
 		answerLists.add(answer1);
 		questionAnswerDTO.setAnswerDTO(answerLists);
 		case1.setQuestionAnswerDTO(questionAnswerDTO);
 		newCaseList.add(case1);
 		sync.setNewCaseList(newCaseList);
+
+		try {
+			System.out.println("inside try catch ");
+			SyncResponseDTO response=syncService.syncData(sync);
+
+		}
+
+		catch (ServiceException e) {
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		} 
+	}
+
+	@Test
+	public void syncNetMdGynaDataUpdateCaseWithoutQuestionnaireChange() {
+		SyncService syncService=(SyncService)applicationContext.getBean("sync.service");
+
+		System.out.println("inside service ");
+		SyncDTO sync=new SyncDTO();
+		sync.setLastSyncTime("2013-10-19 10:10:10");
+		HeaderDTO header = new HeaderDTO();
+		header.setHeadOfficeId(3);
+		header.setPassPhrase("n8ih3gftEbXR7NUd8Cfvhg==");
+		header.setMacId("00-80-48-6E-E1-E2");
+		header.setBranchId(5);
+
+		sync.setHeader(header);
+		List<CaseDTO> updateCaseList= new ArrayList<CaseDTO>();
+		CaseDTO case1= new CaseDTO();
+		case1.setCaseName("obstetrics");
+		case1.setAdmittedDate("2013-01-08");
+		case1.setBmi(23);
+		case1.setHbCount(120);
+		case1.setHeight(150);
+		case1.setDepartmentId(7);
+		case1.setPatientId(5);
+		case1.setGlobalId(16);
+		case1.setActionName("Update");
+		case1.setPatientType("inpatient");
+		QuestionAnswerDTO questionAnswerDTO= new QuestionAnswerDTO();
+		List<AnswerDTO> answerLists = new ArrayList<AnswerDTO>() ;
+		AnswerDTO answer1= new AnswerDTO();
+		answer1.setQuestionKey("name");
+		answer1.setAnswer("jonatha");
+		answerLists.add(answer1);
+		questionAnswerDTO.setAnswerDTO(answerLists);
+		case1.setQuestionAnswerDTO(questionAnswerDTO);
+		updateCaseList.add(case1);
+		sync.setUpdateCaseList(updateCaseList);
 
 		try {
 			System.out.println("inside try catch ");
