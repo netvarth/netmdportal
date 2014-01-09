@@ -59,6 +59,7 @@
 		<class>com.nv.youNeverWait.pl.entity.NetposPassphraseTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetposTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetposUserTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.OrganisationTbl</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 		</properties>
