@@ -272,10 +272,7 @@ public class Query {
 	public static final String GET_NETRX_PASSPHRASE_BY_BRANCH_ID = "from NetrxPassphraseTbl as branchPassphrase where branchPassphrase.netrxBranchTbl.id=:param1 and branchPassphrase.passPhrase=:param2";
 	//public static final String GET_NAME_BY_AGE = " select (select qaTbl.answer from QusAnsTbl as qaTbl where qaTbl.questionTbl.questionKey='name' and qaTbl.caseTbl.id=q.caseTbl.id) from QusAnsTbl as q where q.questionTbl.questionKey='age' and q.answer=:param1";
 	//public static final String GET_NAME_BY_AGE="select distinct qa1.answer,qa0.caseTbl.id,qa2.answer from(select distinct qa0.caseTbl.id  from QusAnsTbl as qa0) as q0 LEFT OUTER JOIN(select qa1.answer ,qa1.caseTbl.id from QusAnsTbl as qa1 where qa1.questionTbl.questionKey='name') as q1 ON q0.qa0.caseTbl.id = q1.qa1.caseTbl.id LEFT OUTER JOIN (select qa2.answer,qa2.caseTbl.id from QusAnsTbl as qa2 where qa2.questionTbl.questionKey='age') as q2 ON q1.qa1.caseTbl.id = q2.qa2.caseTbl.id where q2.qa2.answer> :param1";
-	public static final String GET_NAME_BY_AGE="select  distinct name,caseId,age from (select distinct case_id  from qus_ans_tbl) as q0 LEFT OUTER JOIN (select answer as name ,case_id as caseId from qus_ans_tbl where quest_id = 5) as q1 ON q0.case_id = q1.caseId LEFT OUTER JOIN (select answer as age,case_id as caseI from qus_ans_tbl where quest_id = 6) as q2 ON q1.caseId = q2.caseI where q2.age>24";
-	public static final String GET_ID_BY_KEY = " from QuestionTbl as q where q.questionKey=:param1";
-	public static final String GET_BY_DEPT = "from QuestionTbl as qTbl where qTbl.deptTbl.id=:param1";
-	public static final String GET_BY_CASE = "from QusAnsTbl as qaTbl where qaTbl.caseTbl.id=:param1";
+
 	
 /**************NetPos******************/
 
@@ -293,6 +290,7 @@ public class Query {
 	/*NetposBranchTbl*/
 	public static final String GET_NETPOS_BRANCHES = "from NetposBranchTbl as netposBranch where  netposBranch.NetposTbl.id=:param1";
 	
+/********************Organizations**************/
 	/*OrganisationLoginTbl*/
 	public static final String GET_LOGIN_BY_ORGANISATION_OWNER_USERNAME = "from OrganisationLoginTbl as login where login.userName=:param1 and login.userType='owner'";
 	
@@ -302,4 +300,16 @@ public class Query {
 	/*OrganisationUserTbl*/
 	public static final String GET_ORGANISATION_USER_BY_EMAIL_AND_BRANCH = " from OrganisationUserTbl as orgUser where orgUser.email=:param1 and orgUser.organisationTbl.id=:param2";
 	public static final String GET_USERS_BY_ORGANISATION_ID = " from OrganisationUserTbl as users where users.organisationTbl.id=:param1 ";
+	
+	/*DepartmentTbl*/
+	public static final String GET_DEPARTMENT_NAME_BY_ID = "select dept.name from DepartmentTbl as dept where dept.id=:param1";
+	
+	/*QuestionTbl*/
+	public static final String GET_ID_BY_KEY = " from QuestionTbl as q where q.questionKey=:param1";
+	public static final String GET_BY_DEPT = "from QuestionTbl as qTbl where qTbl.departmentTbl.id=:param1";
+	
+	/*AnswerTbl*/
+	public static final String GET_BY_CASE = "from AnswerTbl as qaTbl where qaTbl.caseTbl.id=:param1";
+	public static final String GET_NAME_BY_AGE="select  distinct name,caseId,age from (select distinct case_id  from qus_ans_tbl) as q0 LEFT OUTER JOIN (select answer as name ,case_id as caseId from qus_ans_tbl where quest_id = 5) as q1 ON q0.case_id = q1.caseId LEFT OUTER JOIN (select answer as age,case_id as caseI from qus_ans_tbl where quest_id = 6) as q2 ON q1.caseId = q2.caseI where q2.age>24";
+
 }
