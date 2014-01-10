@@ -11,7 +11,7 @@ import com.nv.youNeverWait.user.bl.impl.EnumDisplay;
  *
  */
 public enum ApplicationNameEnum implements EnumDisplay{
-	NetLims("Netlims"),NetMd("Netmd"),Patient("Patient"),SuperAdmin("SuperAdmin"),NetRx("Netrx");
+	NetLims("Netlims"),NetMd("Netmd"),Patient("Patient"),SuperAdmin("SuperAdmin"),NetRx("Netrx"), Organisation("Organisation");
 
 	private String displayName;
 

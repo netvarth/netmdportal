@@ -19,7 +19,8 @@ public class OrganisationLoginTbl implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(unique = true, nullable = false)
 	private int id;
-
+	
+	@Column(name="password")
 	private String password;
 
 	@Column(name="user_name")

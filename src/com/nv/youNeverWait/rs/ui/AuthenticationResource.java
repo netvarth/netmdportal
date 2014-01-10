@@ -311,7 +311,56 @@ public class AuthenticationResource {
 		return response;
 	}
 
-	
+	/**
+	 * Method performed for NetLims login
+	 * 
+	 * @param LoginDTO
+	 * @return LoginResponseDTO
+	 */
+	@RequestMapping(value = "organisationLogin", method = RequestMethod.POST)
+	@ResponseBody
+	public LoginResponseDTO organisationLogin(@RequestBody LoginDTO login) {
+		User user = new User();
+		LoginResponseDTO response = new LoginResponseDTO();
+		try {
+			response = authenticationService.organisationLogin(login);
+			if (response.isSuccess()) {
+				ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+						.currentRequestAttributes();
+				HttpServletRequest req = t.getRequest();
+				
+				UserDetails userDetail = authenticationService
+						.getOrganisationUser(login.getUserName());
+				if (userDetail != null) {
+					user.setLoginTime(new Date());
+					user.setName(userDetail.getName());
+					user.setUserName(login.getUserName().trim());
+					user.setId(userDetail.getId());
+					user.setLabId(userDetail.getLabId());
+					user.setUserType(userDetail.getUserType());
+				}
+				req.getSession().setAttribute(Constants.USER, user);
+			}
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		logService.saveUserDetails(request.getRemoteAddr(),
+				user.getName(), user.getUserType(), user.getLoginTime(), null,
+				ApplicationNameEnum.Organisation.getDisplayName(),
+				Constants.LOGIN);
+		return response;
+	}
+
 	/**
 	 * Get current user in the session
 	 * 
