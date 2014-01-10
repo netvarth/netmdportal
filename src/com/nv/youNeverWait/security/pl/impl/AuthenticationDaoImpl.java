@@ -29,7 +29,11 @@ import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.NetrxLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetrxTbl;
 import com.nv.youNeverWait.pl.entity.NetrxUserTbl;
+import com.nv.youNeverWait.pl.entity.OrganisationLoginTbl;
+import com.nv.youNeverWait.pl.entity.OrganisationTbl;
+import com.nv.youNeverWait.pl.entity.OrganisationUserTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
+import com.nv.youNeverWait.pl.entity.UserTypeEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
@@ -154,6 +158,23 @@ AuthenticationDao {
 		return login;
 	}
 
+
+	@Override
+	@Transactional
+	public LoginResponseDTO organisationLogin(LoginDTO login) {
+
+		LoginResponseDTO orgLogin = new LoginResponseDTO();
+		OrganisationLoginTbl loginDetails = getOrgUserByUserNameAndPassword(
+				login.getPassword(), login.getUserName());
+		if(loginDetails==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.UserNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		orgLogin.setSuccess(true);
+		return orgLogin;
+	}
 	/**
 	 * Method performed to get Netlims user details
 	 * 
@@ -328,36 +349,73 @@ AuthenticationDao {
 		return user;
 
 	}
-	/**
-	 * Method performed to get patient details
-	 * 
-	 * @param userName
-	 * @return UserDetails
-	 */
-	@Override
-	@Transactional
-	public UserDetails netrxLogin(String userName) {
 
-		UserDetails user = new UserDetails();
-		List<PatientTbl> patientList = getNetRxUserByLogin(userName);
-		PatientTbl patient = patientList.get(0);
-		user.setId(patient.getId());
-		user.setNetmdId(patient.getNetmdBranchTbl().getId());
-		user.setUserType(patient.getNetmdLoginTbl().getUserType());
-		user.setName(userName);
-		return user;
+	@Override
+	public UserDetails getOrganisationUser(String userName) {
+		OrganisationLoginTbl orgLogin = (OrganisationLoginTbl) getOrgLoginByUserName(userName
+				.trim());
+		if (orgLogin == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.LoginNotExists);
+			se.addParam(new Parameter(Constants.NAME, userName));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		UserTypeEnum userType = UserTypeEnum.getEnum(orgLogin
+				.getUserType());
+		if (orgLogin.getUserType().equals(UserTypeEnum.Owner.getDisplayName())) {
+			OrganisationTbl orgTbl = getOrgOwnerByLoginId(orgLogin.getId());
+			if (orgTbl != null) {
+				UserDetails user = new UserDetails();
+				user.setId(orgTbl.getId());
+				user.setName(orgTbl.getOwnerFirstName());
+				user.setUserType(userType.getDisplayName());
+				user.setOrganisationId(orgTbl.getId());
+				return user;
+			}
+		} else {
+
+			OrganisationUserTbl orgnUser = (OrganisationUserTbl) getOrgUserByLoginId(orgLogin
+					.getId());
+			if (orgnUser != null) {
+				UserDetails user = new UserDetails();
+				user.setId(orgnUser.getId());
+				user.setName(orgnUser.getFirstName());
+				user.setUserType(userType.getDisplayName());
+				user.setOrganisationId(orgnUser.getId());
+				return user;
+			}
+		}
+		return null;
 	}
-	/**
-	 * Get patient details
-	 * 
-	 * @param userName
-	 * @return PatientTbl
-	 */
-	private List<PatientTbl> getNetRxUserByLogin(String userName) {
+
+	
+	private OrganisationUserTbl getOrgUserByLoginId(int loginId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_ORGANISATION_USER);
+		query.setParameter("param1", loginId);
+		return executeUniqueQuery(OrganisationUserTbl.class, query);
+	}
+
+	private OrganisationTbl getOrgOwnerByLoginId(int loginId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_ORGANISATION_OWNER);
+		query.setParameter("param1", loginId);
+		return executeUniqueQuery(OrganisationTbl.class, query);
+	}
+
+	private OrganisationLoginTbl getOrgLoginByUserName(String userName) {
 		javax.persistence.Query query = em
-				.createQuery(Query.GET_PATIENT_BY_USERNAME);
+				.createQuery(Query.GET_ORGANISATION_LOGIN_BY_USERNAME);
 		query.setParameter("param1", userName);
-		return executeQuery(PatientTbl.class, query);
+		return executeUniqueQuery(OrganisationLoginTbl.class, query);
+	}
+
+	private OrganisationLoginTbl getOrgUserByUserNameAndPassword(
+			String password, String userName) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_ORGANISATION_USER_BY_PASSWORD);
+		query.setParameter("param1", password);
+		query.setParameter("param2", userName);
+		return executeUniqueQuery(OrganisationLoginTbl.class, query);
 	}
 
 
@@ -566,5 +624,7 @@ AuthenticationDao {
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
+
+	
 
 }

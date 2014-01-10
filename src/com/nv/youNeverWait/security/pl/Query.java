@@ -293,13 +293,18 @@ public class Query {
 /********************Organizations**************/
 	/*OrganisationLoginTbl*/
 	public static final String GET_LOGIN_BY_ORGANISATION_OWNER_USERNAME = "from OrganisationLoginTbl as login where login.userName=:param1 and login.userType='owner'";
+	public static final String GET_ORGANISATION_USER_BY_PASSWORD = "from OrganisationLoginTbl as login  where login.password =:param1 and login.userName =:param2";
+	public static final String GET_ORGANISATION_LOGIN_BY_USERNAME = "from OrganisationLoginTbl as login where TRIM(login.userName)=:param1";
+	
 	
 	/*OrganisationTbl*/
 	public static final String GET_ORGANISATION_BY_NAME =  "from OrganisationTbl as orgnstion where  REPLACE(TRIM(UPPER(orgnstion.name)),' ','')=:param1";
-	
+	public static final String GET_ORGANISATION_OWNER = "from OrganisationTbl as orgn where  orgn.organisationLoginTbl.id=:param1";
+
 	/*OrganisationUserTbl*/
 	public static final String GET_ORGANISATION_USER_BY_EMAIL_AND_BRANCH = " from OrganisationUserTbl as orgUser where orgUser.email=:param1 and orgUser.organisationTbl.id=:param2";
 	public static final String GET_USERS_BY_ORGANISATION_ID = " from OrganisationUserTbl as users where users.organisationTbl.id=:param1 ";
+	public static final String GET_ORGANISATION_USER = "from OrganisationUserTbl as user where user.organisationLoginTbl.id= :param1";
 	
 	/*DepartmentTbl*/
 	public static final String GET_DEPARTMENT_NAME_BY_ID = "select dept.name from DepartmentTbl as dept where dept.id=:param1";
@@ -311,5 +316,5 @@ public class Query {
 	/*AnswerTbl*/
 	public static final String GET_BY_CASE = "from AnswerTbl as qaTbl where qaTbl.caseTbl.id=:param1";
 	public static final String GET_NAME_BY_AGE="select  distinct name,caseId,age from (select distinct case_id  from qus_ans_tbl) as q0 LEFT OUTER JOIN (select answer as name ,case_id as caseId from qus_ans_tbl where quest_id = 5) as q1 ON q0.case_id = q1.caseId LEFT OUTER JOIN (select answer as age,case_id as caseI from qus_ans_tbl where quest_id = 6) as q2 ON q1.caseId = q2.caseI where q2.age>24";
-
+	
 }
