@@ -26,19 +26,22 @@ import org.apache.commons.logging.LogFactory;
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
 import com.nv.framework.sendmsg.email.SendMailMsgObj;
+import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
+import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.OrganisationTbl;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
-import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
-import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
+import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.Organisation;
 import com.nv.youNeverWait.rs.dto.OrganisationListResponseDTO;
 import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
 import com.nv.youNeverWait.rs.dto.OrganisationUsersList;
 import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
 import com.nv.youNeverWait.user.bl.service.OrganisationService;
 import com.nv.youNeverWait.user.bl.validation.OrganisationValidator;
@@ -311,6 +314,102 @@ public class OrganisationManager  implements OrganisationService{
 		return response;
 	}
 	
+	@Override
+	public ResponseDTO forgotPassword(LoginDTO login) {
+		ResponseDTO response = new ResponseDTO();
+		if (login.getUserName() == null || login.getUserName().equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUserName);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		UserCredentials user = organisationDao.getUserCredentials(login);
+		if (user.getEmailId() == null || user.getEmailId().equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidMailId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		sendEmailForResetPassword(Constants.RESET_PASSWORD, user);
+		response.setSuccess(true);
+		return response;
+
+	}
+	
+	@Override
+	public ResponseDTO resetPassword(LoginDTO login) {
+		validator.validateUserNameAndPassword(login.getUserName(),
+				login.getPassword());
+		ResponseDTO response = organisationDao.resetPassword(login);
+		return response;
+	}
+
+	/**
+	 * Method to send email for resetting password.It will perform the following
+	 * operations. 1.Take default email HTML template 2.Create email body 3.Send
+	 * email to the organization user/owner.
+	 */
+	private void sendEmailForResetPassword(String subject, UserCredentials user) {
+
+		String msgBody = "";
+		URL url = null;
+		try {
+			url = new URL("http://" + organisationServerIpAddress
+					+ "/youNeverWait/EmailFormat/OrganisationForgotPassword.html");
+			msgBody = createDefaultEmailBody(url, user);
+			// EmailSender.sendEmail(emailId, mailFrom, subject, msgBody);
+
+			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,
+					user.getEmailId(), mailFrom, 0, 0, null,
+					SendMsgCallbackEnum.LAB_RESET_PWD.getId(), null);
+			mailThread.addSendMsgObj(obj);
+		} catch (IOException e) {
+			log.error(
+					"Error while sending Email for resetting password in lab",
+					e);
+			e.printStackTrace();
+		}
+	}
+
+		/**
+	 * Method to create email body for Reset Password
+	 */
+	private String createDefaultEmailBody(URL url, UserCredentials user)
+			throws IOException {
+
+		StringBuffer msgBodyBfr = new StringBuffer();
+		String fullMsgBody = "";
+
+		String encryptedUserName = StringEncoder.encryptWithStaticKey(user
+				.getUserName());
+		String resetPasswordLink = "http://" + organisationServerIpAddress
+				+ "/youNeverWait/EmailFormat/OrganisationResetPassword.html?userName="
+				+ encryptedUserName;
+		java.net.URLConnection openConnection = url.openConnection();
+		InputStream inputStream = openConnection.getInputStream();
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				inputStream));
+		String readLine = "";
+		while ((readLine = in.readLine()) != null) {
+			msgBodyBfr.append(readLine).append("\n");
+		}
+		in.close();
+		fullMsgBody = msgBodyBfr.toString();
+		fullMsgBody = fullMsgBody.replace("{firstname}", user.getFirstName());
+		if (user.getLastName() != null && !user.getLastName().equals("")) {
+			fullMsgBody = fullMsgBody.replace("{lastname}", user.getLastName());
+		} else {
+			fullMsgBody = fullMsgBody.replace("{lastname}", "");
+		}
+		fullMsgBody = fullMsgBody.replace("{ResetLink}", resetPasswordLink);
+		fullMsgBody = fullMsgBody.replace("{serverIpAddress}",
+				organisationServerIpAddress);
+
+		return fullMsgBody;
+	}
+
+
 	/**
 	 * @param organztionUser
 	 * @param organisationName
@@ -378,6 +477,8 @@ public class OrganisationManager  implements OrganisationService{
 
 		return fullMsgBody;
 	}
+	 
+	
 	/**
 	/**
 	 * @return the organisationDao
@@ -484,5 +585,4 @@ public class OrganisationManager  implements OrganisationService{
 		return log;
 	}
 
-	
 }
