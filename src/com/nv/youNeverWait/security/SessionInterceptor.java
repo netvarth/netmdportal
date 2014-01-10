@@ -37,7 +37,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 					request.getRequestDispatcher("/ws/ui/patient/pForm")
 							.forward(request, response);
 					return false;
-					// response.sendRedirect("/youNeverWait/ws/ui/patient/pForm");
+				
 
 				}
 			} // end of if loop of youNeverWait domain
@@ -74,7 +74,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 						request.getRequestDispatcher("/ws/ui/superAdmin/sForm")
 								.forward(request, response);
 						return false;
-						// response.sendRedirect("/youNeverWait/ws/ui/superAdmin/sForm");
+						
 
 					}
 				}
@@ -118,7 +118,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 						request.getRequestDispatcher("/ws/ui/lab/lForm")
 								.forward(request, response);
 						return false;
-						// response.sendRedirect("/youNeverWait/ws/ui/lab/lForm");
+						
 					}
 				}
 			} // end of netlims if loop
@@ -145,7 +145,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 					request.getRequestDispatcher("/ws/ui/netRx/rForm").forward(
 							request, response);
 					return false;
-					// response.sendRedirect("/youNeverWait/ws/ui/netRx/rForm");
+					
 				}
 
 			} // end of netrx if loop
@@ -179,7 +179,28 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 					request.getRequestDispatcher("/ws/ui/netMd/mForm").forward(
 							request, response);
 					return false;
-					// response.sendRedirect("/youNeverWait/ws/ui/netMd/mForm");
+					
+				}
+
+			}// end of netmd if loop
+		/* Organization domain */
+			if (request.getServerName().equals("www.organisaton.co.in")) {
+				if (!request.getRequestURI().equals(
+						"/youNeverWait/ws/ui/orgn/oForm")
+						&& !request.getRequestURI().equals(
+								"/youNeverWait/ws/ui/auth/organisationLogin")
+						&& !request.getRequestURI().equals(
+								"/youNeverWait/ws/ui/orgn/resetPassword")
+						&& !request.getRequestURI().equals(
+								"/youNeverWait/ws/ui/orgn/forgotPassword")
+						&& !request.getRequestURI().equals(
+								"/youNeverWait/ws/ui/auth/getErrorCodes")
+						&& !request.getRequestURI().equals(
+								"/youNeverWait/ws/ui/auth/getEnumsList")) {
+					request.getRequestDispatcher("/ws/ui/orgn/oForm").forward(
+							request, response);
+					return false;
+				
 				}
 
 			}// end of netmd if loop
