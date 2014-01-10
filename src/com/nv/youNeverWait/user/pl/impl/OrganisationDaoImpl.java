@@ -136,7 +136,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 	@Transactional
 	public ResponseDTO updateOrganisation(Organisation organztion) {
 		ResponseDTO response = new ResponseDTO();
-		if (organztion.getId() <= 0) {
+		if (organztion.getGlobalId() <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidOrganisation);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(organztion
@@ -145,7 +145,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 			throw se;
 		}
 		OrganisationTbl organisationTbl = getById(OrganisationTbl.class,
-				organztion.getId());
+				organztion.getGlobalId());
 		if (organisationTbl == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidOrganisation);

@@ -150,7 +150,7 @@ public class OrganisationManager  implements OrganisationService{
 	 */
 	@Override
 	public ResponseDTO updateOrganisation(Organisation organztion) {
-		validator.validateGlobalId(organztion.getId());
+		validator.validateGlobalId(organztion.getGlobalId());
 		validator.validateOrganisationDetails(organztion);
 		ResponseDTO response=organisationDao.updateOrganisation(organztion);
 		return response;
@@ -250,6 +250,7 @@ public class OrganisationManager  implements OrganisationService{
 			organization.setUserName(organisationTbl.getOrganisationLoginTbl().getUserName());
 			organization.setUserType(organisationTbl.getOrganisationLoginTbl().getUserType());
 			organization.setDepartmentType(organisationTbl.getDepartmentType());
+			organization.setStatus(organisationTbl.getStatus());
 			organisationDetails.add(organization);
 		}
 		response.setOrganisation(organisationDetails);
