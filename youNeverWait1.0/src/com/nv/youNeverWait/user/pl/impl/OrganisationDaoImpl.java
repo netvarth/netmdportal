@@ -19,9 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.pl.entity.DepartmentTypeEnum;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
-import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
 import com.nv.youNeverWait.pl.entity.OrganisationLoginTbl;
 import com.nv.youNeverWait.pl.entity.OrganisationTbl;
 import com.nv.youNeverWait.pl.entity.OrganisationUserTbl;
@@ -29,11 +27,13 @@ import com.nv.youNeverWait.pl.entity.StatusEnum;
 import com.nv.youNeverWait.pl.entity.SuperAdminTbl;
 import com.nv.youNeverWait.pl.entity.UserTypeEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
+import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.Organisation;
 import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
 import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.OrganisationDao;
@@ -136,7 +136,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 	@Transactional
 	public ResponseDTO updateOrganisation(Organisation organztion) {
 		ResponseDTO response = new ResponseDTO();
-		if (organztion.getId() <= 0) {
+		if (organztion.getGlobalId() <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidOrganisation);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(organztion
@@ -145,7 +145,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 			throw se;
 		}
 		OrganisationTbl organisationTbl = getById(OrganisationTbl.class,
-				organztion.getId());
+				organztion.getGlobalId());
 		if (organisationTbl == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidOrganisation);
@@ -274,18 +274,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		return response;
 	}
 
-	/**
-	 * @param globalId
-	 * @return
-	 */
-	private List<OrganisationUserTbl> getUsersByOrganisationId(int globalId) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_USERS_BY_ORGANISATION_ID);
-		query.setParameter("param1", globalId);
-
-		return executeQuery(OrganisationUserTbl.class, query);
-	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -348,6 +337,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		newUser.setEmail(organztionUser.getEmail());
 		newUser.setOrganisationTbl(organisationTbl);
 		newUser.setOrganisationLoginTbl(login);
+		newUser.setStatus(StatusEnum.Active.getDisplayName());
 		Date currentDate = new Date();
 		newUser.setCreatedDateTime(currentDate);
 		newUser.setUpdatedDateTime(currentDate);
@@ -404,12 +394,12 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		}
 
 		OrganisationUserTbl updateUser = getById(OrganisationUserTbl.class,
-				organztionUser.getOrganisationId());
+				organztionUser.getGlobalId());
 		if (updateUser == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.UserNotExists);
 			se.addParam(new Parameter(Constants.ID, Integer
-					.toString(organztionUser.getOrganisationId())));
+					.toString(organztionUser.getGlobalId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
@@ -443,20 +433,6 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		return response;
 	}
 
-	/**
-	 * @param trim
-	 * @return
-	 */
-	private OrganisationUserTbl getOrganisationUserByEmail(String email,
-			int organisationId) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_ORGANISATION_USER_BY_EMAIL_AND_BRANCH);
-		query.setParameter("param1", email);
-		query.setParameter("param2", organisationId);
-		return executeUniqueQuery(OrganisationUserTbl.class, query);
-
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -485,6 +461,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		userDetail.setUserName(user.getOrganisationLoginTbl().getUserName());
 		userDetail.setUserType(user.getOrganisationLoginTbl().getUserType());
 		userDetail.setStatus(user.getStatus());
+		userDetail.setGlobalId(user.getId());
 		response.setUserDetails(userDetail);
 		response.setSuccess(true);
 		return response;
@@ -513,8 +490,95 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		return response;
 	}
 
+	@Override
+	@Transactional
+	public UserCredentials getUserCredentials(LoginDTO login) {
+
+		UserCredentials user = new UserCredentials();
+		OrganisationLoginTbl userLogin = getOrganisationUserByName(login.getUserName().trim());
+		if (userLogin == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUserName);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
+		if (userLogin.getUserType().equals(UserTypeEnum.Owner.getDisplayName())) {
+			OrganisationTbl orgTbl = getOrgOwnerByLoginId(userLogin.getId());
+			if (orgTbl == null) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.NoUserExists);
+				se.addParam(new Parameter(Constants.NAME, userLogin
+						.getUserName()));
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			user.setEmailId(orgTbl.getOwnerEmail());
+			user.setFirstName(orgTbl.getOwnerFirstName());
+			user.setLastName(orgTbl.getOwnerLastName());
+			user.setUserName(userLogin.getUserName());
+	
+		} else {
+
+			OrganisationUserTbl orgnUser = (OrganisationUserTbl) getOrgUserByLoginId(userLogin
+					.getId());
+			if (orgnUser == null) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.NoUserExists);
+				se.addParam(new Parameter(Constants.NAME, userLogin
+						.getUserName()));
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			user.setEmailId(orgnUser.getEmail());
+			user.setFirstName(orgnUser.getFirstName());
+			user.setLastName(orgnUser.getLastName());
+			user.setUserName(userLogin.getUserName());
+		}
+		return user;
+	}
+
+	@Override
+	@Transactional
+	public ResponseDTO resetPassword(LoginDTO login) {
+		ResponseDTO response = new ResponseDTO();
+		String newPassword = StringEncoder.encryptWithKey(login.getPassword());
+		String decrypedUserName = StringEncoder.decryptWithStaticKey(login
+				.getUserName());
+		OrganisationLoginTbl userLogin = getOrganisationUserByName(decrypedUserName);
+		if (userLogin == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUserName);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		userLogin.setPassword(newPassword);
+		update(userLogin);
+		response.setSuccess(true);
+		return response;
+	}
+
+	private OrganisationUserTbl getOrgUserByLoginId(int loginId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_ORGANISATION_USER);
+		query.setParameter("param1", loginId);
+		return executeUniqueQuery(OrganisationUserTbl.class, query);
+	}
+	
+	private OrganisationTbl getOrgOwnerByLoginId(int loginId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_ORGANISATION_OWNER);
+		query.setParameter("param1", loginId);
+		return executeUniqueQuery(OrganisationTbl.class, query);
+	}
+	
+	private OrganisationLoginTbl getOrganisationUserByName(String userName) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_ORGANISATION_LOGIN_BY_USERNAME);
+		query.setParameter("param1", userName);
+		return executeUniqueQuery(OrganisationLoginTbl.class, query);
+	}
+
 	/**
-	 * @param trim
+	 * @param name
 	 * @return
 	 */
 	private OrganisationTbl getOrganisationByName(String name) {
@@ -534,5 +598,30 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		query.setParameter("param1", userName);
 		return executeUniqueQuery(OrganisationLoginTbl.class, query);
 	}
+	/**
+	 * @param trim
+	 * @return
+	 */
+	private OrganisationUserTbl getOrganisationUserByEmail(String email,
+			int organisationId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_ORGANISATION_USER_BY_EMAIL_AND_BRANCH);
+		query.setParameter("param1", email);
+		query.setParameter("param2", organisationId);
+		return executeUniqueQuery(OrganisationUserTbl.class, query);
 
+	}
+	/**
+	 * @param globalId
+	 * @return
+	 */
+	private List<OrganisationUserTbl> getUsersByOrganisationId(int globalId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_USERS_BY_ORGANISATION_ID);
+		query.setParameter("param1", globalId);
+
+		return executeQuery(OrganisationUserTbl.class, query);
+	}
+
+	
 }

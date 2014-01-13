@@ -113,7 +113,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	private TestService testService;
 	private SpecimenService specimenService;
 	private NetPosService netPosService;
-	private static final Log log = LogFactory.getLog(SuperAdminServiceImpl.class);
+	private static final Log log = LogFactory
+			.getLog(SuperAdminServiceImpl.class);
 	private OrganisationService organisationService;
 
 	/**
@@ -234,21 +235,21 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public ResponseDTO forgotPassword(LoginDTO login) {
 		ResponseDTO response = new ResponseDTO();
 		if (login.getUserName() == null || login.getUserName().equals("")) {
-			ServiceException se = new 
+			ServiceException se = new
 
-ServiceException(ErrorCodeEnum.InvalidUserName);
+			ServiceException(ErrorCodeEnum.InvalidUserName);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		UserCredentials user = 
+		UserCredentials user =
 
-superAdminDao.getUserCredentials(login);
-		if (user.getEmailId() == null || user.getEmailId().equals("")) 
+		superAdminDao.getUserCredentials(login);
+		if (user.getEmailId() == null || user.getEmailId().equals(""))
 
-{
-			ServiceException se = new 
+		{
+			ServiceException se = new
 
-ServiceException(ErrorCodeEnum.InvalidMailId);
+			ServiceException(ErrorCodeEnum.InvalidMailId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
@@ -259,30 +260,30 @@ ServiceException(ErrorCodeEnum.InvalidMailId);
 	}
 
 	/**
-	 * Method to send email for resetting password.It will perform the 
-
-following
-	 * operations. 1.Take default email HTML template from Apache folder
-	 * 2.Create email body 3.Send email to the superAdmin.
+	 * Method to send email for resetting password.It will perform the
+	 * 
+	 * following operations. 1.Take default email HTML template from Apache
+	 * folder 2.Create email body 3.Send email to the superAdmin.
 	 */
 	private void sendEmailForResetPassword(String subject, UserCredentials user) {
 
 		String msgBody = "";
 		URL url = null;
 		try {
-			url = new URL("http://" + netlimsServerIpAddress +  
+			url = new URL("http://" + netlimsServerIpAddress +
 
-"/youNeverWait/EmailFormat/ForgotPassword.html");
+			"/youNeverWait/EmailFormat/ForgotPassword.html");
 			msgBody = createDefaultEmailBody(url, user);
 			// EmailSender.sendEmail(emailId, mailFrom, subject, msgBody);
-			SendMailMsgObj obj = new SendMailMsgObj(subject, 
+			SendMailMsgObj obj = new SendMailMsgObj(subject,
 
-msgBody,user.getEmailId(), mailFrom, 0, 0, 
+			msgBody, user.getEmailId(), mailFrom, 0, 0,
 
-null,SendMsgCallbackEnum.SUPERADMIN_RESET_PWD.getId(), null);
+			null, SendMsgCallbackEnum.SUPERADMIN_RESET_PWD.getId(), null);
 			mailThread.addSendMsgObj(obj);
 		} catch (IOException e) {
-			log.error("Error while sending forgot password mail to SuperAdmin ",
+			log.error(
+					"Error while sending forgot password mail to SuperAdmin ",
 					e);
 			e.printStackTrace();
 		}
@@ -291,32 +292,38 @@ null,SendMsgCallbackEnum.SUPERADMIN_RESET_PWD.getId(), null);
 	/**
 	 * Method to create email body for Reset password
 	 */
-	private String createDefaultEmailBody(URL url, UserCredentials user)throws IOException {
+	private String createDefaultEmailBody(URL url, UserCredentials user)
+			throws IOException {
 
 		StringBuffer msgBodyBfr = new StringBuffer();
 		String fullMsgBody = "";
-		String encryptedUserName = 
+		String encryptedUserName =
 
-StringEncoder.encryptWithStaticKey(user.getUserName());
-		String resetPasswordLink = "http://" + netlimsServerIpAddress+ 
+		StringEncoder.encryptWithStaticKey(user.getUserName());
+		String resetPasswordLink = "http://" + netlimsServerIpAddress +
 
-"/youNeverWait/EmailFormat/ResetPassword.html?userName=" + encryptedUserName;
+		"/youNeverWait/EmailFormat/ResetPassword.html?userName="
+				+ encryptedUserName;
 		java.net.URLConnection openConnection = url.openConnection();
 		InputStream inputStream = openConnection.getInputStream();
-		BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				inputStream));
 		String readLine = "";
-		while ((readLine = in.readLine()) != null) {msgBodyBfr.append(readLine).append("\n");
+		while ((readLine = in.readLine()) != null) {
+			msgBodyBfr.append(readLine).append("\n");
 		}
 		in.close();
 		fullMsgBody = msgBodyBfr.toString();
 		if (user.getFirstName() != null && !user.getFirstName().equals("")) {
-			fullMsgBody = fullMsgBody.replace("{firstname}",user.getFirstName());
+			fullMsgBody = fullMsgBody.replace("{firstname}",
+					user.getFirstName());
 		} else {
 			fullMsgBody = fullMsgBody.replace("{firstname}", "admin,");
 		}
 
-		fullMsgBody = fullMsgBody.replace("{ResetLink}",resetPasswordLink);
-		fullMsgBody = fullMsgBody.replace("{serverIpAddress}",netlimsServerIpAddress);
+		fullMsgBody = fullMsgBody.replace("{ResetLink}", resetPasswordLink);
+		fullMsgBody = fullMsgBody.replace("{serverIpAddress}",
+				netlimsServerIpAddress);
 
 		return fullMsgBody;
 	}
@@ -328,9 +335,9 @@ StringEncoder.encryptWithStaticKey(user.getUserName());
 	 * @return ResponseDTO
 	 */
 	@Override
-	public ResponseDTO changePassword(@RequestBody PasswordDTO passwords) 
+	public ResponseDTO changePassword(@RequestBody PasswordDTO passwords)
 
-{
+	{
 		validator.validatePasswords(passwords);
 		ResponseDTO response = superAdminDao.changePassword(passwords);
 		return response;
@@ -357,9 +364,9 @@ StringEncoder.encryptWithStaticKey(user.getUserName());
 	@Override
 	public ResponseDTO createNetPos(NetPosDTO netPos) {
 		ResponseDTO response = netPosService.createNetPos(netPos);
- 		return response;
+		return response;
 	}
-	
+
 	/**
 	 * Update netmd account
 	 * 
@@ -372,8 +379,7 @@ StringEncoder.encryptWithStaticKey(user.getUserName());
 		ResponseDTO response = netMdService.updateNetMd(netMd);
 		return response;
 	}
-	
-	
+
 	/**
 	 * Method to delete a NetMd account
 	 */
@@ -383,7 +389,7 @@ StringEncoder.encryptWithStaticKey(user.getUserName());
 		ResponseDTO response = netMdService.deleteNetMd(netMdId);
 		return response;
 	}
-	
+
 	/**
 	 * Method to delete a NetPos account
 	 */
@@ -484,7 +490,8 @@ StringEncoder.encryptWithStaticKey(user.getUserName());
 		validator.validateLogin(login);
 		String userName = login.getUserName().trim();
 		login.setUserName(userName);
-		String encPassword = StringEncoder.encryptWithKey(login.getPassword().trim());
+		String encPassword = StringEncoder.encryptWithKey(login.getPassword()
+				.trim());
 		login.setPassword(encPassword);
 		response = superAdminDao.login(login);
 		return response;
@@ -519,7 +526,8 @@ StringEncoder.encryptWithStaticKey(user.getUserName());
 	 */
 	@Override
 	public NetMdBranchListResponseDTO getBranchList(FilterDTO filter) {
-		NetMdBranchListResponseDTO response = netMdService.getBranchList(filter);
+		NetMdBranchListResponseDTO response = netMdService
+				.getBranchList(filter);
 		return response;
 	}
 
@@ -614,8 +622,8 @@ StringEncoder.encryptWithStaticKey(user.getUserName());
 	 * 
 	 * @see
 	 * 
-
-com.nv.youNeverWait.user.bl.service.SuperAdminService#userLogList(com
+	 * 
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#userLogList(com
 	 * .nv.youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
@@ -647,10 +655,10 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#userLogList(com
 			queryBuilder.addFilter(filter);
 		}
 		// build query
-		TypedQuery<LogTbl> q = 
+		TypedQuery<LogTbl> q =
 
-queryBuilder.buildQuery(filterDTO.isAsc(),
-				filterDTO.getFrom(), filterDTO.getCount());
+		queryBuilder.buildQuery(filterDTO.isAsc(), filterDTO.getFrom(),
+				filterDTO.getCount());
 
 		Long count = queryBuilder.getCount();
 		System.out.println("queryBuilder.getCount():" + count);
@@ -679,9 +687,9 @@ queryBuilder.buildQuery(filterDTO.isAsc(),
 			String logOutTime = null;
 			String loginTime = null;
 			String actionDate = null;
-			SimpleDateFormat df = new 
+			SimpleDateFormat df = new
 
-SimpleDateFormat(Constants.DATE_FORMAT_DAY_FIRST);
+			SimpleDateFormat(Constants.DATE_FORMAT_DAY_FIRST);
 			if (logTbl.getLoginTime() != null) {
 				loginTime = df.format(logTbl.getLoginTime());
 			}
@@ -735,18 +743,19 @@ SimpleDateFormat(Constants.DATE_FORMAT_DAY_FIRST);
 	}
 
 	/**
-	 * To retrieve a list of netRx branches which satisfy all filter 
-
-conditions
+	 * To retrieve a list of netRx branches which satisfy all filter
+	 * 
+	 * conditions
 	 * 
 	 * @param filter
 	 * @return NetMdBranchListResponseDTO
 	 */
 	@Override
-	public NetRxBranchListResponseDTO getNetRxBranchList(FilterDTO filter) 
+	public NetRxBranchListResponseDTO getNetRxBranchList(FilterDTO filter)
 
-{
-		NetRxBranchListResponseDTO response = netRxService.getNetRxBranchList(filter);
+	{
+		NetRxBranchListResponseDTO response = netRxService
+				.getNetRxBranchList(filter);
 		return response;
 	}
 
@@ -796,7 +805,8 @@ conditions
 	 */
 	@Override
 	public NetRxBranchResponseDTO viewNetRxBranch(int netrxBranchId) {
-		NetRxBranchResponseDTO response = netRxService.viewBranch(netrxBranchId);
+		NetRxBranchResponseDTO response = netRxService
+				.viewBranch(netrxBranchId);
 		return response;
 	}
 
@@ -823,23 +833,23 @@ conditions
 	}
 
 	/**
-	 * To show all the total orders and its related details of each branch 
-
-in
-	 * the lab
+	 * To show all the total orders and its related details of each branch
+	 * 
+	 * in the lab
 	 * 
 	 * @param globalId
 	 * @return BranchOrdersResponseDTO
 	 */
 	@Override
 	public BranchOrdersResponseDTO viewBranchOrders(int globalId) {
-		BranchOrdersResponseDTO response = labService.viewBranchOrders(globalId);
+		BranchOrdersResponseDTO response = labService
+				.viewBranchOrders(globalId);
 		return response;
 	}
-	
+
 	/**
 	 * Method for listing orders
- 	 */
+	 */
 	@Override
 	public BranchOrdersResponseDTO orderList(FilterDTO filterDTO) {
 		BranchOrdersResponseDTO response = labService.orderList(filterDTO);
@@ -854,9 +864,9 @@ in
 	 */
 	@Override
 	public BranchSystemInfoDetails viewBranchSystemInfo(int branchId) {
-		BranchSystemInfoDetails response = 
+		BranchSystemInfoDetails response =
 
-labService.viewBranchSystemInfoDetails(branchId);
+		labService.viewBranchSystemInfoDetails(branchId);
 		return response;
 	}
 
@@ -867,9 +877,9 @@ labService.viewBranchSystemInfoDetails(branchId);
 	 * @return
 	 */
 	@Override
-	public ResponseDTO updateLabBranchSystemInfo(BranchSystemInfoDetails 
+	public ResponseDTO updateLabBranchSystemInfo(BranchSystemInfoDetails
 
-details) {
+	details) {
 		ResponseDTO response = labService.updateLabBranchSystemInfo(details);
 		return response;
 	}
@@ -879,8 +889,8 @@ details) {
 	 * 
 	 * @see
 	 * 
-
-com.nv.youNeverWait.user.bl.service.SuperAdminService#testList(com.nv
+	 * 
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#testList(com.nv
 	 * .youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
@@ -894,8 +904,8 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#testList(com.nv
 	 * 
 	 * @see
 	 * 
-
-com.nv.youNeverWait.user.bl.service.SuperAdminService#specimenList(com
+	 * 
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#specimenList(com
 	 * .nv.youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
@@ -910,18 +920,18 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#specimenList(com
 	 * 
 	 * @see
 	 * 
-
-com.nv.youNeverWait.user.bl.service.SuperAdminService#enableSyncLog(com
-	 * .nv.youNeverWait.rs.dto.LogDTO, 
-
-javax.servlet.http.HttpServletRequest)
+	 * 
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#enableSyncLog(com
+	 * .nv.youNeverWait.rs.dto.LogDTO,
+	 * 
+	 * javax.servlet.http.HttpServletRequest)
 	 */
 	@Override
 	public ResponseDTO enableSyncLog(SyncLogDTO syncLog,
 			HttpServletRequest request) {
-		ResponseDTO response = superAdminDao.enableSyncLog(syncLog, 
+		ResponseDTO response = superAdminDao.enableSyncLog(syncLog,
 
-request);
+		request);
 		return response;
 	}
 
@@ -930,8 +940,8 @@ request);
 	 * 
 	 * @see
 	 * 
-
-com.nv.youNeverWait.user.bl.service.SuperAdminService#setSyncFreq(com
+	 * 
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#setSyncFreq(com
 	 * .nv.youNeverWait.rs.dto.SyncFreqDTO)
 	 */
 	@Override
@@ -942,7 +952,7 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#setSyncFreq(com
 	}
 
 	/**
-	 * Method to set synchronization interval time for a  NetLims
+	 * Method to set synchronization interval time for a NetLims
 	 */
 	@Override
 	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync) {
@@ -950,9 +960,8 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#setSyncFreq(com
 		return response;
 	}
 
-
 	/**
-	 * Method to set synchronization interval time for a  NetLims branch
+	 * Method to set synchronization interval time for a NetLims branch
 	 */
 	@Override
 	public SyncFreqResponseDTO setBranchSync(SyncFreqDTO sync) {
@@ -960,9 +969,8 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#setSyncFreq(com
 		return response;
 	}
 
-
 	/**
-	 * Method to set synchronization interval time for a  NetMd
+	 * Method to set synchronization interval time for a NetMd
 	 */
 	@Override
 	public SyncFreqResponseDTO setNetMdSync(SyncFreqDTO sync) {
@@ -971,7 +979,7 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#setSyncFreq(com
 	}
 
 	/**
-	 * Method to set synchronization interval time for a  NetMd branch
+	 * Method to set synchronization interval time for a NetMd branch
 	 */
 	@Override
 	public SyncFreqResponseDTO setNetMdBranchSync(SyncFreqDTO sync) {
@@ -980,7 +988,7 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#setSyncFreq(com
 	}
 
 	/**
-	 * Method to set synchronization interval time for a  NetRx
+	 * Method to set synchronization interval time for a NetRx
 	 */
 	@Override
 	public SyncFreqResponseDTO setNetRxSync(SyncFreqDTO sync) {
@@ -988,8 +996,8 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#setSyncFreq(com
 		return response;
 	}
 
-	/** 
-	 * Method to set synchronization interval time for a  NetRx branch
+	/**
+	 * Method to set synchronization interval time for a NetRx branch
 	 */
 	@Override
 	public SyncFreqResponseDTO setNetRxBranchSync(SyncFreqDTO sync) {
@@ -1002,8 +1010,8 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#setSyncFreq(com
 	 * 
 	 * @see
 	 * 
-
-com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncDetails()
+	 * 
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncDetails()
 	 */
 	@Override
 	public SyncFreqDTO getSyncDetails() {
@@ -1018,17 +1026,18 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncDetails()
 	 * viewNetMdBranchSystemInfo(java.lang.String)
 	 */
 	@Override
-	public BranchSystemInfoDetails viewNetMdBranchSystemInfo(String 
+	public BranchSystemInfoDetails viewNetMdBranchSystemInfo(String
 
-passphrase) {
-		BranchSystemInfoDetails response = 
+	passphrase) {
+		BranchSystemInfoDetails response =
 
-netMdService.viewNetmdBranchSystemInfoDetails(passphrase);
+		netMdService.viewNetmdBranchSystemInfoDetails(passphrase);
 		return response;
 	}
 
 	/**
 	 * Filter method for getting list of bills in netmd
+	 * 
 	 * @param filter
 	 * @return BranchBillListResponseDTO
 	 */
@@ -1048,9 +1057,9 @@ netMdService.viewNetmdBranchSystemInfoDetails(passphrase);
 	@Override
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails) {
-		ResponseDTO response = 
+		ResponseDTO response =
 
-netMdService.updateNetmdBranchSystemInfo(systemCriticalDetails);
+		netMdService.updateNetmdBranchSystemInfo(systemCriticalDetails);
 		return response;
 	}
 
@@ -1088,10 +1097,10 @@ netMdService.updateNetmdBranchSystemInfo(systemCriticalDetails);
 			queryBuilder.addFilter(filter);
 		}
 		// build query
-		TypedQuery<SyncLogTbl> q = 
+		TypedQuery<SyncLogTbl> q =
 
-queryBuilder.buildQuery(filterDTO.isAsc(),
-				filterDTO.getFrom(), filterDTO.getCount());
+		queryBuilder.buildQuery(filterDTO.isAsc(), filterDTO.getFrom(),
+				filterDTO.getCount());
 
 		Long count = queryBuilder.getCount();
 		System.out.println("queryBuilder.getCount():" + count);
@@ -1104,22 +1113,21 @@ queryBuilder.buildQuery(filterDTO.isAsc(),
 	}
 
 	private SyncLogListResponseDTO getSyncLogList(List<SyncLogTbl> logs) {
-		SyncLogListResponseDTO response = new 
+		SyncLogListResponseDTO response = new
 
-SyncLogListResponseDTO();
+		SyncLogListResponseDTO();
 		if (logs == null) {
 			return response;
 		}
-		List<SyncLogDetail> syncLogList = new 
+		List<SyncLogDetail> syncLogList = new
 
-ArrayList<SyncLogDetail>();
+		ArrayList<SyncLogDetail>();
 		for (SyncLogTbl synclogTbl : logs) {
 
 			String lastsyncTime = null;
 			SimpleDateFormat df = new SimpleDateFormat(
-					
 
-Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+			Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 			if (synclogTbl.getLastSyncTime() != null) {
 				lastsyncTime = df.format(synclogTbl.getLastSyncTime());
 			}
@@ -1135,12 +1143,12 @@ Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 	 * 
 	 * @see
 	 * 
-
-com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncLogStatus()
+	 * 
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncLogStatus()
 	 */
 	@Override
 	public EnableLogStatusResponseDTO getSyncLogStatus() {
-		EnableLogStatusResponseDTO response  = superAdminDao.getSyncLogStatus();
+		EnableLogStatusResponseDTO response = superAdminDao.getSyncLogStatus();
 		return response;
 	}
 
@@ -1270,9 +1278,9 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#getSyncLogStatus()
 	 * @param queryBuilderFactory
 	 *            the queryBuilderFactory to set
 	 */
-	public void setQueryBuilderFactory(QueryBuilderFactory 
+	public void setQueryBuilderFactory(QueryBuilderFactory
 
-queryBuilderFactory) {
+	queryBuilderFactory) {
 		this.queryBuilderFactory = queryBuilderFactory;
 	}
 
@@ -1336,14 +1344,15 @@ queryBuilderFactory) {
 		this.specimenService = specimenService;
 	}
 
-	
-
-	/* (non-Javadoc)
-	 * @see 
-
-com.nv.youNeverWait.user.bl.service.SuperAdminService#updateNetPos(com.nv.youNeverWait.rs.dto.NetP
-
-osDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * 
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#updateNetPos(com.nv.
+	 * youNeverWait.rs.dto.NetP
+	 * 
+	 * osDTO)
 	 */
 	@Override
 	public ResponseDTO updateNetPos(NetPosDTO netPos) {
@@ -1351,147 +1360,182 @@ osDTO)
 		return response;
 	}
 
-	/* (non-Javadoc)
-	 * @see 
-
-com.nv.youNeverWait.user.bl.service.SuperAdminService#viewNetPos(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * 
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#viewNetPos(int)
 	 */
 	@Override
 	public NetPosViewResponseDTO viewNetPos(int netPosId) {
 		NetPosViewResponseDTO response = netPosService.viewNetPos(netPosId);
 		return response;
-	
+
 	}
 
-	/* (non-Javadoc)
-	 * @see 
-
-com.nv.youNeverWait.user.bl.service.SuperAdminService#createOrganisation(com.nv.youNeverWait.rs.dto.
-
-Organisation)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * 
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#createOrganisation(com
+	 * .nv.youNeverWait.rs.dto.
+	 * 
+	 * Organisation)
 	 */
 	@Override
 	public ResponseDTO createOrganisation(Organisation organztion) {
-		ResponseDTO response=organisationService.createOrganisation(organztion);
+		ResponseDTO response = organisationService
+				.createOrganisation(organztion);
 		return response;
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see 
-
-com.nv.youNeverWait.user.bl.service.SuperAdminService#updateOrganisation(com.nv.youNeverWait.rs.dto.
-
-Organisation)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * 
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#updateOrganisation(com
+	 * .nv.youNeverWait.rs.dto.
+	 * 
+	 * Organisation)
 	 */
 	@Override
 	public ResponseDTO updateOrganisation(Organisation organztion) {
-		ResponseDTO response=organisationService.updateOrganisation(organztion);
+		ResponseDTO response = organisationService
+				.updateOrganisation(organztion);
 		return response;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#viewOrganisation(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#viewOrganisation
+	 * (int)
 	 */
 	@Override
 	public OrganizationViewResponseDTO viewOrganisation(int globalId) {
-		OrganizationViewResponseDTO 
+		OrganizationViewResponseDTO
 
-response=organisationService.viewOrganisation(globalId);
+		response = organisationService.viewOrganisation(globalId);
 		return response;
 	}
 
-
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#deleteOrganisation(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#deleteOrganisation
+	 * (int)
 	 */
 	@Override
 	public ResponseDTO deleteOrganisation(int globalId) {
-		ResponseDTO response=organisationService.deleteOrganisation(globalId);
+		ResponseDTO response = organisationService.deleteOrganisation(globalId);
 		return response;
 	}
-	
 
-	/* (non-Javadoc)
-	 * @see 
-
-com.nv.youNeverWait.user.bl.service.SuperAdminService#getOrganisationList(com.nv.youNeverWait.rs.dto.
-
-FilterDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * 
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#getOrganisationList(
+	 * com.nv.youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
 	public OrganisationListResponseDTO getOrganisationList(FilterDTO filter) {
-		OrganisationListResponseDTO 
-
-response=organisationService.getOrganisationList(filter);
+		OrganisationListResponseDTO response = organisationService
+				.getOrganisationList(filter);
 		return response;
 	}
-	
-	
-	/* (non-Javadoc)
-	 * @see 
 
-com.nv.youNeverWait.user.bl.service.SuperAdminService#createOrganisationUser(com.nv.youNeverWait.rs.
-
-dto.OrganisationUserDetail)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * 
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#createOrganisationUser
+	 * (com.nv.youNeverWait.rs.dto.OrganisationUserDetail)
 	 */
 	@Override
 	public ResponseDTO createOrganisationUser(
 			OrganisationUserDetail organztionUser) {
-		ResponseDTO response=organisationService.createUser(organztionUser);
+		ResponseDTO response = organisationService.createUser(organztionUser);
 		return response;
 	}
 
-	/* (non-Javadoc)
-	 * @see 
-
-com.nv.youNeverWait.user.bl.service.SuperAdminService#updateOrganisationUser(com.nv.youNeverWait.rs
-
-.dto.OrganisationUserDetail)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * 
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#updateOrganisationUser
+	 * (com.nv.youNeverWait.rs
+	 * 
+	 * .dto.OrganisationUserDetail)
 	 */
 	@Override
 	public ResponseDTO updateOrganisationUser(
 			OrganisationUserDetail organztionUser) {
-		ResponseDTO response=organisationService.updateUser(organztionUser);
+		ResponseDTO response = organisationService.updateUser(organztionUser);
 		return response;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#viewOrganisationUser(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#viewOrganisationUser
+	 * (int)
 	 */
 	@Override
 	public ViewOrganisationUser viewOrganisationUser(int globalId) {
-		ViewOrganisationUser response=organisationService.viewUser(globalId);
+		ViewOrganisationUser response = organisationService.viewUser(globalId);
 		return response;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#deleteOrganisationUser(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#deleteOrganisationUser
+	 * (int)
 	 */
 	@Override
 	public ResponseDTO deleteOrganisationUser(int globalId) {
-		ResponseDTO response=organisationService.deleteUser(globalId);
+		ResponseDTO response = organisationService.deleteUser(globalId);
 		return response;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#getOrganisationUserList(com.nv.youNeverWait.rs.dto.FilterDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#getOrganisationUserList
+	 * (com.nv.youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
 	public OrganisationUsersList getOrganisationUserList(FilterDTO filter) {
-		OrganisationUsersList response=organisationService.getUserList(filter);
+		OrganisationUsersList response = organisationService
+				.getUserList(filter);
 		return response;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.bl.service.SuperAdminService#getNetPosList(com.nv.youNeverWait.rs.dto.FilterDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.bl.service.SuperAdminService#getNetPosList(com
+	 * .nv.youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
 	public NetPosListResponseDTO getNetPosList(FilterDTO filter) {
 		NetPosListResponseDTO response = netPosService.list(filter);
 		return response;
 	}
-	
+
 	public NetPosService getNetPosService() {
 		return netPosService;
 	}
@@ -1501,7 +1545,8 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#updateOrganisationUser(com
 	}
 
 	/**
-	 * @param organisationService the organisationService to set
+	 * @param organisationService
+	 *            the organisationService to set
 	 */
 	public void setOrganisationService(OrganisationService organisationService) {
 		this.organisationService = organisationService;
@@ -1513,7 +1558,5 @@ com.nv.youNeverWait.user.bl.service.SuperAdminService#updateOrganisationUser(com
 	public OrganisationService getOrganisationService() {
 		return organisationService;
 	}
-
-	
 
 }

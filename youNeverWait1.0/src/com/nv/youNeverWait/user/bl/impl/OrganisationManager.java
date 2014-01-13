@@ -26,19 +26,23 @@ import org.apache.commons.logging.LogFactory;
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
 import com.nv.framework.sendmsg.email.SendMailMsgObj;
+import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
+import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.OrganisationTbl;
+import com.nv.youNeverWait.pl.entity.OrganisationUserTbl;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
-import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
-import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
+import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.Organisation;
 import com.nv.youNeverWait.rs.dto.OrganisationListResponseDTO;
 import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
 import com.nv.youNeverWait.rs.dto.OrganisationUsersList;
 import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
 import com.nv.youNeverWait.user.bl.service.OrganisationService;
 import com.nv.youNeverWait.user.bl.validation.OrganisationValidator;
@@ -96,8 +100,7 @@ public class OrganisationManager  implements OrganisationService{
 					organztion.getOwnerEmail(), mailFrom, 0, 0, null,
 					SendMsgCallbackEnum.ORGANISATION_REGISTRATION.getId(), null);
 			mailThread.addSendMsgObj(obj);
-			// /EmailSender.sendEmail(netMd.getOwnerEmail(), mailFrom, subject,
-			// msgBody);
+		
 		} catch (IOException e) {
 			log.error(
 					"Error while sending organisation registration email to the owner's email id ",
@@ -109,8 +112,7 @@ public class OrganisationManager  implements OrganisationService{
 	/**
 	 * To create email body
 	 * 
-	 * @param url
-	 *            ,netMd
+	 * @param url ,organztion
 	 * 
 	 * @return email message body
 	 */
@@ -150,7 +152,7 @@ public class OrganisationManager  implements OrganisationService{
 	 */
 	@Override
 	public ResponseDTO updateOrganisation(Organisation organztion) {
-		validator.validateGlobalId(organztion.getId());
+		validator.validateGlobalId(organztion.getGlobalId());
 		validator.validateOrganisationDetails(organztion);
 		ResponseDTO response=organisationDao.updateOrganisation(organztion);
 		return response;
@@ -221,10 +223,10 @@ public class OrganisationManager  implements OrganisationService{
 	}
 
 	/**
-	 * Assign netmd record details to response
+	 * Assign organisation record details to response
 	 * 
-	 * @param netmdList
-	 * @return NetMdListResponseDTO
+	 * @param orgList
+	 * @return OrganisationListResponseDTO
 	 */
 	private OrganisationListResponseDTO getOrganisationList(List<OrganisationTbl> orgList) {
 		OrganisationListResponseDTO response = new OrganisationListResponseDTO();
@@ -249,6 +251,9 @@ public class OrganisationManager  implements OrganisationService{
 			organization.setHeadOfficeName(organisationTbl.getHeadOfficeName());
 			organization.setUserName(organisationTbl.getOrganisationLoginTbl().getUserName());
 			organization.setUserType(organisationTbl.getOrganisationLoginTbl().getUserType());
+			organization.setDepartmentType(organisationTbl.getDepartmentType());
+			organization.setStatus(organisationTbl.getStatus());
+			organisationDetails.add(organization);
 		}
 		response.setOrganisation(organisationDetails);
 		return response;
@@ -258,9 +263,73 @@ public class OrganisationManager  implements OrganisationService{
 	 * @see com.nv.youNeverWait.user.bl.service.OrganisationService#getOrganisationUserList(com.nv.youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
-	public OrganisationUsersList getUserList(FilterDTO filter) {
-		// TODO Auto-generated method stub
-		return null;
+	public OrganisationUsersList getUserList(FilterDTO filterDTO) {
+			OrganisationUsersList response = new OrganisationUsersList();
+
+		// validate filterDTO to identify invalid expressions and if there is
+		// any,
+		// return result with appropriate error code
+		ErrorDTO error = validator.validateUserFilter(filterDTO);
+		if (error != null) {
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+
+		// get queryBuilder for lab from builder factory
+		QueryBuilder queryBuilder = queryBuilderFactory
+				.getQueryBuilder(Constants.ORGANISATION_USER);
+		if (queryBuilder == null) {
+			return response;
+		}
+		for (ExpressionDTO exp : filterDTO.getExp()) {
+
+			// get filter from filter factory by setting expression name and
+			// value to filter
+			Filter filter = filterFactory.getFilter(exp);
+			queryBuilder.addFilter(filter);
+		}
+		// build query
+		TypedQuery<OrganisationUserTbl> q = queryBuilder.buildQuery(filterDTO.isAsc(),
+				filterDTO.getFrom(), filterDTO.getCount());
+
+		Long count = queryBuilder.getCount();
+		System.out.println("queryBuilder.getCount():" + count);
+		// execute query
+		List<OrganisationUserTbl> organisationUserList = queryBuilder.executeQuery(q);
+		response = getOrganisationUserList(organisationUserList);
+		response.setCount(count);
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * Assign organization user record details to response
+	 * 
+	 * @param orgUserList
+	 * @return OrganisationUsersList
+	 */
+	private OrganisationUsersList getOrganisationUserList(List<OrganisationUserTbl> orgUserList) {
+		OrganisationUsersList response = new OrganisationUsersList();
+		if (orgUserList.isEmpty()) {
+			return response;
+		}
+		List<OrganisationUserDetail> organisationUserDetails = new ArrayList<OrganisationUserDetail>();
+		for (OrganisationUserTbl organisationUserTbl : orgUserList) {
+			OrganisationUserDetail userDetail = new OrganisationUserDetail();
+			userDetail.setAddress(organisationUserTbl.getAddress());
+			userDetail.setEmail(organisationUserTbl.getEmail());
+			userDetail.setFirstName(organisationUserTbl.getFirstName());
+			userDetail.setLastName(organisationUserTbl.getLastName());
+			userDetail.setMobile(organisationUserTbl.getMobile());
+			userDetail.setOrganisationId(organisationUserTbl.getOrganisationTbl().getId());
+			userDetail.setPhone(organisationUserTbl.getPhone());
+			userDetail.setUserName(organisationUserTbl.getOrganisationLoginTbl().getUserName());
+			userDetail.setUserType(organisationUserTbl.getOrganisationLoginTbl().getUserType());
+			organisationUserDetails.add(userDetail);
+		}
+		response.setOrganisationUsers(organisationUserDetails);
+		return response;
 	}
 
 	/* (non-Javadoc)
@@ -289,6 +358,8 @@ public class OrganisationManager  implements OrganisationService{
 	@Override
 	public ResponseDTO updateUser(
 			OrganisationUserDetail organztionUser) {
+		validator.validateGlobalId(organztionUser.getGlobalId());
+		validator.validateGlobalId(organztionUser.getOrganisationId());
 		validator.validateUserDetails(organztionUser);
 		ResponseDTO response = organisationDao.updateUser(organztionUser);
 		return response;
@@ -308,6 +379,102 @@ public class OrganisationManager  implements OrganisationService{
 		return response;
 	}
 	
+	@Override
+	public ResponseDTO forgotPassword(LoginDTO login) {
+		ResponseDTO response = new ResponseDTO();
+		if (login.getUserName() == null || login.getUserName().equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUserName);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		UserCredentials user = organisationDao.getUserCredentials(login);
+		if (user.getEmailId() == null || user.getEmailId().equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidMailId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		sendEmailForResetPassword(Constants.RESET_PASSWORD, user);
+		response.setSuccess(true);
+		return response;
+
+	}
+	
+	@Override
+	public ResponseDTO resetPassword(LoginDTO login) {
+		validator.validateUserNameAndPassword(login.getUserName(),
+				login.getPassword());
+		ResponseDTO response = organisationDao.resetPassword(login);
+		return response;
+	}
+
+	/**
+	 * Method to send email for resetting password.It will perform the following
+	 * operations. 1.Take default email HTML template 2.Create email body 3.Send
+	 * email to the organization user/owner.
+	 */
+	private void sendEmailForResetPassword(String subject, UserCredentials user) {
+
+		String msgBody = "";
+		URL url = null;
+		try {
+			url = new URL("http://" + organisationServerIpAddress
+					+ "/youNeverWait/EmailFormat/OrganisationForgotPassword.html");
+			msgBody = createDefaultEmailBody(url, user);
+			// EmailSender.sendEmail(emailId, mailFrom, subject, msgBody);
+
+			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,
+					user.getEmailId(), mailFrom, 0, 0, null,
+					SendMsgCallbackEnum.ORGANISATION_RESET_PWD.getId(), null);
+			mailThread.addSendMsgObj(obj);
+		} catch (IOException e) {
+			log.error(
+					"Error while sending Email for resetting password in lab",
+					e);
+			e.printStackTrace();
+		}
+	}
+
+		/**
+	 * Method to create email body for Reset Password
+	 */
+	private String createDefaultEmailBody(URL url, UserCredentials user)
+			throws IOException {
+
+		StringBuffer msgBodyBfr = new StringBuffer();
+		String fullMsgBody = "";
+
+		String encryptedUserName = StringEncoder.encryptWithStaticKey(user
+				.getUserName());
+		String resetPasswordLink = "http://" + organisationServerIpAddress
+				+ "/youNeverWait/EmailFormat/OrganisationResetPassword.html?userName="
+				+ encryptedUserName;
+		java.net.URLConnection openConnection = url.openConnection();
+		InputStream inputStream = openConnection.getInputStream();
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				inputStream));
+		String readLine = "";
+		while ((readLine = in.readLine()) != null) {
+			msgBodyBfr.append(readLine).append("\n");
+		}
+		in.close();
+		fullMsgBody = msgBodyBfr.toString();
+		fullMsgBody = fullMsgBody.replace("{firstname}", user.getFirstName());
+		if (user.getLastName() != null && !user.getLastName().equals("")) {
+			fullMsgBody = fullMsgBody.replace("{lastname}", user.getLastName());
+		} else {
+			fullMsgBody = fullMsgBody.replace("{lastname}", "");
+		}
+		fullMsgBody = fullMsgBody.replace("{ResetLink}", resetPasswordLink);
+		fullMsgBody = fullMsgBody.replace("{serverIpAddress}",
+				organisationServerIpAddress);
+
+		return fullMsgBody;
+	}
+
+
 	/**
 	 * @param organztionUser
 	 * @param organisationName
@@ -375,6 +542,8 @@ public class OrganisationManager  implements OrganisationService{
 
 		return fullMsgBody;
 	}
+	 
+	
 	/**
 	/**
 	 * @return the organisationDao
@@ -481,5 +650,4 @@ public class OrganisationManager  implements OrganisationService{
 		return log;
 	}
 
-	
 }

@@ -68,20 +68,20 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	</bean>
 	<bean class="com.nv.youNeverWait.rs.ui.StartUpHtmlEndpoint" />
 
-	<bean class="com.nv.youNeverWait.rs.ui.AuthenticationResource" >
-	<property name="authenticationService">
+	<bean class="com.nv.youNeverWait.rs.ui.AuthenticationResource">
+		<property name="authenticationService">
 			<ref bean="authentication.service" />
 		</property>
 		<property name="logService">
 			<ref bean="log.service" />
 		</property>
 	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.DoctorResource" >
+	<bean class="com.nv.youNeverWait.rs.ui.DoctorResource">
 		<property name="service">
 			<ref bean="doctor.service" />
 		</property>
 	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.PatientResource" >
+	<bean class="com.nv.youNeverWait.rs.ui.PatientResource">
 		<property name="service">
 			<ref bean="patient.service" />
 		</property>
@@ -89,29 +89,29 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="log.service" />
 		</property>
 	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.SyncResource" >
+	<bean class="com.nv.youNeverWait.rs.ui.SyncResource">
 		<property name="service">
 			<ref bean="sync.service" />
 		</property>
 	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.SuperAdminResource" >
+	<bean class="com.nv.youNeverWait.rs.ui.SuperAdminResource">
 		<property name="service">
 			<ref bean="superAdmin.service" />
 		</property>
-			<property name="logService">
+		<property name="logService">
 			<ref bean="log.service" />
 		</property>
 	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.LabResource" >
+	<bean class="com.nv.youNeverWait.rs.ui.LabResource">
 		<property name="labService">
 			<ref bean="lab.service" />
 		</property>
 		<property name="logService">
 			<ref bean="log.service" />
 		</property>
-		
+
 	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.NetMdResource" >
+	<bean class="com.nv.youNeverWait.rs.ui.NetMdResource">
 		<property name="netMdService">
 			<ref bean="netMd.service" />
 		</property>
@@ -119,17 +119,17 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="log.service" />
 		</property>
 	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.ScheduleResource" >
+	<bean class="com.nv.youNeverWait.rs.ui.ScheduleResource">
 		<property name="scheduleService">
 			<ref bean="schedule.service" />
 		</property>
 	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.ResultResource" >
+	<bean class="com.nv.youNeverWait.rs.ui.ResultResource">
 		<property name="resultService">
 			<ref bean="result.service" />
 		</property>
 	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.NetRxResource" >
+	<bean class="com.nv.youNeverWait.rs.ui.NetRxResource">
 		<property name="netRxService">
 			<ref bean="netRx.service" />
 		</property>
@@ -137,20 +137,20 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="log.service" />
 		</property>
 	</bean>
-	
-	<bean class="com.nv.youNeverWait.rs.ui.TestResource" >
+
+	<bean class="com.nv.youNeverWait.rs.ui.TestResource">
 
 		<property name="testService">
 			<ref bean="test.service" />
 		</property>
 	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.SpecimenResource" >
+	<bean class="com.nv.youNeverWait.rs.ui.SpecimenResource">
 
 		<property name="specimenService">
 			<ref bean="specimen.service" />
 		</property>
 	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.ConfigResource" >
+	<bean class="com.nv.youNeverWait.rs.ui.ConfigResource">
 
 		<property name="configService">
 			<ref bean="config.service" />
@@ -159,10 +159,15 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="config.validator" />
 		</property>
 	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.OrderResource" >
-	    <property name="orderService">
+	<bean class="com.nv.youNeverWait.rs.ui.OrderResource">
+		<property name="orderService">
 			<ref bean="order.service" />
 		</property>
 	</bean>
-	
+	<bean class="com.nv.youNeverWait.rs.ui.OrganisationResource">
+		<property name="organisationService">
+			<ref bean="organisation.service" />
+		</property>
+	</bean>
+
 </beans>

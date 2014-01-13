@@ -45,4 +45,5 @@ public interface PatientDao {
 	public ResponseDTO updateCase(CaseDTO updatedPatientCase,
 			HeaderDTO header);
 	public boolean isEmailExists(String email);
+	public String getDepartmentNameById(int departmentId);
 }

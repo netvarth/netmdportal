@@ -194,6 +194,12 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 				</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.NetPosPropertyEnum
 				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.OrganisationPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.pl.entity.DepartmentTypeEnum</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.OrganisationUserPropertyEnum
+				</value>
+					<value>com.nv.youNeverWait.pl.entity.UserTypeEnum</value>
 			</list>
 		</property>
 	</bean>
@@ -563,6 +569,10 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 					value="com.nv.youNeverWait.util.filter.queryBuilder.LabOrderQueryBuilder" />
 				<entry key="netpos"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.NetPosQueryBuilder" />
+				<entry key="organisation"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.OrganisationQueryBuilder" />
+					<entry key="organisationUser"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.OrganisationUserQueryBuilder" />
 			</map>
 		</property>
 
@@ -744,6 +754,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	</bean>
 	<bean id="organisation.validator"
 		class="com.nv.youNeverWait.user.bl.validation.OrganisationValidator"></bean>
+	
 	<bean id="organisation.dao" class="com.nv.youNeverWait.user.pl.impl.OrganisationDaoImpl"></bean>
 
 	<bean id="questionnaire.service" class="com.nv.youNeverWait.user.bl.impl.QuestionnaireManager">
@@ -751,6 +762,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="questionnaire.dao" />
 		</property>
 	</bean>
+	
 	<bean id="questionnaire.dao" class="com.nv.youNeverWait.user.pl.impl.QuestionnaireDaoImpl">
 	</bean>
 </beans>		

@@ -276,7 +276,8 @@ public enum ErrorCodeEnum {
 	InvalidDepartmentId("4009","Invalid department id"),
 	InvalidCaseId("4010","Invalid case id"),
 	InvalidPatientId("4011","Invalid patient id"), 
-	InValidCaseName("4012","Case name is empty ")
+	InValidCaseName("4012","Case name is empty "), 
+	InvalidCaseStatus("4013","Invalid case status")
 	;
 	private String errCode;
 	private String errMsg;

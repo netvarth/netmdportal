@@ -2,6 +2,7 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -15,8 +16,11 @@ public class OrganisationLoginTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(unique = true, nullable = false)
 	private int id;
-
+	
+	@Column(name="password")
 	private String password;
 
 	@Column(name="user_name")

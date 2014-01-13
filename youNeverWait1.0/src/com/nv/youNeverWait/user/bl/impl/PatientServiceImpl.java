@@ -20,6 +20,7 @@ import com.nv.framework.sendmsg.email.SendMailMsgObj;
 import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.pl.entity.DepartmentTypeEnum;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
@@ -649,13 +650,13 @@ public class PatientServiceImpl implements PatientService {
 		validator.validateCase(newPatientCase);
 		ResponseDTO response= new ResponseDTO();
 		response = patientDao.createCase(newPatientCase,header);
-		
-		if(newPatientCase.getDepartmentName().trim().equals(Constants.OBSTETRICS) && response.getGlobalId()!=0){
+		String departmentName= patientDao.getDepartmentNameById(newPatientCase.getDepartmentId());
+		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
 			QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
-			 questionAnswer.setCaseId(response.getId());
+			 questionAnswer.setCaseId(response.getGlobalId());
 			 questionAnswer.setDepartmentId(newPatientCase.getDepartmentId());
 			 questionAnswer.setAnswerDTO(newPatientCase.getQuestionAnswerDTO().getAnswerDTO());
-			 response=questionnaireService.create(questionAnswer);
+			 response=questionnaireService.create(questionAnswer,header);
 		}
 		response.setSuccess(true);
 		return response;
@@ -667,14 +668,15 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public ResponseDTO updateCase(CaseDTO updatedPatientCase, HeaderDTO header) {
 		ResponseDTO response = new ResponseDTO();
-		validator.validateCase(updatedPatientCase);
+		validator.validateUpdatedCase(updatedPatientCase);
 		response = patientDao.updateCase(updatedPatientCase, header);
-		if(updatedPatientCase.getDepartmentName().trim().equals(Constants.OBSTETRICS) && response.getGlobalId()!=0){
+		String departmentName= patientDao.getDepartmentNameById(updatedPatientCase.getDepartmentId());
+		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
 			 QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
-			 questionAnswer.setCaseId(response.getId());
+			 questionAnswer.setCaseId(response.getGlobalId());
 			 questionAnswer.setDepartmentId(updatedPatientCase.getDepartmentId());
 			 questionAnswer.setAnswerDTO(updatedPatientCase.getQuestionAnswerDTO().getAnswerDTO());
-			 response=questionnaireService.update(questionAnswer);
+			 response=questionnaireService.update(questionAnswer,header);
 		}
 		response.setSuccess(true);
 		return response;

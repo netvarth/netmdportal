@@ -116,11 +116,13 @@ public class Constants {
 	public static final String MESSAGE = "Synchronization disabled.";
 	public static final String NETLIMS_ORDER = "order";
 	
-	/*Organisation*/
+	/*Organization*/
 	public static final String ORGANISATION_REGISTER = "Organisation Registration";
 	public static final String ORGANISATION = "organisation";
 	public static final String NETPOS = "netpos";
-	public static final String OBSTETRICS = "obstetrics";
+	public static final String HOME = "showing organization home page";
+	public static final String ORGANISATION_USER = "organisationUser";
+	
 	
 	
 	

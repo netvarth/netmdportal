@@ -11,7 +11,7 @@
 package com.nv.youNeverWait.util.filter.queryBuilder;
 
 import com.nv.youNeverWait.pl.dao.FilterDao;
-import com.nv.youNeverWait.pl.entity.OrganisationTbl;
+import com.nv.youNeverWait.pl.entity.OrganisationUserTbl;
 import com.nv.youNeverWait.util.filter.core.Criteria;
 import com.nv.youNeverWait.util.filter.core.Filter;
 
@@ -20,9 +20,9 @@ import com.nv.youNeverWait.util.filter.core.Filter;
  *
  * @author Luciya Jose
  */
-public class OrganisationQueryBuilder extends RootQueryBuilder<OrganisationTbl>{
+public class OrganisationUserQueryBuilder extends RootQueryBuilder<OrganisationUserTbl>{
 
-	public OrganisationQueryBuilder(){
+	public OrganisationUserQueryBuilder(){
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class OrganisationQueryBuilder extends RootQueryBuilder<OrganisationTbl>{
 	 */
 	@Override 
 	public void init(FilterDao dao) {
-		super.init(dao, OrganisationTbl.class);
+		super.init(dao, OrganisationUserTbl.class);
 	}
 
 	/**
@@ -40,8 +40,8 @@ public class OrganisationQueryBuilder extends RootQueryBuilder<OrganisationTbl>{
 	 */
 	@Override
 	public void addFilter(Filter filter) {
-		String referenceName = OrganisationPropertyEnum.valueOf(filter.getName()).getReferenceName();
-		String pathReferenceName =OrganisationPropertyEnum.valueOf(filter.getName()).getPathReferenceName();
+		String referenceName = OrganisationUserPropertyEnum.valueOf(filter.getName()).getReferenceName();
+		String pathReferenceName =OrganisationUserPropertyEnum.valueOf(filter.getName()).getPathReferenceName();
 
 		if(referenceName!=null && !referenceName.equals("")){
 			if(referenceMap.get(referenceName)==null){
@@ -53,7 +53,7 @@ public class OrganisationQueryBuilder extends RootQueryBuilder<OrganisationTbl>{
 				pathReferenceMap.put(pathReferenceName, referenceMap.get(referenceName).get(pathReferenceName));
 			}
 		}
-		Criteria criteria = filter.getPredicate(this, OrganisationPropertyEnum.valueOf(filter.getName()));
+		Criteria criteria = filter.getPredicate(this, OrganisationUserPropertyEnum.valueOf(filter.getName()));
 		if(criteria.getPredicate()!=null){
 			predicates.add(criteria.getPredicate());
 		}

@@ -11,6 +11,7 @@
 package com.nv.youNeverWait.user.bl.service;
 
 import com.nv.youNeverWait.rs.dto.FilterDTO;
+import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.Organisation;
 import com.nv.youNeverWait.rs.dto.OrganisationListResponseDTO;
 import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
@@ -85,5 +86,9 @@ public interface OrganisationService {
 	 * @return
 	 */
 	ResponseDTO createUser(OrganisationUserDetail organztionUser);
+
+	ResponseDTO forgotPassword(LoginDTO login);
+
+	ResponseDTO resetPassword(LoginDTO login);
 
 }

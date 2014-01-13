@@ -37,7 +37,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 					request.getRequestDispatcher("/ws/ui/patient/pForm")
 							.forward(request, response);
 					return false;
-					// response.sendRedirect("/youNeverWait/ws/ui/patient/pForm");
 
 				}
 			} // end of if loop of youNeverWait domain
@@ -74,7 +73,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 						request.getRequestDispatcher("/ws/ui/superAdmin/sForm")
 								.forward(request, response);
 						return false;
-						// response.sendRedirect("/youNeverWait/ws/ui/superAdmin/sForm");
 
 					}
 				}
@@ -118,7 +116,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 						request.getRequestDispatcher("/ws/ui/lab/lForm")
 								.forward(request, response);
 						return false;
-						// response.sendRedirect("/youNeverWait/ws/ui/lab/lForm");
+
 					}
 				}
 			} // end of netlims if loop
@@ -145,44 +143,69 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 					request.getRequestDispatcher("/ws/ui/netRx/rForm").forward(
 							request, response);
 					return false;
-					// response.sendRedirect("/youNeverWait/ws/ui/netRx/rForm");
+
 				}
 
 			} // end of netrx if loop
 
 			/* netMd domain */
 			if (request.getServerName().equals("www.netmd.co.in")) {
-				if (!request.getRequestURI().equals(
-						"/youNeverWait/ws/ui/netMd/mForm")
-						&& !request.getRequestURI().equals(
-								"/youNeverWait/ws/ui/auth/netmdLogin")
-						&& !request.getRequestURI().equals(
-								"/youNeverWait/ws/ui/auth/getCaptcha")
-						&& !request.getRequestURI().equals(
-								"/youNeverWait/ws/ui/auth/verifyCaptcha")
-						&& !request.getRequestURI().equals(
-								"/youNeverWait/ws/ui/netMd/resetPassword")
-						&& !request.getRequestURI().equals(
-								"/youNeverWait/ws/ui/doctor/resetPassword")
-						&& !request.getRequestURI().equals(
-								"/youNeverWait/ws/ui/netMd/forgotPassword")
-						&& !request.getRequestURI().equals(
-								"/youNeverWait/ws/ui/netMd/activateNetMd")
-						&& !request.getRequestURI().equals(
-								"/youNeverWait/ws/ui/sync/syncData")
-						&& !request.getRequestURI().equals(
-								"/youNeverWait/ws/ui/auth/getErrorCodes")
-						&& !request.getRequestURI().equals(
-								"/youNeverWait/ws/ui/auth/getEnumsList")
-						&& !request.getRequestURI().equals(
-								"/youNeverWait/ws/ui/netMd/privacyPolicy")) {
-					request.getRequestDispatcher("/ws/ui/netMd/mForm").forward(
-							request, response);
-					return false;
-					// response.sendRedirect("/youNeverWait/ws/ui/netMd/mForm");
+				String containr = request.getRequestURI();
+				String orgnContent = "youNeverWait/ws/ui/orgn/";
+				/* Organization domain */
+				if (containr.toUpperCase().contains(orgnContent.toUpperCase())) {
+					if (!request.getRequestURI().equals(
+							"/youNeverWait/ws/ui/orgn/oForm")
+							&& !request
+									.getRequestURI()
+									.equals("/youNeverWait/ws/ui/auth/organisationLogin")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/orgn/resetPassword")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/orgn/forgotPassword")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/auth/getErrorCodes")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/auth/getEnumsList")) {
+						request.getRequestDispatcher("/ws/ui/orgn/oForm")
+								.forward(request, response);
+						return false;
+
+					}
+				} else {
+					if (!request.getRequestURI().equals(
+							"/youNeverWait/ws/ui/netMd/mForm")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/auth/netmdLogin")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/auth/getCaptcha")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/auth/verifyCaptcha")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/netMd/resetPassword")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/doctor/resetPassword")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/netMd/forgotPassword")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/netMd/activateNetMd")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/sync/syncData")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/auth/getErrorCodes")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/auth/getEnumsList")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/netMd/privacyPolicy")) {
+						request.getRequestDispatcher("/ws/ui/netMd/mForm")
+								.forward(request, response);
+						return false;
+
+					}
 				}
 
 			}// end of netmd if loop
+
 		}
 		return true;
 	}

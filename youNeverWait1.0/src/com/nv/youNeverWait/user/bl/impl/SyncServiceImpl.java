@@ -175,7 +175,7 @@ public class SyncServiceImpl implements SyncService {
 
 			syncResponse.setBillResponse(billResponseList);
 			
-			/*Synchronising patient case details*/
+			/* Synchronizing patient case details*/
 			List<CaseSyncResponseDTO> caseResponseList= getCaseResponseList(sync.getHeader(),sync.getNewCaseList(),sync.getUpdateCaseList());
 			syncResponse.setPatientCaseResponse(caseResponseList);
 		}// end of if loop

@@ -26,6 +26,7 @@ import com.nv.youNeverWait.util.filter.core.Property;
 import com.nv.youNeverWait.util.filter.queryBuilder.NetMDBranchPropertyEnum;
 import com.nv.youNeverWait.util.filter.queryBuilder.NetMdPropertyEnum;
 import com.nv.youNeverWait.util.filter.queryBuilder.OrganisationPropertyEnum;
+import com.nv.youNeverWait.util.filter.queryBuilder.OrganisationUserPropertyEnum;
 import com.nv.youNeverWait.util.filter.validation.FilterValidator;
 
 /**
@@ -73,13 +74,7 @@ public class OrganisationValidator extends FilterValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (organztion.getHeadOfficeName() == null
-				|| organztion.getHeadOfficeName().isEmpty()) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidHeadOfficeName);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
+		
 		if (organztion.getHeadOfficeEmail() == null
 				|| organztion.getHeadOfficeEmail().isEmpty()
 				|| !isValidEmail(organztion.getHeadOfficeEmail())) {
@@ -161,6 +156,30 @@ public class OrganisationValidator extends FilterValidator {
 		return null;
 	}
 
+	
+	/**
+	 * @param filterDTO
+	 * @return
+	 */
+	public ErrorDTO validateUserFilter(FilterDTO filter) {
+		ErrorDTO error = new ErrorDTO();
+		for (ExpressionDTO exp : filter.getExp()) {
+			Property property = null;
+			try {
+				property = OrganisationUserPropertyEnum.valueOf(exp.getName());
+			} catch (IllegalArgumentException e) {
+				error = getInvalidExpNameError(exp);
+				return error;
+			}
+			error = validateExp(exp, property);
+			if (error != null) {
+				return error;
+			}
+		}
+		return null;
+	}
+
+
 	/**
 	 * @param organztionUser
 	 */
@@ -182,7 +201,6 @@ public class OrganisationValidator extends FilterValidator {
 			throw se;
 		}
 		UserTypeEnum.getEnum(user.getUserType());
-			
 	}
 
 	/**
