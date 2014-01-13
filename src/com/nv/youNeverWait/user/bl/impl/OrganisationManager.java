@@ -31,6 +31,7 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.OrganisationTbl;
+import com.nv.youNeverWait.pl.entity.OrganisationUserTbl;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
@@ -99,8 +100,7 @@ public class OrganisationManager  implements OrganisationService{
 					organztion.getOwnerEmail(), mailFrom, 0, 0, null,
 					SendMsgCallbackEnum.ORGANISATION_REGISTRATION.getId(), null);
 			mailThread.addSendMsgObj(obj);
-			// /EmailSender.sendEmail(netMd.getOwnerEmail(), mailFrom, subject,
-			// msgBody);
+		
 		} catch (IOException e) {
 			log.error(
 					"Error while sending organisation registration email to the owner's email id ",
@@ -112,8 +112,7 @@ public class OrganisationManager  implements OrganisationService{
 	/**
 	 * To create email body
 	 * 
-	 * @param url
-	 *            ,netMd
+	 * @param url ,organztion
 	 * 
 	 * @return email message body
 	 */
@@ -224,10 +223,10 @@ public class OrganisationManager  implements OrganisationService{
 	}
 
 	/**
-	 * Assign netmd record details to response
+	 * Assign organisation record details to response
 	 * 
-	 * @param netmdList
-	 * @return NetMdListResponseDTO
+	 * @param orgList
+	 * @return OrganisationListResponseDTO
 	 */
 	private OrganisationListResponseDTO getOrganisationList(List<OrganisationTbl> orgList) {
 		OrganisationListResponseDTO response = new OrganisationListResponseDTO();
@@ -264,9 +263,73 @@ public class OrganisationManager  implements OrganisationService{
 	 * @see com.nv.youNeverWait.user.bl.service.OrganisationService#getOrganisationUserList(com.nv.youNeverWait.rs.dto.FilterDTO)
 	 */
 	@Override
-	public OrganisationUsersList getUserList(FilterDTO filter) {
-		// TODO Auto-generated method stub
-		return null;
+	public OrganisationUsersList getUserList(FilterDTO filterDTO) {
+			OrganisationUsersList response = new OrganisationUsersList();
+
+		// validate filterDTO to identify invalid expressions and if there is
+		// any,
+		// return result with appropriate error code
+		ErrorDTO error = validator.validateUserFilter(filterDTO);
+		if (error != null) {
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+
+		// get queryBuilder for lab from builder factory
+		QueryBuilder queryBuilder = queryBuilderFactory
+				.getQueryBuilder(Constants.ORGANISATION_USER);
+		if (queryBuilder == null) {
+			return response;
+		}
+		for (ExpressionDTO exp : filterDTO.getExp()) {
+
+			// get filter from filter factory by setting expression name and
+			// value to filter
+			Filter filter = filterFactory.getFilter(exp);
+			queryBuilder.addFilter(filter);
+		}
+		// build query
+		TypedQuery<OrganisationUserTbl> q = queryBuilder.buildQuery(filterDTO.isAsc(),
+				filterDTO.getFrom(), filterDTO.getCount());
+
+		Long count = queryBuilder.getCount();
+		System.out.println("queryBuilder.getCount():" + count);
+		// execute query
+		List<OrganisationUserTbl> organisationUserList = queryBuilder.executeQuery(q);
+		response = getOrganisationUserList(organisationUserList);
+		response.setCount(count);
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * Assign organization user record details to response
+	 * 
+	 * @param orgUserList
+	 * @return OrganisationUsersList
+	 */
+	private OrganisationUsersList getOrganisationUserList(List<OrganisationUserTbl> orgUserList) {
+		OrganisationUsersList response = new OrganisationUsersList();
+		if (orgUserList.isEmpty()) {
+			return response;
+		}
+		List<OrganisationUserDetail> organisationUserDetails = new ArrayList<OrganisationUserDetail>();
+		for (OrganisationUserTbl organisationUserTbl : orgUserList) {
+			OrganisationUserDetail userDetail = new OrganisationUserDetail();
+			userDetail.setAddress(organisationUserTbl.getAddress());
+			userDetail.setEmail(organisationUserTbl.getEmail());
+			userDetail.setFirstName(organisationUserTbl.getFirstName());
+			userDetail.setLastName(organisationUserTbl.getLastName());
+			userDetail.setMobile(organisationUserTbl.getMobile());
+			userDetail.setOrganisationId(organisationUserTbl.getOrganisationTbl().getId());
+			userDetail.setPhone(organisationUserTbl.getPhone());
+			userDetail.setUserName(organisationUserTbl.getOrganisationLoginTbl().getUserName());
+			userDetail.setUserType(organisationUserTbl.getOrganisationLoginTbl().getUserType());
+			organisationUserDetails.add(userDetail);
+		}
+		response.setOrganisationUsers(organisationUserDetails);
+		return response;
 	}
 
 	/* (non-Javadoc)
@@ -295,6 +358,8 @@ public class OrganisationManager  implements OrganisationService{
 	@Override
 	public ResponseDTO updateUser(
 			OrganisationUserDetail organztionUser) {
+		validator.validateGlobalId(organztionUser.getGlobalId());
+		validator.validateGlobalId(organztionUser.getOrganisationId());
 		validator.validateUserDetails(organztionUser);
 		ResponseDTO response = organisationDao.updateUser(organztionUser);
 		return response;
