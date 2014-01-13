@@ -81,15 +81,15 @@ public class OrganisationServiceTest {
 		System.out.println("create user");
 		OrganisationService service =(OrganisationService) applicationContext.getBean("organisation.service");
 		OrganisationUserDetail userDetail = new OrganisationUserDetail();
-		userDetail.setAddress("palayur");
-		userDetail.setEmail("liyanto.jose@netvarth.com");
-		userDetail.setFirstName("liyanto");
-		userDetail.setLastName("jose");
+		userDetail.setAddress("chittal");
+		userDetail.setEmail("ashly.pauly@netvarth.com");
+		userDetail.setFirstName("ashly");
+		userDetail.setLastName("pauly");
 		userDetail.setMobile("9945623562");
 		userDetail.setOrganisationId(7);
 		userDetail.setPhone("04872565656");
-		userDetail.setUserName("liyanto");
-		userDetail.setUserType("owner");
+		userDetail.setUserName("ashly");
+		userDetail.setUserType("admin");
 		userDetail.setPassword("netvarth");
 		try{
 			
