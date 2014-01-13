@@ -427,7 +427,7 @@ public class OrganisationManager  implements OrganisationService{
 
 			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,
 					user.getEmailId(), mailFrom, 0, 0, null,
-					SendMsgCallbackEnum.LAB_RESET_PWD.getId(), null);
+					SendMsgCallbackEnum.ORGANISATION_RESET_PWD.getId(), null);
 			mailThread.addSendMsgObj(obj);
 		} catch (IOException e) {
 			log.error(
