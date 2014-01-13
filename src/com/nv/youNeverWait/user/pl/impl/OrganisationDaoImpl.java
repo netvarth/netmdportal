@@ -274,18 +274,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		return response;
 	}
 
-	/**
-	 * @param globalId
-	 * @return
-	 */
-	private List<OrganisationUserTbl> getUsersByOrganisationId(int globalId) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_USERS_BY_ORGANISATION_ID);
-		query.setParameter("param1", globalId);
-
-		return executeQuery(OrganisationUserTbl.class, query);
-	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -348,6 +337,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		newUser.setEmail(organztionUser.getEmail());
 		newUser.setOrganisationTbl(organisationTbl);
 		newUser.setOrganisationLoginTbl(login);
+		newUser.setStatus(StatusEnum.Active.getDisplayName());
 		Date currentDate = new Date();
 		newUser.setCreatedDateTime(currentDate);
 		newUser.setUpdatedDateTime(currentDate);
@@ -404,12 +394,12 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		}
 
 		OrganisationUserTbl updateUser = getById(OrganisationUserTbl.class,
-				organztionUser.getOrganisationId());
+				organztionUser.getGlobalId());
 		if (updateUser == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.UserNotExists);
 			se.addParam(new Parameter(Constants.ID, Integer
-					.toString(organztionUser.getOrganisationId())));
+					.toString(organztionUser.getGlobalId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
@@ -443,20 +433,6 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		return response;
 	}
 
-	/**
-	 * @param trim
-	 * @return
-	 */
-	private OrganisationUserTbl getOrganisationUserByEmail(String email,
-			int organisationId) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_ORGANISATION_USER_BY_EMAIL_AND_BRANCH);
-		query.setParameter("param1", email);
-		query.setParameter("param2", organisationId);
-		return executeUniqueQuery(OrganisationUserTbl.class, query);
-
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -485,6 +461,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		userDetail.setUserName(user.getOrganisationLoginTbl().getUserName());
 		userDetail.setUserType(user.getOrganisationLoginTbl().getUserType());
 		userDetail.setStatus(user.getStatus());
+		userDetail.setGlobalId(user.getId());
 		response.setUserDetails(userDetail);
 		response.setSuccess(true);
 		return response;
@@ -601,7 +578,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 	}
 
 	/**
-	 * @param trim
+	 * @param name
 	 * @return
 	 */
 	private OrganisationTbl getOrganisationByName(String name) {
@@ -621,7 +598,30 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		query.setParameter("param1", userName);
 		return executeUniqueQuery(OrganisationLoginTbl.class, query);
 	}
+	/**
+	 * @param trim
+	 * @return
+	 */
+	private OrganisationUserTbl getOrganisationUserByEmail(String email,
+			int organisationId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_ORGANISATION_USER_BY_EMAIL_AND_BRANCH);
+		query.setParameter("param1", email);
+		query.setParameter("param2", organisationId);
+		return executeUniqueQuery(OrganisationUserTbl.class, query);
 
-	
+	}
+	/**
+	 * @param globalId
+	 * @return
+	 */
+	private List<OrganisationUserTbl> getUsersByOrganisationId(int globalId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_USERS_BY_ORGANISATION_ID);
+		query.setParameter("param1", globalId);
+
+		return executeQuery(OrganisationUserTbl.class, query);
+	}
+
 	
 }
