@@ -4,6 +4,7 @@
  */
 package com.nv.youNeverWait.rs.ui;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,11 +23,13 @@ import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.UserDetails;
+import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.LogService;
 import com.nv.youNeverWait.user.bl.service.OrganisationService;
-import com.nv.youNeverWait.user.pl.dao.OrganisationDao;
 
 /**
  * @author Luciya Jose
@@ -148,6 +151,82 @@ public class OrganisationResource {
 				Constants.RESET_PSWD);
 		return response;
 	}
+	
+	/**
+	 * Method performed for session logout
+	 * 
+	 * @return LoginResponseDTO
+	 */
+	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	@ResponseBody
+	public LoginResponseDTO logout() {
+
+		LoginResponseDTO response = new LoginResponseDTO();
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest req = t.getRequest();
+		User user = (User) req.getSession().getAttribute("user");
+		if (user != null) {
+			logService.saveUserDetails(req.getRemoteAddr(), user.getName(),
+					user.getUserType(), user.getLoginTime(), new Date(),
+					ApplicationNameEnum.Organisation.getDisplayName(),
+					Constants.LOGOUT);
+		}
+		req.getSession().setAttribute(Constants.USER, null);
+		response.setSuccess(true);
+		response.setError(null);
+		return response;
+	}
+	/**
+	 * Method performed for organisation login
+	 * 
+	 * @param LoginDTO
+	 * @return LoginResponseDTO
+	 */
+	@RequestMapping(value = "login", method = RequestMethod.POST)
+	@ResponseBody
+	public LoginResponseDTO organisationLogin(@RequestBody LoginDTO login) {
+		User user = new User();
+		LoginResponseDTO response = new LoginResponseDTO();
+		try {
+			response = organisationService.organisationLogin(login);
+			if (response.isSuccess()) {
+				ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+						.currentRequestAttributes();
+				HttpServletRequest req = t.getRequest();
+				
+				UserDetails userDetail = organisationService
+						.getOrganisationUser(login.getUserName());
+				if (userDetail != null) {
+					user.setLoginTime(new Date());
+					user.setName(userDetail.getName());
+					user.setUserName(login.getUserName().trim());
+					user.setId(userDetail.getId());
+					user.setOrganisationId(userDetail.getOrganisationId());
+					user.setUserType(userDetail.getUserType());
+				}
+				req.getSession().setAttribute(Constants.USER, user);
+			}
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		logService.saveUserDetails(request.getRemoteAddr(),
+				user.getName(), user.getUserType(), user.getLoginTime(), null,
+				ApplicationNameEnum.Organisation.getDisplayName(),
+				Constants.LOGIN);
+		return response;
+	}
+
 
 	public void setLogService(LogService logService) {
 		this.logService = logService;
