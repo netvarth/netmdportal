@@ -36,6 +36,7 @@ import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.Organisation;
 import com.nv.youNeverWait.rs.dto.OrganisationListResponseDTO;
 import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
@@ -43,6 +44,7 @@ import com.nv.youNeverWait.rs.dto.OrganisationUsersList;
 import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
+import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
 import com.nv.youNeverWait.user.bl.service.OrganisationService;
 import com.nv.youNeverWait.user.bl.validation.OrganisationValidator;
@@ -543,6 +545,37 @@ public class OrganisationManager  implements OrganisationService{
 		return fullMsgBody;
 	}
 	 
+	@Override
+	public LoginResponseDTO organisationLogin(LoginDTO login) {
+		LoginResponseDTO response = new LoginResponseDTO();
+		ErrorDTO error = validator.validateLogin(login);
+		if (error != null) {
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+		String userName = login.getUserName().trim();
+		login.setUserName(userName);
+		String encPassword = StringEncoder.encryptWithKey(login.getPassword().trim());
+		login.setPassword(encPassword);
+		response = organisationDao.organisationLogin(login);
+
+		return response;
+	}
+	
+	@Override
+	public UserDetails getOrganisationUser(String userName) {
+		UserDetails user = null;
+		if (userName == null || userName.equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.UserNameNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		user = organisationDao.getOrganisationUser(userName);
+		return user;
+	}
+
 	
 	/**
 	/**

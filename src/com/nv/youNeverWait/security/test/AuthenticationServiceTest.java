@@ -106,36 +106,5 @@ public class AuthenticationServiceTest {
 			System.out.println(e.getParamList());
 		}
 	}
-	@Test
-	public void OrganisationLogin(){	
-		AuthenticationService service = (AuthenticationService) applicationContext.getBean("authentication.service");
-		LoginDTO login = new LoginDTO();
-		login.setPassword("ds");
-		login.setUserName("star");
-		try{
-		 service.organisationLogin(login);
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-		
-	}
-	@Test
-	public void getOrganisationUser(){	
-		AuthenticationService service = (AuthenticationService) applicationContext.getBean("authentication.service");
-		
-		try{
-		 service.getOrganisationUser("rt");
-		}
-		catch(ServiceException e){
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-		
-	}
+	
 }

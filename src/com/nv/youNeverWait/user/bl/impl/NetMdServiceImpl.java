@@ -1197,6 +1197,11 @@ public class NetMdServiceImpl implements NetMdService {
 		return response;
 	}
 
+	@Override
+	public NetMdListResponseDTO getNetmdList() {
+		NetMdListResponseDTO response= netMdDao.getNetMdList();
+		return response;
+	}
 	/**
 	 * @return the netMdDao
 	 */
@@ -1316,5 +1321,9 @@ public class NetMdServiceImpl implements NetMdService {
 	public void setHealthService(HealthMonitorService healthService) {
 		this.healthService = healthService;
 	}
+
+	
+
+	
 
 }
