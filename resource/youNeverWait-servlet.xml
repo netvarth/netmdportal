@@ -168,6 +168,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="organisationService">
 			<ref bean="organisation.service" />
 		</property>
+			<property name="logService">
+			<ref bean="log.service" />
+		</property>
 	</bean>
 
 </beans>
