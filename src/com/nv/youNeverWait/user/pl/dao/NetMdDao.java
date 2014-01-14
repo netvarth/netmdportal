@@ -18,6 +18,7 @@ import com.nv.youNeverWait.rs.dto.NetMdActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdDTO;
+import com.nv.youNeverWait.rs.dto.NetMdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
 import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
@@ -67,6 +68,7 @@ public interface NetMdDao {
 	public BranchSystemInfoDetails viewBranchSystemInfoDetails(String passphrase);
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails);
+	public NetMdListResponseDTO getNetMdList();
 	
 
 }

@@ -51,6 +51,8 @@ import com.nv.youNeverWait.rs.dto.NetMdActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdDTO;
+import com.nv.youNeverWait.rs.dto.NetMdDetail;
+import com.nv.youNeverWait.rs.dto.NetMdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
 import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
@@ -1218,7 +1220,6 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		return response;
 	}
 
-	
 	/**
 	 * Method which clears mac Id
 	 * 
@@ -1487,7 +1488,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 					netmdBranch.setEnableSync(netmd.getEnableSync());
 					netmdBranch.setUpdateDateTime(newDate);
 					update(netmdBranch);
-					
+
 				}// end of for loop
 			}
 
@@ -1499,7 +1500,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		
+
 		response.setSuccess(true);
 		return response;
 	}
@@ -1758,6 +1759,26 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		}
 	}
 
+	@Override
+	@Transactional
+	public NetMdListResponseDTO getNetMdList() {
+		NetMdListResponseDTO response = new NetMdListResponseDTO();
+		List<NetMdDetail> netMdList = new ArrayList<NetMdDetail>();
+		List<NetmdTbl> netmdTblList = getNetMds();
+		for (NetmdTbl netmdTbl : netmdTblList) {
+			netMdList.add(new NetMdDetail(netmdTbl));
+		}
+
+		response.setNetMd(netMdList);
+		response.setSuccess(true);
+		return response;
+		
+	}
+
+	private List<NetmdTbl> getNetMds() {
+		javax.persistence.Query query = em.createQuery(Query.GET_NETMD);
+		return executeQuery(NetmdTbl.class, query);
+	}
 
 	private List<NetmdHealthMonitorTbl> getMonitorDetailsByBranchId(
 			int passPhraseId, int startIndex) {
@@ -2197,15 +2218,20 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		this.em = em;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.pl.dao.NetMdDao#systemCriticalDetails(com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.pl.dao.NetMdDao#systemCriticalDetails(com.nv
+	 * .youNeverWait.rs.dto.BranchSystemInfoDetails)
 	 */
 	@Override
 	@Transactional
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails) {
 		ResponseDTO response = new ResponseDTO();
-		NetmdPassphraseTbl netmdPassphrase = getByPassphrase(systemCriticalDetails.getPasspharse());
+		NetmdPassphraseTbl netmdPassphrase = getByPassphrase(systemCriticalDetails
+				.getPasspharse());
 		if (netmdPassphrase == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidPassphrase);
@@ -2221,14 +2247,17 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		systemInfo.setCriticalHardDiskLevel(Integer.parseInt(systemCriticalDetails
-				.getCriticalHardDiskSpaceLevel()));
+		systemInfo
+				.setCriticalHardDiskLevel(Integer
+						.parseInt(systemCriticalDetails
+								.getCriticalHardDiskSpaceLevel()));
 		systemInfo.setCriticalCpuLevel(Integer.parseInt(systemCriticalDetails
 				.getCriticalCpuLevel()));
-		systemInfo.setCriticalMemoryLevel(Integer.parseInt(systemCriticalDetails
-				.getCriticalMemoryLevel()));
+		systemInfo.setCriticalMemoryLevel(Integer
+				.parseInt(systemCriticalDetails.getCriticalMemoryLevel()));
 		systemInfo.setFreqType(systemCriticalDetails.getFreqType());
-		systemInfo.setIntervalTime(Integer.parseInt(systemCriticalDetails.getIntervalTime()));
+		systemInfo.setIntervalTime(Integer.parseInt(systemCriticalDetails
+				.getIntervalTime()));
 		update(systemInfo);
 
 		response.setSuccess(true);

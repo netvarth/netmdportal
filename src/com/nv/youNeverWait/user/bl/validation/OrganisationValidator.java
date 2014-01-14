@@ -19,6 +19,7 @@ import com.nv.youNeverWait.pl.entity.UserTypeEnum;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
+import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.Organisation;
 import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
 import com.nv.youNeverWait.rs.dto.Parameter;
@@ -35,6 +36,40 @@ import com.nv.youNeverWait.util.filter.validation.FilterValidator;
  * @author Luciya Jose
  */
 public class OrganisationValidator extends FilterValidator {
+	/**
+	 * Check validity of username and password
+	 * 
+	 * @param login
+	 * @return ErrorDTO
+	 */
+	public ErrorDTO validateLogin(LoginDTO login) {
+		ErrorDTO error = new ErrorDTO();
+		if (!isValidExpValue(login.getUserName())) {
+			error.setErrCode(ErrorCodeEnum.UserNameNull.getErrCode());
+			error.setDisplayErrMsg(true);
+			return error;
+		}
+		if (!isValidExpValue(login.getPassword())) {
+			error.setErrCode(ErrorCodeEnum.PasswordNull.getErrCode());
+			error.setDisplayErrMsg(true);
+			return error;
+		}
+
+		return null;
+	}
+	/**
+	 * Check validity of expression value
+	 * 
+	 * @param value
+	 * @return boolean
+	 * 
+	 */
+	private boolean isValidExpValue(String value) {
+		if (value != null && !value.equals("")) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * @param organztion
