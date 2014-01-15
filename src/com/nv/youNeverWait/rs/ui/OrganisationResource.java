@@ -44,6 +44,8 @@ import com.nv.youNeverWait.user.bl.service.OrganisationService;
 @Controller
 @RequestMapping("ui/orgn/")
 public class OrganisationResource {
+	
+
 	private LogService logService;
 	private OrganisationService organisationService;
 	private PDFReportView view;
@@ -280,5 +282,11 @@ public class OrganisationResource {
 	public void setOrganisationService(OrganisationService organisationService) {
 		this.organisationService = organisationService;
 	}
+	public PDFReportView getView() {
+		return view;
+	}
 
+	public void setView(PDFReportView view) {
+		this.view = view;
+	}
 }
