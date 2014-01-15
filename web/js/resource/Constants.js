@@ -17,16 +17,10 @@ function Constants() {
 	this.ADMINTOOLBARJSON ="/youNeverWait/json/toolbars/netlimsAccChangePwd.json";
 	this.OLDPASSWRDREQUIRED="Old Password Required";
 	this.NEWPASSWRDREQUIRED="New Password Required";
-	this.PASSWRDREQUIRED="Password Required";
 	this.CONFIRMPASSWRDREQUIRED="Confirm Password Required";
 	this.PASSWRDMISMATCH="Password Do Not Match";
 	this.PASSWRDCHANGDSUCCES="Password changed successfully";
 	this.SYNCINTERVALREQUIRED="Synchronisation Interval Required";
-	this.ORGNAMEREQUIRED="Organization Name Required";
-	this.ORGNAMEINVALID="Invalid Organization Name";
-	this.HEDNAMEREQUIRED="Headoffice Name Required";
-	this.HEDNAMEINVALID="Invalid Headoffice Name";
-	this.USERNAMEREQUIRED="Username Required";
 	
 	/*****************-------------netlimsaccount-----------**----*************/
 	this.NETLIMSACCRIBBONURL="/youNeverWait/json/toolbars/netlimsGlobalToolbar.json";
@@ -110,39 +104,14 @@ function Constants() {
 	this.NEWNETRXACCPASWRDCHGJSON="/youNeverWait/json/changepassword/netRxAccChangePassword.json";
 	this.NEWNETRXACCPASWRDCHGMODAL="changepwdModalNetrx";
 	this.CHANGEPASSWORDNETRXURL="/youNeverWait/ws/ui/netRx/changePassword";
-	/*****************----------superadmin-------------**************/
-	this.SUPERADMINRIBBONURL="/youNeverWait/json/toolbars/globalToolbar.json";
-	this.SUPERADMINLEFTPANEURL="/youNeverWait/json/toolbars/leftPaneToolBar.json";
-	/*****-----netlims---*****/
-	this.NETLIMSBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/labList";
-	this.NETLIMSLIST="NETLIMS LIST";
-	this.NETLIMSPAGEJSON="/youNeverWait/json/toolbars/netlimsPageToolBar.json";
-	this.NETLIMS="NETLIMS";
-	this.NETLIMSLISTJSON="/youNeverWait/json/list/netlimsTable.json";
-	this.NEWNETLIMSJSON="/youNeverWait/json/new/newNetLims.json";
-	this.NEWNETLIMSMODAL="netlimsModal";
-	this.CREATENETLIMSURL="/youNeverWait/ws/ui/superAdmin/createLab";
-	this.NETLIMSCREATESUCCESS="Netlims Created Successfully";
-	this.VIEWNETLIMSDETAILPAGEURL="/youNeverWait/json/view/viewnetlimsdetails.json";
-	this.VIEWNETLIMSDETAILURL="/youNeverWait/ws/ui/superAdmin/viewLab/";
-	this.UPDATENETLIMSURL="/youNeverWait/ws/ui/superAdmin/updateLab";
-	this.NETLIMSGENERAL="netlims";
-	this.DELETENETLIMSURL="/youNeverWait/ws/ui/superAdmin/deleteLab/";
-	this.NETLIMSDELETESUCCESS="Inactivated netlims Successfully";
-	this.VIEWNETLIMSORDERLISTURL="/youNeverWait/ws/ui/superAdmin/viewBranchOrders/";
-	this.NETLIMSLABBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/branchList";
-	this.CREATENETLIMSBRANCHURL="/youNeverWait/ws/ui/superAdmin/createBranch";
-	this.UPDATENETLIMSBRCHURL="/youNeverWait/ws/ui/superAdmin/updateBranch";
-	this.VIEWNETLIMSBRCHURL="/youNeverWait/ws/ui/superAdmin/viewBranch/";
-	this.DELETENETLIMSLABBRANCHURL="/youNeverWait/ws/ui/superAdmin/deleteBranch";
-	this.SYNCDATANETLIMSBRCHURL="/youNeverWait/ws/ui/lab/getBranchSyncDetails/";
-	this.SETNETLIMSBRACHSYCURL="/youNeverWait/ws/ui/superAdmin/setBranchSync";
-	this.GETNETLIMSBRANCHORDERLISTURL="/youNeverWait/ws/ui/superAdmin/orderList";
-	this.NETLIMSBRNCHPAGEBRANCHJSON="/youNeverWait/json/toolbars/netLimsbranchPageToolBar.json";
-	this.VIEWNETLIMSBRCHPAGEURL="/youNeverWait/json/view/viewbranchdetails.json";
-	this.NEWMACIDCLEARMODAL="macIdClearModal";
-	this.NEWNETLIMSBRANCHMACIDCLEARJSON="/youNeverWait/json/macidConfirm.json";
-	this.SETNETLIMSBRACHCLEARMACURL="/youNeverWait/ws/ui/superAdmin/clearNetlimsMacId";
+	/****************************-----organizationAccount----****************************/
+	this.ORGNZTNTABCREATEVIEWURL="/youNeverWait/json/view/organizationTabs.json";
+	this.ORGTABOBJ="#tabs-1";
+	this.ORGREPORTTABOBJ="#reportInfoTab";
+	this.ORGNZTNREPORTTABVIEWURL="/youNeverWait/json/view/organizationReport.json";
+	this.ORGNZTNREPORTFILTERVIEWURL="/youNeverWait/json/view/orgReportfiltr.json";
+	this.ORGNZTNREPORTFILTERNETMDLISTURL="/youNeverWait/ws/ui/netMd/getNetmdList";
+	this.REPORTGENERATEURL="/youNeverWait/ws/ui/orgn/report/generate";
 	/*****************-------------General-----------**----*************/
 	this.NAME = "name";
 	this.ADDRESS = "address";
@@ -433,14 +402,6 @@ function Constants() {
 	this.SETTINGUPDATESUCCESS="Setting updated successfully";
 	this.SETTINGDELETECONFIRM="Do you really want to delete  ";
 	this.SETTINGDELETESUCCESS="Setting deleted successfully"
-	/*************----------------netpos----------------------------------**********/
-	this.CREATENETPOSUI="/youNeverWait/json/new/newNetPos.json";
-	this.NETPOSMODEL="netPosmodel";
-	this.NETPOSCREATESUCCESS="SSSSUUUCCCEEEESSSSS";
-	this.CREATENETPOSURL="/youNeverWait/ws/ui/superAdmin/createNetPos";
-	this.NETPOSLIST="NETPOS LIST";
-	this.NETPOSPAGEJSON="/youNeverWait/json/toolbars/netposPageToolBar.json";
-	this.NETPOS="NETPOS";
-	this.NETPOSLISTJSON="/youNeverWait/json/list/netposTable.json";
-	this.NETPOSLISTURL="/youNeverWait/ws/ui/superAdmin/netPosList";
+	/*************--------------------------------------------------**********/
+	
 }
