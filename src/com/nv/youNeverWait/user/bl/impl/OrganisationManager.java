@@ -47,6 +47,7 @@ import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
 import com.nv.youNeverWait.user.bl.service.OrganisationService;
+import com.nv.youNeverWait.user.bl.service.ReportService;
 import com.nv.youNeverWait.user.bl.validation.OrganisationValidator;
 import com.nv.youNeverWait.user.pl.dao.OrganisationDao;
 import com.nv.youNeverWait.util.filter.core.Filter;
@@ -67,6 +68,7 @@ public class OrganisationManager  implements OrganisationService{
 	private String organisationServerIpAddress;
 	private String mailFrom;
 	private SendEmailMsgWorkerThread mailThread;
+	private ReportService reportManager;
 	private static final Log log = LogFactory.getLog(NetMdServiceImpl.class);
 
 	/* (non-Javadoc)
@@ -576,7 +578,31 @@ public class OrganisationManager  implements OrganisationService{
 		return user;
 	}
 
+	/**
+	 * @param reportName
+	 * @return jrxml path
+	 */
+	@Override
+	public Object getJRXmlPath(String reportName) {
+		return reportManager.getJRXmlPath(reportName);
+	}
 	
+	/**
+	 * @return connection
+	 */
+	@Override
+	public Object getConnection() {
+		return reportManager.getConnection();
+	}
+	
+	public ReportService getReportManager() {
+		return reportManager;
+	}
+
+	public void setReportManager(ReportService reportManager) {
+		this.reportManager = reportManager;
+	}
+
 	/**
 	/**
 	 * @return the organisationDao

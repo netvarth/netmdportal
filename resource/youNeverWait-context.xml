@@ -199,7 +199,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 				<value>com.nv.youNeverWait.pl.entity.DepartmentTypeEnum</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.OrganisationUserPropertyEnum
 				</value>
-					<value>com.nv.youNeverWait.pl.entity.UserTypeEnum</value>
+				<value>com.nv.youNeverWait.pl.entity.UserTypeEnum</value>
 			</list>
 		</property>
 	</bean>
@@ -571,7 +571,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 					value="com.nv.youNeverWait.util.filter.queryBuilder.NetPosQueryBuilder" />
 				<entry key="organisation"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.OrganisationQueryBuilder" />
-					<entry key="organisationUser"
+				<entry key="organisationUser"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.OrganisationUserQueryBuilder" />
 			</map>
 		</property>
@@ -751,10 +751,35 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="mailThread">
 			<ref bean="email.worker.thread" />
 		</property>
+		<property name="reportManager" ref="report.manager" />
+	</bean>
+	<bean id="report.manager" class="com.nv.youNeverWait.user.bl.impl.ReportManager">
+		<property name="reportHandler" ref="report.handler" />
+	</bean>
+	<bean id="report.handler" class="com.nv.youNeverWait.api.report.ReportHandler">
+		<property name="reportDao" ref="report.dao" />
+	</bean>
+	<bean id="report.dao" class="com.nv.youNeverWait.user.pl.impl.ReportDaoImpl"
+		parent="generic.dao">
+		<property name="serverPath">
+			<value>${server.path}</value>
+		</property>
+		<property name="jrxmlPath">
+			<value>${jrxml.path}</value>
+		</property>
+		<property name="postgresIpAddress">
+			<value>${mysql.ip.address}</value>
+		</property>
+		<property name="postgresUserName">
+			<value>${mysql.username}</value>
+		</property>
+		<property name="postgresPassword">
+			<value>${mysql.password}</value>
+		</property>
 	</bean>
 	<bean id="organisation.validator"
 		class="com.nv.youNeverWait.user.bl.validation.OrganisationValidator"></bean>
-	
+
 	<bean id="organisation.dao" class="com.nv.youNeverWait.user.pl.impl.OrganisationDaoImpl"></bean>
 
 	<bean id="questionnaire.service" class="com.nv.youNeverWait.user.bl.impl.QuestionnaireManager">
@@ -762,7 +787,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="questionnaire.dao" />
 		</property>
 	</bean>
-	
+
 	<bean id="questionnaire.dao" class="com.nv.youNeverWait.user.pl.impl.QuestionnaireDaoImpl">
 	</bean>
 </beans>		

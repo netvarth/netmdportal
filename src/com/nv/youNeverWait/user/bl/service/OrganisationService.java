@@ -95,4 +95,8 @@ public interface OrganisationService {
 	public LoginResponseDTO organisationLogin(LoginDTO login);
 	public UserDetails getOrganisationUser(String userName);
 
+	Object getJRXmlPath(String parameter);
+
+	Object getConnection();
+
 }

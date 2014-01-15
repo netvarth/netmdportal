@@ -4,8 +4,12 @@
  */
 package com.nv.youNeverWait.rs.ui;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
+import org.springframework.web.servlet.ModelAndView;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
+import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
+import com.nv.youNeverWait.report.PDFReportView;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
@@ -33,13 +39,14 @@ import com.nv.youNeverWait.user.bl.service.OrganisationService;
 
 /**
  * @author Luciya Jose
- *
+ * 
  */
 @Controller
 @RequestMapping("ui/orgn/")
 public class OrganisationResource {
 	private LogService logService;
 	private OrganisationService organisationService;
+	private PDFReportView view;
 
 	/**
 	 * To show login page for organisation user/owner
@@ -52,13 +59,13 @@ public class OrganisationResource {
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
 		logService.saveUserDetails(request.getRemoteAddr(), null,
-						LogUserTypeEnum.Nil.getDisplayName(), null, null,
-						ApplicationNameEnum.Organisation.getDisplayName(),
-						Constants.STARTUP);
+				LogUserTypeEnum.Nil.getDisplayName(), null, null,
+				ApplicationNameEnum.Organisation.getDisplayName(),
+				Constants.STARTUP);
 
 		return "organisationIndex";
 	}
-	
+
 	/**
 	 * To show login page for lab user/owner
 	 * 
@@ -68,7 +75,7 @@ public class OrganisationResource {
 	public String lForm() {
 		return "organisationLoginPage";
 	}
-	
+
 	/**
 	 * To show login page for organisation user/owner
 	 * 
@@ -80,9 +87,9 @@ public class OrganisationResource {
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
 		logService.saveUserDetails(request.getRemoteAddr(), null,
-						LogUserTypeEnum.Nil.getDisplayName(), null, null,
-						ApplicationNameEnum.Organisation.getDisplayName(),
-						Constants.HOME);
+				LogUserTypeEnum.Nil.getDisplayName(), null, null,
+				ApplicationNameEnum.Organisation.getDisplayName(),
+				Constants.HOME);
 
 		return "organisationHome";
 	}
@@ -119,6 +126,7 @@ public class OrganisationResource {
 
 		return response;
 	}
+
 	/**
 	 * To reset password of organisation user/owner
 	 * 
@@ -145,13 +153,13 @@ public class OrganisationResource {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
-		logService.saveUserDetails(request.getRemoteAddr(),
-				null, login.getUserType(), null, null,
+		logService.saveUserDetails(request.getRemoteAddr(), null,
+				login.getUserType(), null, null,
 				ApplicationNameEnum.Organisation.getDisplayName(),
 				Constants.RESET_PSWD);
 		return response;
 	}
-	
+
 	/**
 	 * Method performed for session logout
 	 * 
@@ -177,6 +185,7 @@ public class OrganisationResource {
 		response.setError(null);
 		return response;
 	}
+
 	/**
 	 * Method performed for organisation login
 	 * 
@@ -194,7 +203,7 @@ public class OrganisationResource {
 				ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 						.currentRequestAttributes();
 				HttpServletRequest req = t.getRequest();
-				
+
 				UserDetails userDetail = organisationService
 						.getOrganisationUser(login.getUserName());
 				if (userDetail != null) {
@@ -220,13 +229,41 @@ public class OrganisationResource {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
-		logService.saveUserDetails(request.getRemoteAddr(),
-				user.getName(), user.getUserType(), user.getLoginTime(), null,
+		logService.saveUserDetails(request.getRemoteAddr(), user.getName(),
+				user.getUserType(), user.getLoginTime(), null,
 				ApplicationNameEnum.Organisation.getDisplayName(),
 				Constants.LOGIN);
 		return response;
 	}
 
+	/**
+	 * generates a report in pdf view
+	 * 
+	 * @param request
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "/report/generate", method = RequestMethod.POST)
+	public ModelAndView generate(HttpServletRequest request) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("JRXML_URL", organisationService.getJRXmlPath(request
+				.getParameter("reportName")));
+		model.put("REPORT_CONNECTION", organisationService.getConnection());
+		// model.put("reportTitle",adminService.getReportTitle());
+		try {
+			model.put("startMonth",
+					df.parse(request.getParameter("startMonth")));
+			model.put("startYear", df.parse(request.getParameter("startYear")));
+			model.put("endMonth", df.parse(request.getParameter("endMonth")));
+			model.put("endYear", df.parse(request.getParameter("endYear")));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			throw new ServiceException(ErrorCodeEnum.InvalidDateFormat);
+		}
+		model.put("paramList", request.getParameter("paramList"));
+		// model.put("maskingList", request.getParameter("maskingList"));
+		return new ModelAndView(view, model);
+	}
 
 	public void setLogService(LogService logService) {
 		this.logService = logService;
@@ -243,6 +280,5 @@ public class OrganisationResource {
 	public void setOrganisationService(OrganisationService organisationService) {
 		this.organisationService = organisationService;
 	}
-	
-	
+
 }

@@ -171,6 +171,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<property name="logService">
 			<ref bean="log.service" />
 		</property>
+		<property name="view" ref="pdfview" />
+	</bean>
+	<bean id="pdfview" class="com.nv.youNeverWait.report.PDFReportView">
 	</bean>
 
 </beans>
