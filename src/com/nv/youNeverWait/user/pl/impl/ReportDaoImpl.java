@@ -98,6 +98,30 @@ public class ReportDaoImpl extends GenericDaoHibernateImpl implements ReportDao{
 		this.serverPath = serverPath;
 	}
 
+	public String getMySqlIpAddress() {
+		return mySqlIpAddress;
+	}
+
+	public void setMySqlIpAddress(String mySqlIpAddress) {
+		this.mySqlIpAddress = mySqlIpAddress;
+	}
+
+	public String getMySqlUserName() {
+		return mySqlUserName;
+	}
+
+	public void setMySqlUserName(String mySqlUserName) {
+		this.mySqlUserName = mySqlUserName;
+	}
+
+	public String getMySqlPassword() {
+		return mySqlPassword;
+	}
+
+	public void setMySqlPassword(String mySqlPassword) {
+		this.mySqlPassword = mySqlPassword;
+	}
+
 	
 	
 
