@@ -36,3 +36,10 @@ $j("#btnLogoutNetrx").die('click').live("click",function() {
 	//window.location.href=serverPath + "/youNeverWait/ws/ui/netRx/startUp";
 	location.reload();
 });
+$j("#btnLogoutNOrg").die('click').live("click",function() {
+//var serverPath = "";
+	ajaxProcessor.setUrl('/youNeverWait/ws/ui/orgn/logout');
+	var response =ajaxProcessor.get(); 
+	if(response.success==true)
+	location.reload();
+})
