@@ -4,7 +4,7 @@
     "content": [
         {
             "className": "sep-div-view",
-            "style": "display:none",
+            "style": "display:none", 
             "id": "errorDivHeader",
             "data": [
                 {
@@ -24,10 +24,10 @@
                             "className": "column-left",
                             "elements": [
                                 {
-                                    "name": "startmonth",
-                                    "id": "startmonth",
-                                    "type": "select",
-                                    "title": "Startmonth",
+                                    "name": "startMonth",
+                                    "id": "startMonth",
+                                    "type": "text",
+                                    "title": "Start month",
 									"style": "width: 60px;"
                                 }
                             ]
@@ -36,10 +36,10 @@
                             "className": "column-right",
                             "elements": [
                                 {
-                                    "name": "startyear",
-                                    "id": "startyear",
-                                    "type": "select",
-                                    "title": "Startyear",
+                                    "name": "startYear",
+                                    "id": "startYear",
+                                    "type": "text",
+                                    "title": "Start year",
 									"style": "width: 60px;"
                                 }
                             ]
@@ -51,10 +51,10 @@
                                     "className": "column-left",
                                     "elements": [
                                         {
-                                            "name": "endmonth",
-                                            "id": "endmonth",
-                                            "type": "select",
-                                            "title": "Endmonth",
+                                            "name": "endMonth",
+                                            "id": "endMonth",
+                                            "type": "text",
+                                            "title": "End month",
 									"style": "width: 60px;"
                                         }
                                     ]
@@ -63,14 +63,25 @@
                                     "className": "column-right",
                                     "elements": [
                                         {
-                                            "name": "endyear",
-                                            "id": "endyear",
-                                            "type": "select",
-                                            "title": "Endyear",
+                                            "name": "endYear",
+                                            "id": "endYear",
+                                            "type": "text",
+                                            "title": "End year",
 											"style": "width: 60px;"
                                         }
                                     ]
-                                }
+                                },
+								{
+									"className": "column-right",
+									"style":"display:none;",
+                                    "elements": [
+                                        {
+                                            "name": "reportName",
+                                            "id": "reportName",
+                                            "type": "text"
+                                        }
+                                    ]
+								}
                             ]
                         }
                     ]

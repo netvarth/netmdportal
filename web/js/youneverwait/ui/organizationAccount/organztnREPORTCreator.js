@@ -1,10 +1,10 @@
 function organztnReportCreator() {
 
 	this.neworgnzReportPage = '#reportViewForm';
-	this.startmonth = $j("#startmonth");
-	this.startyear = $j("#startyear");
-	this.endmonth = $j("#endmonth");
-	this.endyear = $j("#endyear");
+	this.startMonth = $j("#startMonth");
+	this.startYear = $j("#startYear");
+	this.endMonth = $j("#endMonth");
+	this.endYear = $j("#endYear");
 	this.netmdlist = $j("#netmdlist");
 	this.showreportButton = $j("#showreport");
 	this.errorHeader = $j("#errorDivHeader");
@@ -25,10 +25,11 @@ organztnReportCreator.prototype.viewReport= function(url,parent) {
 
 organztnReportCreator.prototype.bindEvents = function() {
 	self = this;
-	self.fillMonth("#startmonth");
-	self.fillMonth("#endmonth");
-	self.fillYear("#startyear");
-	self.fillYear("#endyear");
+	self.fillMonth("#startMonth");
+	self.fillMonth("#endMonth");
+	self.fillYear("#startYear");
+	self.fillYear("#endYear");
+	$j("#reportName").attr('value',"GynecologySummaryReport");
 	ajaxProcessor.setUrl(constants.ORGNZTNREPORTFILTERVIEWURL);
 	var ftbdata =ajaxProcessor.get();
 	var ftb = new FilterToolBar(ftbdata);
@@ -59,6 +60,7 @@ organztnReportCreator.prototype.bindEvents = function() {
 		$j("#reportViewForm").attr('action',constants.REPORTGENERATEURL);
 		$j("#reportViewForm").attr('target','_blank');
 		$j("#reportViewForm").submit();
+		
 	});	
 	
 }	
