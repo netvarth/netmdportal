@@ -751,9 +751,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="mailThread">
 			<ref bean="email.worker.thread" />
 		</property>
-		<property name="reportManager" ref="report.manager" />
+		<property name="reportManager" ref="report.service" />
 	</bean>
-	<bean id="report.manager" class="com.nv.youNeverWait.user.bl.impl.ReportManager">
+	<bean id="report.service" class="com.nv.youNeverWait.user.bl.impl.ReportManager">
 		<property name="reportHandler" ref="report.handler" />
 	</bean>
 	<bean id="report.handler" class="com.nv.youNeverWait.api.report.ReportHandler">
@@ -767,13 +767,13 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="jrxmlPath">
 			<value>${jrxml.path}</value>
 		</property>
-		<property name="postgresIpAddress">
+		<property name="mySqlIpAddress">
 			<value>${mysql.ip.address}</value>
 		</property>
-		<property name="postgresUserName">
+		<property name="mySqlUserName">
 			<value>${mysql.username}</value>
 		</property>
-		<property name="postgresPassword">
+		<property name="mySqlPassword">
 			<value>${mysql.password}</value>
 		</property>
 	</bean>
