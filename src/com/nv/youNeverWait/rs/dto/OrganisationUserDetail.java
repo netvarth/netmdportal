@@ -18,7 +18,7 @@ package com.nv.youNeverWait.rs.dto;
 public class OrganisationUserDetail {
 	private int globalId;
 	private int id;
-	private int OrganisationId;
+	private int organisationId;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -55,18 +55,7 @@ public class OrganisationUserDetail {
 	public void setId(int id) {
 		this.id = id;
 	}
-	/**
-	 * @return the organisationId
-	 */
-	public int getOrganisationId() {
-		return OrganisationId;
-	}
-	/**
-	 * @param organisationId the organisationId to set
-	 */
-	public void setOrganisationId(int organisationId) {
-		OrganisationId = organisationId;
-	}
+	
 	/**
 	 * @return the firstName
 	 */
@@ -78,6 +67,12 @@ public class OrganisationUserDetail {
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+	public int getOrganisationId() {
+		return organisationId;
+	}
+	public void setOrganisationId(int organisationId) {
+		this.organisationId = organisationId;
 	}
 	/**
 	 * @return the lastName
