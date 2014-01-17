@@ -330,6 +330,8 @@ public class OrganisationManager  implements OrganisationService{
 			userDetail.setPhone(organisationUserTbl.getPhone());
 			userDetail.setUserName(organisationUserTbl.getOrganisationLoginTbl().getUserName());
 			userDetail.setUserType(organisationUserTbl.getOrganisationLoginTbl().getUserType());
+			userDetail.setGlobalId(organisationUserTbl.getId());
+			userDetail.setStatus(organisationUserTbl.getStatus());
 			organisationUserDetails.add(userDetail);
 		}
 		response.setOrganisationUsers(organisationUserDetails);
