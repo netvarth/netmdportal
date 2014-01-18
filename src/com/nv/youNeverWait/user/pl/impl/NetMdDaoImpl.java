@@ -49,6 +49,8 @@ import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetMdActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
+import com.nv.youNeverWait.rs.dto.NetMdBranchDetail;
+import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdDTO;
 import com.nv.youNeverWait.rs.dto.NetMdDetail;
@@ -1761,23 +1763,23 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 
 	@Override
 	@Transactional
-	public NetMdListResponseDTO getNetMdList() {
-		NetMdListResponseDTO response = new NetMdListResponseDTO();
-		List<NetMdDetail> netMdList = new ArrayList<NetMdDetail>();
-		List<NetmdTbl> netmdTblList = getNetMds();
-		for (NetmdTbl netmdTbl : netmdTblList) {
-			netMdList.add(new NetMdDetail(netmdTbl));
+	public NetMdBranchListResponseDTO getNetMdBrnchList() {
+		NetMdBranchListResponseDTO response = new NetMdBranchListResponseDTO();
+		List<NetMdBranchDetail> netMdBranchDetails = new ArrayList<NetMdBranchDetail>();
+		List<NetmdBranchTbl> netmdBranchTblList = getNetMdBranches();
+		for (NetmdBranchTbl netmdBranchTbl : netmdBranchTblList) {
+			netMdBranchDetails.add(new NetMdBranchDetail(netmdBranchTbl));
 		}
 
-		response.setNetMd(netMdList);
+		response.setNetmdBranch(netMdBranchDetails);
 		response.setSuccess(true);
 		return response;
 		
 	}
 
-	private List<NetmdTbl> getNetMds() {
-		javax.persistence.Query query = em.createQuery(Query.GET_NETMD);
-		return executeQuery(NetmdTbl.class, query);
+	private List<NetmdBranchTbl> getNetMdBranches() {
+		javax.persistence.Query query = em.createQuery(Query.GET_NETMD_BRANCH_LIST);
+		return executeQuery(NetmdBranchTbl.class, query);
 	}
 
 	private List<NetmdHealthMonitorTbl> getMonitorDetailsByBranchId(
