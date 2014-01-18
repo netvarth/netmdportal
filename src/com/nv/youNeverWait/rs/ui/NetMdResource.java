@@ -862,13 +862,13 @@ public class NetMdResource {
 	 * @param branchId
 	 * @return SyncFreqDTO
 	 */
-	@RequestMapping(value = "getNetmdList", method = RequestMethod.GET)
+	@RequestMapping(value = "getNetMdBrnchList", method = RequestMethod.GET)
 	@ResponseBody
-	public NetMdListResponseDTO getNetmdList() {
+	public NetMdBranchListResponseDTO getNetMdBrnchList() {
 
-		NetMdListResponseDTO response = new NetMdListResponseDTO();
+		NetMdBranchListResponseDTO response = new NetMdBranchListResponseDTO();
 		try {
-			response = netMdService.getNetmdList();
+			response = netMdService.getNetMdBrnchList();
 		} catch (ServiceException e) {
 			List<Parameter> parameters = e.getParamList();
 			ErrorDTO error = new ErrorDTO();
