@@ -120,6 +120,7 @@ public class Query {
 	public static final String GET_NEW_NETMD_BRANCHES = "from NetmdBranchTbl as branch where  branch.createDateTime>:param1 and branch.createDateTime<:param2 order by createDateTime";
 	public static final String GET_UPDATE_NETMD_BRANCHES = "from NetmdBranchTbl as branch where  branch.createDateTime < branch.updateDateTime and branch.updateDateTime>:param1 and branch.updateDateTime<:param2 order by updateDateTime";
 	public static final String GET_NETMD_BRANCHES = "from NetmdBranchTbl as branch where branch.netmdTbl.id=:param1";
+	public static final String GET_NETMD_BRANCH_LIST = "from NetmdBranchTbl as branch ";
 
 	/* NetmdPassphraseTbl */
 	public static final String GET_MAC_BY_PASSPHRASE = " select branchPassphrase.macId from NetmdPassphraseTbl as branchPassphrase where branchPassphrase.passPhrase=:param1";
