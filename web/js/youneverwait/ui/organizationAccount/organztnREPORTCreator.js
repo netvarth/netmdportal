@@ -25,11 +25,11 @@ organztnReportCreator.prototype.viewReport= function(url,parent) {
 
 organztnReportCreator.prototype.bindEvents = function() {
 	self = this;
-	self.fillMonth("#startMonth");
-	self.fillMonth("#endMonth");
-	self.fillYear("#startYear");
-	self.fillYear("#endYear");
-	$j("#reportName").attr('value',"GynecologySummaryReport");
+	self.fillMonth("#reportViewForm #startMonth");
+	self.fillMonth("#reportViewForm #endMonth");
+	self.fillYear("#reportViewForm #startYear");
+	self.fillYear("#reportViewForm #endYear");
+	$j("#reportViewForm #reportName").attr('value',"GynecologySummaryReport");
 	ajaxProcessor.setUrl(constants.ORGNZTNREPORTFILTERVIEWURL);
 	var ftbdata =ajaxProcessor.get();
 	var ftb = new FilterToolBar(ftbdata);
@@ -42,6 +42,7 @@ organztnReportCreator.prototype.bindEvents = function() {
 		myDiv.append(toolbutton);
 		myDiv.append(inputTag);					
 	self.fillnetMdlist("#txtreportfilter");
+	
 	$j( "#netmdlist a:not(:selected)").die('click').live("click",function(){
 		var curObjName = $j(this).attr('name');
 		$j(this).attr('selected','selected');
@@ -56,14 +57,41 @@ organztnReportCreator.prototype.bindEvents = function() {
 	});	
 	
 	$j("#reportViewForm #showreport").die('click').live('click',function(){	
+		commonMethodInvoker.removeErrors();
+		if(self.validateMonthYer()){
 		$j("#reportViewForm").attr('method','post');
 		$j("#reportViewForm").attr('action',constants.REPORTGENERATEURL);
 		$j("#reportViewForm").attr('target','_blank');
-		$j("#reportViewForm").submit();
-		
+		$j("#reportViewForm").submit(); 
+		}
 	});	
 	
+}
+
+organztnReportCreator.prototype.validateMonthYer = function() {
+	var bValid=true;
+	var startMonth=$j("#reportViewForm #startMonth").val();
+	var endMonth=$j("#reportViewForm #endMonth").val();
+	var startYear=$j("#reportViewForm #startYear").val();
+	var endyear=$j("#reportViewForm #endYear").val();
+	if(startYear==endyear){
+	alert("ddd");
+		if(startMonth<=endMonth){
+			bValid=true;
+		}
+		else{
+			commonMethodInvoker.createServerError($j("#errorDivHeader"),$j("#errorDivData"),"Start month must be less than end month");
+			bValid=false;
+		}
+	}
+	 if(startYear>endyear){
+			commonMethodInvoker.createServerError($j("#errorDivHeader"),$j("#errorDivData"),"Start year must be less than end year");
+			bValid=false;
+			
+	}
+	return bValid;
 }	
+	
 organztnReportCreator.prototype.fillMonth = function(controlObj) {
 	var numbers = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -85,7 +113,7 @@ organztnReportCreator.prototype.fillnetMdlist = function(controlObj) {
 	ajaxProcessor.setUrl(constants.ORGNZTNREPORTFILTERNETMDLISTURL);
 	var netMdlistdata =ajaxProcessor.get();
 	//alert(JSON.stringify(netMdlistdata))
-	$j(netMdlistdata.netMd).each( function(val, text) {
+	$j(netMdlistdata.netmdBranch).each( function(val, text) {
             $j(controlObj).append( $j('<option></option>').val(text.globalId).html(text.name) )
             }); 
 	

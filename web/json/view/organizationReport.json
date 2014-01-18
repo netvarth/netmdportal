@@ -3,7 +3,7 @@
     "id": "reportViewForm",
     "content": [
         {
-            "className": "sep-div-view",
+            "className": "sep-div",
             "style": "display:none", 
             "id": "errorDivHeader",
             "data": [
@@ -26,7 +26,7 @@
                                 {
                                     "name": "startMonth",
                                     "id": "startMonth",
-                                    "type": "text",
+                                    "type": "select",
                                     "title": "Start month",
 									"style": "width: 60px;"
                                 }
@@ -38,7 +38,7 @@
                                 {
                                     "name": "startYear",
                                     "id": "startYear",
-                                    "type": "text",
+                                    "type": "select",
                                     "title": "Start year",
 									"style": "width: 60px;"
                                 }
@@ -53,7 +53,7 @@
                                         {
                                             "name": "endMonth",
                                             "id": "endMonth",
-                                            "type": "text",
+                                            "type": "select",
                                             "title": "End month",
 									"style": "width: 60px;"
                                         }
@@ -65,7 +65,7 @@
                                         {
                                             "name": "endYear",
                                             "id": "endYear",
-                                            "type": "text",
+                                            "type": "select",
                                             "title": "End year",
 											"style": "width: 60px;"
                                         }
