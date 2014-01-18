@@ -25,4 +25,5 @@ function CookieProcessor() {
 		var keyValue = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)'); 
 		return keyValue ? keyValue[2] : null;  
 	}
+	
 }

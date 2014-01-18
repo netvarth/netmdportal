@@ -28,12 +28,14 @@ import com.nv.youNeverWait.pl.entity.SuperAdminTbl;
 import com.nv.youNeverWait.pl.entity.UserTypeEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.Organisation;
 import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
 import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
+import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.OrganisationDao;
@@ -558,6 +560,78 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		return response;
 	}
 
+	@Override
+	@Transactional
+	public LoginResponseDTO organisationLogin(LoginDTO login) {
+
+		LoginResponseDTO orgLogin = new LoginResponseDTO();
+		OrganisationLoginTbl loginDetails = getOrgUserByUserNameAndPassword(
+				login.getPassword(), login.getUserName());
+		if(loginDetails==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.UserNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		orgLogin.setSuccess(true);
+		return orgLogin;
+	}
+	@Override
+	@Transactional
+	public UserDetails getOrganisationUser(String userName) {
+		OrganisationLoginTbl orgLogin = (OrganisationLoginTbl) getOrgLoginByUserName(userName
+				.trim());
+		if (orgLogin == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.LoginNotExists);
+			se.addParam(new Parameter(Constants.NAME, userName));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		UserTypeEnum userType = UserTypeEnum.getEnum(orgLogin
+				.getUserType());
+		if (orgLogin.getUserType().equals(UserTypeEnum.Owner.getDisplayName())) {
+			OrganisationTbl orgTbl = getOrgOwnerByLoginId(orgLogin.getId());
+			if (orgTbl != null) {
+				UserDetails user = new UserDetails();
+				user.setId(orgTbl.getId());
+				user.setName(orgTbl.getOwnerFirstName());
+				user.setUserType(userType.getDisplayName());
+				user.setOrganisationId(orgTbl.getId());
+				return user;
+			}
+		} else {
+
+			OrganisationUserTbl orgnUser = (OrganisationUserTbl) getOrgUserByLoginId(orgLogin
+					.getId());
+			if (orgnUser != null) {
+				UserDetails user = new UserDetails();
+				user.setId(orgnUser.getId());
+				user.setName(orgnUser.getFirstName());
+				user.setUserType(userType.getDisplayName());
+				user.setOrganisationId(orgnUser.getOrganisationTbl().getId());
+				return user;
+			}
+		}
+		return null;
+	}
+
+	private OrganisationLoginTbl getOrgUserByUserNameAndPassword(
+			String password, String userName) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_ORGANISATION_USER_BY_PASSWORD);
+		query.setParameter("param1", password);
+		query.setParameter("param2", userName);
+		return executeUniqueQuery(OrganisationLoginTbl.class, query);
+	}
+
+	private OrganisationLoginTbl getOrgLoginByUserName(String userName) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_ORGANISATION_LOGIN_BY_USERNAME);
+		query.setParameter("param1", userName);
+		return executeUniqueQuery(OrganisationLoginTbl.class, query);
+	}
+	
 	private OrganisationUserTbl getOrgUserByLoginId(int loginId) {
 		javax.persistence.Query query = em.createQuery(Query.GET_ORGANISATION_USER);
 		query.setParameter("param1", loginId);

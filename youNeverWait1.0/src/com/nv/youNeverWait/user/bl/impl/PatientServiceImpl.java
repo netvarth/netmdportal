@@ -648,18 +648,21 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public ResponseDTO createCase(CaseDTO newPatientCase, HeaderDTO header) {
 		validator.validateCase(newPatientCase);
-		ResponseDTO response= new ResponseDTO();
-		response = patientDao.createCase(newPatientCase,header);
+		ResponseDTO respnse= new ResponseDTO();
+		 ResponseDTO response = patientDao.createCase(newPatientCase,header);
+		
 		String departmentName= patientDao.getDepartmentNameById(newPatientCase.getDepartmentId());
 		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
 			QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
 			 questionAnswer.setCaseId(response.getGlobalId());
 			 questionAnswer.setDepartmentId(newPatientCase.getDepartmentId());
 			 questionAnswer.setAnswerDTO(newPatientCase.getQuestionAnswerDTO().getAnswerDTO());
-			 response=questionnaireService.create(questionAnswer,header);
+			ResponseDTO rsponse=questionnaireService.create(questionAnswer,header);
 		}
-		response.setSuccess(true);
-		return response;
+		respnse.setGlobalId(response.getGlobalId());
+		respnse.setId(response.getId());
+		respnse.setSuccess(true);
+		return respnse;
 	}
 
 	/* (non-Javadoc)
@@ -667,19 +670,22 @@ public class PatientServiceImpl implements PatientService {
 	 */
 	@Override
 	public ResponseDTO updateCase(CaseDTO updatedPatientCase, HeaderDTO header) {
-		ResponseDTO response = new ResponseDTO();
+		ResponseDTO respnse = new ResponseDTO();
 		validator.validateUpdatedCase(updatedPatientCase);
-		response = patientDao.updateCase(updatedPatientCase, header);
+		 
+		ResponseDTO response = patientDao.updateCase(updatedPatientCase, header);
 		String departmentName= patientDao.getDepartmentNameById(updatedPatientCase.getDepartmentId());
 		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
 			 QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
 			 questionAnswer.setCaseId(response.getGlobalId());
 			 questionAnswer.setDepartmentId(updatedPatientCase.getDepartmentId());
 			 questionAnswer.setAnswerDTO(updatedPatientCase.getQuestionAnswerDTO().getAnswerDTO());
-			 response=questionnaireService.update(questionAnswer,header);
+			 ResponseDTO rsponse=questionnaireService.update(questionAnswer,header);
 		}
-		response.setSuccess(true);
-		return response;
+		respnse.setId(response.getId());
+		respnse.setGlobalId(response.getGlobalId());
+		respnse.setSuccess(true);
+		return respnse;
 	}
 	
 	public QueryBuilderFactory getQueryBuilderFactory() {

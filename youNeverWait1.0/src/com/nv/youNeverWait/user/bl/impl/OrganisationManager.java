@@ -36,6 +36,7 @@ import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.Organisation;
 import com.nv.youNeverWait.rs.dto.OrganisationListResponseDTO;
 import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
@@ -43,8 +44,10 @@ import com.nv.youNeverWait.rs.dto.OrganisationUsersList;
 import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
+import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
 import com.nv.youNeverWait.user.bl.service.OrganisationService;
+import com.nv.youNeverWait.user.bl.service.ReportService;
 import com.nv.youNeverWait.user.bl.validation.OrganisationValidator;
 import com.nv.youNeverWait.user.pl.dao.OrganisationDao;
 import com.nv.youNeverWait.util.filter.core.Filter;
@@ -65,6 +68,7 @@ public class OrganisationManager  implements OrganisationService{
 	private String organisationServerIpAddress;
 	private String mailFrom;
 	private SendEmailMsgWorkerThread mailThread;
+	private ReportService reportManager;
 	private static final Log log = LogFactory.getLog(NetMdServiceImpl.class);
 
 	/* (non-Javadoc)
@@ -326,6 +330,8 @@ public class OrganisationManager  implements OrganisationService{
 			userDetail.setPhone(organisationUserTbl.getPhone());
 			userDetail.setUserName(organisationUserTbl.getOrganisationLoginTbl().getUserName());
 			userDetail.setUserType(organisationUserTbl.getOrganisationLoginTbl().getUserType());
+			userDetail.setGlobalId(organisationUserTbl.getId());
+			userDetail.setStatus(organisationUserTbl.getStatus());
 			organisationUserDetails.add(userDetail);
 		}
 		response.setOrganisationUsers(organisationUserDetails);
@@ -543,7 +549,62 @@ public class OrganisationManager  implements OrganisationService{
 		return fullMsgBody;
 	}
 	 
+	@Override
+	public LoginResponseDTO organisationLogin(LoginDTO login) {
+		LoginResponseDTO response = new LoginResponseDTO();
+		ErrorDTO error = validator.validateLogin(login);
+		if (error != null) {
+			response.setError(error);
+			response.setSuccess(false);
+			return response;
+		}
+		String userName = login.getUserName().trim();
+		login.setUserName(userName);
+		String encPassword = StringEncoder.encryptWithKey(login.getPassword().trim());
+		login.setPassword(encPassword);
+		response = organisationDao.organisationLogin(login);
+
+		return response;
+	}
 	
+	@Override
+	public UserDetails getOrganisationUser(String userName) {
+		UserDetails user = null;
+		if (userName == null || userName.equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.UserNameNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		user = organisationDao.getOrganisationUser(userName);
+		return user;
+	}
+
+	/**
+	 * @param reportName
+	 * @return jrxml path
+	 */
+	@Override
+	public Object getJRXmlPath(String reportName) {
+		return reportManager.getJRXmlPath(reportName);
+	}
+	
+	/**
+	 * @return connection
+	 */
+	@Override
+	public Object getConnection() {
+		return reportManager.getConnection();
+	}
+	
+	public ReportService getReportManager() {
+		return reportManager;
+	}
+
+	public void setReportManager(ReportService reportManager) {
+		this.reportManager = reportManager;
+	}
+
 	/**
 	/**
 	 * @return the organisationDao

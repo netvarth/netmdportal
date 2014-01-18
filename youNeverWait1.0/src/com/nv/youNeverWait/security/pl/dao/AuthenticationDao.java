@@ -23,7 +23,6 @@ public interface AuthenticationDao extends GenericDao {
 	public ErrorCodeListResponseDTO getErrorCodes();
 	public LoginResponseDTO netrxLogin(LoginDTO loginDTO);
 	public UserDetails getNetrxUser(String userName);
-	public LoginResponseDTO organisationLogin(LoginDTO login);
-	public UserDetails getOrganisationUser(String userName);
+	
 	
 }

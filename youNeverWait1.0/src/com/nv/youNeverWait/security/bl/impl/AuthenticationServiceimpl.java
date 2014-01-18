@@ -379,36 +379,6 @@ public class AuthenticationServiceimpl implements AuthenticationService {
 
 	}
 
-	@Override
-	public LoginResponseDTO organisationLogin(LoginDTO login) {
-		LoginResponseDTO response = new LoginResponseDTO();
-		ErrorDTO error = validator.validateLogin(login);
-		if (error != null) {
-			response.setError(error);
-			response.setSuccess(false);
-			return response;
-		}
-		String userName = login.getUserName().trim();
-		login.setUserName(userName);
-		String encPassword = StringEncoder.encryptWithKey(login.getPassword().trim());
-		login.setPassword(encPassword);
-		response = authenticationDao.organisationLogin(login);
-
-		return response;
-	}
-	
-	@Override
-	public UserDetails getOrganisationUser(String userName) {
-		UserDetails user = null;
-		if (userName == null || userName.equals("")) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.UserNameNull);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		user = authenticationDao.getOrganisationUser(userName);
-		return user;
-	}
 
 	
 

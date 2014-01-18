@@ -158,7 +158,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 							"/youNeverWait/ws/ui/orgn/oForm")
 							&& !request
 									.getRequestURI()
-									.equals("/youNeverWait/ws/ui/auth/organisationLogin")
+									.equals("/youNeverWait/ws/ui/orgn/login")
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/ws/ui/orgn/resetPassword")
 							&& !request.getRequestURI().equals(

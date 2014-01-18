@@ -30,8 +30,7 @@ public interface AuthenticationService {
 	public ErrorCodeListResponseDTO getErrorCodes();
 	public LoginResponseDTO netrxLogin(LoginDTO login);
 	public UserDetails getNetrxUser(String userName);
-	public LoginResponseDTO organisationLogin(LoginDTO login);
-	public UserDetails getOrganisationUser(String userName);
+	
 	
 	
 }

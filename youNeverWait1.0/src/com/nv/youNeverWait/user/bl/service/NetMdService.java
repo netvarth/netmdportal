@@ -76,5 +76,6 @@ public interface NetMdService {
 			int interval);
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails);
+	public NetMdBranchListResponseDTO getNetMdBrnchList();
 
 }

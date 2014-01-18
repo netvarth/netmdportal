@@ -2014,9 +2014,7 @@ RequestMethod.GET)
 	 */
 	@RequestMapping(value = "createOrganisationUser", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseDTO createOrganisationUser(@RequestBody OrganisationUserDetail 
-
-organztionUser) {
+	public ResponseDTO createOrganisationUser(@RequestBody OrganisationUserDetail organztionUser) {
 		ResponseDTO response = new ResponseDTO();
 		try {
 			response = service.createOrganisationUser(organztionUser);
@@ -2042,9 +2040,7 @@ organztionUser) {
 	 */
 	@RequestMapping(value = "updateOrganisationUser", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseDTO updateOrganisationUser(@RequestBody OrganisationUserDetail 
-
-organztionUser) {
+	public ResponseDTO updateOrganisationUser(@RequestBody OrganisationUserDetail organztionUser) {
 		ResponseDTO response = new ResponseDTO();
 		try {
 			response = service.updateOrganisationUser(organztionUser);

@@ -24,9 +24,9 @@ $j(document).ready(function() {
 	});
 	
 	
-	$j('#forgotpwdOrg').die('click').live("click",function(){
+	/* $j('#forgotpwdOrg').die('click').live("click",function(){
 	window.location.href = "/youNeverWait/html/netlimsForgotPassword.html";
-	});
+	}); */
 
 	$j('#btnLoginOrg').die('click').live("click",function(){
 	
@@ -38,7 +38,7 @@ $j(document).ready(function() {
 					var loginData='{'+'"userName"'+':"'+username+'"'+','+'"password"'+':"' + password +'"'+'}';
 					$j.ajax({
 						type: "POST",
-						url: serverPath + "/youNeverWait/ws/ui/auth/organisationLogin",
+						url: serverPath + "/youNeverWait/ws/ui/orgn/login",
 						data: loginData,
 						contentType: "application/json",
 						dataType: "json",

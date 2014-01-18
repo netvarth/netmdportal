@@ -13,7 +13,15 @@ public class User {
 	private int labId;
 	private int netmdId;
 	private int netrxId;
+	private int organisationId;
 	private String userType;
+	
+	public int getOrganisationId() {
+		return organisationId;
+	}
+	public void setOrganisationId(int organisationId) {
+		this.organisationId = organisationId;
+	}
 	/**
 	 * @return the name
 	 */

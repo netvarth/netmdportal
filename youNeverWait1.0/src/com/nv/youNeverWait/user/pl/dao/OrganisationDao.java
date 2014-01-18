@@ -11,11 +11,13 @@
 package com.nv.youNeverWait.user.pl.dao;
 
 import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.Organisation;
 import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
 import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
+import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
 
 /**
@@ -82,5 +84,7 @@ public interface OrganisationDao {
 	UserCredentials getUserCredentials(LoginDTO login);
 
 	ResponseDTO resetPassword(LoginDTO login);
+	public LoginResponseDTO organisationLogin(LoginDTO login);
+	public UserDetails getOrganisationUser(String userName);
 
 }

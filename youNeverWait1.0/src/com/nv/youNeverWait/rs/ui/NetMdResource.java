@@ -35,6 +35,7 @@ import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
+import com.nv.youNeverWait.rs.dto.NetMdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDTO;
 import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
@@ -855,6 +856,30 @@ public class NetMdResource {
 		return response;
 	}
 
+	/**
+	 * To get synchronization frequency of a netmd branch 
+	 * 
+	 * @param branchId
+	 * @return SyncFreqDTO
+	 */
+	@RequestMapping(value = "getNetMdBrnchList", method = RequestMethod.GET)
+	@ResponseBody
+	public NetMdBranchListResponseDTO getNetMdBrnchList() {
+
+		NetMdBranchListResponseDTO response = new NetMdBranchListResponseDTO();
+		try {
+			response = netMdService.getNetMdBrnchList();
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
 	/**
 	 * @return the netMdService
 	 */

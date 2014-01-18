@@ -1,5 +1,4 @@
 function CommonMethodInvoker() {
-
 	ajaxProcessor.setUrl(constants.GETERRORCODEURL);
 	this.errorCode = ajaxProcessor.get();
 		
@@ -55,7 +54,6 @@ function CommonMethodInvoker() {
 		return str.replace(/[\r\n]/g, "<br/>");
 	}
 	this.validateNumber = function(p)	{
-	
 		$j(p).keydown(function (e) {
 			if (e.shiftKey || e.ctrlKey || e.altKey) { // if shift, ctrl or alt keys held down
 				e.preventDefault();         // Prevent character input
@@ -78,7 +76,6 @@ function CommonMethodInvoker() {
 		});
 	}
 	this.validateNumberDot = function(p)	{
-	
 		$j(p).keydown(function (e) {
             if (e.shiftKey || e.ctrlKey || e.altKey) { // if shift, ctrl or alt keys held down
                 e.preventDefault();         // Prevent character input
