@@ -4,8 +4,7 @@
  */
 package com.nv.youNeverWait.rs.ui;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
-import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
 import com.nv.youNeverWait.report.PDFReportView;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
@@ -44,8 +42,6 @@ import com.nv.youNeverWait.user.bl.service.OrganisationService;
 @Controller
 @RequestMapping("ui/orgn/")
 public class OrganisationResource {
-	
-
 	private LogService logService;
 	private OrganisationService organisationService;
 	private PDFReportView view;
@@ -246,22 +242,19 @@ public class OrganisationResource {
 	 */
 	@RequestMapping(value = "/report/generate", method = RequestMethod.POST)
 	public ModelAndView generate(HttpServletRequest request) {
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("JRXML_URL", organisationService.getJRXmlPath(request
 				.getParameter("reportName")));
 		model.put("REPORT_CONNECTION", organisationService.getConnection());
 		// model.put("reportTitle",adminService.getReportTitle());
-		try {
-			model.put("startMonth",
-					df.parse(request.getParameter("startMonth")));
-			model.put("startYear", df.parse(request.getParameter("startYear")));
-			model.put("endMonth", df.parse(request.getParameter("endMonth")));
-			model.put("endYear", df.parse(request.getParameter("endYear")));
-		} catch (ParseException e) {
-			e.printStackTrace();
-			throw new ServiceException(ErrorCodeEnum.InvalidDateFormat);
-		}
+		
+			model.put("startMonth",request.getParameter("startMonth"));
+			model.put("startYear", request.getParameter("startYear"));
+			model.put("endMonth", request.getParameter("endMonth"));
+			model.put("endYear", request.getParameter("endYear"));
+		
+			
 		model.put("paramList", request.getParameter("paramList"));
 		// model.put("maskingList", request.getParameter("maskingList"));
 		return new ModelAndView(view, model);
@@ -282,6 +275,7 @@ public class OrganisationResource {
 	public void setOrganisationService(OrganisationService organisationService) {
 		this.organisationService = organisationService;
 	}
+
 	public PDFReportView getView() {
 		return view;
 	}
@@ -289,4 +283,6 @@ public class OrganisationResource {
 	public void setView(PDFReportView view) {
 		this.view = view;
 	}
+
+	
 }
