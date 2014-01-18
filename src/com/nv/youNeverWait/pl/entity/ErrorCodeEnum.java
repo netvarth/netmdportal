@@ -278,7 +278,9 @@ public enum ErrorCodeEnum {
 	InvalidPatientId("4011","Invalid patient id"), 
 	InValidCaseName("4012","Case name is empty "), 
 	InvalidCaseStatus("4013","Invalid case status"),
-	ReportNull("4014","Invalid report name")
+	ReportNull("4014","Invalid report name"),
+	InvalidStartMonth("4015","Start Month should not be greater than End Month"),
+	InvalidStartYear("4016","Start Month should not be greater than End Month"),
 	;
 	private String errCode;
 	private String errMsg;
