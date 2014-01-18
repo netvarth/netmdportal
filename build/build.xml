@@ -121,6 +121,7 @@
  		<lib dir="${lib.dir}/spring"/>
  		<lib dir="${lib.dir}/hibernate"/>
  		<lib dir="${dist.dir}/lib"/>
+  		<lib dir="${lib.dir}/jdbc"/>
  		<lib dir="${lib.dir}/framework"/>
 	    <classes dir="${temp.build.dir}"/>
     </war>
