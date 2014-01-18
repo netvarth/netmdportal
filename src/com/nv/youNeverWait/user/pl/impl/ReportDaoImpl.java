@@ -49,7 +49,8 @@ public class ReportDaoImpl extends GenericDaoHibernateImpl implements ReportDao{
 //			throw se;
 //		}
 		String reprtName="GynecologySummaryReport";
-		jrXml = serverPath.trim()+jrxmlPath.trim()+reprtName+".jrxml";
+		//jrXml ="F://jrxml/"+reprtName+".jrxml";
+		jrXml =serverPath.trim()+jrxmlPath.trim()+reprtName+".jrxml";
 		return jrXml;
 
 	}
