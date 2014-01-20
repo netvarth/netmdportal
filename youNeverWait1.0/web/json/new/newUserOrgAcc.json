@@ -1,0 +1,237 @@
+{
+    "title": "Create Organization Branch",
+    "style": "width:60%;margin:0 20%",
+    "data": [
+        {
+            "name": "newOrgnzAccBranchForm",
+            "id": "newOrgnzAccBranchForm",
+            "content": [
+									    {
+                    "className": "sep-div",
+                    "style": "display:none",
+                    "id": "errorDivHeader",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "id": "errorDivNewOrgAccBranchData"
+                        }
+                    ]
+                },
+                 {
+                    "className": "sep-div",
+                    "data": [
+                        
+                       
+						{
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                       {
+											"className": "five_sixth",
+											"data": [
+												{
+													"className": "column-left",
+													"elements": [
+														{ 
+															"name": "organizationfirstname",
+															"id": "organizationfirstname",
+															"type": "text",
+															"tabIndex": 1,
+															"className": "large capital",
+															"title": "Organization First Name",
+															"required": "true"
+														}
+													]
+												},
+												{
+													"className": "column-right",
+													"elements": [
+														{
+															"name": "organizationlastname",
+															"id": "organizationlastname",
+															"type": "text",
+															"className": "large capital",
+															"title": "Organization Last Name"
+														}
+													]
+												}
+
+											]
+										}, {
+                                           "name": "usertype",
+                                            "id": "usertype",
+                                            "type": "select",
+                                            "className": "large capital",
+                                            "title": "User Type"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                           "name": "organizationaddress",
+                                            "id": "organizationaddress",
+                                            "type": "textarea",
+                                            "className": "large capital",
+                                            "title": "Organization Address"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+										{
+											"className": "five_sixth",
+											"data": [
+												{
+													"className": "column-left",
+													"elements": [
+														{ 
+															"name": "organizationphone",
+															"id": "organizationphone",
+															"type": "text",
+															"className": "large",
+															"title": "Organization Phone"
+														}
+													]
+												},
+												{
+													"className": "column-right",
+													"elements": [
+														{
+															"name": "organizationmobile",
+															"id": "organizationmobile",
+															"type": "text",
+															"className": "large",
+															"title": "Organization Mobile"
+														}
+													]
+												}
+
+											]
+										}
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "organizationemail",
+                                            "id": "organizationemail",
+                                            "type": "text",
+											"tabIndex": 2,
+                                            "className": "large",
+                                            "title": "Organization Email",
+											"required": true
+										}
+                                    ]
+                                }
+                            ]
+                        },
+						                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+										{
+											"className": "five_sixth",
+											"data": [
+												{
+													"className": "column-left",
+													"elements": [
+														{ 
+															"name": "password",
+															"id": "password",
+															"type": "password",
+															"tabIndex": 4,
+															"className": "large",
+															"title": "Password",
+															"required": true
+														}
+													]
+												},
+												{
+													"className": "column-right",
+													"elements": [
+														{
+															"name": "rePassword",
+															"id": "rePassword",
+															"type": "password",
+															"tabIndex": 5,
+															"className": "large",
+															"title": "Confirm password",
+															"required": true
+														}
+													]
+												}
+
+											]
+										}
+                                    ]
+                                },
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                             "name": "username",
+                                            "id": "username",
+                                            "type": "text",
+											"tabIndex": 3,
+                                            "className": "large",
+                                            "title": "User Name",
+											"required": true
+										}
+                                    ]
+                                }
+                            ]
+                        }
+
+                    ]
+                },
+
+                {
+                    "className": "sep-div ",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                            {
+                                                "name": "btnNewuserCreate",
+                                                "id": "btnNewuserCreate",
+                                                "title": "Create",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1; margin:2px"
+                                            },
+                                            {
+                                                "name": "btnNewUserCancel",
+                                                "id": "btnNewUserCancel",
+                                                "title": "Cancel",
+                                                "type": "button",
+                                                "className": "stdbtn",
+                                                "style": "opacity:1; margin:2px"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

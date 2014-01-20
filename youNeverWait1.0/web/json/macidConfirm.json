@@ -6,7 +6,17 @@
             "name": "macidClearForm",
             "id": "macidClearForm",
             "content": [
-
+					{
+                    "className": "sep-div",
+                    "style": "display:none",
+                    "id": "errorDivclearMacidHeader",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "id": "errorDivNetlimsclearMacidData"
+                        }
+                    ]
+                },
                 {
                     "className": "sep-div",
                     "id": "changepwddiv",

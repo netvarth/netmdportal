@@ -53,6 +53,34 @@ function PageHandler() {
 	this.setnetrxAccClassLoaded=function(status){
 		this.netrxAccClassLoaded=status;
 	}
+	this.isnetlimsClassLoaded=function(){
+		return this.netlimsClassLoaded;
+	}
+	this.setnetlimsClassLoaded=function(status){
+		this.netlimsClassLoaded=status;
+	}
+	
+	this.isnetmdClassLoaded=function(){
+		return this.netmdClassLoaded;
+	}
+	this.setnetmdClassLoaded=function(status){
+		this.netmdClassLoaded=status;
+	}
+	
+	this.isnetrxClassLoaded=function(){
+		return this.netrxClassLoaded;
+	}
+	this.setnetrxClassLoaded=function(status){
+		this.netrxClassLoaded=status;
+	}
+	
+	this.isorganizationLoaded=function(){
+		return this.organizationClassLoaded;
+	}
+	this.setorganizationClassLoaded=function(status){
+		this.organizationClassLoaded=status;
+	}
+	
 	this.isnetlimsAccSettingsClassLoaded=function(){
 		return this.netlimsAccSettingsClassLoaded;
 	}

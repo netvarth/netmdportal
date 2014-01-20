@@ -4,13 +4,14 @@ function SuperAdminGlobalToolBarProcessor() {
 	this.netlimslist="#leftPaneNetLims";
 	this.netmdlist="#leftPaneNetMd";
 	this.netrxlist="#leftPaneNetRx";
+	this.organizationlist="#leftPaneOrganization";
 	this.settings="#leftPaneSettings";
 	this.newnetlims="#ribbonNewNetLims";
 	this.newnetmd="#ribbonNewNetMd";
 	this.newnetrx="#ribbonNewNetRx";
+	this.neworganization="#ribbonNewOrgzn";
 	this.setsync="#ribbonSetSync";
-	this.newnetpos="#ribbonNewNetPos";
-	this.netposlist="#leftPaneNetPos";
+	
 	/*
 	this.filter = $j('#filter');
 	this.filterBench=$j('#filterWorkBench');
@@ -57,21 +58,46 @@ SuperAdminGlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 			netlimsUI.createNetlimsModal(obj);
 		});
 	}
-	if($j(self.newnetpos)) {
-		$j(self.newnetpos).die('click').live("click",function() {		
+	if($j(self.newnetmd)) {
+		$j(self.newnetmd).die('click').live("click",function() {		
 			var obj=$j(this);
 			commonMethodInvoker.removeErrors();
-			if(pageHandler.isnetposClassLoaded()!=true){
-				var netposClass = new netposClassLoader();
-				netposClass.load();
-				pageHandler.setnetposClassLoaded(true);
+			if(pageHandler.isnetmdClassLoaded()!=true){
+				var netmdClass = new netmdClassLoader();
+				netmdClass.load();
+				pageHandler.setnetmdClassLoaded(true);
 			}
-			var netposUI = new NetPosUIStartup();	
-			netposUI.createNetPosModal(obj);
+			var netmdUI = new netmdUIStartup();	
+			netmdUI.createNetmdModal(obj);
 		});
 	}
 	
-	
+	if($j(self.newnetrx)) {
+		$j(self.newnetrx).die('click').live("click",function() {		
+			var obj=$j(this);
+			commonMethodInvoker.removeErrors();
+			if(pageHandler.isnetrxClassLoaded()!=true){
+				var netrxClass = new netrxClassLoader();
+				netrxClass.load();
+				pageHandler.setnetrxClassLoaded(true);
+			}
+			var netrxUI = new netmdUIStartup();	
+			netrxUI.createNetrxModal(obj);
+		});
+	}
+	if($j(self.neworganization)) {
+		$j(self.neworganization).die('click').live("click",function() {		
+			var obj=$j(this);
+			commonMethodInvoker.removeErrors();
+			if(pageHandler.isorganizationLoaded()!=true){
+				var netmdClass = new organizationClassLoader();
+				netmdClass.load();
+				pageHandler.setorganizationClassLoaded(true);
+			}
+			var netmdUI = new organizationUIStartup();	
+			netmdUI.createOrganizationModal(obj);
+		});
+	}
 	
 }
 
@@ -93,22 +119,47 @@ SuperAdminGlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 		});
 	}	
 	
-	if($j(self.netposlist)) {
-		$j(self.netposlist).die('click').live("click",function() {	
+	if($j(self.netmdlist)) {
+		$j(self.netmdlist).die('click').live("click",function() {	
 			var obj=$j(this);
-		
 			commonMethodInvoker.removeErrors();
-			if(pageHandler.isnetposClassLoaded()!=true){
-				var netposClass = new netposClassLoader();
-				netposClass.load();
-				pageHandler.setnetposClassLoaded(true);
+			if(pageHandler.isnetmdClassLoaded()!=true){
+				var netmdClass = new netmdClassLoader();
+				netmdClass.load();
+				pageHandler.setnetmdClassLoaded(true);
 			}
-			var netposUI = new NetPosUIStartup();	
-			netposUI.init();
+			var netmdUI = new netmdUIStartup();	
+			netmdUI.init();
 		});
+	}	
 	
-	}
+	if($j(self.netrxlist)) {
+		$j(self.netrxlist).die('click').live("click",function() {	
+			var obj=$j(this);
+			commonMethodInvoker.removeErrors();
+			if(pageHandler.isnetrxClassLoaded()!=true){
+				var netrxClass = new netrxClassLoader();
+				netrxClass.load();
+				pageHandler.setnetrxClassLoaded(true);
+			}
+			var netrxUI = new netrxUIStartup();	
+			netrxUI.init();
+		});
+	}	
 	
+	if($j(self.organizationlist)) {
+		$j(self.organizationlist).die('click').live("click",function() {	
+			var obj=$j(this);
+			commonMethodInvoker.removeErrors();
+			if(pageHandler.isorganizationLoaded()!=true){
+				var netmdClass = new organizationClassLoader();
+				netmdClass.load();
+				pageHandler.setorganizationClassLoaded(true);
+			}
+			var organizationUI = new organizationUIStartup();	
+			organizationUI.init();
+		});
+	}	
 	
 	if($j(self.netlimsAccbranchsettings)) {
 		$j(self.netlimsAccbranchsettings).die('click').live("click",function() {
