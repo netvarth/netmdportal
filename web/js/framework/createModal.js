@@ -1,7 +1,6 @@
 function createModal (urlPath,modaldivName,model) {
 	var modalobj;
-		ajaxProcessor.setUrl(urlPath);
-		var dataToCreateModal = ajaxProcessor.get();
+	var dataToCreateModal = getRequestData(urlPath);
 	//alert(JSON.stringify(dataToCreateModal));
 	modalobj = new Modal(dataToCreateModal,model);
 	
