@@ -1,0 +1,239 @@
+{
+    "name": "orgnbranchViewForm",
+    "id": "orgnbranchViewForm",
+    "content": [
+        {
+            "className": "sep-div-view",
+            "style": "display:none",
+            "id": "errorDivHeader",
+            "data": [
+                {
+                    "className": "five_sixth",
+                    "id": "errorDivvwnetmdBranchData"
+                }
+            ]
+        },
+        {
+            "className": "sep-div-view",
+            "id": "viewOrgnBranchHeader",
+            "data": [
+                {
+                    "className": "column-left",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "name": "orgid",
+                                    "id": "orgid",
+                                    "type": "text",
+                                    "title": "Organization Id",
+                                    "className": "newBox"
+                                }
+                            ]
+                        },
+                        {
+                            "className": "column-right",
+                            "elements": [
+                                {
+                                    "name": "userid",
+                                    "id": "userid",
+                                    "type": "text",
+                                    "title": "User Id",
+                                    "className": "newBox"
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five-sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "branchStatus",
+                                            "id": "branchStatus",
+                                            "type": "text",
+                                            "title": "Status",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "username",
+                                            "id": "username",
+                                            "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "User Name",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five-sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "branchPhone",
+                                            "id": "branchPhone",
+                                            "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "Phone",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "branchMobile",
+                                            "id": "branchMobile",
+                                            "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "Mobile",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "column-right",
+                    "data": [
+                        {
+                            "className": "five-sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "firstName",
+                                            "id": "firstName",
+                                            "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "First Name",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "lastName",
+                                            "id": "lastName",
+                                            "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "Last Name",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five-sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "usertype",
+                                            "id": "usertype",
+                                            "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "User Type",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "email",
+                                            "id": "email",
+                                            "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "Email",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five-sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "address",
+                                            "id": "address",
+                                            "type": "textarea",
+                                            "readonly": "readonly",
+                                            "title": "Address",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "elements": [
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                            {
+                                                "name": "orgzuservwbtnEdit",
+                                                "id": "orgzuservwbtnEdit",
+                                                "title": "Edit",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;margin:4px"
+                                            },
+                                            {
+                                                "name": "orgzuservwbtnDone",
+                                                "id": "orgzuservwbtnDone",
+                                                "title": "Done",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;display:none;margin-top:1%"
+                                            },
+                                            {
+                                                "name": "orgzuservwbtnCancel",
+                                                "id": "orgzuservwbtnCancel",
+                                                "title": "Cancel",
+                                                "type": "button",
+                                                "className": "stdbtn",
+                                                "style": "opacity:1;display:none;margin-top:1%"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
