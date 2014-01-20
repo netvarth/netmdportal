@@ -20,10 +20,10 @@
             "image": "/youNeverWait/images/icon/dashboard/3.PNG"
         },
 		{
-            "title": " New NetPos",
+            "title": " New Organizaton",
             "className": "big-link",
-            "name": "ribbonNewNetPos",
-            "image": "/youNeverWait/images/icon/dashboard/pos.png"
+            "name": "ribbonNewOrgzn",
+            "image": "/youNeverWait/images/icon/dashboard/3.PNG"
         },
 		{
             "title": "Set Sync",

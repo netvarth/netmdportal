@@ -17,13 +17,11 @@
 		  "className": "netrx",
           "name": "leftPaneNetRx"
         },
-		
 		{
-          "title": "NetPos",
-		  "className": "netpos",
-          "name": "leftPaneNetPos"
+          "title": "Organization",
+		  "className": "organization",
+          "name": "leftPaneOrganization"
         },
-		
 		{
           "title": "Settings",
 		  "className": "admin",
