@@ -9,8 +9,8 @@ function ClassLoader() {
 		})
 		//$j.getScript("/youNeverWait/js/resource/DataTableProcessor.js").done(function(script, textStatus){
 		//})
-		$j.getScript("/youNeverWait/js/resource/CommonMethodInvoker.js").done(function(script, textStatus){
-		})
+		//$j.getScript("/youNeverWait/js/resource/CommonMethodInvoker.js").done(function(script, textStatus){
+		//})
 		//$j.getScript("/youNeverWait/js/resource/DataTableNavigator.js").done(function(script, textStatus){
 		//})	
 		$j.getScript("/youNeverWait/js/resource/Validator.js").done(function(script, textStatus){
