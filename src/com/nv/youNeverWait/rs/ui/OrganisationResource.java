@@ -227,10 +227,10 @@ public class OrganisationResource {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
-//		logService.saveUserDetails(request.getRemoteAddr(), user.getName(),
-//				user.getUserType(), user.getLoginTime(), null,
-//				ApplicationNameEnum.Organisation.getDisplayName(),
-//				Constants.LOGIN);
+		logService.saveUserDetails(request.getRemoteAddr(), user.getName(),
+				user.getUserType(), user.getLoginTime(), null,
+				ApplicationNameEnum.Organisation.getDisplayName(),
+				Constants.LOGIN);
 		return response;
 	}
 
