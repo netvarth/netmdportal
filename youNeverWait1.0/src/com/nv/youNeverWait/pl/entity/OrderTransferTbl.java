@@ -23,14 +23,6 @@ public class OrderTransferTbl implements Serializable {
 	@Column(name="created_date_time", nullable=false)
 	private Date createdDateTime;
 
-	@Lob
-	@Column(name="order_details", nullable=false)
-	private String orderDetails;
-
-
-	@Column(name="order_uid", nullable=false, length=45)
-	private String orderUid;
-
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="updated_date_time", nullable=false)
 	private Date updatedDateTime;
@@ -38,22 +30,17 @@ public class OrderTransferTbl implements Serializable {
 	//bi-directional many-to-one association to LabBranchTbl
 	@ManyToOne
 	@JoinColumn(name="destination_branch_id", nullable=false)
-	private LabBranchTbl destinationBranch;
-
-	//bi-directional many-to-one association to LabBranchTbl
-	@ManyToOne
-	@JoinColumn(name="source_branch_id", nullable=false)
-	private LabBranchTbl sourceBranch;
-
-	//bi-directional many-to-one association to LabTbl
-	@ManyToOne
-	@JoinColumn(name="source_lab_id", nullable=false)
-	private LabTbl sourceLab;
+	private LabBranchTbl labBranchTbl;
 
 	//bi-directional many-to-one association to LabTbl
 	@ManyToOne
 	@JoinColumn(name="destination_lab_id", nullable=false)
-	private LabTbl destinationLab;
+	private LabTbl labTbl;
+
+	//bi-directional many-to-one association to OrderBranchTbl
+	@ManyToOne
+	@JoinColumn(name="order_id", nullable=false)
+	private OrderBranchTbl orderBranchTbl;
 
 	public OrderTransferTbl() {
 	}
@@ -74,29 +61,6 @@ public class OrderTransferTbl implements Serializable {
 		this.createdDateTime = createdDateTime;
 	}
 
-	public String getOrderDetails() {
-		return this.orderDetails;
-	}
-
-	public void setOrderDetails(String orderDetails) {
-		this.orderDetails = orderDetails;
-	}
-
-	
-	/**
-	 * @return the orderUid
-	 */
-	public String getOrderUid() {
-		return orderUid;
-	}
-
-	/**
-	 * @param orderUid the orderUid to set
-	 */
-	public void setOrderUid(String orderUid) {
-		this.orderUid = orderUid;
-	}
-
 	public Date getUpdatedDateTime() {
 		return this.updatedDateTime;
 	}
@@ -105,64 +69,28 @@ public class OrderTransferTbl implements Serializable {
 		this.updatedDateTime = updatedDateTime;
 	}
 
-	/**
-	 * @return the destinationBranch
-	 */
-	public LabBranchTbl getDestinationBranch() {
-		return destinationBranch;
+	public LabBranchTbl getLabBranchTbl() {
+		return this.labBranchTbl;
 	}
 
-	/**
-	 * @param destinationBranch the destinationBranch to set
-	 */
-	public void setDestinationBranch(LabBranchTbl destinationBranch) {
-		this.destinationBranch = destinationBranch;
+	public void setLabBranchTbl(LabBranchTbl labBranchTbl) {
+		this.labBranchTbl = labBranchTbl;
 	}
 
-	/**
-	 * @return the sourceBranch
-	 */
-	public LabBranchTbl getSourceBranch() {
-		return sourceBranch;
+	public LabTbl getLabTbl() {
+		return this.labTbl;
 	}
 
-	/**
-	 * @param sourceBranch the sourceBranch to set
-	 */
-	public void setSourceBranch(LabBranchTbl sourceBranch) {
-		this.sourceBranch = sourceBranch;
+	public void setLabTbl(LabTbl labTbl) {
+		this.labTbl = labTbl;
 	}
 
-	/**
-	 * @return the sourceLab
-	 */
-	public LabTbl getSourceLab() {
-		return sourceLab;
+	public OrderBranchTbl getOrderBranchTbl() {
+		return this.orderBranchTbl;
 	}
 
-	/**
-	 * @param sourceLab the sourceLab to set
-	 */
-	public void setSourceLab(LabTbl sourceLab) {
-		this.sourceLab = sourceLab;
+	public void setOrderBranchTbl(OrderBranchTbl orderBranchTbl) {
+		this.orderBranchTbl = orderBranchTbl;
 	}
-
-	/**
-	 * @return the destinationLab
-	 */
-	public LabTbl getDestinationLab() {
-		return destinationLab;
-	}
-
-	/**
-	 * @param destinationLab the destinationLab to set
-	 */
-	public void setDestinationLab(LabTbl destinationLab) {
-		this.destinationLab = destinationLab;
-	}
-
-	
-
-	
 
 }

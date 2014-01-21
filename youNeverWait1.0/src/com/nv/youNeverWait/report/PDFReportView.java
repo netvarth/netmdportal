@@ -55,7 +55,7 @@ public class PDFReportView  implements View  {
 			HttpServletResponse response) throws JRException, SQLException,
 			IOException {
 		response.addHeader("Content-Disposition", "inline;");
-		Connection conn = (Connection) model.get("REPORT_CONNECTION");
+		Connection conn = null;
 		String JRXmlFilePath = (String) model.get("JRXML_URL");
 
 		JasperDesign design = JRXmlLoader.load(JRXmlFilePath);
@@ -83,15 +83,7 @@ public class PDFReportView  implements View  {
 		String filterQury = "";
 		JRQuery query = design.getQuery();
 		queryString = query.getText();
-		/* getting param list */
-		String parameterList = (String) model.get("paramList");
-		if (parameterList != null && !parameterList.equals("")) {
-			String[] param = parameterList.split(":");
-			for (int i = 0; i < param.length; i++) {
-				subQuery = subQuery + param[i];
-			}
-		}
-	
+
 		String startMnth=(String)model.get("startMonth");
 		String endMnth=(String)model.get("endMonth");
 		String startYear=(String)model.get("startYear");
@@ -240,6 +232,8 @@ public class PDFReportView  implements View  {
 		System.out.println("aaaaaa" + design.getQuery().getText());
 		//
 
+		conn=(Connection) model.get("REPORT_CONNECTION");
+		try{
 		JasperReport jReport = JasperCompileManager.compileReport(design);
 		JasperPrint jPrint = JasperFillManager.fillReport(jReport, model, conn);
 
@@ -248,9 +242,13 @@ public class PDFReportView  implements View  {
 		JasperExportManager.exportReportToPdfStream(jPrint, out);
 		out.flush();
 		out.close();
-
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		} finally{
 		if (conn != null)
 			conn.close();
+		}
 	}
 
 
