@@ -25,6 +25,7 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
 import com.nv.youNeverWait.pl.entity.LabTbl;
+import com.nv.youNeverWait.pl.entity.OrderBranchTbl;
 import com.nv.youNeverWait.pl.entity.OrderTransferTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
@@ -83,7 +84,8 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			Object orderDetails = new Object();
 			ObjectMapper maper = new ObjectMapper();
 			try {
-				orderDetails = maper.readValue(order.getOrderDetails(), Object.class);
+				orderDetails = maper.readValue(order.getOrderBranchTbl().getOrderDetails(),
+						Object.class);
 			} catch (Exception e) {
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.OrderTransferException);
@@ -112,9 +114,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		LabBranchTbl sourceLabBranch = getLabBranchId(
 				orderTranfer.getSourceLabBranchId(),
 				orderTranfer.getSourceLabId());
-		LabBranchTbl destinationLabBranch = getLabBranchId(
-				orderTranfer.getDestinationLabBranchId(),
-				orderTranfer.getDestinationLabId());
+
 		if (sourceLabBranch == null) {
 
 			ServiceException se = new ServiceException(
@@ -124,37 +124,53 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			throw se;
 
 		}
-		if (destinationLabBranch == null) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidDestinationLabBranch);
 
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		OrderTransferTbl orderTransferTbl = new OrderTransferTbl();
-		orderTransferTbl.setSourceLab(sourceLabBranch.getLabTbl());
-		orderTransferTbl.setSourceBranch(sourceLabBranch);
-		orderTransferTbl.setDestinationLab(destinationLabBranch.getLabTbl());
-		orderTransferTbl.setDestinationBranch(destinationLabBranch);
-		orderTransferTbl.setOrderDetails(orderTranfer.getOrderDetails());
+		/* Saving orders in order branch tbl */
+		OrderBranchTbl orderBranchTbl = new OrderBranchTbl();
+		orderBranchTbl.setLabTbl(sourceLabBranch.getLabTbl());
+		orderBranchTbl.setLabBranchTbl(sourceLabBranch);
+		orderBranchTbl.setOrderDetails(orderTranfer.getOrderDetails());
 
 		/** Setting unique id if there is no unique id given from **/
-		if (orderTranfer.getOrderUid()==null && orderTranfer.getOrderUid().equals("")) {
+		if (orderTranfer.getOrderUid() == null || orderTranfer.getOrderUid().equals("")) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.OrderUidNull);
 
 			se.setDisplayErrMsg(true);
 			throw se;
 		} else {
-			orderTransferTbl.setOrderUid(orderTranfer.getOrderUid());
+			orderBranchTbl.setOrderUid(orderTranfer.getOrderUid());
 		}
 
 		Date createdTime = new Date();
-		orderTransferTbl.setCreatedDateTime(createdTime);
-		orderTransferTbl.setUpdatedDateTime(createdTime);
-		save(orderTransferTbl);
+		orderBranchTbl.setCreatedDateTime(createdTime);
+		orderBranchTbl.setUpdatedDateTime(createdTime);
+		save(orderBranchTbl);
 
-		response.setGlobalId(orderTransferTbl.getId());
+		/* Saving details in order branch tbl */
+		for (Integer destinationBranch : orderTranfer.getDestinationBranches()) {
+			/* Checking whether there is any labs and branches */
+			LabBranchTbl destinationLabBranch = getLabBranchId(
+					destinationBranch, orderTranfer.getDestinationLabId());
+
+			if (destinationLabBranch == null) {
+				 ServiceException se = new ServiceException(
+				 ErrorCodeEnum.InvalidDestinationLabBranch);
+				
+				 se.setDisplayErrMsg(true);
+				 throw se;
+
+			}
+			OrderTransferTbl orderTransferTbl = new OrderTransferTbl();
+			orderTransferTbl.setOrderBranchTbl(orderBranchTbl);
+			orderTransferTbl.setLabBranchTbl(destinationLabBranch);
+			orderTransferTbl.setLabTbl(destinationLabBranch.getLabTbl());
+			orderTransferTbl.setCreatedDateTime(createdTime);
+			orderTransferTbl.setUpdatedDateTime(createdTime);
+			save(orderTransferTbl);
+
+		}
+		response.setGlobalId(orderBranchTbl.getId());
 		response.setSuccess(true);
 		return response;
 	}
@@ -185,7 +201,9 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		return response;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.nv.youNeverWait.user.pl.dao.OrderDao#getOrderType(int)
 	 */
 	@Override
@@ -194,15 +212,15 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		LabTbl lab = getById(LabTbl.class, labId);
 		if (lab == null) {
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidLab);
-			se.addParam(new Parameter(Constants.ID, Integer
-					.toString(labId)));
+			se.addParam(new Parameter(Constants.ID, Integer.toString(labId)));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		OrderTypeDTO orderType= new OrderTypeDTO();
+		OrderTypeDTO orderType = new OrderTypeDTO();
 		orderType.setOrderTypeCodes(lab.getOrderTypeCode());
 		return orderType;
 	}
+
 	/**
 	 * 
 	 * @param branchId
@@ -268,7 +286,5 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
-
-	
 
 }

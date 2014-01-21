@@ -228,8 +228,8 @@ public class Query {
 	public static final String GET_NEW_MSG = "from PendingMessageTbl as msg where msg.status=:param3 and msg.communicationType=:param1 and msg.applicationSpecifier=:param2 ORDER BY lastAttemptOn ASC";
 	
 	/*OrderTransferTbl*/
-	public static final String GET_LAST_UNIQUE_ID = "select MAX(u.uniqueId) from OrderTransferTbl as u"; 
-	public static final String GET_ORDERS = "from OrderTransferTbl as order where order.destinationLab.id=:param1 and order.destinationBranch.id=:param2 and order.updatedDateTime>=:param3 and order.updatedDateTime<:param4";
+	//public static final String GET_LAST_UNIQUE_ID = "select MAX(u.uniqueId) from OrderTransferTbl as u"; -- wrong should use order branch tbl if this query is using
+	public static final String GET_ORDERS = "from OrderTransferTbl as order where order.labTbl.id=:param1 and order.labBranchTbl.id=:param2 and order.updatedDateTime>=:param3 and order.updatedDateTime<:param4";
 	
 
 	/*SpecimenTbl*/
