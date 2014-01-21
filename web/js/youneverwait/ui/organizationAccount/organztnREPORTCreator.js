@@ -37,6 +37,7 @@ organztnReportCreator.prototype.bindEvents = function() {
 	var toolbutton= $j('<a href="#" class="anchorbutton remMarginRight genMarginLeft" name="reportfilter" id="btn_reportfilter_filter_id"><span>Netmd List</span></a>');
 		var inputTag=$j('<select></select>');
 		inputTag.attr('id','txtreportfilter');
+		inputTag.attr('name','paramList');
 		inputTag.addClass('genTextHeight');
 		inputTag.attr('style','display:none');
 		myDiv.append(toolbutton);
@@ -75,7 +76,7 @@ organztnReportCreator.prototype.validateMonthYer = function() {
 	var startYear=$j("#reportViewForm #startYear").val();
 	var endyear=$j("#reportViewForm #endYear").val();
 	if(startYear==endyear){
-	alert("ddd");
+	
 		if(startMonth<=endMonth){
 			bValid=true;
 		}
