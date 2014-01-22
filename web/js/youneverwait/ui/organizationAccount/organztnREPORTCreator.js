@@ -42,19 +42,23 @@ organztnReportCreator.prototype.bindEvents = function() {
 		inputTag.attr('style','display:none');
 		myDiv.append(toolbutton);
 		myDiv.append(inputTag);					
-	self.fillnetMdlist("#txtreportfilter");
+	//self.fillnetMdlist("#txtreportfilter");
 	
 	$j( "#netmdlist a:not(:selected)").die('click').live("click",function(){
 		var curObjName = $j(this).attr('name');
 		$j(this).attr('selected','selected');
 		$j(this).addClass('button_filter');
 		$j('#txt'+curObjName).show();
+		self.fillnetMdlist("#txtreportfilter");
+		
 	});	
 	$j( "#netmdlist a[selected]").die('click').live("click",function(){
 		var curObjName = $j(this).attr('name');
 		$j(this).removeAttr('selected');
 		$j(this).removeClass('button_filter');
+		$j('#txtreportfilter').find('option').remove()
 		$j('#txt'+curObjName).hide();
+		
 	});	
 	
 	$j("#reportViewForm #showreport").die('click').live('click',function(){	
