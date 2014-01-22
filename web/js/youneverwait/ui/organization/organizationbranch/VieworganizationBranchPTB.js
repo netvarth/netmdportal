@@ -13,9 +13,9 @@ function ViewOrgBranchPTB(viewOrgUI) {
 		return viewOrgUI.getOrgUIStartup();
 	}
 	
-	this.getorgAccTableNavigator = function() {
+	this.getorgnAccTableNavigator = function() {
 		var OrgUIStartup = this.getOrgUIStartup();
-		return OrgUIStartup.getorgAccTableNavigator();
+		return OrgUIStartup.getorgnAccTableNavigator();
 	}
 	
 	
@@ -29,16 +29,16 @@ function ViewOrgBranchPTB(viewOrgUI) {
 		});
 		$j(ptbParent +" " + self.upbutton).die('click').live('click',function(){
 			commonMethodInvoker.removeErrors();
-			var orgTableNavigator = self.getorgAccTableNavigator();
+			var orgTableNavigator = self.getorgnAccTableNavigator();
 			var orgInfo = source.getBranch();
-			var prevId = self.getPrevId(orgInfo.branch.globalId,orgTableNavigator.getPgDataList());
+			var prevId = self.getPrevId(orgInfo.userDetails.globalId,orgTableNavigator.getPgDataList());
 			viewUI.viewOrgBranchDetails(prevId);
 		});
 		$j(ptbParent +" " + self.downbutton).die('click').live('click',function(){
 			commonMethodInvoker.removeErrors();
-			var orgTableNavigator = self.getorgAccTableNavigator();
+			var orgTableNavigator = self.getorgnAccTableNavigator();
 			var orgInfo = source.getBranch();
-			var prevId = self.getNextId(orgInfo.branch.globalId,orgTableNavigator.getPgDataList());
+			var prevId = self.getNextId(orgInfo.userDetails.globalId,orgTableNavigator.getPgDataList());
 			viewUI.viewOrgBranchDetails(prevId);
 		});
 	}

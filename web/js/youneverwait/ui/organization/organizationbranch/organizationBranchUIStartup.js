@@ -10,7 +10,7 @@ function organizationBranchUIStartup(netmdId) {
 	this.errorData = $j('#errorDivData');
 	this.errorHeader = $j('#errorDivHeader');
 	this.orgnzId=netmdId;
-	this.pgTableRowClass = this.pgTableName + ' .branchNetlimsAccIdCol';
+	this.pgTableRowClass = this.pgTableName + ' .userOrgAccIdCol';
 	this.exp = new ExpressionListDTO();
 	this.orgzAccService = new OrganizationUserServiceImpl();
 	this.listUrl = constants.ORGAZSUPERUSERLISTURL;
@@ -21,7 +21,7 @@ function organizationBranchUIStartup(netmdId) {
 organizationBranchUIStartup.prototype.setorgAccTableNavigator = function(orgzAccTableNavigator) {
 	this.orgzAccTableNavigator = orgzAccTableNavigator;
 }
-organizationBranchUIStartup.prototype.getorgAccTableNavigator = function() {
+organizationBranchUIStartup.prototype.getorgnAccTableNavigator = function() {
 	return this.orgzAccTableNavigator;
 }
 organizationBranchUIStartup.prototype.getViewOrgzBranchUI = function() {
@@ -71,7 +71,7 @@ organizationBranchUIStartup.prototype.init = function(orgnzId) {
 	var exp = new ExpressionListDTO();
 	var expr = new ExpressionDTO(selName,selValue,selOperator);
 	exp.add(expr);
-	var orgAccntTableNavigator = self.getorgAccTableNavigator();
+	var orgAccntTableNavigator = self.getorgnAccTableNavigator();
 	orgAccntTableNavigator.setExp(exp);
 	var ptbProcessor = new PageToolBarProcessor();
 	ptbProcessor.create(constants.ORGNBRANCH, constants.ORGNPAGEBRANCHJSON); //Create the Page tool Bar for Order
@@ -142,12 +142,12 @@ organizationBranchUIStartup.prototype.bindToolBarEvents = function() {
 				 var orgDelResponse = orgUIService.deleteOrgBranch(branchId);
 				//alert(JSON.stringify(orgDelResponse));	
 				if(orgDelResponse.success==true) {
-					showTip(constants.NETMDBRANCHDELETESUCCESS);//For showing the global Tip
+					showTip(constants.ORGUSERDELETESUCCESS);//For showing the global Tip
 				} else {
 					commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(orgDelResponse.error));
 				}
-				var orgzAccTableNavigator = self.getorgAccTableNavigator();
-				orgzAccTableNavigator.list();
+				var orgzAccTableNavigator = self.getorgnAccTableNavigator();
+				orgzAccTableNavigator.list("userlist");
 			 
 		}	
 	});

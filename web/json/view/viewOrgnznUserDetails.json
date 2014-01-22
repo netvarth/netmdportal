@@ -146,11 +146,27 @@
                             "data": [
                                 {
                                     "className": "column-left",
-                                    "elements": [
+                                    "id":"usertypelabel",
+									"elements": [
                                         {
                                             "name": "usertype",
                                             "id": "usertype",
                                             "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "User Type",
+                                            "className": "newBox"
+                                        }
+                                    ]
+                                },
+								{
+                                    "className": "column-left",
+                                   "style":"display:none",
+								   "id":"usertypediv",
+								   "elements": [
+                                        {
+                                            "name": "usertypesel",
+                                            "id": "usertypesel",
+                                            "type": "select",
                                             "readonly": "readonly",
                                             "title": "User Type",
                                             "className": "newBox"

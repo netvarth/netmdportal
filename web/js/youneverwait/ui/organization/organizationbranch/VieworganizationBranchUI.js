@@ -6,13 +6,16 @@
 	this.updateButton = this.viewOrgnzAccBrchPage + " #orgzuservwbtnDone";
 	this.editButton = this.viewOrgnzAccBrchPage + " #orgzuservwbtnEdit";
 	this.cancelButton = this.viewOrgnzAccBrchPage + " #orgzuservwbtnCancel";  
-	this.ptbBack = '#GeneralPTBContainer #btn_back_ptb_id';
-	this.ptbUp = '#GeneralPTBContainer #btn_up_ptb_id';
-	this.ptbDown = '#GeneralPTBContainer #btn_down_ptb_id';  
+	this.ptbBack = '#orgaccbrachPTBContainer #btn_back_ptb_id';
+	this.ptbUp = '#orgaccbrachPTBContainer #btn_up_ptb_id';
+	this.ptbDown = '#orgaccbrachPTBContainer #btn_down_ptb_id';  
 	this.id = this.viewOrgnzAccBrchPage + " #orgid ";
 	this.brachId=this.viewOrgnzAccBrchPage + " #userid";
 	this.branchStatus=this.viewOrgnzAccBrchPage + " #branchStatus";
 	this.usertype=this.viewOrgnzAccBrchPage + " #usertype";
+	this.usertypelabel=this.viewOrgnzAccBrchPage + " #usertypelabel";
+	this.usertypediv=this.viewOrgnzAccBrchPage + " #usertypediv";
+	this.usertypesel=this.viewOrgnzAccBrchPage + " #usertypesel";
 	this.inputFields = this.viewOrgnzAccBrchPage + " :input[type=text]";
 	this.firstName=this.viewOrgnzAccBrchPage + " #firstName";
 	this.lastName=this.viewOrgnzAccBrchPage + " #lastName";
@@ -31,9 +34,9 @@ ViewOrganizationBranchUI.prototype.getOrgnzUIService = function() {
 ViewOrganizationBranchUI.prototype.getOrgUIStartup = function() {
 	return this.orgUIStartup;
 }
-ViewOrganizationBranchUI.prototype.getorgAccTableNavigator = function() {
+ViewOrganizationBranchUI.prototype.getorgnAccTableNavigator = function() {
 	var orgAccBrchUI = this.getOrgUIStartup();
-	return orgAccBrchUI.getorgAccTableNavigator();
+	return orgAccBrchUI.getorgnAccTableNavigator();
 }
 ViewOrganizationBranchUI.prototype.setBranchId= function(branchId) {
 	var orgAccBrchUI = this.getOrgUIStartup();
@@ -75,6 +78,9 @@ ViewOrganizationBranchUI.prototype.writable = function() {
 	$j(self.ptbBack).hide();
 	$j(self.ptbUp).hide();
 	$j(self.ptbDown).hide();
+	$j(self.usertypediv).show();
+	$j(self.usertypelabel).hide();
+	self.fillUsertypeList(this.usertypesel);
 	$j(self.viewOrgnzAccBrchPage + " input[type=text]").removeAttr('readonly');
 	$j(self.viewOrgnzAccBrchPage + " input[type=text]").removeClass('newBox');
 	$j(self.viewOrgnzAccBrchPage + " textarea").removeClass('newBox');
@@ -85,8 +91,8 @@ ViewOrganizationBranchUI.prototype.writable = function() {
 		$j(self.id).attr('readonly','readonly');
 		$j(self.branchStatus).addClass('newBox');
 		$j(self.branchStatus).attr('readonly','readonly');
-		$j(self.deviceNo).addClass('newBox');
-		$j(self.deviceNo).attr('readonly','readonly');
+		$j(self.username).addClass('newBox');
+		$j(self.username).attr('readonly','readonly');
 	$j(self.cancelButton).show();
 	$j(self.updateButton).show();
 }
@@ -95,6 +101,8 @@ ViewOrganizationBranchUI.prototype.readable = function() {
 	$j(self.ptbBack).show();
 	$j(self.ptbUp).show();
 	$j(self.ptbDown).show();
+	$j(self.usertypediv).hide();
+	$j(self.usertypelabel).show();
 	$j(self.viewOrgnzAccBrchPage + " input[type=text]").attr('readonly',true);
 	$j(self.viewOrgnzAccBrchPage + " input[type=text]").addClass('newBox');
 	$j(self.viewOrgnzAccBrchPage + " textarea").attr('readonly',true);
@@ -128,7 +136,7 @@ ViewOrganizationBranchUI.prototype.bindEvents = function() {
 		self.errorHeader.hide();
 		commonMethodInvoker.removeErrors();
 		var branchInfo = self.getBranch();
-		var branchId = branchInfo.branch.globalId;
+		var branchId = branchInfo.userDetails.globalId;
 		self.viewOrgBranchDetails(branchId);
 		self.readable();
 	});
@@ -137,17 +145,17 @@ ViewOrganizationBranchUI.prototype.bindEvents = function() {
 		self.errorHeader.hide();
 		commonMethodInvoker.removeErrors();
 		var branchPass = self.getBranchRequest();
-		var branchValidator = new NetmdBranchValidator();
+		var branchValidator = new OrganizationUserValidator();
 		var error  = branchValidator.validate(branchPass, self);
 		if(error.errorStatus==false) {
 			var netmdUIService = self.getOrgnzUIService();
 			var orgzResponse = netmdUIService.updateAccBranchOrg(branchPass);
 			//alert(JSON.stringify(orgzResponse));
 			if(orgzResponse.success==true) {
-				showTip(constants.BRANCHUPDATESUCCESS);//For showing the global Tip
+				showTip(constants.USERUPDATESUCCESS);//For showing the global Tip
 				var branchInfo = self.getBranch();
 				//alert(JSON.stringify(branchInfo));
-				self.viewOrgBranchDetails(branchInfo.branch.globalId);
+				self.viewOrgBranchDetails(branchInfo.userDetails.globalId);
 				self.readable();
 			} else
 				commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(orgzResponse.error));
@@ -165,115 +173,91 @@ ViewOrganizationBranchUI.prototype.viewOrgBranchDetails = function(branchId) {
 	self.setBranchId(branchId);
 	var NetorgUIService = self.getOrgnzUIService();
 	var orgzResponse = NetorgUIService.viewOrgBranchDetails(branchId);
-	alert(JSON.stringify(orgzResponse));
-	/* if(!orgzResponse.errorMessage) {
+	//alert(JSON.stringify(orgzResponse));
+	 if(!orgzResponse.errorMessage) {
 		self.setBranch(orgzResponse);
-		$j(self.id).val(orgzResponse.userDetails.netMdId);
+		$j(self.id).val(orgzResponse.userDetails.organisationId);
 		$j(self.brachId).val(orgzResponse.userDetails.globalId);
 		$j(self.branchStatus).val(orgzResponse.userDetails.status);
-		$j(self.firstName).val(orgzResponse.userDetails.name);
+		$j(self.firstName).val(orgzResponse.userDetails.firstName);
 		$j(self.phone).val(orgzResponse.userDetails.phone);
-		$j(self.usertype).val(orgzResponse.userDetails.numberOfDevices);
+		$j(self.usertype).val(orgzResponse.userDetails.userType);
+		$j(self.usertypesel).val(orgzResponse.userDetails.userType);
 		$j(self.email).val(orgzResponse.userDetails.email);
 		$j(self.address).val(commonMethodInvoker.br2nl(orgzResponse.userDetails.address));
 		$j(self.mobile).val(orgzResponse.userDetails.mobile);
-		$j(self.lastName).val(orgzResponse.userDetails.email);
-		$j(self.username).val(orgzResponse.userDetails.email);
+		$j(self.lastName).val(orgzResponse.userDetails.lastName);
+		$j(self.username).val(orgzResponse.userDetails.userName);
 		
 	} else 
-		commonMethodInvoker.createServerError(self.errorHeader,self.errorData,orgzResponse.errorMessage); */
+		commonMethodInvoker.createServerError(self.errorHeader,self.errorData,orgzResponse.errorMessage); 
 	self.setPageTitle("View User");
 }
-
-ViewOrganizationBranchUI.prototype.viewPassPhraseTableAcc = function(orgzResponse) {
-	self=this;
-	$j(self.secondaryTable).dataTable().fnClearTable();
-	$j(self.primaryTable).dataTable().fnClearTable();
-		$j(orgzResponse.branch).each(function (index,branchInfo) {
-	var myData='<input type="button" value="clear" class="clearMacid stdbtn">';
-	var makePrim='<input type="button" value="clear"  class="clearMacid stdbtn"><input type="button" value="make primary"  class="chngprimdevice stdbtn"  >';
-		$j(branchInfo.passPhrase).each(function (index,passPhrase) {
-		if(passPhrase.primary==true)
-		{
-		if(passPhrase.macId==null)
-		{		var rowData=$j(self.primaryTable).dataTable().fnAddData([passPhrase.passPhrase,'Nil',myData]);
-			var row=$j(self.primaryTable).dataTable().fnSettings().aoData[rowData].nTr;
-			$j(row).children("td:nth-child(2)").attr("class","nilstyle");
+ViewOrganizationBranchUI.prototype.fillUsertypeList = function(controlobj) {
+	var usertypeList=[];
+	ajaxProcessor.setUrl(constants.DEPARTMENTLISTURL);
+	var enumList=ajaxProcessor.get();
+	$j(enumList.enumListDTO).each(function (index, list) {
+		if(list.key=="UserTypeEnum") {
+			$j(list.enumValues).each(function (enumvalueIndex, enumvalue) {
+				usertypeList.push(enumvalue);
+			});
 		}
-		else
-		{
-		var rowData=$j(self.primaryTable).dataTable().fnAddData([passPhrase.passPhrase,passPhrase.macId,myData]);
-		var row=$j(self.primaryTable).dataTable().fnSettings().aoData[rowData].nTr;
-		$j(row).children("td:nth-child(2)").attr("class","nilstyle");
-		}
-		}
-		// var button=$j('<button name="save"/>');
-		else
-		{
-		if(passPhrase.macId==null)
-		{		
-		var rowData=$j(self.secondaryTable).dataTable().fnAddData([passPhrase.passPhrase,'Nil',makePrim]);
-		var row=$j(self.secondaryTable).dataTable().fnSettings().aoData[rowData].nTr
-		$j(row).children("td:nth-child(2)").attr("class","nilstyle");
-		}
-		else
-		{
-		var rowData=$j(self.secondaryTable).dataTable().fnAddData([passPhrase.passPhrase,passPhrase.macId,makePrim]);
-		var row=$j(self.secondaryTable).dataTable().fnSettings().aoData[rowData].nTr; 
-		$j(row).children("td:nth-child(2)").attr("class","nilstyle");
-		}
-		}
-				
-		});	
 	});
-
+	$j(usertypeList).each(function (Index, List) {
+			var freqlist=List;
+			$j(controlobj).append('<option  value="'+freqlist+'">'+freqlist+'</option>');
+	}); 
 }
+
 
 ViewOrganizationBranchUI.prototype.getBranchRequest = function() {
 	var self=this;
-	var branch = new BranchNetmdDTO();
-	var device=$j(self.deviceNo).val();
-	if(device==""){device=0;}
-	var name=$j(self.name).val();
+	var userDetails = new organizationUserDTO();
+	var name=$j(self.firstName).val();
 	name= name.replace(/\b[a-z]/g, function(letter) {
 		return letter.toUpperCase();
 	});
 	
-	branch.setglobalId($j(self.brachId).val());
-	branch.setnetMdId($j(self.id).val());
-	branch.setName(name);
-	branch.setEmail($j(self.email).val());
-	branch.setAddress(commonMethodInvoker.nl2br($j(self.address).val()));
-	branch.setPhone($j(self.phone).val());
-	branch.setMobile($j(self.mobile).val());
-	branch.setnumberOfDevices(parseInt(device));
-	return branch;
+	userDetails.setglobalId($j(self.brachId).val());
+	userDetails.setOrganisationId($j(self.id).val());
+	userDetails.setfirstName(name);
+	userDetails.setlastName($j(self.lastName).val());
+	userDetails.setaddress(commonMethodInvoker.nl2br($j(self.address).val()));
+	userDetails.setemail($j(self.email).val());
+	userDetails.setphone($j(self.phone).val());
+	userDetails.setmobile($j(self.mobile).val());
+	userDetails.setuserType($j(self.usertypesel).val());
+	userDetails.setuserName($j(self.username).val());
+	//userDetails.setpassword($j(self.password).val());
+	
+	return userDetails;
 }
 
 ViewOrganizationBranchUI.prototype.getPrevId = function(curId,branchResult) {
 	var prevId;
-	$j(branchResult.netmdBranch).each(function (index, rowbranch) {
+	$j(branchResult.organisationUsers).each(function (index, rowbranch) {
 		if(curId==rowbranch.globalId)	{
-			var arrayLength=(branchResult.netmdBranch).length;
+			var arrayLength=(branchResult.organisationUsers).length;
 			var comp=arrayLength-1;
 			if(index==0)
 				prevId = curId;
 			else
-				prevId=branchResult.netmdBranch[index-1].globalId;
+				prevId=branchResult.organisationUsers[index-1].globalId;
 		}
 	});
 	return prevId;	
 }
 ViewOrganizationBranchUI.prototype.getNextId = function(curId,branchResult) {
 	var nextId;
-	$j(branchResult.netmdBranch).each(function (index, rowbranch) {
+	$j(branchResult.organisationUsers).each(function (index, rowbranch) {
 		if(curId==rowbranch.globalId)	{
-			var arrayLength=(branchResult.netmdBranch).length;
+			var arrayLength=(branchResult.organisationUsers).length;
 			var comp=arrayLength-1;
 			if(index==comp)
 				nextId = curId;
 			else
-				nextId=branchResult.netmdBranch[index+1].globalId;	
+				nextId=branchResult.organisationUsers[index+1].globalId;	
 		}
 	});	
 	return nextId;	

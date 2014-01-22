@@ -38,8 +38,8 @@ function OrganizationUserServiceImpl () {
 	return ajaxProcessor.post(orgnzObj);
 }
 OrganizationUserServiceImpl.prototype.updateAccBranchOrg=function(orgnzObj) {
-	//alert(JSON.stringify(netlimsObj));
-	ajaxProcessor.setUrl(constants.UPDATENETMDBRCHURL);
+	//alert(JSON.stringify(orgnzObj));
+	ajaxProcessor.setUrl(constants.UPDATEORGUSERURL);
 	return ajaxProcessor.post(orgnzObj);
 }
 
@@ -49,7 +49,7 @@ OrganizationUserServiceImpl.prototype.viewOrgBranchDetails=function(orgBrchId) {
 }
 
 OrganizationUserServiceImpl.prototype.deleteOrgBranch=function(orgBrchId) {
-	ajaxProcessor.setUrl(constants.DELETENETMDBRANCHURL + orgBrchId);
+	ajaxProcessor.setUrl(constants.DELETEORGUSERURL + orgBrchId);
 	return ajaxProcessor.get();
 }
 
