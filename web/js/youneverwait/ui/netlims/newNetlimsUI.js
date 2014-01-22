@@ -73,7 +73,7 @@ NewNetlimsUI.prototype.cancel = function() {
 	var exp = new ExpressionListDTO();
 	var netlimsTableNavigator = self.getnetlimsTableNavigator();
 	netlimsTableNavigator.setExp(exp);
-	netlimsTableNavigator.list();
+	netlimsTableNavigator.list("netlimslist");
 		
 	}
 	self.setNetlimsCreationStatus(false);

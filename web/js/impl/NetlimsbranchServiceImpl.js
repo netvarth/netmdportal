@@ -1,6 +1,7 @@
 function NetlimsbranchServiceImpl () {
-		this.setTableValues = function(tableObj, branchResult) {
+		this.setTableValues = function(tableObj, branchResult,key) {
 		$j(tableObj).dataTable().fnClearTable();
+		if(key=="branchlist"){
 			if(branchResult.branch) {
 				if(branchResult.branch.length>0) {			
 					$j(branchResult.branch).each(function (index, branch) {
@@ -12,10 +13,8 @@ function NetlimsbranchServiceImpl () {
 						});	
 				}
 			}		 
-	 
-		} 
-		
-		this.setTableValuesOrderList = function(tableObj, branchResult) {
+	 }else{
+	 this.setTableValuesOrderList = function(tableObj, branchResult) {
 		$j(tableObj).dataTable().fnClearTable();
 		if(branchResult.branchOrders.length>0) {			
 			$j(branchResult.branchOrders).each(function (index, lab) {
@@ -27,7 +26,10 @@ function NetlimsbranchServiceImpl () {
 				});	
 		} 
 	 
+		} }
 		} 
+		
+		
 		
 		/* this.setTableValueBranchOrderList = function(tableObj, branchResult) {
 		$j(tableObj).dataTable().fnClearTable();
