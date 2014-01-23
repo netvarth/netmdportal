@@ -20,7 +20,7 @@ public class OrderResultTbl implements Serializable {
 	private int id;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="`created-date_time`", nullable=false)
+	@Column(name="`created_date_time`", nullable=false)
 	private Date created_dateTime;
 
 	@Lob
