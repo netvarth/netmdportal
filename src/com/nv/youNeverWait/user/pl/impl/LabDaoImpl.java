@@ -2260,6 +2260,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		orderTestResult.setCreated_dateTime(currentDateTime);
 		orderTestResult.setUpdatedDateTime(currentDateTime);
 		save(orderTestResult);
+		
 		response.setGlobalId(orderTestResult.getId());
 		response.setSuccess(true);
 		return response;
