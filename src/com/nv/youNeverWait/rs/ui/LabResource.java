@@ -1011,7 +1011,7 @@ public class LabResource {
 	 * @param orderHeader
 	 * @return
 	 */
-	@RequestMapping(value = "saveResult", method = RequestMethod.POST)
+	@RequestMapping(value = "resultTransfer", method = RequestMethod.POST)
 	@ResponseBody
 	public  ResponseDTO saveResult(@RequestBody LabResultHeaderDTO labResultHeader ) {
 		ResponseDTO response = new ResponseDTO();
