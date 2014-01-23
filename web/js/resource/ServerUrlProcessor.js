@@ -15,7 +15,6 @@ function ServerUrlProcessor() {
 			data: JSON.stringify(param),
 			contentType: "application/json;charset=utf-8",
 			dataType: "json",
-			async: false,
 			success:function(response) {
 				if(response==null){
 				//	window.location.href=pageHandler.getHomePageUrl();
@@ -49,5 +48,25 @@ function ServerUrlProcessor() {
 		//	location.reload();
 		}
 		return response;	
-	} 
+	}
+	
+	this.getJavaScript = function() {
+	var postResponse;
+	jQuery.ajax({
+	type: "GET",
+	url: this.url,
+	async: false,
+	success:function(response) {
+	if(response==null || response==undefined){
+	postResponse = new Error(true, "No response from server");
+	}else
+	postResponse = response;
+	},
+	error: function(xhr, ajaxOptions, thrownError) {
+	postResponse = new Error(true, xhr.responseText);
+	}
+	});
+	return postResponse;
+	}
+
 }	

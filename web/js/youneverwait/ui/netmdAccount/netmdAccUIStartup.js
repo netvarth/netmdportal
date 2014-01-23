@@ -84,6 +84,11 @@ netmdAccountUIStartup.prototype.init = function() {
 
 netmdAccountUIStartup.prototype.createBranchModal = function(obj) {
 	var self = this;
+	if(pageHandler.isnetmdControlClassLoaded()!=true){
+		ajaxProcessor.setUrl("/youNeverWait/js/youneverwait/ui/netmdAccount/netMdloader.js");
+		ajaxProcessor.getJavaScript();
+		pageHandler.setnetmdControlClassLoaded(true);
+			}
 	commonMethodInvoker.removeErrors();
 	createModal(constants.NEWNETMDACCBRANCHJSON,constants.NEWNETMDACCBRANCHMODAL);		
 	openModalBox(obj,constants.NEWNETMDACCBRANCHMODAL);
@@ -105,12 +110,18 @@ netmdAccountUIStartup.prototype.createBranchModal = function(obj) {
 
 netmdAccountUIStartup.prototype.bindToolBarEvents = function() {
 	var self=this;
+	
 	 self.ptbCreate.die('click').live('click',function() {
 		var obj=$j(this);
 		self.createBranchModal(obj);
 	});	
 	self.ptbView.die('click').live('click',function() {
 		removeErrors();
+		if(pageHandler.isnetmdControlClassLoaded()!=true){
+		ajaxProcessor.setUrl("/youNeverWait/js/youneverwait/ui/netmdAccount/netMdloader.js");
+		ajaxProcessor.getJavaScript();
+		pageHandler.setnetmdControlClassLoaded(true);
+			}
 		var branchId=self.getSelectedbranchId(self.pgTableName);
 		if(branchId!="") {
 			var viewNetmdBranchUI = self.getViewNetmdBranchUI();
@@ -119,6 +130,11 @@ netmdAccountUIStartup.prototype.bindToolBarEvents = function() {
 	});
 	self.ptbSync.die('click').live('click',function() {
 		removeErrors();
+		if(pageHandler.isnetmdControlClassLoaded()!=true){
+		ajaxProcessor.setUrl("/youNeverWait/js/youneverwait/ui/netmdAccount/netMdloader.js");
+		ajaxProcessor.getJavaScript();
+		pageHandler.setnetmdControlClassLoaded(true);
+			}
 		var branchId=self.getSelectedbranchId(self.pgTableName);
 		if(branchId!="") {
 			var obj=$j(this);
@@ -163,6 +179,11 @@ netmdAccountUIStartup.prototype.bindEvents = function() {
 	$j(parent.pgTableRowClass).die('click').live('click',function(){
 	   var branchId= $j(this).parent().attr('id');
 		if(branchId!="") {
+			if(pageHandler.isnetmdControlClassLoaded()!=true){
+		ajaxProcessor.setUrl("/youNeverWait/js/youneverwait/ui/netmdAccount/netMdloader.js");
+		ajaxProcessor.getJavaScript();
+		pageHandler.setnetmdControlClassLoaded(true);
+			}
 			var viewNetmdBranchUI = parent.getViewNetmdBranchUI();
 			viewNetmdBranchUI.init(branchId);
 		}	
