@@ -112,7 +112,9 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 									.getRequestURI()
 									.equals("/youNeverWait/ws/ui/lab/retrieveBranchOrders")
 							&& !request.getRequestURI().equals(
-									"/youNeverWait/ws/ui/lab/orderTransfer")) {
+									"/youNeverWait/ws/ui/lab/orderTransfer")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/lab/resultTransfer")) {
 						request.getRequestDispatcher("/ws/ui/lab/lForm")
 								.forward(request, response);
 						return false;
@@ -156,9 +158,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				if (containr.toUpperCase().contains(orgnContent.toUpperCase())) {
 					if (!request.getRequestURI().equals(
 							"/youNeverWait/ws/ui/orgn/oForm")
-							&& !request
-									.getRequestURI()
-									.equals("/youNeverWait/ws/ui/orgn/login")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/ws/ui/orgn/login")
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/ws/ui/orgn/resetPassword")
 							&& !request.getRequestURI().equals(
