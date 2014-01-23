@@ -72,6 +72,11 @@ SettingsToolBarProcessor.prototype.createorderTypeModal = function(obj) {
 }
 SettingsToolBarProcessor.prototype.createChangePasswrdnetMdModal = function(obj) {
 	var self = this;
+	if(pageHandler.isnetmdControlClassLoaded()!=true){
+		ajaxProcessor.setUrl("/youNeverWait/js/youneverwait/ui/netmdAccount/netMdloader.js");
+		ajaxProcessor.getJavaScript();
+		pageHandler.setnetmdControlClassLoaded(true);
+			}
 	commonMethodInvoker.removeErrors();
 	createModal(constants.NEWNETMDACCPASWRDCHGJSON,constants.NEWNETMDACCPASWRDCHGMODAL);		
 	openModalBox(obj,constants.NEWNETMDACCPASWRDCHGMODAL);

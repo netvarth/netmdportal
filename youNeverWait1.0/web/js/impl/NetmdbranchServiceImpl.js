@@ -1,6 +1,7 @@
 function NetmdbranchServiceImpl () {
-		this.setTableValues = function(tableObj, branchResult) {
+		this.setTableValues = function(tableObj, branchResult,key) {
 		$j(tableObj).dataTable().fnClearTable();
+			if(key=="branchlist"){
 			if(branchResult.netmdBranch) {
 				if(branchResult.netmdBranch.length>0) {			
 					$j(branchResult.netmdBranch).each(function (index, netmdBranch) {
@@ -13,23 +14,22 @@ function NetmdbranchServiceImpl () {
 				}
 			}		 
 	 
-		} 
-		
-		
-		
-		this.setTableValueBranchBillList = function(tableObj, billResult) {
-		$j(tableObj).dataTable().fnClearTable();
-		if(billResult.branchBillList.length>0) {			
-				$j(billResult.branchBillList).each(function (index, netmd) {
-					var id=netmd.branchId;
-					var rowData=$j(tableObj).dataTable().fnAddData([netmd.uid,netmd.orderDate,netmd.patientName,netmd.payStatus,netmd.billAmount,netmd.amountPaid]);
-					var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
-					$j(row).attr('id',id);	
-					//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
-					});	
+		} else
+		{
+			if(branchResult.branchBillList.length>0) {			
+					$j(branchResult.branchBillList).each(function (index, netmd) {
+						var id=netmd.branchId;
+						var rowData=$j(tableObj).dataTable().fnAddData([netmd.uid,netmd.orderDate,netmd.patientName,netmd.payStatus,netmd.billAmount,netmd.amountPaid]);
+						var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+						$j(row).attr('id',id);	
+						//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
+						});	
+				}
 			}
-	 
-		} 
+		}
+		
+		
+		
 }
  NetmdbranchServiceImpl.prototype.createBranchNetmd=function (netmdObj) {
 	ajaxProcessor.setUrl(constants.CREATENETMDBRANCHURL);

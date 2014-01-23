@@ -1,4 +1,4 @@
- function ViewNetlimsBranchUI(netlimsUIStartup){
+ function ViewNetlimsBranchUI(netlimsbrchUIStartup){
 	this.viewNetlimsAccBrchPage = "#viewBranchHeader";
 	this.errorHeader = $j('#errorDivHeader');
 	this.errorData = $j('#errorDivData');
@@ -9,6 +9,7 @@
 	this.toDate="#branchViewForm #toDate";
 	this.orderButton="#branchViewForm #btnShowOrders";
 	this.orderListTable="#ordersnetlimsaccViewTable";
+	this.orderListTableCont="#viewBranchHeader";
 	this.primaryTable="#passphrasenetlimsViewTable";
 	this.clearMacid="#branchViewForm .clearMacid";
 	this.clearMacidYes="#macidClearForm #btnClearMacYes";
@@ -30,7 +31,11 @@
 	this.phone = this.viewNetlimsAccBrchPage + " #branchPhone";
 	this.mobile=this.viewNetlimsAccBrchPage + " #branchMobile";
 	this.email = this.viewNetlimsAccBrchPage + " #email";
-	this.netlimsUIStartup=netlimsUIStartup;
+	this.exp = new ExpressionListDTO();
+	this.netlimsAccService = new NetlimsbranchServiceImpl();
+	this.listUrl=constants.GETNETLIMSBRANCHORDERLISTURL;
+	this.netlimsOrderTableNavigator = new DataTableNavigator(this.orderListTable,this.listUrl,this.orderListTableCont,this.netlimsAccService,this.exp);
+	this.netlimsUIStartup=netlimsbrchUIStartup;
 	this.viewNetlimsBranchPTB = new ViewNetlimsBranchPTB(this);
 }
 ViewNetlimsBranchUI.prototype.getNetlimsUIService = function() {
@@ -183,18 +188,40 @@ ViewNetlimsBranchUI.prototype.bindEvents = function() {
 		self.errorHeader.hide();
 		var obj=$j(this);
 		commonMethodInvoker.removeErrors();
-		var orderlistData=self.getOrderDetail();
-		var netlimsUIService = self.getNetlimsUIService();
-		var netlimsOrderListResponse = netlimsUIService.BranchOrderlistNetlims(orderlistData);
-		//alert(JSON.stringify(netlimsOrderListResponse));
-		if(netlimsOrderListResponse.success==true) {
+		
+		var selName="labId";
+		var selValue=$j(self.id).val();
+		var selOperator = "eq";
+		
+		var selBrchName="labBranchId";
+		var selBrchValue=$j(self.brachId).val();
+		var selBrchOperator = "eq";
+		
+		var date="orderDate";
+		var fromValue=$j(self.fromDate).val();
+		var fromOperator = "ge";
+		
+		var toValue=$j(self.toDate).val();
+		var toOperator = "le";
+		
+		var exp = new ExpressionListDTO();
+		var expr = new ExpressionDTO(selName,selValue,selOperator);
+		var expr1 = new ExpressionDTO(selBrchName,selBrchValue,selBrchOperator);
+		var expr2 = new ExpressionDTO(date,fromValue,fromOperator);
+		var expr3 = new ExpressionDTO(date,toValue,toOperator);
+		exp.add(expr);
+		exp.add(expr1);
+		exp.add(expr2);
+		exp.add(expr3);
+		
 		createModal(constants.BRANCHNETLIMSORDERLIST,constants.SHOWORDERMODAL);		
 		openModalBox(obj,constants.SHOWORDERMODAL);
 		dataTableProcessor.setCustomTable(self.orderListTable);
-		//self.netlimsUIService.setTableValueBranchOrderList(self.orderListTable,netlimsOrderListResponse);
-		}else
-			commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netlimsOrderListResponse.error));
-	});
+		
+		var netlimsAccntTableNavigator = self.netlimsOrderTableNavigator;
+		netlimsAccntTableNavigator.setExp(exp);
+		netlimsAccntTableNavigator.list("orderlist");
+		});
 }
 
 ViewNetlimsBranchUI.prototype.createClearmacidModal = function(obj) {

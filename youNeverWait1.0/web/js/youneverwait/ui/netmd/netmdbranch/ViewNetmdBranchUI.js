@@ -13,6 +13,7 @@
 	this.clearMacidYes="#macidClearForm #btnClearMacYes";
 	this.clearMacidNo="#macidClearForm #btnClearMacNo";
 	this.billListTable="#accBillDetailsViewTable";
+	this.billListTableCont="#viewBranchHeader";
 	this.updateButton = this.viewNetmdAccBrchPage + " #netmdbranchvwbtnDone";
 	this.editButton = this.viewNetmdAccBrchPage + " #netmdbranchvwbtnEdit";
 	this.cancelButton = this.viewNetmdAccBrchPage + " #netmdbranchvwbtnCancel";  
@@ -30,6 +31,10 @@
 	this.email = this.viewNetmdAccBrchPage + " #email";
 	this.deviceNo= this.viewNetmdAccBrchPage + " #devicesno";
 	this.netmdUIStartup=netmdUIStartup;
+	this.exp = new ExpressionListDTO();
+	this.netmdAccService = new NetmdbranchServiceImpl();
+	this.listUrl = constants.GETNETMDBILLLISTURL;
+	this.netmdBillTableNavigator = new DataTableNavigator(this.billListTable,this.listUrl,this.billListTableCont,this.netmdAccService,this.exp);
 	this.viewNetmdBranchPTB = new ViewNetmdBranchPTB(this);
 }
 ViewNetmdBranchUI.prototype.getNetmdUIService = function() {
@@ -199,17 +204,38 @@ ViewNetmdBranchUI.prototype.bindEvents = function() {
 		self.errorHeader.hide();
 		var obj=$j(this);
 		commonMethodInvoker.removeErrors();
-		var billlistData=self.getBillDetail();
-		var netmdUIService = self.getNetmdUIService();
-		var netmdbillListResponse = netmdUIService.BranchBilllistNetmd(billlistData);
-		//alert(JSON.stringify(netmdbillListResponse));
-		if(netmdbillListResponse.success==true) {
+		
+		var selName="netmdId";
+		var selValue=$j(self.id).val();
+		var selOperator = "eq";
+		
+		var selBrchName="netmdBranchId";
+		var selBrchValue=$j(self.brachId).val();
+		var selBrchOperator = "eq";
+		
+		var date="orderDate";
+		var fromValue=$j(self.fromDate).val();
+		var fromOperator = "ge";
+		
+		var toValue=$j(self.toDate).val();
+		var toOperator = "le";
+		
+		var exp = new ExpressionListDTO();
+		var expr = new ExpressionDTO(selName,selValue,selOperator);
+		var expr1 = new ExpressionDTO(selBrchName,selBrchValue,selBrchOperator);
+		var expr2 = new ExpressionDTO(date,fromValue,fromOperator);
+		var expr3 = new ExpressionDTO(date,toValue,toOperator);
+		exp.add(expr);
+		exp.add(expr1);
+		exp.add(expr2);
+		exp.add(expr3);
 		createModal(constants.BRANCHNETMDBILLLISTJSON,constants.SHOWBILLLISTMODAL);		
 		openModalBox(obj,constants.SHOWBILLLISTMODAL);
 		dataTableProcessor.setCustomTable(self.billListTable);
-		//self.netmdUIService.setTableValueBranchBillList(self.billListTable,netmdbillListResponse);
-		}else
-			commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netmdbillListResponse.error));
+		
+		var netmdAccntTableNavigator = self.netmdBillTableNavigator;
+		netmdAccntTableNavigator.setExp(exp);
+		netmdAccntTableNavigator.list("billList");
 	}); 
 }
 

@@ -71,7 +71,7 @@ netlimsUIStartup.prototype.init = function() {
 	self.bindToolBarEvents();
 	dataTableProcessor.create(self.pgTableName,constants.NETLIMSLISTJSON);//Create Table for Listing Order
 	dataTableProcessor.setCustomTable(self.pgTableName);
-	netlimsTableNavigator.list();
+	netlimsTableNavigator.list("netlimslist");
 	self.bindEvents();
 	pageHandler.setActivePage(self);
 }
@@ -148,7 +148,7 @@ netlimsUIStartup.prototype.bindToolBarEvents = function() {
 					commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netlimsDelResponse.error));
 				}
 				var netlimsTableNavigator = self.getnetlimsTableNavigator();
-				netlimsTableNavigator.list();
+				netlimsTableNavigator.list("netlimslist");
 			
 			}	
 	});

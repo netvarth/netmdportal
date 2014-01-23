@@ -71,7 +71,7 @@ netmdUIStartup.prototype.init = function() {
 	self.bindToolBarEvents();
 	dataTableProcessor.create(self.pgTableName,constants.NETMDLISTJSON);//Create Table for Listing Order
 	dataTableProcessor.setCustomTable(self.pgTableName);
-	netmdTableNavigator.list();
+	netmdTableNavigator.list("netmdlist");
 	self.bindEvents();
 	pageHandler.setActivePage(self);
 }
@@ -163,7 +163,7 @@ netmdUIStartup.prototype.bindToolBarEvents = function() {
 					commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netmdDelResponse.error));
 				}
 				var netmdTableNavigator = self.getnetmdTableNavigator();
-				netmdTableNavigator.list();
+				netmdTableNavigator.list("netmdlist");
 			
 			}	
 	});

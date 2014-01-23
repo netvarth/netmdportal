@@ -1,6 +1,7 @@
 function NetlimsServiceImpl () {
-		this.setTableValues = function(tableObj, netlimsResult) {
+		this.setTableValues = function(tableObj, netlimsResult,key) {
 		$j(tableObj).dataTable().fnClearTable();
+			if(key=="netlimslist"){
 			if(netlimsResult.lab) {
 				if(netlimsResult.lab.length>0) {			
 					$j(netlimsResult.lab).each(function (index, lab) {
@@ -12,7 +13,7 @@ function NetlimsServiceImpl () {
 						});	
 				}
 			}		
-	 
+			}
 		} 
 		
 		this.setviewordersnetlimsListTable = function(tableObj, netlimsorderResult) {

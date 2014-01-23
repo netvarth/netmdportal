@@ -94,7 +94,7 @@ netlimsBranchUIStartup.prototype.init = function(netlimsId) {
 	self.bindToolBarEvents();
 	dataTableProcessor.create(self.pgTableName,constants.NETLIMSACCBRANCHLISTJSON);//Create Table for Listing Order
 	dataTableProcessor.setCustomTable(self.pgTableName);
-	netlimsAccTableNavigator.list();
+	netlimsAccTableNavigator.list("branchlist");
 	self.bindEvents();
 	pageHandler.setActivePage(self);
 }
@@ -278,7 +278,7 @@ netlimsBranchUIStartup.prototype.bindToolBarEvents = function() {
 					commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netlimsDelResponse.error));
 				}
 				var netlimsAccTableNavigator = self.getnetlimsAccTableNavigator();
-				netlimsAccTableNavigator.list();
+				netlimsAccTableNavigator.list("branchlist");
 			 
 		}	
 	});

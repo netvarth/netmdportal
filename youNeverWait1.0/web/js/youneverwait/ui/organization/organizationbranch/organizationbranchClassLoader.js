@@ -10,7 +10,7 @@ function organizationbranchClassLoader() {
 		})
 		$j.getScript("/youNeverWait/js/youneverwait/ui/organization/organizationbranch/VieworganizationBranchPTB.js").done(function(script,textStatus){
 		})
-		$j.getScript("/youNeverWait/js/validation/OrganizationUserValidator.js").done(function(script,textStatus){
+		$j.getScript("/youNeverWait/js/validation/OrganizationUserViewValidator.js").done(function(script,textStatus){
 		})
 		$j.getScript("/youNeverWait/js/youneverwait/ui/organization/organizationbranch/organizationAccSyncUI.js").done(function(script,textStatus){
 		})

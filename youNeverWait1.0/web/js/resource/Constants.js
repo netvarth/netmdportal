@@ -198,7 +198,6 @@ function Constants() {
 	this.UPDATEORGNZURL="/youNeverWait/ws/ui/superAdmin/updateOrganisation";
 	this.VIEWORGDETAILPAGEURL="/youNeverWait/json/view/viewOrganizationdetails.json";
 	this.VIEWORGDETAILURL="/youNeverWait/ws/ui/superAdmin/viewOrganisation/";
-	this.NETMDUPDATESUCCESS="Netmd Updated Successfully";
 	this.ORGNGENERAL="orgn";
 	this.ORGANZTNDELETESUCCESS="Inactivated organization Successfully";
 	this.DELETEORGURL="/youNeverWait/ws/ui/superAdmin/deleteOrganisation/";
@@ -206,9 +205,11 @@ function Constants() {
 	//this.VIEWNETMDBRCHPAGEURL="/youNeverWait/json/view/viewNetmdBranchDetails.json";
 	this.ORGAZSUPERUSERLISTURL="/youNeverWait/ws/ui/superAdmin/getOrganisationUserList";
 	this.CREATEORGUSERURL="/youNeverWait/ws/ui/superAdmin/createOrganisationUser";
-	this.UPDATENETMDBRCHURL="/youNeverWait/ws/ui/superAdmin/updateNetMdBranch";
+	this.UPDATEORGUSERURL="/youNeverWait/ws/ui/superAdmin/updateOrganisationUser";
+	this.USERUPDATESUCCESS="User Updated Successfully";
 	this.VIEWORGUSERURL="/youNeverWait/ws/ui/superAdmin/viewOrganisationUser/";
-	this.DELETENETMDBRANCHURL="/youNeverWait/ws/ui/superAdmin/deleteNetMdBranch/";
+	this.DELETEORGUSERURL="/youNeverWait/ws/ui/superAdmin/deleteOrganisationUser/";
+	this.ORGUSERDELETESUCCESS="Inactivated organization User Successfully";
 	this.USERLIST="USER LIST";
 	this.ORGNBRANCH="BRANCHORG";
 	this.ORGNACCBRANCHLISTJSON="/youNeverWait/json/list/orgnAccUserTable.json";

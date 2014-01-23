@@ -67,6 +67,13 @@ function PageHandler() {
 		this.netmdClassLoaded=status;
 	}
 	
+	this.isnetmdControlClassLoaded=function(){
+		return this.netmdControlClassLoaded;
+	}
+	this.setnetmdControlClassLoaded=function(status){
+		this.netmdControlClassLoaded=status;
+	}
+	
 	this.isnetrxClassLoaded=function(){
 		return this.netrxClassLoaded;
 	}

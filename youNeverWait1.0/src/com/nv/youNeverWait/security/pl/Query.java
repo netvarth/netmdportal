@@ -248,7 +248,8 @@ public class Query {
 	public static final String GET_TEST_SPECIMEN = "from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid = :param1";
 	public static final String GET_SPECIMEN_BY_TEST_UID = "from TestSpecimenTbl as testSpecimen where testSpecimen.testTbl.uid=:param1";
 	
-	
+	/*OrderBranchTbl*/
+	public static final String GET_ORDER_BY_UID = "from OrderBranchTbl as order where order.orderUid=:param1";
 	/**************NetRx******************/
 	
 	/*NetRxTbl*/
@@ -317,6 +318,7 @@ public class Query {
 	/*AnswerTbl*/
 	public static final String GET_BY_CASE = "from AnswerTbl as qaTbl where qaTbl.caseTbl.id=:param1";
 	public static final String GET_NAME_BY_AGE="select  distinct name,caseId,age from (select distinct case_id  from qus_ans_tbl) as q0 LEFT OUTER JOIN (select answer as name ,case_id as caseId from qus_ans_tbl where quest_id = 5) as q1 ON q0.case_id = q1.caseId LEFT OUTER JOIN (select answer as age,case_id as caseI from qus_ans_tbl where quest_id = 6) as q2 ON q1.caseId = q2.caseI where q2.age>24";
+	
 
 	
 }

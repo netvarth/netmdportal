@@ -1,9 +1,10 @@
 function NetmdServiceImpl () {
-		this.setTableValues = function(tableObj, netlimsResult) {
+		this.setTableValues = function(tableObj, branchResult,key) {
 		$j(tableObj).dataTable().fnClearTable();
-			if(netlimsResult.netMd) {
-				if(netlimsResult.netMd.length>0) {			
-					$j(netlimsResult.netMd).each(function (index, netMd) {
+		if(key=="netmdlist"){
+			if(branchResult.netMd) {
+				if(branchResult.netMd.length>0) {			
+					$j(branchResult.netMd).each(function (index, netMd) {
 						var id=netMd.globalId;
 						var rowData=$j(tableObj).dataTable().fnAddData([id,netMd.name,netMd.ownerEmail,netMd.status]);
 						var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
@@ -14,34 +15,9 @@ function NetmdServiceImpl () {
 			}		
 	 
 		} 
+	}
 		
-		this.setviewordersnetlimsListTable = function(tableObj, netlimsorderResult) {
-		$j(tableObj).dataTable().fnClearTable();
-		if(netlimsorderResult.branchOrders.length>0) {			
-			$j(netlimsorderResult.branchOrders).each(function (index, netMd) {
-				var id=netMd.branchId;
-				var rowData=$j(tableObj).dataTable().fnAddData([id,netMd.branchName,netMd.orderDate,netMd.totalOrders,netMd.netAmount,netMd.paidAmount,netMd.lastOrderdTime]);
-				var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
-				$j(row).attr('id',id);	
-				//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
-				});	
-		}
-	 
-		} 
 		
-		this.setTableValueBranchOrderList = function(tableObj, branchResult) {
-		$j(tableObj).dataTable().fnClearTable();
-		if(branchResult.branchOrders.length>0) {			
-				$j(branchResult.branchOrders).each(function (index, netMd) {
-					var id=netMd.branchId;
-					var rowData=$j(tableObj).dataTable().fnAddData([netMd.orderDate,netMd.totalOrders,netMd.netAmount,netMd.paidAmount,netMd.lastOrderdTime]);
-					var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
-					$j(row).attr('id',id);	
-					//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
-					});	
-		}
-	 
-		} 
 }
  NetmdServiceImpl.prototype.createNetmd=function (netmdObj) {
 	ajaxProcessor.setUrl(constants.CREATENETMDURL);
