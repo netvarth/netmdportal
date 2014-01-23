@@ -51,9 +51,8 @@ public class OrderResultTbl implements Serializable {
 		@JoinColumn(name="owner_branch_id", nullable=false)
 		private LabBranchTbl ownerLabBranchTbl;
 
-
-	@Column(nullable=false)
-	private String test;
+		@Column(name="test_uid", length=45)
+		private String testUid;
 
 	public OrderResultTbl() {
 	}
@@ -98,12 +97,12 @@ public class OrderResultTbl implements Serializable {
 		this.orderBranchTbl = orderBranchTbl;
 	}
 
-	public String getTest() {
-		return test;
+	public String getTestUid() {
+		return testUid;
 	}
 
-	public void setTest(String test) {
-		this.test = test;
+	public void setTestUid(String testUid) {
+		this.testUid = testUid;
 	}
 
 	public LabBranchTbl getLabBranchTbl() {

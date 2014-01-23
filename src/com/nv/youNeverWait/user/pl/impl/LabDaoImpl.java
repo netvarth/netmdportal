@@ -2253,7 +2253,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		OrderResultTbl orderTestResult = new OrderResultTbl();
 		orderTestResult.setOrderBranchTbl(orderBrnchTbl);
 		orderTestResult.setResult(labResultHeader.getResultDetails());
-		orderTestResult.setTest(labResultHeader.getTestUId());
+		orderTestResult.setTestUid(labResultHeader.getTestUId());
 		orderTestResult.setLabBranchTbl(labBranchTbl);
 		orderTestResult.setLabTbl(labTbl);
 		orderTestResult.setOwnerLabBranchTbl(orderBrnchTbl.getLabBranchTbl());
