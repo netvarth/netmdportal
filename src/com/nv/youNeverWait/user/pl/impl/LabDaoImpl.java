@@ -2248,12 +2248,16 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
+		Date currentDateTime = new Date();
 		OrderResultTbl orderTestResult = new OrderResultTbl();
 		orderTestResult.setOrderBranchTbl(orderBrnchTbl);
 		orderTestResult.setResult(labResultHeader.getResultDetails());
 		orderTestResult.setTest(labResultHeader.getTestUId());
 		orderTestResult.setLabBranchTbl(labBranchTbl);
 		orderTestResult.setLabTbl(labTbl);
+		orderTestResult.setOwnerLabBranchTbl(orderBrnchTbl.getLabBranchTbl());
+		orderTestResult.setCreated_dateTime(currentDateTime);
+		orderTestResult.setUpdatedDateTime(currentDateTime);
 		save(orderTestResult);
 
 		response.setSuccess(true);

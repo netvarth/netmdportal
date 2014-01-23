@@ -46,7 +46,12 @@ public class OrderResultTbl implements Serializable {
 		@JoinColumn(name="source_lab_id", nullable=false)
 		private LabTbl labTbl;
 
-		
+		//bi-directional many-to-one association to LabBranchTbl
+		@ManyToOne
+		@JoinColumn(name="owner_branch_id", nullable=false)
+		private LabBranchTbl ownerLabBranchTbl;
+
+
 	@Column(nullable=false)
 	private String test;
 
@@ -116,6 +121,16 @@ public class OrderResultTbl implements Serializable {
 	public void setLabTbl(LabTbl labTbl) {
 		this.labTbl = labTbl;
 	}
+
+	public LabBranchTbl getOwnerLabBranchTbl() {
+		return ownerLabBranchTbl;
+	}
+
+	public void setOwnerLabBranchTbl(LabBranchTbl ownerLabBranchTbl) {
+		this.ownerLabBranchTbl = ownerLabBranchTbl;
+	}
+
+	
 
 	
 
