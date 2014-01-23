@@ -76,7 +76,7 @@ NewBranchUI.prototype.cancel = function() {
 	netmdAccTableNavigator.setExp(exp);
 		
 			//var branchTableNavigator = self.getnetmdAccTableNavigator();
-			netmdAccTableNavigator.list();
+			netmdAccTableNavigator.list("branchlist");
 		
 	}
 	self.setBranchCreationStatus(false);

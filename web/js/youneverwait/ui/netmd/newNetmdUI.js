@@ -74,7 +74,7 @@ NewNetmdUI.prototype.cancel = function() {
 	var exp = new ExpressionListDTO();
 	var netmdTableNavigator = self.getnetmdTableNavigator();
 	netmdTableNavigator.setExp(exp);
-	netmdTableNavigator.list();
+	netmdTableNavigator.list("netmdlist");
 		
 	}
 	self.setNetmdCreationStatus(false);
