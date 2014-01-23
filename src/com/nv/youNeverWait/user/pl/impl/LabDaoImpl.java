@@ -2236,7 +2236,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		LabTbl labTbl = getById(LabTbl.class, labResultHeader.getSourceLabId());
 		if (labTbl == null) {
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidLab);
-			se.addParam(new Parameter(Constants.ID, Integer.toString(labResultHeader.getSourceLabId())));
+			se.addParam(new Parameter(Constants.ID, Integer
+					.toString(labResultHeader.getSourceLabId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
@@ -2259,7 +2260,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		orderTestResult.setCreated_dateTime(currentDateTime);
 		orderTestResult.setUpdatedDateTime(currentDateTime);
 		save(orderTestResult);
-
+		response.setGlobalId(orderTestResult.getId());
 		response.setSuccess(true);
 		return response;
 	}
