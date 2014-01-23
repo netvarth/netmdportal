@@ -14,6 +14,9 @@ package com.nv.youNeverWait.user.bl.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.OrderDetails;
+import com.nv.youNeverWait.rs.dto.OrderTestResultList;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
 import com.nv.youNeverWait.user.bl.service.ResultService;
@@ -55,6 +58,13 @@ public class ResultServiceImpl implements ResultService{
 		List<RetrieveResultsResponseDTO> response= resultDao.getPatientResults(lastSyncTime, passPhrase, netMdBranchId, currentSyncTime);
 		return response;
 	}
+	@Override
+	public OrderTestResultList retrieveResults(HeaderDTO header,
+			String lastSyncTime, Date currentSyncTime) {
+		OrderTestResultList testResults=resultDao.retrieveResults(header,lastSyncTime,currentSyncTime);
+		return testResults;
+	}
+	
 	/**
 	 * @return the resultDao
 	 */
@@ -79,6 +89,7 @@ public class ResultServiceImpl implements ResultService{
 	public void setResultValidator(ResultValidator resultValidator) {
 		this.resultValidator = resultValidator;
 	}
+	
 
 
 

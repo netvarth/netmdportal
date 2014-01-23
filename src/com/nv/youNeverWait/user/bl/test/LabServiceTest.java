@@ -2883,12 +2883,12 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		LabService service =(LabService) applicationContext.getBean("lab.service");
 		LabOrderHeaderDTO orderHeader= new LabOrderHeaderDTO();
 		HeaderDTO header = new HeaderDTO();
-		header.setHeadOfficeId(192);
-		header.setBranchId(122);
-		header.setPassPhrase("mxfdKpnGwKrrnT03vHa4ww==");
+		header.setHeadOfficeId(277);
+		header.setBranchId(325);
+		header.setPassPhrase("AVlKyVKV5reRy25xW8bJNA==");
 		header.setMacId("00-1C-C0-5A-AA-7B");
 		orderHeader.setHeader(header);
-		orderHeader.setLastOrderSyncTime("2013-09-24 12:00:57");
+		orderHeader.setLastOrderSyncTime("2014-01-23 11:40:58");
 		try{
 			service.retrieveBranchOrders(orderHeader);
 		}

@@ -59,6 +59,8 @@ import com.nv.youNeverWait.rs.dto.LabDetail;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
+import com.nv.youNeverWait.rs.dto.OrderTestResult;
+import com.nv.youNeverWait.rs.dto.OrderTestResultList;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
@@ -80,6 +82,7 @@ import com.nv.youNeverWait.user.bl.service.HealthMonitorService;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.service.OrderService;
+import com.nv.youNeverWait.user.bl.service.ResultService;
 import com.nv.youNeverWait.user.bl.validation.LabValidator;
 import com.nv.youNeverWait.user.pl.dao.LabDao;
 import com.nv.youNeverWait.user.pl.impl.BranchOwnerDetails;
@@ -100,6 +103,7 @@ public class LabServiceImpl implements LabService {
 	private static final Log log = LogFactory.getLog(LabServiceImpl.class);
 	private OrderService orderService;
 	private HealthMonitorService healthService;
+	private ResultService resultService;
 
 	/**
 	 * Create user in Lab
@@ -1233,6 +1237,10 @@ public class LabServiceImpl implements LabService {
 		Date currentSyncTime= new Date();
 		OrderDetails orderDetail = orderService.retrieveBranchOrders(orderHeader.getHeader(),
 				orderHeader.getLastOrderSyncTime(),currentSyncTime);
+		OrderTestResultList testResults=resultService.retrieveResults(orderHeader.getHeader(),orderHeader.getLastOrderSyncTime(),currentSyncTime);
+		orderDetail.setOrderTestResult(testResults.getOrderTestResultList());
+		orderDetail.setSuccess(true);
+		
 		return orderDetail;
 	}
 
@@ -1517,6 +1525,14 @@ public class LabServiceImpl implements LabService {
 	 */
 	public void setHealthService(HealthMonitorService healthService) {
 		this.healthService = healthService;
+	}
+
+	public ResultService getResultService() {
+		return resultService;
+	}
+
+	public void setResultService(ResultService resultService) {
+		this.resultService = resultService;
 	}
 
 	
