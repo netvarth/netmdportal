@@ -44,6 +44,7 @@ import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabOrderHeaderDTO;
+import com.nv.youNeverWait.rs.dto.LabResultHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
@@ -1359,6 +1360,14 @@ public class LabServiceImpl implements LabService {
 		return syncFreqDetails;
 	}
 
+	@Override
+	public ResponseDTO saveResult(LabResultHeaderDTO labResultHeader) {
+		validator.validateLabResultDetails(labResultHeader);
+		ResponseDTO response = labDao
+				.saveResult(labResultHeader);
+		return response;
+	}
+
 	
 	/**
 	 * @return the labDao
@@ -1510,5 +1519,6 @@ public class LabServiceImpl implements LabService {
 		this.healthService = healthService;
 	}
 
+	
 	
 }

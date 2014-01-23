@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
@@ -24,6 +25,7 @@ import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
+import com.nv.youNeverWait.rs.dto.LabResultHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
@@ -735,6 +737,36 @@ public class LabValidator extends FilterValidator {
 			}
 		}
 		return null;
+	}
+
+	public void validateLabResultDetails(LabResultHeaderDTO labResultHeader) {
+		validateHeaderDetails(labResultHeader.getHeader());
+		validateLabBranchIds(labResultHeader.getHeader().getHeadOfficeId(), labResultHeader.getHeader().getBranchId());
+		validateLabBranchIds(labResultHeader.getSourceLabId(), labResultHeader.getSourceLabBranchId()); 
+		    if (labResultHeader.getTestUId()== null
+					|| labResultHeader.getTestUId().isEmpty()) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidTestUid);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+		    if (labResultHeader.getResultDetails() == null
+					||labResultHeader.getResultDetails().isEmpty()) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.EmptyResult);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+		
+		
+		if (labResultHeader.getOrderUid() == null
+				|| labResultHeader.getOrderUid().isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidOrderUid);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
 	}
 
 }

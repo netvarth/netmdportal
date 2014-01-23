@@ -19,6 +19,7 @@ import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
+import com.nv.youNeverWait.rs.dto.LabResultHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
@@ -78,5 +79,6 @@ public interface LabDao {
 	public SyncFreqResponseDTO setLabSync(SyncFreqDTO sync);
 	public SyncFreqDTO getLabSyncDetails(int labId);
 	public SyncFreqDTO getBranchSyncDetails(int branchId);
+	public ResponseDTO saveResult(LabResultHeaderDTO labResultHeader);
 
 }

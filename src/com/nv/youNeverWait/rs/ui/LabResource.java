@@ -33,6 +33,7 @@ import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabOrderHeaderDTO;
+import com.nv.youNeverWait.rs.dto.LabResultHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
@@ -1005,7 +1006,30 @@ public class LabResource {
 		return response;
 	}
 	
-	
+	/**
+	 * Method performed for saving all results from a lab 
+	 * @param orderHeader
+	 * @return
+	 */
+	@RequestMapping(value = "saveResult", method = RequestMethod.POST)
+	@ResponseBody
+	public  ResponseDTO saveResult(@RequestBody LabResultHeaderDTO labResultHeader ) {
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = labService.saveResult(labResultHeader);
+		} catch (ServiceException e) {
+
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+
+		}
+		return response;
+	}
 	
 	/**
 	 * @return the labService
