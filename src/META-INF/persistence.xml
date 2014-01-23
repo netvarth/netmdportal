@@ -51,6 +51,7 @@
 		
 		<class>com.nv.youNeverWait.pl.entity.OrderAmountTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.OrderBranchTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.OrderResultTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.OrderTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.OrderTransferTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.OrganisationLoginTbl</class>
