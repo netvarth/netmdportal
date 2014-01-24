@@ -136,6 +136,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 	 * @return ResponseDTO
 	 */
 	@Override
+	@Transactional
 	public ResponseDTO update(NetRxDTO netRx) {
 		ResponseDTO response = new ResponseDTO();
 		if (netRx.getGlobalId() <= 0) {
@@ -471,6 +472,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 	 * @return netrx branch name
 	 */
 	@Override
+	@Transactional
 	public String getNetRxBranchName(int netRxBranchId) {
 		NetrxBranchTbl netRxBranchTbl = getById(NetrxBranchTbl.class,
 				netRxBranchId);

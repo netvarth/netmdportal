@@ -524,6 +524,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="orderService">
 			<ref bean="order.service" />
 		</property>
+		<property name="resultService">
+			<ref bean="result.service" />
+		</property>
 	</bean>
 
 	<bean id="lab.validator" class="com.nv.youNeverWait.user.bl.validation.LabValidator"></bean>

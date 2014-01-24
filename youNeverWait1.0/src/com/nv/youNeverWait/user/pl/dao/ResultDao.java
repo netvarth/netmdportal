@@ -14,6 +14,8 @@ package com.nv.youNeverWait.user.pl.dao;
 import java.util.Date;
 import java.util.List;
 
+import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.OrderTestResultList;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
 
@@ -26,5 +28,8 @@ public interface ResultDao {
 	public ResultListResponseDTO listResult(String patientId);
 
 	public List<RetrieveResultsResponseDTO> getPatientResults(String lastSyncTime, String passPhrase, int netMdBranchId,Date currentSyncTime);
+
+	public OrderTestResultList retrieveResults(HeaderDTO header, String lastSyncTime,
+			Date currentSyncTime);
 	
 }

@@ -43,14 +43,14 @@ public class OrderValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (orderTranfer.getDestinationLabId() <= 0) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidDestinationLab);
-			se.addParam(new Parameter(Constants.ID, Integer
-					.toString(orderTranfer.getDestinationLabId())));
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
+//		if (orderTranfer.getDestinationLabId() <= 0) {
+//			ServiceException se = new ServiceException(
+//					ErrorCodeEnum.InvalidDestinationLab);
+//			se.addParam(new Parameter(Constants.ID, Integer
+//					.toString(orderTranfer.getDestinationLabId())));
+//			se.setDisplayErrMsg(true);
+//			throw se;
+//		}
 		for (Integer destinationBranch : orderTranfer.getDestinationBranches()) {
 			if (destinationBranch <= 0) {
 				ServiceException se = new ServiceException(

@@ -23,10 +23,19 @@ public class OrderDetails {
 	
 	
 	private List<Object> orders= new ArrayList<Object>();
+	private List<OrderTestResult> orderTestResult = new ArrayList<OrderTestResult>();
 	private String lastOrderSyncTime;
 	private ErrorDTO error;
 	private boolean success;
 	
+	
+	
+	public List<OrderTestResult> getOrderTestResult() {
+		return orderTestResult;
+	}
+	public void setOrderTestResult(List<OrderTestResult> orderTestResult) {
+		this.orderTestResult = orderTestResult;
+	}
 	/**
 	 * @return the lastOrderSyncTime
 	 */
