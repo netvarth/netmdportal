@@ -2242,7 +2242,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			throw se;
 		}
 		LabBranchTbl labBranchTbl = getById(LabBranchTbl.class,
-				labResultHeader.getSourceLabId());
+				labResultHeader.getSourceLabBranchId());
 		if (labBranchTbl == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidBranchId);
