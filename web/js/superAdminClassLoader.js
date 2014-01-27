@@ -143,6 +143,8 @@ $j.cachedScript("/youNeverWait/js/framework/logout.js").done(function(script, te
 		})
 		$j.cachedScript("/youNeverWait/js/impl/NetmdbranchServiceImpl.js").done(function(script,textStatus){
 		})
+		$j.cachedScript("/youNeverWait/js/impl/NetrxbranchServiceImpl.js").done(function(script,textStatus){
+		})
 		$j.cachedScript("/youNeverWait/js/impl/OrganizationUserServiceImpl.js").done(function(script,textStatus){
 		})
 		
