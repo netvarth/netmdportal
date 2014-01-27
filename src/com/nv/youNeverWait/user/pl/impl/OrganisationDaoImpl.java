@@ -598,6 +598,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 				user.setName(orgTbl.getOwnerFirstName());
 				user.setUserType(userType.getDisplayName());
 				user.setOrganisationId(orgTbl.getId());
+				user.setAccountName(orgTbl.getName());
 				return user;
 			}
 		} else {
@@ -610,6 +611,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 				user.setName(orgnUser.getFirstName());
 				user.setUserType(userType.getDisplayName());
 				user.setOrganisationId(orgnUser.getOrganisationTbl().getId());
+				user.setAccountName(orgnUser.getOrganisationTbl().getName());
 				return user;
 			}
 		}
