@@ -1,19 +1,19 @@
 function NewBranchUI(BranchUIStartup) {
-this.netmdAccBranchModal = '#netmdAccBranchModal';
-	this.newnetmdAccBranchPage = this.netmdAccBranchModal + " #newNetMdAccBranchForm";
-	this.createButton = $j(this.newnetmdAccBranchPage + " #btnNewBranchCreate");
-	this.cancelButton = $j(this.newnetmdAccBranchPage + " #btnNewBranchCancel");
-	this.errorHeader = $j(this.newnetmdAccBranchPage + " #errorDivHeader");
-	this.errorData = $j(this.newnetmdAccBranchPage + " #errorDivNewNetmdAccBranchData");
+this.netrxAccBranchModal = '#netrxAccBranchModal';
+	this.newnetrxAccBranchPage = this.netrxAccBranchModal + " #newNetRxBranchAccForm";
+	this.createButton = $j(this.newnetrxAccBranchPage + " #btnNewBranchCreate");
+	this.cancelButton = $j(this.newnetrxAccBranchPage + " #btnNewBranchCancel");
+	this.errorHeader = $j(this.newnetrxAccBranchPage + " #errorDivHeader");
+	this.errorData = $j(this.newnetrxAccBranchPage + " #errorDivNewNetrxAccBranchData");
 	//this.netmdId=userdata.netmdId;
-	this.netmdId=BranchUIStartup.getnetmdId();
-	this.inputFields = this.newnetmdAccBranchPage + " :input[type=text]";
-	this.name=this.newnetmdAccBranchPage + " #organizationname";
-	this.address=this.newnetmdAccBranchPage + " #organizationaddress";
-	this.phone = this.newnetmdAccBranchPage + " #phone";
-	this.mobile=this.newnetmdAccBranchPage + " #mobile";
-	this.email = this.newnetmdAccBranchPage + " #Email";
-	this.numberOfDevices = this.newnetmdAccBranchPage + " #numberOfDevices";
+	this.netrxId=BranchUIStartup.getnetrxId();
+	this.inputFields = this.newnetrxAccBranchPage + " :input[type=text]";
+	this.name=this.newnetrxAccBranchPage + " #organizationname";
+	this.address=this.newnetrxAccBranchPage + " #organizationaddress";
+	this.phone = this.newnetrxAccBranchPage + " #phone";
+	this.mobile=this.newnetrxAccBranchPage + " #mobile";
+	this.email = this.newnetrxAccBranchPage + " #Email";
+	this.numberOfDevices = this.newnetrxAccBranchPage + " #numberOfDevices";
 	this.branchUIStartup = BranchUIStartup;
 	this.branchCreationStatus= false;
 }
@@ -27,13 +27,13 @@ NewBranchUI.prototype.setBranchCreationStatus = function(status) {
 NewBranchUI.prototype.getBranchUIStartup = function() {
 	return this.branchUIStartup;
 }
-NewBranchUI.prototype.getnetmdAccTableNavigator = function() {
+NewBranchUI.prototype.getnetrxAccTableNavigator = function() {
 	var branchUIStartup = this.getBranchUIStartup();
-	return branchUIStartup.getnetmdAccTableNavigator();
+	return branchUIStartup.getnetrxAccTableNavigator();
 }
-NewBranchUI.prototype.getNetmdUIService = function() {
+NewBranchUI.prototype.getNetrxUIService = function() {
 	var branchUIStartup = this.getBranchUIStartup();
-	return branchUIStartup.getNetmdUIService();
+	return branchUIStartup.getNetrxUIService();
 }
 
 NewBranchUI.prototype.init = function() {
@@ -42,8 +42,8 @@ NewBranchUI.prototype.init = function() {
 }
 
 NewBranchUI.prototype.clearFields = function() {
-	$j(this.newnetmdAccBranchPage + " input[type=text]").val("");
-	$j(this.newnetmdAccBranchPage + " textarea").val("");
+	$j(this.newnetrxAccBranchPage + " input[type=text]").val("");
+	$j(this.newnetrxAccBranchPage + " textarea").val("");
 }
 NewBranchUI.prototype.removecolors = function(cl) {
 	commonMethodInvoker.removeErrorColor(self.name);
@@ -62,21 +62,21 @@ NewBranchUI.prototype.cancel = function() {
 	var self=this;
 	self.errorHeader.hide();
 	commonMethodInvoker.removeErrors();
-	$j(self.netmdAccBranchModal + self.newnetmdAccBranchPage + " input[type=text]").val("");	
-	$j(self.netmdAccBranchModal).trigger('reveal:close');
-	$j(self.netmdAccBranchModal).remove();
+	$j(self.netrxAccBranchModal + self.newnetrxAccBranchPage + " input[type=text]").val("");	
+	$j(self.netrxAccBranchModal).trigger('reveal:close');
+	$j(self.netrxAccBranchModal).remove();
 	if(self.getBranchCreationStatus() == true){
-			var selName="netMdId";
-	var selValue=self.netmdId;
+			var selName="netRxId";
+	var selValue=self.netrxId;
 	var selOperator = "eq";
 	var exp = new ExpressionListDTO();
 	var expr = new ExpressionDTO(selName,selValue,selOperator);
 	exp.add(expr);
-	var netmdAccTableNavigator = self.getnetmdAccTableNavigator();
-	netmdAccTableNavigator.setExp(exp);
+	var netrxAccTableNavigator = self.getnetrxAccTableNavigator();
+	netrxAccTableNavigator.setExp(exp);
 		
-			//var branchTableNavigator = self.getnetmdAccTableNavigator();
-			netmdAccTableNavigator.list();
+			//var branchTableNavigator = self.getnetrxAccTableNavigator();
+			netrxAccTableNavigator.list("branchlist");
 		
 	}
 	self.setBranchCreationStatus(false);
@@ -87,12 +87,12 @@ NewBranchUI.prototype.create = function() {
 	self.errorHeader.hide();
 	commonMethodInvoker.removeErrors();
 	var branch = self.getBranch();
-	var branchValidator = new NetmdBranchValidator();
+	var branchValidator = new NetrxBranchValidator();
 	var error  = branchValidator.validate(branch,self);
 	//alert("Error"+error);
 	if(error.errorStatus==false) {
-		var branchService = self.getNetmdUIService();
-		var branchResponse =branchService.createBranchNetmd(branch);
+		var branchService = self.getNetrxUIService();
+		var branchResponse =branchService.createBranchNetrx(branch);
 		//alert(JSON.stringify(branchResponse));
 		if(branchResponse.success==true) {
 			self.setBranchCreationStatus(true);
@@ -105,7 +105,7 @@ NewBranchUI.prototype.create = function() {
 }
 NewBranchUI.prototype.getBranch = function() {
 	var self=this;
-	var branch = new BranchNetmdDTO();
+	var branch = new BranchNetrxDTO();
 	var device=$j(self.numberOfDevices).val();
 	if(device==""){device=0;}
 	var name=$j(self.name).val();
@@ -113,7 +113,7 @@ NewBranchUI.prototype.getBranch = function() {
 		return letter.toUpperCase();
 	});
 	
-	branch.setnetMdId(self.netmdId);
+	branch.setnetRxId(self.netrxId);
 	branch.setName(name);
 	branch.setEmail($j(self.email).val());
 	branch.setAddress(commonMethodInvoker.nl2br($j(self.address).val()));
@@ -125,12 +125,12 @@ NewBranchUI.prototype.getBranch = function() {
 
 NewBranchUI.prototype.bindEvents = function() {
 self = this;
-	self.removecolors(self.newnetmdAccBranchPage + " :input");
+	self.removecolors(self.newnetrxAccBranchPage + " :input");
 	commonMethodInvoker.validateNumber(self.phone);
 	commonMethodInvoker.validateNumber(self.mobile);
 	commonMethodInvoker.validateNumber(self.numberOfDevices);
 
-	$j(self.netmdAccBranchModal + ' .close-reveal-modal').die('click').live('click',function(){	
+	$j(self.netrxAccBranchModal + ' .close-reveal-modal').die('click').live('click',function(){	
 		self.cancel();
 	});	
 	self.cancelButton.die('click').live('click',function(){

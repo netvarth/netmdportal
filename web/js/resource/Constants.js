@@ -231,6 +231,22 @@ function Constants() {
 	this.NETRXCREATESUCCESS="Netrx created Successfully";
 	this.CREATENETRXURL="/youNeverWait/ws/ui/superAdmin/createNetRx";
 	this.VIEWNETRXDETAILPAGEURL="/youNeverWait/json/view/viewnetrxdetails.json";
+	this.VIEWNETRXDETAILURL="/youNeverWait/ws/ui/superAdmin/viewNetRx/";
+	this.NETRXGENERAL="netrx";
+	this.NETRXUPDATESUCCESS="Netrx Updated Successfully";
+	this.UPDATENETRXURL="/youNeverWait/ws/ui/superAdmin/updateNetRx";
+	this.DELETENETRXURL="/youNeverWait/ws/ui/superAdmin/deleteNetRx/";
+	this.NETRXDELETESUCCESS="Netrx Inactivated Successfully";
+	this.NETRXSUPERBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/netRxBranchList";
+	this.CREATENETRXBRANCHURL="/youNeverWait/ws/ui/superAdmin/createNetRxBranch"
+	this.VIEWNETRXBRCHPAGEURL="/youNeverWait/json/view/viewNetrxBranchDetails.json";
+	this.UPDATENETRXBRCHURL="/youNeverWait/ws/ui/superAdmin/updateNetRxBranch";
+	this.SETNETRXBRACHCLEARMACURL="/youNeverWait/ws/ui/superAdmin/clearNetRxMacId";
+	this.NEWNETRXMACIDCLEARMODAL="netrxmacIdClearModal";
+	this.SETNETRXBRACHSYCURL="/youNeverWait/ws/ui/superAdmin/setNetRxBranchSync";
+	this.NETRXSYNCMODAL="netrxsyncmodal";
+	this.SYNCDATANETRXURL="/youNeverWait/ws/ui/netRx/getNetrxSyncDetails/";
+	this.SETNETRXSYCURL="/youNeverWait/ws/ui/superAdmin/setNetRxSync";
 	/*****************-------------General-----------**----*************/
 	this.NAME = "name";
 	this.ADDRESS = "address";

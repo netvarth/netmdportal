@@ -16,7 +16,7 @@ function netrxUIStartup() {
 	this.netrxService = new NetrxServiceImpl();
 	this.listUrl = constants.NETRXBRANCHLISTURL;
 	this.netrxTableNavigator = new DataTableNavigator(this.pgTableName,this.listUrl,this.pgTableContainer,this.netrxService,this.exp);
-	//this.viewNetrxUI = new ViewNetrxUI(this);
+	this.viewNetrxUI = new ViewNetrxUI(this);
 }
 
 netrxUIStartup.prototype.setnetrxAccTableNavigator = function(netrxTableNavigator) {
@@ -72,7 +72,7 @@ netrxUIStartup.prototype.init = function() {
 	dataTableProcessor.create(self.pgTableName,constants.NETRXLISTJSON);//Create Table for Listing Order
 	dataTableProcessor.setCustomTable(self.pgTableName);
 	netrxTableNavigator.list();
-	//self.bindEvents();
+	self.bindEvents();
 	pageHandler.setActivePage(self);
 }
 
@@ -91,11 +91,11 @@ netrxUIStartup.prototype.createNetrxModal = function(obj) {
 netrxUIStartup.prototype.createSyncModal = function(obj,netrxId) {
 	var self = this;
 	commonMethodInvoker.removeErrors();
-	createModal(constants.NETLIMSACCSYNCJSON,constants.NETMDSYNCMODAL);		
-	openModalBox(obj,constants.NETMDSYNCMODAL);
-	var netmdSyncUI = new NetmdSyncUI(self,netrxId);
-	netmdSyncUI.init();
-	return netmdSyncUI; 
+	createModal(constants.NETLIMSACCSYNCJSON,constants.NETRXSYNCMODAL);		
+	openModalBox(obj,constants.NETRXSYNCMODAL);
+	var netrxSyncUI = new NetrxSyncUI(self,netrxId);
+	netrxSyncUI.init();
+	return netrxSyncUI; 
 }
 
 
@@ -128,10 +128,10 @@ netrxUIStartup.prototype.bindToolBarEvents = function() {
 		var netrxId=self.getSelectedbranchId(self.pgTableName);
 		if(netrxId!="") {
 			commonMethodInvoker.removeErrors();
-			var netmdAccClass = new netmdbranchClassLoader();
-			netmdAccClass.load();
-			var netmdAccUI = new netmdBranchUIStartup(netrxId);	
-			netmdAccUI.createBranchModal(obj);
+			var netrxAccClass = new netrxbranchClassLoader();
+			netrxAccClass.load();
+			var netrxAccUI = new netrxBranchUIStartup(netrxId);	
+			netrxAccUI.createBranchModal(obj);
 		}	
 	});
 	
@@ -140,10 +140,10 @@ netrxUIStartup.prototype.bindToolBarEvents = function() {
 		var netrxId=self.getSelectedbranchId(self.pgTableName);
 		if(netrxId!="") {
 			commonMethodInvoker.removeErrors();
-			var netmdAccClass = new netmdbranchClassLoader();
-			netmdAccClass.load();
-			var netmdAccUI = new netmdBranchUIStartup(netrxId);	
-			netmdAccUI.init(netrxId);
+			var netrxAccClass = new netrxbranchClassLoader();
+			netrxAccClass.load();
+			var netrxAccUI = new netrxBranchUIStartup(netrxId);	
+			netrxAccUI.init(netrxId);
 		}	
 	});
 	 
@@ -154,13 +154,13 @@ netrxUIStartup.prototype.bindToolBarEvents = function() {
 		removeErrors();
 		var netrxId=self.getSelectedbranchId(self.pgTableName);
 		if(netrxId!="") {
-			var netmdUIService = self.getNetrxUIService();
-				  var netmdDelResponse = netmdUIService.deleteNetmd(netrxId);
-				//alert(JSON.stringify(netmdDelResponse));	
-				if(netmdDelResponse.success==true) {
-					showTip(constants.NETMDDELETESUCCESS);//For showing the global Tip
+			var netrxUIService = self.getNetrxUIService();
+				  var netrxDelResponse = netrxUIService.deleteNetrx(netrxId);
+				//alert(JSON.stringify(netrxDelResponse));	
+				if(netrxDelResponse.success==true) {
+					showTip(constants.NETRXDELETESUCCESS);//For showing the global Tip
 				} else {
-					commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netmdDelResponse.error));
+					commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netrxDelResponse.error));
 				}
 				var netrxTableNavigator = self.getnetrxTableNavigator();
 				netrxTableNavigator.list();

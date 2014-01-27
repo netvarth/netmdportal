@@ -1,4 +1,4 @@
-function ViewNetrxPTB(viewNetrxUI) {
+function ViewNetrxBranchPTB(viewNetrxUI) {
 	this.backbutton = '#btn_back_ptb_id';
 	this.upbutton = '#btn_up_ptb_id';
 	this.downbutton = '#btn_down_ptb_id';
@@ -13,9 +13,9 @@ function ViewNetrxPTB(viewNetrxUI) {
 		return viewNetrxUI.getNetrxUIStartup();
 	}
 	
-	this.getnetrxTableNavigator = function() {
-		var netrxUIStartup = this.getNetrxUIStartup();
-		return netrxUIStartup.getnetrxTableNavigator();
+	this.getnetrxAccTableNavigator = function() {
+		var NetrxUIStartup = this.getNetrxUIStartup();
+		return NetrxUIStartup.getnetrxAccTableNavigator();
 	}
 	
 	
@@ -29,23 +29,23 @@ function ViewNetrxPTB(viewNetrxUI) {
 		});
 		$j(ptbParent +" " + self.upbutton).die('click').live('click',function(){
 			commonMethodInvoker.removeErrors();
-			var netrxTableNavigator = self.getnetrxTableNavigator();
-			var netrxInfo = source.getNetrx();
-			var prevId = self.getPrevId(netrxInfo.netRxDTO.globalId,netrxTableNavigator.getPgDataList());
-			viewUI.viewNetrxDetails(prevId);
+			var netrxTableNavigator = self.getnetrxAccTableNavigator();
+			var netrxInfo = source.getBranch();
+			var prevId = self.getPrevId(netrxInfo.branch.globalId,netrxTableNavigator.getPgDataList());
+			viewUI.viewNetrxBranchDetails(prevId);
 		});
 		$j(ptbParent +" " + self.downbutton).die('click').live('click',function(){
 			commonMethodInvoker.removeErrors();
-			var netrxTableNavigator = self.getnetrxTableNavigator();
-			var netrxInfo = source.getNetrx();
-			var prevId = self.getNextId(netrxInfo.netRxDTO.globalId,netrxTableNavigator.getPgDataList());
-			viewUI.viewNetrxDetails(prevId);
+			var netrxTableNavigator = self.getnetrxAccTableNavigator();
+			var netrxInfo = source.getBranch();
+			var prevId = self.getNextId(netrxInfo.branch.globalId,netrxTableNavigator.getPgDataList());
+			viewUI.viewNetrxBranchDetails(prevId);
 		});
 	}
 	
 	this.init = function (source) {
 		var ptbProcessor = new PageToolBarProcessor();
-		ptbParent = ptbProcessor.create(constants.NETRXGENERAL, constants.GENERALPTBURL);
+		ptbParent = ptbProcessor.create(constants.NETRXACCBRCHGENERAL, constants.GENERALPTBURL);
 		this.bindEvents(ptbParent,source);
-	}
+	} 
 }

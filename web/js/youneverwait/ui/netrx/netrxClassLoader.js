@@ -12,11 +12,11 @@ function netrxClassLoader() {
 		})
 		$j.getScript("/youNeverWait/js/validation/NetrxValidator.js").done(function(script,textStatus){
 		})
-		//$j.getScript("/youNeverWait/js/validation/NetrxViewValidator.js").done(function(script,textStatus){
-		//})
+		$j.getScript("/youNeverWait/js/validation/NetrxViewValidator.js").done(function(script,textStatus){
+		})
 		$j.getScript("/youNeverWait/js/youneverwait/ui/netrx/netrxSyncUI.js").done(function(script,textStatus){
 		})
-		//$j.getScript("/youNeverWait/js/youneverwait/ui/netrx/netmdbranch/netmdbranchClassLoader.js").done(function(script,textStatus){
-		//})
+		$j.getScript("/youNeverWait/js/youneverwait/ui/netrx/netrxbranch/netrxbranchClassLoader.js").done(function(script,textStatus){
+		})
 	}
 }

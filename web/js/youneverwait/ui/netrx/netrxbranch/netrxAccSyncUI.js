@@ -1,38 +1,38 @@
 
-function NetrxSyncUI(BranchUIStartup,netrxId) {
-	this.netmdSycSetModal = " #netrxsyncmodal";
-	this.netrxSycSetPage =  " #newAccBranchsetSyncForm";
-	this.radioCheck=this.netrxSycSetPage + " input[type=radio]:checked ";
-	this.createButton = $j(this.netrxSycSetPage + " #btnnetlimsAccBranchSubmit");
-	this.enableRadio=$j(this.netrxSycSetPage + " #netlimsAccBrchEnable");
-	this.disableRadio=$j(this.netrxSycSetPage + " #netlimsAccBrchDisable");
-	this.selectHeader=$j(this.netrxSycSetPage + " #syctxtAccBranchEnTime");
-	this.select=$j(this.netrxSycSetPage + " #NetlimsAccBranchSyncTime");
-	this.intervalHead=$j(this.netrxSycSetPage + " #syctxtAccBranchEnInr");
-	this.interval=$j(this.netrxSycSetPage + " #NetlimsAccBranchSyncInterval");
-	this.errorHeader = $j(this.netrxSycSetPage + " #errorDivHeader");
-	this.errorData = $j(this.netrxSycSetPage + " #errorDivNewNetlimsAccBranchData");
-	this.netrxId=netrxId;
+function NetrxAccSyncUI(BranchUIStartup,branchId) {
+	this.netrxAccSycSetModal = " #netrxAccBranchSycSetModal";
+	this.netrxAccSycSetPage =  " #newnetrxAccBranchsetSyncForm";
+	this.radioCheck=this.netrxAccSycSetPage + " input[type=radio]:checked ";
+	this.createButton = $j(this.netrxAccSycSetPage + " #btnnetrxAccbrchSubmit");
+	this.enableRadio=$j(this.netrxAccSycSetPage + " #netrxAccbrchEnable");
+	this.disableRadio=$j(this.netrxAccSycSetPage + " #netrxAccbrchDisable");
+	this.selectHeader=$j(this.netrxAccSycSetPage + " #syctxtnetrxAccBranchEnTime");
+	this.select=$j(this.netrxAccSycSetPage + " #NetrxAccBranchSyncTime");
+	this.intervalHead=$j(this.netrxAccSycSetPage + " #syctxtnetrxAccBranchEnInr");
+	this.interval=$j(this.netrxAccSycSetPage + " #NetrxAccBranchSyncInterval");
+	this.errorHeader = $j(this.netrxAccSycSetPage + " #errorDivHeader");
+	this.errorData = $j(this.netrxAccSycSetPage + " #errorDivNewNetrxAccBranchData");
+	this.branchId=branchId;
 	this.branchUIStartup = BranchUIStartup; 
 	
 }
 
 
- NetrxSyncUI.prototype.getBranchUIStartup = function() {
+ NetrxAccSyncUI.prototype.getBranchUIStartup = function() {
 	return this.branchUIStartup;
 }
 
-NetrxSyncUI.prototype.getNetrxUIService = function() {
+NetrxAccSyncUI.prototype.getNetrxUIService = function() {
 	var branchUIStartup = this.getBranchUIStartup();
 	return branchUIStartup.getNetrxUIService();
 }
 
-NetrxSyncUI.prototype.init = function() {
+NetrxAccSyncUI.prototype.init = function() {
 	self =this;
 	fillTimeList(self.select);
 	commonMethodInvoker.validateNumber(self.interval);
 	var syncdetails = self.getNetrxUIService();
-	var getSyncdetails=syncdetails.netrxSyncdata(self.netrxId);
+	var getSyncdetails=syncdetails.syncdata(self.branchId);
 	//alert(JSON.stringify(getSyncdetails));
 	var radioStatus=getSyncdetails.enableSync;
 	
@@ -69,7 +69,7 @@ NetrxSyncUI.prototype.init = function() {
 	});	
 	self.bindEvents();
 } 
-NetrxSyncUI.prototype.bindEvents = function() {
+NetrxAccSyncUI.prototype.bindEvents = function() {
 self = this;	
 	
 	self.createButton.die('click').live('click',function(){
@@ -77,14 +77,15 @@ self = this;
 	});	
 }
 
-NetrxSyncUI.prototype.create = function() {
+NetrxAccSyncUI.prototype.create = function() {
 	var self=this;
 	self.errorHeader.hide();
 	commonMethodInvoker.removeErrors();
 	var syncData = self.getSyncDetail();
-	if(validateNetmdSync()) {
+	if(validateNetmdAccBrchSync()) {
 		var syncService = self.getNetrxUIService();
-		var syncServiceResponse =syncService.syncNetrx(syncData);
+		var syncServiceResponse =syncService.syncBranchNetrx(syncData);
+		//alert(JSON.stringify(syncServiceResponse));
 		if(syncServiceResponse.success==true){
 			var messge=syncServiceResponse.msg;
 		if(syncServiceResponse.msg==null){
@@ -98,7 +99,7 @@ NetrxSyncUI.prototype.create = function() {
 		} 
 	} 
 }
-NetrxSyncUI.prototype.getSyncDetail = function() {
+NetrxAccSyncUI.prototype.getSyncDetail = function() {
 	var self=this;
 	var intr=self.interval.val();
 	var status=false;
@@ -107,7 +108,7 @@ NetrxSyncUI.prototype.getSyncDetail = function() {
 	var BrchSync = new BranchSyncDTO();
 	BrchSync.setenableSync(status);
 	BrchSync.setsyncTime(parseInt(self.interval.val()));
-	BrchSync.setnetrxId(parseInt(self.netrxId));
+	BrchSync.setnetrxBranchId(parseInt(self.branchId));
 	BrchSync.setsyncFreqType(self.select.val());
 	return BrchSync;
 }	
@@ -121,8 +122,8 @@ function fillTimeList(controlobj)
 
 		
 	} 
-function validateNetmdSync(){
-	var syncInterval=$j('#newAccBranchsetSyncForm #NetlimsAccBranchSyncInterval');
+function validateNetmdAccBrchSync(){
+	var syncInterval=$j('#newnetrxAccBranchsetSyncForm #NetrxAccBranchSyncInterval');
 	var OrgNameValid;
 	OrgNameValid = checkNull(syncInterval,constants.SYNCINTERVALREQUIRED);
 	return OrgNameValid;
