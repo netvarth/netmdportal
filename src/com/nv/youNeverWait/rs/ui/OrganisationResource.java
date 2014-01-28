@@ -211,6 +211,7 @@ public class OrganisationResource {
 					user.setId(userDetail.getId());
 					user.setOrganisationId(userDetail.getOrganisationId());
 					user.setUserType(userDetail.getUserType());
+					user.setAccountName(userDetail.getAccountName());
 				}
 				req.getSession().setAttribute(Constants.USER, user);
 			}
