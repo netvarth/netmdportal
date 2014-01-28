@@ -95,7 +95,7 @@ public class NetMdResource {
 	
 	
 	/**
-	 * To show a page from which NetMD Application can be downloaded
+	 * To show a page from which NetMD Application can be download
 	 * 
 	 * @return netMdDownload.html
 	 */
