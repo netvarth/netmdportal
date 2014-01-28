@@ -21,12 +21,10 @@ $j(document).ready(function(){
 	organzUI.init();
 	ajaxProcessor.setUrl('/youNeverWait/ws/ui/auth/getUser');
 	userdata =ajaxProcessor.get();
-	var usetType=userdata.userType;
 	var ownerName=userdata.userName;
-	var otherUserName=userdata.name;
+	var orgName=userdata.accountName;
+	orgName=orgName.toUpperCase();
+	$j('#orgName').html(orgName);
+	$j('#Nameoforguser').html(ownerName);
 	
-	if(usetType=='owner')
-		$j('#Nameoforguser').html(ownerName);
-	else
-		$j('#Nameoforguser').html(otherUserName); 
 });				
