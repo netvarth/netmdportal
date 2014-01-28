@@ -61,7 +61,7 @@ ViewNetmdUI.prototype.getviewNetmdPTB = function() {
 }
 
 ViewNetmdUI.prototype.setPageTitle = function() {
-	this.pageTitle.empty().html("View Netmd ");
+	this.pageTitle.empty().html("View NetMD ");
 }
 ViewNetmdUI.prototype.removecolors = function(cl) {
 	commonMethodInvoker.removeErrorColor(self.inputFields);
@@ -188,7 +188,7 @@ ViewNetmdUI.prototype.viewNetmdDetails = function(netmdId) {
 				
 	} else 
 		commonMethodInvoker.createServerError(self.errorHeader,self.errorData,netmdInfo.errorMessage);
-	self.setPageTitle("View Netmd ");
+	self.setPageTitle("View NetMD ");
 }
 
 ViewNetmdUI.prototype.getNetmdRequest = function() {
