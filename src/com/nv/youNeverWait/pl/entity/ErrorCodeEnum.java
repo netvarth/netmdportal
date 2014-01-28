@@ -264,7 +264,7 @@ public enum ErrorCodeEnum {
 	InvalidNetPosId("3005","You must give valid netpos id"),
 	
 	/*Organisations*/
-	InvalidOrganisationName("4000","You must give valid name"), 
+	InvalidOrganisationName("4000","You must give valid  organization name"), 
 	DepartmentTypeEmpty("4001","No department type selected"),
 	InvalidDepartmentType("4002","Invalid department type"),
 	OrganisationAlreadyExists("4003","There is another organisation with given username"),

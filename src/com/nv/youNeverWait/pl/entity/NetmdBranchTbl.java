@@ -88,7 +88,10 @@ public class NetmdBranchTbl implements Serializable {
 	@Column(name="sync_time")
 	private int syncTime;
 	
-	
+	//bi-directional many-to-one association to OrganisationNetmdTbl
+		@OneToMany(mappedBy="netmdBranchTbl")
+		private Set<OrganisationNetmdTbl> organisationNetmdTbls;
+		
     public NetmdBranchTbl() {
     }
 
@@ -249,5 +252,11 @@ public class NetmdBranchTbl implements Serializable {
 	public void setSyncTime(int syncTime) {
 		this.syncTime = syncTime;
 	}
+	public Set<OrganisationNetmdTbl> getOrganisationNetmdTbls() {
+		return this.organisationNetmdTbls;
+	}
 
+	public void setOrganisationNetmdTbls(Set<OrganisationNetmdTbl> organisationNetmdTbls) {
+		this.organisationNetmdTbls = organisationNetmdTbls;
+	}
 }

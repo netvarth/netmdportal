@@ -23,8 +23,8 @@ import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
 
 /**
- *
- *
+ * 
+ * 
  * @author Luciya Jose
  */
 public interface OrganisationService {
@@ -87,16 +87,20 @@ public interface OrganisationService {
 	 * @param organztionUser
 	 * @return
 	 */
-	ResponseDTO createUser(OrganisationUserDetail organztionUser);
+	public ResponseDTO createUser(OrganisationUserDetail organztionUser);
 
-	ResponseDTO forgotPassword(LoginDTO login);
+	public ResponseDTO forgotPassword(LoginDTO login);
 
-	ResponseDTO resetPassword(LoginDTO login);
+	public ResponseDTO resetPassword(LoginDTO login);
+
 	public LoginResponseDTO organisationLogin(LoginDTO login);
+
 	public UserDetails getOrganisationUser(String userName);
 
 	Object getJRXmlPath(String parameter);
 
 	Object getConnection();
+
+	public OrganisationListResponseDTO getOrganisationList();
 
 }

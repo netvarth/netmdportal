@@ -120,8 +120,10 @@ public class Query {
 	public static final String GET_NEW_NETMD_BRANCHES = "from NetmdBranchTbl as branch where  branch.createDateTime>:param1 and branch.createDateTime<:param2 order by createDateTime";
 	public static final String GET_UPDATE_NETMD_BRANCHES = "from NetmdBranchTbl as branch where  branch.createDateTime < branch.updateDateTime and branch.updateDateTime>:param1 and branch.updateDateTime<:param2 order by updateDateTime";
 	public static final String GET_NETMD_BRANCHES = "from NetmdBranchTbl as branch where branch.netmdTbl.id=:param1";
-	public static final String GET_NETMD_BRANCH_LIST = "from NetmdBranchTbl as branch ";
-
+	
+	/*OrganisationNetmdTbl*/
+	public static final String GET_ORGANISATION_NETMD_BRANCH_LIST = "from OrganisationNetmdTbl as orgNetmdBranch where orgNetmdBranch.organisationTbl.id=:param1 ";
+	public static final String RETRIEVE_ORGANISATIONS = "from OrganisationNetmdTbl as org where org.netmdBranchTbl.id=:param1";
 	/* NetmdPassphraseTbl */
 	public static final String GET_MAC_BY_PASSPHRASE = " select branchPassphrase.macId from NetmdPassphraseTbl as branchPassphrase where branchPassphrase.passPhrase=:param1";
 	public static final String GET_NETMD_BRANCH_PASSPHRASE = " from NetmdPassphraseTbl as branchPassphrase where branchPassphrase.passPhrase=:param1";
@@ -302,7 +304,7 @@ public class Query {
 	/*OrganisationTbl*/
 	public static final String GET_ORGANISATION_BY_NAME =  "from OrganisationTbl as orgnstion where  REPLACE(TRIM(UPPER(orgnstion.name)),' ','')=:param1";
 	public static final String GET_ORGANISATION_OWNER = "from OrganisationTbl as orgn where  orgn.organisationLoginTbl.id=:param1";
-
+	public static final String GET_ORGANISATION = "from OrganisationTbl as org";
 	/*OrganisationUserTbl*/
 	public static final String GET_ORGANISATION_USER_BY_EMAIL_AND_BRANCH = " from OrganisationUserTbl as orgUser where orgUser.email=:param1 and orgUser.organisationTbl.id=:param2";
 	public static final String GET_USERS_BY_ORGANISATION_ID = " from OrganisationUserTbl as users where users.organisationTbl.id=:param1 ";
@@ -321,6 +323,9 @@ public class Query {
 
 	/*OrderResultTbl*/
 	public static final String GET_ORDER_TEST_RESULTS = "from OrderResultTbl as orderResult where orderResult.ownerLabBranchTbl.id=:param1 and orderResult.labBranchTbl.id!=:param1 and orderResult.updatedDateTime>=:param2 and orderResult.updatedDateTime<:param3 ";
+	
+	
+
 	
 
 	

@@ -10,6 +10,7 @@
  */
 package com.nv.youNeverWait.user.pl.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,7 @@ import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.Organisation;
+import com.nv.youNeverWait.rs.dto.OrganisationListResponseDTO;
 import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
 import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
@@ -618,6 +620,27 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		return null;
 	}
 
+	@Override
+	@Transactional
+	public OrganisationListResponseDTO getOrganisationList() {
+		OrganisationListResponseDTO response = new OrganisationListResponseDTO();
+		List<Organisation> organisationList = new ArrayList<Organisation>();
+		List<OrganisationTbl> organisationTblList = getOrganisation();
+		for(OrganisationTbl organisationTbl:organisationTblList){
+			Organisation organisation = new Organisation();
+			organisation.setName(organisationTbl.getName());
+			organisationList.add(organisation);
+		}
+		return response;
+	}
+
+	
+	private List<OrganisationTbl> getOrganisation() {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_ORGANISATION);
+		return executeQuery(OrganisationTbl.class, query);
+	}
+
 	private OrganisationLoginTbl getOrgUserByUserNameAndPassword(
 			String password, String userName) {
 		javax.persistence.Query query = em
@@ -699,5 +722,6 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		return executeQuery(OrganisationUserTbl.class, query);
 	}
 
+	
 	
 }

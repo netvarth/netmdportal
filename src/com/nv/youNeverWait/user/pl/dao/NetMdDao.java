@@ -69,7 +69,7 @@ public interface NetMdDao {
 	public BranchSystemInfoDetails viewBranchSystemInfoDetails(String passphrase);
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails);
-	public NetMdBranchListResponseDTO getNetMdBrnchList();
+	public NetMdBranchListResponseDTO getNetMdBrnchList(int organisationId);
 	
 
 }
