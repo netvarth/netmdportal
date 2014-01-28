@@ -153,7 +153,7 @@ ViewNetrxUI.prototype.bindEvents = function() {
 				if(netrxResponse.error==null) {
 					showTip(constants.NETRXUPDATESUCCESS);//For showing the global Tip
 					var netrxInfo = self.getNetrx();
-					alert(JSON.stringify(netrxInfo));
+					//alert(JSON.stringify(netrxInfo));
 					self.viewNetrxDetails(netrxInfo.netRxDTO.globalId);
 					self.readable();
 				} else
