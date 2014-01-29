@@ -155,7 +155,7 @@ function Constants() {
 	this.SETNETLIMSSYCURL="/youNeverWait/ws/ui/superAdmin/setLabSync";
 	/***********netmd***************/
 	this.NETMDBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/netmdList";
-	this.NETMDLIST="NETMD LIST";
+	this.NETMDLIST="NetMD LIST";
 	this.NETMD="NETMD";
 	this.NETMDPAGEJSON="/youNeverWait/json/toolbars/netmdPageToolBar.json";
 	this.NETMDLISTJSON="/youNeverWait/json/list/netmdTable.json";
