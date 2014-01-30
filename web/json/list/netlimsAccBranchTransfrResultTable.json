@@ -33,7 +33,7 @@
 							{ "className" : "head0",	"name" : "From Branch", "style":"width:10%"},
 							{ "className" : "head1",	"name" : "To Branch", "style":"width:10%"},
 							{ "className" : "head0",	"name" : "Order Uid", "style":"width:5%"},
-							{ "className" : "head1",	"name" : "Sent To Destination", "style":"width:30%"}
+							{ "className" : "head1",	"name" : "Sent To Destination ?", "style":"width:30%"}
 						]
                     }
                 }

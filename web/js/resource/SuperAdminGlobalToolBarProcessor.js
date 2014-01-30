@@ -10,6 +10,8 @@ function SuperAdminGlobalToolBarProcessor() {
 	this.newnetmd="#ribbonNewNetMd";
 	this.newnetrx="#ribbonNewNetRx";
 	this.neworganization="#ribbonNewOrgzn";
+	this.newnetpos="#ribbonNewNetPos";
+	this.netposlist="#leftPaneNetPos";
 	this.setsync="#ribbonSetSync";
 	
 	/*
@@ -85,6 +87,19 @@ SuperAdminGlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 			netrxUI.createNetrxModal(obj);
 		});
 	}
+	if($j(self.newnetpos)) {
+		$j(self.newnetpos).die('click').live("click",function() {		
+			var obj=$j(this);
+			commonMethodInvoker.removeErrors();
+			if(pageHandler.isnetposClassLoaded()!=true){
+				var netposClass = new netposClassLoader();
+				netposClass.load();
+				pageHandler.setnetposClassLoaded(true);
+			}
+			var netposUI = new NetPosUIStartup();	
+			netposUI.createNetPosModal(obj);
+		});
+	}
 	if($j(self.neworganization)) {
 		$j(self.neworganization).die('click').live("click",function() {		
 			var obj=$j(this);
@@ -147,6 +162,21 @@ SuperAdminGlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 		});
 	}	
 	
+	if($j(self.netposlist)) {
+		$j(self.netposlist).die('click').live("click",function() {	
+			var obj=$j(this);
+			commonMethodInvoker.removeErrors();
+			if(pageHandler.isnetposClassLoaded()!=true){
+				var netposClass = new netposClassLoader();
+				netposClass.load();
+				pageHandler.setnetposClassLoaded(true);
+			}
+			var netposUI = new NetPosUIStartup();	
+			netposUI.init();
+		});
+	
+	}
+	
 	if($j(self.organizationlist)) {
 		$j(self.organizationlist).die('click').live("click",function() {	
 			var obj=$j(this);
@@ -161,13 +191,13 @@ SuperAdminGlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 		});
 	}	
 	
-	if($j(self.netlimsAccbranchsettings)) {
-		$j(self.netlimsAccbranchsettings).die('click').live("click",function() {
-			 var obj=$j(this);
+	if($j(self.settings)) {
+		$j(self.settings).die('click').live("click",function() {
+			/*  var obj=$j(this);
 			commonMethodInvoker.removeErrors();
 			$j('#pageToolBar-Container').html("");
 			var adminUI = new SettingsToolBarProcessor();
-			adminUI.init(); 
+			adminUI.init(); */ 
 		});
 	}	
 	

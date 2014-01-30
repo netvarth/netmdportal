@@ -17,6 +17,7 @@
 		  "className": "netrx",
           "name": "leftPaneNetRx"
         },
+		
 		{
           "title": "Organization",
 		  "className": "organization",
