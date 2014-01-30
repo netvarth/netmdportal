@@ -2,6 +2,8 @@ function netlimsAccountUIStartup() {
 	this.pgTableName = "#branchNetlimsAcc";
 	this.pgTableContainer="#branchNetlimsAccTableCont"; 
 	this.pgTableNameorderList="#branchOrderNetlimsAcc";
+	this.pgTableNameTransfrorderList="#branchtransfrOrderNetlimsAcc";
+	this.pgTableNameTransfresultList="#branchtrnsfrresultNetlimsAcc";
 	this.pageTitle = $j('#pageTitle');
 	this.ptbCreate=$j('#BRANCHPTBContainer #btn_new_ptb_id');
 	this.ptbView=$j('#BRANCHPTBContainer #btn_view_ptb_id');
@@ -114,6 +116,36 @@ netlimsAccountUIStartup.prototype.branchorderlist = function() {
 	ajaxProcessor.setUrl(constants.NETLIMSACCTODAYSORDERLISTTABLEURL + self.netlimsId);
 	var pgDataList = ajaxProcessor.get();
 	self.netlimsAccService.setTableValuesOrderList(self.pgTableNameorderList,pgDataList);
+	 
+	
+}
+netlimsAccountUIStartup.prototype.transferorderlist = function() {
+	var self = this;
+	commonMethodInvoker.removeErrors();
+	self.setPageTitle(constants.TRANSFEREDORDERLIST);
+	ajaxProcessor.setUrl(constants.NETLIMSACCTRANSFEREDORDERLISTURL);
+	var branchTable=ajaxProcessor.get();
+	var contentForm = new form(branchTable);
+	$j('#tabs-1').html(contentForm.result);	
+	dataTableProcessor.setCustomTable(self.pgTableNameTransfrorderList);
+	ajaxProcessor.setUrl(constants.NETLIMSACCTODAYSORDERLISTTABLEURL + self.netlimsId);
+	var pgDataList = ajaxProcessor.get();
+	self.netlimsAccService.setTableValues(self.pgTableNameTransfrorderList,pgDataList,"transferorder");
+	 
+	
+}
+netlimsAccountUIStartup.prototype.transferresultlist = function() {
+	var self = this;
+	commonMethodInvoker.removeErrors();
+	self.setPageTitle(constants.TRANSFEREDRESULTLIST);
+	ajaxProcessor.setUrl(constants.NETLIMSACCTRANSFEREDRESULTLISTURL);
+	var branchTable=ajaxProcessor.get();
+	var contentForm = new form(branchTable);
+	$j('#tabs-1').html(contentForm.result);	
+	dataTableProcessor.setCustomTable(self.pgTableNameTransfresultList);
+	ajaxProcessor.setUrl(constants.NETLIMSACCTODAYSORDERLISTTABLEURL + self.netlimsId);
+	var pgDataList = ajaxProcessor.get();
+	self.netlimsAccService.setTableValues(self.pgTableNameTransfresultList,pgDataList,"transferresult");
 	 
 	
 }
