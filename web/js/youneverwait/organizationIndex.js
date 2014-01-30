@@ -11,20 +11,20 @@ $j.cachedScript = function(url, options) {
   // Return the jqXHR object so we can chain callbacks
   return $j.ajax(options);
 };
-
+var userdata;
 $j(document).ready(function(){
 	var classLoader = new ClassLoader();
 		classLoader.load();
 	var organzaccUI = new orgztnAccClassLoader();
 		organzaccUI.load();
-	var organzUI = new organztnUIStartup();
-	organzUI.init();
 	ajaxProcessor.setUrl('/youNeverWait/ws/ui/auth/getUser');
 	userdata =ajaxProcessor.get();
+	var organzUI = new organztnUIStartup();
+	organzUI.init(userdata);
 	var ownerName=userdata.userName;
 	var orgName=userdata.accountName;
-	orgName=orgName.toUpperCase();
-	$j('#orgName').html(orgName);
+	//orgName=orgName.toUpperCase();
+	$j('#orgName').html("For "+orgName);
 	$j('#Nameoforguser').html(ownerName);
 	
 });				

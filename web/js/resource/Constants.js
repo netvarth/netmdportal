@@ -110,7 +110,7 @@ function Constants() {
 	this.ORGREPORTTABOBJ="#reportInfoTab";
 	this.ORGNZTNREPORTTABVIEWURL="/youNeverWait/json/view/organizationReport.json";
 	this.ORGNZTNREPORTFILTERVIEWURL="/youNeverWait/json/view/orgReportfiltr.json";
-	this.ORGNZTNREPORTFILTERNETMDLISTURL="/youNeverWait/ws/ui/netMd/getNetMdBrnchList";
+	this.ORGNZTNREPORTFILTERNETMDLISTURL="/youNeverWait/ws/ui/netMd/getNetMdBrnchList/";
 	this.REPORTGENERATEURL="/youNeverWait/ws/ui/orgn/report/generate";
 	/*****************----------superadmin-------------**************/
 	this.SUPERADMINRIBBONURL="/youNeverWait/json/toolbars/globalToolbar.json";
