@@ -9,6 +9,9 @@ package com.nv.youNeverWait.user.pl.dao;
 
 
 import java.util.Date;
+import java.util.List;
+
+import com.nv.youNeverWait.pl.entity.OrderTransferTbl;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
@@ -80,5 +83,6 @@ public interface LabDao {
 	public SyncFreqDTO getLabSyncDetails(int labId);
 	public SyncFreqDTO getBranchSyncDetails(int branchId);
 	public ResponseDTO saveResult(LabResultHeaderDTO labResultHeader);
+	public List<OrderTransferTbl> getDestinationBranches(int id);
 
 }

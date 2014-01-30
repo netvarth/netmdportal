@@ -49,6 +49,7 @@ import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
+import com.nv.youNeverWait.rs.dto.TransferredDetails;
 import com.nv.youNeverWait.security.User;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.LogService;
@@ -1031,6 +1032,32 @@ public class LabResource {
 		return response;
 	}
 	
+	/**
+	 * Retrieve all transferred orders
+	 * 
+	 * @param report
+	 * @return ReportResponseDTO
+	 */
+	@RequestMapping(value = "getTransferredOrders", method = RequestMethod.POST)
+	@ResponseBody
+	public TransferredDetails getTransferredorders(
+			@RequestBody FilterDTO filterDTO) {
+
+		TransferredDetails response = new TransferredDetails();
+		try {
+			response = labService.getTransferredOrders(filterDTO);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+
 	/**
 	 * @return the labService
 	 */

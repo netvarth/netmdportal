@@ -42,6 +42,7 @@ import com.nv.youNeverWait.pl.entity.OrderAmountTbl;
 import com.nv.youNeverWait.pl.entity.OrderBranchTbl;
 import com.nv.youNeverWait.pl.entity.OrderResultTbl;
 import com.nv.youNeverWait.pl.entity.OrderTbl;
+import com.nv.youNeverWait.pl.entity.OrderTransferTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.pl.entity.SuperAdminTbl;
@@ -2266,6 +2267,12 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		return response;
 	}
 
+	@Override
+	public List<OrderTransferTbl> getDestinationBranches(int orderId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_DESTINATION_BRANCHES_BY_ORDER_ID);
+		query.setParameter("param1", orderId);
+		return executeQuery(OrderTransferTbl.class, query);
+	}
 	private OrderBranchTbl getByOrderUid(String orderUid) {
 		javax.persistence.Query query = em.createQuery(Query.GET_ORDER_BY_UID);
 		query.setParameter("param1", orderUid);
@@ -2847,5 +2854,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	public void setNetlimsServerIpAddress(String netlimsServerIpAddress) {
 		this.netlimsServerIpAddress = netlimsServerIpAddress;
 	}
+
+	
 
 }

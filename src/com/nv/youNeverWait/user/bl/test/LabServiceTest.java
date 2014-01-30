@@ -2945,5 +2945,26 @@ filterDTO.setExp(expressionList);
 		}
 	}
 
+	@Test
+	public void getTransferredOrders() {
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		FilterDTO filterDTO = new FilterDTO();
+		List<ExpressionDTO> expressionList = new ArrayList<ExpressionDTO>();
+		ExpressionDTO exp1 = new ExpressionDTO();
+		exp1.setName("labId");
+		exp1.setOperator("eq");
+		exp1.setValue("277");
+		expressionList.add(exp1);
+		filterDTO.setExp(expressionList);
+		try {
+			service.getTransferredOrders(filterDTO);
+  		} catch (ServiceException e) {
+
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
+
 }
 

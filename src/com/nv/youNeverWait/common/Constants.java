@@ -58,6 +58,8 @@ public class Constants {
 	public static final String APPOINTMENTS = "appointments";
 	public static final String SYNC_LOG = "syncLog";
 	public static final String NETMD_BILL = "bill";
+	public static final String TRANSFERRED_ORDER = "transferredOrders";
+	
 		
 	/* Log */
 	public static final String STARTUP = "Show login page";
