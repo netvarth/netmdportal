@@ -14,18 +14,42 @@ function NetlimsAccServiceImpl () {
 					}
 				}
 			}
-			else{
-				if(branchResult.branchOrders.length>0) {			
-					$j(branchResult.branchOrders).each(function (index, lab) {
-						var id=lab.branchId;
-						var rowData=$j(tableObj).dataTable().fnAddData([lab.orderDate,lab.totalOrders,lab.netAmount,lab.paidAmount,lab.lastOrderdTime]);
-						var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
-						$j(row).attr('id',id);	
-						//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
-						});	
-				}
+			else if(key=="transferorder"){
+					if(branchResult.branchOrders.length>0) {			
+						$j(branchResult.branchOrders).each(function (index, lab) {
+							var id=lab.branchId;
+							var rowData=$j(tableObj).dataTable().fnAddData([lab.fromBranch,lab.toBranch,lab.orderUid,lab.senttoDestination]);
+							var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+							$j(row).attr('id',id);	
+							//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
+							});	
+					}
 	 
-			}		 
+			}
+			else if(key=="transferresult"){
+					if(branchResult.branchOrders.length>0) {			
+						$j(branchResult.branchOrders).each(function (index, lab) {
+							var id=lab.branchId;
+							var rowData=$j(tableObj).dataTable().fnAddData([lab.fromBranch,lab.toBranch,lab.orderUid,lab.senttoDestination]);
+							var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+							$j(row).attr('id',id);	
+							//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
+							});	
+					}
+			}
+			else{
+				
+					if(branchResult.branchOrders.length>0) {			
+						$j(branchResult.branchOrders).each(function (index, lab) {
+							var id=lab.branchId;
+							var rowData=$j(tableObj).dataTable().fnAddData([lab.orderDate,lab.totalOrders,lab.netAmount,lab.paidAmount,lab.lastOrderdTime]);
+							var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+							$j(row).attr('id',id);	
+							//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
+							});	
+					}
+	 
+			}
 	 
 		} 
 		
