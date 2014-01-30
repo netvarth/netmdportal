@@ -240,7 +240,7 @@ input.readonlybox {
 }
 .box-content {  padding: 5px 5px 5px 14px;}
 
-.namecolor{color:blue;}
+.namecolor{color: wheat;}
 
 #healthdiv { width: 80%; height: 400px; position: relative; margin: 0 auto; }
 #healthdiv .legend table,#healthdiv .legend > div { height: 82px !important; opacity: 1 !important; right: -55px; top: 10px; width: 116px !important; }
