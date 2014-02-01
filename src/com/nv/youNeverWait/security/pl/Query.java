@@ -98,7 +98,7 @@ public class Query {
 	public static final String GET_NETMD_PATIENTS_BY_NETMD_BRANCH = "from PatientTbl as patient where patient.netmdBranchTbl.id=:param1";
 	public static final String GET_PATIENT_WITH_LOGIN = "from PatientTbl as patient where patient.netmdLoginTbl.id =:param1 and patient.netmdBranchTbl.id =:param2 and patient.firstName=:param3 and patient.netmdLoginTbl.userType='patient'";
 	public static String RETRIEVE_PATIENTS_FOR_PRIMARY="from PatientTbl as patient where patient.updateDateTime>=:param1 and patient.updateDateTime<:param4 and patient.netmdBranchTbl.id=:param3 and patient.netmdPassphraseTbl.id=:param2";
-	
+	public static final String GET_BY_PATIENT_NAME_AND_BRANCH_ID = "from PatientTbl as patient where patient.firstName=:param1 and patient.netmdBranchTbl.id=:param2";
 	/* NetmdLoginTbl */
 	public static final String GET_PATIENT_BY_USERNAME_PASSWORD = "from NetmdLoginTbl as login left join fetch NetmdUserTbl where login.password =:param1 and login.userName =:param2";
 	public static final String GET_NETMD_USER_BY_PASSWORD = "from NetmdLoginTbl as login where login.password =:param1 and login.userName =:param2";
@@ -323,6 +323,7 @@ public class Query {
 
 	/*OrderResultTbl*/
 	public static final String GET_ORDER_TEST_RESULTS = "from OrderResultTbl as orderResult where orderResult.ownerLabBranchTbl.id=:param1 and orderResult.labBranchTbl.id!=:param1 and orderResult.updatedDateTime>=:param2 and orderResult.updatedDateTime<:param3 ";
+	
 	
 	
 

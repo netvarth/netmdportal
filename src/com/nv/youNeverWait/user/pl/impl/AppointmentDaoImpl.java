@@ -325,8 +325,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 				// the request is from portal
 			appointmentTbl.setNetmdPassphraseTbl(null);
 		}
-		PatientTbl patientTbl = (PatientTbl) getById(PatientTbl.class,
-				appointment.getAppointmentDetails().getPatientId());
+		PatientTbl patientTbl = (PatientTbl) getByPatientNameAndBranchId(appointment.getAppointmentDetails().getPatientName(),appointment.getHeader().getBranchId());
 		if (patientTbl == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.PatientNotFound);
@@ -468,6 +467,15 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 		response.setUpdateDateTime(df3.format(newDate));
 		return response;
 
+	}
+
+	private PatientTbl getByPatientNameAndBranchId(String patientName,
+			int branchId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_BY_PATIENT_NAME_AND_BRANCH_ID);
+		query.setParameter("param1", patientName);
+		query.setParameter("param2", branchId);
+		return executeUniqueQuery(PatientTbl.class, query);
 	}
 
 	/**

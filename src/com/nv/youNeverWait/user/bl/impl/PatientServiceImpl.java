@@ -111,19 +111,15 @@ public class PatientServiceImpl implements PatientService {
 	public ResponseDTO updatePatient(PatientDetail patient, HeaderDTO header) {
 
 		validator.validateUpdatePatient(patient, header);
-
+		boolean flag=patientDao.isEmailExists(patient.getGlobalId(),patient.getEmail().trim());
 		ResponseDTO response = patientDao.updatePatient(patient, header);
-		if(patient.getEmail()!=null && !patient.getEmail().isEmpty())
-		{
-			boolean flag=patientDao.isEmailExists(patient.getEmail());
 			if(!flag){
 				String branchName = patientDao.getBranch(header.getBranchId());
 				// send login details and password creation link to the user
-				sendEmailForPatientCreation(patient.getFirstName(),
-						patient.getEmail(), Constants.PATIENT_REGISTRATION,
+				sendEmailForPatientCreation(patient.getFirstName(),patient.getEmail(), Constants.PATIENT_REGISTRATION,
 						patient.getEmail(), branchName);
 			}
-		}
+		
 		return response;
 	}
 
@@ -345,6 +341,7 @@ public class PatientServiceImpl implements PatientService {
 			e.printStackTrace();
 		}
 	}
+	
 
 	/**
 	 * Method to create email body

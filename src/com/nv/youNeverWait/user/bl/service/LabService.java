@@ -45,6 +45,7 @@ import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.TransferredDetails;
+import com.nv.youNeverWait.rs.dto.TransferredResultDetails;
 
 
 
@@ -100,5 +101,6 @@ public interface LabService {
 			int interval);
 	public ResponseDTO saveResult(LabResultHeaderDTO labResultHeader);
 	public TransferredDetails getTransferredOrders(FilterDTO filterDTO);
+	public TransferredResultDetails getTransferredResults(FilterDTO filterDTO);
 	
 }

@@ -735,13 +735,24 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 
 	@Override
 	@Transactional
-	public boolean isEmailExists(String email) {
-		String patientEmail=email.trim();
-		PatientTbl patientTbl = getPatientByEmail(patientEmail);
+	public boolean isEmailExists(int id, String email) {
+		boolean flag=true;
+		PatientTbl patientTbl = getById(PatientTbl.class, id);
 		if(patientTbl!=null){
-			return true;
+			if(patientTbl.getEmail()==null || patientTbl.getEmail().isEmpty()){
+				flag=false;
+			}
+			else{
+				if(patientTbl.getEmail().equals(email)){
+					flag=true;
+				}
+				else{
+					flag=false;
+				}
+			}
+		
 		}
-		return false;
+		return flag;
 	}
 	
 	private ResultTbl getPatientResultsByPatientOrderId(int patientId, String orderId) {

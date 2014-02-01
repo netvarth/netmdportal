@@ -130,6 +130,8 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 				orderResult.addToMap(new String(orderTestResult.getTestUid()), new String(orderTestResult.getResult()));
 			}
 			uid = uidC;
+//			orderTestResult.setSent(true);  have to set this
+//			update(orderTestResult);
 		}
 		if (orderResult !=null){
 			System.out.println(orderResult.getTestResultList().size());

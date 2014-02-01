@@ -32,6 +32,7 @@ import com.nv.youNeverWait.pl.entity.LabTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBillTbl;
 import com.nv.youNeverWait.pl.entity.OrderAmountTbl;
 import com.nv.youNeverWait.pl.entity.OrderBranchTbl;
+import com.nv.youNeverWait.pl.entity.OrderResultTbl;
 import com.nv.youNeverWait.pl.entity.OrderTransferTbl;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
@@ -82,6 +83,8 @@ import com.nv.youNeverWait.rs.dto.SystemHealthResponse;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.TransferredDetails;
 import com.nv.youNeverWait.rs.dto.TransferredOrders;
+import com.nv.youNeverWait.rs.dto.TransferredResultDetails;
+import com.nv.youNeverWait.rs.dto.TransferredResults;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.bl.service.HealthMonitorService;
 import com.nv.youNeverWait.user.bl.service.LabService;
@@ -1437,7 +1440,7 @@ public class LabServiceImpl implements LabService {
 			for(OrderTransferTbl orderTransferTbl:orderTrasnferTblList){
 				OrderDestinationBranchDTO destbranch= new OrderDestinationBranchDTO();
 				destbranch.setDestinationBranch(orderTransferTbl.getLabBranchTbl().getName());
-				destbranch.setOrderSent(true);
+				//destbranch.setOrderSent(orderTransferTbl.isSent());
 				destinationBranches.add(destbranch);
 			}
 			trsnferredOrder.setFromBranch(labTransferredOrder.getLabBranchTbl().getName());
@@ -1446,6 +1449,68 @@ public class LabServiceImpl implements LabService {
 			labOrderList.add(trsnferredOrder);
 		}
 		response.setTransferreddetails(labOrderList);
+		return response; 
+	}
+
+	@Override
+	public TransferredResultDetails getTransferredResults(FilterDTO filterDTO) {
+		TransferredResultDetails response = new TransferredResultDetails();
+		// validate filterDTO to identify invalid expressions and if there is
+				// any,return result with appropriate error code
+				ErrorDTO error = validator.validateTransferredResultFilter(filterDTO);
+				if (error != null) {
+					response.setError(error);
+					response.setSuccess(false);
+					return response;
+				}
+
+				// get queryBuilder for netlims branch from builder factory
+				QueryBuilder queryBuilder = queryBuilderFactory
+						.getQueryBuilder(Constants.TRANSFERRED_RESULTS);
+				if (queryBuilder == null) {
+					return response;
+				}
+				for (ExpressionDTO exp : filterDTO.getExp()) {
+
+					// get filter from filter factory by setting expression name and
+					// value to filter
+					Filter filter = filterFactory.getFilter(exp);
+					queryBuilder.addFilter(filter);
+				}
+				// build query
+				TypedQuery<OrderResultTbl> q = queryBuilder.buildQuery(filterDTO.isAsc(),
+						filterDTO.getFrom(), filterDTO.getCount());
+
+				// get count
+				Long count = queryBuilder.getCount();
+
+				// execute query
+				List<OrderResultTbl> transferredResultList = queryBuilder.executeQuery(q);
+				response = getNetLimsTransferredResultList(transferredResultList);
+				response.setCount(count);
+				response.setSuccess(true);
+				return response;
+	}
+
+	
+	private TransferredResultDetails getNetLimsTransferredResultList(
+			List<OrderResultTbl> transferredResultList) {
+		TransferredResultDetails response = new TransferredResultDetails();
+		if (transferredResultList == null) {
+			return response;
+		}
+		
+		List<TransferredResults> transferreddetails= new ArrayList<TransferredResults>();
+		for (OrderResultTbl orderResultTbl : transferredResultList) {
+			TransferredResults trsnferredResult= new TransferredResults();
+			trsnferredResult.setFromBranch(orderResultTbl.getLabTbl().getName());
+			trsnferredResult.setToBracnh(orderResultTbl.getOwnerLabBranchTbl().getName());
+			trsnferredResult.setOrderUid(orderResultTbl.getOrderBranchTbl().getOrderUid());
+			trsnferredResult.setTestUId(orderResultTbl.getTestUid());
+			//trsnferredResult.setSent(orderResultTbl.isSent());
+			transferreddetails.add(trsnferredResult);
+		}
+		response.setTransferreddetails(transferreddetails);
 		return response; 
 	}
 
@@ -1607,6 +1672,7 @@ public class LabServiceImpl implements LabService {
 		this.resultService = resultService;
 	}
 
+	
 	
 
 	
