@@ -34,6 +34,8 @@ import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
+import com.nv.youNeverWait.pl.entity.OrganisationNetmdTbl;
+import com.nv.youNeverWait.pl.entity.OrganisationTbl;
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.StatusEnum;
@@ -343,6 +345,21 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			netMdPassPhraseTbl.setPrimaryDevice(false);
 			save(netMdPassPhraseTbl);
 		}
+		/*Saving record in organisationNetmdTbl if any*/
+		if(branch.getOrganisationName()!=null && !branch.getOrganisationName().equals("")){
+			OrganisationTbl organisationTbl= getOrganisationByName(branch.getOrganisationName().trim());
+			if(organisationTbl==null){
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidOrganisationName);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			OrganisationNetmdTbl orgNetmdTbl= new OrganisationNetmdTbl();
+			orgNetmdTbl.setOrganisationTbl(organisationTbl);
+			orgNetmdTbl.setNetmdBranchTbl(netMdBranch);
+			save(orgNetmdTbl);
+		}
+		
 		response.setSuccess(true);
 		response.setGlobalId(netMdBranch.getId());
 		return response;
@@ -534,10 +551,28 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netMdBranch.setEmail(branch.getEmail());
 		netMdBranch.setUpdateDateTime(new Date());
 		update(netMdBranch);
+		/*updating record in organisationNetmdTbl if any*/
+		if(branch.getOrganisationName()!=null && !branch.getOrganisationName().equals("")){
+			OrganisationTbl organisationTbl= getOrganisationByName(branch.getOrganisationName().trim());
+			if(organisationTbl==null){
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidOrganisationName);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
+			OrganisationNetmdTbl orgNetmdTbl= getOrganisationByNetmd(netMdBranch.getId());
+			if(orgNetmdTbl!=null){
+			orgNetmdTbl.setOrganisationTbl(organisationTbl);
+			update(orgNetmdTbl);
+			}
+		}
+		
 		response.setGlobalId(netMdBranch.getId());
 		response.setSuccess(true);
 		return response;
 	}
+
+	
 
 	/**
 	 * view a branch details
@@ -580,7 +615,13 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			}
 			passPhraseList.add(pass);
 		}
+		
 		branch.setPassPhrase(passPhraseList);
+		OrganisationNetmdTbl orgNetmdTbl= getOrganisationByNetmd(netMdBranch.getId());
+		if(orgNetmdTbl!=null){
+			branch.setOrganisationName(orgNetmdTbl.getNetmdBranchTbl().getName());
+		
+		}
 		response.setBranch(branch);
 		response.setSuccess(true);
 		return response;
@@ -1763,12 +1804,12 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 
 	@Override
 	@Transactional
-	public NetMdBranchListResponseDTO getNetMdBrnchList() {
+	public NetMdBranchListResponseDTO getNetMdBrnchList(int organisationId) {
 		NetMdBranchListResponseDTO response = new NetMdBranchListResponseDTO();
 		List<NetMdBranchDetail> netMdBranchDetails = new ArrayList<NetMdBranchDetail>();
-		List<NetmdBranchTbl> netmdBranchTblList = getNetMdBranches();
-		for (NetmdBranchTbl netmdBranchTbl : netmdBranchTblList) {
-			netMdBranchDetails.add(new NetMdBranchDetail(netmdBranchTbl));
+		List<OrganisationNetmdTbl> orgNetmdTblList= getOrganisationNetMdBranches(organisationId);
+		for(OrganisationNetmdTbl orgNetmd:orgNetmdTblList){
+			netMdBranchDetails.add(new NetMdBranchDetail(orgNetmd.getNetmdBranchTbl()));
 		}
 
 		response.setNetmdBranch(netMdBranchDetails);
@@ -1777,9 +1818,9 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		
 	}
 
-	private List<NetmdBranchTbl> getNetMdBranches() {
-		javax.persistence.Query query = em.createQuery(Query.GET_NETMD_BRANCH_LIST);
-		return executeQuery(NetmdBranchTbl.class, query);
+	private List<OrganisationNetmdTbl> getOrganisationNetMdBranches(int organisationId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_ORGANISATION_NETMD_BRANCH_LIST);
+		return executeQuery(OrganisationNetmdTbl.class, query);
 	}
 
 	private List<NetmdHealthMonitorTbl> getMonitorDetailsByBranchId(
@@ -1896,6 +1937,17 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		return count;
 	}
 
+	/**
+	 * @param name
+	 * @return
+	 */
+	private OrganisationTbl getOrganisationByName(String name) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_ORGANISATION_BY_NAME);
+		query.setParameter("param1", name);
+		return executeUniqueQuery(OrganisationTbl.class, query);
+	}
+	
 	/**
 	 * 
 	 * @param loginId
@@ -2205,6 +2257,13 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		return executeQuery(DoctorScheduleTbl.class, query);
 	}
 
+	private OrganisationNetmdTbl getOrganisationByNetmd(int netmdBranchId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.RETRIEVE_ORGANISATIONS);
+		query.setParameter("param1", netmdBranchId);
+		return executeUniqueQuery(OrganisationNetmdTbl.class, query);
+	}
+	
 	/**
 	 * @return the em
 	 */

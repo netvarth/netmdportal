@@ -57,6 +57,7 @@
 		<class>com.nv.youNeverWait.pl.entity.OrganisationLoginTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.OrganisationTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.OrganisationUserTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.OrganisationNetmdTbl</class>
 		
 		<class>com.nv.youNeverWait.pl.entity.PatientAppointmentTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.PatientMedicalHistoryTbl</class>

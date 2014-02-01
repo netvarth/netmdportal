@@ -200,6 +200,10 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.OrganisationUserPropertyEnum
 				</value>
 				<value>com.nv.youNeverWait.pl.entity.UserTypeEnum</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.TransferredOrderPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.TransferredResultPropertyEnum
+				</value>
 			</list>
 		</property>
 	</bean>
@@ -576,6 +580,10 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 					value="com.nv.youNeverWait.util.filter.queryBuilder.OrganisationQueryBuilder" />
 				<entry key="organisationUser"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.OrganisationUserQueryBuilder" />
+				<entry key="transferredOrders"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.TransferredOrderQueryBuilder" />
+				<entry key="transferredResults"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.TransferredResultQueryBuilder" />
 			</map>
 		</property>
 

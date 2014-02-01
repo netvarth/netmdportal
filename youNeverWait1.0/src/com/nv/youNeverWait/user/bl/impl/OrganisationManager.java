@@ -589,6 +589,11 @@ public class OrganisationManager  implements OrganisationService{
 		return reportManager.getJRXmlPath(reportName);
 	}
 	
+	@Override
+	public OrganisationListResponseDTO getOrganisationList() {
+		OrganisationListResponseDTO response = organisationDao.getOrganisationList();
+		return response;
+	}
 	/**
 	 * @return connection
 	 */
@@ -710,5 +715,7 @@ public class OrganisationManager  implements OrganisationService{
 	public static Log getLog() {
 		return log;
 	}
+
+
 
 }

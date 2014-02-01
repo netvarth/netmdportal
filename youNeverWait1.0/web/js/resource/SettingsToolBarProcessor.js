@@ -1,20 +1,12 @@
 function SettingsToolBarProcessor() {
 	this.globalService = new GlobalServiceImpl();
+	//this.superAdminglobalService=new SuperAdminGlobalServiceImpl();
 	this.changePasswrdButton ="#btnNetlimsChangePwd";
 	this.orderTypeButton="#btnNetlimsOrdertype";
 	this.changePasswrdnetMdbutton="#btnNetMdChangePwd";
 	this.changePasswrdnetRxbutton="#btnNetRxChangePwd";
 	this.pageTitle = $j('#pageTitle');
-	/* this.testButton="#btnTest";
-	this.discountButton = "#btnDiscounts";
-	this.backupButton = "#btnBackUP";
-	this.configButton = "#btnConfig";
-	this.areaButton = "#btnArea";
-	this.specimenButton = "#btnSpecimens";
-	this.filter = $j('#filter');
-	this.filterBench=$j('#filterWorkBench');
-	this.ftbContainer=$j('#filterToolBar-Container'); */
-	this.ptbContainer=$j('#pageToolBar-Container');
+	
 }
 SettingsToolBarProcessor.prototype.getGlobalService = function() {
 	return this.globalService;

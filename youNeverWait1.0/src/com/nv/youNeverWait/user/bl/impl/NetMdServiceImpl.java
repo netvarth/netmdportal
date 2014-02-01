@@ -1198,8 +1198,8 @@ public class NetMdServiceImpl implements NetMdService {
 	}
 
 	@Override
-	public NetMdBranchListResponseDTO getNetMdBrnchList() {
-		NetMdBranchListResponseDTO response= netMdDao.getNetMdBrnchList();
+	public NetMdBranchListResponseDTO getNetMdBrnchList(int organisationId) {
+		NetMdBranchListResponseDTO response= netMdDao.getNetMdBrnchList(organisationId);
 		return response;
 	}
 	/**

@@ -2,6 +2,7 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -54,6 +55,9 @@ public class OrderResultTbl implements Serializable {
 		@Column(name="test_uid", length=45)
 		private String testUid;
 
+		@Column(name="sent")
+		private boolean sent;
+		
 	public OrderResultTbl() {
 	}
 
@@ -127,6 +131,14 @@ public class OrderResultTbl implements Serializable {
 
 	public void setOwnerLabBranchTbl(LabBranchTbl ownerLabBranchTbl) {
 		this.ownerLabBranchTbl = ownerLabBranchTbl;
+	}
+
+	public boolean isSent() {
+		return sent;
+	}
+
+	public void setSent(boolean sent) {
+		this.sent = sent;
 	}
 
 	

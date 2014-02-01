@@ -42,6 +42,10 @@ public class OrderTransferTbl implements Serializable {
 	@JoinColumn(name="order_id", nullable=false)
 	private OrderBranchTbl orderBranchTbl;
 
+	@Column(name="sent")
+	private boolean sent;
+	
+	
 	public OrderTransferTbl() {
 	}
 
@@ -91,6 +95,14 @@ public class OrderTransferTbl implements Serializable {
 
 	public void setOrderBranchTbl(OrderBranchTbl orderBranchTbl) {
 		this.orderBranchTbl = orderBranchTbl;
+	}
+
+	public boolean isSent() {
+		return sent;
+	}
+
+	public void setSent(boolean sent) {
+		this.sent = sent;
 	}
 
 }

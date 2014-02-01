@@ -28,27 +28,27 @@
                                             },
 											{
                                                 "className": "head1",
-                                                "name": "BillDate",
+                                                "name": "Bill Date",
                                                 "style": "width:15%"
                                             },
                                             {
                                                 "className": "head0",
-                                                "name": "PatientName",
+                                                "name": "Patient Name",
                                                 "style": "width:10%"
                                             },
                                             {
                                                 "className": "head1",
-                                                "name": "PayStatus",
+                                                "name": "Pay Status",
                                                 "style": "width:10%"
                                             },
                                             {
                                                 "className": "head0",
-                                                "name": "BillAmount",
+                                                "name": "Bill Amount",
                                                 "style": "width:10%"
                                             },
                                             {
                                                 "className": "head1",
-                                                "name": "AmountPaid",
+                                                "name": "Amount Paid",
                                                 "style": "width:10%"
                                             }
 											 

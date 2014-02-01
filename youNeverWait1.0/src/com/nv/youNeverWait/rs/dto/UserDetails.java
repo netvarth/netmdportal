@@ -11,9 +11,17 @@ public class UserDetails {
 	private int netmdId;
 	private int netrxId;
 	private int organisationId;
+	private String accountName;
 	private String userType;
 	
 	
+	
+	public String getAccountName() {
+		return accountName;
+	}
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
+	}
 	public int getOrganisationId() {
 		return organisationId;
 	}

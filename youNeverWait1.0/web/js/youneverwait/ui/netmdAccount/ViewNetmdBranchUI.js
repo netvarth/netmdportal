@@ -63,7 +63,7 @@ ViewNetmdBranchUI.prototype.getviewNetmdBranchPTB = function() {
 }
 
 ViewNetmdBranchUI.prototype.setPageTitle = function() {
-	this.pageTitle.empty().html("View Netmd Branch");
+	this.pageTitle.empty().html("View NetMD Branch");
 }
 ViewNetmdBranchUI.prototype.removecolors = function(cl) {
 	commonMethodInvoker.removeErrorColor(self.name);
@@ -224,7 +224,7 @@ ViewNetmdBranchUI.prototype.viewNetmdBranchDetails = function(branchId) {
 		self.viewPassPhraseTableAcc(netmdResponse);
 	} else 
 		commonMethodInvoker.createServerError(self.errorHeader,self.errorData,netmdResponse.errorMessage);
-	self.setPageTitle("View Netmd Branch");
+	self.setPageTitle("View NetMD Branch");
 }
 
 ViewNetmdBranchUI.prototype.viewPassPhraseTableAcc = function(netmdResponse) {

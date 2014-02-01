@@ -15,7 +15,15 @@ public class User {
 	private int netrxId;
 	private int organisationId;
 	private String userType;
+	private String accountName;
 	
+	
+	public String getAccountName() {
+		return accountName;
+	}
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
+	}
 	public int getOrganisationId() {
 		return organisationId;
 	}

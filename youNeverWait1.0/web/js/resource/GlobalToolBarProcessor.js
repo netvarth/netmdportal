@@ -3,6 +3,8 @@ function GlobalToolBarProcessor() {
 	
 	this.netlimsAccbranchlist="#leftPaneNetlimsBranch";
 	this.netlimsAccbranchorders="#leftPaneNetlimsOrders";
+	this.leftPaneTransferredOrders="#leftPaneTransferredOrders";
+	this.leftPaneTransferredResults="#leftPaneTransferredResults";
 	this.netlimsAccbranchsettings="#leftPaneNetlimsSettings";
 	this.newnetlimsBranch="#ribbonNewNetlimsBranch";
 	this.netlimsdownLoad="#ribbonNetlimsDownload";
@@ -203,6 +205,36 @@ GlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 			netlimsAccUI.branchorderlist(); 
 		});
 	}	
+	
+	if($j(self.leftPaneTransferredOrders)) {
+		$j(self.leftPaneTransferredOrders).die('click').live("click",function() {
+			 var obj=$j(this);
+			commonMethodInvoker.removeErrors();
+			$j('#pageToolBar-Container').html("")
+			if(pageHandler.isnetlimsAccClassLoaded()!=true){
+				var netlimsAccClass = new netlimsAccClassLoader();
+				netlimsAccClass.load();
+				pageHandler.setnetlimsAccClassLoaded(true);
+			}
+			var netlimsAccUI = new netlimsAccountUIStartup();	
+			netlimsAccUI.transferorderlist(); 
+		});
+	}	
+	if($j(self.leftPaneTransferredResults)) {
+		$j(self.leftPaneTransferredResults).die('click').live("click",function() {
+			 var obj=$j(this);
+			commonMethodInvoker.removeErrors();
+			$j('#pageToolBar-Container').html("")
+			if(pageHandler.isnetlimsAccClassLoaded()!=true){
+				var netlimsAccClass = new netlimsAccClassLoader();
+				netlimsAccClass.load();
+				pageHandler.setnetlimsAccClassLoaded(true);
+			}
+			var netlimsAccUI = new netlimsAccountUIStartup();	
+			netlimsAccUI.transferresultlist(); 
+		});
+	}	
+	
 	if($j(self.netlimsAccbranchsettings)) {
 		$j(self.netlimsAccbranchsettings).die('click').live("click",function() {
 			 var obj=$j(this);

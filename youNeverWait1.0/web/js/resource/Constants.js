@@ -33,7 +33,13 @@ function Constants() {
 	this.NETLIMSACCBRANCHLISTJSON="/youNeverWait/json/list/netlimsAccBranchTable.json";
 	this.CREATENETLIMSACCBRANCHURL="/youNeverWait/ws/ui/lab/createBranch";
 	this.TODAYSORDERLIST="Today's Branch Orders";
+	this.TRANSFEREDORDERLIST="Transferred Orders";
+	this.TRANSFEREDRESULTLIST="Transferred Results";
 	this.NETLIMSACCTODAYSORDERLISTURL="/youNeverWait/json/list/netlimsAccBranchOrdersTable.json";
+	this.NETLIMSACCTRANSFEREDORDERLISTJSON="/youNeverWait/json/list/netlimsAccBranchTransfrOrdersTable.json";
+	this.NETLIMSACCTRANSFEREDRESULTLISTJSON="/youNeverWait/json/list/netlimsAccBranchTransfrResultTable.json";
+	this.NETLIMSACCTRANSFEREDORDERLISTURL="/youNeverWait/ws/ui/lab/getTransferredOrders";
+	this.NETLIMSACCTRANSFEREDRESULTLISTURL="/youNeverWait/ws/ui/lab/getTransferredResults";
 	this.NETLIMSACCTODAYSORDERLISTTABLEURL="/youNeverWait/ws/ui/lab/viewBranchOrders/";
 	this.VIEWNETLIMSACCBRCHPAGEURL="/youNeverWait/json/view/viewNetlimsAccBranchDetails.json";
 	this.VIEWNETLIMSACCBRCHURL="/youNeverWait/ws/ui/lab/viewBranch/";
@@ -110,7 +116,7 @@ function Constants() {
 	this.ORGREPORTTABOBJ="#reportInfoTab";
 	this.ORGNZTNREPORTTABVIEWURL="/youNeverWait/json/view/organizationReport.json";
 	this.ORGNZTNREPORTFILTERVIEWURL="/youNeverWait/json/view/orgReportfiltr.json";
-	this.ORGNZTNREPORTFILTERNETMDLISTURL="/youNeverWait/ws/ui/netMd/getNetMdBrnchList";
+	this.ORGNZTNREPORTFILTERNETMDLISTURL="/youNeverWait/ws/ui/netMd/getNetMdBrnchList/";
 	this.REPORTGENERATEURL="/youNeverWait/ws/ui/orgn/report/generate";
 	/*****************----------superadmin-------------**************/
 	this.SUPERADMINRIBBONURL="/youNeverWait/json/toolbars/globalToolbar.json";
@@ -155,7 +161,7 @@ function Constants() {
 	this.SETNETLIMSSYCURL="/youNeverWait/ws/ui/superAdmin/setLabSync";
 	/***********netmd***************/
 	this.NETMDBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/netmdList";
-	this.NETMDLIST="NETMD LIST";
+	this.NETMDLIST="NetMD LIST";
 	this.NETMD="NETMD";
 	this.NETMDPAGEJSON="/youNeverWait/json/toolbars/netmdPageToolBar.json";
 	this.NETMDLISTJSON="/youNeverWait/json/list/netmdTable.json";
@@ -231,6 +237,22 @@ function Constants() {
 	this.NETRXCREATESUCCESS="Netrx created Successfully";
 	this.CREATENETRXURL="/youNeverWait/ws/ui/superAdmin/createNetRx";
 	this.VIEWNETRXDETAILPAGEURL="/youNeverWait/json/view/viewnetrxdetails.json";
+	this.VIEWNETRXDETAILURL="/youNeverWait/ws/ui/superAdmin/viewNetRx/";
+	this.NETRXGENERAL="netrx";
+	this.NETRXUPDATESUCCESS="Netrx Updated Successfully";
+	this.UPDATENETRXURL="/youNeverWait/ws/ui/superAdmin/updateNetRx";
+	this.DELETENETRXURL="/youNeverWait/ws/ui/superAdmin/deleteNetRx/";
+	this.NETRXDELETESUCCESS="Netrx Inactivated Successfully";
+	this.NETRXSUPERBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/netRxBranchList";
+	this.CREATENETRXBRANCHURL="/youNeverWait/ws/ui/superAdmin/createNetRxBranch"
+	this.VIEWNETRXBRCHPAGEURL="/youNeverWait/json/view/viewNetrxBranchDetails.json";
+	this.UPDATENETRXBRCHURL="/youNeverWait/ws/ui/superAdmin/updateNetRxBranch";
+	this.SETNETRXBRACHCLEARMACURL="/youNeverWait/ws/ui/superAdmin/clearNetRxMacId";
+	this.NEWNETRXMACIDCLEARMODAL="netrxmacIdClearModal";
+	this.SETNETRXBRACHSYCURL="/youNeverWait/ws/ui/superAdmin/setNetRxBranchSync";
+	this.NETRXSYNCMODAL="netrxsyncmodal";
+	this.SYNCDATANETRXURL="/youNeverWait/ws/ui/netRx/getNetrxSyncDetails/";
+	this.SETNETRXSYCURL="/youNeverWait/ws/ui/superAdmin/setNetRxSync";
 	/*****************-------------General-----------**----*************/
 	this.NAME = "name";
 	this.ADDRESS = "address";

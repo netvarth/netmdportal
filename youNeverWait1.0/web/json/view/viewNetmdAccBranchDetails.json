@@ -216,7 +216,7 @@
                     "elements": [
                         {
                             "type": "label",
-							"title":"BillList",
+							"title":"Bill List",
                             "spanstyle": "font-size:15px;"
                         }
                     ]

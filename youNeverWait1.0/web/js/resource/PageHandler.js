@@ -80,7 +80,12 @@ function PageHandler() {
 	this.setnetrxClassLoaded=function(status){
 		this.netrxClassLoaded=status;
 	}
-	
+	this.isnetposClassLoaded=function(){
+		return this.netposClassLoaded;
+	}
+	this.setnetposClassLoaded=function(status){
+		this.netposClassLoaded=status;
+	}
 	this.isorganizationLoaded=function(){
 		return this.organizationClassLoaded;
 	}

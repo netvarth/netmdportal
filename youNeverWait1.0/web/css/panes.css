@@ -106,6 +106,9 @@
 .leftmenu ul li a.netpos{
 	background:#f6f4f4 url(../images/leftmenu/pos.png) no-repeat;
 }
+.leftmenu ul li a.organization{
+	background:#f6f4f4 url(../images/leftmenu/orgn.png) no-repeat;
+}
 .leftmenu ul li a.border {
 	background:#f6f4f4 url(../images/leftmenu/border-bg.png) no-repeat;
 }

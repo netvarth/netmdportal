@@ -11,6 +11,16 @@
           "name": "leftPaneNetlimsOrders"
         },
 		{
+          "title": "Transferred Orders",
+		  "className": "branchorders",
+          "name": "leftPaneTransferredOrders"
+        },
+		{
+          "title": "Transferred Results",
+		  "className": "branchorders",
+          "name": "leftPaneTransferredResults"
+        },
+		{
           "title": "Settings",
 		  "className": "admin",
           "name": "leftPaneNetlimsSettings"

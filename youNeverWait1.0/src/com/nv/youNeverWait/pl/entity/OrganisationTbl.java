@@ -45,6 +45,7 @@ public class OrganisationTbl implements Serializable {
 	@Column(name="head_office_phone")
 	private String headOfficePhone;
 
+	@Column(name="name")
 	private String name;
 
 	@Column(name="owner_address")

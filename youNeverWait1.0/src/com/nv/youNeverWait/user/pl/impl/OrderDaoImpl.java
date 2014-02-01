@@ -92,6 +92,8 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 				se.setDisplayErrMsg(true);
 				throw se;
 			}
+			order.setSent(true);  
+			update(order);
 			orderList.add(orderDetails);
 		}
 		orderDetail.setOrders(orderList);
@@ -147,7 +149,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		orderBranchTbl.setUpdatedDateTime(createdTime);
 		save(orderBranchTbl);
 
-		/* Saving details in order branch tbl */
+		/* Saving details in order transfer tbl */
 		for (Integer destinationBranch : orderTranfer.getDestinationBranches()) {
 			/* Checking whether there is any labs and branches */
 			LabBranchTbl destinationLabBranch = getLabBranchId(

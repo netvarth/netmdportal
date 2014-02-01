@@ -1,7 +1,13 @@
 function netlimsAccountUIStartup() {
 	this.pgTableName = "#branchNetlimsAcc";
 	this.pgTableContainer="#branchNetlimsAccTableCont"; 
+	this.transfrOrderpgTableContainer="#branchtransfrOrderNetlimsCont";
+	this.transfrResultpgTableContainer="#branchtrnsfrresultNetlimsCont"; 	
 	this.pgTableNameorderList="#branchOrderNetlimsAcc";
+	this.pgTableNameTransfrorderList="#branchtransfrOrderNetlimsAcc";
+	this.pgTableNameTransfresultList="#branchtrnsfrresultNetlimsAcc";
+	this.transfrOrderListUrl=constants.NETLIMSACCTRANSFEREDORDERLISTURL;
+	this.transfrresultListUrl=constants.NETLIMSACCTRANSFEREDRESULTLISTURL;
 	this.pageTitle = $j('#pageTitle');
 	this.ptbCreate=$j('#BRANCHPTBContainer #btn_new_ptb_id');
 	this.ptbView=$j('#BRANCHPTBContainer #btn_view_ptb_id');
@@ -15,6 +21,8 @@ function netlimsAccountUIStartup() {
 	this.netlimsAccService = new NetlimsAccServiceImpl();
 	this.listUrl = constants.NETLIMSACCBRANCHLISTURL;
 	this.netlimsAccTableNavigator = new DataTableNavigator(this.pgTableName,this.listUrl,this.pgTableContainer,this.netlimsAccService,this.exp);
+	this.netlimsTranfrTableNavigator = new DataTableNavigator(this.pgTableNameTransfrorderList,this.transfrOrderListUrl,this.transfrOrderpgTableContainer,this.netlimsAccService,this.exp);
+	this.netlimsTranfrResultTableNavigator = new DataTableNavigator(this.pgTableNameTransfresultList,this.transfrresultListUrl,this.transfrResultpgTableContainer,this.netlimsAccService,this.exp);
 	this.viewNetlimsBranchUI = new ViewNetlimsBranchUI(this);
 }
 
@@ -114,6 +122,58 @@ netlimsAccountUIStartup.prototype.branchorderlist = function() {
 	ajaxProcessor.setUrl(constants.NETLIMSACCTODAYSORDERLISTTABLEURL + self.netlimsId);
 	var pgDataList = ajaxProcessor.get();
 	self.netlimsAccService.setTableValuesOrderList(self.pgTableNameorderList,pgDataList);
+	 
+	
+}
+netlimsAccountUIStartup.prototype.transferorderlist = function() {
+	var self = this;
+	commonMethodInvoker.removeErrors();
+	self.setPageTitle(constants.TRANSFEREDORDERLIST);
+		
+		var selName="labId";
+		var selValue=self.netlimsId;
+		var selOperator = "eq";
+		
+		var exp = new ExpressionListDTO();
+		var expr = new ExpressionDTO(selName,selValue,selOperator);
+		exp.add(expr);
+		
+	ajaxProcessor.setUrl(constants.NETLIMSACCTRANSFEREDORDERLISTJSON);
+	var branchTable=ajaxProcessor.get();
+	var contentForm = new form(branchTable);
+	$j('#tabs-1').html(contentForm.result);	
+	dataTableProcessor.setCustomTable(self.pgTableNameTransfrorderList);
+	
+	var netlimsAccntTableNavigator = self.netlimsTranfrTableNavigator;
+		netlimsAccntTableNavigator.setExp(exp);
+		netlimsAccntTableNavigator.list("transferorder");
+	
+}
+netlimsAccountUIStartup.prototype.transferresultlist = function() {
+	var self = this;
+	commonMethodInvoker.removeErrors();
+	self.setPageTitle(constants.TRANSFEREDRESULTLIST);
+		
+		var selName="labId";
+		var selValue=self.netlimsId;
+		var selOperator = "eq";
+		
+		var exp = new ExpressionListDTO();
+		var expr = new ExpressionDTO(selName,selValue,selOperator);
+		exp.add(expr);
+	ajaxProcessor.setUrl(constants.NETLIMSACCTRANSFEREDRESULTLISTJSON);
+	var branchTable=ajaxProcessor.get();
+	var contentForm = new form(branchTable);
+	$j('#tabs-1').html(contentForm.result);	
+	dataTableProcessor.setCustomTable(self.pgTableNameTransfresultList);
+	
+	var netlimsAccntTableNavigator = self.netlimsTranfrResultTableNavigator;
+		netlimsAccntTableNavigator.setExp(exp);
+		netlimsAccntTableNavigator.list("transferresult");
+		
+	//ajaxProcessor.setUrl(constants.NETLIMSACCTODAYSORDERLISTTABLEURL + self.netlimsId);
+	//var pgDataList = ajaxProcessor.get();
+	//self.netlimsAccService.setTableValues(self.pgTableNameTransfresultList,pgDataList,"transferresult");
 	 
 	
 }

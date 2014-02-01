@@ -29,48 +29,36 @@ function NetrxServiceImpl () {
 	 
 		} 
 		
-		this.setTableValueBranchOrderList = function(tableObj, branchResult) {
-		$j(tableObj).dataTable().fnClearTable();
-		if(branchResult.branchOrders.length>0) {			
-				$j(branchResult.branchOrders).each(function (index, netMd) {
-					var id=netMd.branchId;
-					var rowData=$j(tableObj).dataTable().fnAddData([netMd.orderDate,netMd.totalOrders,netMd.netAmount,netMd.paidAmount,netMd.lastOrderdTime]);
-					var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
-					$j(row).attr('id',id);	
-					//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
-					});	
-		}
-	 
-		} 
+		
 }
  NetrxServiceImpl.prototype.createNetrx=function (netrxObj) {
 	ajaxProcessor.setUrl(constants.CREATENETRXURL);
 	return ajaxProcessor.post(netrxObj);
 }
-NetrxServiceImpl.prototype.updateNetmd=function(netmdObj) {
-	//alert(JSON.stringify(netmdObj));
-	ajaxProcessor.setUrl(constants.UPDATENETMDURL);
-	return ajaxProcessor.post(netmdObj);
+NetrxServiceImpl.prototype.updateNetrx=function(netrxObj) {
+	//alert(JSON.stringify(netrxObj));
+	ajaxProcessor.setUrl(constants.UPDATENETRXURL);
+	return ajaxProcessor.post(netrxObj);
 }
 
-NetrxServiceImpl.prototype.viewNetmdDetails=function(netmdId) {
-	ajaxProcessor.setUrl(constants.VIEWNETMDDETAILURL + netmdId);
+NetrxServiceImpl.prototype.viewNetrxDetails=function(netrxId) {
+	ajaxProcessor.setUrl(constants.VIEWNETRXDETAILURL + netrxId);
 	return ajaxProcessor.get();
 }
 
-NetrxServiceImpl.prototype.deleteNetmd=function(netmdId) {
-	ajaxProcessor.setUrl(constants.DELETENETMDURL + netmdId);
+NetrxServiceImpl.prototype.deleteNetrx=function(netrxId) {
+	ajaxProcessor.setUrl(constants.DELETENETRXURL + netrxId);
 	return ajaxProcessor.get();
 }
 
 
 
-NetrxServiceImpl.prototype.netmdSyncdata=function(netmdId) {
-	ajaxProcessor.setUrl(constants.SYNCDATANETMDURL + netmdId);
+NetrxServiceImpl.prototype.netrxSyncdata=function(netrxId) {
+	ajaxProcessor.setUrl(constants.SYNCDATANETRXURL + netrxId);
 	return ajaxProcessor.get();
 }
-NetrxServiceImpl.prototype.syncNetmd=function(syncData) {
-	ajaxProcessor.setUrl(constants.SETNETMDSYCURL);
+NetrxServiceImpl.prototype.syncNetrx=function(syncData) {
+	ajaxProcessor.setUrl(constants.SETNETRXSYCURL);
 	return ajaxProcessor.post(syncData);
 }
 

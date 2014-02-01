@@ -115,7 +115,7 @@ ViewNetrxUI.prototype.init = function(netrxId) {
 	viewNetrxPTB.init(self);
 	pageHandler.create(constants.VIEWNETRXDETAILPAGEURL);
 	self.readable();
-	self.viewNetmdDetails(netrxId);
+	self.viewNetrxDetails(netrxId);
 	pageHandler.setActivePage(self);
 	self.bindEvents();
 	
@@ -133,70 +133,70 @@ ViewNetrxUI.prototype.bindEvents = function() {
 		self=parent;
 		self.errorHeader.hide();
 		commonMethodInvoker.removeErrors();
-		var netmdInfo = self.getNetrx();
-		var netmdId = netmdInfo.netMd.globalId;
-		self.viewNetmdDetails(netmdId);
+		var netrxInfo = self.getNetrx();
+		var netmdId = netrxInfo.netRxDTO.globalId;
+		self.viewNetrxDetails(netmdId);
 		self.readable();
 	});
 	$j(self.updateButton).die('click').live('click',function(){
 		 self=parent;
 		self.errorHeader.hide();
 		commonMethodInvoker.removeErrors();
-		var netmd = self.getNetmdRequest();
-		//alert(JSON.stringify(netmd));
-		var netmdValidator = new NetmdViewValidator();
-		var error  = netmdValidator.validate(netmd,self);
+		var netrx = self.getNetrxRequest();
+		//alert(JSON.stringify(netrx));
+		var netrxValidator = new NetrxViewValidator();
+		var error  = netrxValidator.validate(netrx,self);
 		if(error.errorStatus==false) {
-			var netmdUIService = self.getNetrxUIService();
-			var netmdResponse = netmdUIService.updateNetmd(netmd);
-			//alert(JSON.stringify(netmdResponse));
-				if(netmdResponse.error==null) {
-					showTip(constants.NETMDUPDATESUCCESS);//For showing the global Tip
-					var netmdInfo = self.getNetrx();
-					//alert(JSON.stringify(branchInfo));
-					self.viewNetmdDetails(netmdInfo.netMd.globalId);
+			var netrxUIService = self.getNetrxUIService();
+			var netrxResponse = netrxUIService.updateNetrx(netrx);
+			//alert(JSON.stringify(netrxResponse));
+				if(netrxResponse.error==null) {
+					showTip(constants.NETRXUPDATESUCCESS);//For showing the global Tip
+					var netrxInfo = self.getNetrx();
+					//alert(JSON.stringify(netrxInfo));
+					self.viewNetrxDetails(netrxInfo.netRxDTO.globalId);
 					self.readable();
 				} else
-					commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netmdResponse.error));
+					commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netrxResponse.error));
 			} else
 			self.createError(error);
 	}); 
 	 
 }
-ViewNetrxUI.prototype.viewNetmdDetails = function(netmdId) {
+ViewNetrxUI.prototype.viewNetrxDetails = function(netrxId) {
 	self=this;
-	self.setNetrxId(netmdId);
-	var NetmdUIService = self.getNetrxUIService();
-	var netmdInfo = NetmdUIService.viewNetmdDetails(netmdId);
-	//alert(JSON.stringify(netmdInfo));
-	if(!netmdInfo.errorMessage) {
-		self.setNetrx(netmdInfo);
-		$j(self.netmdid).val(netmdInfo.netMd.globalId);
-		$j(self.organizationname).val(netmdInfo.netMd.name);
-		$j(self.headofficeemail).val(netmdInfo.netMd.headOfficeEmail);
-		$j(self.headofficephone).val(netmdInfo.netMd.headOfficePhone);
-		$j(self.ownerfirstname).val(netmdInfo.netMd.ownerFirstName);
-		$j(self.ownerlastname).val(netmdInfo.netMd.ownerLastName);
-		$j(self.owneremail).val(netmdInfo.netMd.ownerEmail);
-		$j(self.ownerphone).val(netmdInfo.netMd.ownerPhone);
-		$j(self.owneraddress).val(commonMethodInvoker.br2nl(netmdInfo.netMd.ownerAddress));
-		$j(self.headofficeaddress).val(commonMethodInvoker.br2nl(netmdInfo.netMd.headOfficeAddress));
-		$j(self.ownermobile).val(netmdInfo.netMd.ownerMobile);
-		$j(self.headofficename).val(netmdInfo.netMd.headOfficeName);
-		$j(self.headofficemobile).val(netmdInfo.netMd.headOfficeMobile);
-		$j(self.username).val(netmdInfo.netMd.userName);
+	self.setNetrxId(netrxId);
+	var NetrxUIService = self.getNetrxUIService();
+	var netrxInfo = NetrxUIService.viewNetrxDetails(netrxId);
+	
+	 if(!netrxInfo.errorMessage) {
+		self.setNetrx(netrxInfo);
+		$j(self.netrxid).val(netrxInfo.netRxDTO.globalId);
+		$j(self.organizationname).val(netrxInfo.netRxDTO.name);
+		$j(self.headofficeemail).val(netrxInfo.netRxDTO.headOfficeEmail);
+		$j(self.headofficephone).val(netrxInfo.netRxDTO.headOfficePhone);
+		$j(self.ownerfirstname).val(netrxInfo.netRxDTO.ownerFirstName);
+		$j(self.ownerlastname).val(netrxInfo.netRxDTO.ownerLastName);
+		$j(self.owneremail).val(netrxInfo.netRxDTO.ownerEmail);
+		$j(self.ownerphone).val(netrxInfo.netRxDTO.ownerPhone);
+		$j(self.owneraddress).val(commonMethodInvoker.br2nl(netrxInfo.netRxDTO.ownerAddress));
+		$j(self.headofficeaddress).val(commonMethodInvoker.br2nl(netrxInfo.netRxDTO.headOfficeAddress));
+		$j(self.ownermobile).val(netrxInfo.netRxDTO.ownerMobile);
+		$j(self.headofficename).val(netrxInfo.netRxDTO.headOfficeName);
+		$j(self.headofficemobile).val(netrxInfo.netRxDTO.headOfficeMobile);
+		$j(self.username).val(netrxInfo.netRxDTO.userName);
 				
 	} else 
-		commonMethodInvoker.createServerError(self.errorHeader,self.errorData,netmdInfo.errorMessage);
-	self.setPageTitle("View Netmd ");
+		commonMethodInvoker.createServerError(self.errorHeader,self.errorData,netrxInfo.errorMessage);
+	self.setPageTitle("View Netrx"); 
 }
 
-ViewNetrxUI.prototype.getNetmdRequest = function() {
+ViewNetrxUI.prototype.getNetrxRequest = function() {
 	var self=this;
-	var netmd = new NetmdDTO();
-	var netmdname;
-	netmdname=$j(self.organizationname).val();
-	netmdname=netmdname.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+	var netrx = new NetrxDTO();
+	var netrxname;
+	netrxname=$j(self.organizationname).val();
+	netrxname=netrxname.toLowerCase().replace(/\b[a-z]/g, function(letter) {
     return letter.toUpperCase();
 	});
 	var ownerfirstname;
@@ -215,48 +215,48 @@ ViewNetrxUI.prototype.getNetmdRequest = function() {
     return letter.toUpperCase();
 	});
 	
-	netmd.setName(netmdname);
-	netmd.setglobalId(parseInt($j(self.netmdid).val()));
-	netmd.setownerFirstName(ownerfirstname);
-	netmd.setownerLastName(ownerlastname);
-	netmd.setownerEmail($j(self.owneremail).val());
-	netmd.setownerPhone($j(self.ownerphone).val());
-	netmd.setownerMobile($j(self.ownermobile).val());
-	netmd.setownerAddress(commonMethodInvoker.nl2br($j(self.owneraddress).val()));
-	netmd.setheadOfficeAddress(commonMethodInvoker.nl2br($j(self.headofficeaddress).val()));
-	netmd.setheadOfficeName(headofficename);
-	netmd.setheadOfficeEmail($j(self.headofficeemail).val());
-	netmd.setheadOfficePhone($j(self.headofficephone).val());
-	netmd.setheadOfficeMobile($j(self.headofficemobile).val());
-	//netmd.setuserName($j(self.username).val());
-	//netmd.setpassword($j(self.password).val());
-	return netmd;
+	netrx.setName(netrxname);
+	netrx.setglobalId(parseInt($j(self.netrxid).val()));
+	netrx.setownerFirstName(ownerfirstname);
+	netrx.setownerLastName(ownerlastname);
+	netrx.setownerEmail($j(self.owneremail).val());
+	netrx.setownerPhone($j(self.ownerphone).val());
+	netrx.setownerMobile($j(self.ownermobile).val());
+	netrx.setownerAddress(commonMethodInvoker.nl2br($j(self.owneraddress).val()));
+	netrx.setheadOfficeAddress(commonMethodInvoker.nl2br($j(self.headofficeaddress).val()));
+	netrx.setheadOfficeName(headofficename);
+	netrx.setheadOfficeEmail($j(self.headofficeemail).val());
+	netrx.setheadOfficePhone($j(self.headofficephone).val());
+	netrx.setheadOfficeMobile($j(self.headofficemobile).val());
+	//netrx.setuserName($j(self.username).val());
+	//netrx.setpassword($j(self.password).val());
+	return netrx;
 }
 
 ViewNetrxUI.prototype.getPrevId = function(curId,branchResult) {
 	var prevId;
-	$j(branchResult.netMd).each(function (index, rowbranch) {
+	$j(branchResult.netRx).each(function (index, rowbranch) {
 		if(curId==rowbranch.globalId)	{
-			var arrayLength=(branchResult.netMd).length;
+			var arrayLength=(branchResult.netRx).length;
 			var comp=arrayLength-1;
 			if(index==0)
 				prevId = curId;
 			else
-				prevId=branchResult.netMd[index-1].globalId;
+				prevId=branchResult.netRx[index-1].globalId;
 		}
 	});
 	return prevId;	
 }
 ViewNetrxUI.prototype.getNextId = function(curId,branchResult) {
 	var nextId;
-	$j(branchResult.netMd).each(function (index, rowbranch) {
+	$j(branchResult.netRx).each(function (index, rowbranch) {
 		if(curId==rowbranch.globalId)	{
-			var arrayLength=(branchResult.netMd).length;
+			var arrayLength=(branchResult.netRx).length;
 			var comp=arrayLength-1;
 			if(index==comp)
 				nextId = curId;
 			else
-				nextId=branchResult.netMd[index+1].globalId;	
+				nextId=branchResult.netRx[index+1].globalId;	
 		}
 	});	
 	return nextId;	

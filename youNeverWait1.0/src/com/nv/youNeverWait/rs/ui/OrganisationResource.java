@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +29,9 @@ import com.nv.youNeverWait.report.PDFReportView;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
+import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
+import com.nv.youNeverWait.rs.dto.OrganisationListResponseDTO;
+import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserDetails;
@@ -211,6 +215,7 @@ public class OrganisationResource {
 					user.setId(userDetail.getId());
 					user.setOrganisationId(userDetail.getOrganisationId());
 					user.setUserType(userDetail.getUserType());
+					user.setAccountName(userDetail.getAccountName());
 				}
 				req.getSession().setAttribute(Constants.USER, user);
 			}
@@ -260,6 +265,29 @@ public class OrganisationResource {
 		return new ModelAndView(view, model);
 	}
 
+	/**
+	 * To get Organization list
+	 * 
+	 * @return OrganizationViewResponseDTO
+	 */
+	@RequestMapping(value = "getOrganisationList", method = RequestMethod.GET)
+	@ResponseBody
+	public OrganisationListResponseDTO getOrganisationList() {
+
+		OrganisationListResponseDTO response = new OrganisationListResponseDTO();
+		try {
+			response = organisationService.getOrganisationList();
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
 	public void setLogService(LogService logService) {
 		this.logService = logService;
 	}

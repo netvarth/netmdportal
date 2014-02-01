@@ -143,6 +143,8 @@ $j.cachedScript("/youNeverWait/js/framework/logout.js").done(function(script, te
 		})
 		$j.cachedScript("/youNeverWait/js/impl/NetmdbranchServiceImpl.js").done(function(script,textStatus){
 		})
+		$j.cachedScript("/youNeverWait/js/impl/NetrxbranchServiceImpl.js").done(function(script,textStatus){
+		})
 		$j.cachedScript("/youNeverWait/js/impl/OrganizationUserServiceImpl.js").done(function(script,textStatus){
 		})
 		
@@ -154,6 +156,33 @@ $j.cachedScript("/youNeverWait/js/framework/logout.js").done(function(script, te
 		})
 		$j.cachedScript("/youNeverWait/js/youneverwait/ui/netrx/netrxClassLoader.js").done(function(script,textStatus){
 		})
+		
+		$j.getScript("/youNeverWait/js/youneverwait/ui/netpos/netposClassLoader.js").done(function(script,textStatus){
+		}).fail(function(xhr,status,exception) {
+			alert("netposClassLoader" + xhr + exception);
+			
+		})
+		
+		$j.getScript("/youNeverWait/js/impl/NetPosServiceImpl.js").done(function(script,textStatus){
+		}).fail(function(xhr,status,exception) {
+			alert("NetPosServiceImpl" + xhr + exception);
+			
+		})
+		
+		$j.getScript("/youNeverWait/js/dto/NetPosDTO.js").
+		done(function(script,textStatus){
+		}).fail(function (xhr, status, exception)
+		{
+        alert("NetPosDTO" + xhr.status + exception);
+		}) 
+		
+		
+		/* $j.getScript("/youNeverWait/js/validation/editNetPosValidator.js").
+		done(function(script,textStatus){
+		}).fail(function (xhr, status, exception)
+		{
+        alert("editNetPosValidator" + xhr.status + exception);
+		})  */
 		
 	}
 }

@@ -31,6 +31,9 @@ import com.nv.youNeverWait.pl.entity.LabBranchTbl;
 import com.nv.youNeverWait.pl.entity.LabTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBillTbl;
 import com.nv.youNeverWait.pl.entity.OrderAmountTbl;
+import com.nv.youNeverWait.pl.entity.OrderBranchTbl;
+import com.nv.youNeverWait.pl.entity.OrderResultTbl;
+import com.nv.youNeverWait.pl.entity.OrderTransferTbl;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
@@ -58,6 +61,7 @@ import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabDetail;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
+import com.nv.youNeverWait.rs.dto.OrderDestinationBranchDTO;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTestResult;
 import com.nv.youNeverWait.rs.dto.OrderTestResultList;
@@ -77,6 +81,10 @@ import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.SystemHealthResponse;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
+import com.nv.youNeverWait.rs.dto.TransferredDetails;
+import com.nv.youNeverWait.rs.dto.TransferredOrders;
+import com.nv.youNeverWait.rs.dto.TransferredResultDetails;
+import com.nv.youNeverWait.rs.dto.TransferredResults;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.bl.service.HealthMonitorService;
 import com.nv.youNeverWait.user.bl.service.LabService;
@@ -1376,7 +1384,136 @@ public class LabServiceImpl implements LabService {
 		return response;
 	}
 
+	@Override
+	public TransferredDetails getTransferredOrders(FilterDTO filterDTO) {
+		TransferredDetails response = new TransferredDetails();
+		// validate filterDTO to identify invalid expressions and if there is
+				// any,return result with appropriate error code
+				ErrorDTO error = validator.validateTransferredOrderFilter(filterDTO);
+				if (error != null) {
+					response.setError(error);
+					response.setSuccess(false);
+					return response;
+				}
+
+				// get queryBuilder for netlims branch from builder factory
+				QueryBuilder queryBuilder = queryBuilderFactory
+						.getQueryBuilder(Constants.TRANSFERRED_ORDER);
+				if (queryBuilder == null) {
+					return response;
+				}
+				for (ExpressionDTO exp : filterDTO.getExp()) {
+
+					// get filter from filter factory by setting expression name and
+					// value to filter
+					Filter filter = filterFactory.getFilter(exp);
+					queryBuilder.addFilter(filter);
+				}
+				// build query
+				TypedQuery<OrderBranchTbl> q = queryBuilder.buildQuery(filterDTO.isAsc(),
+						filterDTO.getFrom(), filterDTO.getCount());
+
+				// get count
+				Long count = queryBuilder.getCount();
+
+				// execute query
+				List<OrderBranchTbl> transferredOrderList = queryBuilder.executeQuery(q);
+				response = getNetLimsTransferredOrderList(transferredOrderList);
+				response.setCount(count);
+				response.setSuccess(true);
+				return response;
+	}
 	
+	private TransferredDetails getNetLimsTransferredOrderList(
+			List<OrderBranchTbl> transferredOrderList) {
+		TransferredDetails response = new TransferredDetails();
+		if (transferredOrderList == null) {
+			return response;
+		}
+		
+		List<TransferredOrders> labOrderList = new ArrayList<TransferredOrders>();
+		for (OrderBranchTbl labTransferredOrder : transferredOrderList) {
+			TransferredOrders trsnferredOrder= new TransferredOrders();
+		
+			List<OrderTransferTbl> orderTrasnferTblList=labDao.getDestinationBranches(labTransferredOrder.getId());
+			List<OrderDestinationBranchDTO> destinationBranches= new ArrayList<OrderDestinationBranchDTO>();
+			for(OrderTransferTbl orderTransferTbl:orderTrasnferTblList){
+				OrderDestinationBranchDTO destbranch= new OrderDestinationBranchDTO();
+				destbranch.setDestinationBranch(orderTransferTbl.getLabBranchTbl().getName());
+				destbranch.setOrderSent(orderTransferTbl.isSent());
+				destinationBranches.add(destbranch);
+			}
+			trsnferredOrder.setFromBranch(labTransferredOrder.getLabBranchTbl().getName());
+			trsnferredOrder.setDestinationBranches(destinationBranches);
+			trsnferredOrder.setOrderUid(labTransferredOrder.getOrderUid());
+			labOrderList.add(trsnferredOrder);
+		}
+		response.setTransferreddetails(labOrderList);
+		return response; 
+	}
+
+	@Override
+	public TransferredResultDetails getTransferredResults(FilterDTO filterDTO) {
+		TransferredResultDetails response = new TransferredResultDetails();
+		// validate filterDTO to identify invalid expressions and if there is
+				// any,return result with appropriate error code
+				ErrorDTO error = validator.validateTransferredResultFilter(filterDTO);
+				if (error != null) {
+					response.setError(error);
+					response.setSuccess(false);
+					return response;
+				}
+
+				// get queryBuilder for netlims branch from builder factory
+				QueryBuilder queryBuilder = queryBuilderFactory
+						.getQueryBuilder(Constants.TRANSFERRED_RESULTS);
+				if (queryBuilder == null) {
+					return response;
+				}
+				for (ExpressionDTO exp : filterDTO.getExp()) {
+
+					// get filter from filter factory by setting expression name and
+					// value to filter
+					Filter filter = filterFactory.getFilter(exp);
+					queryBuilder.addFilter(filter);
+				}
+				// build query
+				TypedQuery<OrderResultTbl> q = queryBuilder.buildQuery(filterDTO.isAsc(),
+						filterDTO.getFrom(), filterDTO.getCount());
+
+				// get count
+				Long count = queryBuilder.getCount();
+
+				// execute query
+				List<OrderResultTbl> transferredResultList = queryBuilder.executeQuery(q);
+				response = getNetLimsTransferredResultList(transferredResultList);
+				response.setCount(count);
+				response.setSuccess(true);
+				return response;
+	}
+
+	
+	private TransferredResultDetails getNetLimsTransferredResultList(
+			List<OrderResultTbl> transferredResultList) {
+		TransferredResultDetails response = new TransferredResultDetails();
+		if (transferredResultList == null) {
+			return response;
+		}
+		
+		List<TransferredResults> transferreddetails= new ArrayList<TransferredResults>();
+		for (OrderResultTbl orderResultTbl : transferredResultList) {
+			TransferredResults trsnferredResult= new TransferredResults();
+			trsnferredResult.setFromBranch(orderResultTbl.getLabTbl().getName());
+			trsnferredResult.setToBracnh(orderResultTbl.getOwnerLabBranchTbl().getName());
+			trsnferredResult.setOrderUid(orderResultTbl.getOrderBranchTbl().getOrderUid());
+			trsnferredResult.setTestUId(orderResultTbl.getTestUid());
+			trsnferredResult.setSent(orderResultTbl.isSent());
+			transferreddetails.add(trsnferredResult);
+		}
+		response.setTransferreddetails(transferreddetails);
+		return response; 
+	}
+
 	/**
 	 * @return the labDao
 	 */
@@ -1534,6 +1671,9 @@ public class LabServiceImpl implements LabService {
 	public void setResultService(ResultService resultService) {
 		this.resultService = resultService;
 	}
+
+	
+	
 
 	
 	
