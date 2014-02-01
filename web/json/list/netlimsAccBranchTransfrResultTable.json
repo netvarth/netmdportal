@@ -21,6 +21,7 @@
            "data": [
 					{
                         "className": "five_sixth",
+						"id":"branchtrnsfrresultNetlimsCont",
                         "elements": [
                                 {
                     "type": "table",
@@ -30,10 +31,11 @@
 						"className" :"stdtable stdtablecb",
 						"style":"border-spacing:0;border-collapse:collapse; border:0;",
 						"colHeaders" : [
-							{ "className" : "head0",	"name" : "From Branch", "style":"width:10%"},
-							{ "className" : "head1",	"name" : "To Branch", "style":"width:10%"},
+							{ "className" : "head0",	"name" : "From Branch", "style":"width:20%"},
+							{ "className" : "head1",	"name" : "To Branch", "style":"width:20%"},
 							{ "className" : "head0",	"name" : "Order Uid", "style":"width:5%"},
-							{ "className" : "head1",	"name" : "Sent To Destination ?", "style":"width:30%"}
+							{ "className" : "head1",	"name" : "Test Uid", "style":"width:5%"},
+							{ "className" : "head0",	"name" : "Sent To Destination ?", "style":"width:5%"}
 						]
                     }
                 }

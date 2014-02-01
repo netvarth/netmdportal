@@ -15,22 +15,24 @@ function NetlimsAccServiceImpl () {
 				}
 			}
 			else if(key=="transferorder"){
-					if(branchResult.branchOrders.length>0) {			
-						$j(branchResult.branchOrders).each(function (index, lab) {
-							var id=lab.branchId;
-							var rowData=$j(tableObj).dataTable().fnAddData([lab.fromBranch,lab.toBranch,lab.orderUid,lab.senttoDestination]);
+					if(branchResult.transferreddetails.length>0) {			
+						$j(branchResult.transferreddetails).each(function (index, lab) {
+								$j(lab.destinationBranches).each(function (index, destination) {
+							var id=lab.orderUid;
+							var rowData=$j(tableObj).dataTable().fnAddData([lab.fromBranch,destination.destinationBranch,id,destination.orderSent]);
 							var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 							$j(row).attr('id',id);	
 							//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
 							});	
+						});
 					}
 	 
 			}
 			else if(key=="transferresult"){
-					if(branchResult.branchOrders.length>0) {			
-						$j(branchResult.branchOrders).each(function (index, lab) {
+					if(branchResult.transferreddetails.length>0) {			
+						$j(branchResult.transferreddetails).each(function (index, lab) {
 							var id=lab.branchId;
-							var rowData=$j(tableObj).dataTable().fnAddData([lab.fromBranch,lab.toBranch,lab.orderUid,lab.senttoDestination]);
+							var rowData=$j(tableObj).dataTable().fnAddData([lab.fromBranch,lab.toBracnh,lab.orderUid,lab.testUId,lab.sent]);
 							var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 							$j(row).attr('id',id);	
 							//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");

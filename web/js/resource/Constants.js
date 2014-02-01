@@ -36,8 +36,10 @@ function Constants() {
 	this.TRANSFEREDORDERLIST="Transferred Orders";
 	this.TRANSFEREDRESULTLIST="Transferred Results";
 	this.NETLIMSACCTODAYSORDERLISTURL="/youNeverWait/json/list/netlimsAccBranchOrdersTable.json";
-	this.NETLIMSACCTRANSFEREDORDERLISTURL="/youNeverWait/json/list/netlimsAccBranchTransfrOrdersTable.json";
-	this.NETLIMSACCTRANSFEREDRESULTLISTURL="/youNeverWait/json/list/netlimsAccBranchTransfrResultTable.json";
+	this.NETLIMSACCTRANSFEREDORDERLISTJSON="/youNeverWait/json/list/netlimsAccBranchTransfrOrdersTable.json";
+	this.NETLIMSACCTRANSFEREDRESULTLISTJSON="/youNeverWait/json/list/netlimsAccBranchTransfrResultTable.json";
+	this.NETLIMSACCTRANSFEREDORDERLISTURL="/youNeverWait/ws/ui/lab/getTransferredOrders";
+	this.NETLIMSACCTRANSFEREDRESULTLISTURL="/youNeverWait/ws/ui/lab/getTransferredResults";
 	this.NETLIMSACCTODAYSORDERLISTTABLEURL="/youNeverWait/ws/ui/lab/viewBranchOrders/";
 	this.VIEWNETLIMSACCBRCHPAGEURL="/youNeverWait/json/view/viewNetlimsAccBranchDetails.json";
 	this.VIEWNETLIMSACCBRCHURL="/youNeverWait/ws/ui/lab/viewBranch/";
