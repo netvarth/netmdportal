@@ -92,8 +92,8 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 				se.setDisplayErrMsg(true);
 				throw se;
 			}
-			//order.setSent(true);  have to set this
-			//update(order);
+			order.setSent(true);  
+			update(order);
 			orderList.add(orderDetails);
 		}
 		orderDetail.setOrders(orderList);

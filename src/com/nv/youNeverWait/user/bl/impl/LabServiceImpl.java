@@ -1440,7 +1440,7 @@ public class LabServiceImpl implements LabService {
 			for(OrderTransferTbl orderTransferTbl:orderTrasnferTblList){
 				OrderDestinationBranchDTO destbranch= new OrderDestinationBranchDTO();
 				destbranch.setDestinationBranch(orderTransferTbl.getLabBranchTbl().getName());
-				//destbranch.setOrderSent(orderTransferTbl.isSent());
+				destbranch.setOrderSent(orderTransferTbl.isSent());
 				destinationBranches.add(destbranch);
 			}
 			trsnferredOrder.setFromBranch(labTransferredOrder.getLabBranchTbl().getName());
@@ -1507,7 +1507,7 @@ public class LabServiceImpl implements LabService {
 			trsnferredResult.setToBracnh(orderResultTbl.getOwnerLabBranchTbl().getName());
 			trsnferredResult.setOrderUid(orderResultTbl.getOrderBranchTbl().getOrderUid());
 			trsnferredResult.setTestUId(orderResultTbl.getTestUid());
-			//trsnferredResult.setSent(orderResultTbl.isSent());
+			trsnferredResult.setSent(orderResultTbl.isSent());
 			transferreddetails.add(trsnferredResult);
 		}
 		response.setTransferreddetails(transferreddetails);
