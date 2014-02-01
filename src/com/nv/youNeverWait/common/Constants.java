@@ -59,6 +59,7 @@ public class Constants {
 	public static final String SYNC_LOG = "syncLog";
 	public static final String NETMD_BILL = "bill";
 	public static final String TRANSFERRED_ORDER = "transferredOrders";
+	public static final String TRANSFERRED_RESULTS = "transferredResults";
 	
 		
 	/* Log */
@@ -124,6 +125,7 @@ public class Constants {
 	public static final String NETPOS = "netpos";
 	public static final String HOME = "showing organization home page";
 	public static final String ORGANISATION_USER = "organisationUser";
+	
 	
 	
 	
