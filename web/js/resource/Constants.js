@@ -121,6 +121,11 @@ function Constants() {
 	/*****************----------superadmin-------------**************/
 	this.SUPERADMINRIBBONURL="/youNeverWait/json/toolbars/globalToolbar.json";
 	this.SUPERADMINLEFTPANEURL="/youNeverWait/json/toolbars/leftPaneToolBar.json";
+	this.NETLIMSPAGE="netlims";
+	this.NETMDPAGE="netmd";
+	this.NETRXPAGE="netrx";
+	this.NETPOSPAGE="nepos";
+	this.ORGNPAGE="organization";
 	/*****-----netlims---*****/
 	this.NETLIMSBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/labList";
 	this.NETLIMSLIST="NETLIMS LIST";
