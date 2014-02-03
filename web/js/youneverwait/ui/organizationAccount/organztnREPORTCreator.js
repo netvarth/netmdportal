@@ -31,7 +31,7 @@ organztnReportCreator.prototype.bindEvents = function(organisationId) {
 	self.fillYear("#reportViewForm #endYear");
 	$j("#reportViewForm #reportName").attr('value',"GynecologySummaryReport");
 	var myDiv = $j('#netmdlist');
-	var toolbutton= $j('<a href="#" class="anchorbutton remMarginRight genMarginLeft" name="reportfilter" id="btn_reportfilter_filter_id"><span>Hospitals</span></a>');
+	var toolbutton= $j('<a href="#" class="anchorbutton remMarginRight genMarginLeft" name="reportfilter" id="btn_reportfilter_filter_id"><span><b>Hospitals</b></span></a>');
 		var inputTag=$j('<select></select>');
 		inputTag.attr('id','txtreportfilter');
 		inputTag.attr('name','paramList');
