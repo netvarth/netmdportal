@@ -261,6 +261,21 @@ function Constants() {
 	this.NETRXSYNCMODAL="netrxsyncmodal";
 	this.SYNCDATANETRXURL="/youNeverWait/ws/ui/netRx/getNetrxSyncDetails/";
 	this.SETNETRXSYCURL="/youNeverWait/ws/ui/superAdmin/setNetRxSync";
+	/*************----------------netpos----------------------------------**********/
+	this.CREATENETPOSUI="/youNeverWait/json/new/newNetPos.json";
+	this.NETPOSMODEL="netPosmodel";
+	this.NETPOSCREATESUCCESS="Netpos created Successfully";
+	this.CREATENETPOSURL="/youNeverWait/ws/ui/superAdmin/createNetPos";
+	this.NETPOSLIST="NETPOS LIST";
+	this.NETPOSPAGEJSON="/youNeverWait/json/toolbars/netposPageToolBar.json";
+	this.NETPOS="NETPOS";
+	this.NETPOSLISTJSON="/youNeverWait/json/list/netposTable.json";
+	this.NETPOSLISTURL="/youNeverWait/ws/ui/superAdmin/netPosList";
+	this.NETPOSGENERAL="netpos";
+	this.VIEWNETPOSDETAILPAGEURL="/youNeverWait/json/view/viewnetposdetails.json";
+	this.VIEWNETPOSDETAILURL="/youNeverWait/ws/ui/superAdmin/viewNetPos/";
+	this.UPDATENETPOSURL="/youNeverWait/ws/ui/superAdmin/updateNetPos/";
+	this.UPDATESUCCESS="Netpos Updated Successfully";
 	/*****************-------------General-----------**----*************/
 	this.NAME = "name";
 	this.ADDRESS = "address";

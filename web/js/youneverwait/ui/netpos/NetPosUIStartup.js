@@ -4,7 +4,7 @@
 function NetPosUIStartup() {
 
 	  this.pgTableName = "#netpos";
-	this.pgTableContainer="#netPosListTableCont"; 
+	this.pgTableContainer="#netposTableCont"; 
 	this.pageTitle = $j('#pageTitle');
 	this.ptbCreate=$j('#netPosPTBContainer #btn_new_ptb_id');
 	this.ptbView=$j('#netPosPTBContainer #btn_view_ptb_id');
@@ -18,7 +18,8 @@ function NetPosUIStartup() {
 	this.netPosTableNavigator = new DataTableNavigator(this.pgTableName,this.listUrl,this.pgTableContainer,this.netPosService,this.exp);
 	this.ftbToolBar = '#netpos-filter-toolbar';
 	this.filter = '#filter';
-	//this.viewNetPosUI = new ViewNetPosUI(this);  
+	this.netPosId=0;
+	this.viewNetPosUI = new ViewNetPosUI(this);  
 }
 
 
@@ -44,7 +45,12 @@ NetPosUIStartup.prototype.setPageTitle = function(value) {
   NetPosUIStartup.prototype.getViewNetPosUI = function() {
 	return this.viewNetPosUI;
 }   
-
+NetPosUIStartup.prototype.getNetposId = function() {
+	return this.netPosId;
+}
+NetPosUIStartup.prototype.setNetposId = function(netPosId) {
+	this.netPosId=netPosId;
+}
  NetPosUIStartup.prototype.init = function() {
 	var self = this;
 	self.setPageTitle(constants.NETPOSLIST);
@@ -53,19 +59,18 @@ NetPosUIStartup.prototype.setPageTitle = function(value) {
 	netposTableNavigator.setExp(exp);
 	var ptbProcessor = new PageToolBarProcessor();
 	ptbProcessor.create(constants.NETPOS, constants.NETPOSPAGEJSON); //Create the Page tool Bar for Order
-	//self.bindToolBarEvents();
+	self.bindToolBarEvents();
 	dataTableProcessor.create(self.pgTableName,constants.NETPOSLISTJSON);
 	//Create Table for Listing Order
 	dataTableProcessor.setCustomTable(self.pgTableName);
 	netposTableNavigator.list();
-	/*self.bindEvents();
-	pageHandler.setActivePage(self); */
+	self.bindEvents();
+	//pageHandler.setActivePage(self); 
 }
 
 
 
 NetPosUIStartup.prototype.createNetPosModal= function(obj) {
-
 	  var self = this;
  commonMethodInvoker.removeErrors();
 	createModal(constants.CREATENETPOSUI,constants.NETPOSMODEL);		
@@ -74,29 +79,26 @@ NetPosUIStartup.prototype.createNetPosModal= function(obj) {
 	newNetPosUI.init();
 	return newNetPosUI;
 } 
-/*
+
 NetPosUIStartup.prototype.bindToolBarEvents = function() {
-	var self=this;
+var self=this;
 	self.ptbCreate.die('click').live('click',function() {
-		var obj=$j(this);
-		removeErrors();
-		createModal(constants.CREATENETPOSUI,constants.NETPOSMODEL);		
-		openModalBox(obj,constants.NETPOSMODEL);
-		var newNetPosUI = new NewNetPosUI(self);
-		newNetPosUI.bindEvents();
+		var obj=$j(self);
+		self.createNetPosModal(obj);
 	});
 	
-	self.ptbView.die('click').live('click',function() {		
+	
+	self.ptbView.die('click').live('click',function() {	
 		removeErrors();
 		var netPosId=self.getSelectedNetPosId(self.pgTableName);
-		$j('#' + constants.NETPOSTITLE + '-filter-cont').hide();
-		$j(self.filter).hide();
 		if(netPosId!="") {
-			var viewNetPosUI = self.getViewNetPosUI();
-			viewNetPosUI.init(netPosId);
-		}	
+			var viewNetposUI = self.getViewNetPosUI();
+			viewNetposUI.init(netPosId);
+			}
 	});
 	
+	
+	/*
 	self.ptbDelete.die('click').live('click',function() {
 		commonMethodInvoker.removeErrors();;
 		var netPosId=self.getSelectedNetPosId(self.pgTableName);
@@ -119,6 +121,8 @@ NetPosUIStartup.prototype.bindToolBarEvents = function() {
 		}	
 	});
 	
+
+*/
 }
 NetPosUIStartup.prototype.getSelectedNetPosId = function () {
 	var netPosId="";
@@ -156,5 +160,5 @@ NetPosUIStartup.prototype.bindEvents = function() {
 			viewNetPosUI.init(netPosId);
 		}	
 	});
-  }*/
   
+  }

@@ -31,12 +31,12 @@ NewNetPosUI.prototype.getNetPosUIStartup = function() {
 
 	return this.netPosUIStartup;
 }
-/*
+
 NewNetPosUI.prototype.getNetPosTableNavigator = function() {
 	var netPosUIStartup = this.getNetPosUIStartup();
 	return netPosUIStartup.getNetPosTableNavigator();
 }
-*/
+
 NewNetPosUI.prototype.getNetPosService = function() {
 
 	var netPosUIStartup = this.getNetPosUIStartup();
@@ -50,8 +50,6 @@ NewNetPosUI.prototype.removecolors = function(cl) {
 NewNetPosUI.prototype.getNetPos = function() {
 
 	var self=this;
-	
-	
 	var netPos = new NetPosDTO();
 	
 	netPos.setName($j(self.organizationname).val());
@@ -122,9 +120,8 @@ NewNetPosUI.prototype.create = function() {
 	var netPos = self.getNetPos();
 	var netPosValidator = new NetPosValidator();
 	var error  = netPosValidator.validate(netPos,self);
-	alert(error);
 	if(error.errorStatus==false) {
-	alert(JSON.stringify(netPos));
+	//alert(JSON.stringify(netPos));
 		var netPosService = self.getNetPosService();
 		var netPosResponse = netPosService.createNetPos(netPos);
 		if(netPosResponse.success==true) {
@@ -133,8 +130,8 @@ NewNetPosUI.prototype.create = function() {
 			//For showing the global Tip
 			self.clearFields();
 			
-			//var netPosTableNavigator = self.getNetPosTableNavigator();
-			//netPosTableNavigator.list();
+			var netPosTableNavigator = self.getNetPosTableNavigator();
+			netPosTableNavigator.list();
 		} else {
 			commonMethodInvoker.createServerError(self.errorHeader,self.errorData, commonMethodInvoker.getErrorName(netPosResponse.error));
 		} 
@@ -146,12 +143,12 @@ NewNetPosUI.prototype.create = function() {
 
 NewNetPosUI.prototype.cancel = function() {
 
-//self.errorHeader.hide();
-		//commonMethodInvoker.removeErrors();
-		//$j(self.netPosModel + self.newNetPosPage + " input[type=text]").val("");	
+self.errorHeader.hide();
+		commonMethodInvoker.removeErrors();
+		$j(self.newNetPosModel + self.newNetPosPage + " input[type=text]").val("");	
 		$j(self.newNetPosModel).trigger('reveal:close');
 		$j(self.newNetPosModel).remove();
-		//self=self.getNetPosStartup(); 
+	
 
 }
 
