@@ -103,7 +103,7 @@ organztnReportCreator.prototype.fillMonth = function(controlObj) {
 }	
 
 organztnReportCreator.prototype.fillYear = function(controlObj) {
-	var firstYear = 2014;
+	var firstYear = 2013;
 var lastYear = 2034;
 for(var i =firstYear; i<=lastYear; i++) {
         $j(controlObj).append( $j('<option></option>').val(i).html(i) )
