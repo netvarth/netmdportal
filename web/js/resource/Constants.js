@@ -21,6 +21,9 @@ function Constants() {
 	this.PASSWRDMISMATCH="Password Do Not Match";
 	this.PASSWRDCHANGDSUCCES="Password changed successfully";
 	this.SYNCINTERVALREQUIRED="Synchronisation Interval Required";
+	this.NETLIMSACCPAGE="netlimsAcc";
+	this.NETMDACCPAGE="netmdAcc";
+	this.NETRXACCPAGE="netrxAcc";
 	
 	/*****************-------------netlimsaccount-----------**----*************/
 	this.NETLIMSACCRIBBONURL="/youNeverWait/json/toolbars/netlimsGlobalToolbar.json";
