@@ -56,16 +56,16 @@ SuperAdminGlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 				netlimsClass.load();
 				pageHandler.setnetlimsClassLoaded(true);
 			}
-			var netlimsUI;
+	var netlimsUI;
 	if(pageHandler.getHomePage()==constants.NETLIMSPAGE)
-	{
-		netlimsUI = pageHandler.getActivePage();
-	}
+		{
+			netlimsUI = pageHandler.getActivePage();
+		}
 	else
-	{
-		netlimsUI = new netlimsUIStartup();	
-	}
-		netlimsUI.createNetlimsModal(obj);
+		{
+			netlimsUI = new netlimsUIStartup();	
+		}
+			netlimsUI.createNetlimsModal(obj);
 		});
 	}
 	if($j(self.newnetmd)) {
@@ -77,16 +77,16 @@ SuperAdminGlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 				netmdClass.load();
 				pageHandler.setnetmdClassLoaded(true);
 			}
-			var netmdUI;
+	var netmdUI;
 	if(pageHandler.getHomePage()==constants.NETMDPAGE)
-	{
-		netmdUI = pageHandler.getActivePage();
-	}
+			{
+				netmdUI = pageHandler.getActivePage();
+			}
 	else
-	{
-		netmdUI = new netmdUIStartup();	
-	}
-		netmdUI.createNetmdModal(obj);
+			{
+				netmdUI = new netmdUIStartup();	
+			}
+				netmdUI.createNetmdModal(obj);
 		});
 	}
 	
@@ -99,16 +99,16 @@ SuperAdminGlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 				netrxClass.load();
 				pageHandler.setnetrxClassLoaded(true);
 			}
-			var netrxUI;
+		var netrxUI;
 		if(pageHandler.getHomePage()==constants.NETRXPAGE)
-		{
-			netrxUI = pageHandler.getActivePage();
-		}
+			{
+				netrxUI = pageHandler.getActivePage();
+			}
 		else
-		{
-			netrxUI = new netmdUIStartup();	
-		}
-			netrxUI.createNetrxModal(obj);
+			{
+				netrxUI = new netmdUIStartup();	
+			}
+				netrxUI.createNetrxModal(obj);
 		});
 	}
 	if($j(self.newnetpos)) {
@@ -120,16 +120,16 @@ SuperAdminGlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 				netposClass.load();
 				pageHandler.setnetposClassLoaded(true);
 			}
-			var netposUI;
+		var netposUI;
 		if(pageHandler.getHomePage()==constants.NETPOSPAGE)
-		{
-			netposUI = pageHandler.getActivePage();
-		}
+			{
+				netposUI = pageHandler.getActivePage();
+			}
 		else
-		{
-			netposUI = new NetPosUIStartup();	
-		}	
-			netposUI.createNetPosModal(obj);
+			{
+				netposUI = new NetPosUIStartup();	
+			}	
+				netposUI.createNetPosModal(obj);
 		});
 	}
 	if($j(self.neworganization)) {
@@ -141,16 +141,16 @@ SuperAdminGlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 				orgClass.load();
 				pageHandler.setorganizationClassLoaded(true);
 			}
-			var orgnUI;
+		var orgnUI;
 		if(pageHandler.getHomePage()==constants.ORGNPAGE)
-		{
-			orgnUI = pageHandler.getActivePage();
-		}
+			{
+				orgnUI = pageHandler.getActivePage();
+			}
 		else
-		{
-			orgnUI = new organizationUIStartup();	
-		}	
-			orgnUI.createOrganizationModal(obj);
+			{
+				orgnUI = new organizationUIStartup();	
+			}	
+				orgnUI.createOrganizationModal(obj);
 		});
 	}
 	
