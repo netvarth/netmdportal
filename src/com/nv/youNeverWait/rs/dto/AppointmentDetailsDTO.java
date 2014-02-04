@@ -21,6 +21,7 @@ public class AppointmentDetailsDTO {
 	private String startDate;
 	private String startTime;
 	private String patientName;
+	private String emailId;
 	
 	
 	public AppointmentDetailsDTO() {
@@ -29,7 +30,7 @@ public class AppointmentDetailsDTO {
 	}
 	public AppointmentDetailsDTO(int id, int patientId, int doctorId,
 			int scheduleId, String startDate, String startTime,
-			String patientName) {
+			String patientName,String emailId) {
 		super();
 		this.id = id;
 		this.patientId = patientId;
@@ -38,6 +39,7 @@ public class AppointmentDetailsDTO {
 		this.startDate = startDate;
 		this.startTime = startTime;
 		this.patientName = patientName;
+		this.emailId=emailId;
 	}
 	public AppointmentDetailsDTO(PatientAppointmentTbl patientAppointmentTblObj) {
 		super();
@@ -50,6 +52,7 @@ public class AppointmentDetailsDTO {
 		this.startDate = sdf.format(patientAppointmentTblObj.getAppointmentDate());
 		this.startTime = sdf2.format(patientAppointmentTblObj.getStartingTime());
 		this.patientName = patientAppointmentTblObj.getPatientTbl().getFirstName()+" "+patientAppointmentTblObj.getPatientTbl().getLastName();
+		this.emailId=patientAppointmentTblObj.getPatientTbl().getEmail();
 	}
 	public int getGlobalId() {
 		return globalId;
@@ -99,4 +102,11 @@ public class AppointmentDetailsDTO {
 	public void setPatientName(String patientName) {
 		this.patientName = patientName;
 	}
+	public String getEmailId() {
+		return emailId;
+	}
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+	
 }
