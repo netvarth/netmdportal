@@ -117,7 +117,9 @@ function Constants() {
 	this.ORGNZTNTABCREATEVIEWURL="/youNeverWait/json/view/organizationTabs.json";
 	this.ORGTABOBJ="#tabs-1";
 	this.ORGREPORTTABOBJ="#reportInfoTab";
+	this.ORGHOMETABOBJ="#homeInfoTab";
 	this.ORGNZTNREPORTTABVIEWURL="/youNeverWait/json/view/organizationReport.json";
+	this.ORGNZTNHOMETABVIEWURL="/youNeverWait/json/view/organizationHome.json";
 	this.ORGNZTNREPORTFILTERVIEWURL="/youNeverWait/json/view/orgReportfiltr.json";
 	this.ORGNZTNREPORTFILTERNETMDLISTURL="/youNeverWait/ws/ui/netMd/getNetMdBrnchList/";
 	this.REPORTGENERATEURL="/youNeverWait/ws/ui/orgn/report/generate";
