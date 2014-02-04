@@ -12,6 +12,8 @@ $j.cachedScript("/youNeverWait/js/framework/NVUIControls/NVText.js").done(functi
 $j.cachedScript("/youNeverWait/js/framework/NVUIControls/NVSelect.js").done(function(script, textStatus) {
 })	
 $j.cachedScript("/youNeverWait/js/framework/NVUIControls/NVTextarea.js").done(function(script, textStatus) {
+})
+$j.cachedScript("/youNeverWait/js/framework/NVUIControls/NVTable.js").done(function(script, textStatus) {		
 })	
 $j.cachedScript("/youNeverWait/js/framework/NVUIControls/NVLabel.js").done(function(script, textStatus) {
 })	

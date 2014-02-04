@@ -9,6 +9,8 @@ function orgztnAccClassLoader() {
 		
 		$j.getScript("/youNeverWait/js/youneverwait/ui/organizationAccount/orgztnTABCreator.js").done(function(script,textStatus){
 		})
+		$j.getScript("/youNeverWait/js/youneverwait/ui/organizationAccount/organztnHomDashbordCreator.js").done(function(script,textStatus){
+		})
 		$j.getScript("/youNeverWait/js/youneverwait/ui/organizationAccount/organztnREPORTCreator.js").done(function(script,textStatus){
 		})
 	}
