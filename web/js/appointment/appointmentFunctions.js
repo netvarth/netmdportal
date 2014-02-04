@@ -404,6 +404,7 @@
 			appointmentDetails +='"startTime":"' + timeslot1+ '",';
 			appointmentDetails +='"startDate":"'+date+'",';
 			appointmentDetails +='"patientName":"' + $j("#select :selected").text() + '"';
+			appointmentDetails +='"emailId":"' + $j('#userloged').text() + '"';
 			appointmentDetails += '}';
 		return appointmentDetails;
 
@@ -424,6 +425,7 @@
 			appointmentDetails +='"startTime":"' + $j('#viewpatintAppointmentForm #from').val()+ '",';
 			appointmentDetails +='"startDate":"'+date+'",';
 			appointmentDetails +='"patientName":"' + $j("#select :selected").text() + '"';
+			appointmentDetails +='"emailId":"' + $j('#userloged').text() + '"';
 			appointmentDetails += '}';
 		return appointmentDetails;
 
