@@ -12,18 +12,16 @@ function organztnReportCreator() {
 	this.inputFields = this.neworgnzReportPage + " :input[type=text]";
 }
 
-organztnReportCreator.prototype.getNameListObj = function(patientresultId) {
-	return this.patientresultId;
-}
-organztnReportCreator.prototype.viewReport= function(url,parent,organisationId) {
+
+organztnReportCreator.prototype.viewReport= function(url,parent,netMdlistdata) {
 	self =this;
 	ajaxProcessor.setUrl(url);
 	var tabdata =ajaxProcessor.get();
 	$j(parent).html(new form(tabdata).result);
-	self.bindEvents(organisationId);
+	self.bindEvents(netMdlistdata);
 }
 
-organztnReportCreator.prototype.bindEvents = function(organisationId) {
+organztnReportCreator.prototype.bindEvents = function(netMdlistdata) {
 	self = this;
 	self.fillMonth("#reportViewForm #startMonth");
 	self.fillMonth("#reportViewForm #endMonth");
@@ -31,7 +29,7 @@ organztnReportCreator.prototype.bindEvents = function(organisationId) {
 	self.fillYear("#reportViewForm #endYear");
 	$j("#reportViewForm #reportName").attr('value',"GynecologySummaryReport");
 	var myDiv = $j('#netmdlist');
-	var toolbutton= $j('<a href="#" class="anchorbutton remMarginRight genMarginLeft" name="reportfilter" id="btn_reportfilter_filter_id"><span>Hospitals</span></a>');
+	var toolbutton= $j('<a href="#" class="anchorbutton remMarginRight genMarginLeft" name="reportfilter" id="btn_reportfilter_filter_id"><span><b>Hospitals</b></span></a>');
 		var inputTag=$j('<select></select>');
 		inputTag.attr('id','txtreportfilter');
 		inputTag.attr('name','paramList');
@@ -46,7 +44,7 @@ organztnReportCreator.prototype.bindEvents = function(organisationId) {
 		$j(this).attr('selected','selected');
 		$j(this).addClass('button_filter');
 		$j('#txt'+curObjName).show();
-		self.fillnetMdlist("#txtreportfilter",organisationId);
+		self.fillnetMdlist("#txtreportfilter",netMdlistdata);
 		
 	});	
 	$j( "#netmdlist a[selected]").die('click').live("click",function(){
@@ -103,7 +101,7 @@ organztnReportCreator.prototype.fillMonth = function(controlObj) {
 }	
 
 organztnReportCreator.prototype.fillYear = function(controlObj) {
-	var firstYear = 2014;
+	var firstYear = 2013;
 var lastYear = 2034;
 for(var i =firstYear; i<=lastYear; i++) {
         $j(controlObj).append( $j('<option></option>').val(i).html(i) )
@@ -111,9 +109,9 @@ for(var i =firstYear; i<=lastYear; i++) {
 	
 }	
 
-organztnReportCreator.prototype.fillnetMdlist = function(controlObj,organisationId) {
-	ajaxProcessor.setUrl(constants.ORGNZTNREPORTFILTERNETMDLISTURL + organisationId);
-	var netMdlistdata =ajaxProcessor.get();
+organztnReportCreator.prototype.fillnetMdlist = function(controlObj,netMdlistdata) {
+	//ajaxProcessor.setUrl(constants.ORGNZTNREPORTFILTERNETMDLISTURL + organisationId);
+	//var netMdlistdata =ajaxProcessor.get();
 	//alert(JSON.stringify(netMdlistdata))
 	$j(netMdlistdata.netmdBranch).each( function(val, text) {
             $j(controlObj).append( $j('<option></option>').val(text.globalId).html(text.name) )

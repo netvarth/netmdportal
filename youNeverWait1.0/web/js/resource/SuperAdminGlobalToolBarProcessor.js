@@ -56,7 +56,15 @@ SuperAdminGlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 				netlimsClass.load();
 				pageHandler.setnetlimsClassLoaded(true);
 			}
-			var netlimsUI = new netlimsUIStartup();	
+	var netlimsUI;
+	if(pageHandler.getHomePage()==constants.NETLIMSPAGE)
+		{
+			netlimsUI = pageHandler.getActivePage();
+		}
+	else
+		{
+			netlimsUI = new netlimsUIStartup();	
+		}
 			netlimsUI.createNetlimsModal(obj);
 		});
 	}
@@ -69,8 +77,16 @@ SuperAdminGlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 				netmdClass.load();
 				pageHandler.setnetmdClassLoaded(true);
 			}
-			var netmdUI = new netmdUIStartup();	
-			netmdUI.createNetmdModal(obj);
+	var netmdUI;
+	if(pageHandler.getHomePage()==constants.NETMDPAGE)
+			{
+				netmdUI = pageHandler.getActivePage();
+			}
+	else
+			{
+				netmdUI = new netmdUIStartup();	
+			}
+				netmdUI.createNetmdModal(obj);
 		});
 	}
 	
@@ -83,8 +99,16 @@ SuperAdminGlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 				netrxClass.load();
 				pageHandler.setnetrxClassLoaded(true);
 			}
-			var netrxUI = new netmdUIStartup();	
-			netrxUI.createNetrxModal(obj);
+		var netrxUI;
+		if(pageHandler.getHomePage()==constants.NETRXPAGE)
+			{
+				netrxUI = pageHandler.getActivePage();
+			}
+		else
+			{
+				netrxUI = new netmdUIStartup();	
+			}
+				netrxUI.createNetrxModal(obj);
 		});
 	}
 	if($j(self.newnetpos)) {
@@ -96,8 +120,16 @@ SuperAdminGlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 				netposClass.load();
 				pageHandler.setnetposClassLoaded(true);
 			}
-			var netposUI = new NetPosUIStartup();	
-			netposUI.createNetPosModal(obj);
+		var netposUI;
+		if(pageHandler.getHomePage()==constants.NETPOSPAGE)
+			{
+				netposUI = pageHandler.getActivePage();
+			}
+		else
+			{
+				netposUI = new NetPosUIStartup();	
+			}	
+				netposUI.createNetPosModal(obj);
 		});
 	}
 	if($j(self.neworganization)) {
@@ -105,12 +137,20 @@ SuperAdminGlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 			var obj=$j(this);
 			commonMethodInvoker.removeErrors();
 			if(pageHandler.isorganizationLoaded()!=true){
-				var netmdClass = new organizationClassLoader();
-				netmdClass.load();
+				var orgClass = new organizationClassLoader();
+				orgClass.load();
 				pageHandler.setorganizationClassLoaded(true);
 			}
-			var netmdUI = new organizationUIStartup();	
-			netmdUI.createOrganizationModal(obj);
+		var orgnUI;
+		if(pageHandler.getHomePage()==constants.ORGNPAGE)
+			{
+				orgnUI = pageHandler.getActivePage();
+			}
+		else
+			{
+				orgnUI = new organizationUIStartup();	
+			}	
+				orgnUI.createOrganizationModal(obj);
 		});
 	}
 	
@@ -124,6 +164,7 @@ SuperAdminGlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 		$j(self.netlimslist).die('click').live("click",function() {	
 			var obj=$j(this);
 			commonMethodInvoker.removeErrors();
+			pageHandler.setHomePage(constants.NETLIMSPAGE);
 			if(pageHandler.isnetlimsClassLoaded()!=true){
 				var netlimsClass = new netlimsClassLoader();
 				netlimsClass.load();
@@ -138,6 +179,7 @@ SuperAdminGlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 		$j(self.netmdlist).die('click').live("click",function() {	
 			var obj=$j(this);
 			commonMethodInvoker.removeErrors();
+			pageHandler.setHomePage(constants.NETMDPAGE);
 			if(pageHandler.isnetmdClassLoaded()!=true){
 				var netmdClass = new netmdClassLoader();
 				netmdClass.load();
@@ -152,6 +194,7 @@ SuperAdminGlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 		$j(self.netrxlist).die('click').live("click",function() {	
 			var obj=$j(this);
 			commonMethodInvoker.removeErrors();
+			pageHandler.setHomePage(constants.NETRXPAGE);
 			if(pageHandler.isnetrxClassLoaded()!=true){
 				var netrxClass = new netrxClassLoader();
 				netrxClass.load();
@@ -166,6 +209,7 @@ SuperAdminGlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 		$j(self.netposlist).die('click').live("click",function() {	
 			var obj=$j(this);
 			commonMethodInvoker.removeErrors();
+			pageHandler.setHomePage(constants.NETPOSPAGE);
 			if(pageHandler.isnetposClassLoaded()!=true){
 				var netposClass = new netposClassLoader();
 				netposClass.load();
@@ -181,6 +225,7 @@ SuperAdminGlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 		$j(self.organizationlist).die('click').live("click",function() {	
 			var obj=$j(this);
 			commonMethodInvoker.removeErrors();
+			pageHandler.setHomePage(constants.ORGNPAGE);
 			if(pageHandler.isorganizationLoaded()!=true){
 				var netmdClass = new organizationClassLoader();
 				netmdClass.load();

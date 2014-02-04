@@ -17,9 +17,11 @@ function NetlimsAccServiceImpl () {
 			else if(key=="transferorder"){
 					if(branchResult.transferreddetails.length>0) {			
 						$j(branchResult.transferreddetails).each(function (index, lab) {
-								$j(lab.destinationBranches).each(function (index, destination) {
+							$j(lab.destinationBranches).each(function (index, destination) {
 							var id=lab.orderUid;
-							var rowData=$j(tableObj).dataTable().fnAddData([lab.fromBranch,destination.destinationBranch,id,destination.orderSent]);
+							var ordersent;
+							if(destination.orderSent==true){ordersent="Yes"}else{ordersent="No"}
+							var rowData=$j(tableObj).dataTable().fnAddData([lab.fromBranch,destination.destinationBranch,id,ordersent]);
 							var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 							$j(row).attr('id',id);	
 							//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
@@ -32,7 +34,9 @@ function NetlimsAccServiceImpl () {
 					if(branchResult.transferreddetails.length>0) {			
 						$j(branchResult.transferreddetails).each(function (index, lab) {
 							var id=lab.branchId;
-							var rowData=$j(tableObj).dataTable().fnAddData([lab.fromBranch,lab.toBracnh,lab.orderUid,lab.testUId,lab.sent]);
+							var resultsent;
+							if(lab.sent==true){resultsent="Yes"}else{resultsent="No"}
+							var rowData=$j(tableObj).dataTable().fnAddData([lab.fromBranch,lab.toBracnh,lab.orderUid,lab.testUId,resultsent]);
 							var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 							$j(row).attr('id',id);	
 							//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");

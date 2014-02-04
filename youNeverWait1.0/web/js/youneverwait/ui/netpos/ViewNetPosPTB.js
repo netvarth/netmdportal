@@ -45,7 +45,7 @@ function ViewNetPosPTB(viewNetPosUI) {
 	
 	this.init = function (source) {
 		var ptbProcessor = new PageToolBarProcessor();
-		ptbParent = ptbProcessor.create(constants.NETPOSGENERAL, constants.NETPOSGENERALPTBURL);
+		ptbParent = ptbProcessor.create(constants.NETPOSGENERAL, constants.GENERALPTBURL);
 		this.bindEvents(ptbParent,source);
 	} 
 }

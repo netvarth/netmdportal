@@ -1,7 +1,6 @@
 function NetPosValidator() {
 
 	this.validate = function(netPos, source) {
-		alert(JSON.stringify(netPos));
 		var error = new ErrorDTO();
 		var errorMsgs = []; // for storing the error messages list having field,Message
 		

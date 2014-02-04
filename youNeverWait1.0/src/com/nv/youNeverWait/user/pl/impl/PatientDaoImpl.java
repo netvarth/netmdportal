@@ -241,8 +241,8 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (header.getBranchId() != netmdBranchPassphrase
-				.getNetmdBranchTbl().getId()) {
+		if (header.getBranchId() != netmdBranchPassphrase.getNetmdBranchTbl()
+				.getId()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.BranchMissMatch);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(header
@@ -250,8 +250,8 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (header.getHeadOfficeId() != netmdBranchPassphrase.getNetmdBranchTbl()
-				.getNetmdTbl().getId()) {
+		if (header.getHeadOfficeId() != netmdBranchPassphrase
+				.getNetmdBranchTbl().getNetmdTbl().getId()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.BranchMissMatch);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(header
@@ -273,30 +273,36 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		}
 		PatientTbl newPatient = new PatientTbl();
 		NetmdLoginTbl loginTbl = new NetmdLoginTbl();
-		if(patient.getEmail()!=null && !patient.getEmail().isEmpty()){
-		NetmdLoginTbl loginObj = getLoginByUserName(patient.getEmail());
-		if (loginObj != null) {// if the userid exists in Netmdlogintbl, take it
-								// and set it to patient and save patient
-			PatientTbl patientObj = getPatient(patient.getFirstName(),
-					loginObj.getId(), header.getBranchId());
-			if (patientObj != null) {// if the patient exists in the same branch
-										// throw error
-				ServiceException se = new ServiceException(
-						ErrorCodeEnum.UserExists);
-				se.setDisplayErrMsg(true);
-				throw se;
-			} else {// else if he doesn't exists. set login obj to the new
-					// patient.
-				newPatient.setNetmdLoginTbl(loginObj);
+		if (patient.getEmail() != null && !patient.getEmail().isEmpty()) {
+			NetmdLoginTbl loginObj = getLoginByUserName(patient.getEmail());
+			if (loginObj != null) {// if the userid exists in Netmdlogintbl,
+									// take it
+									// and set it to patient and save patient
+				PatientTbl patientObj = getPatient(patient.getFirstName(),
+						loginObj.getId(), header.getBranchId());
+				if (patientObj != null) {// if the patient exists in the same
+											// branch
+											// throw error
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.UserExists);
+					se.setDisplayErrMsg(true);
+					throw se;
+				} else {// else if he doesn't exists. set login obj to the new
+						// patient.
+					newPatient.setNetmdLoginTbl(loginObj);
+				}
+			} else {
+				loginTbl.setUserName(patient.getEmail());
+				loginTbl.setUserType(UserTypeEnum.Patient.getDisplayName());// user
+																			// type
+																			// corresponding
+																			// to
+																			// patient
+				//
+				save(loginTbl);
+				newPatient.setNetmdLoginTbl(loginTbl);
 			}
-		} else {
-			loginTbl.setUserName(patient.getEmail());
-			loginTbl.setUserType(UserTypeEnum.Patient.getDisplayName());// user type corresponding to patient
-			// 
-			save(loginTbl);		
-			newPatient.setNetmdLoginTbl(loginTbl);
 		}
-	}
 
 		newPatient.setFirstName(patient.getFirstName());
 		newPatient.setLastName(patient.getLastName());
@@ -378,8 +384,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (header.getBranchId() != netmdBranch.getNetmdBranchTbl()
-				.getId()) {
+		if (header.getBranchId() != netmdBranch.getNetmdBranchTbl().getId()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.BranchMissMatch);
 			se.addParam(new Parameter(Constants.ID, Integer.toString(header
@@ -405,6 +410,20 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 			se.addParam(new Parameter(Constants.ID, Integer.toString(globalId)));
 			se.setDisplayErrMsg(true);
 			throw se;
+		}
+		if (patient.getEmail() != null && !patient.getEmail().isEmpty()) {
+			NetmdLoginTbl patientLogin = getLoginByUserName(patient.getEmail());
+			if(patientLogin==null){
+				NetmdLoginTbl login= new NetmdLoginTbl();
+				login.setUserName(patient.getEmail().trim());
+				login.setUserType(UserTypeEnum.Patient.getDisplayName());
+				save(login);
+				patientTbl.setNetmdLoginTbl(login);
+			}
+			else{
+			patientTbl.setNetmdLoginTbl(patientLogin);
+			}
+
 		}
 
 		patientTbl.setFirstName(patient.getFirstName());
@@ -573,10 +592,10 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 	@Override
 	@Transactional
 	public ResultDTO patientTestResult(PatientOrderDTO patient) {
-		ResultDTO response= new ResultDTO();
-		ResultTbl patientResults=getPatientResultsByPatientOrderId(patient.getPatientId(),patient.getOrderId());
-		if(patientResults==null)
-		{
+		ResultDTO response = new ResultDTO();
+		ResultTbl patientResults = getPatientResultsByPatientOrderId(
+				patient.getPatientId(), patient.getOrderId());
+		if (patientResults == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.PatientResultEmpty);
 			se.addParam(new Parameter(Constants.ID, patient.getOrderId()));
@@ -588,52 +607,62 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		return response;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.pl.dao.PatientDao#createCase(com.nv.youNeverWait.rs.dto.CaseDTO, com.nv.youNeverWait.rs.dto.HeaderDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.pl.dao.PatientDao#createCase(com.nv.youNeverWait
+	 * .rs.dto.CaseDTO, com.nv.youNeverWait.rs.dto.HeaderDTO)
 	 */
 	@Override
 	@Transactional
 	public ResponseDTO createCase(CaseDTO newPatientCase, HeaderDTO header) {
-		ResponseDTO caseResponse= new ResponseDTO();
-		SimpleDateFormat sdf= new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
-		
-		PatientTbl patientTbl= getById(PatientTbl.class, newPatientCase.getPatientId());
-		
+		ResponseDTO caseResponse = new ResponseDTO();
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITHOUT_TIME);
+
+		PatientTbl patientTbl = getById(PatientTbl.class,
+				newPatientCase.getPatientId());
+
 		if (patientTbl == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidPatientId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		DepartmentTbl dept= getById(DepartmentTbl.class,newPatientCase.getDepartmentId());
-		if(dept==null){
+		DepartmentTbl dept = getById(DepartmentTbl.class,
+				newPatientCase.getDepartmentId());
+		if (dept == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidDepartmentId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		
-		Date currentDate= new Date();
-		/*Saving case for the patient in case tbl*/
-		CaseTbl caseTbl= new CaseTbl();
+
+		Date currentDate = new Date();
+		/* Saving case for the patient in case tbl */
+		CaseTbl caseTbl = new CaseTbl();
 		caseTbl.setCaseName(newPatientCase.getCaseName());
 		caseTbl.setPatientTbl(patientTbl);
-		if(newPatientCase.getPatientType().equals(PatientTypeEnum.InPatient.getDisplayName())){
+		if (newPatientCase.getPatientType().equals(
+				PatientTypeEnum.InPatient.getDisplayName())) {
 			caseTbl.setPatientType(PatientTypeEnum.InPatient.getDisplayName());
 		}
-		if(newPatientCase.getPatientType().equals(PatientTypeEnum.OutPatient.getDisplayName())){
+		if (newPatientCase.getPatientType().equals(
+				PatientTypeEnum.OutPatient.getDisplayName())) {
 			caseTbl.setPatientType(PatientTypeEnum.OutPatient.getDisplayName());
 		}
-		if(newPatientCase.getAdmittedDate()!=null){
-		try {
-			caseTbl.setAdmittedDate(sdf.parse(newPatientCase.getAdmittedDate()));
-		} catch (ParseException e) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidDateFormat);
-			se.setDisplayErrMsg(true);
-			throw se;
+		if (newPatientCase.getAdmittedDate() != null) {
+			try {
+				caseTbl.setAdmittedDate(sdf.parse(newPatientCase
+						.getAdmittedDate()));
+			} catch (ParseException e) {
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidDateFormat);
+				se.setDisplayErrMsg(true);
+				throw se;
+			}
 		}
-	}
 		caseTbl.setBmi(newPatientCase.getBmi());
 		caseTbl.setDepartmentTbl(dept);
 		caseTbl.setDescription(newPatientCase.getDescription());
@@ -644,84 +673,101 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		caseTbl.setCreatedDateTime(currentDate);
 		caseTbl.setUpdatedDateTime(currentDate);
 		save(caseTbl);
-		
+
 		caseResponse.setGlobalId(caseTbl.getId());
 		caseResponse.setId(newPatientCase.getId());
 		caseResponse.setSuccess(true);
 		return caseResponse;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nv.youNeverWait.user.pl.dao.PatientDao#updateCase(com.nv.youNeverWait.rs.dto.CaseDTO, com.nv.youNeverWait.rs.dto.HeaderDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.nv.youNeverWait.user.pl.dao.PatientDao#updateCase(com.nv.youNeverWait
+	 * .rs.dto.CaseDTO, com.nv.youNeverWait.rs.dto.HeaderDTO)
 	 */
 	@Override
 	@Transactional
-	public ResponseDTO updateCase(CaseDTO updatedPatientCase,
-			HeaderDTO header) {
-		ResponseDTO caseResponse= new ResponseDTO();
-		SimpleDateFormat sdf= new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
-		
-		CaseTbl caseTbl= getById(CaseTbl.class,updatedPatientCase.getGlobalId());
-		if(caseTbl==null){
+	public ResponseDTO updateCase(CaseDTO updatedPatientCase, HeaderDTO header) {
+		ResponseDTO caseResponse = new ResponseDTO();
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITHOUT_TIME);
+
+		CaseTbl caseTbl = getById(CaseTbl.class,
+				updatedPatientCase.getGlobalId());
+		if (caseTbl == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidCaseId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		PatientTbl patientTbl= getById(PatientTbl.class, updatedPatientCase.getPatientId());
-		
+		PatientTbl patientTbl = getById(PatientTbl.class,
+				updatedPatientCase.getPatientId());
+
 		if (patientTbl == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidPatientId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		DepartmentTbl dept= getById(DepartmentTbl.class,updatedPatientCase.getDepartmentId());
-		if(dept==null){
+		DepartmentTbl dept = getById(DepartmentTbl.class,
+				updatedPatientCase.getDepartmentId());
+		if (dept == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidDepartmentId);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		
-		Date currentDate= new Date(); 
-		/*Updating case for the patient in case tbl*/
-		if(updatedPatientCase.getActionName().equals(ActionNameEnum.UPDATE.getDisplayName())){
+
+		Date currentDate = new Date();
+		/* Updating case for the patient in case tbl */
+		if (updatedPatientCase.getActionName().equals(
+				ActionNameEnum.UPDATE.getDisplayName())) {
 			caseTbl.setCaseName(updatedPatientCase.getCaseName());
 			caseTbl.setPatientTbl(patientTbl);
-			if(updatedPatientCase.getPatientType().equals(PatientTypeEnum.InPatient.getDisplayName())){
-				caseTbl.setPatientType(PatientTypeEnum.InPatient.getDisplayName());
+			if (updatedPatientCase.getPatientType().equals(
+					PatientTypeEnum.InPatient.getDisplayName())) {
+				caseTbl.setPatientType(PatientTypeEnum.InPatient
+						.getDisplayName());
 			}
-			if(updatedPatientCase.getPatientType().equals(PatientTypeEnum.OutPatient.getDisplayName())){
-				caseTbl.setPatientType(PatientTypeEnum.OutPatient.getDisplayName());
+			if (updatedPatientCase.getPatientType().equals(
+					PatientTypeEnum.OutPatient.getDisplayName())) {
+				caseTbl.setPatientType(PatientTypeEnum.OutPatient
+						.getDisplayName());
 			}
-			if(updatedPatientCase.getAdmittedDate()!=null){
-			try {
-				caseTbl.setAdmittedDate(sdf.parse(updatedPatientCase.getAdmittedDate()));
-			} catch (ParseException e) {
-				ServiceException se = new ServiceException(
-						ErrorCodeEnum.InvalidDateFormat);
-				se.setDisplayErrMsg(true);
-				throw se;
+			if (updatedPatientCase.getAdmittedDate() != null) {
+				try {
+					caseTbl.setAdmittedDate(sdf.parse(updatedPatientCase
+							.getAdmittedDate()));
+				} catch (ParseException e) {
+					ServiceException se = new ServiceException(
+							ErrorCodeEnum.InvalidDateFormat);
+					se.setDisplayErrMsg(true);
+					throw se;
+				}
 			}
-		}
 			caseTbl.setBmi(updatedPatientCase.getBmi());
 			caseTbl.setDepartmentTbl(dept);
 			caseTbl.setHeight(updatedPatientCase.getHeight());
 			caseTbl.setDescription(updatedPatientCase.getDescription());
 			caseTbl.setHb(updatedPatientCase.getHbCount());
 			caseTbl.setWeight(updatedPatientCase.getWeight());
-			if(updatedPatientCase.getStatus()!=null && !updatedPatientCase.getStatus().isEmpty()){
-				if(updatedPatientCase.getStatus().equals(CaseStatusEnum.Open.getDisplayName())){
+			if (updatedPatientCase.getStatus() != null
+					&& !updatedPatientCase.getStatus().isEmpty()) {
+				if (updatedPatientCase.getStatus().equals(
+						CaseStatusEnum.Open.getDisplayName())) {
 					caseTbl.setStatus(CaseStatusEnum.Open.getDisplayName());
 				}
-				if(updatedPatientCase.getStatus().equals(CaseStatusEnum.Closed.getDisplayName())){
+				if (updatedPatientCase.getStatus().equals(
+						CaseStatusEnum.Closed.getDisplayName())) {
 					caseTbl.setStatus(CaseStatusEnum.Closed.getDisplayName());
 				}
 			}
-			
+
 		}
-		if(updatedPatientCase.getActionName().equals(ActionNameEnum.DELETE.getDisplayName())){
+		if (updatedPatientCase.getActionName().equals(
+				ActionNameEnum.DELETE.getDisplayName())) {
 			caseTbl.setStatus(CaseStatusEnum.Closed.getDisplayName());
 		}
 		caseTbl.setUpdatedDateTime(currentDate);
@@ -731,31 +777,30 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		caseResponse.setSuccess(true);
 		return caseResponse;
 	}
-	
 
 	@Override
 	@Transactional
 	public boolean isEmailExists(int id, String email) {
-		boolean flag=true;
+		boolean flag = true;
 		PatientTbl patientTbl = getById(PatientTbl.class, id);
-		if(patientTbl!=null){
-			if(patientTbl.getEmail()==null || patientTbl.getEmail().isEmpty()){
-				flag=false;
-			}
-			else{
-				if(patientTbl.getEmail().equals(email)){
-					flag=true;
+		if (patientTbl != null) {
+			if (patientTbl.getEmail() == null
+					|| patientTbl.getEmail().isEmpty()) {
+				flag = false;
+			} else {
+				if (patientTbl.getEmail().equals(email)) {
+					flag = true;
+				} else {
+					flag = false;
 				}
-				else{
-					flag=false;
-				}
 			}
-		
+
 		}
 		return flag;
 	}
-	
-	private ResultTbl getPatientResultsByPatientOrderId(int patientId, String orderId) {
+
+	private ResultTbl getPatientResultsByPatientOrderId(int patientId,
+			String orderId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_PATIENT_RESULTS_BY_ORDERID);
 		query.setParameter("param1", patientId);
@@ -855,13 +900,14 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 	@Override
 	@Transactional
 	public String getDepartmentNameById(int departmentId) {
-		String departmentName="";
+		String departmentName = "";
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_DEPARTMENT_NAME_BY_ID);
 		query.setParameter("param1", departmentId);
-		departmentName=(String) query.getSingleResult();
+		departmentName = (String) query.getSingleResult();
 		return departmentName;
 	}
+
 	/**
 	 * @return the em
 	 */
@@ -877,5 +923,4 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		this.em = em;
 	}
 
-	
 }

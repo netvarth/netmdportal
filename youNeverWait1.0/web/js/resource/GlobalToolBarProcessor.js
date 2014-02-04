@@ -82,8 +82,16 @@ GlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 				netlimsAccClass.load();
 				pageHandler.setnetlimsAccClassLoaded(true);
 			}
-			var netlimsAccUI = new netlimsAccountUIStartup();			
-			netlimsAccUI.createBranchModal(obj);
+	var netlimsAccUI;
+	if(pageHandler.getHomePage()==constants.NETLIMSACCPAGE)
+			{
+				netlimsAccUI = pageHandler.getActivePage();
+			}
+	else
+			{
+				netlimsAccUI = new netlimsAccountUIStartup();	
+			}			
+					netlimsAccUI.createBranchModal(obj);
 		});
 	}
 	
@@ -116,8 +124,16 @@ GlobalToolBarProcessor.prototype.bindnetMdAccRibbonTBEvents=function() {
 				netmdAccClass.load();
 				pageHandler.setnetmdAccClassLoaded(true);
 			}
-			var netmdAccUI = new netmdAccountUIStartup();			
-			netmdAccUI.createBranchModal(obj);
+	var netmdAccUI;
+	if(pageHandler.getHomePage()==constants.NETMDACCPAGE)
+			{
+				netmdAccUI = pageHandler.getActivePage();
+			}
+	else
+			{
+				netmdAccUI = new netmdAccountUIStartup();	
+			}			
+					netmdAccUI.createBranchModal(obj);
 		});
 	}
 	
@@ -150,8 +166,16 @@ GlobalToolBarProcessor.prototype.bindnetRxAccRibbonTBEvents=function() {
 				netrxAccClass.load();
 				pageHandler.setnetrxAccClassLoaded(true);
 			}
-			var netrxAccUI = new netrxAccountUIStartup();			
-			netrxAccUI.createBranchModal(obj);
+	var netrxAccUI;
+	if(pageHandler.getHomePage()==constants.NETRXACCPAGE)
+			{
+				netrxAccUI = pageHandler.getActivePage();
+			}
+	else
+			{
+				netrxAccUI = new netrxAccountUIStartup();	
+			}				
+					netrxAccUI.createBranchModal(obj);
 		});
 	}
 	
@@ -181,6 +205,7 @@ GlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 		$j(self.netlimsAccbranchlist).die('click').live("click",function() {	
 			var obj=$j(this);
 			commonMethodInvoker.removeErrors();
+			pageHandler.setHomePage(constants.NETLIMSACCPAGE);
 			if(pageHandler.isnetlimsAccClassLoaded()!=true){
 				var netlimsAccClass = new netlimsAccClassLoader();
 				netlimsAccClass.load();
@@ -253,6 +278,7 @@ GlobalToolBarProcessor.prototype.bindnetMdAccLeftPaneEvents=function() {
 		$j(self.netmdAccbranchlist).die('click').live("click",function() {	
 			var obj=$j(this);
 			commonMethodInvoker.removeErrors();
+			pageHandler.setHomePage(constants.NETMDACCPAGE);
 			if(pageHandler.isnetmdAccClassLoaded()!=true){
 				var netmdAccClass = new netmdAccClassLoader();
 				netmdAccClass.load();
@@ -283,6 +309,7 @@ GlobalToolBarProcessor.prototype.bindnetRxAccLeftPaneEvents=function() {
 		$j(self.netrxAccbranchlist).die('click').live("click",function() {	
 			var obj=$j(this);
 			commonMethodInvoker.removeErrors();
+			pageHandler.setHomePage(constants.NETRXACCPAGE);
 			if(pageHandler.isnetrxAccClassLoaded()!=true){
 				var netrxAccClass = new netrxAccClassLoader();
 				netrxAccClass.load();

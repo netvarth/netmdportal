@@ -239,11 +239,12 @@ public class PatientServiceTest {
 		AppointmentDetailsDTO details = new AppointmentDetailsDTO();
 		HeaderDTO header = new HeaderDTO();
 		details.setScheduleId(175);
-		details.setDoctorId(1);
+		details.setDoctorId(3);
 		details.setPatientId(5);
-		details.setPatientName("asha");
-		details.setStartDate("2014-10-11");
+		details.setPatientName("Asha Vibin");
+		details.setStartDate("2014-02-04");
 		details.setStartTime("11:12 am");
+		details.setEmailId("asha.chandran@netvarth.com");
 		appointment.setAppointmentDetails(details);		
 		header.setHeadOfficeId(3);
 		header.setBranchId(5);

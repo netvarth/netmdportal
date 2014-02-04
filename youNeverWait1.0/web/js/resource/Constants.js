@@ -21,6 +21,9 @@ function Constants() {
 	this.PASSWRDMISMATCH="Password Do Not Match";
 	this.PASSWRDCHANGDSUCCES="Password changed successfully";
 	this.SYNCINTERVALREQUIRED="Synchronisation Interval Required";
+	this.NETLIMSACCPAGE="netlimsAcc";
+	this.NETMDACCPAGE="netmdAcc";
+	this.NETRXACCPAGE="netrxAcc";
 	
 	/*****************-------------netlimsaccount-----------**----*************/
 	this.NETLIMSACCRIBBONURL="/youNeverWait/json/toolbars/netlimsGlobalToolbar.json";
@@ -114,13 +117,20 @@ function Constants() {
 	this.ORGNZTNTABCREATEVIEWURL="/youNeverWait/json/view/organizationTabs.json";
 	this.ORGTABOBJ="#tabs-1";
 	this.ORGREPORTTABOBJ="#reportInfoTab";
+	this.ORGHOMETABOBJ="#homeInfoTab";
 	this.ORGNZTNREPORTTABVIEWURL="/youNeverWait/json/view/organizationReport.json";
+	this.ORGNZTNHOMETABVIEWURL="/youNeverWait/json/view/organizationHome.json";
 	this.ORGNZTNREPORTFILTERVIEWURL="/youNeverWait/json/view/orgReportfiltr.json";
 	this.ORGNZTNREPORTFILTERNETMDLISTURL="/youNeverWait/ws/ui/netMd/getNetMdBrnchList/";
 	this.REPORTGENERATEURL="/youNeverWait/ws/ui/orgn/report/generate";
 	/*****************----------superadmin-------------**************/
 	this.SUPERADMINRIBBONURL="/youNeverWait/json/toolbars/globalToolbar.json";
 	this.SUPERADMINLEFTPANEURL="/youNeverWait/json/toolbars/leftPaneToolBar.json";
+	this.NETLIMSPAGE="netlims";
+	this.NETMDPAGE="netmd";
+	this.NETRXPAGE="netrx";
+	this.NETPOSPAGE="nepos";
+	this.ORGNPAGE="organization";
 	/*****-----netlims---*****/
 	this.NETLIMSBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/labList";
 	this.NETLIMSLIST="NETLIMS LIST";
@@ -253,6 +263,21 @@ function Constants() {
 	this.NETRXSYNCMODAL="netrxsyncmodal";
 	this.SYNCDATANETRXURL="/youNeverWait/ws/ui/netRx/getNetrxSyncDetails/";
 	this.SETNETRXSYCURL="/youNeverWait/ws/ui/superAdmin/setNetRxSync";
+	/*************----------------netpos----------------------------------**********/
+	this.CREATENETPOSUI="/youNeverWait/json/new/newNetPos.json";
+	this.NETPOSMODEL="netPosmodel";
+	this.NETPOSCREATESUCCESS="Netpos created Successfully";
+	this.CREATENETPOSURL="/youNeverWait/ws/ui/superAdmin/createNetPos";
+	this.NETPOSLIST="NETPOS LIST";
+	this.NETPOSPAGEJSON="/youNeverWait/json/toolbars/netposPageToolBar.json";
+	this.NETPOS="NETPOS";
+	this.NETPOSLISTJSON="/youNeverWait/json/list/netposTable.json";
+	this.NETPOSLISTURL="/youNeverWait/ws/ui/superAdmin/netPosList";
+	this.NETPOSGENERAL="netpos";
+	this.VIEWNETPOSDETAILPAGEURL="/youNeverWait/json/view/viewnetposdetails.json";
+	this.VIEWNETPOSDETAILURL="/youNeverWait/ws/ui/superAdmin/viewNetPos/";
+	this.UPDATENETPOSURL="/youNeverWait/ws/ui/superAdmin/updateNetPos/";
+	this.UPDATESUCCESS="Netpos Updated Successfully";
 	/*****************-------------General-----------**----*************/
 	this.NAME = "name";
 	this.ADDRESS = "address";
