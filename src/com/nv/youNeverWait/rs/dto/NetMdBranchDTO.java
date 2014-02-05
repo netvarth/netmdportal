@@ -26,14 +26,15 @@ public class NetMdBranchDTO {
 	private int netMdId;
 	private List<PassPhraseDTO> passPhrase = new ArrayList<PassPhraseDTO>();
 	private int numberOfDevices;
-	private String OrganisationName;
+	private String organisationName;
 
 	
+	
 	public String getOrganisationName() {
-		return OrganisationName;
+		return organisationName;
 	}
 	public void setOrganisationName(String organisationName) {
-		OrganisationName = organisationName;
+		this.organisationName = organisationName;
 	}
 	/**
 	 * @return the status
