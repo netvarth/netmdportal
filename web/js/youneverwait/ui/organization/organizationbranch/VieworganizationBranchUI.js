@@ -74,6 +74,8 @@ ViewOrganizationBranchUI.prototype.createError = function(error) {
 ViewOrganizationBranchUI.prototype.writable = function() {
 	self=this;
 	self.removecolors(self.inputFields);
+	var userInfo = self.getBranch();
+	var userName = userInfo.userDetails.userType;
 	$j(self.editButton).hide();
 	$j(self.ptbBack).hide();
 	$j(self.ptbUp).hide();
@@ -81,6 +83,7 @@ ViewOrganizationBranchUI.prototype.writable = function() {
 	$j(self.usertypediv).show();
 	$j(self.usertypelabel).hide();
 	self.fillUsertypeList(this.usertypesel);
+	$j(self.usertypesel).val(userName);
 	$j(self.viewOrgnzAccBrchPage + " input[type=text]").removeAttr('readonly');
 	$j(self.viewOrgnzAccBrchPage + " input[type=text]").removeClass('newBox');
 	$j(self.viewOrgnzAccBrchPage + " textarea").removeClass('newBox');
