@@ -75,7 +75,6 @@ netmdBranchUIStartup.prototype.init = function(netmdId) {
 	var exp = new ExpressionListDTO();
 	var expr = new ExpressionDTO(selName,selValue,selOperator);
 	exp.add(expr);
-	alert(JSON.stringify(self.organizationlist()));
 	var netmdAccntTableNavigator = self.getnetmdAccTableNavigator();
 	netmdAccntTableNavigator.setExp(exp);
 	var ptbProcessor = new PageToolBarProcessor();

@@ -289,6 +289,7 @@ ViewNetmdBranchUI.prototype.viewNetmdBranchDetails = function(branchId) {
 	self.setBranchId(branchId);
 	var NetmdUIService = self.getNetmdUIService();
 	var netmdResponse = NetmdUIService.viewNetmdBranchDetails(branchId);
+	//alert(JSON.stringify(netmdResponse));
 	if(!netmdResponse.errorMessage) {
 		self.setBranch(netmdResponse);
 		$j(self.id).val(netmdResponse.branch.netMdId);

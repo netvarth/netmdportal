@@ -13,6 +13,7 @@ this.netmdAccBranchModal = '#netmdAccBranchModal';
 	this.phone = this.newnetmdAccBranchPage + " #phone";
 	this.mobile=this.newnetmdAccBranchPage + " #mobile";
 	this.email = this.newnetmdAccBranchPage + " #Email";
+	this.selectOrg= this.newnetmdAccBranchPage + " #organizationselect";
 	this.numberOfDevices = this.newnetmdAccBranchPage + " #numberOfDevices";
 	this.branchUIStartup = BranchUIStartup;
 	this.branchCreationStatus= false;
@@ -38,6 +39,7 @@ NewBranchUI.prototype.getNetmdUIService = function() {
 
 NewBranchUI.prototype.init = function() {
 	self =this;
+	self.organizationNames(self.selectOrg);
 	self.bindEvents();
 }
 
@@ -51,6 +53,17 @@ NewBranchUI.prototype.removecolors = function(cl) {
 	commonMethodInvoker.removeErrorColor(self.mobile);
 	commonMethodInvoker.removeErrorColor(self.email);
 	commonMethodInvoker.removeErrorColor(self.numberOfDevices);
+}
+
+NewBranchUI.prototype.organizationNames = function(orgnisation) {
+	var list=self.getBranchUIStartup();
+	var orgNames=list.organizationlist();
+	$j(orgnisation).empty();
+	$j(orgnisation).append('<option value="select">selectType</option>');
+	$j(orgNames.organisation).each(function(index,org){
+	$j(orgnisation).append('<option value='+org.name+'>'+org.name+'</option>');
+	});
+
 }
 NewBranchUI.prototype.createError = function(error) {
 	var self=this;
@@ -112,6 +125,8 @@ NewBranchUI.prototype.getBranch = function() {
 	name= name.replace(/\b[a-z]/g, function(letter) {
 		return letter.toUpperCase();
 	});
+	var orgName=$j("#organizationselect option:selected").text();
+	if(orgName=="selectType"){orgName="";}
 	
 	branch.setnetMdId(self.netmdId);
 	branch.setName(name);
@@ -119,6 +134,7 @@ NewBranchUI.prototype.getBranch = function() {
 	branch.setAddress(commonMethodInvoker.nl2br($j(self.address).val()));
 	branch.setPhone($j(self.phone).val());
 	branch.setMobile($j(self.mobile).val());
+	branch.setOrganisationName(orgName);
 	branch.setnumberOfDevices(parseInt(device));
 	return branch;
 }
