@@ -75,7 +75,7 @@ NewBranchUI.prototype.cancel = function() {
 	netrxAccTableNavigator.setExp(exp);
 		
 			//var branchTableNavigator = self.getnetrxAccTableNavigator();
-			netrxAccTableNavigator.list();
+			netrxAccTableNavigator.list("branchlist");
 		
 	}
 	self.setBranchCreationStatus(false);
@@ -94,7 +94,7 @@ NewBranchUI.prototype.create = function() {
 		var branchResponse =branchService.createBranchNetrx(branch);
 		//alert(JSON.stringify(branchResponse));
 		if(branchResponse.error==null) {
-			//self.setBranchCreationStatus(true);
+			self.setBranchCreationStatus(true);
 			showTip(constants.BRANCHCREATESUCCESS);//For showing the global Tip			
 			self.clearFields();
 		} else 

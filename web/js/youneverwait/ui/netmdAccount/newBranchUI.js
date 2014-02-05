@@ -90,7 +90,7 @@ NewBranchUI.prototype.cancel = function() {
 	netmdAccTableNavigator.setExp(exp);
 		
 			//var branchTableNavigator = self.getnetmdAccTableNavigator();
-			netmdAccTableNavigator.list();
+			netmdAccTableNavigator.list("branchlist");
 		
 	}
 	self.setBranchCreationStatus(false);
@@ -109,7 +109,7 @@ NewBranchUI.prototype.create = function() {
 		var branchResponse =branchService.createBranchNetmd(branch);
 		alert(JSON.stringify(branchResponse));
 		if(branchResponse.success==true) {
-			//self.setBranchCreationStatus(true);
+			self.setBranchCreationStatus(true);
 			showTip(constants.BRANCHCREATESUCCESS);//For showing the global Tip			
 			self.clearFields();
 		} else 
