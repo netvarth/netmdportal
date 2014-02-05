@@ -36,7 +36,10 @@ netmdAccountUIStartup.prototype.setBranchId = function(BranchId) {
 netmdAccountUIStartup.prototype.getNetmdUIService = function() {
 	return this.netmdAccService;
 }
-
+netmdAccountUIStartup.prototype.organizationlist = function() {
+	ajaxProcessor.setUrl(constants.GETORGANIZATIONLIST);
+	return ajaxProcessor.get();
+}
 
 //Set the page title of the order ui page
 netmdAccountUIStartup.prototype.setPageTitle = function(value) {

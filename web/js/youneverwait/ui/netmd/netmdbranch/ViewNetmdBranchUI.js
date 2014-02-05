@@ -30,6 +30,7 @@
 	this.mobile=this.viewNetmdAccBrchPage + " #branchMobile";
 	this.email = this.viewNetmdAccBrchPage + " #email";
 	this.deviceNo= this.viewNetmdAccBrchPage + " #devicesno";
+	this.orgName=this.viewNetmdAccBrchPage + " #orgName";
 	this.netmdUIStartup=netmdUIStartup;
 	this.exp = new ExpressionListDTO();
 	this.netmdAccService = new NetmdbranchServiceImpl();
@@ -100,6 +101,8 @@ ViewNetmdBranchUI.prototype.writable = function() {
 		$j(self.branchStatus).attr('readonly','readonly');
 		$j(self.deviceNo).addClass('newBox');
 		$j(self.deviceNo).attr('readonly','readonly');
+		$j(self.orgName).addClass('newBox');
+		$j(self.orgName).attr('readonly','readonly');
 	$j(self.cancelButton).show();
 	$j(self.updateButton).show();
 }
@@ -289,7 +292,6 @@ ViewNetmdBranchUI.prototype.viewNetmdBranchDetails = function(branchId) {
 	self.setBranchId(branchId);
 	var NetmdUIService = self.getNetmdUIService();
 	var netmdResponse = NetmdUIService.viewNetmdBranchDetails(branchId);
-	//alert(JSON.stringify(netmdResponse));
 	if(!netmdResponse.errorMessage) {
 		self.setBranch(netmdResponse);
 		$j(self.id).val(netmdResponse.branch.netMdId);
@@ -300,6 +302,7 @@ ViewNetmdBranchUI.prototype.viewNetmdBranchDetails = function(branchId) {
 		$j(self.deviceNo).val(netmdResponse.branch.numberOfDevices);
 		$j(self.email).val(netmdResponse.branch.email);
 		$j(self.address).val(commonMethodInvoker.br2nl(netmdResponse.branch.address));
+		$j(self.orgName).val(netmdResponse.branch.organisationName);
 		$j(self.mobile).val(netmdResponse.branch.mobile);
 		dataTableProcessor.setCustomTableWithoutNavigator(self.primaryTable);
 		dataTableProcessor.setCustomTableWithoutNavigator(self.secondaryTable);
@@ -369,6 +372,7 @@ ViewNetmdBranchUI.prototype.getBranchRequest = function() {
 	branch.setEmail($j(self.email).val());
 	branch.setAddress(commonMethodInvoker.nl2br($j(self.address).val()));
 	branch.setPhone($j(self.phone).val());
+	branch.setOrganisationName($j(self.orgName).val());
 	branch.setMobile($j(self.mobile).val());
 	branch.setnumberOfDevices(parseInt(device));
 	return branch;
