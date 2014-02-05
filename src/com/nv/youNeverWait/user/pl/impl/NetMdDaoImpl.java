@@ -347,7 +347,9 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		}
 		/*Saving record in organisationNetmdTbl if any*/
 		if(branch.getOrganisationName()!=null && !branch.getOrganisationName().equals("")){
-			OrganisationTbl organisationTbl= getOrganisationByName(branch.getOrganisationName().trim());
+			String alphaDigitsOnly = branch.getOrganisationName().replaceAll(
+					"[^a-zA-Z0-9]+", "");
+			OrganisationTbl organisationTbl= getOrganisationByName(alphaDigitsOnly.toUpperCase().trim());
 			if(organisationTbl==null){
 				ServiceException se = new ServiceException(
 						ErrorCodeEnum.InvalidOrganisationName);
