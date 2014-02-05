@@ -40,7 +40,7 @@
 															"type": "text",
 															"tabIndex": 1,
 															"className": "large capital",
-															"title": "Organization First Name",
+															"title": "User First Name",
 															"required": "true"
 														}
 													]
@@ -53,7 +53,7 @@
 															"id": "organizationlastname",
 															"type": "text",
 															"className": "large capital",
-															"title": "Organization Last Name"
+															"title": "User Last Name"
 														}
 													]
 												}
@@ -76,7 +76,7 @@
                                             "id": "organizationaddress",
                                             "type": "textarea",
                                             "className": "large capital",
-                                            "title": "Organization Address"
+                                            "title": "User Address"
                                         }
                                     ]
                                 }
@@ -99,7 +99,7 @@
 															"id": "organizationphone",
 															"type": "text",
 															"className": "large",
-															"title": "Organization Phone"
+															"title": "User Phone"
 														}
 													]
 												},
@@ -111,7 +111,7 @@
 															"id": "organizationmobile",
 															"type": "text",
 															"className": "large",
-															"title": "Organization Mobile"
+															"title": "User Mobile"
 														}
 													]
 												}
@@ -129,7 +129,7 @@
                                             "type": "text",
 											"tabIndex": 2,
                                             "className": "large",
-                                            "title": "Organization Email",
+                                            "title": "User Email",
 											"required": true
 										}
                                     ]
