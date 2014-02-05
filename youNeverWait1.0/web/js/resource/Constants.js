@@ -176,6 +176,7 @@ function Constants() {
 	this.NETMDPAGEJSON="/youNeverWait/json/toolbars/netmdPageToolBar.json";
 	this.NETMDLISTJSON="/youNeverWait/json/list/netmdTable.json";
 	this.NEWNETMDMODAL="netmdModal";
+	this.GETORGANIZATIONLIST="/youNeverWait/ws/ui/orgn/getOrganisationList";
 	this.NEWNETMDJSON="/youNeverWait/json/new/newNetMd.json";
 	this.CREATENETMDURL="/youNeverWait/ws/ui/superAdmin/createNetMd";
 	this.NETMDCREATESUCCESS="Netmd Created Successfully";

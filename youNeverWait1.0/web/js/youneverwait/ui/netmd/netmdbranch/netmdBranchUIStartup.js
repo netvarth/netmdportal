@@ -40,7 +40,10 @@ netmdBranchUIStartup.prototype.getnetmdId = function() {
 netmdBranchUIStartup.prototype.getNetmdUIService = function() {
 	return this.netmdAccService;
 }
-
+netmdBranchUIStartup.prototype.organizationlist = function() {
+	ajaxProcessor.setUrl(constants.GETORGANIZATIONLIST);
+	return ajaxProcessor.get();
+}
 
 //Set the page title of the order ui page
 netmdBranchUIStartup.prototype.setPageTitle = function(value) {
@@ -72,6 +75,7 @@ netmdBranchUIStartup.prototype.init = function(netmdId) {
 	var exp = new ExpressionListDTO();
 	var expr = new ExpressionDTO(selName,selValue,selOperator);
 	exp.add(expr);
+	alert(JSON.stringify(self.organizationlist()));
 	var netmdAccntTableNavigator = self.getnetmdAccTableNavigator();
 	netmdAccntTableNavigator.setExp(exp);
 	var ptbProcessor = new PageToolBarProcessor();

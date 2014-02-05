@@ -1820,6 +1820,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 
 	private List<OrganisationNetmdTbl> getOrganisationNetMdBranches(int organisationId) {
 		javax.persistence.Query query = em.createQuery(Query.GET_ORGANISATION_NETMD_BRANCH_LIST);
+		query.setParameter("param1", organisationId);
 		return executeQuery(OrganisationNetmdTbl.class, query);
 	}
 
