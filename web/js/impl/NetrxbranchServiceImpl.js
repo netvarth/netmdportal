@@ -39,7 +39,7 @@ NetrxbranchServiceImpl.prototype.deleteNetrxBranch=function(netrxBrchId) {
 	return ajaxProcessor.get();
 }
 
-NetmdbranchServiceImpl.prototype.clearMacNetrxBranch=function(clearMac) {
+NetrxbranchServiceImpl.prototype.clearMacNetrxBranch=function(clearMac) {
 	ajaxProcessor.setUrl(constants.SETNETRXBRACHCLEARMACURL);
 	return ajaxProcessor.post(clearMac);
 }

@@ -45,7 +45,10 @@ $j.cachedScript("/youNeverWait/js/framework/notifier.js").done(function(script, 
 })
 $j.cachedScript("/youNeverWait/js/framework/logout.js").done(function(script, textStatus) {
 })
-
+$j.cachedScript("/youNeverWait/js/youneverwait/ui/SASyncStatusProcessor.js").done(function(script, textStatus) {
+}).fail(function(xhr,status,exception) {
+			alert(xhr + exception);
+		})
 		$j.cachedScript("/youNeverWait/js/dto/SpecimenListDTO.js").done(function(script, textStatus) {
 		})
 		$j.cachedScript("/youNeverWait/js/dto/SpecimenCollectStatusDTO.js").done(function(script, textStatus) {

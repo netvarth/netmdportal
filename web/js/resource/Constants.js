@@ -123,6 +123,7 @@ function Constants() {
 	this.ORGNZTNREPORTFILTERVIEWURL="/youNeverWait/json/view/orgReportfiltr.json";
 	this.ORGNZTNREPORTFILTERNETMDLISTURL="/youNeverWait/ws/ui/netMd/getNetMdBrnchList/";
 	this.REPORTGENERATEURL="/youNeverWait/ws/ui/orgn/report/generate";
+	
 	/*****************----------superadmin-------------**************/
 	this.SUPERADMINRIBBONURL="/youNeverWait/json/toolbars/globalToolbar.json";
 	this.SUPERADMINLEFTPANEURL="/youNeverWait/json/toolbars/leftPaneToolBar.json";
@@ -131,6 +132,10 @@ function Constants() {
 	this.NETRXPAGE="netrx";
 	this.NETPOSPAGE="nepos";
 	this.ORGNPAGE="organization";
+	this.SUPERADMINSYNCMODAL="superadminsyncmodal";
+	this.SUPERADMINSYNCJSON="/youNeverWait/json/new/newsetSync.json";
+	this.SYNCDATASUPERADMINURL="/youNeverWait/ws/ui/superAdmin/getSyncDetails";
+	this.SETSUPERADMINSYCURL="/youNeverWait/ws/ui/superAdmin/setSync";
 	/*****-----netlims---*****/
 	this.NETLIMSBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/labList";
 	this.NETLIMSLIST="NETLIMS LIST";

@@ -1,6 +1,5 @@
 function SuperAdminGlobalToolBarProcessor() {
 	this.globalService = new SuperAdminGlobalServiceImpl();
-	
 	this.netlimslist="#leftPaneNetLims";
 	this.netmdlist="#leftPaneNetMd";
 	this.netrxlist="#leftPaneNetRx";
@@ -153,9 +152,25 @@ SuperAdminGlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 				orgnUI.createOrganizationModal(obj);
 		});
 	}
+	if($j(self.setsync)) {
+		$j(self.setsync).die('click').live("click",function() {		
+			var obj=$j(this);
+			self.createSyncModal(obj);
+		});
+	}
+	
 	
 }
 
+SuperAdminGlobalToolBarProcessor.prototype.createSyncModal = function(obj) {
+	var self = this;
+	commonMethodInvoker.removeErrors();
+	createModal(constants.SUPERADMINSYNCJSON,constants.SUPERADMINSYNCMODAL);		
+	openModalBox(obj,constants.SUPERADMINSYNCMODAL);
+	var syncStatusProcessor = new SASyncStatusProcessor(self);
+	syncStatusProcessor.init();
+	return syncStatusProcessor; 
+}
 
 SuperAdminGlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 	var self=this;
