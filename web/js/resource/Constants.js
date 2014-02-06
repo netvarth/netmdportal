@@ -136,6 +136,10 @@ function Constants() {
 	this.SUPERADMINSYNCJSON="/youNeverWait/json/new/newsetSync.json";
 	this.SYNCDATASUPERADMINURL="/youNeverWait/ws/ui/superAdmin/getSyncDetails";
 	this.SETSUPERADMINSYCURL="/youNeverWait/ws/ui/superAdmin/setSync";
+	this.SUPERADMINTOOLBARJSON="/youNeverWait/json/toolbars/adminChangePwd.json";
+	this.NEWSUPERADMINPASWRDCHGMODAL="superadminchgpaswrdModal";
+	this.NEWSUPERADMINPASWRDCHGJSON="/youNeverWait/json/changepassword/adminChangePassword.json";
+	this.SUPERADMINCHGPASWRDURL="/youNeverWait/ws/ui/superAdmin/changePassword";
 	/*****-----netlims---*****/
 	this.NETLIMSBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/labList";
 	this.NETLIMSLIST="NETLIMS LIST";

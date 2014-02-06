@@ -60,6 +60,13 @@ function PageHandler() {
 		this.netlimsClassLoaded=status;
 	}
 	
+	this.issuperadminSettingsClassLoaded=function(){
+		return this.superadminClassLoaded;
+	}
+	this.setsuperadminSettingsClassLoaded=function(status){
+		this.superadminClassLoaded=status;
+	}
+	
 	this.isnetmdClassLoaded=function(){
 		return this.netmdClassLoaded;
 	}

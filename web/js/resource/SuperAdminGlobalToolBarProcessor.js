@@ -253,11 +253,11 @@ SuperAdminGlobalToolBarProcessor.prototype.bindLeftPaneEvents=function() {
 	
 	if($j(self.settings)) {
 		$j(self.settings).die('click').live("click",function() {
-			/*  var obj=$j(this);
+			  var obj=$j(this);
 			commonMethodInvoker.removeErrors();
 			$j('#pageToolBar-Container').html("");
-			var adminUI = new SettingsToolBarProcessor();
-			adminUI.init(); */ 
+			var adminUI = new SuperAdminSettingsToolBarProcessor();
+			adminUI.init();  
 		});
 	}	
 	

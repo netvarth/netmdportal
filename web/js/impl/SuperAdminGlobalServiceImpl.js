@@ -19,4 +19,8 @@ function SuperAdminGlobalServiceImpl () {
 		ajaxProcessor.setUrl(constants.SETSUPERADMINSYCURL);
 		return ajaxProcessor.post(syncData);
 	}
+	this.changePasswrdSuperadmin=function(changePasswrd) {
+		ajaxProcessor.setUrl(constants.SUPERADMINCHGPASWRDURL);
+		return ajaxProcessor.post(changePasswrd);
+	}
 }

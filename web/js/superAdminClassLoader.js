@@ -24,7 +24,9 @@ function ClassLoader() {
 		})
 		$j.cachedScript("/youNeverWait/js/resource/FilterToolBarProcessor.js").done(function(script,textStatus){
 		})
-		$j.cachedScript("/youNeverWait/js/resource/SettingsToolBarProcessor.js").done(function(script,textStatus){
+		$j.cachedScript("/youNeverWait/js/resource/SuperAdminSettingsToolBarProcessor.js").done(function(script,textStatus){
+		})
+		$j.cachedScript("/youNeverWait/js/youneverwait/settings/superAdminSettings/SuperAdminSettingsClassLoader.js").done(function(script,textStatus){
 		})
 	    $j.cachedScript("/youNeverWait/js/ClassInitializer.js").done(function(script, textStatus) {
 		})
