@@ -140,6 +140,11 @@ function Constants() {
 	this.NEWSUPERADMINPASWRDCHGMODAL="superadminchgpaswrdModal";
 	this.NEWSUPERADMINPASWRDCHGJSON="/youNeverWait/json/changepassword/adminChangePassword.json";
 	this.SUPERADMINCHGPASWRDURL="/youNeverWait/ws/ui/superAdmin/changePassword";
+	this.TESTDETAILS = "Test Details";
+	this.NAMEREQUIRED = "Name required";
+	this.RATEREQUIRED = "Rate required";
+	this.AVOIDDOUBLEQUOTES = "Please avoid double quotes";
+	this.TESTDELETESUCCESS = "Test deleted successfully";
 	/*****-----netlims---*****/
 	this.NETLIMSBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/labList";
 	this.NETLIMSLIST="NETLIMS LIST";

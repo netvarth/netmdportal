@@ -52,8 +52,7 @@ SuperAdminSettingsToolBarProcessor.prototype.bindAdminTBEvents=function() {
 	});
 	
 	$j(self.btnSpecimenList).die('click').click(function(){
-		var obj=$j(this);
-		
+		commonMethodInvoker.removeErrors();
 		if(pageHandler.isSpecimenClassLoaded()!=true){
 				var SpecimenClass = new SpecimenClassLoader();
 				SpecimenClass.load();
@@ -63,7 +62,12 @@ SuperAdminSettingsToolBarProcessor.prototype.bindAdminTBEvents=function() {
 		specimenUI.init();
 	});
 	
-	
+	$j(self.btnTestList).die('click').click(function(){
+		commonMethodInvoker.removeErrors();
+		$j.cachedScript("/youNeverWait/js/youneverwait/settings/test/testEntryPoint.js").done(function(script, textStatus) {
+		})
+		
+	});
 	
 	
 }
