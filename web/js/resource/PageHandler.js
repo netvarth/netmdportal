@@ -118,18 +118,19 @@ function PageHandler() {
 	this.setnetrxAccSettingsClassLoaded=function(status){
 		this.netrxAccSettingsClassLoaded=status;
 	}
-	/* 
-	
-	
-	this.setSettingClassLoaded=function(status){
-		this.settingClassLoaded=status;
-	}
 	this.isSpecimenClassLoaded=function(){
 		return this.specimenClassLoaded;
 	}
 	this.setSpecimenClassLoaded=function(status){
 		this.specimenClassLoaded=status;
 	}
+	/* 
+	
+	
+	this.setSettingClassLoaded=function(status){
+		this.settingClassLoaded=status;
+	}
+	
 	this.isTestClassLoaded=function(){
 		return this.testClassLoaded;
 	}

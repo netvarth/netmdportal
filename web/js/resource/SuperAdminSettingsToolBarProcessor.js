@@ -51,15 +51,16 @@ SuperAdminSettingsToolBarProcessor.prototype.bindAdminTBEvents=function() {
 		self.createChangePasswrdModal(obj);
 	});
 	
-	$j(self.orderTypeButton).die('click').click(function(){
+	$j(self.btnSpecimenList).die('click').click(function(){
 		var obj=$j(this);
 		
-		if(pageHandler.isnetlimsAccSettingsClassLoaded()!=true){
-				var NetlimsAccSettingsClass = new NetlimsAccSettingsClassLoader();
-				NetlimsAccSettingsClass.load();
-				pageHandler.setnetlimsAccSettingsClassLoaded(true);
+		if(pageHandler.isSpecimenClassLoaded()!=true){
+				var SpecimenClass = new SpecimenClassLoader();
+				SpecimenClass.load();
+				pageHandler.setSpecimenClassLoaded(true);
 			} 
-		self.createorderTypeModal(obj);
+		var specimenUI = new SpecimenUIStartup();			
+		specimenUI.init();
 	});
 	
 	

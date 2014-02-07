@@ -109,32 +109,11 @@ $j.cachedScript("/youNeverWait/js/youneverwait/ui/SASyncStatusProcessor.js").don
 		})
 		/*--------------------------------*/
 		/* Specimen UI Pages */
-		$j.cachedScript("/youNeverWait/js/youneverwait/netlims/Specimen/SpecimenUIStartup.js").done(function(script,textStatus){
+		$j.cachedScript("/youNeverWait/js/youneverwait/settings/Specimen/SpecimenClassLoader.js").done(function(script,textStatus){
 		}).fail(function(xhr,status,exception) {
 			alert(xhr + exception);
 		})
-		$j.cachedScript("/youNeverWait/js/youneverwait/netlims/Specimen/NewSpecimenUI.js").done(function(script,textStatus){
-		}).fail(function(xhr,status,exception) {
-			alert(xhr + exception);
-		})
-		$j.cachedScript("/youNeverWait/js/youneverwait/netlims/Specimen/ViewSpecimenUI.js").done(function(script,textStatus){
-		}).fail(function(xhr,status,exception) {
-			alert(xhr + exception);
-		})
-		$j.cachedScript("/youNeverWait/js/youneverwait/netlims/Specimen/ViewSpecimenPTB.js").done(function(script,textStatus){
-		}).fail(function(xhr,status,exception) {
-			alert(xhr + exception);
-		})
-		/* Specimen Validator */
-		$j.cachedScript("/youNeverWait/js/framework/SpecimenValidator.js").done(function(script,textStatus){
-		}).fail(function(xhr,status,exception) {
-			alert(xhr + exception);
-		})
-		/* Specimen Service JS */
-		$j.cachedScript("/youNeverWait/js/impl/SpecimenServiceImpl.js").done(function(script, textStatus){
-		}).fail(function(xhr,status,exception) {
-			alert("SpecimenServiceImpl" + xhr + exception);
-		})
+		
 		
 		$j.cachedScript("/youNeverWait/js/impl/NetlimsServiceImpl.js").done(function(script,textStatus){
 		})
