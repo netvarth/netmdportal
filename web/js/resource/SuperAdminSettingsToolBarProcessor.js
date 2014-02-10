@@ -75,4 +75,10 @@ SuperAdminSettingsToolBarProcessor.prototype.bindAdminTBEvents=function() {
 		})
 		
 	});
+	$j(self.btnSyncLogList).die('click').click(function(){
+		commonMethodInvoker.removeErrors();
+		$j.cachedScript(constants.SYNCLOGENTRYURL).done(function(script, textStatus) {
+		})
+		
+	});
 }

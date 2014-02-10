@@ -150,6 +150,9 @@ function Constants() {
 	this.USERLOGLIST="USER LOG LIST";
 	this.USERLOGJSON='/youNeverWait/json/userlog/userlog.json';
 	this.USERLOGCONTROLURL="/youNeverWait/ws/ui/superAdmin/enableLog";
+	this.SYNCLOGENTRYURL="/youNeverWait/js/youneverwait/settings/syncLog/syncLogEntryPoint.js";
+	this.SYNCLOGLISTMSG="SYNC LOG LIST";
+	this.SYNCFUNCTIONSURL="/youNeverWait/js/youneverwait/settings/syncLog/syncLogFunctions.js";
 	/*****-----netlims---*****/
 	this.NETLIMSBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/labList";
 	this.NETLIMSLIST="NETLIMS LIST";
@@ -190,7 +193,7 @@ function Constants() {
 	this.SETNETLIMSSYCURL="/youNeverWait/ws/ui/superAdmin/setLabSync";
 	/***********netmd***************/
 	this.NETMDBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/netmdList";
-	this.NETMDLIST="NetMD LIST";
+	this.NETMDLIST="NETMD LIST";
 	this.NETMD="NETMD";
 	this.NETMDPAGEJSON="/youNeverWait/json/toolbars/netmdPageToolBar.json";
 	this.NETMDLISTJSON="/youNeverWait/json/list/netmdTable.json";
@@ -521,7 +524,7 @@ function Constants() {
 	/*****************---------------Setting----------------****************/
 	this.SETTINGLISTURL="/weblims/ws/ui/result/settinglist";
 	this.SETTING="setting";
-	this.SETTINGTITLE="Settings";
+	this.SETTINGTITLE="SETTINGS";
 	this.CREATESETTINGURL="/weblims/ws/ui/result/createSetting";
 	this.DELETESETTINGURL="/weblims/ws/ui/result/deleteSetting/";
 	this.SETTINGPAGETOOLBAR="settingPageToolBar";

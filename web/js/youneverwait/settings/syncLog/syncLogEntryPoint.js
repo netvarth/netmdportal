@@ -1,5 +1,5 @@
-$j('#pageTitle').html(constant_SyncLogList_Msg);
-$j.cachedScript(constant_SyncLogFunctions_Url).done(function(script, textStatus) {
+$j('#pageTitle').html(constants.SYNCLOGLISTMSG);
+$j.cachedScript(constants.SYNCFUNCTIONSURL).done(function(script, textStatus) {
 })
 $j(document).ready(function() {
 		var pgSyncLogList;
@@ -122,5 +122,14 @@ $j(document).ready(function() {
 			setPaginationFields(curPage, maxPages, pgTableContainer);
 		}
 	});
+	
+	$j('#syncLogPTBContainer #btn_back_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	$j("#leftPaneSettings").trigger('click');
+	$j('#filter').hide();
+	$j('#syncLogPTBContainer').hide();
+	$j('#sync-filter-toolbar').hide();
+
+	})
 		
 });	//document.ready ends here
