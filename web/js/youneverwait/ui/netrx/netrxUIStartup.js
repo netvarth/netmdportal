@@ -138,12 +138,13 @@ netrxUIStartup.prototype.bindToolBarEvents = function() {
 	self.brachlist.die('click').live('click',function() {
 		var obj=$j(this);
 		var netrxId=self.getSelectedbranchId(self.pgTableName);
+		var selnetrx = $j(self.pgTableName + ' tbody tr[selected] td:eq(1)').text();
 		if(netrxId!="") {
 			commonMethodInvoker.removeErrors();
 			var netrxAccClass = new netrxbranchClassLoader();
 			netrxAccClass.load();
-			var netrxAccUI = new netrxBranchUIStartup(netrxId);	
-			netrxAccUI.init(netrxId);
+			var netrxAccUI = new netrxBranchUIStartup(netrxId,selnetrx);	
+			netrxAccUI.init(netrxId,selnetrx);
 		}	
 	});
 	 

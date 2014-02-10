@@ -1,7 +1,8 @@
-function organizationBranchUIStartup(netmdId) {
+function organizationBranchUIStartup(netmdId,selorg) {
 	this.pgTableName = "#branchOrgnzAcc";
 	this.pgTableContainer="#branchOrgnzAccTableCont"; 
 	this.pageTitle = $j('#pageTitle');
+	this.pageorgTitle = $j('#pageTitle1');
 	this.ptbCreate=$j('#BRANCHORGPTBContainer #btn_new_ptb_id');
 	this.ptbOrglist=$j('#BRANCHORGPTBContainer #btn_back_ptb_id');
 	this.ptbView=$j('#BRANCHORGPTBContainer #btn_view_ptb_id');
@@ -10,6 +11,7 @@ function organizationBranchUIStartup(netmdId) {
 	this.errorData = $j('#errorDivData');
 	this.errorHeader = $j('#errorDivHeader');
 	this.orgnzId=netmdId;
+	this.orgName=selorg;
 	this.pgTableRowClass = this.pgTableName + ' .userOrgAccIdCol';
 	this.exp = new ExpressionListDTO();
 	this.orgzAccService = new OrganizationUserServiceImpl();
@@ -42,8 +44,10 @@ organizationBranchUIStartup.prototype.getOrgnzUIService = function() {
 
 
 //Set the page title of the order ui page
-organizationBranchUIStartup.prototype.setPageTitle = function(value) {
+organizationBranchUIStartup.prototype.setPageTitle = function(value,orgName) {
+	this.pageorgTitle.show();
 	this.pageTitle.html(value);
+	this.pageorgTitle.html('&nbsp &nbsp['+orgName.toUpperCase()+']');
 }
 
 //Return the selected Order Id from the list table
@@ -62,12 +66,12 @@ organizationBranchUIStartup.prototype.getSelectedbranchId = function () {
 	return branchId;
 }
 
-organizationBranchUIStartup.prototype.init = function(orgnzId) {
+organizationBranchUIStartup.prototype.init = function(orgnzId,orgName) {
 	var self = this;
 	var selName="organisationId";
 	var selValue=self.orgnzId;
 	var selOperator = "eq";
-	self.setPageTitle(constants.USERLIST);
+	self.setPageTitle(constants.USERLIST,self.orgName);
 	var exp = new ExpressionListDTO();
 	var expr = new ExpressionDTO(selName,selValue,selOperator);
 	exp.add(expr);
@@ -110,6 +114,7 @@ organizationBranchUIStartup.prototype.bindToolBarEvents = function() {
 	var self=this;
 	 self.ptbOrglist.die('click').live('click',function() {
 		commonMethodInvoker.removeErrors();
+		self.pageorgTitle.hide();
 			if(pageHandler.isorganizationLoaded()!=true){
 				var netmdClass = new organizationClassLoader();
 				netmdClass.load();

@@ -156,12 +156,13 @@ netlimsUIStartup.prototype.bindToolBarEvents = function() {
 	 self.brachlist.die('click').live('click',function() {
 		var obj=$j(this);
 		var labId=self.getSelectedbranchId(self.pgTableName);
+		var sellab = $j(self.pgTableName + ' tbody tr[selected] td:eq(1)').text();
 		if(labId!="") {
 			commonMethodInvoker.removeErrors();
 			var netlimsAccClass = new netlimsbranchClassLoader();
 			netlimsAccClass.load();
-			var netlimsAccUI = new netlimsBranchUIStartup(labId);	
-			netlimsAccUI.init(labId);
+			var netlimsAccUI = new netlimsBranchUIStartup(labId,sellab);	
+			netlimsAccUI.init(labId,sellab);
 		}	
 	});
 	

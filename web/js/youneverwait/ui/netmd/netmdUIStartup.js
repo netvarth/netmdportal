@@ -138,12 +138,13 @@ netmdUIStartup.prototype.bindToolBarEvents = function() {
 	self.brachlist.die('click').live('click',function() {
 		var obj=$j(this);
 		var netmdId=self.getSelectedbranchId(self.pgTableName);
+		var selnetmd= $j(self.pgTableName + ' tbody tr[selected] td:eq(1)').text();
 		if(netmdId!="") {
 			commonMethodInvoker.removeErrors();
 			var netmdAccClass = new netmdbranchClassLoader();
 			netmdAccClass.load();
-			var netmdAccUI = new netmdBranchUIStartup(netmdId);	
-			netmdAccUI.init(netmdId);
+			var netmdAccUI = new netmdBranchUIStartup(netmdId,selnetmd);	
+			netmdAccUI.init(netmdId,selnetmd);
 		}	
 	});
 	 
