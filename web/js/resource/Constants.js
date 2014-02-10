@@ -145,6 +145,11 @@ function Constants() {
 	this.RATEREQUIRED = "Rate required";
 	this.AVOIDDOUBLEQUOTES = "Please avoid double quotes";
 	this.TESTDELETESUCCESS = "Test deleted successfully";
+	this.USERLOGENTRYURL="/youNeverWait/js/youneverwait/settings/userlog/userlogEntryPoint.js";
+	this.USERFUNCTIONSURL="/youNeverWait/js/youneverwait/settings/userlog/userlogFunctions.js";
+	this.USERLOGLIST="USER LOG LIST";
+	this.USERLOGJSON='/youNeverWait/json/userlog/userlog.json';
+	this.USERLOGCONTROLURL="/youNeverWait/ws/ui/superAdmin/enableLog";
 	/*****-----netlims---*****/
 	this.NETLIMSBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/labList";
 	this.NETLIMSLIST="NETLIMS LIST";

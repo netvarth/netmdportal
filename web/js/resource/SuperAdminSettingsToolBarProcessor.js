@@ -69,5 +69,10 @@ SuperAdminSettingsToolBarProcessor.prototype.bindAdminTBEvents=function() {
 		
 	});
 	
-	
+	$j(self.btnUserLogList).die('click').click(function(){
+		commonMethodInvoker.removeErrors();
+		$j.cachedScript(constants.USERLOGENTRYURL).done(function(script, textStatus) {
+		})
+		
+	});
 }

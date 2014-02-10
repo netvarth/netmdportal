@@ -1,5 +1,5 @@
-$j('#pageTitle').html(constant_UserLogList_Msg);
-$j.cachedScript(constant_UserLogFunctions_Url).done(function(script, textStatus) {
+$j('#pageTitle').html(constants.USERLOGLIST);
+$j.cachedScript(constants.USERFUNCTIONSURL).done(function(script, textStatus) {
 })
 $j(document).ready(function() {
 		var pgUserLogList;
@@ -121,6 +121,46 @@ $j(document).ready(function() {
 			pgBranchList=fillUserLogTable(userlogListJson,pgTableName);
 			setPaginationFields(curPage, maxPages, pgTableContainer);
 		}
+	});
+	
+	$j('#logPTBContainer #btn_back_ptb_id').die('click').live("click",function() {
+	removeErrors();
+	//$j('#pageToolBar-Container').html("");
+	$j("#leftPaneSettings").trigger('click');
+	$j('#filter').hide();
+	$j('#logPTBContainer').hide();
+	$j('#user-filter-toolbar').hide();
+
+	});
+	$j('#btn_userlogcontrol_ptb_id').die('click').live("click",function() {
+	var currentstatus=getRequestData('/youNeverWait/ws/ui/superAdmin/enableLogStatus');
+	var obj=$j(this);
+		createModal(constants.USERLOGJSON,'userLogModal');	
+		openModalBox(obj,'userLogModal');
+		if(currentstatus.status==false){$j('#userlogForm #userDisable').attr( "checked",true );}
+		else{$j('#userlogForm #userEnable').attr( "checked",true );}
+		
+	});
+	
+	$j('#userlogForm #btnUserLogSubmit').die('click').live('click',function(){
+	if($j("#userlogForm input[name='userlog']:checked").val()=='Disable')
+	{
+	userLogData = '{"enableLog":'+false+'}';
+	}
+	else
+	{
+	userLogData = '{"enableLog":'+true+'}';
+	}
+	var response = postdataToServer(constants.USERLOGCONTROLURL, userLogData );
+	//alert(JSON.stringify(response));
+	if(response.success==true){
+	showTip("Updated Successfully");
+	$j('#errorDivUserLogData').hide();
+	}
+	else {
+		updateTipsNew(getErrorName(response.error),$j('#userLogModal #errorDivUserLogData'),$j('#userLogModal #errorDivHeader'));
+	}
+	
 	});
 		
 });	//document.ready ends here
