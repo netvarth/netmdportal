@@ -23,27 +23,27 @@
                                             
                                             {
                                                 "className": "head0",
-                                                "name": "OrderDate",
+                                                "name": "Order Date",
                                                 "style": "width:15%"
                                             },
                                             {
                                                 "className": "head1",
-                                                "name": "TotalOrders",
+                                                "name": "Total Orders",
                                                 "style": "width:10%"
                                             },
                                             {
                                                 "className": "head0",
-                                                "name": "NetAmount",
+                                                "name": "Net Amount",
                                                 "style": "width:10%"
                                             },
                                             {
                                                 "className": "head1",
-                                                "name": "PaidAmount",
+                                                "name": "Paid Amount",
                                                 "style": "width:10%"
                                             },
                                             {
                                                 "className": "head0",
-                                                "name": "LastOrderedtime",
+                                                "name": "Last Orderedtime",
                                                 "style": "width:10%"
                                             }
                                         ]

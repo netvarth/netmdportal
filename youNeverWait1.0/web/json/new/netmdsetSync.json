@@ -70,7 +70,7 @@
                                 {
                                     "className": "column-right",
                                     "id": "syctxtNetmdEnInr",
-                                    "style": "margin: -9% 30% 0 0;display:none;",
+                                    "style": "margin: -6% 34% 0% 0%;display:none;",
                                     "elements": [
                                         {
                                             "name": "NetmdSyncInterval",
