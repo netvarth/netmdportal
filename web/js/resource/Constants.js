@@ -24,6 +24,8 @@ function Constants() {
 	this.NETLIMSACCPAGE="netlimsAcc";
 	this.NETMDACCPAGE="netmdAcc";
 	this.NETRXACCPAGE="netrxAcc";
+	this.SELECTONEBRANCH = "Select atleast one branch";
+	this.SELECTONEBRANCHONLY = "Select only one branch";
 	
 	/*****************-------------netlimsaccount-----------**----*************/
 	this.NETLIMSACCRIBBONURL="/youNeverWait/json/toolbars/netlimsGlobalToolbar.json";
@@ -437,9 +439,6 @@ function Constants() {
 	this.ORDERVIEWINFO = "Order - ";
 	this.ORDERS = "Orders";
 	this.CREATEORDERUI = "/weblims/json/newOrder.json";
-	
-	
-	this.SELECTONEBRANCHONLY = "Select only one branch";
 	this.ORDERDELETECONFIRM = "Do you really want to delete specimen ";
 	this.ORDERBUTTONSCONTAINER = 'orderViewButtonsDiv';
 	this.ORDERVIEWINFOBUTTONS = "orderViewButtons";
