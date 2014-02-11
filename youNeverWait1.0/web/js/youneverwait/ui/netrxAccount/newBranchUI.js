@@ -75,7 +75,7 @@ NewBranchUI.prototype.cancel = function() {
 	netrxAccTableNavigator.setExp(exp);
 		
 			//var branchTableNavigator = self.getnetrxAccTableNavigator();
-			netrxAccTableNavigator.list();
+			netrxAccTableNavigator.list("branchlist");
 		
 	}
 	self.setBranchCreationStatus(false);

@@ -1,8 +1,9 @@
-function netmdBranchUIStartup(netmdId) {
+function netmdBranchUIStartup(netmdId,selnetmd) {
 	this.pgTableName = "#branchNetmdAcc";
 	this.pgTableContainer="#branchNetmdAccTableCont"; 
 	this.pgTableNameorderList="#branchOrderNetlimsAcc";
 	this.pageTitle = $j('#pageTitle');
+	this.pagenetmdTitle = $j('#pageTitle1');
 	this.ptbCreate=$j('#BRANCHNETMDPTBContainer #btn_new_ptb_id');
 	this.ptbNetmdlist=$j('#BRANCHNETMDPTBContainer #btn_back_ptb_id');
 	this.ptbView=$j('#BRANCHNETMDPTBContainer #btn_view_ptb_id');
@@ -11,6 +12,7 @@ function netmdBranchUIStartup(netmdId) {
 	this.errorData = $j('#errorDivData');
 	this.errorHeader = $j('#errorDivHeader');
 	this.netmdId=netmdId;
+	this.netmdname=selnetmd;
 	this.pgTableRowClass = this.pgTableName + ' .branchNetlimsAccIdCol';
 	this.exp = new ExpressionListDTO();
 	this.netmdAccService = new NetmdbranchServiceImpl();
@@ -46,8 +48,10 @@ netmdBranchUIStartup.prototype.organizationlist = function() {
 }
 
 //Set the page title of the order ui page
-netmdBranchUIStartup.prototype.setPageTitle = function(value) {
+netmdBranchUIStartup.prototype.setPageTitle = function(value,netmdname) {
+	this.pagenetmdTitle.show();
 	this.pageTitle.html(value);
+	this.pagenetmdTitle.html('&nbsp &nbsp['+netmdname.toUpperCase()+']');
 }
 
 //Return the selected Order Id from the list table
@@ -71,11 +75,10 @@ netmdBranchUIStartup.prototype.init = function(netmdId) {
 	var selName="netMdId";
 	var selValue=self.netmdId;
 	var selOperator = "eq";
-	self.setPageTitle(constants.BRANCHLIST);
+	self.setPageTitle(constants.BRANCHLIST,self.netmdname);
 	var exp = new ExpressionListDTO();
 	var expr = new ExpressionDTO(selName,selValue,selOperator);
 	exp.add(expr);
-	alert(JSON.stringify(self.organizationlist()));
 	var netmdAccntTableNavigator = self.getnetmdAccTableNavigator();
 	netmdAccntTableNavigator.setExp(exp);
 	var ptbProcessor = new PageToolBarProcessor();
@@ -115,6 +118,7 @@ netmdBranchUIStartup.prototype.bindToolBarEvents = function() {
 	var self=this;
 	 self.ptbNetmdlist.die('click').live('click',function() {
 		commonMethodInvoker.removeErrors();
+		self.pagenetmdTitle.hide();
 			if(pageHandler.isnetmdClassLoaded()!=true){
 				var netmdClass = new netmdClassLoader();
 				netmdClass.load();

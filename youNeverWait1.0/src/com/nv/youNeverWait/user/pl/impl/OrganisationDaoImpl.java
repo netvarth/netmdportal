@@ -631,6 +631,8 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 			organisation.setName(organisationTbl.getName());
 			organisationList.add(organisation);
 		}
+		response.setOrganisation(organisationList);
+		response.setSuccess(true);
 		return response;
 	}
 

@@ -138,12 +138,13 @@ organizationUIStartup.prototype.bindToolBarEvents = function() {
 	self.brachlist.die('click').live('click',function() {
 		var obj=$j(this);
 		var orgnzId=self.getSelectedbranchId(self.pgTableName);
+		var selorg = $j(self.pgTableName + ' tbody tr[selected] td:eq(1)').text();
 		if(orgnzId!="") {
 			commonMethodInvoker.removeErrors();
 			var orgnzAccClass = new organizationbranchClassLoader();
 			orgnzAccClass.load();
-			var orgnzAccUI = new organizationBranchUIStartup(orgnzId);	
-			orgnzAccUI.init(orgnzId);
+			var orgnzAccUI = new organizationBranchUIStartup(orgnzId,selorg);	
+			orgnzAccUI.init(orgnzId,selorg);
 		}	
 	});
 	 

@@ -1,8 +1,9 @@
-function netlimsBranchUIStartup(labId) {
+function netlimsBranchUIStartup(labId,sellab) {
 	this.pgTableName = "#branchNetlimsAcc";
 	this.pgTableContainer="#branchNetlimsAccTableCont"; 
 	this.pgTableNameorderList="#branchOrderNetlimsAcc";
 	this.pageTitle = $j('#pageTitle');
+	this.pagelabTitle = $j('#pageTitle1');
 	this.ptbCreate=$j('#BRANCHPTBContainer #btn_new_ptb_id');
 	this.ptbNetlimslist=$j('#BRANCHPTBContainer #btn_back_ptb_id');
 	this.ptbView=$j('#BRANCHPTBContainer #btn_view_ptb_id');
@@ -26,6 +27,7 @@ function netlimsBranchUIStartup(labId) {
 	this.errorData = $j('#errorDivData');
 	this.errorHeader = $j('#errorDivHeader');
 	this.netlimsId=labId;
+	this.labName=sellab;
 	this.pgTableRowClass = this.pgTableName + ' .branchNetlimsAccIdCol';
 	this.exp = new ExpressionListDTO();
 	this.netlimsAccService = new NetlimsbranchServiceImpl();
@@ -58,8 +60,10 @@ netlimsBranchUIStartup.prototype.getNetlimsUIService = function() {
 
 
 //Set the page title of the order ui page
-netlimsBranchUIStartup.prototype.setPageTitle = function(value) {
+netlimsBranchUIStartup.prototype.setPageTitle = function(value,labName) {
+	this.pagelabTitle.show();
 	this.pageTitle.html(value);
+	this.pagelabTitle.html('&nbsp &nbsp['+labName.toUpperCase()+']');
 }
 
 //Return the selected Order Id from the list table
@@ -78,12 +82,12 @@ netlimsBranchUIStartup.prototype.getSelectedbranchId = function () {
 	return branchId;
 }
 
-netlimsBranchUIStartup.prototype.init = function(netlimsId) {
+netlimsBranchUIStartup.prototype.init = function(netlimsId,labName) {
 	var self = this;
 	var selName="labId";
 	var selValue=self.netlimsId;
 	var selOperator = "eq";
-	self.setPageTitle(constants.BRANCHLIST);
+	self.setPageTitle(constants.BRANCHLIST,self.labName);
 	var exp = new ExpressionListDTO();
 	var expr = new ExpressionDTO(selName,selValue,selOperator);
 	exp.add(expr);
@@ -231,6 +235,7 @@ netlimsBranchUIStartup.prototype.bindToolBarEvents = function() {
 	var self=this;
 	self.ptbNetlimslist.die('click').live('click',function() {
 		commonMethodInvoker.removeErrors();
+		self.pagelabTitle.hide();
 			if(pageHandler.isnetlimsClassLoaded()!=true){
 				var netlimsClass = new netlimsClassLoader();
 				netlimsClass.load();

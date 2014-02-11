@@ -89,6 +89,17 @@
                                             "className": "newBox"
                                         }
                                     ]
+                                },{
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "orgName",
+                                            "id": "orgName",
+                                            "type": "text",
+                                            "title": "Organization Name",
+                                            "className": "newBox"
+                                        }
+                                    ]
                                 }
                             ]
                         }

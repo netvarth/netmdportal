@@ -11,6 +11,16 @@ function SuperAdminGlobalServiceImpl () {
 		ajaxProcessor.setUrl(constants.SUPERADMINTOOLBARJSON);
 		return ajaxProcessor.get();
 	}
-	
-	
+	this.superAdminSyncdata=function() {
+		ajaxProcessor.setUrl(constants.SYNCDATASUPERADMINURL);
+		return ajaxProcessor.get();
+	}
+	this.syncSuperadmin=function(syncData) {
+		ajaxProcessor.setUrl(constants.SETSUPERADMINSYCURL);
+		return ajaxProcessor.post(syncData);
+	}
+	this.changePasswrdSuperadmin=function(changePasswrd) {
+		ajaxProcessor.setUrl(constants.SUPERADMINCHGPASWRDURL);
+		return ajaxProcessor.post(changePasswrd);
+	}
 }

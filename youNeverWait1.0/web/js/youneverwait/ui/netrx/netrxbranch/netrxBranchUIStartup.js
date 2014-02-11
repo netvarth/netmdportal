@@ -1,8 +1,9 @@
-function netrxBranchUIStartup(netrxId) {
+function netrxBranchUIStartup(netrxId,selnetrx) {
 	this.pgTableName = "#branchNetrxAcc";
 	this.pgTableContainer="#branchNetrxAccTableCont"; 
 	this.pgTableNameorderList="#branchOrderNetlimsAcc";
 	this.pageTitle = $j('#pageTitle');
+	this.pagenetrxTitle = $j('#pageTitle1');
 	this.ptbCreate=$j('#BRANCHNETRXPTBContainer #btn_new_ptb_id');
 	this.ptbNetrxlist=$j('#BRANCHNETRXPTBContainer #btn_back_ptb_id');
 	this.ptbView=$j('#BRANCHNETRXPTBContainer #btn_view_ptb_id');
@@ -11,6 +12,7 @@ function netrxBranchUIStartup(netrxId) {
 	this.errorData = $j('#errorDivData');
 	this.errorHeader = $j('#errorDivHeader');
 	this.netrxId=netrxId;
+	this.netrxName=selnetrx;
 	this.pgTableRowClass = this.pgTableName + ' .branchNetrxAccIdCol';
 	this.exp = new ExpressionListDTO();
 	this.netmdAccService = new NetrxbranchServiceImpl();
@@ -43,8 +45,10 @@ netrxBranchUIStartup.prototype.getNetrxUIService = function() {
 
 
 //Set the page title of the order ui page
-netrxBranchUIStartup.prototype.setPageTitle = function(value) {
+netrxBranchUIStartup.prototype.setPageTitle = function(value,netrxName) {
+	this.pagenetrxTitle.show();
 	this.pageTitle.html(value);
+	this.pagenetrxTitle.html('&nbsp &nbsp['+netrxName.toUpperCase()+']');
 }
 
 //Return the selected Order Id from the list table
@@ -63,12 +67,12 @@ netrxBranchUIStartup.prototype.getSelectedbranchId = function () {
 	return branchId;
 }
 
-netrxBranchUIStartup.prototype.init = function(netrxId) {
+netrxBranchUIStartup.prototype.init = function(netrxId,netrxName) {
 	var self = this;
 	var selName="netRxId";
 	var selValue=self.netrxId;
 	var selOperator = "eq";
-	self.setPageTitle(constants.BRANCHLIST);
+	self.setPageTitle(constants.BRANCHLIST,self.netrxName);
 	var exp = new ExpressionListDTO();
 	var expr = new ExpressionDTO(selName,selValue,selOperator);
 	exp.add(expr);
@@ -111,6 +115,7 @@ netrxBranchUIStartup.prototype.bindToolBarEvents = function() {
 	var self=this;
 	 self.ptbNetrxlist.die('click').live('click',function() {
 		commonMethodInvoker.removeErrors();
+		self.pagenetrxTitle.hide();
 			if(pageHandler.isnetrxClassLoaded()!=true){
 				var netrxClass = new netrxClassLoader();
 				netrxClass.load();

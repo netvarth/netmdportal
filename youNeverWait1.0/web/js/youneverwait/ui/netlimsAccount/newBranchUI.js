@@ -73,7 +73,7 @@ NewBranchUI.prototype.cancel = function() {
 	netlimsAccTableNavigator.setExp(exp);
 		
 			//var branchTableNavigator = self.getnetlimsAccTableNavigator();
-			netlimsAccTableNavigator.list();
+			netlimsAccTableNavigator.list("branchlist");
 		
 	}
 	self.setBranchCreationStatus(false);

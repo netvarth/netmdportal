@@ -159,13 +159,13 @@ ViewNetrxBranchUI.prototype.bindEvents = function() {
 			self.createError(error);	
 	}); 
 	
-	$j(self.clearMacid).die('click').live('click',function(){
+	/* $j(self.clearMacid).die('click').live('click',function(){
  		self=parent;
 		self.errorHeader.hide();
 		var obj=$j(this);
 		commonMethodInvoker.removeErrors();
 		self.createClearmacidModal(obj);
-	});
+	}); */
 	
 	/* $j(self.makePrim).die('click').live('click',function(){
  		self=parent;

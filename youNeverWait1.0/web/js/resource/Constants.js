@@ -24,6 +24,8 @@ function Constants() {
 	this.NETLIMSACCPAGE="netlimsAcc";
 	this.NETMDACCPAGE="netmdAcc";
 	this.NETRXACCPAGE="netrxAcc";
+	this.SELECTONEBRANCH = "Select atleast one branch";
+	this.SELECTONEBRANCHONLY = "Select only one branch";
 	
 	/*****************-------------netlimsaccount-----------**----*************/
 	this.NETLIMSACCRIBBONURL="/youNeverWait/json/toolbars/netlimsGlobalToolbar.json";
@@ -123,6 +125,7 @@ function Constants() {
 	this.ORGNZTNREPORTFILTERVIEWURL="/youNeverWait/json/view/orgReportfiltr.json";
 	this.ORGNZTNREPORTFILTERNETMDLISTURL="/youNeverWait/ws/ui/netMd/getNetMdBrnchList/";
 	this.REPORTGENERATEURL="/youNeverWait/ws/ui/orgn/report/generate";
+	
 	/*****************----------superadmin-------------**************/
 	this.SUPERADMINRIBBONURL="/youNeverWait/json/toolbars/globalToolbar.json";
 	this.SUPERADMINLEFTPANEURL="/youNeverWait/json/toolbars/leftPaneToolBar.json";
@@ -131,6 +134,27 @@ function Constants() {
 	this.NETRXPAGE="netrx";
 	this.NETPOSPAGE="nepos";
 	this.ORGNPAGE="organization";
+	this.SUPERADMINSYNCMODAL="superadminsyncmodal";
+	this.SUPERADMINSYNCJSON="/youNeverWait/json/new/newsetSync.json";
+	this.SYNCDATASUPERADMINURL="/youNeverWait/ws/ui/superAdmin/getSyncDetails";
+	this.SETSUPERADMINSYCURL="/youNeverWait/ws/ui/superAdmin/setSync";
+	this.SUPERADMINTOOLBARJSON="/youNeverWait/json/toolbars/adminChangePwd.json";
+	this.NEWSUPERADMINPASWRDCHGMODAL="superadminchgpaswrdModal";
+	this.NEWSUPERADMINPASWRDCHGJSON="/youNeverWait/json/changepassword/adminChangePassword.json";
+	this.SUPERADMINCHGPASWRDURL="/youNeverWait/ws/ui/superAdmin/changePassword";
+	this.TESTDETAILS = "Test Details";
+	this.NAMEREQUIRED = "Name required";
+	this.RATEREQUIRED = "Rate required";
+	this.AVOIDDOUBLEQUOTES = "Please avoid double quotes";
+	this.TESTDELETESUCCESS = "Test deleted successfully";
+	this.USERLOGENTRYURL="/youNeverWait/js/youneverwait/settings/userlog/userlogEntryPoint.js";
+	this.USERFUNCTIONSURL="/youNeverWait/js/youneverwait/settings/userlog/userlogFunctions.js";
+	this.USERLOGLIST="USER LOG LIST";
+	this.USERLOGJSON='/youNeverWait/json/userlog/userlog.json';
+	this.USERLOGCONTROLURL="/youNeverWait/ws/ui/superAdmin/enableLog";
+	this.SYNCLOGENTRYURL="/youNeverWait/js/youneverwait/settings/syncLog/syncLogEntryPoint.js";
+	this.SYNCLOGLISTMSG="SYNC LOG LIST";
+	this.SYNCFUNCTIONSURL="/youNeverWait/js/youneverwait/settings/syncLog/syncLogFunctions.js";
 	/*****-----netlims---*****/
 	this.NETLIMSBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/labList";
 	this.NETLIMSLIST="NETLIMS LIST";
@@ -171,7 +195,7 @@ function Constants() {
 	this.SETNETLIMSSYCURL="/youNeverWait/ws/ui/superAdmin/setLabSync";
 	/***********netmd***************/
 	this.NETMDBRANCHLISTURL="/youNeverWait/ws/ui/superAdmin/netmdList";
-	this.NETMDLIST="NetMD LIST";
+	this.NETMDLIST="NETMD LIST";
 	this.NETMD="NETMD";
 	this.NETMDPAGEJSON="/youNeverWait/json/toolbars/netmdPageToolBar.json";
 	this.NETMDLISTJSON="/youNeverWait/json/list/netmdTable.json";
@@ -340,10 +364,7 @@ function Constants() {
 	this.PAYSTATUSENUM = "CollectStatusEnum";
 	this.PRIORITYENUM="PriorityEnum";
 	
-	this.DEFAULTCOLLECTEDAT = "Jeeva";
-	this.LISTDUPLICATION=" List already entered"
-	this.COLLECTED="Collected";
-	this.NOTCOLLECTED= "Not Collected";
+	
 	this.LAYOUTGENERAL="General";
 	this.LAYOUTGENERALONE="GeneralOne";
 	this.LAYOUT1="Layout1";
@@ -418,47 +439,14 @@ function Constants() {
 	this.ORDERVIEWINFO = "Order - ";
 	this.ORDERS = "Orders";
 	this.CREATEORDERUI = "/weblims/json/newOrder.json";
-	this.CREATEORDERURL = "/youNeverWait/ws/ui/order/create";
-	this.UPDATEORDERURL = "/youNeverWait/ws/ui/order/updateSpecimen";
-	this.DELETEORDERURL = "/youNeverWait/ws/ui/order/deleteSpecimen/";
-	this.UPDATEPAYMENTURL = "/youNeverWait/ws/ui/order/updatePayment";
-	this.VIEWORDERURL = "/youNeverWait/ws/ui/order/view/";
-	this.ORDERMODAL = "orderModal";
-	this.ORDERCREATESUCCESS = "Order created successfully";
-	this.ORDERDELETESUCCESS = "Order deleted successfully";
-	this.ORDERUPDATESUCCESS = "Order updated successfully";
-	this.SELECTONEBRANCH = "Select atleast one branch";
-	this.SELECTONEBRANCHONLY = "Select only one branch";
 	this.ORDERDELETECONFIRM = "Do you really want to delete specimen ";
 	this.ORDERBUTTONSCONTAINER = 'orderViewButtonsDiv';
 	this.ORDERVIEWINFOBUTTONS = "orderViewButtons";
 	this.ORDERS = "Orders";
 	this.RESULTNOTREADY ="Results not ready";
-	this.SELECTREADYRESULTS ="Selection not contains ready results";
-	this.ORDERHOLDORCANCEL = "Order is on Hold or Cancelled ";
-	this.SAVEORDERRESULTURL = "/youNeverWait/ws/ui/result/saveOrderResult";
-	this.GETORDERRESULTURL = "/youNeverWait/ws/ui/result/getOrderResult/";
-	this.GETORDERRESULTMAILURL="/youNeverWait/ws/ui/result/emailOrderResult";
-	this.COLLECTIONCHARGE = "Collection Charge";
-	this.DOCTORFEE = "Doctor Fee";
-	this.PREMISES = "Premises";
-	this.AGENT = "Agent";
-	this.BLANKETORDER="Blanket Order";
-	this.OTHERBRANCH="Other Branch";
-	this.BRANCH = "Branch";
-	this.DOCTOR = "Doctor";
-	this.CONFIRMCLEARBILLTABLE = "This will clear the entered tests. Do you want to continue?";
-	this.TP = "TP";
 	this.SPECIALPACKAGE = "Special Package";
 	this.ONDEMAND = "OnDemand";
-	this.GETDISCOUNTVALUE="/youNeverWait/ws/ui/admin/getDiscountValue";
-	this.COLLECTIONNOTBEZERO = "Collection charge should not be zero.";
-	this.DOCTORAMOUNTNOTZERO = "Doctor charge should not be zero";
-	this.GETAGENTBYREFERRAL = "/youNeverWait/ws/ui/agent/getAgentByReferral/";
-	this.GETAGENTBYFACILITY = "/youNeverWait/ws/ui/agent/getAgentByFacility/";
-	this.GETFACILITYBYAREA = "/youNeverWait/ws/ui/agent/getFacilityByArea/";
-	this.GETFACILITIES = "/youNeverWait/ws/ui/agent/getFacilities/";
-	this.REFNOTBENULL = "Ref By not be null/invalid";
+	
 	this.PERCENTAGE = "Percentage";
 	this.PERCENTAGESYMBOL = "(%)";
 	this.RUPEESYMBOL = "(<img src='/youNeverWait/images/rupee-symbel.png'/>)";
@@ -478,8 +466,6 @@ function Constants() {
 	this.DAILY = "Daily";
 	this.MONTHLY = "Monthly";
 	this.SELECTPAYMENTMODE = "Select mode";
-	
-	this.CREATESPECIMENSTATUSUI="/weblims/json/changeSpecimenStatus.json";
 	this.SPECIMENSTATUSMODAL="specimenStatusModal";
 	this.NOSPECIMEN = "No specimen";
 	this.ORDERSTATUSMODAL="statusModal";
@@ -501,16 +487,10 @@ function Constants() {
 	this.RESULTTRANSFERMODAL = "transferModal";
 	this.CREATERESULTMAILUI="/weblims/json/emailSendForm.json";
 	this.RESULTMAILMODAL = "emailModal";
-	this.BILLHEADER1 = "BillHead1";
-	this.BILLHEADER2 = "BillHead2";
-	this.BILLFOOTER1 = "BillFooter1";
-	this.BILLFOOTER2 = "BillFooter2";
+	
 	/*****************-----------------------------------****************/
 	
-	/*****************---------------Referral----------------****************/
-	this.VIEWREFERRALURL = "/youNeverWait/ws/ui/referral/view/";
-	this.REFERRALCREATESUCCESS ="Referral created successfully";
-	/*****************-----------------------------------****************/
+	
 	/*****************---------------TestPackage----------------****************/
 	this.TESTPACKAGE="testPackage";
 	this.TESTPACKAGES="Test Packages";
@@ -539,16 +519,11 @@ function Constants() {
 	this.NORMALPACKAGE="Normal Package";
 	/*****************-----------------------------------****************/
 	this.GETDISCOUNTURL = "/youNeverWait/ws/ui/admin/viewDiscount/";
-	/*****************-----------------------------------****************/
-	this.PRINTSETUPMODAL = "printSetupModal";
-	this.CREATEPRINTSETTINGS = "/weblims/json/printSetup.json";
 	
-	this.CREATEREFERRALURL = "/youNeverWait/ws/ui/referral/create";
-	/******************---------------------***********************/
 	/*****************---------------Setting----------------****************/
 	this.SETTINGLISTURL="/weblims/ws/ui/result/settinglist";
 	this.SETTING="setting";
-	this.SETTINGTITLE="Settings";
+	this.SETTINGTITLE="SETTINGS";
 	this.CREATESETTINGURL="/weblims/ws/ui/result/createSetting";
 	this.DELETESETTINGURL="/weblims/ws/ui/result/deleteSetting/";
 	this.SETTINGPAGETOOLBAR="settingPageToolBar";

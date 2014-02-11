@@ -26,6 +26,7 @@
 	this.mobile=this.viewNetmdAccBrchPage + " #branchMobile";
 	this.email = this.viewNetmdAccBrchPage + " #email";
 	this.deviceNo= this.viewNetmdAccBrchPage + " #devicesno";
+	this.orgName=this.viewNetmdAccBrchPage + " #orgName";
 	this.netmdUIStartup=netmdUIStartup;
 	this.exp = new ExpressionListDTO();
 	this.netmdAccService = new NetmdAccServiceImpl();
@@ -96,6 +97,8 @@ ViewNetmdBranchUI.prototype.writable = function() {
 		$j(self.branchStatus).attr('readonly','readonly');
 		$j(self.deviceNo).addClass('newBox');
 		$j(self.deviceNo).attr('readonly','readonly');
+		$j(self.orgName).addClass('newBox');
+		$j(self.orgName).attr('readonly','readonly');
 	$j(self.cancelButton).show();
 	$j(self.updateButton).show();
 }
@@ -219,6 +222,7 @@ ViewNetmdBranchUI.prototype.viewNetmdBranchDetails = function(branchId) {
 		$j(self.email).val(netmdResponse.branch.email);
 		$j(self.address).val(commonMethodInvoker.br2nl(netmdResponse.branch.address));
 		$j(self.mobile).val(netmdResponse.branch.mobile);
+		$j(self.orgName).val(netmdResponse.branch.organisationName);
 		dataTableProcessor.setCustomTableWithoutNavigator(self.primaryTable);
 		dataTableProcessor.setCustomTableWithoutNavigator(self.secondaryTable);
 		self.viewPassPhraseTableAcc(netmdResponse);
@@ -286,6 +290,7 @@ ViewNetmdBranchUI.prototype.getBranchRequest = function() {
 	branch.setAddress(commonMethodInvoker.nl2br($j(self.address).val()));
 	branch.setPhone($j(self.phone).val());
 	branch.setMobile($j(self.mobile).val());
+	branch.setOrganisationName($j(self.orgName).val());
 	branch.setnumberOfDevices(parseInt(device));
 	return branch;
 }

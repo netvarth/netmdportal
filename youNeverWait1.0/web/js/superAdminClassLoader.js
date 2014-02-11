@@ -24,7 +24,9 @@ function ClassLoader() {
 		})
 		$j.cachedScript("/youNeverWait/js/resource/FilterToolBarProcessor.js").done(function(script,textStatus){
 		})
-		$j.cachedScript("/youNeverWait/js/resource/SettingsToolBarProcessor.js").done(function(script,textStatus){
+		$j.cachedScript("/youNeverWait/js/resource/SuperAdminSettingsToolBarProcessor.js").done(function(script,textStatus){
+		})
+		$j.cachedScript("/youNeverWait/js/youneverwait/settings/superAdminSettings/SuperAdminSettingsClassLoader.js").done(function(script,textStatus){
 		})
 	    $j.cachedScript("/youNeverWait/js/ClassInitializer.js").done(function(script, textStatus) {
 		})
@@ -45,7 +47,10 @@ $j.cachedScript("/youNeverWait/js/framework/notifier.js").done(function(script, 
 })
 $j.cachedScript("/youNeverWait/js/framework/logout.js").done(function(script, textStatus) {
 })
-
+$j.cachedScript("/youNeverWait/js/youneverwait/ui/SASyncStatusProcessor.js").done(function(script, textStatus) {
+}).fail(function(xhr,status,exception) {
+			alert(xhr + exception);
+		})
 		$j.cachedScript("/youNeverWait/js/dto/SpecimenListDTO.js").done(function(script, textStatus) {
 		})
 		$j.cachedScript("/youNeverWait/js/dto/SpecimenCollectStatusDTO.js").done(function(script, textStatus) {
@@ -104,32 +109,11 @@ $j.cachedScript("/youNeverWait/js/framework/logout.js").done(function(script, te
 		})
 		/*--------------------------------*/
 		/* Specimen UI Pages */
-		$j.cachedScript("/youNeverWait/js/youneverwait/netlims/Specimen/SpecimenUIStartup.js").done(function(script,textStatus){
+		$j.cachedScript("/youNeverWait/js/youneverwait/settings/Specimen/SpecimenClassLoader.js").done(function(script,textStatus){
 		}).fail(function(xhr,status,exception) {
 			alert(xhr + exception);
 		})
-		$j.cachedScript("/youNeverWait/js/youneverwait/netlims/Specimen/NewSpecimenUI.js").done(function(script,textStatus){
-		}).fail(function(xhr,status,exception) {
-			alert(xhr + exception);
-		})
-		$j.cachedScript("/youNeverWait/js/youneverwait/netlims/Specimen/ViewSpecimenUI.js").done(function(script,textStatus){
-		}).fail(function(xhr,status,exception) {
-			alert(xhr + exception);
-		})
-		$j.cachedScript("/youNeverWait/js/youneverwait/netlims/Specimen/ViewSpecimenPTB.js").done(function(script,textStatus){
-		}).fail(function(xhr,status,exception) {
-			alert(xhr + exception);
-		})
-		/* Specimen Validator */
-		$j.cachedScript("/youNeverWait/js/framework/SpecimenValidator.js").done(function(script,textStatus){
-		}).fail(function(xhr,status,exception) {
-			alert(xhr + exception);
-		})
-		/* Specimen Service JS */
-		$j.cachedScript("/youNeverWait/js/impl/SpecimenServiceImpl.js").done(function(script, textStatus){
-		}).fail(function(xhr,status,exception) {
-			alert("SpecimenServiceImpl" + xhr + exception);
-		})
+		
 		
 		$j.cachedScript("/youNeverWait/js/impl/NetlimsServiceImpl.js").done(function(script,textStatus){
 		})

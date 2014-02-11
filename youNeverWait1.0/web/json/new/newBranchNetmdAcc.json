@@ -36,6 +36,14 @@
                                             "className": "large capital",
                                             "title": "Branch Name",
                                             "required": true
+                                        },
+										{
+                                            "name": "organizationselect",
+                                            "id": "organizationselect",
+                                            "type": "select",
+                                            "className": "large capital",
+                                            "title": "Organization Name",
+											"style":"width:30%"
                                         }
                                     ]
                                 },

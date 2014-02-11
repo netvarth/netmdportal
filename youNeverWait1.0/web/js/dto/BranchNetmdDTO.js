@@ -45,6 +45,12 @@ BranchNetmdDTO.prototype.setAddress = function(address) {
 BranchNetmdDTO.prototype.getAddress = function() {
 	return this.address;
 }
+BranchNetmdDTO.prototype.setOrganisationName = function(organisationName) {
+	this.organisationName=organisationName;
+}
+BranchNetmdDTO.prototype.getOrganisationName = function() {
+	return this.organisationName;
+}
 BranchNetmdDTO.prototype.setnumberOfDevices = function(numberOfDevices) {
 	this.numberOfDevices=numberOfDevices;
 }
