@@ -20,7 +20,7 @@ SendMsgResultNotifier<SendMailMsgObj> {
 				if (obj.getStatus().equals(SendMsgStatus.SUCCESS)) {
 					System.out.println("Successfully send  doctor registration email  - CALLBACK FUNCTION");
 				} else if (obj.getStatus().equals(SendMsgStatus.FAILED)) {
-					System.out.pri ntln("Failed to send doctor registration email  - CALLBACK FUNCTION");
+					System.out.println("Failed to send doctor registration email  - CALLBACK FUNCTION");
 				}
 	}
 
