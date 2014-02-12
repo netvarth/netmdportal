@@ -6,7 +6,7 @@ var serverPath = "";
 
 $j(document).ready(function() {
 	
-	$j('.Home').die('click').live("click",function(){
+	/*$j('.Home').die('click').live("click",function(){
 		
 		$j.get('/youNeverWait/ws/ui/lab/startUp', function(data){
 		$j('html').html(data);
@@ -14,14 +14,14 @@ $j(document).ready(function() {
 
 	});
 	
-	$j('.AboutNetlims').die('click').live("click",function(){
+	 $j('.AboutNetlims').die('click').live("click",function(){
 		
 		$j.get('/youNeverWait/ws/ui/lab/aboutNetLims', function(data){
 		$j('html').html(data);
 		
 		});
 	
-	});
+	}); 
 	
 	$j('.ContactUs').die('click').live("click",function(){
 		
@@ -44,7 +44,7 @@ $j(document).ready(function() {
 		$j('html').html(data);
 		});
 	
-	});
+	});*/
 	
 	$j("#userNameNetlims").bind("keypress", function (e) {
 		if (e.keyCode == 13) {
