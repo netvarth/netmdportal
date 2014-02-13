@@ -1091,7 +1091,7 @@ public class LabResource {
 	 * @param report
 	 * @return ReportResponseDTO
 	 */
-	@RequestMapping(value = "sendMail", method = RequestMethod.POST)
+	@RequestMapping(value = "mailResult", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseDTO sendMail(
 			@RequestBody MailResult mailResult) {
