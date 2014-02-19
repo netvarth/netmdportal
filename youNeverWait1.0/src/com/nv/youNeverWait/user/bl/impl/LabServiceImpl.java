@@ -61,6 +61,7 @@ import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabDetail;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
+import com.nv.youNeverWait.rs.dto.MailResult;
 import com.nv.youNeverWait.rs.dto.OrderDestinationBranchDTO;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTestResult;
@@ -1514,6 +1515,22 @@ public class LabServiceImpl implements LabService {
 		return response; 
 	}
 
+	@Override
+	public ResponseDTO sendMail(MailResult mailResult) {
+		ResponseDTO response=new ResponseDTO();
+		try {
+
+			SendMailMsgObj obj = new SendMailMsgObj(mailResult.getSubject(),mailResult.getFrom(),mailResult.getTo(),mailResult.getBody(),SendMsgCallbackEnum.LAB_USER_REGISTRATION.getId());
+			mailThread.addSendMsgObj(obj);
+		} catch (Exception e) {
+			log.error("Error while sending Email to admin", e);
+			e.printStackTrace();
+			response.setSuccess(false);
+		}
+		response.setSuccess(true);
+		return response;
+	}
+
 	/**
 	 * @return the labDao
 	 */
@@ -1672,6 +1689,7 @@ public class LabServiceImpl implements LabService {
 		this.resultService = resultService;
 	}
 
+	
 	
 	
 

@@ -38,6 +38,7 @@ import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
+import com.nv.youNeverWait.rs.dto.MailResult;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.Parameter;
@@ -1083,6 +1084,33 @@ public class LabResource {
 		}
 		return response;
 	}
+	
+	/**
+	 * Mailing details 
+	 * 
+	 * @param report
+	 * @return ReportResponseDTO
+	 */
+	@RequestMapping(value = "mailResult", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO sendMail(
+			@RequestBody MailResult mailResult) {
+
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = labService.sendMail(mailResult);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
 	
 
 	/**

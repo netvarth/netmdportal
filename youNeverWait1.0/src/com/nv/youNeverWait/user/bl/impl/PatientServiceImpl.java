@@ -89,7 +89,7 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public ResponseDTO createPatient(PatientDetail patient, HeaderDTO header) {
 
-		validator.validateCreatePatient(patient, header);
+		//validator.validateCreatePatient(patient, header);
 		ResponseDTO response = patientDao.createPatient(patient, header);
 		String branchName = patientDao.getBranch(header.getBranchId());
 

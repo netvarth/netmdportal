@@ -162,34 +162,34 @@ public class PatientValidator extends FilterValidator{
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if(patient.getEmail()!=null && !patient.getEmail().equals("")){
-			if(!patient.getEmail().matches("[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})")){
-
-				
-				ServiceException se = new ServiceException(
-						ErrorCodeEnum.InvalidMailId);
-				se.setDisplayErrMsg(true);
-				throw se;
-			}
-		}
-		if(patient.getPhone()!=null && !patient.getPhone().equals("")){
-			if(!patient.getPhone().matches("^0?[1-9]{1}[0-9]{9}$")){
-				
-				ServiceException se = new ServiceException(
-						ErrorCodeEnum.InvalidPhoneFormat);
-				se.setDisplayErrMsg(true);
-				throw se;
-			}
-		}
-		if(patient.getMobile()!=null && !patient.getMobile().equals("")){
-			if(!patient.getMobile().matches("\\d{10}")){
-				
-				ServiceException se = new ServiceException(
-						ErrorCodeEnum.InvalidMobileFormat);
-				se.setDisplayErrMsg(true);
-				throw se;
-			}
-		}
+//		if(patient.getEmail()!=null && !patient.getEmail().equals("")){
+//			if(!patient.getEmail().matches("[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})")){
+//
+//				
+//				ServiceException se = new ServiceException(
+//						ErrorCodeEnum.InvalidMailId);
+//				se.setDisplayErrMsg(true);
+//				throw se;
+//			}
+//		}
+//		if(patient.getPhone()!=null && !patient.getPhone().equals("")){
+//			if(!patient.getPhone().matches("^0?[1-9]{1}[0-9]{9}$")){
+//				
+//				ServiceException se = new ServiceException(
+//						ErrorCodeEnum.InvalidPhoneFormat);
+//				se.setDisplayErrMsg(true);
+//				throw se;
+//			}
+//		}
+//		if(patient.getMobile()!=null && !patient.getMobile().equals("")){
+//			if(!patient.getMobile().matches("\\d{10}")){
+//				
+//				ServiceException se = new ServiceException(
+//						ErrorCodeEnum.InvalidMobileFormat);
+//				se.setDisplayErrMsg(true);
+//				throw se;
+//			}
+//		}
 		
 	}
 
