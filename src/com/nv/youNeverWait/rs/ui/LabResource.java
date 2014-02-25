@@ -1093,8 +1093,7 @@ public class LabResource {
 	 */
 	@RequestMapping(value = "mailResult", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseDTO sendMail(
-			@RequestBody MailResult mailResult) {
+	public ResponseDTO sendMail(@RequestBody MailResult mailResult) {
 
 		ResponseDTO response = new ResponseDTO();
 		try {
