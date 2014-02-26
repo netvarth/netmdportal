@@ -1,3 +1,3 @@
-curl -H "Accept: application/json" -H "Content-type: application/json; charset=UTF-8" -X POST --data @json/login.json http://www.netlims.in:8080/youNeverWait/ws/ui/auth/netlimsLogin -c cookies.txt
-curl -H "Accept: application/json" -H "Content-type: application/json; charset=UTF-8" -X POST --data @json/branchList.json http://www.netlims.in:8080/youNeverWait/ws/ui/lab/branchList -b cookies.txt
+curl -H "Accept: application/json" -H "Content-type: application/json; charset=UTF-8" -X POST --data @login.json http://www.netlims.in:8080/youNeverWait/ws/ui/auth/netlimsLogin -c cookies.txt
+curl -H "Accept: application/json" -H "Content-type: application/json; charset=UTF-8" -X POST --data @branchList.json http://www.netlims.in:8080/youNeverWait/ws/ui/lab/branchList -b cookies.txt
 curl  http://www.netlims.in:8080/youNeverWait/ws/ui/auth/logout -b cookies.txt
