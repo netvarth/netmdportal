@@ -139,6 +139,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netMdTbl.setHeadOfficeName(netMd.getHeadOfficeName());
 		netMdTbl.setHeadOfficePhone(netMd.getHeadOfficePhone());
 		netMdTbl.setStatus(StatusEnum.Active.getDisplayName());
+		netMdTbl.setLogo(netMd.getLogo());
 		Date createdTime = new Date();
 		netMdTbl.setCreateDateTime(createdTime);
 		netMdTbl.setUpdateDateTime(createdTime);
@@ -422,6 +423,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netmdTbl.setHeadOfficeName(netMd.getHeadOfficeName());
 		netmdTbl.setHeadOfficePhone(netMd.getHeadOfficePhone());
 		netmdTbl.setUpdateDateTime(new Date());
+		netmdTbl.setLogo(netMd.getLogo());
 		update(netmdTbl);
 
 		response.setGlobalId(netmdTbl.getId());
@@ -512,6 +514,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netMd.setUserName(netmdTbl.getNetmdLoginTbl().getUserName());
 		netMd.setPassword(netmdTbl.getNetmdLoginTbl().getPassword());
 		netMd.setUserType(netmdTbl.getNetmdLoginTbl().getUserType());
+		netMd.setLogo(netmdTbl.getLogo());
 		NetMdViewResponseDTO response = new NetMdViewResponseDTO();
 		response.setNetMd(netMd);
 		response.setSuccess(true);
@@ -842,6 +845,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netMd.setHeadOfficeMobile(netMdTbl.getHeadOfficeMobile());
 		netMd.setHeadOfficeName(netMdTbl.getHeadOfficeName());
 		netMd.setHeadOfficePhone(netMdTbl.getHeadOfficePhone());
+		netMd.setLogo(netMdTbl.getLogo());
 		netMd.setPassword(netMdTbl.getNetmdLoginTbl().getPassword());
 		netMd.setUserName(netMdTbl.getNetmdLoginTbl().getUserName());
 		netMd.setUserType(netMdTbl.getNetmdLoginTbl().getUserType());
