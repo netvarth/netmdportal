@@ -1,7 +1,5 @@
 
 function ViewNetmdUI(netmdUIStartup){
-
-	
 	this.viewNetmdPage = "#viewNetmdHeader";
 	this.errorHeader = $j('#errorDivHeader');
 	this.errorData = $j('#errorDivData');
@@ -28,7 +26,10 @@ function ViewNetmdUI(netmdUIStartup){
 	this.owneraddress = this.viewNetmdPage + " #ownerAddress";
 	this.headofficeaddress = this.viewNetmdPage + " #headOfficeAddress";
 	this.netmdUIStartup=netmdUIStartup;
+	this.logoDiv=this.viewNetmdPage + " #logo";
 	this.viewNetmdPTB = new ViewNetmdPTB(this);
+	this.browseImage=this.viewNetmdPage + " #file";
+	this.selectedImage="#netmdlogo";
 }
 
 ViewNetmdUI.prototype.getNetmdUIService = function() {
@@ -120,6 +121,19 @@ ViewNetmdUI.prototype.init = function(netmdId) {
 	self.bindEvents();
 	
 }
+ViewNetmdUI.prototype.editLogo=function(){
+
+var fullClass = $j('<div />');
+	var fileTag = $j('<input type="file" id="file"/>');
+	$j('#logosection').append(fileTag);
+	var rightDiv = $j('<div class="column-right"/>');
+	var fulldiv = $j('<div class="five_sixth"/>');
+	var Notes = $j('<div class="panel-heading"><h1 class="panel-title">upload Tips</h1></div><div ><ul type="circle"><li> The maximum file size for uploads is 25KB .</li><li>Only image files (JPG, GIF, PNG) are allowed </li></ul></div>');
+	fulldiv.append(Notes);
+	rightDiv.append(fulldiv);
+	fullClass.append(rightDiv);
+	$j(self.logoDiv).append(fullClass);
+}
 ViewNetmdUI.prototype.bindEvents = function() {
 	self = this;
 	parent = self;
@@ -128,11 +142,14 @@ ViewNetmdUI.prototype.bindEvents = function() {
 		self.errorHeader.hide();
 		commonMethodInvoker.removeErrors();
 		self.writable();
+		self.editLogo();
+		self.fileEvents();
 	});
 	$j(self.cancelButton).die('click').live('click',function(){
 		self=parent;
 		self.errorHeader.hide();
 		commonMethodInvoker.removeErrors();
+		$j('div #logo').html("");
 		var netmdInfo = self.getNetmd();
 		var netmdId = netmdInfo.netMd.globalId;
 		self.viewNetmdDetails(netmdId);
@@ -143,17 +160,15 @@ ViewNetmdUI.prototype.bindEvents = function() {
 		self.errorHeader.hide();
 		commonMethodInvoker.removeErrors();
 		var netmd = self.getNetmdRequest();
-		//alert(JSON.stringify(netmd));
 		var netmdValidator = new NetmdViewValidator();
 		var error  = netmdValidator.validate(netmd,self);
 		if(error.errorStatus==false) {
 			var netmdUIService = self.getNetmdUIService();
 			var netmdResponse = netmdUIService.updateNetmd(netmd);
-			//alert(JSON.stringify(netmdResponse));
 				if(netmdResponse.error==null) {
 					showTip(constants.NETMDUPDATESUCCESS);//For showing the global Tip
 					var netmdInfo = self.getNetmd();
-					//alert(JSON.stringify(branchInfo));
+					$j(self.logoDiv).html("");
 					self.viewNetmdDetails(netmdInfo.netMd.globalId);
 					self.readable();
 				} else
@@ -163,12 +178,12 @@ ViewNetmdUI.prototype.bindEvents = function() {
 	}); 
 	 
 }
+
 ViewNetmdUI.prototype.viewNetmdDetails = function(netmdId) {
 	self=this;
 	self.setNetmdId(netmdId);
 	var NetmdUIService = self.getNetmdUIService();
 	var netmdInfo = NetmdUIService.viewNetmdDetails(netmdId);
-	//alert(JSON.stringify(netmdInfo));
 	if(!netmdInfo.errorMessage) {
 		self.setNetmd(netmdInfo);
 		$j(self.netmdid).val(netmdInfo.netMd.globalId);
@@ -185,12 +200,24 @@ ViewNetmdUI.prototype.viewNetmdDetails = function(netmdId) {
 		$j(self.headofficename).val(netmdInfo.netMd.headOfficeName);
 		$j(self.headofficemobile).val(netmdInfo.netMd.headOfficeMobile);
 		$j(self.username).val(netmdInfo.netMd.userName);
+		self.displayLogo(netmdInfo.netMd.logo);
 				
 	} else 
 		commonMethodInvoker.createServerError(self.errorHeader,self.errorData,netmdInfo.errorMessage);
 	self.setPageTitle("View NetMD ");
 }
 
+ViewNetmdUI.prototype.displayLogo = function(data) {
+	var leftDiv = $j('<div class="column-left" id="logosection"/>');
+	var pTag=$j('<p></p>');
+	 pTag.empty();
+	var titleTag=$j(' <span>Logo</span><br>');
+	pTag.append(titleTag);
+	var fileTag = $j('<img src="'+data +'" " id="netmdlogo" width="100px" height="60px" title="Logo"/>');
+	pTag.append(fileTag);
+	leftDiv.append(pTag);
+	$j(self.logoDiv).append(leftDiv);
+}
 ViewNetmdUI.prototype.getNetmdRequest = function() {
 	var self=this;
 	var netmd = new NetmdDTO();
@@ -228,8 +255,7 @@ ViewNetmdUI.prototype.getNetmdRequest = function() {
 	netmd.setheadOfficeEmail($j(self.headofficeemail).val());
 	netmd.setheadOfficePhone($j(self.headofficephone).val());
 	netmd.setheadOfficeMobile($j(self.headofficemobile).val());
-	//netmd.setuserName($j(self.username).val());
-	//netmd.setpassword($j(self.password).val());
+	netmd.setlogo($j(this.selectedImage).attr('src'));
 	return netmd;
 }
 
@@ -246,6 +272,35 @@ ViewNetmdUI.prototype.getPrevId = function(curId,branchResult) {
 		}
 	});
 	return prevId;	
+}
+ViewNetmdUI.prototype.fileEvents=function(){
+
+	$j('#viewNetmdHeader #file').change(function() {
+		var reader = new FileReader();
+    	var image  = new Image();
+    	var file = this.files[0];
+    	reader.readAsDataURL(file);  
+    	reader.onload = function(_file) {
+    		image.src="";
+        	image.src    = _file.target.result;              // url.createObjectURL(file);
+        	image.onload = function() {
+	            var w = this.width,
+	                h = this.height,
+	                s = ~~(file.size/1024);
+	            if(w!=150 && h!=60) {
+	               alert("Image should be in 150x60 ");
+	                $j(self.selectedImage).removeAttr('src');
+	               return false;
+	            }
+	            if(s>=25) {
+	               alert("Image size shouldn't exceed 25KB");
+	                $j(self.selectedImage).removeAttr('src');
+	               return false;
+	            }
+	            $j(self.selectedImage).attr('src', this.src);
+	        };
+        }
+	});
 }
 ViewNetmdUI.prototype.getNextId = function(curId,branchResult) {
 	var nextId;
