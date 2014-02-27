@@ -29,6 +29,7 @@ public class NetMdDTO {
 	private String userName;
 	private String password;
 	private String userType;
+	private String logo;
 	
 	/**
 	 * @return the globalId
@@ -205,6 +206,12 @@ public class NetMdDTO {
 	 */
 	public String getOwnerFirstName() {
 		return ownerFirstName;
+	}
+	public String getLogo() {
+		return logo;
+	}
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
 	/**
 	 * @param ownerFirstName the ownerFirstName to set
