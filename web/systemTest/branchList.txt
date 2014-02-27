@@ -1,1 +1,1 @@
-{"exp":[{"name":"labId","value":"230","operator":"eq"}],"from":"0","count":"20", "asc":true }
+{"exp":[{"name":"labId","value":"230","operator":"eq"}],"from":"0","count":"20", "asc":true}
