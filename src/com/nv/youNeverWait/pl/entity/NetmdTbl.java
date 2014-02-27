@@ -2,6 +2,7 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -41,6 +42,9 @@ public class NetmdTbl implements Serializable {
 
 	@Column(length=45)
 	private String name;
+	
+	@Column(name="logo")
+	private String logo;
 
 	@Column(name="owner_address", length=145)
 	private String ownerAddress;
@@ -154,6 +158,14 @@ public class NetmdTbl implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
 
 	public String getOwnerAddress() {
