@@ -38,7 +38,7 @@ import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
-import com.nv.youNeverWait.rs.dto.MailResult;
+import com.nv.youNeverWait.rs.dto.MailTransferInfo;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.Parameter;
@@ -1093,7 +1093,7 @@ public class LabResource {
 	 */
 	@RequestMapping(value = "mailResult", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseDTO sendMail(@RequestBody MailResult mailResult) {
+	public ResponseDTO sendMail(@RequestBody MailTransferInfo mailResult) {
 
 		ResponseDTO response = new ResponseDTO();
 		try {
