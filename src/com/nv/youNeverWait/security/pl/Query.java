@@ -120,6 +120,7 @@ public class Query {
 	public static final String GET_NEW_NETMD_BRANCHES = "from NetmdBranchTbl as branch where  branch.createDateTime>:param1 and branch.createDateTime<:param2 order by createDateTime";
 	public static final String GET_UPDATE_NETMD_BRANCHES = "from NetmdBranchTbl as branch where  branch.createDateTime < branch.updateDateTime and branch.updateDateTime>:param1 and branch.updateDateTime<:param2 order by updateDateTime";
 	public static final String GET_NETMD_BRANCHES = "from NetmdBranchTbl as branch where branch.netmdTbl.id=:param1";
+	public static final String GET_UPDATE_NETMD_BRANCH_DETAILS ="from NetmdBranchTbl as branch where  branch.createDateTime < branch.updateDateTime and branch.updateDateTime>:param1 and branch.updateDateTime<:param2 and branch.id=:param3";
 	
 	/*OrganisationNetmdTbl*/
 	public static final String GET_ORGANISATION_NETMD_BRANCH_LIST = "from OrganisationNetmdTbl as orgNetmdBranch where orgNetmdBranch.organisationTbl.id=:param1 ";
@@ -145,6 +146,7 @@ public class Query {
 	public static final String GET_UPDATE_NETMD = "from NetmdTbl as netmd where  netmd.createDateTime < netmd.updateDateTime and netmd.updateDateTime>:param1 and netmd.updateDateTime<:param2 order by updateDateTime";
 	public static final String GET_NETMD_BY_LOGIN_ID = "from NetmdTbl as netmd where  netmd.netmdLoginTbl.id=:param1";
 	public static final String GET_NETMD = "from NetmdTbl as netmd" ;
+	public static final String GET_UPDATE_NETMD_DETAILS = "from NetmdTbl as netmd where  netmd.createDateTime < netmd.updateDateTime and netmd.updateDateTime>:param1 and netmd.updateDateTime<:param2 and netmd.id=:param3";
 	/* SeriesTbl */
 	public static final String GET_EXISTING_SERIES = "from SeriesTbl as series where series.seriesId= :param1 and series.netmdPassphraseTbl.id=:param2";
 
@@ -323,6 +325,10 @@ public class Query {
 
 	/*OrderResultTbl*/
 	public static final String GET_ORDER_TEST_RESULTS = "from OrderResultTbl as orderResult where orderResult.ownerLabBranchTbl.id=:param1 and orderResult.labBranchTbl.id!=:param1 and orderResult.updatedDateTime>=:param2 and orderResult.updatedDateTime<:param3 ";
+
+	/*Netmd_question_tbl*/
+	public static final String GET_NETMD_QUESTION_TBL = "from NetmdQuestionTbl";
+	public static final String GET_BY_QUESTIONNAIRE = "from NetmdAnswerTbl as answer where answer.netmdQuestionnaireTbl.id=:param1";
 	
 	
 	
