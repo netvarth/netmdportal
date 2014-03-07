@@ -37,6 +37,7 @@ public interface NetMdDao {
 	public ResponseDTO  create(NetMdDTO netMd);
 	public ResponseDTO  update(NetMdDTO netMd);
 	public ResponseDTO  delete(int netMdId);
+	public  NetMdDTO getUpdateNetMd(String lastSyncTime, Date currentSyncTime,HeaderDTO header);
 	public ResponseDTO  updateBranch(NetMdBranchDTO branch);
 	public NetMdBranchResponseDTO viewBranch(int globalId);
 	public ResponseDTO createBranch(NetMdBranchDTO branch);
@@ -70,6 +71,8 @@ public interface NetMdDao {
 	public ResponseDTO updateNetmdBranchSystemInfo(
 			BranchSystemInfoDetails systemCriticalDetails);
 	public NetMdBranchListResponseDTO getNetMdBrnchList(int organisationId);
+	public NetMdBranchDTO getUpdateNetmdBranch(String lastSyncTime,
+			Date currentSyncTime,HeaderDTO header);
 	
 
 }
