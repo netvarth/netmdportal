@@ -139,6 +139,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netMdTbl.setHeadOfficeName(netMd.getHeadOfficeName());
 		netMdTbl.setHeadOfficePhone(netMd.getHeadOfficePhone());
 		netMdTbl.setStatus(StatusEnum.Active.getDisplayName());
+		netMdTbl.setLogo(netMd.getLogo());
 		Date createdTime = new Date();
 		netMdTbl.setCreateDateTime(createdTime);
 		netMdTbl.setUpdateDateTime(createdTime);
@@ -422,6 +423,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netmdTbl.setHeadOfficeName(netMd.getHeadOfficeName());
 		netmdTbl.setHeadOfficePhone(netMd.getHeadOfficePhone());
 		netmdTbl.setUpdateDateTime(new Date());
+		netmdTbl.setLogo(netMd.getLogo());
 		update(netmdTbl);
 
 		response.setGlobalId(netmdTbl.getId());
@@ -512,6 +514,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netMd.setUserName(netmdTbl.getNetmdLoginTbl().getUserName());
 		netMd.setPassword(netmdTbl.getNetmdLoginTbl().getPassword());
 		netMd.setUserType(netmdTbl.getNetmdLoginTbl().getUserType());
+		netMd.setLogo(netmdTbl.getLogo());
 		NetMdViewResponseDTO response = new NetMdViewResponseDTO();
 		response.setNetMd(netMd);
 		response.setSuccess(true);
@@ -842,6 +845,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netMd.setHeadOfficeMobile(netMdTbl.getHeadOfficeMobile());
 		netMd.setHeadOfficeName(netMdTbl.getHeadOfficeName());
 		netMd.setHeadOfficePhone(netMdTbl.getHeadOfficePhone());
+		netMd.setLogo(netMdTbl.getLogo());
 		netMd.setPassword(netMdTbl.getNetmdLoginTbl().getPassword());
 		netMd.setUserName(netMdTbl.getNetmdLoginTbl().getUserName());
 		netMd.setUserType(netMdTbl.getNetmdLoginTbl().getUserType());
@@ -2326,6 +2330,101 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 
 		response.setSuccess(true);
 		return response;
+	}
+
+
+
+	@Override
+	public NetMdDTO getUpdateNetMd(String lastSyncTime, Date currentSyncTime,HeaderDTO header) {
+		NetMdDTO netmdDTO=null;
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		Date lastsync = null;
+		try {
+			lastsync = sdf.parse(lastSyncTime);
+		} catch (ParseException e) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidSyncTime);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+	
+		NetmdTbl netmdTbl = getUpdateNetmdDetails(lastsync, currentSyncTime,header);
+		if(netmdTbl!=null){
+			netmdDTO=new NetMdDTO();
+			netmdDTO.setName(netmdTbl.getName());
+			netmdDTO.setOwnerFirstName(netmdTbl.getOwnerFirstName());
+			netmdDTO.setOwnerLastName(netmdTbl.getOwnerLastName());
+			netmdDTO.setOwnerAddress(netmdTbl.getOwnerAddress());
+			netmdDTO.setOwnerEmail(netmdTbl.getOwnerEmail());
+			netmdDTO.setOwnerMobile(netmdTbl.getOwnerMobile());
+			netmdDTO.setOwnerPhone(netmdTbl.getOwnerPhone());
+			netmdDTO.setHeadOfficeName(netmdTbl.getHeadOfficeName());
+			netmdDTO.setHeadOfficeAddress(netmdTbl.getHeadOfficeAddress());
+			netmdDTO.setHeadOfficeEmail(netmdTbl.getHeadOfficeEmail());
+			netmdDTO.setHeadOfficeMobile(netmdTbl.getHeadOfficeMobile());
+			netmdDTO.setHeadOfficePhone(netmdTbl.getHeadOfficePhone());
+			netmdDTO.setLogo(netmdTbl.getLogo());
+			netmdDTO.setGlobalId(netmdTbl.getId());
+			netmdDTO.setStatus(netmdTbl.getStatus());
+		//	netmdDTO.setUpdateDateTime(currentSyncTime.toString());
+
+		}
+		return netmdDTO;
+	}
+
+	private NetmdTbl getUpdateNetmdDetails(Date lastSyncTime,
+			Date currentSyncTime,HeaderDTO header) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_UPDATE_NETMD_DETAILS);
+		query.setParameter("param1", lastSyncTime);
+		query.setParameter("param2", currentSyncTime);
+		query.setParameter("param3",header.getHeadOfficeId());
+		return executeUniqueQuery(NetmdTbl.class, query);
+	}
+
+	@Override
+	public NetMdBranchDTO getUpdateNetmdBranch(String lastSyncTime,
+			Date currentSyncTime,HeaderDTO header) {
+		NetMdBranchDTO netmdBranchDTO=null;
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
+		Date lastsync = null;
+		try {
+			lastsync = sdf.parse(lastSyncTime);
+		} catch (ParseException e) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidSyncTime);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
+		
+		NetmdBranchTbl netmdbranchTbl=getUpdateNetmdBranchDetails(lastsync, currentSyncTime,header);
+		if(netmdbranchTbl!=null){
+			netmdBranchDTO=new NetMdBranchDTO();
+			netmdBranchDTO.setGlobalId(netmdbranchTbl.getId());
+			netmdBranchDTO.setName(netmdbranchTbl.getName());
+			netmdBranchDTO.setAddress(netmdbranchTbl.getAddress());
+			netmdBranchDTO.setPhone(netmdbranchTbl.getPhone());
+			netmdBranchDTO.setMobile(netmdbranchTbl.getMobile());
+			netmdBranchDTO.setEmail(netmdbranchTbl.getEmail());
+			netmdBranchDTO.setNetMdId(netmdbranchTbl.getNetmdTbl().getId());
+			netmdBranchDTO.setStatus(netmdbranchTbl.getStatus());	
+			
+		}
+		return netmdBranchDTO;
+	
+	}
+
+	private NetmdBranchTbl getUpdateNetmdBranchDetails(Date lastSyncTime,
+			Date currentSyncTime, HeaderDTO header) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_UPDATE_NETMD_BRANCH_DETAILS);
+		query.setParameter("param1", lastSyncTime);
+		query.setParameter("param2", currentSyncTime);
+		query.setParameter("param3",header.getBranchId());
+		return executeUniqueQuery(NetmdBranchTbl.class, query);
 	}
 
 }

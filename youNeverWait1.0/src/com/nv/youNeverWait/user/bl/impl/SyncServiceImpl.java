@@ -37,7 +37,11 @@ import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
+import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
+import com.nv.youNeverWait.rs.dto.NetMdDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
+import com.nv.youNeverWait.rs.dto.NetmdQuestionAnswerDTO;
+import com.nv.youNeverWait.rs.dto.NetmdQuestionAnswerSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientResponse;
@@ -63,6 +67,7 @@ import com.nv.youNeverWait.user.bl.service.DoctorService;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.service.PatientService;
+import com.nv.youNeverWait.user.bl.service.QuestionnaireService;
 import com.nv.youNeverWait.user.bl.service.ResultService;
 import com.nv.youNeverWait.user.bl.service.ScheduleService;
 import com.nv.youNeverWait.user.bl.service.SpecimenService;
@@ -87,6 +92,7 @@ public class SyncServiceImpl implements SyncService {
 	private LabService labService;
 	private SpecimenService specimenService;
 	private TestService testService;
+	private QuestionnaireService questionnaireService;
 	
 	private static final Log log = LogFactory.getLog(SyncServiceImpl.class);
 
@@ -128,6 +134,12 @@ public class SyncServiceImpl implements SyncService {
 				.getHeader());
 
 		if (headerResponse.isPrimaryDevice()) {
+			NetMdDTO NetmdResponse=getNetmdDetails(sync.getLastSyncTime(),currentSyncTime,sync.getHeader());
+			syncResponse.setNetmdResponse(NetmdResponse);
+			
+			NetMdBranchDTO netmdBranch=getNetmdBranchDetails(sync.getLastSyncTime(),currentSyncTime,sync.getHeader());
+			syncResponse.setNetmdBranchResponse(netmdBranch);
+			
 			/* Synchronizing doctor details */
 			List<DoctorResponse> doctorResponseList = getDoctorResponseList(
 					sync.getHeader(), sync.getNewDoctorList(),
@@ -178,7 +190,19 @@ public class SyncServiceImpl implements SyncService {
 			/* Synchronizing patient case details*/
 			List<CaseSyncResponseDTO> caseResponseList= getCaseResponseList(sync.getHeader(),sync.getNewCaseList(),sync.getUpdateCaseList());
 			syncResponse.setPatientCaseResponse(caseResponseList);
-		}// end of if loop
+			
+			
+			List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswerList=getNetmdQuestionnaireList(sync.getHeader(),sync.getNewNetmdQuestionnaireList(),sync.getUpdateNetmdQuestionnaireList());
+			syncResponse.setNetmdQuestionAnswer(netmdQuestionAnswerList);
+			
+			
+		}
+		
+		// end of if loop
+		
+		
+		
+		
 
 		/*Retrieve appointments for secondary devices*/
 		if(!headerResponse.isPrimaryDevice()){
@@ -234,6 +258,122 @@ public class SyncServiceImpl implements SyncService {
 		syncResponse.setSuccess(true);
 		return syncResponse;
 	}
+
+	private List<NetmdQuestionAnswerSyncResponseDTO> getNetmdQuestionnaireList(
+			HeaderDTO header, List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList, List<NetmdQuestionAnswerDTO> updateNetmdQuestionnaireList) {
+		List<NetmdQuestionAnswerSyncResponseDTO> netmdQuesstionAnswer=new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
+		List<NetmdQuestionAnswerSyncResponseDTO> newNetmdQuestionnaireResponseList = syncNewNetmdQuestionnaire(
+						newNetmdQuestionnaireList, header);
+		List<NetmdQuestionAnswerSyncResponseDTO> updatedNetmdQuestionnaireResponseList = syncUpdatedNetmdQuestionnaire(
+						updateNetmdQuestionnaireList, header);
+		netmdQuesstionAnswer.addAll(newNetmdQuestionnaireResponseList);
+		netmdQuesstionAnswer.addAll(updatedNetmdQuestionnaireResponseList);
+		return netmdQuesstionAnswer;
+	}
+
+	private List<NetmdQuestionAnswerSyncResponseDTO> syncUpdatedNetmdQuestionnaire(
+			List<NetmdQuestionAnswerDTO> updateNetmdQuestionnaireList,
+			HeaderDTO header) {
+		List<NetmdQuestionAnswerSyncResponseDTO> updateNetmdewQuestionnaireResponseList = new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
+		for (NetmdQuestionAnswerDTO netmdQuestionAnswer : updateNetmdQuestionnaireList) {
+			try {
+
+				ResponseDTO response = questionnaireService.updateQuestionnaire(netmdQuestionAnswer, header);
+				NetmdQuestionAnswerSyncResponseDTO updateQuestionAnswerDTOSyncResponse = new NetmdQuestionAnswerSyncResponseDTO();
+				updateQuestionAnswerDTOSyncResponse.setActionName(ActionNameEnum.UPDATE
+						.getDisplayName());
+				updateQuestionAnswerDTOSyncResponse.setUpdateDateTime(response.getUpdateDateTime());
+				updateQuestionAnswerDTOSyncResponse.setGlobalId(response.getGlobalId());
+				updateQuestionAnswerDTOSyncResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
+				updateQuestionAnswerDTOSyncResponse.setSuccess(true);
+				updateNetmdewQuestionnaireResponseList.add(updateQuestionAnswerDTOSyncResponse);
+			}
+			catch (ServiceException se) {
+				log.error("Error while saving updated NetmdQuestionnaire into portal ", se);
+				List<Parameter> parameters = se.getParamList();
+				ErrorDTO error = new ErrorDTO();
+				error.setErrCode(se.getError().getErrCode());
+				error.setParams(parameters);
+				error.setDisplayErrMsg(se.isDisplayErrMsg());
+				NetmdQuestionAnswerSyncResponseDTO updateNetmdQuestionnaireResponse = new NetmdQuestionAnswerSyncResponseDTO();
+				updateNetmdQuestionnaireResponse.setError(error);
+				updateNetmdQuestionnaireResponse.setSuccess(false);
+				updateNetmdQuestionnaireResponse.setId(updateNetmdQuestionnaireResponse.getId());
+				updateNetmdQuestionnaireResponse.setGlobalId(updateNetmdQuestionnaireResponse.getGlobalId());
+				updateNetmdQuestionnaireResponse.setActionName(ActionNameEnum.UPDATE
+						.getDisplayName());
+
+				updateNetmdewQuestionnaireResponseList.add(updateNetmdQuestionnaireResponse);
+			}
+		}
+		return updateNetmdewQuestionnaireResponseList;
+	}
+
+	private List<NetmdQuestionAnswerSyncResponseDTO> syncNewNetmdQuestionnaire(
+			List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList,
+			HeaderDTO header) {
+		
+		List<NetmdQuestionAnswerSyncResponseDTO> newNetmdQuestionnaireResponseList = new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
+		for (NetmdQuestionAnswerDTO netmdQuestionAnswer : newNetmdQuestionnaireList) {
+			try {
+
+				ResponseDTO response = questionnaireService.NetmdQuestionnaire(netmdQuestionAnswer, header);
+				NetmdQuestionAnswerSyncResponseDTO netmdQuestionAnswerDTOSyncResponse = new NetmdQuestionAnswerSyncResponseDTO();
+				netmdQuestionAnswerDTOSyncResponse.setActionName(ActionNameEnum.ADD
+						.getDisplayName());
+				netmdQuestionAnswerDTOSyncResponse.setCreateDateTime(response.getCreateDateTime());
+				netmdQuestionAnswerDTOSyncResponse.setUpdateDateTime(response.getUpdateDateTime());
+				netmdQuestionAnswerDTOSyncResponse.setGlobalId(response.getGlobalId());
+				netmdQuestionAnswerDTOSyncResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
+				netmdQuestionAnswerDTOSyncResponse.setSuccess(true);
+
+				newNetmdQuestionnaireResponseList.add(netmdQuestionAnswerDTOSyncResponse);
+			} catch (ServiceException se) {
+				log.error("Error while saving new NetmdQuestionnaire into portal ", se);
+				ErrorDTO error = new ErrorDTO();
+				error.setErrCode(se.getError().getErrCode());
+				error.setDisplayErrMsg(se.isDisplayErrMsg());
+				NetmdQuestionAnswerSyncResponseDTO netmdQuestionAnswerResponse = new NetmdQuestionAnswerSyncResponseDTO();
+				netmdQuestionAnswerResponse.setError(error);
+				netmdQuestionAnswerResponse.setSuccess(false);
+				netmdQuestionAnswerResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
+				netmdQuestionAnswerResponse.setActionName(ActionNameEnum.ADD
+						.getDisplayName());
+				newNetmdQuestionnaireResponseList.add(netmdQuestionAnswerResponse);
+			}
+		}
+		return newNetmdQuestionnaireResponseList;
+	}
+
+	private NetMdBranchDTO getNetmdBranchDetails(String lastSyncTime,
+			Date currentSyncTime,HeaderDTO header) {
+		NetMdBranchDTO netmdBranch=syncNetmdBranchDetails(lastSyncTime,currentSyncTime,header);
+		// TODO Auto-generated method stub
+		return netmdBranch;
+	}
+
+	private NetMdBranchDTO syncNetmdBranchDetails(String lastSyncTime,
+			Date currentSyncTime,HeaderDTO header) {
+		NetMdBranchDTO netmdBranchDTO=netMdService.getUpdateNetmdBranch(lastSyncTime, currentSyncTime,header);
+		 return netmdBranchDTO;	
+	}
+
+	private NetMdDTO getNetmdDetails(String lastSyncTime, Date currentSyncTime,HeaderDTO header) {
+		NetMdDTO netmdDetails = syncNetmdDetails(lastSyncTime,currentSyncTime,header);
+		
+		return netmdDetails;
+	}
+
+
+	private NetMdDTO syncNetmdDetails(String lastSyncTime, Date currentSyncTime,HeaderDTO header) {
+
+		NetMdDTO netmd=netMdService.getUpdateNetMd(lastSyncTime,currentSyncTime,header);
+		
+		 return netmd;	
+	}
+
+
+
 
 	/**
 	 * @param header
@@ -1443,6 +1583,14 @@ public class SyncServiceImpl implements SyncService {
 	 */
 	public void setTestService(TestService testService) {
 		this.testService = testService;
+	}
+
+	public QuestionnaireService getQuestionnaireService() {
+		return questionnaireService;
+	}
+
+	public void setQuestionnaireService(QuestionnaireService questionnaireService) {
+		this.questionnaireService = questionnaireService;
 	}
 
 	

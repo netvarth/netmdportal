@@ -3,6 +3,8 @@
  */
 package com.nv.youNeverWait.user.pl.impl;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,17 +14,22 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.AnswerTbl;
 import com.nv.youNeverWait.pl.entity.CaseTbl;
 import com.nv.youNeverWait.pl.entity.DepartmentTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.pl.entity.NetmdAnswerTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
+import com.nv.youNeverWait.pl.entity.NetmdQuestionTbl;
+import com.nv.youNeverWait.pl.entity.NetmdQuestionnaireTbl;
 import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.QuestionTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.AnswerDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.NetmdQuestionAnswerDTO;
 import com.nv.youNeverWait.rs.dto.QuestionAnswerDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.security.pl.Query;
@@ -174,6 +181,151 @@ public class QuestionnaireDaoImpl extends GenericDaoHibernateImpl implements Que
 		this.em = em;
 	}
 
+	@Override
+	@Transactional
+	public ResponseDTO NetmdQuestionnaire(NetmdQuestionAnswerDTO questionnaire) {
+		ResponseDTO response = new ResponseDTO();
+		NetmdQuestionnaireTbl ntmdQstnnaireTbl=new NetmdQuestionnaireTbl();
+		Date currentTime=new Date();
+        ntmdQstnnaireTbl.setCreatedTime(currentTime); 
+        ntmdQstnnaireTbl.setUpdatedTime(currentTime); 
+		save(ntmdQstnnaireTbl);
+		response.setSuccess(true);
+		response.setId(ntmdQstnnaireTbl.getId());
+		return response;
+	}
+
+	@Override
+	@Transactional
+	public ResponseDTO createNetmdQuestionnaire(
+			NetmdQuestionAnswerDTO questionnaire,HeaderDTO header) {
 	
+		ResponseDTO response = new ResponseDTO();
+		Map<String, Integer> qMap = new HashMap<String, Integer>();
+		NetmdQuestionnaireTbl netmdQuestionnaireTbl=getById(NetmdQuestionnaireTbl.class, questionnaire.getQuestionnaireId());
+		if(netmdQuestionnaireTbl==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.QuestionnaireNotFound);
+		
+			throw se;
+		}
+		
+		NetmdBranchTbl netmdBranchTbl=  getById(NetmdBranchTbl.class,header.getBranchId());
+		if(netmdBranchTbl==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		List<NetmdQuestionTbl> questionList= getByQuestionId();
+		for(NetmdQuestionTbl questionObj:questionList){
+			qMap.put(questionObj.getQuestionKey(), questionObj.getId());
+		}
+	
+		for(AnswerDTO answer:questionnaire.getAnswerDTO()){
+			String ans=answer.getAnswer().trim();
+			if(!ans.isEmpty() && !ans.contains("select")){
+			    NetmdAnswerTbl netmdanswerTbl= new NetmdAnswerTbl();
+			    NetmdQuestionTbl qstntable =new NetmdQuestionTbl();
+			    qstntable.setId(qMap.get(answer.getQuestionKey()));
+				netmdanswerTbl.setNetmdQuestionnaireTbl(netmdQuestionnaireTbl);
+				netmdanswerTbl.setNetmdQuestionTbl(qstntable);
+				netmdanswerTbl.setAnswer(ans);
+				netmdanswerTbl.setNetmdBranchTbl(netmdBranchTbl);
+				save(netmdanswerTbl);
+			}
+
+		}
+
+		response.setSuccess(true);
+		response.setId(questionnaire.getQuestionnaireId());	
+		response.setGlobalId(netmdQuestionnaireTbl.getId());
+		response.setCreateDateTime(netmdQuestionnaireTbl.getCreatedTime().toString());
+		response.setUpdateDateTime(netmdQuestionnaireTbl.getUpdatedTime().toString());
+		return response;
+	}
+
+	private List<NetmdQuestionTbl> getByQuestionId() {
+		javax.persistence.Query query = em.createQuery(Query.GET_NETMD_QUESTION_TBL);
+		return executeQuery(NetmdQuestionTbl.class, query);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public ResponseDTO updateQuestionnaire(NetmdQuestionAnswerDTO questionAnswer,HeaderDTO header) {
+		ResponseDTO response = new ResponseDTO();
+		Map<String, Integer> qMap = new HashMap<String, Integer>();
+		NetmdQuestionnaireTbl netmdQuestionnaireTbl=getById(NetmdQuestionnaireTbl.class, questionAnswer.getQuestionnaireId());
+		if(netmdQuestionnaireTbl==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.QuestionnaireNotFound);
+		
+			throw se;
+		}
+		NetmdBranchTbl netmdBranchTbl=  getById(NetmdBranchTbl.class,header.getBranchId());
+		if(netmdBranchTbl==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		List<NetmdAnswerTbl> answerlist=getAnswersLists(netmdQuestionnaireTbl.getId());
+		for(NetmdAnswerTbl answer:answerlist){
+			delete(answer);
+		}
+		
+		List<NetmdQuestionTbl> questionList= getByQuestionId();
+		for(NetmdQuestionTbl questionObj:questionList){
+			qMap.put(questionObj.getQuestionKey(), questionObj.getId());
+		}
+		for(AnswerDTO answer:questionAnswer.getAnswerDTO()){
+			String ans=answer.getAnswer().trim();
+			if(!ans.isEmpty() && !ans.contains("select")){
+			    NetmdAnswerTbl netmdanswerTbl= new NetmdAnswerTbl();
+			    NetmdQuestionTbl qstntable =new NetmdQuestionTbl();
+			    qstntable.setId(qMap.get(answer.getQuestionKey()));
+				netmdanswerTbl.setNetmdQuestionnaireTbl(netmdQuestionnaireTbl);
+				netmdanswerTbl.setNetmdQuestionTbl(qstntable);
+				netmdanswerTbl.setAnswer(answer.getAnswer());
+				netmdanswerTbl.setNetmdBranchTbl(netmdBranchTbl);
+				save(netmdanswerTbl);
+			}
+		}
+		Date currentTime=new Date();
+		netmdQuestionnaireTbl.setUpdatedTime(currentTime); 
+		update(netmdQuestionnaireTbl);
+		response.setSuccess(true);
+		response.setId(questionAnswer.getQuestionnaireId());
+		response.setGlobalId(netmdQuestionnaireTbl.getId());
+		response.setUpdateDateTime(netmdQuestionnaireTbl.getUpdatedTime().toString());
+		return response;
+	}
+
+	private List<NetmdAnswerTbl> getAnswersLists(int qstnrId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_BY_QUESTIONNAIRE);
+		query.setParameter("param1", qstnrId);
+		return executeQuery(NetmdAnswerTbl.class, query);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public ResponseDTO deleteQuestionnaire(int id,HeaderDTO header) {
+		ResponseDTO response=new ResponseDTO();
+		NetmdQuestionnaireTbl netmdQuestionnaireTbl=getById(NetmdQuestionnaireTbl.class,id);
+		if(netmdQuestionnaireTbl==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.QuestionnaireNotFound);
+			throw se;
+		}
+		List<NetmdAnswerTbl> answerlist=getAnswersLists(netmdQuestionnaireTbl.getId());
+		for(NetmdAnswerTbl answer:answerlist){
+			delete(answer);
+		}
+		delete(netmdQuestionnaireTbl);
+		response.setSuccess(true);
+		return response;
+	}
 
 }

@@ -23,6 +23,10 @@ function NewNetmdUI(NetmdUIStartup) {
 	this.username=this.newnetmdPage + " #username";
 	this.netmdUIStartup = NetmdUIStartup;
 	this.netmdCreationStatus= false;
+	this.logo="#newNetmdForm #logosection";
+	this.browseImage = this.newnetmdPage +" #file";
+	this.selectedImage = this.newnetmdPage +" #logo";
+	this.logoDiv=this.newnetmdPage+" #logoDiv";
 }
 
 NewNetmdUI.prototype.getNetmdCreationStatus = function() {
@@ -45,6 +49,8 @@ NewNetmdUI.prototype.getNetmdUIService = function() {
 
 NewNetmdUI.prototype.init = function() {
 	self =this;
+	self =this;
+	$j(self.logo).html(self.getNetmdLogo());
 	self.bindEvents();
 }
 
@@ -52,6 +58,7 @@ NewNetmdUI.prototype.clearFields = function() {
 	$j(this.newnetmdPage + " input[type=text]").val("");
 	$j(this.newnetmdPage + " input[type=password]").val("");
 	$j(this.newnetmdPage + " textarea").val("");
+	$j(this.logoDiv).html('');
 }
 NewNetmdUI.prototype.removecolors = function(cl) {
 	commonMethodInvoker.removeErrorColor(self.inputFields);
@@ -62,6 +69,27 @@ NewNetmdUI.prototype.createError = function(error) {
 	$j(error.errorMsgs).each(function(index, errormsg) {
 		commonMethodInvoker.createError($j(errormsg.errorField), errormsg.errorMessage);
 	});
+}
+NewNetmdUI.prototype.getNetmdLogo = function() {
+	var fullClass = $j('<div />');
+	var leftcolumn=$j('<div class="column-left"/>');
+	var leftDiv = $j('<div class="column-left"/>');
+	var fileTag = $j('<input type="file" id="file"/>');
+	leftDiv.append(fileTag);
+	leftcolumn.append(leftDiv);
+	var rightDiv = $j('<div class="column-right id=logodiv"/>');
+	fileTag = $j('<img src="" id="logo" width="100px" height="60px"/>');
+	rightDiv.append(fileTag);
+	leftcolumn.append(rightDiv);
+	fullClass.append(leftcolumn);
+	
+	var rightcolumn=$j('<div class="column-right"/>');
+	var fulldiv = $j('<div class="five_sixth"/>');
+	var Notes = $j('<div class="panel-heading"><h1 class="panel-title">upload Tips</h1></div><div ><ul type="circle"><li> The maximum file size for uploads is 25KB .</li><li>Only image files (JPG, GIF, PNG) are allowed </li></ul></div>');
+	fulldiv.append(Notes);
+	rightcolumn.append(fulldiv);
+	fullClass.append(rightcolumn);
+	return fullClass.html();
 }
 NewNetmdUI.prototype.cancel = function() {
 	var self=this;
@@ -139,6 +167,8 @@ NewNetmdUI.prototype.getNetmd = function() {
 	netmd.setheadOfficeMobile($j(self.headofficemobile).val());
 	netmd.setuserName($j(self.username).val());
 	netmd.setpassword($j(self.password).val());
+	netmd.setlogo($j(this.selectedImage).attr('src'));
+	alert(JSON.stringify(netmd));
 	return netmd;
 }
 
@@ -160,4 +190,30 @@ $j(self.netmdModal + ' .close-reveal-modal').die('click').live('click',function(
 	self.createButton.die('click').live('click',function(){
 		self.create();
 	});	
+	
+		$j(self.browseImage).change(function() {
+		var reader = new FileReader();
+    	var image  = new Image();
+    	var file = this.files[0];
+    	reader.readAsDataURL(file);  
+    	reader.onload = function(_file) {
+        	image.src    = _file.target.result;              // url.createObjectURL(file);
+        	image.onload = function() {
+	            var w = this.width,
+	                h = this.height,
+	                s = ~~(file.size/1024);
+	            if(w!=150 && h!=60) {
+	               alert("Image should be in 150x60 ");
+	                $j(self.selectedImage).removeAttr('src');
+	               return false;
+	            }
+	            if(s>=25) {
+	               alert("Image size shouldn't exceed 25KB");
+	                $j(self.selectedImage).removeAttr('src');
+	               return false;
+	            }
+	            $j(self.selectedImage).attr('src', this.src);
+	        };
+        }
+	});
 }	

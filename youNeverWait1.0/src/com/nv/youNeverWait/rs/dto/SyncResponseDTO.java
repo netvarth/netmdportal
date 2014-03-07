@@ -16,6 +16,8 @@ import java.util.List;
  */
 public class SyncResponseDTO {
 	public HeaderResponseDTO headerResponse ;
+	private NetMdDTO NetmdResponse;
+	private NetMdBranchDTO NetmdBranchResponse;
 	private List<DoctorResponse> doctorResponse = new ArrayList<DoctorResponse>();
 	private List<DoctorLoginDTO> doctorLogin = new ArrayList<DoctorLoginDTO>();
 	private List<ScheduleResponse> scheduleResponse = new ArrayList<ScheduleResponse>();
@@ -31,6 +33,7 @@ public class SyncResponseDTO {
 	private RetrievalAppointmentResponseDTO retrievalAppointmentListForPrimary = new RetrievalAppointmentResponseDTO();
 	private List<BillSyncResponseDTO> billResponse=new ArrayList<BillSyncResponseDTO>();
 	private List<CaseSyncResponseDTO> patientCaseResponse=new ArrayList<CaseSyncResponseDTO>();
+	private List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswer=new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
 	private String lastSynctime;
 //	private boolean syncStatus;
 //	private String syncFreqType;
@@ -220,6 +223,19 @@ public class SyncResponseDTO {
 	public List<DoctorResponse> getDoctorResponse() {
 		return doctorResponse;
 	}
+
+	public NetMdDTO getNetmdResponse() {
+		return NetmdResponse;
+	}
+	public void setNetmdResponse(NetMdDTO netmdResponse) {
+		NetmdResponse = netmdResponse;
+	}
+	public NetMdBranchDTO getNetmdBranchResponse() {
+		return NetmdBranchResponse;
+	}
+	public void setNetmdBranchResponse(NetMdBranchDTO netmdBranchResponse) {
+		NetmdBranchResponse = netmdBranchResponse;
+	}
 	/**
 	 * @param doctorResponse the doctorResponse to set
 	 */
@@ -317,6 +333,13 @@ public class SyncResponseDTO {
 	 */
 	public void setPatientCaseResponse(List<CaseSyncResponseDTO> patientCaseResponse) {
 		this.patientCaseResponse = patientCaseResponse;
+	}
+	public List<NetmdQuestionAnswerSyncResponseDTO> getNetmdQuestionAnswer() {
+		return netmdQuestionAnswer;
+	}
+	public void setNetmdQuestionAnswer(
+			List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswer) {
+		this.netmdQuestionAnswer = netmdQuestionAnswer;
 	}
 	
 

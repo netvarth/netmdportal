@@ -8,6 +8,7 @@
 package com.nv.youNeverWait.user.bl.impl;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,9 +18,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 import javax.persistence.TypedQuery;
+
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
 import com.nv.framework.sendmsg.email.SendMailMsgObj;
@@ -29,15 +38,11 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
 import com.nv.youNeverWait.pl.entity.LabTbl;
-import com.nv.youNeverWait.pl.entity.NetmdBillTbl;
 import com.nv.youNeverWait.pl.entity.OrderAmountTbl;
 import com.nv.youNeverWait.pl.entity.OrderBranchTbl;
 import com.nv.youNeverWait.pl.entity.OrderResultTbl;
 import com.nv.youNeverWait.pl.entity.OrderTransferTbl;
-import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
-import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
-import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
@@ -61,10 +66,9 @@ import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabDetail;
 import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
-import com.nv.youNeverWait.rs.dto.MailResult;
+import com.nv.youNeverWait.rs.dto.MailTransferInfo;
 import com.nv.youNeverWait.rs.dto.OrderDestinationBranchDTO;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
-import com.nv.youNeverWait.rs.dto.OrderTestResult;
 import com.nv.youNeverWait.rs.dto.OrderTestResultList;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.Parameter;
@@ -100,6 +104,10 @@ import com.nv.youNeverWait.util.filter.core.FilterFactory;
 import com.nv.youNeverWait.util.filter.core.QueryBuilder;
 import com.nv.youNeverWait.util.filter.core.QueryBuilderFactory;
 
+/**
+ * @author 
+ *
+ */
 public class LabServiceImpl implements LabService {
 	private LabDao labDao;
 	private LabValidator validator;
@@ -1194,7 +1202,7 @@ public class LabServiceImpl implements LabService {
 	 * Method for viewing branch default system details
 	 * 
 	 * @param branchId
-	 * @return
+	 * @return BranchSystemInfoDetails
 	 */
 	@Override
 	public BranchSystemInfoDetails viewBranchSystemInfoDetails(int branchId) {
@@ -1214,7 +1222,7 @@ public class LabServiceImpl implements LabService {
 	 * Method for updating the branch default system details
 	 * 
 	 * @param details
-	 * @return
+	 * @return ResponseDTO
 	 */
 	@Override
 	public ResponseDTO updateLabBranchSystemInfo(BranchSystemInfoDetails details) {
@@ -1516,11 +1524,28 @@ public class LabServiceImpl implements LabService {
 	}
 
 	@Override
-	public ResponseDTO sendMail(MailResult mailResult) {
+	public ResponseDTO sendMail(MailTransferInfo mailResult) {
 		ResponseDTO response=new ResponseDTO();
+		ByteArrayInputStream body = null;
 		try {
-
-			SendMailMsgObj obj = new SendMailMsgObj(mailResult.getSubject(),mailResult.getFrom(),mailResult.getTo(),mailResult.getBody(),SendMsgCallbackEnum.LAB_USER_REGISTRATION.getId());
+			body = new ByteArrayInputStream(Base64.decodeBase64(mailResult.getBody()));
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		ByteArrayDataSource bads = null;
+		try {
+			bads = new ByteArrayDataSource(body, "multipart/mixed; boundary=null");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		Multipart multipart = null;
+		try {
+			multipart = new MimeMultipart(bads);
+		} catch (MessagingException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			SendMailMsgObj obj = new SendMailMsgObj(mailResult.getSubject(),mailResult.getFrom(),mailResult.getTo(),multipart,SendMsgCallbackEnum.LAB_USER_REGISTRATION.getId());
 			mailThread.addSendMsgObj(obj);
 		} catch (Exception e) {
 			log.error("Error while sending Email to admin", e);
@@ -1681,10 +1706,16 @@ public class LabServiceImpl implements LabService {
 		this.healthService = healthService;
 	}
 
+	/**
+	 * @return ResultService
+	 */
 	public ResultService getResultService() {
 		return resultService;
 	}
 
+	/**
+	 * @param resultService
+	 */
 	public void setResultService(ResultService resultService) {
 		this.resultService = resultService;
 	}

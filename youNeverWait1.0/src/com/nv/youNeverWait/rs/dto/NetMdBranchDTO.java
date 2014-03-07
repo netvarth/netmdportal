@@ -23,6 +23,7 @@ public class NetMdBranchDTO {
 	private String mobile;
 	private String address;
 	private String status;
+	private String logo;
 	private int netMdId;
 	private List<PassPhraseDTO> passPhrase = new ArrayList<PassPhraseDTO>();
 	private int numberOfDevices;
@@ -137,6 +138,12 @@ public class NetMdBranchDTO {
 	 */
 	public String getAddress() {
 		return address;
+	}
+	public String getLogo() {
+		return logo;
+	}
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
 	/**
 	 * @param address the address to set

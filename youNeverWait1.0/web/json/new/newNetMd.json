@@ -304,6 +304,15 @@
 
                     ]
                 },
+				  {
+                    "className": "sep-div ",
+                    "data": [
+                         {
+					"className": "five_sixth",
+					"id":"logosection"
+				}
+                    ]
+                },
                 {
                     "className": "sep-div ",
                     "data": [

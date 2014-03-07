@@ -27,9 +27,8 @@
                                     "name": "netmdid",
                                     "id": "netmdid",
                                     "type": "text",
-									"title": "Id",
-									 "className": "newBox"
-                                    
+                                    "title": "Id",
+                                    "className": "newBox"
                                 }
                             ]
                         },
@@ -37,28 +36,28 @@
                             "className": "column-right",
                             "elements": [
                                 {
-                                            "name": "usernameNetmd",
-                                            "id": "usernameNetmd",
-                                            "type": "text",
-                                            "readonly": "readonly",
-                                            "title": "UserName",
-                                            "className": "newBox"
+                                    "name": "usernameNetmd",
+                                    "id": "usernameNetmd",
+                                    "type": "text",
+                                    "readonly": "readonly",
+                                    "title": "UserName",
+                                    "className": "newBox"
                                 }
                             ]
                         },
-						{
+                        {
                             "className": "five-sixth",
                             "data": [
                                 {
                                     "className": "column-left",
                                     "elements": [
                                         {
-                                    "name": "organizationName",
-                                    "id": "organizationName",
-                                    "type": "text",
-                                   "readonly": "readonly",
-                                    "title": "Organization Name",
-                                    "className": "newBox"
+                                            "name": "organizationName",
+                                            "id": "organizationName",
+                                            "type": "text",
+                                            "readonly": "readonly",
+                                            "title": "Organization Name",
+                                            "className": "newBox"
                                         }
                                     ]
                                 },
@@ -77,7 +76,7 @@
                                 }
                             ]
                         },
-						{
+                        {
                             "className": "five-sixth",
                             "data": [
                                 {
@@ -108,7 +107,7 @@
                                 }
                             ]
                         },
-						 {
+                        {
                             "className": "five-sixth",
                             "data": [
                                 {
@@ -124,7 +123,7 @@
                                         }
                                     ]
                                 },
-								{
+                                {
                                     "className": "column-right",
                                     "elements": [
                                         {
@@ -137,11 +136,8 @@
                                         }
                                     ]
                                 }
-                               
                             ]
                         }
-						 
-                   
                     ]
                 },
                 {
@@ -178,8 +174,7 @@
                                 }
                             ]
                         },
-						
-						 {
+                        {
                             "className": "five-sixth",
                             "data": [
                                 {
@@ -199,8 +194,7 @@
                                     "className": "column-right",
                                     "elements": [
                                         {
-                                          
-											"name": "headOfficeEmail",
+                                            "name": "headOfficeEmail",
                                             "id": "headOfficeEmail",
                                             "type": "text",
                                             "readonly": "readonly",
@@ -211,14 +205,14 @@
                                 }
                             ]
                         },
-						{
+                        {
                             "className": "five-sixth",
                             "data": [
                                 {
                                     "className": "column-left",
                                     "elements": [
                                         {
-                                           "name": "ownerAddress",
+                                            "name": "ownerAddress",
                                             "id": "ownerAddress",
                                             "type": "textarea",
                                             "readonly": "readonly",
@@ -227,11 +221,11 @@
                                         }
                                     ]
                                 },
-								{
+                                {
                                     "className": "column-right",
                                     "elements": [
                                         {
-                                             "name": "headOfficeAddress",
+                                            "name": "headOfficeAddress",
                                             "id": "headOfficeAddress",
                                             "type": "textarea",
                                             "readonly": "readonly",
@@ -240,56 +234,56 @@
                                         }
                                     ]
                                 }
-                                
                             ]
+                        },
+                        {
+                            "className": "five_sixth",
+                            "id": "logo"
                         }
-                 
                     ]
                 },
-				{
-            "className": "sep-div",
-            "data": [
                 {
-                    "className": "five_sixth",
-                    "elements": [
+                    "className": "sep-div",
+                    "data": [
                         {
-                            "type": "button",
-                            "content": {
-                                "buttons": [
-                                    {
-                                        "name": "netmdvwbtnEdit",
-                                        "id": "netmdvwbtnEdit",
-                                        "title": "Edit",
-                                        "type": "button",
-                                        "className": "stdbtn btn_black",
-                                        "style": "opacity:1;margin:4px"
-                                    },
-									{
-                                        "name": "netmdvwbtnDone",
-                                        "id": "netmdvwbtnDone",
-                                        "title": "Done",
-                                        "type": "button",
-                                        "className": "stdbtn btn_black",
-                                        "style": "opacity:1;display:none;margin-top:1%"
-                                    },
-                                    {
-                                        "name": "netmdvwbtnCancel",
-                                        "id": "netmdvwbtnCancel",
-                                        "title": "Cancel",
-                                        "type": "button",
-                                        "className": "stdbtn",
-                                        "style": "opacity:1;display:none;margin-top:1%"
+                            "className": "five_sixth",
+                            "elements": [
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                            {
+                                                "name": "netmdvwbtnEdit",
+                                                "id": "netmdvwbtnEdit",
+                                                "title": "Edit",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;margin:4px"
+                                            },
+                                            {
+                                                "name": "netmdvwbtnDone",
+                                                "id": "netmdvwbtnDone",
+                                                "title": "Done",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;display:none;margin-top:1%"
+                                            },
+                                            {
+                                                "name": "netmdvwbtnCancel",
+                                                "id": "netmdvwbtnCancel",
+                                                "title": "Cancel",
+                                                "type": "button",
+                                                "className": "stdbtn",
+                                                "style": "opacity:1;display:none;margin-top:1%"
+                                            }
+                                        ]
                                     }
-									
-                                ]
-                            }
+                                }
+                            ]
                         }
                     ]
                 }
             ]
         }
-            ]
-        }
-        
     ]
 }

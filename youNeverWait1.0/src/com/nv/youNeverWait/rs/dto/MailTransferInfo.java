@@ -3,40 +3,61 @@
  */
 package com.nv.youNeverWait.rs.dto;
 
-import javax.mail.Multipart;
-
 /**
  * @author Joshi
  *
  */
-public class MailResult {
+public class MailTransferInfo {
 	private String to;
 	private String from;
-	private Multipart body;
+	private byte [] body;
 	private String subject;
+	/**
+	 * @return to
+	 */
 	public String getTo() {
 		return to;
 	}
+	/**
+	 * @param to
+	 */
 	public void setTo(String to) {
 		this.to = to;
 	}
+	/**
+	 * @return from
+	 */
 	public String getFrom() {
 		return from;
 	}
+	/**
+	 * @param from
+	 */
 	public void setFrom(String from) {
 		this.from = from;
 	}
-	public Multipart getBody() {
-		return body;
-	}
-	public void setBody(Multipart body) {
-		this.body = body;
-	}
+	/**
+	 * @return subject
+	 */
 	public String getSubject() {
 		return subject;
 	}
+	/**
+	 * @param subject
+	 */
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	
+	/**
+	 * @return the body
+	 */
+	public byte [] getBody() {
+		return body;
+	}
+	/**
+	 * @param body the body to set
+	 */
+	public void setBody(byte [] body) {
+		this.body = body;
+	}
 }

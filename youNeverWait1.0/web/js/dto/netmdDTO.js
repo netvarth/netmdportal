@@ -97,3 +97,9 @@ NetmdDTO.prototype.setpassword = function(password) {
 NetmdDTO.prototype.getpassword = function() {
 	return this.password;
 }
+NetmdDTO.prototype.setlogo= function(logo) {
+	this.logo=logo;
+}
+NetmdDTO.prototype.getlogo = function() {
+	return this.logo;
+}

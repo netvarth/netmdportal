@@ -29,6 +29,9 @@ public class NetMdDTO {
 	private String userName;
 	private String password;
 	private String userType;
+	private String logo;
+//	private String createDateTime;
+//	private String updateDateTime;
 	
 	/**
 	 * @return the globalId
@@ -206,6 +209,24 @@ public class NetMdDTO {
 	public String getOwnerFirstName() {
 		return ownerFirstName;
 	}
+	public String getLogo() {
+		return logo;
+	}
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+//	public String getCreateDateTime() {
+//		return createDateTime;
+//	}
+//	public void setCreateDateTime(String createDateTime) {
+//		this.createDateTime = createDateTime;
+//	}
+//	public String getUpdateDateTime() {
+//		return updateDateTime;
+//	}
+//	public void setUpdateDateTime(String updateDateTime) {
+//		this.updateDateTime = updateDateTime;
+//	}
 	/**
 	 * @param ownerFirstName the ownerFirstName to set
 	 */
