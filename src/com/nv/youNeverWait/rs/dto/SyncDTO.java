@@ -14,6 +14,8 @@ import java.util.List;
 public class SyncDTO {
 	private HeaderDTO header;
 	private String lastSyncTime;
+	private NetMdDTO UpdateNetmd;
+	private NetMdBranchDTO UpdatedNetmdBranch;
 	private List<DoctorDetail> newDoctorList = new ArrayList<DoctorDetail>();
 	private List<DoctorDetail> updateDoctorList = new ArrayList<DoctorDetail>();
 	private List<DoctorDetail> deleteDoctorList = new ArrayList<DoctorDetail>();
@@ -34,35 +36,10 @@ public class SyncDTO {
 	private List<BillSummaryDTO> updateBillList=new ArrayList<BillSummaryDTO>();
 	private List<CaseDTO> newCaseList= new ArrayList<CaseDTO>();
 	private List<CaseDTO> updateCaseList= new ArrayList<CaseDTO>();
+	private List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList=new ArrayList<NetmdQuestionAnswerDTO>();
+	private List<NetmdQuestionAnswerDTO>updateNetmdQuestionnaireList=new ArrayList<NetmdQuestionAnswerDTO>();
 	
-//	private String freqType;
-//	private int interval;
-	
-//	/**
-//	 * @return the freqType
-//	 */
-//	public String getFreqType() {
-//		return freqType;
-//	}
-//	/**
-//	 * @param freqType the freqType to set
-//	 */
-//	public void setFreqType(String freqType) {
-//		this.freqType = freqType;
-//	}
-//	/**
-//	 * @return the interval
-//	 */
-//	public int getInterval() {
-//		return interval;
-//	}
-//	/**
-//	 * @param interval the interval to set
-//	 */
-//	public void setInterval(int interval) {
-//		this.interval = interval;
-//	}
-//	
+
 	
 	/**
 	 * @return the newBillList
@@ -106,6 +83,7 @@ public class SyncDTO {
 	public List<NetMdUserDetail> getNewUserList() {
 		return newUserList;
 	}
+
 	/**
 	 * @param newUserList the newUserList to set
 	 */
@@ -271,6 +249,18 @@ public class SyncDTO {
 	public List<PatientDetail> getDeletedPatientList() {
 		return deletedPatientList;
 	}
+	public NetMdDTO getUpdateNetmd() {
+		return UpdateNetmd;
+	}
+	public void setUpdateNetmd(NetMdDTO updateNetmd) {
+		UpdateNetmd = updateNetmd;
+	}
+	public NetMdBranchDTO getUpdatedNetmdBranch() {
+		return UpdatedNetmdBranch;
+	}
+	public void setUpdatedNetmdBranch(NetMdBranchDTO updatedNetmdBranch) {
+		UpdatedNetmdBranch = updatedNetmdBranch;
+	}
 	public void setDeletedPatientList(List<PatientDetail> deletedPatientList) {
 		this.deletedPatientList = deletedPatientList;
 	}
@@ -293,6 +283,20 @@ public class SyncDTO {
 	public void setDeletedAppointmentList(
 			List<AppointmentDetailsDTO> deletedAppointmentList) {
 		this.deletedAppointmentList = deletedAppointmentList;
+	}
+	public List<NetmdQuestionAnswerDTO> getNewNetmdQuestionnaireList() {
+		return newNetmdQuestionnaireList;
+	}
+	public void setNewNetmdQuestionnaireList(
+			List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList) {
+		this.newNetmdQuestionnaireList = newNetmdQuestionnaireList;
+	}
+	public List<NetmdQuestionAnswerDTO> getUpdateNetmdQuestionnaireList() {
+		return updateNetmdQuestionnaireList;
+	}
+	public void setUpdateNetmdQuestionnaireList(
+			List<NetmdQuestionAnswerDTO> updateNetmdQuestionnaireList) {
+		this.updateNetmdQuestionnaireList = updateNetmdQuestionnaireList;
 	}
 
 	
