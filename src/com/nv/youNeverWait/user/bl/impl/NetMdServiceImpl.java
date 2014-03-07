@@ -1322,8 +1322,17 @@ public class NetMdServiceImpl implements NetMdService {
 		this.healthService = healthService;
 	}
 
-	
 
-	
 
+	@Override
+	public NetMdDTO getUpdateNetMd(String lastSyncTime, Date currentSyncTime,HeaderDTO header) {
+		
+		return netMdDao.getUpdateNetMd(lastSyncTime,currentSyncTime,header);
+	}
+
+	@Override
+	public NetMdBranchDTO getUpdateNetmdBranch(String lastSyncTime,
+			Date currentSyncTime,HeaderDTO header ) {
+		return netMdDao.getUpdateNetmdBranch(lastSyncTime,currentSyncTime,header);
+	}
 }
