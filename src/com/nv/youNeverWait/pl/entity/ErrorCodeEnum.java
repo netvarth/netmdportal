@@ -281,6 +281,7 @@ public enum ErrorCodeEnum {
 	ReportNull("4014","Invalid report name"),
 	InvalidStartMonth("4015","Start Month should not be greater than End Month"),
 	InvalidStartYear("4016","Start Month should not be greater than End Month"),
+	QuestionnaireNotFound("4017","questionnaire does not exist"),
 	;
 	private String errCode;
 	private String errMsg;
