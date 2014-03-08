@@ -228,6 +228,137 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="email.worker.thread" />
 		</property>
 	</bean>
+	
+	<bean  id ="analatic.dao" class = "com.nv.youNeverWait.analatic.pl.impl.AnalaticDaoImpl" parent="generic.dao"/>
+	         
+	      
+
+	
+	<bean id ="age.cluster" class="com.nv.youNeverWait.analatic.bl.impl.MaternalAge">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	
+	</bean>
+	
+	
+	<bean id ="height.cluster" class="com.nv.youNeverWait.analatic.bl.impl.MaternalHeight">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	
+	</bean>
+	
+	<bean id ="weight.cluster" class="com.nv.youNeverWait.analatic.bl.impl.MaternalWeight">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	
+	</bean>
+	
+	<bean id ="bookedStati.cluster" class="com.nv.youNeverWait.analatic.bl.impl.BookedStatistics">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+	
+	
+	
+	
+	<bean id ="complications.cluster" class="com.nv.youNeverWait.analatic.bl.impl.MaternalComplications">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+	
+	
+	<bean id ="bmi.cluster" class="com.nv.youNeverWait.analatic.bl.impl.BodyMassIndex">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+	
+	<bean id ="parity.cluster" class="com.nv.youNeverWait.analatic.bl.impl.Parity">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+	
+	
+	<bean id ="previous.cs.cluster" class="com.nv.youNeverWait.analatic.bl.impl.PreviousCS">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+	
+	<bean id ="vaginal.delivery.cluster" class="com.nv.youNeverWait.analatic.bl.impl.VaginalDelivery">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+	
+	<bean id ="caesarean.section.cluster" class="com.nv.youNeverWait.analatic.bl.impl.CaesareanSection">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+	
+	<bean id ="robson.class.cluster" class="com.nv.youNeverWait.analatic.bl.impl.RobsonClass">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+	
+	<bean id ="presentation.cluster" class="com.nv.youNeverWait.analatic.bl.impl.Presentation">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+	
+	<bean id ="episiotomy.cluster" class="com.nv.youNeverWait.analatic.bl.impl.Episiotomy">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+	
+	<bean id ="perineal.tear.cluster" class="com.nv.youNeverWait.analatic.bl.impl.PerinealTear">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+	
+	
+	<bean id ="induced.labour.cluster" class="com.nv.youNeverWait.analatic.bl.impl.Induction">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+	
+	
+	
+	<bean id="analatic.bean" class="com.nv.youNeverWait.analatic.bl.Analatic">
+	     <property name ="clusters">
+	     <list>
+	          <ref bean="age.cluster"/>
+	          <ref bean="bookedStati.cluster"/>
+	          <ref bean="height.cluster"/>
+	          <ref bean="weight.cluster"/>
+	          <ref bean="complications.cluster"/>
+	          <ref bean="bmi.cluster"/>
+	          <ref bean="parity.cluster"/>
+	          <ref bean="previous.cs.cluster"/>
+	          <ref bean="vaginal.delivery.cluster"/>
+	          <ref bean="caesarean.section.cluster"/>
+	          <ref bean="robson.class.cluster"/>
+	          <ref bean="presentation.cluster"/>
+	          <ref bean="episiotomy.cluster"/>
+	          <ref bean="perineal.tear.cluster"/>
+	          <ref bean="induced.labour.cluster"/>
+	              
+	     </list>
+	     </property>
+	
+	</bean>
 
 	<bean id="doctor.validator" class="com.nv.youNeverWait.user.bl.validation.DoctorValidator"></bean>
 
@@ -264,9 +395,6 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 		<property name="testService">
 			<ref bean="test.service" />
-		</property>
-		<property name="questionnaireService">
-			<ref bean="questionnaire.service" />
 		</property>
 	</bean>
 
@@ -765,13 +893,15 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="mailThread">
 			<ref bean="email.worker.thread" />
 		</property>
-		<property name="reportManager" ref="report.service" />
-	</bean>
-	<bean id="report.service" class="com.nv.youNeverWait.user.bl.impl.ReportManager">
 		<property name="reportHandler" ref="report.handler" />
 	</bean>
-	<bean id="report.handler" class="com.nv.youNeverWait.api.report.ReportHandler">
+	
+	<bean id="report.handler" class="com.nv.youNeverWait.report.ReportHandler">
 		<property name="reportDao" ref="report.dao" />
+		<property name="analatic">
+		      <ref bean="analatic.bean"/>
+		</property> 
+		
 	</bean>
 	<bean id="report.dao" class="com.nv.youNeverWait.user.pl.impl.ReportDaoImpl"
 		parent="generic.dao">
