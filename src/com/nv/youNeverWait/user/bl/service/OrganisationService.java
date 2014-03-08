@@ -10,6 +10,13 @@
  */
 package com.nv.youNeverWait.user.bl.service;
 
+import java.io.InputStream;
+import java.util.Map;
+
+import javax.servlet.ServletContext;
+
+import net.sf.jasperreports.engine.JasperPrint;
+
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
@@ -21,6 +28,7 @@ import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
+
 
 /**
  * 
@@ -97,10 +105,8 @@ public interface OrganisationService {
 
 	public UserDetails getOrganisationUser(String userName);
 
-	Object getJRXmlPath(String parameter);
-
-	Object getConnection();
-
 	public OrganisationListResponseDTO getOrganisationList();
+
+	public JasperPrint createReport(Map<String,Object> map, ServletContext contexPath);
 
 }
