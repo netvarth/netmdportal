@@ -9,9 +9,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.springframework.transaction.annotation.Transactional;
+
 import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
@@ -29,8 +32,8 @@ import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
 import com.nv.youNeverWait.pl.entity.PatientTypeEnum;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.pl.entity.StatusEnum;
-import com.nv.youNeverWait.pl.entity.UserTypeEnum;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
+import com.nv.youNeverWait.pl.entity.UserTypeEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.CaseDTO;
 import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
