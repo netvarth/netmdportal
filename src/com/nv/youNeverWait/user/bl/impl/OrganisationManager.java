@@ -16,9 +16,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.TypedQuery;
+import javax.servlet.ServletContext;
+
+import net.sf.jasperreports.engine.JasperPrint;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,6 +37,7 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.OrganisationTbl;
 import com.nv.youNeverWait.pl.entity.OrganisationUserTbl;
+import com.nv.youNeverWait.report.ReportHandler;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
@@ -68,7 +74,7 @@ public class OrganisationManager  implements OrganisationService{
 	private String organisationServerIpAddress;
 	private String mailFrom;
 	private SendEmailMsgWorkerThread mailThread;
-	private ReportService reportManager;
+	private ReportHandler reportHandler;
 	private static final Log log = LogFactory.getLog(NetMdServiceImpl.class);
 
 	/* (non-Javadoc)
@@ -376,7 +382,7 @@ public class OrganisationManager  implements OrganisationService{
 	 */
 	@Override
 	public ResponseDTO createUser(
-			OrganisationUserDetail organztionUser) {
+		OrganisationUserDetail organztionUser) {
 		validator.validateUserDetails(organztionUser);
 		validator.validateUserLoginDetails(organztionUser);
 		ResponseDTO response = organisationDao.createUser(organztionUser);
@@ -584,10 +590,7 @@ public class OrganisationManager  implements OrganisationService{
 	 * @param reportName
 	 * @return jrxml path
 	 */
-	@Override
-	public Object getJRXmlPath(String reportName) {
-		return reportManager.getJRXmlPath(reportName);
-	}
+	
 	
 	@Override
 	public OrganisationListResponseDTO getOrganisationList() {
@@ -597,20 +600,7 @@ public class OrganisationManager  implements OrganisationService{
 	/**
 	 * @return connection
 	 */
-	@Override
-	public Object getConnection() {
-		return reportManager.getConnection();
-	}
-	
-	public ReportService getReportManager() {
-		return reportManager;
-	}
-
-	public void setReportManager(ReportService reportManager) {
-		this.reportManager = reportManager;
-	}
-
-	/**
+		/**
 	/**
 	 * @return the organisationDao
 	 */
@@ -714,6 +704,22 @@ public class OrganisationManager  implements OrganisationService{
 	 */
 	public static Log getLog() {
 		return log;
+	}
+
+	public ReportHandler getReportHandler() {
+		return reportHandler;
+	}
+
+	public void setReportHandler(ReportHandler reportHandler) {
+		this.reportHandler = reportHandler;
+	}
+
+	public JasperPrint createReport(Map<String, Object> map,ServletContext context) {
+		
+	InputStream inputStream = reportHandler.getJRXml(map, context);
+		
+	return reportHandler.createReport(inputStream,map);
+		
 	}
 
 
