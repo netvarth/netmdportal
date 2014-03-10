@@ -41,6 +41,9 @@ public class SyncResponseDTO {
 	private ErrorDTO error;
 	private boolean success;
 	
+	
+	
+	
 //	
 //	
 //	/**
