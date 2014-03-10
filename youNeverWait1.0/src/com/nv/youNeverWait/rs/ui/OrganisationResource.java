@@ -5,15 +5,19 @@
 package com.nv.youNeverWait.rs.ui;
 
 
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.jasperreports.engine.JasperPrint;
+
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
@@ -29,7 +34,7 @@ import com.nv.youNeverWait.report.PDFReportView;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
-import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
+
 import com.nv.youNeverWait.rs.dto.OrganisationListResponseDTO;
 import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
@@ -45,7 +50,7 @@ import com.nv.youNeverWait.user.bl.service.OrganisationService;
  */
 @Controller
 @RequestMapping("ui/orgn/")
-public class OrganisationResource {
+public class OrganisationResource   {
 	private LogService logService;
 	private OrganisationService organisationService;
 	private PDFReportView view;
@@ -240,29 +245,27 @@ public class OrganisationResource {
 	}
 
 	/**
-	 * generates a report in pdf view
-	 * 
-	 * @param request
-	 * @return ModelAndView
-	 */
+	* generates a report in pdf view
+	*
+	* @param request
+	* @return ModelAndView
+	*/
 	@RequestMapping(value = "/report/generate", method = RequestMethod.POST)
 	public ModelAndView generate(HttpServletRequest request) {
+	ServletContext context =	request.getSession().getServletContext();	
+    
+	Map<String, Object> model = new HashMap<String, Object>();
 		
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("JRXML_URL", organisationService.getJRXmlPath(request
-				.getParameter("reportName")));
-		model.put("REPORT_CONNECTION", organisationService.getConnection());
-		// model.put("reportTitle",adminService.getReportTitle());
-		
-			model.put("startMonth",request.getParameter("startMonth"));
-			model.put("startYear", request.getParameter("startYear"));
-			model.put("endMonth", request.getParameter("endMonth"));
-			model.put("endYear", request.getParameter("endYear"));
-		
-			
-		model.put("paramList", request.getParameter("paramList"));
-		// model.put("maskingList", request.getParameter("maskingList"));
-		return new ModelAndView(view, model);
+    model.put("reportName", request.getParameter("reportName"));
+	model.put("startMonth",request.getParameter("startMonth"));
+	model.put("startYear", request.getParameter("startYear"));
+	model.put("endMonth", request.getParameter("endMonth"));
+	model.put("endYear", request.getParameter("endYear"));
+	model.put("paramList", request.getParameter("paramList"));
+    
+    JasperPrint jPrint =organisationService.createReport(model, context);
+    model.put("jPrint",jPrint );		
+	return new ModelAndView(view, model);
 	}
 
 	/**

@@ -282,7 +282,9 @@ public enum ErrorCodeEnum {
 	InvalidStartMonth("4015","Start Month should not be greater than End Month"),
 	InvalidStartYear("4016","Start Month should not be greater than End Month"),
 	QuestionnaireNotFound("4017","questionnaire does not exist"),
-	;
+	invalidJrxmlPath("4018","jrxml file does not exist in the given path"),
+	JasperException ("4019","JasperException");
+	
 	private String errCode;
 	private String errMsg;
 

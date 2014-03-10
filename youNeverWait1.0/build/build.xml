@@ -49,16 +49,19 @@
   <target name="compile" depends="init" description="compile the source " >
     
   	<!-- Compile the java code from ${src.dir} into ${build.dir} -->
-    <javac srcdir="${src.dir}" destdir="${temp.build.dir}" debug="on">
-	  <classpath>
+    
+  	<javac srcdir="${src.dir}" destdir="${temp.build.dir}" debug="on">
+	    <exclude  name="**/test/*.*" /> 
+    	<classpath>
 	  	<path refid="project.class.path"/>
-      </classpath>
+       </classpath>
     </javac>
   	
   	 <copy todir="${temp.build.dir}">
   			      <fileset dir="${resource.dir}">    	
   			      	<exclude name="*-servlet.xml"/>
   			      	<exclude name="web.xml"/>
+  			        
   			      	<include name="**/*.*" />
   		  	  	  </fileset>
   	 			  	
