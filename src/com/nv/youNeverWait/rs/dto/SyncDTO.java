@@ -39,8 +39,6 @@ public class SyncDTO {
 	private List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList=new ArrayList<NetmdQuestionAnswerDTO>();
 	private List<NetmdQuestionAnswerDTO>updateNetmdQuestionnaireList=new ArrayList<NetmdQuestionAnswerDTO>();
 	
-
-	
 	/**
 	 * @return the newBillList
 	 */
