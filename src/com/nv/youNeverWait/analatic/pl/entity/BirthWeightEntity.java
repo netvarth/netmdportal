@@ -10,7 +10,7 @@ public class BirthWeightEntity {
 	
 	private String hospital;
 	private String year;
-	private String month;
+	private Integer month;
 	private Integer baby1GnderM;
 	private Integer baby1GnderF;
 	private Integer baby1WtGr3500;
@@ -29,10 +29,14 @@ public class BirthWeightEntity {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getMonth() {
+
+	
+	
+	
+	public Integer getMonth() {
 		return month;
 	}
-	public void setMonth(String month) {
+	public void setMonth(Integer month) {
 		this.month = month;
 	}
 	public Integer getBaby1GnderM() {

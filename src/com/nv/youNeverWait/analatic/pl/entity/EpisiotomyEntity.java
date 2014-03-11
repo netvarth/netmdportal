@@ -9,7 +9,7 @@ public class EpisiotomyEntity {
 	
 	private String hospital;
 	private String year;
-	private String month;
+	private Integer month;
 	private Integer midlineEpisiotomy;
 	private Integer medioLateralEpisiotomy;
 	public String getHospital() {
@@ -24,10 +24,14 @@ public class EpisiotomyEntity {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getMonth() {
+
+	
+	
+	
+	public Integer getMonth() {
 		return month;
 	}
-	public void setMonth(String month) {
+	public void setMonth(Integer month) {
 		this.month = month;
 	}
 	public Integer getMidlineEpisiotomy() {

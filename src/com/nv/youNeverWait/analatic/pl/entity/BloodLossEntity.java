@@ -11,7 +11,7 @@ public class BloodLossEntity {
 	
 	private String hospital;
 	private String year;
-	private String month;
+	private Integer month;
 	private Integer bldLosLs500Cs;
 	private Integer bldLosBtw500And1000Cs;
 	private Integer bldLosGr1000Cs;
@@ -157,13 +157,17 @@ public class BloodLossEntity {
 
 
 
-	public String getMonth() {
+
+
+
+
+	public Integer getMonth() {
 		return month;
 	}
 
 
 
-	public void setMonth(String month) {
+	public void setMonth(Integer month) {
 		this.month = month;
 	}
 
@@ -175,7 +179,7 @@ public class BloodLossEntity {
 		final class BloodLossSubclusters implements SubClusters {
 			private String hospitl= hospital;
 			private String yer=year;
-			private String mnth=month;
+			private Integer mnth=month;
 			@Override
 			public String getHospital() {
 
@@ -187,7 +191,7 @@ public class BloodLossEntity {
 				return this.yer;
 			}
 			@Override
-			public String getMonth() {
+			public Integer getMonth() {
 
 				return this.mnth;
 			}

@@ -9,7 +9,7 @@ public class MaternalWeightEntity {
 	
 	private String hospital;
 	private String year;
-	private String month;
+	private Integer month;
 	private Integer lt40;
 	private Integer bt40to49;
 	private Integer bt50to69;
@@ -27,18 +27,19 @@ public class MaternalWeightEntity {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getMonth() {
-		return month;
-	}
-	public void setMonth(String month) {
-		this.month = month;
-	}
+
 	
 	
 	
 	
 	
 
+	public Integer getMonth() {
+		return month;
+	}
+	public void setMonth(Integer month) {
+		this.month = month;
+	}
 	public Integer getLt40() {
 		return lt40;
 	}

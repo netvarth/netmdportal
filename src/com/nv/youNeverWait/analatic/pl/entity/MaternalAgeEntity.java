@@ -10,7 +10,7 @@ import java.util.Map;
 public class MaternalAgeEntity {
 	private String hospital;
 	private String year;
-	private String month;
+	private Integer month;
 	private Integer lt20;
 	private Integer bt20to24;
 	private Integer bt25to29;
@@ -20,7 +20,7 @@ public class MaternalAgeEntity {
 	
 	
 	
-	public MaternalAgeEntity(String hospital, String year, String month,
+	public MaternalAgeEntity(String hospital, String year, Integer month,
 			BigDecimal lt20, BigDecimal bt20to24, BigDecimal bt25to29, BigDecimal bt30to35,
 			BigDecimal gt35) {
 		super();
@@ -49,15 +49,16 @@ public class MaternalAgeEntity {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getMonth() {
+	
+	
+	
+	
+	public Integer getMonth() {
 		return month;
 	}
-	public void setMonth(String month) {
+	public void setMonth(Integer month) {
 		this.month = month;
 	}
-	
-	
-	
 	public Integer getLt20() {
 		return lt20;
 	}

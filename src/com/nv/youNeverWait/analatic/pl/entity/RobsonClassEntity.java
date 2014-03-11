@@ -10,7 +10,7 @@ import com.nv.youNeverWait.analatic.bl.SubClusters;
 public class RobsonClassEntity {
 	private String hospital;
 	private String year;
-	private String month;
+	private Integer month;
 	private Integer total1;
 	private Integer total2e;
 	private Integer total2i;
@@ -47,10 +47,14 @@ public class RobsonClassEntity {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getMonth() {
+
+	
+	
+	
+	public Integer getMonth() {
 		return month;
 	}
-	public void setMonth(String month) {
+	public void setMonth(Integer month) {
 		this.month = month;
 	}
 	public Integer getTotal1() {
@@ -226,7 +230,7 @@ public class RobsonClassEntity {
 		final class RobsonSubclusters implements SubClusters {
 			private String hospitl= hospital;
 			private String yer=year;
-			private String mnth=month;
+			private Integer mnth=month;
 			@Override
 			public String getHospital() {
 
@@ -238,7 +242,7 @@ public class RobsonClassEntity {
 				return this.yer;
 			}
 			@Override
-			public String getMonth() {
+			public Integer getMonth() {
 
 				return this.mnth;
 			}
@@ -249,47 +253,47 @@ public class RobsonClassEntity {
 				innerMap.put("Total", total1);
 				innerMap.put("CS", cs1);
 				outerMap.put("1", innerMap);
-				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap = new HashMap<String,Integer>();
 				innerMap.put("Total", total2e);
 				innerMap.put("CS", cs2e);
 				outerMap.put("2e", innerMap);
-				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap = new HashMap<String,Integer>();
 				innerMap.put("Total", total2i);
 				innerMap.put("CS", cs2i);
 				outerMap.put("2i", innerMap);
-				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap = new HashMap<String,Integer>();
 				innerMap.put("Total", total3);
 				innerMap.put("CS", cs3);
 				outerMap.put("3", innerMap);
-				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap = new HashMap<String,Integer>();
 				innerMap.put("Total", total4e);
 				innerMap.put("CS", cs4e);
 				outerMap.put("4e", innerMap);
-				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap = new HashMap<String,Integer>();
 				innerMap.put("Total", total4i);
 				innerMap.put("CS", cs4i);
 				outerMap.put("4i", innerMap);
-				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap = new HashMap<String,Integer>();
 				innerMap.put("Total", total5);
 				innerMap.put("CS", cs5);
 				outerMap.put("5", innerMap);
-				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap = new HashMap<String,Integer>();
 				innerMap.put("Total", total6);
 				innerMap.put("CS", cs6);
 				outerMap.put("6", innerMap);
-				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap = new HashMap<String,Integer>();
 				innerMap.put("Total", total7);
 				innerMap.put("CS", cs7);
 				outerMap.put("7", innerMap);
-				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap = new HashMap<String,Integer>();
 				innerMap.put("Total", total8);
 				innerMap.put("CS", cs8);
 				outerMap.put("8", innerMap);
-				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap = new HashMap<String,Integer>();
 				innerMap.put("Total", total9);
 				innerMap.put("CS", cs9);
 				outerMap.put("9", innerMap);
-				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap = new HashMap<String,Integer>();
 				innerMap.put("Total", total10);
 				innerMap.put("CS", cs10);
 				outerMap.put("10", innerMap);
