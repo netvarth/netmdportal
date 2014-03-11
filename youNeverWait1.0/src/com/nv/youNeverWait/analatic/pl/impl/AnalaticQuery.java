@@ -14,7 +14,7 @@ public class AnalaticQuery {
 			"LEFT OUTER JOIN (select answer as age,case_id as caseId from answer_tbl where quest_id=4 ) as q4 ON q0.caseId=q4.caseId "+
 			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
 			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
-			"group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+			"group by nmd.name,mnth,yer order by nmd.name,str_to_date(concat(mnth,yer),'%M%Y')";
 
 	public static final String MATERNAL_AGE_QUERY_WITH_HOSPITAL = "select nmd.name as hospital,yer as year, mnth as month,"+
 			"sum(if(age='20',1,0)) as lt20,"+
@@ -543,6 +543,300 @@ public class AnalaticQuery {
 
 
 	
+	public static final String OXITOXINE = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(oxytoxinReceive='Yes',1,0)) as oxytoxinReceive,"+
+			"sum(if(oxytoxinReceiveType='IV',1,0)) as IV,"+
+			"sum(if(oxytoxinReceiveType='IM',1,0)) as IM,"+
+			"sum(if(oxytoxinReceiveType='Rectal',1,0)) as rectal,"+
+			"sum(if(oxytoxinReceiveType='Intra',1,0)) as intra "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as oxytoxinReceive,case_id as caseId from answer_tbl where quest_id=99 ) as q23 ON q0.caseId=q23.caseId "+
+			"LEFT OUTER JOIN (select answer as oxytoxinReceiveType,case_id as caseId from answer_tbl where quest_id=72 ) as q24 ON q0.caseId=q24.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+	
+	
+	public static final String OXITOXIN_PER_HOSPITAL = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(oxytoxinReceive='Yes',1,0)) as oxytoxinReceive,"+
+			"sum(if(oxytoxinReceiveType='IV',1,0)) as IV,"+
+			"sum(if(oxytoxinReceiveType='IM',1,0)) as IM,"+
+			"sum(if(oxytoxinReceiveType='Rectal',1,0)) as rectal,"+
+			"sum(if(oxytoxinReceiveType='Intra',1,0)) as intra, "+
+			"from (select distinct case_id as caseId, netmd_branch_id as netmdBranchId from answer_tbl) as q0 "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as oxytoxinReceive,case_id as caseId from answer_tbl where quest_id=99 ) as q23 ON q0.caseId=q23.caseId "+
+			"LEFT OUTER JOIN (select answer as oxytoxinReceiveType,case_id as caseId from answer_tbl where quest_id=72 ) as q24 ON q0.caseId=q24.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"and netmdBranchId=:hospital  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+
+	public static final String THIRD_STAGE_DURATION = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(thrdStgDuration ='< 5' OR thrdStgDuration ='5-9',1,0)) as thrdStgDurtnLs10,"+
+			"sum(if(thrdStgDuration='10-29',1,0)) as thrdStgDurtn10To29,"+
+			"sum(if(thrdStgDuration='>30',1,0)) as thrdStgDurtnGr30 "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as thrdStgDuration,case_id as caseId from answer_tbl where quest_id=73 ) as q42 ON q0.caseId=q42.caseId "+			
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+	
+	
+	public static final String THIRD_STAGE_DURATION_PER_HOSPITAL = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(thrdStgDuration ='< 5' OR thrdStgDuration ='5-9',1,0)) as thrdStgDurtnLs10,"+
+			"sum(if(thrdStgDuration='10-29',1,0)) as thrdStgDurtn10To29,"+
+			"sum(if(thrdStgDuration='>30',1,0)) as thrdStgDurtnGr30 "+
+			"from (select distinct case_id as caseId, netmd_branch_id as netmdBranchId from answer_tbl) as q0 "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as thrdStgDuration,case_id as caseId from answer_tbl where quest_id=73 ) as q42 ON q0.caseId=q42.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"and netmdBranchId=:hospital  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+
+
+	
+	public static final String FORTH_STAGE_OBSERVATION = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(fourthStgObsrv='yes',1,0)) as fourthStgObsrve,"+
+			"sum(if(manualRml='yes',1,0)) as manualRmvl, "+
+			"sum(if(isHypotension='yes',1,0)) as isHypotensn "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as isHypotension,case_id as caseId from answer_tbl where quest_id=78 ) as q37 ON q0.caseId=q37.caseId "+
+			"LEFT OUTER JOIN (select answer as fourthStgObsrv,case_id as caseId from answer_tbl where quest_id=82 ) as q38 ON q0.caseId=q38.caseId "+
+			"LEFT OUTER JOIN (select answer as manualRml,case_id as caseId from answer_tbl where quest_id=74 ) as q39 ON q0.caseId=q39.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+	
+	
+	public static final String FORTH_STAGE_OBSERVATION_PER_HOSPITAL = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(fourthStgObsrv='yes',1,0)) as fourthStgObsrve,"+
+			"sum(if(manualRml='yes',1,0)) as manualRmvl, "+
+			"sum(if(isHypotension='yes',1,0)) as isHypotensn "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as isHypotension,case_id as caseId from answer_tbl where quest_id=78 ) as q37 ON q0.caseId=q37.caseId "+
+			"LEFT OUTER JOIN (select answer as fourthStgObsrv,case_id as caseId from answer_tbl where quest_id=82 ) as q38 ON q0.caseId=q38.caseId "+
+			"LEFT OUTER JOIN (select answer as manualRml,case_id as caseId from answer_tbl where quest_id=74 ) as q39 ON q0.caseId=q39.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"and netmdBranchId=:hospital  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
 	
 
+	public static final String IV_FLUID_USED = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(amtFluids<1000,1,0)) as amtFluidsLs1000,"+
+			"sum(if(amtFluids BETWEEN 1000 and 3000,1,0)) as amtFluidsBtw1000And3000,"+
+			"sum(if(amtFluids>3000,1,0)) as amtFluidsGr3000, "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as amtFluids,case_id as caseId from answer_tbl where quest_id=80 ) as q33 ON q0.caseId=q33.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			" group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+	
+	
+	public static final String IV_FLUID_USED_PER_HOSPITAL = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(amtFluids<1000,1,0)) as amtFluidsLs1000,"+
+			"sum(if(amtFluids BETWEEN 1000 and 3000,1,0)) as amtFluidsBtw1000And3000,"+
+			"sum(if(amtFluids>3000,1,0)) as amtFluidsGr3000, "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as amtFluids,case_id as caseId from answer_tbl where quest_id=80 ) as q33 ON q0.caseId=q33.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"and netmdBranchId=:hospital  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+	
+	public static final String PLACENTAL_WEIGHT = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(placentalWght<200,1,0)) as placentalWghtLs200,"+
+			"sum(if(placentalWght BETWEEN 200 AND 399,1,0)) as placentalWghtBtw200And399,"+
+			"sum(if(placentalWght>400,1,0)) as placentalWghtGr400 "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as placentalWght,case_id as caseId from answer_tbl where quest_id=76 )as q36 ON q0.caseId=q36.caseId"+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+	
+	
+	public static final String PLACENTAL_WEIGHT_PER_HOSPITAL = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(placentalWght<200,1,0)) as placentalWghtLs200,"+
+			"sum(if(placentalWght BETWEEN 200 AND 399,1,0)) as placentalWghtBtw200And399,"+
+			"sum(if(placentalWght>400,1,0)) as placentalWghtGr400 "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as placentalWght,case_id as caseId from answer_tbl where quest_id=76 )as q36 ON q0.caseId=q36.caseId"+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"and netmdBranchId=:hospital  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+	
+
+	public static final String BLOODLOSS = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(bloodLoss='< 500'AND outcme='Cs',1,0)) as bldLosLs500Cs,"+
+			"sum(if(bloodLoss='500-999'AND outcme='Cs',1,0)) as bldLosBtw500And1000Cs,"+
+			"sum(if(bloodLoss='>=1000'AND outcme='Cs',1,0)) as bldLosGr1000Cs,"+
+			"sum(if(bloodLoss='< 500'AND outcme='Vaginal',1,0)) as bldLosLs500Vag,"+
+			"sum(if(bloodLoss='500-999'AND outcme='Vaginal',1,0)) as bldLosBtw500And1000Vag,"+
+			"sum(if(bloodLoss='>=1000'AND outcme='Vaginal',1,0)) as bldLosGr1000Vag,"+
+			"sum(if(bloodLoss='< 500'AND outcme='Vaginal' OR outcme='Cs',1,0)) as bldLosLs500Total,"+
+			"sum(if(bloodLoss='500-999' AND outcme='Vaginal' OR outcme='Cs',1,0)) as bldLosBtw500And1000Total,"+
+			"sum(if(bloodLoss='>=1000' AND outcme='Vaginal' OR outcme='Cs',1,0)) as bldLosGr1000Total "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as bloodLoss,case_id as caseId from answer_tbl where quest_id=86 ) as q40 ON q0.caseId=q40.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+	
+	
+	public static final String BLOODLOSS_PER_HOSPITAL = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(bloodLoss='< 500'AND outcme='Cs',1,0)) as bldLosLs500Cs,"+
+			"sum(if(bloodLoss='500-999'AND outcme='Cs',1,0)) as bldLosBtw500And1000Cs,"+
+			"sum(if(bloodLoss='>=1000'AND outcme='Cs',1,0)) as bldLosGr1000Cs,"+
+			"sum(if(bloodLoss='< 500'AND outcme='Vaginal',1,0)) as bldLosLs500Vag,"+
+			"sum(if(bloodLoss='500-999'AND outcme='Vaginal',1,0)) as bldLosBtw500And1000Vag,"+
+			"sum(if(bloodLoss='>=1000'AND outcme='Vaginal',1,0)) as bldLosGr1000Vag,"+
+			"sum(if(bloodLoss='< 500'AND outcme='Vaginal' OR outcme='Cs',1,0)) as bldLosLs500Total,"+
+			"sum(if(bloodLoss='500-999' AND outcme='Vaginal' OR outcme='Cs',1,0)) as bldLosBtw500And1000Total,"+
+			"sum(if(bloodLoss='>=1000' AND outcme='Vaginal' OR outcme='Cs',1,0)) as bldLosGr1000Total "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as bloodLoss,case_id as caseId from answer_tbl where quest_id=86 ) as q40 ON q0.caseId=q40.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"and netmdBranchId=:hospital  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+	
+	public static final String MATERNAL_MORTALITY_MORBIDITY = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(maternalDeath='yes',1,0)) as maternalDth,"+
+			"sum(if(sevMatMorbidility='yes',1,0)) as matMorbidility "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as maternalDeath,case_id as caseId from answer_tbl where quest_id=112 ) as q34 ON q0.caseId=q34.caseId "+
+			"LEFT OUTER JOIN (select answer as sevMatMorbidility,case_id as caseId from answer_tbl where quest_id=110 ) as q35 ON q0.caseId=q35.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+	
+	
+	public static final String MATERNAL_MORTALITY_MORBIDITY_PER_HOSPITAL = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(maternalDeath='yes',1,0)) as maternalDth,"+
+			"sum(if(sevMatMorbidility='yes',1,0)) as MatMorbidility "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as maternalDeath,case_id as caseId from answer_tbl where quest_id=112 ) as q34 ON q0.caseId=q34.caseId "+
+			"LEFT OUTER JOIN (select answer as sevMatMorbidility,case_id as caseId from answer_tbl where quest_id=110 ) as q35 ON q0.caseId=q35.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"and netmdBranchId=:hospital  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+	
+	
+	public static final String BIRTH_WEIGHT_PER_GENTER = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(baby1Gnder='male',1,0)) as baby1GnderM,"+
+			"sum(if(baby1Gnder='female',1,0)) as baby1GnderF,"+
+			"sum(if(baby1Wt>=3500,1,0)) as baby1WtGr3500,"+
+			"sum(if(baby1Wt BETWEEN 2500 AND 3499,1,0)) as baby1WtBtw2500And3499,"+
+			"sum(if(baby1Wt<=1500,1,0)) as baby1WtLs1500,"+
+			"sum(if(baby1Wt BETWEEN 1500 AND 2499,1,0)) as baby1WtBtw1500And2499 "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as baby1Gnder,case_id as caseId from answer_tbl where quest_id=127) as q42 ON q0.caseId=q42.caseId "+
+			"LEFT OUTER JOIN (select answer as baby1Wt,case_id as caseId from answer_tbl where quest_id=128) as q43 ON q0.caseId=q43.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+	
+	
+	public static final String BIRTH_WEIGHT_PER_GENTER_PER_HOSPITAL = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(baby1Gnder='male',1,0)) as baby1GnderM,"+
+			"sum(if(baby1Gnder='female',1,0)) as baby1GnderF,"+
+			"sum(if(baby1Wt>=3500,1,0)) as baby1WtGr3500,"+
+			"sum(if(baby1Wt BETWEEN 2500 AND 3499,1,0)) as baby1WtBtw2500And3499,"+
+			"sum(if(baby1Wt<=1500,1,0)) as baby1WtLs1500,"+
+			"sum(if(baby1Wt BETWEEN 1500 AND 2499,1,0)) as baby1WtBtw1500And2499 "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as baby1Gnder,case_id as caseId from answer_tbl where quest_id=127) as q42 ON q0.caseId=q42.caseId "+
+			"LEFT OUTER JOIN (select answer as baby1Wt,case_id as caseId from answer_tbl where quest_id=128) as q43 ON q0.caseId=q43.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"and netmdBranchId=:hospital  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+	
+	public static final String APGAR_SCORE = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(baby1ApgarOne<1,1,0)) as baby1ApgarLs1, "+
+			"sum(if(baby1ApgarFve<5,1,0)) as baby1ApgarLs5 "+
+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as baby1ApgarOne,case_id as caseId from answer_tbl where quest_id=129) as q44 ON q0.caseId=q44.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+	
+	
+	public static final String APGAR_SCORE_PER_HOSPITAL = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(baby1ApgarOne<1,1,0)) as baby1ApgarLs1,"+
+			"sum(if(baby1ApgarFve<5,1,0)) as baby1ApgarLs5 "+
+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as baby1ApgarOne,case_id as caseId from answer_tbl where quest_id=129) as q44 ON q0.caseId=q44.caseId "+
+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"and netmdBranchId=:hospital  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+
+	
+	
+	public static final String FETAL_COMPLEXITES = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(fetal1StllBrth='yes',1,0)) as fetal1StllBrth,"+
+			"sum(if(fetal1NeonatalDeath='yes',1,0)) as fetal1NeonatalDeath,"+
+			"sum(if(fetal1Anomalies='yes',1,0)) as fetal1Anomalies,"+
+			"sum(if(fetal1NICUAdmn='yes',1,0)) as fetal1NICUAdmn "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as fetal1StllBrth,case_id as caseId from answer_tbl where quest_id=161) as q46 ON q0.caseId=q46.caseId "+
+			"LEFT OUTER JOIN (select answer as fetal1NeonatalDeath,case_id as caseId from answer_tbl where quest_id=162) as q47 ON q0.caseId=q47.caseId "+
+			"LEFT OUTER JOIN (select answer as fetal1Anomalies,case_id as caseId from answer_tbl where quest_id=163) as q48 ON q0.caseId=q48.caseId "+
+			"LEFT OUTER JOIN (select answer as fetal1NICUAdmn,case_id as caseId from answer_tbl where quest_id=164) as q49 ON q0.caseId=q49.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+	
+	
+	public static final String FETAL_COMPLEXITES_PER_HOSPITAL = "select nmd.name as hospital,yer as year, mnth as month,"+
+			"sum(if(fetal1StllBrth='yes',1,0)) as fetal1StllBrth,"+
+			"sum(if(fetal1NeonatalDeath='yes',1,0)) as fetal1NeonatalDeath,"+
+			"sum(if(fetal1Anomalies='yes',1,0)) as fetal1Anomalies,"+
+			"sum(if(fetal1NICUAdmn='yes',1,0)) as fetal1NICUAdmn "+
+			"LEFT OUTER JOIN (select answer as mnth,case_id as caseId from answer_tbl where quest_id=123 ) as q1 ON q0.caseId=q1.caseId "+
+			"LEFT OUTER JOIN (select answer as yer,case_id as caseId from answer_tbl where quest_id=124 ) as q2 ON q0.caseId=q2.caseId "+
+			"LEFT OUTER JOIN (select answer as fetal1StllBrth,case_id as caseId from answer_tbl where quest_id=161) as q46 ON q0.caseId=q46.caseId "+
+			"LEFT OUTER JOIN (select answer as fetal1NeonatalDeath,case_id as caseId from answer_tbl where quest_id=162) as q47 ON q0.caseId=q47.caseId "+
+			"LEFT OUTER JOIN (select answer as fetal1Anomalies,case_id as caseId from answer_tbl where quest_id=163) as q48 ON q0.caseId=q48.caseId "+
+			"LEFT OUTER JOIN (select answer as fetal1NICUAdmn,case_id as caseId from answer_tbl where quest_id=164) as q49 ON q0.caseId=q49.caseId "+
+			"LEFT JOIN  netmd_branch_tbl as nmd ON q0.netmdBranchId=nmd.id "+
+			"where str_to_date(concat(mnth,yer),'%M%Y') between str_to_date(concat(:fMonth,' ',:fYear),'%m%Y') and  str_to_date(concat(:toMonth,' ',:toYear),'%m%Y') "+
+			"and netmdBranchId=:hospital  group by nmd.name,mnth,yer order by nmd.name,yer,month(str_to_date(SUBSTRING(mnth,1,3),'%b'))";
+
+	
+	
 }

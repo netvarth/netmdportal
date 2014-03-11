@@ -59,7 +59,7 @@ public class Induction implements Cluster{
 					measure = new Measure();
 					measure.setColumn(clusterMap.getKey());
 					measure.setHospital(subCluster.getHospital());
-					measure.setMonth(subCluster.getHospital());
+					measure.setMonth(subCluster.getMonth());
 					measure.setYear(entity.getYear());
 					measure.setKey(onesubCluster.getKey());
 					measure.setMeasure(onesubCluster.getValue());

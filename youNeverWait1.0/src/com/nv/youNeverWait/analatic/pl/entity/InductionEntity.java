@@ -2,6 +2,7 @@ package com.nv.youNeverWait.analatic.pl.entity;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nv.youNeverWait.analatic.bl.SubClusters;
@@ -118,20 +119,20 @@ public class InductionEntity {
 			}
 			@Override
 			public Map<String, Map<String, Integer>> getClusterMap() {
-				Map<String,Map<String,Integer>> outerMap = new HashMap<String,Map<String,Integer>>();
-				Map<String, Integer> innerMap = new HashMap<String,Integer>();
+				Map<String,Map<String,Integer>> outerMap = new LinkedHashMap<String,Map<String,Integer>>();
+				Map<String, Integer> innerMap = new LinkedHashMap<String,Integer>();
 				innerMap.put("Vag  del <24hrs", electiveInductionGr24HrVag+indicatedInductionGr24HrVag);
 				innerMap.put("Vag  del >24hrs", electiveInductionLs24HrVag+indicatedInductionLs24HrVag);
 				innerMap.put("CS", inducedLabourCs);
 				outerMap.put("Total induced", innerMap);
 				
-				innerMap = new HashMap<String,Integer>();
+				innerMap = new LinkedHashMap<String,Integer>();
 				innerMap.put("Vag  del <24hrs", electiveInductionGr24HrVag);
 				innerMap.put("Vag  del >24hrs", electiveInductionLs24HrVag);
 				innerMap.put("CS", electiveInductionCs);
 				outerMap.put("Elective induction", innerMap);
 				
-				innerMap = new HashMap<String,Integer>();
+				innerMap = new LinkedHashMap<String,Integer>();
 				innerMap.put("Vag  del <24hrs", indicatedInductionGr24HrVag);
 				innerMap.put("Vag  del >24hrs", indicatedInductionLs24HrVag);
 				innerMap.put("CS", indicatedInductionCs);

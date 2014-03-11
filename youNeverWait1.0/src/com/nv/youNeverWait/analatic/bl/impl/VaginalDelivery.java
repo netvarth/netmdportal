@@ -13,7 +13,7 @@ import com.nv.youNeverWait.analatic.pl.entity.VaginalDeliveryEntity;
 public class VaginalDelivery implements Cluster {
 
 	private AnalaticDao analaticDao;
-	  private String name ="VaginalDelivery";
+	  private String name ="Vaginal Delivery";
 	    
 	    @Override
 		public Inference getInference( String fmonth, String fyear,

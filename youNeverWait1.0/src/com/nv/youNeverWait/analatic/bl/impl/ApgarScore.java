@@ -9,12 +9,12 @@ import com.nv.youNeverWait.analatic.bl.Inference;
 import com.nv.youNeverWait.analatic.bl.Measure;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
 import com.nv.youNeverWait.analatic.pl.entity.ApgarScoreEntity;
-import com.nv.youNeverWait.analatic.pl.entity.BloodGroupEntity;
+
 
 public class ApgarScore implements Cluster {
 
 	private AnalaticDao analaticDao;
-	  private String name ="Upgar Score";
+	  private String name ="Apgar Score";
 	    
 	    @Override
 		public Inference getInference( String fmonth, String fyear,
@@ -22,12 +22,12 @@ public class ApgarScore implements Cluster {
 			
 			 
 		         Inference inference = new Inference();
-		        // inference.setCluster(name);
+		         inference.setCluster(name);
 			     
-				 //List<ApgarScoreEntity> entityList= analaticDao.getUpgarScoreInferences(fmonth,fyear,toMonth, toYear);
-			     //List<Measure> measures = getMeasures(entityList);
-			     //inference.setEvaluations(measures);
-	    
+		         List<ApgarScoreEntity> entityList =analaticDao.getApgarScoreInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear));
+			     List<Measure> measures = getMeasures(entityList);
+			     inference.setEvaluations(measures);
+					 
 	      
 			return inference;
 		}
@@ -39,11 +39,11 @@ public class ApgarScore implements Cluster {
 				String toMonth, String toYear, Integer hosptl) {
 			
 		     Inference inference = new Inference();
-	       //  inference.setCluster(name);
+	         inference.setCluster(name);
 		     
-		   //  List<ApgarScoreEntity> entityList =analaticDao.getUpgarScoreInferences(fmonth,fyear,toMonth, toYear,hosptl);
-		   //  List<Measure> measures = getMeasures(entityList);
-		   //  inference.setEvaluations(measures);
+		     List<ApgarScoreEntity> entityList =analaticDao.getApgarScoreInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear),hosptl);
+		     List<Measure> measures = getMeasures(entityList);
+		     inference.setEvaluations(measures);
 			
 			
 			return inference;
@@ -73,7 +73,7 @@ public class ApgarScore implements Cluster {
 	    	    measure.setMeasure(entry.getValue());
 	    	    measure.setMonth(entity.getMonth());
 	    	    measure.setYear(entity.getYear());
-	    	    measure.setHospital(entity.getHostpital());
+	    	    measure.setHospital(entity.getHospital());
 	    	    measures.add(measure);
 	    		}
 	    		

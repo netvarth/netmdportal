@@ -14,23 +14,34 @@ import java.util.List;
 
 
 
+
+
+
+
+
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.nv.youNeverWait.analatic.bl.Measure;
+import com.nv.youNeverWait.analatic.bl.impl.PlacentalWt;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
 import com.nv.youNeverWait.analatic.pl.entity.ApgarScoreEntity;
+import com.nv.youNeverWait.analatic.pl.entity.BirthWeightEntity;
 import com.nv.youNeverWait.analatic.pl.entity.BloodGroupEntity;
+import com.nv.youNeverWait.analatic.pl.entity.BloodLossEntity;
 import com.nv.youNeverWait.analatic.pl.entity.BodyMassIndexEntity;
 import com.nv.youNeverWait.analatic.pl.entity.BookedStatisticsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.CaesareanSectionEntity;
 import com.nv.youNeverWait.analatic.pl.entity.EpisiotomyEntity;
+import com.nv.youNeverWait.analatic.pl.entity.FetalComplexitesEntity;
 import com.nv.youNeverWait.analatic.pl.entity.InductionEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalAgeEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalComplicationsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalHeightEntity;
+import com.nv.youNeverWait.analatic.pl.entity.MaternalMortalityMorbidityEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalWeightEntity;
 import com.nv.youNeverWait.analatic.pl.entity.ParityEntity;
 import com.nv.youNeverWait.analatic.pl.entity.PerinealTearEntity;
@@ -1015,72 +1026,299 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	}
 	
 
+	@Override
+	public List<FetalComplexitesEntity> getFetalComplexitesInferences(
+			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear) {
+		Query query = em.createNativeQuery(AnalaticQuery.FETAL_COMPLEXITES);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+	     
+		List<Object[]>entityList = query.getResultList();
+		List<FetalComplexitesEntity> fetalComplexitesEntityList  = new ArrayList<FetalComplexitesEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	FetalComplexitesEntity fetalComplexitesEntity = new FetalComplexitesEntity();
+	    	fetalComplexitesEntity.setHospital((String)entity[0]);
+	    	fetalComplexitesEntity.setYear((String)entity[1]);
+	    	fetalComplexitesEntity.setMonth((String)entity[2]);
+	    	fetalComplexitesEntity.setFetalStllBrth((BigDecimal)entity[3]);
+	    	fetalComplexitesEntity.setFetal1NeonatalDeath((BigDecimal)entity[4]);
+	    	fetalComplexitesEntity.setFetalAdmission((BigDecimal)entity[5]);
+	    	fetalComplexitesEntity.setFetalNICUAdmn((BigDecimal)entity[6]);
+	    	fetalComplexitesEntity.setFetalAnomalies((BigDecimal)entity[7]);
+	    	fetalComplexitesEntityList.add(fetalComplexitesEntity);
+	    }
+	    	return fetalComplexitesEntityList;
+	}
+	@Override
+	public List<FetalComplexitesEntity> getFetalComplexitesInferences(
+			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear,
+			Integer hospital) {
+		Query query = em.createNativeQuery(AnalaticQuery.FETAL_COMPLEXITES);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		query.setParameter("hospital",hospital);
+	     
+		List<Object[]>entityList = query.getResultList();
+		List<FetalComplexitesEntity> fetalComplexitesEntityList  = new ArrayList<FetalComplexitesEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	FetalComplexitesEntity fetalComplexitesEntity = new FetalComplexitesEntity();
+	    	fetalComplexitesEntity.setHospital((String)entity[0]);
+	    	fetalComplexitesEntity.setYear((String)entity[1]);
+	    	fetalComplexitesEntity.setMonth((String)entity[2]);
+	    	fetalComplexitesEntity.setFetalStllBrth((BigDecimal)entity[3]);
+	    	fetalComplexitesEntity.setFetal1NeonatalDeath((BigDecimal)entity[4]);
+	    	fetalComplexitesEntity.setFetalAdmission((BigDecimal)entity[5]);
+	    	fetalComplexitesEntity.setFetalNICUAdmn((BigDecimal)entity[6]);
+	    	fetalComplexitesEntity.setFetalAnomalies((BigDecimal)entity[7]);
+	    	fetalComplexitesEntityList.add(fetalComplexitesEntity);
+	    }
+	    	return fetalComplexitesEntityList;
+	}
 	
+	@Override
+	public List<BirthWeightEntity> getBirthWeightInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear) {
+		
+		
+		
+		Query query = em.createNativeQuery(AnalaticQuery.BIRTH_WEIGHT_PER_GENTER);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+	     
+		List<Object[]>entityList = query.getResultList();
+		List<BirthWeightEntity> birthWeightEntityList  = new ArrayList<BirthWeightEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	BirthWeightEntity birthWeightEntity = new BirthWeightEntity();
+	    	birthWeightEntity.setHospital((String)entity[0]);
+	    	birthWeightEntity.setYear((String)entity[1]);
+	    	birthWeightEntity.setMonth((String)entity[2]);
+	    	birthWeightEntity.setBaby1GnderM((BigDecimal)entity[3]);
+	    	birthWeightEntity.setBaby1WtLs1500((BigDecimal)entity[4]);
+	    	birthWeightEntity.setBaby1WtBtw1500And2499((BigDecimal)entity[5]);
+	    	birthWeightEntity.setBaby1WtBtw2500And3499((BigDecimal)entity[6]);
+	    	birthWeightEntity.setBaby1WtGr3500((BigDecimal)entity[7]);
+	    	birthWeightEntityList.add(birthWeightEntity);
+	    }
+		return birthWeightEntityList;
+	}
+	@Override
+	public List<BirthWeightEntity> getBirthWeightInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
 	
+		Query query = em.createNativeQuery(AnalaticQuery.BIRTH_WEIGHT_PER_GENTER_PER_HOSPITAL);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		query.setParameter("hospital",hospital);
+		List<Object[]>entityList = query.getResultList();
+		List<BirthWeightEntity> birthWeightEntityList  = new ArrayList<BirthWeightEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	BirthWeightEntity birthWeightEntity = new BirthWeightEntity();
+	    	birthWeightEntity.setHospital((String)entity[0]);
+	    	birthWeightEntity.setYear((String)entity[1]);
+	    	birthWeightEntity.setMonth((String)entity[2]);
+	    	birthWeightEntity.setBaby1GnderM((BigDecimal)entity[3]);
+	    	birthWeightEntity.setBaby1WtLs1500((BigDecimal)entity[4]);
+	    	birthWeightEntity.setBaby1WtBtw1500And2499((BigDecimal)entity[5]);
+	    	birthWeightEntity.setBaby1WtBtw2500And3499((BigDecimal)entity[6]);
+	    	birthWeightEntity.setBaby1WtGr3500((BigDecimal)entity[7]);
+	    	birthWeightEntityList.add(birthWeightEntity);
+	    
+	    }
+	  return birthWeightEntityList;
+	
+	}
 
 	
+	@Override
+	public List<ApgarScoreEntity> getApgarScoreInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear) {
+		Query query = em.createNativeQuery(AnalaticQuery.APGAR_SCORE);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+	
+		List<Object[]>entityList = query.getResultList();
+		List<ApgarScoreEntity> apgarScoreEntityList  = new ArrayList<ApgarScoreEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	ApgarScoreEntity apgarScoreEntity = new ApgarScoreEntity();
+	    	apgarScoreEntity.setHospital((String)entity[0]);
+	    	apgarScoreEntity.setYear((String)entity[1]);
+	    	apgarScoreEntity.setMonth((String)entity[2]);
+	    	apgarScoreEntity.setOneAtFive((BigDecimal)entity[3]);
+	    	apgarScoreEntity.setFiveAt5((BigDecimal)entity[4]);
+	    	apgarScoreEntityList.add(apgarScoreEntity);
+	    }
+	return apgarScoreEntityList;
+	}
 	
 	
 	@Override
-	public List<ApgarScoreEntity> getApgarScoreInferences(String fyear,
-			String fmonth, String toyear, String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ApgarScoreEntity> getApgarScoreInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
+		Query query = em.createNativeQuery(AnalaticQuery.APGAR_SCORE_PER_HOSPITAL);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		query.setParameter("hospital",hospital);
+		List<Object[]>entityList = query.getResultList();
+		List<ApgarScoreEntity> apgarScoreEntityList  = new ArrayList<ApgarScoreEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	ApgarScoreEntity apgarScoreEntity = new ApgarScoreEntity();
+	    	apgarScoreEntity.setHospital((String)entity[0]);
+	    	apgarScoreEntity.setYear((String)entity[1]);
+	    	apgarScoreEntity.setMonth((String)entity[2]);
+	    	apgarScoreEntity.setOneAtFive((BigDecimal)entity[3]);
+	    	apgarScoreEntity.setFiveAt5((BigDecimal)entity[4]);
+	    	apgarScoreEntityList.add(apgarScoreEntity);
+	    }
+	return apgarScoreEntityList;
+	}
+	
+	
+	@Override
+	public List<MaternalMortalityMorbidityEntity> getMaternalMortalityMorbidityInferences(Integer fmonth, Integer fyear, Integer toMonth, Integer toYear) {
+		Query query = em.createNativeQuery(AnalaticQuery.MATERNAL_MORTALITY_MORBIDITY);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+	
+		List<Object[]>entityList = query.getResultList();
+		List<MaternalMortalityMorbidityEntity> apgarScoreEntityList  = new ArrayList<MaternalMortalityMorbidityEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	MaternalMortalityMorbidityEntity maternalMortalityMorbidityEntity = new MaternalMortalityMorbidityEntity();
+	    	maternalMortalityMorbidityEntity.setHospital((String)entity[0]);
+	    	maternalMortalityMorbidityEntity.setYear((String)entity[1]);
+	    	maternalMortalityMorbidityEntity.setMonth((String)entity[2]);
+	    	maternalMortalityMorbidityEntity.setMaternalDth((BigDecimal)entity[3]);
+	    	maternalMortalityMorbidityEntity.setMatMorbidility((BigDecimal)entity[4]);
+	    	apgarScoreEntityList.add(maternalMortalityMorbidityEntity);
+	    }
+	return apgarScoreEntityList;
+		
+		
 	}
 	@Override
-	public List<ApgarScoreEntity> getApgarScoreInferences(String fyear,
-			String fmonth, String toyear, String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MaternalMortalityMorbidityEntity> getMaternalMortalityMorbidityInferences(
+			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear,
+			Integer hospital) {
+		
+		Query query = em.createNativeQuery(AnalaticQuery.MATERNAL_MORTALITY_MORBIDITY_PER_HOSPITAL);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		query.setParameter("hospital",hospital);
+		List<Object[]>entityList = query.getResultList();
+		List<MaternalMortalityMorbidityEntity> maternalMortalityMorbidityEntityList  = new ArrayList<MaternalMortalityMorbidityEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	MaternalMortalityMorbidityEntity maternalMortalityMorbidityEntity = new MaternalMortalityMorbidityEntity();
+	    	maternalMortalityMorbidityEntity.setHospital((String)entity[0]);
+	    	maternalMortalityMorbidityEntity.setYear((String)entity[1]);
+	    	maternalMortalityMorbidityEntity.setMonth((String)entity[2]);
+	    	maternalMortalityMorbidityEntity.setMaternalDth((BigDecimal)entity[3]);
+	    	maternalMortalityMorbidityEntity.setMatMorbidility((BigDecimal)entity[4]);
+	    	maternalMortalityMorbidityEntityList.add(maternalMortalityMorbidityEntity);
+	    }
+		return maternalMortalityMorbidityEntityList;
 	}
+	
+	
 	@Override
-	public Measure getBloodLossInferences(String fyear, String fmonth,
-			String toyear, String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BloodLossEntity> getBloodLossInferences(
+			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear) {
+		
+		Query query = em.createNativeQuery(AnalaticQuery.MATERNAL_MORTALITY_MORBIDITY_PER_HOSPITAL);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		
+		List<Object[]>entityList = query.getResultList();
+		List<BloodLossEntity> bloodLossEntityList  = new ArrayList<BloodLossEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	BloodLossEntity bloodLossEntity = new BloodLossEntity();
+	    	bloodLossEntity.setHospital((String)entity[0]);
+	    	bloodLossEntity.setYear((String)entity[1]);
+	    	bloodLossEntity.setMonth((String)entity[2]);
+	    	bloodLossEntity.setBldLosLs500Cs((BigDecimal)entity[3]);
+	    	bloodLossEntity.setBldLosBtw500And1000Cs((BigDecimal)entity[4]);
+	    	bloodLossEntity.setBldLosGr1000Cs((BigDecimal)entity[5]);
+	    	bloodLossEntity.setBldLosLs500Vag((BigDecimal)entity[6]);
+	    	bloodLossEntity.setBldLosBtw500And1000Vag((BigDecimal)entity[7]);
+	    	bloodLossEntity.setBldLosGr1000Vag((BigDecimal)entity[8]);
+	    	bloodLossEntity.setBldLosLs500Total((BigDecimal)entity[9]);
+	    	bloodLossEntity.setBldLosBtw500And1000Total((BigDecimal)entity[10]);
+	    	bloodLossEntity.setBldLosGr1000Total((BigDecimal)entity[11]);
+	    
+	    	
+	    	bloodLossEntityList.add(bloodLossEntity);
+	    }
+		return bloodLossEntityList;
 	}
+	
+	
+	
+	
+	
 	@Override
-	public Measure getBloodLossInferences(String fyear, String fmonth,
-			String toyear, String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BloodLossEntity> getBloodLossInferences(
+			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear,Integer hospital) {
+		
+		Query query = em.createNativeQuery(AnalaticQuery.MATERNAL_MORTALITY_MORBIDITY_PER_HOSPITAL);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		query.setParameter("hospital",hospital);
+		
+		List<Object[]>entityList = query.getResultList();
+		List<BloodLossEntity> bloodLossEntityList  = new ArrayList<BloodLossEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	BloodLossEntity bloodLossEntity = new BloodLossEntity();
+	    	bloodLossEntity.setHospital((String)entity[0]);
+	    	bloodLossEntity.setYear((String)entity[1]);
+	    	bloodLossEntity.setMonth((String)entity[2]);
+	    	bloodLossEntity.setBldLosLs500Cs((BigDecimal)entity[3]);
+	    	bloodLossEntity.setBldLosBtw500And1000Cs((BigDecimal)entity[4]);
+	    	bloodLossEntity.setBldLosGr1000Cs((BigDecimal)entity[5]);
+	    	bloodLossEntity.setBldLosLs500Vag((BigDecimal)entity[6]);
+	    	bloodLossEntity.setBldLosBtw500And1000Vag((BigDecimal)entity[7]);
+	    	bloodLossEntity.setBldLosGr1000Vag((BigDecimal)entity[8]);
+	    	bloodLossEntity.setBldLosLs500Total((BigDecimal)entity[9]);
+	    	bloodLossEntity.setBldLosBtw500And1000Total((BigDecimal)entity[10]);
+	    	bloodLossEntity.setBldLosGr1000Total((BigDecimal)entity[11]);
+	    
+	    	
+	    	bloodLossEntityList.add(bloodLossEntity);
+	    }
+		return bloodLossEntityList;
 	}
-	@Override
-	public Measure getMaternalDeathInferences(String fyear, String fmonth,
-			String toyear, String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getMaternalDeathInferences(String fyear, String fmonth,
-			String toyear, String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getMaternalMorbidityInferences(String fyear, String fmonth,
-			String toyear, String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getMaternalMorbidityInferences(String fyear, String fmonth,
-			String toyear, String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getPlacentalWtInferences(String fyear, String fmonth,
-			String toyear, String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getPlacentalWtInferences(String fyear, String fmonth,
-			String toyear, String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	
+	
+	
+	
 	
 	@Override
 	public Measure getTSDInferences(String fyear, String fmonth, String toyear,
@@ -1130,7 +1368,43 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	@Override
+	public Measure getMaternalDeathInferences(String fyear, String fmonth,
+			String toyear, String tomonth) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Measure getMaternalDeathInferences(String fyear, String fmonth,
+			String toyear, String tomonth, Integer hospital) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Measure getMaternalMorbidityInferences(String fyear, String fmonth,
+			String toyear, String tomonth) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Measure getMaternalMorbidityInferences(String fyear, String fmonth,
+			String toyear, String tomonth, Integer hospital) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Measure getPlacentalWtInferences(String fyear, String fmonth,
+			String toyear, String tomonth) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Measure getPlacentalWtInferences(String fyear, String fmonth,
+			String toyear, String tomonth, Integer hospital) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 
 	
 	

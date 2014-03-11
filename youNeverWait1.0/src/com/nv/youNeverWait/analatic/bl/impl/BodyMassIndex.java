@@ -14,7 +14,7 @@ import com.nv.youNeverWait.analatic.pl.entity.BodyMassIndexEntity;
 public class BodyMassIndex implements Cluster{
 
 	  private AnalaticDao analaticDao;
-	  private String name ="BodyMassIndex";
+	  private String name ="Body Mass Index";
 	    
 	    @Override
 		public Inference getInference( String fmonth, String fyear,

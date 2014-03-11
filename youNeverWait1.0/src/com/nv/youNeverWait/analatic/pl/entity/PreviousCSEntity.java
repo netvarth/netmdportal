@@ -2,6 +2,7 @@ package com.nv.youNeverWait.analatic.pl.entity;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nv.youNeverWait.analatic.bl.SubClusters;
@@ -121,7 +122,7 @@ public class PreviousCSEntity {
 			public Map<String,Map<String,Integer>> getClusterMap() {
 				Map<String,Map<String,Integer>> outerMap = new HashMap<String,Map<String,Integer>>();
 				
-				Map<String, Integer> innerMap = new HashMap<String,Integer>();
+				Map<String, Integer> innerMap = new LinkedHashMap<String,Integer>();
 				innerMap.put("One CS",same1);
 				innerMap.put("Two CS",same2);
 				innerMap.put("Three CS",same3);

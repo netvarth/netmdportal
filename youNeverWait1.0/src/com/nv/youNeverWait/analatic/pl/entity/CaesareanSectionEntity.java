@@ -2,6 +2,7 @@ package com.nv.youNeverWait.analatic.pl.entity;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CaesareanSectionEntity {
@@ -38,8 +39,8 @@ public class CaesareanSectionEntity {
     
 	public Map<String,Integer> getSubClusters(){
 		
-		Map<String,Integer>map = new HashMap<String,Integer>();
-		   map.put("Total Caesarians", totalCs);
+		Map<String,Integer>map = new LinkedHashMap<String,Integer>();
+		   map.put("Total", totalCs);
 		return map;
 	}
     
