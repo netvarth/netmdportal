@@ -14,7 +14,7 @@ import com.nv.youNeverWait.analatic.pl.entity.PerinealTearEntity;
 public class PerinealTear implements Cluster {
 
 	private AnalaticDao analaticDao;
-	private String name ="Perieal Tear";
+	private String name ="Perineal Tear";
 
     @Override
 	public Inference getInference( String fmonth, String fyear,

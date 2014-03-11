@@ -14,7 +14,7 @@ import com.nv.youNeverWait.analatic.pl.entity.VaginalDeliveryEntity;
 public class CaesareanSection implements Cluster{
 	
 	private AnalaticDao analaticDao;
-	private String name ="Caesarian Sections";
+	private String name ="Caesarean Sections";
 
     @Override
 	public Inference getInference( String fmonth, String fyear,

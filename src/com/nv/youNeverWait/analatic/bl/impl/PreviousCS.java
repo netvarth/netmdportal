@@ -16,7 +16,7 @@ import com.nv.youNeverWait.analatic.pl.entity.RobsonClassEntity;
 public class PreviousCS implements Cluster{
 
 	private AnalaticDao analaticDao;
-	  private String name ="PreviousCS";
+	  private String name ="Previous Caesereans";
 	    
 	    @Override
 		public Inference getInference( String fmonth, String fyear,
@@ -74,7 +74,7 @@ public class PreviousCS implements Cluster{
 						measure = new Measure();
 						measure.setColumn(clusterMap.getKey());
 						measure.setHospital(subCluster.getHospital());
-						measure.setMonth(subCluster.getHospital());
+						measure.setMonth(subCluster.getMonth());
 						measure.setYear(entity.getYear());
 						measure.setKey(onesubCluster.getKey());
 						measure.setMeasure(onesubCluster.getValue());
