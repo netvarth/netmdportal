@@ -9,7 +9,7 @@
 		<field name="measure" class="java.lang.Integer"/>
 		<field name="year" class="java.lang.String"/>
 		<field name="hospital" class="java.lang.String"/>
-		<field name="month" class="java.lang.String"/>
+		<field name="month" class="java.lang.Integer"/>
 		<field name="column" class="java.lang.String"/>
 	</subDataset>
 	<queryString>
@@ -134,7 +134,7 @@
 					</columnGroup>
 					<columnGroup name="month" height="30">
 						<bucket >
-							<bucketExpression class="java.lang.String"><![CDATA[$F{month}]]></bucketExpression>
+							<bucketExpression class="java.lang.Integer"><![CDATA[$F{month}]]></bucketExpression>
 						</bucket>
 						<crosstabColumnHeader>
 							<cellContents backcolor="#F0F8FF" mode="Opaque">
@@ -144,7 +144,7 @@
 								<textField>
 									<reportElement  style="Crosstab Data Text" x="0" y="0" width="50" height="30"/>
 									<textElement/>
-									<textFieldExpression><![CDATA[$V{month}]]></textFieldExpression>
+									<textFieldExpression class="java.lang.String"><![CDATA[$V{month}.intValue()==2 ? "Feb":"March"]]></textFieldExpression>
 								</textField>
 							</cellContents>
 						</crosstabColumnHeader>
