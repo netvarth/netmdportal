@@ -2,6 +2,7 @@ package com.nv.youNeverWait.analatic.pl.entity;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MaternalHeightEntity {
@@ -57,7 +58,7 @@ public class MaternalHeightEntity {
 	}
 	public Map<String,Integer> getSubClusters(){
 		
-		Map<String,Integer>map = new HashMap<String,Integer>();
+		Map<String,Integer>map = new LinkedHashMap<String,Integer>();
 		   map.put("<40", lt45);
 		   map.put("145-149", bt145to149);
 		   map.put("150-170", bt150to170);

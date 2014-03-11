@@ -2,6 +2,7 @@ package com.nv.youNeverWait.analatic.pl.entity;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class EpisiotomyEntity {
@@ -45,7 +46,7 @@ public class EpisiotomyEntity {
 	
 	public Map<String,Integer> getSubClusters(){
 		
-		Map<String,Integer>map = new HashMap<String,Integer>();
+		Map<String,Integer>map = new LinkedHashMap<String,Integer>();
 		   map.put("Midline Episiotomy", midlineEpisiotomy);
 		   map.put("Medio Lateral Episiotomy", medioLateralEpisiotomy);
 		  

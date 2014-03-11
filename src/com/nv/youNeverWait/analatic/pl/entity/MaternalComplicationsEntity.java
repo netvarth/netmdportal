@@ -2,6 +2,7 @@ package com.nv.youNeverWait.analatic.pl.entity;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MaternalComplicationsEntity {
@@ -60,7 +61,7 @@ public class MaternalComplicationsEntity {
 	}
 	public Map<String,Integer> getSubClusters(){
 		
-		Map<String,Integer>map = new HashMap<String,Integer>();
+		Map<String,Integer>map = new LinkedHashMap<String,Integer>();
 		   map.put("Anemia", anemia);
 		   map.put("Diabetes", diabetes);
 		   map.put("Hypertension", hyperTension);

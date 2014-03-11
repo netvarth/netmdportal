@@ -2,6 +2,7 @@ package com.nv.youNeverWait.analatic.pl.entity;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BloodGroupEntity {
@@ -65,7 +66,7 @@ public class BloodGroupEntity {
 	}
 	public Map<String,Integer> getSubClusters(){
 		
-		Map<String,Integer>map = new HashMap<String,Integer>();
+		Map<String,Integer>map = new LinkedHashMap<String,Integer>();
 		   map.put("A", a);
 		   map.put("B", b);
 		   map.put("AB", ab);
