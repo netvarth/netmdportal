@@ -5,12 +5,12 @@ public class Measure {
 	private String  key;
 	private Integer measure;
 	private String  year;
-	private String  month;
+	private int  month;
 	private String  hospital;
     private String  column=null;
 	
 	
-	public Measure(String key, Integer measure, String year, String month,
+	public Measure(String key, Integer measure, String year, int month,
 			String hospital) {
 		super();
 		this.key = key;
@@ -25,6 +25,18 @@ public class Measure {
 	public Measure() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+
+
+	public int getMonth() {
+		return month;
+	}
+
+
+
+	public void setMonth(int month) {
+		this.month = month;
 	}
 
 
@@ -47,12 +59,10 @@ public class Measure {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getMonth() {
-		return month;
-	}
-	public void setMonth(String month) {
-		this.month = month;
-	}
+
+	
+	
+	
 	public String getHospital() {
 		return hospital;
 	}
