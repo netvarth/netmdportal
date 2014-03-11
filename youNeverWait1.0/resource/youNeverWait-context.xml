@@ -396,6 +396,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="testService">
 			<ref bean="test.service" />
 		</property>
+		<property name="questionnaireService">
+			<ref bean="questionnaire.service" />
+		</property>
 	</bean>
 
 	<bean id="sync.validator" class="com.nv.youNeverWait.user.bl.validation.SyncValidator"></bean>
