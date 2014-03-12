@@ -1,0 +1,188 @@
+{
+    
+    "data": [
+        {
+            "name": "newHealthForm",
+            "id": "newHealthForm",
+            "content": [
+                {
+                    "className": "sep-div",
+                    "data": [
+                        {
+                            "className": "graph-area",
+                            "id": "healthdiv",
+                            "data": [
+                               
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div-view",
+                    "id": "viewBranchHeader",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "data": [
+                                {
+                                    "className": "five-sixth",
+                                    "data": [
+                                        {
+                                            "className": "column-left",
+                                            "elements": [
+                                                {
+                                            "name": "branchid",
+                                            "id": "branchid",
+                                            "type": "text",
+                                            "title": "Branch Id",
+                                            "className": "newBox"
+                                        }
+                                            ]
+                                        },
+                                        {
+                                            "className": "column-right",
+                                            "elements": [
+                                                
+                                                {
+                                                    "name": "criticalCpuLevel",
+                                                    "id": "criticalCpuLevel",
+                                                    "type": "text",
+                                                    "readonly": "readonly",
+                                                    "title": "CriticalCpuLevel(%)",
+                                                    "className": "newBox"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "five-sixth",
+                                    "data": [
+                                        {
+                                            "className": "column-left",
+                                            "id": "texfrequencyType",
+                                            "elements": [
+                                                {
+                                                    "name": "frequencyType",
+                                                    "id": "frequencyType",
+                                                    "type": "text",
+                                                    "readonly": "readonly",
+                                                    "title": "FrequencyType",
+                                                    "className": "newBox"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "className": "column-left",
+                                            "id": "selfrequencyType",
+                                            "style": "display:none",
+                                            "elements": [
+                                                {
+                                                    "name": "frequencyType",
+                                                    "id": "selectfrequencyType",
+                                                    "type": "select",
+                                                    "title": "FrequencyType",
+                                                    "className": "newBox"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "className": "column-right ",
+                                            "elements": [
+                                                {
+                                                    "name": "intervalTime",
+                                                    "id": "intervalTime",
+                                                    "type": "text",
+                                                    "readonly": "readonly",
+                                                    "title": "IntervalTime",
+                                                    "className": "newBox"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "column-right",
+                            "data": [
+                                {
+                                    "className": "five-sixth",
+                                    "data": [
+                                        {
+                                            "className": "column-left",
+                                            "elements": [
+                                                {
+                                                    "name": "criticalMemoryLevel",
+                                                    "id": "criticalMemoryLevel",
+                                                    "type": "text",
+                                                    "readonly": "readonly",
+                                                    "title": "CriticalMemoryLevel(%)",
+                                                    "className": "newBox"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                                    "name": "criticalHardDiskSpaceLevel",
+                                                    "id": "criticalHardDiskSpaceLevel",
+                                                    "type": "text",
+                                                    "readonly": "readonly",
+                                                    "title": "CriticalHardDiskSpaceLevel(%)",
+                                                    "className": "newBox"
+                                                }
+                                    ]
+                                }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "sep-div",
+                            "data": [
+                                {
+                                    "className": "five_sixth",
+                                    "elements": [
+                                        {
+                                            "type": "button",
+                                            "content": {
+                                                "buttons": [
+                                                    {
+                                                        "name": "healthbtnedit",
+                                                        "id": "healthbtnedit",
+                                                        "title": "Edit",
+                                                        "type": "button",
+                                                        "className": "stdbtn btn_black",
+                                                        "style": "opacity:1;margin:4px"
+                                                    },
+                                                    {
+                                                        "name": "healthbtnDone",
+                                                        "id": "healthbtnDone",
+                                                        "title": "Done",
+                                                        "type": "button",
+                                                        "className": "stdbtn btn_black",
+                                                        "style": "opacity:1;display:none;"
+                                                    },
+                                                    {
+                                                        "name": "healthbtnCancel",
+                                                        "id": "healthbtnCancel",
+                                                        "title": "Cancel",
+                                                        "type": "button",
+                                                        "className": "stdbtn",
+                                                        "style": "opacity:1;display:none;"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

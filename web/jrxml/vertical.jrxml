@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vertical" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" >
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<subDataset name="dataset" >
+		<field name="key" class="java.lang.String"/>
+		<field name="measure" class="java.lang.Integer"/>
+		<field name="year" class="java.lang.String"/>
+		<field name="hospital" class="java.lang.String"/>
+		<field name="month" class="java.lang.Integer"/>
+		<field name="column" class="java.lang.String"/>
+	</subDataset>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cluster" class="java.lang.String">
+		<fieldDescription><![CDATA[cluster]]></fieldDescription>
+	</field>
+	<field name="evaluations" class="java.util.List">
+		<fieldDescription><![CDATA[evaluations]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement  x="0" y="0" width="555" height="38"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Quality Standards in Obstertric Care ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="0" y="38" width="555" height="27"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Project of NRHM, Kerala Health Services, NICE Internatinal ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<elementGroup>
+				<crosstab>
+					<reportElement  x="0" y="0" width="534" height="120"/>
+				<crosstabParameter name="parameter1">
+					<parameterValueExpression><![CDATA[$F{cluster}]]></parameterValueExpression>
+				</crosstabParameter>
+					<crosstabDataset isDataPreSorted="true">
+						<dataset>
+							<datasetRun subDataset="dataset" >
+								<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{evaluations})]]></dataSourceExpression>
+							</datasetRun>
+						</dataset>
+					</crosstabDataset>
+					
+						<crosstabHeaderCell>
+					<cellContents backcolor="#CCCCFF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement  style="Crosstab Data Text" x="0" y="0" width="120" height="60"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="12"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$P{parameter1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabHeaderCell>
+					<rowGroup name="hospital" width="100">
+						<bucket >
+							<bucketExpression class="java.lang.String"><![CDATA[$F{hospital}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField>
+									<reportElement  style="Crosstab Data Text" x="0" y="0" width="100" height="25"/>
+									<textElement/>
+									<textFieldExpression><![CDATA[$V{hospital}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents/>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<rowGroup name="key" width="70">
+						<bucket >
+							<bucketExpression class="java.lang.String"><![CDATA[$F{key}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField>
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25"/>
+									<textElement/>
+									<textFieldExpression><![CDATA[$V{key}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents/>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<columnGroup name="year" height="30">
+						<bucket >
+							<bucketExpression class="java.lang.String"><![CDATA[$F{year}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField>
+									<reportElement  style="Crosstab Data Text" x="0" y="0" width="50" height="30"/>
+									<textElement/>
+									<textFieldExpression><![CDATA[$V{year}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+							<cellContents/>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<columnGroup name="month" height="30">
+						<bucket >
+							<bucketExpression class="java.lang.Integer"><![CDATA[$F{month}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField>
+									<reportElement  style="Crosstab Data Text" x="0" y="0" width="50" height="30"/>
+									<textElement/>
+									<textFieldExpression class="java.lang.String"><![CDATA[$V{month}.intValue()==2 ? "Feb":"March"]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+							<cellContents/>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<columnGroup name="column" height="30">
+						<bucket >
+							<bucketExpression class="java.lang.String"><![CDATA[$F{column}==null? "":$F{column}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+							    <box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField>
+									<reportElement  style="Crosstab Data Text" x="0" y="0" width="50" height="30"/>
+									<textElement/>
+									<textFieldExpression><![CDATA[$V{column}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+							<cellContents/>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<measure name="measureMeasure" class="java.lang.Integer" calculation="Sum">
+						<measureExpression><![CDATA[$F{measure}]]></measureExpression>
+					</measure>
+					<crosstabCell width="50" height="25">
+						<cellContents>
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement  style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.Integer"><![CDATA[$V{measureMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell height="25" rowTotalGroup="key">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement  style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.Integer"><![CDATA[$V{measureMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" columnTotalGroup="year">
+						<cellContents backcolor="#005FB3" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement  style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.Integer"><![CDATA[$V{measureMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell rowTotalGroup="key" columnTotalGroup="year">
+						<cellContents backcolor="#005FB3" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement  style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.Integer"><![CDATA[$V{measureMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" columnTotalGroup="month">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement  style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.Integer"><![CDATA[$V{measureMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell rowTotalGroup="key" columnTotalGroup="month">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement  style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.Integer"><![CDATA[$V{measureMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell rowTotalGroup="hospital">
+						<cellContents/>
+					</crosstabCell>
+					<crosstabCell rowTotalGroup="hospital" columnTotalGroup="year">
+						<cellContents/>
+					</crosstabCell>
+					<crosstabCell rowTotalGroup="hospital" columnTotalGroup="month">
+						<cellContents/>
+					</crosstabCell>
+				
+				</crosstab>
+			</elementGroup>
+		</band>
+	</detail>
+</jasperReport>
