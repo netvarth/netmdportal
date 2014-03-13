@@ -121,19 +121,33 @@ public class PreviousCSEntity {
 
 			@Override
 			public Map<String,Map<String,Integer>> getClusterMap() {
-				Map<String,Map<String,Integer>> outerMap = new HashMap<String,Map<String,Integer>>();
+				Map<String,Map<String,Integer>> outerMap = new LinkedHashMap<String,Map<String,Integer>>();
 				
 				Map<String, Integer> innerMap = new LinkedHashMap<String,Integer>();
-				innerMap.put("One CS",same1);
-				innerMap.put("Two CS",same2);
-				innerMap.put("Three CS",same3);
-				innerMap.put("> Three CS",samegt3);
-				outerMap.put("Same Hospital",innerMap );
-				innerMap.put("One CS",other1);
-				innerMap.put("Two CS",other2);
-				innerMap.put("Three CS",other3);
-				innerMap.put("> Three CS",othergt3);
-				outerMap.put("Other Hospital",innerMap );
+				innerMap.put("same Hospital",same1);
+				innerMap.put("Other Hospital",other1);
+				outerMap.put("One CS",innerMap );
+				
+				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap.put("same Hospital",same2);
+				innerMap.put("Other Hospital",other2);
+				outerMap.put("Two CS",innerMap );
+				
+				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap.put("same Hospital",same3);
+				innerMap.put("Other Hospital",other3);
+				outerMap.put("Three CS",innerMap );
+				
+				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap.put("same Hospital",samegt3);
+				innerMap.put("Other Hospital",othergt3);
+				outerMap.put("> Three CS",innerMap );
+				
+			
+				
+				
+				
+				
 				
 				return outerMap;
 			}

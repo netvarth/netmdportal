@@ -250,54 +250,36 @@ public class RobsonClassEntity {
 			public Map<String, Map<String, Integer>> getClusterMap() {
 				Map<String,Map<String,Integer>> outerMap = new LinkedHashMap<String,Map<String,Integer>>();
 				Map<String, Integer> innerMap = new LinkedHashMap<String,Integer>();
-				innerMap.put("Total", total1);
-				innerMap.put("CS", cs1);
-				outerMap.put("1", innerMap);
-				innerMap = new HashMap<String,Integer>();
-				innerMap.put("Total", total2e);
-				innerMap.put("CS", cs2e);
-				outerMap.put("2e", innerMap);
-				innerMap = new HashMap<String,Integer>();
-				innerMap.put("Total", total2i);
-				innerMap.put("CS", cs2i);
-				outerMap.put("2i", innerMap);
-				innerMap = new HashMap<String,Integer>();
-				innerMap.put("Total", total3);
-				innerMap.put("CS", cs3);
-				outerMap.put("3", innerMap);
-				innerMap = new HashMap<String,Integer>();
-				innerMap.put("Total", total4e);
-				innerMap.put("CS", cs4e);
-				outerMap.put("4e", innerMap);
-				innerMap = new HashMap<String,Integer>();
-				innerMap.put("Total", total4i);
-				innerMap.put("CS", cs4i);
-				outerMap.put("4i", innerMap);
-				innerMap = new HashMap<String,Integer>();
-				innerMap.put("Total", total5);
-				innerMap.put("CS", cs5);
-				outerMap.put("5", innerMap);
-				innerMap = new HashMap<String,Integer>();
-				innerMap.put("Total", total6);
-				innerMap.put("CS", cs6);
-				outerMap.put("6", innerMap);
-				innerMap = new HashMap<String,Integer>();
-				innerMap.put("Total", total7);
-				innerMap.put("CS", cs7);
-				outerMap.put("7", innerMap);
-				innerMap = new HashMap<String,Integer>();
-				innerMap.put("Total", total8);
-				innerMap.put("CS", cs8);
-				outerMap.put("8", innerMap);
-				innerMap = new HashMap<String,Integer>();
-				innerMap.put("Total", total9);
-				innerMap.put("CS", cs9);
-				outerMap.put("9", innerMap);
-				innerMap = new HashMap<String,Integer>();
-				innerMap.put("Total", total10);
-				innerMap.put("CS", cs10);
-				outerMap.put("10", innerMap);
-
+				innerMap.put("1", total1);
+				innerMap.put("2e", total2e);
+				innerMap.put("2i", total2i);
+				innerMap.put("3", total3);
+				innerMap.put("4e", total4e);
+				innerMap.put("4i", total4i);
+				innerMap.put("5", total5);
+				innerMap.put("6", total6);
+				innerMap.put("7", total7);
+				innerMap.put("8", total8);
+				innerMap.put("9", total9);
+				innerMap.put("10", total10);
+				
+				outerMap.put("Total", innerMap);
+				
+				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap.put("1", cs1);
+				innerMap.put("2e", cs2e);
+				innerMap.put("2i", cs2i);
+				innerMap.put("3", cs3);
+				innerMap.put("4e", cs4e);
+				innerMap.put("4i", cs4i);
+				innerMap.put("5", cs5);
+				innerMap.put("6", cs6);
+				innerMap.put("7", cs7);
+				innerMap.put("8", cs8);
+				innerMap.put("9", cs9);
+				innerMap.put("10", cs10);
+				outerMap.put("CS", innerMap);
+				
 				return outerMap ;
 			}
 		}	
