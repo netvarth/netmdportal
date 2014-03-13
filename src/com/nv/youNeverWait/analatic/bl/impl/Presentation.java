@@ -54,7 +54,7 @@ public class Presentation implements Cluster {
     	     
     		for(Map.Entry<String, Integer> entry :entity.getSubClusters().entrySet()){
     		measure = new Measure();
-    	    measure.setKey(entry.getKey());
+    	    measure.setRow(entry.getKey());
     	    measure.setMeasure(entry.getValue());
     	    measure.setMonth(entity.getMonth());
     	    measure.setYear(entity.getYear());

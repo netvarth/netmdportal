@@ -77,7 +77,7 @@ public class BloodLoss implements Cluster {
 						measure.setHospital(subCluster.getHospital());
 						measure.setMonth(subCluster.getMonth());
 						measure.setYear(entity.getYear());
-						measure.setKey(onesubCluster.getKey());
+						measure.setRow(onesubCluster.getKey());
 						measure.setMeasure(onesubCluster.getValue());
 						measures.add(measure);
 					}

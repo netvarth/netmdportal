@@ -10,6 +10,7 @@ import com.nv.youNeverWait.analatic.bl.Inference;
 import com.nv.youNeverWait.analatic.bl.Measure;
 import com.nv.youNeverWait.analatic.bl.SubClusters;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
+import com.nv.youNeverWait.analatic.pl.entity.PreviousCSEntity;
 import com.nv.youNeverWait.analatic.pl.entity.RobsonClassEntity;
 
 public class RobsonClass implements Cluster {
@@ -63,29 +64,31 @@ public class RobsonClass implements Cluster {
 
 
 		private  List<Measure>  getMeasures(List<RobsonClassEntity> data){
-			List<Measure> measures = new ArrayList<Measure>();
-			Measure measure = null;
-			if ((data ==null) || data.size()==0)   return measures;
-			for (RobsonClassEntity entity :data){
+	    	List<Measure> measures = new ArrayList<Measure>();
+	    	Measure measure;
+            int typeOrder=0;
+	    	for (RobsonClassEntity entity :data){
 				SubClusters subCluster =entity.getSubClusters();
 				for( Entry<String, Map<String, Integer>> clusterMap :subCluster.getClusterMap().entrySet()){
-					
+					 typeOrder=1;
 					for ( Entry<String, Integer> onesubCluster:clusterMap.getValue().entrySet()){
 						measure = new Measure();
-						measure.setColumn(clusterMap.getKey());
+						measure.setTypeOrder(typeOrder);
+						measure.setColumn(onesubCluster.getKey());
 						measure.setHospital(subCluster.getHospital());
 						measure.setMonth(subCluster.getMonth());
 						measure.setYear(entity.getYear());
-						measure.setKey(onesubCluster.getKey());
+						measure.setRow(clusterMap.getKey() );
 						measure.setMeasure(onesubCluster.getValue());
 						measures.add(measure);
 					}
-
+                    typeOrder++;
 				}	
 
 			}
-			return measures;
-		}
+	    return measures;
+	    }
+
 
 
 
