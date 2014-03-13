@@ -36,6 +36,7 @@ import com.nv.youNeverWait.rs.dto.RetrievalDoctorResponseDTO;
 import com.nv.youNeverWait.user.bl.service.DoctorService;
 import com.nv.youNeverWait.user.bl.validation.DoctorValidator;
 import com.nv.youNeverWait.user.pl.dao.DoctorDao;
+import com.nv.youNeverWait.user.pl.dao.DoctorTestDao;
 import com.nv.youNeverWait.user.pl.impl.DoctorDaoImpl;
 
 public class DoctorServiceImpl implements DoctorService {
@@ -47,7 +48,7 @@ public class DoctorServiceImpl implements DoctorService {
 	private String mailFrom;
 	private SendEmailMsgWorkerThread mailThread;
 	private static final Log log = LogFactory.getLog(DoctorServiceImpl.class);
-
+	private DoctorTestDao doctorTestDao;
 	/**
 	 * Method to reset password
 	 * 
@@ -73,10 +74,11 @@ public class DoctorServiceImpl implements DoctorService {
 	public ResponseDTO create(DoctorDetail doctor, HeaderDTO header) {
 
 		validator.validateCreateDoctor(doctor, header);
-		ResponseDTO response = doctorDao.create(doctor, header);
-		NetmdBranchTbl netmdBranchTbl = doctorDao.getById(NetmdBranchTbl.class,
-				header.getBranchId());
-		String netmdBranch= netmdBranchTbl.getName();
+		ResponseDTO response = doctorTestDao.create(doctor, header);
+//		NetmdBranchTbl netmdBranchTbl = doctorTestDao.getById(NetmdBranchTbl.class,
+//				header.getBranchId());
+		//String netmdBranch= netmdBranchTbl.getName();
+		String netmdBranch= "Cassandra";
 		/*Sending mail to doctor*/
 			sendEmailToDoctor(Constants.DOCTOR_REGISTER, doctor,netmdBranch);
 		

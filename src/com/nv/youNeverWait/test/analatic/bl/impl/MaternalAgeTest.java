@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Assert;
-
-import org.easymock.EasyMock;
-import org.easymock.IAnswer;
+//
+//import org.easymock.EasyMock;
+//import org.easymock.IAnswer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,24 +42,24 @@ public class MaternalAgeTest {
 	
 	@Before
     public void setup(){
-		
-		AnalaticDao analaticDao = EasyMock.createMock(AnalaticDao.class);
-	     EasyMock.expect(analaticDao.getMaternalAgeInferences(EasyMock.anyInt(), EasyMock.anyInt(), EasyMock.anyInt(), EasyMock.anyInt())).andStubAnswer(new IAnswer<List<MaternalAgeEntity>>() {
-		        @Override
-		        public List<MaternalAgeEntity> answer() throws Throwable {
-		        	      List<MaternalAgeEntity> entityList = new ArrayList<MaternalAgeEntity>();
-		        	      MaternalAgeEntity maternalAgeEntity= new MaternalAgeEntity();
-		        	      maternalAgeEntity.setHospital("Mother Hospital");
-		        	      maternalAgeEntity.setMonth(1);
-		        	      maternalAgeEntity.setYear("2013");
-		        	      
-		        		  entityList.add(maternalAgeEntity);        	
-		        			
-		            return entityList;
-		        }
-			});
-		
-	     maternalAge =  (MaternalAge) applicationContext.getBean("age.cluster");
+//		
+//		AnalaticDao analaticDao = EasyMock.createMock(AnalaticDao.class);
+//	     EasyMock.expect(analaticDao.getMaternalAgeInferences(EasyMock.anyInt(), EasyMock.anyInt(), EasyMock.anyInt(), EasyMock.anyInt())).andStubAnswer(new IAnswer<List<MaternalAgeEntity>>() {
+//		        @Override
+//		        public List<MaternalAgeEntity> answer() throws Throwable {
+//		        	      List<MaternalAgeEntity> entityList = new ArrayList<MaternalAgeEntity>();
+//		        	      MaternalAgeEntity maternalAgeEntity= new MaternalAgeEntity();
+//		        	      maternalAgeEntity.setHospital("Mother Hospital");
+//		        	      maternalAgeEntity.setMonth(1);
+//		        	      maternalAgeEntity.setYear("2013");
+//		        	      
+//		        		  entityList.add(maternalAgeEntity);        	
+//		        			
+//		            return entityList;
+//		        }
+//			});
+//		
+//	     maternalAge =  (MaternalAge) applicationContext.getBean("age.cluster");
 	     //ReflectionTestUtils.setField(maternalAge,"analaticDao", analaticDao);
 	}
 	     
