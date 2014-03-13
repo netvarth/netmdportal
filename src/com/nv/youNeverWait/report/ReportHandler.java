@@ -87,6 +87,7 @@ public class ReportHandler {
 		try{
 			HashMap<String, Object> reportParms = new HashMap<String, Object>();
 			JasperDesign jasperDesign = JRXmlLoader.load(is);
+		
 			jasperReport = JasperCompileManager.compileReport(jasperDesign);
 			JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(dataBeanList);
 			jasperPrint = JasperFillManager.fillReport(jasperReport,reportParms,beanColDataSource);
