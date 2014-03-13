@@ -71,8 +71,10 @@ public class ReportHandler {
 		String fYear = (String) map.get("startYear");
 		String toMonth = (String) map.get("endMonth");
 		String toYear = (String) map.get("endYear");
-		Integer hospital = (Integer) map.get("paramList");
-		
+		String hospitalString = (String) map.get("paramList");
+		Integer hospital=null;
+		if (hospitalString !=null)
+		hospital = Integer.parseInt(hospitalString);
 		
 		List<Inference> dataBeanList=null;
 		if (hospital !=null){
