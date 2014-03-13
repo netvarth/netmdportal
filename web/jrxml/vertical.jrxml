@@ -11,7 +11,8 @@
 		<field name="hospital" class="java.lang.String"/>
 		<field name="month" class="java.lang.Integer"/>
 		<field name="column" class="java.lang.String"/>
-	</subDataset>
+		<field name="typeOrder" class="java.lang.Integer"/>
+		</subDataset>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -95,6 +96,7 @@
 					<rowGroup name="key" width="70">
 						<bucket >
 							<bucketExpression class="java.lang.String"><![CDATA[$F{key}]]></bucketExpression>
+							  <orderByExpression> <![CDATA[$V{measure1}]]></orderByExpression> 
 						</bucket>
 						<crosstabRowHeader>
 							<cellContents backcolor="#F0F8FF" mode="Opaque">
@@ -104,7 +106,7 @@
 								<textField>
 									<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25"/>
 									<textElement/>
-									<textFieldExpression><![CDATA[$V{key}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$V{row}]]></textFieldExpression>
 								</textField>
 							</cellContents>
 						</crosstabRowHeader>
@@ -152,9 +154,13 @@
 							<cellContents/>
 						</crosstabTotalColumnHeader>
 					</columnGroup>
+								
 					<columnGroup name="column" height="30">
+					
+				 
 						<bucket >
 							<bucketExpression class="java.lang.String"><![CDATA[$F{column}==null? "":$F{column}]]></bucketExpression>
+						  
 						</bucket>
 						<crosstabColumnHeader>
 							<cellContents backcolor="#F0F8FF" mode="Opaque">
@@ -175,6 +181,9 @@
 					<measure name="measureMeasure" class="java.lang.Integer" calculation="Sum">
 						<measureExpression><![CDATA[$F{measure}]]></measureExpression>
 					</measure>
+					   <measure name="measure1" class="java.lang.Integer">
+					    	<measureExpression><![CDATA[$F{typeOrder}]]></measureExpression>
+				    	    </measure>
 					<crosstabCell width="50" height="25">
 						<cellContents>
 							<box>
@@ -187,7 +196,7 @@
 							</textField>
 						</cellContents>
 					</crosstabCell>
-					<crosstabCell height="25" rowTotalGroup="key">
+					<crosstabCell height="25" rowTotalGroup="row">
 						<cellContents backcolor="#BFE1FF" mode="Opaque">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
@@ -211,7 +220,7 @@
 							</textField>
 						</cellContents>
 					</crosstabCell>
-					<crosstabCell rowTotalGroup="key" columnTotalGroup="year">
+					<crosstabCell rowTotalGroup="row" columnTotalGroup="year">
 						<cellContents backcolor="#005FB3" mode="Opaque">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
@@ -235,7 +244,7 @@
 							</textField>
 						</cellContents>
 					</crosstabCell>
-					<crosstabCell rowTotalGroup="key" columnTotalGroup="month">
+					<crosstabCell rowTotalGroup="row" columnTotalGroup="month">
 						<cellContents backcolor="#BFE1FF" mode="Opaque">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
