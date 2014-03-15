@@ -26,6 +26,10 @@ public class AstyanaxDao {
     private Keyspace keyspace;
     private AstyanaxContext<Keyspace> astyanaxContext;
 
+    public AstyanaxDao()
+    {
+    	
+    }
     public AstyanaxDao(String host, String keyspace) {
         try {
             this.astyanaxContext = new AstyanaxContext.Builder()
@@ -53,6 +57,22 @@ public class AstyanaxDao {
 
 	public Keyspace getKeyspace() {
 		return keyspace;
+	}
+
+	public AstyanaxContext<Keyspace> getAstyanaxContext() {
+		return astyanaxContext;
+	}
+
+	public void setAstyanaxContext(AstyanaxContext<Keyspace> astyanaxContext) {
+		this.astyanaxContext = astyanaxContext;
+	}
+
+	public static Logger getLog() {
+		return LOG;
+	}
+
+	public void setKeyspace(Keyspace keyspace) {
+		this.keyspace = keyspace;
 	}
 }
 

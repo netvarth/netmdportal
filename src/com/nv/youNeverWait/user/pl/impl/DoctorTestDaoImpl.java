@@ -29,9 +29,10 @@ import com.nv.youNeverWait.user.pl.dao.DoctorTestDao;
  *
  */
 public class DoctorTestDaoImpl extends AstyanaxDao implements DoctorTestDao{
-
+	private static int count=100;
 	 private static final Logger LOG = LoggerFactory.getLogger(DoctorTestDaoImpl.class);
-	    public static final String TABLE_NAME = "children";
+	   // public static final String TABLE_NAME = "children";
+	 public static final String TABLE_NAME = "netmd";
 	    private static final ColumnFamily<String, String> COLUMN_FAMILY = ColumnFamily.newColumnFamily(TABLE_NAME,
 	    		StringSerializer.get(), StringSerializer.get(), 
 	            StringSerializer.get());
@@ -40,18 +41,23 @@ public class DoctorTestDaoImpl extends AstyanaxDao implements DoctorTestDao{
 	        super(host, keyspace);
 	    }
 
-	    
+	    public DoctorTestDaoImpl()
+	    {
+	    	
+	    }
 	    @Override
 		@Transactional
 		public ResponseDTO create(DoctorDetail doctor, HeaderDTO header) {
 			ResponseDTO response= new ResponseDTO();
-			DoctorTestDaoImpl childDao = new DoctorTestDaoImpl("192.168.1.94","mykeyspace");
+			count++;
+			String mychildId=Integer.toString(count);
+			DoctorTestDaoImpl childDao = new DoctorTestDaoImpl("192.168.1.91","mykeyspace");
 			Map<String, String> aChildRow = new HashMap<String, String>();
-	    	aChildRow.put("childId","002");
-	    	aChildRow.put("state","CA");
-	    	aChildRow.put("zip","94085");
+	    	aChildRow.put("childId",mychildId);
+	    	aChildRow.put("state","AC");
+	    	aChildRow.put("zip","99456");
 	    	try {
-				childDao.write("002", aChildRow);
+				childDao.write(mychildId, aChildRow);
 				LOG.debug("Done");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -66,14 +72,15 @@ public class DoctorTestDaoImpl extends AstyanaxDao implements DoctorTestDao{
 		@Override
 		public DoctorViewResponseDTO view(int doctorId) {
 			DoctorViewResponseDTO response= new DoctorViewResponseDTO();
-			DoctorTestDaoImpl childDao = new DoctorTestDaoImpl("192.168.1.94","mykeyspace");
+			String mychildId=Integer.toString(count);
+			DoctorTestDaoImpl childDao = new DoctorTestDaoImpl("192.168.1.91","mykeyspace");
 			Map<String, String> aChildRow = new HashMap<String, String>();
-	    	aChildRow.put("childId","004");
-	    	aChildRow.put("state","SN");
-	    	aChildRow.put("zip","94084");
+//	    	aChildRow.put("childId","101");
+//	    	aChildRow.put("state","ST");
+//	    	aChildRow.put("zip","12345");
 	    	try {
-	    		childDao.write("004", aChildRow);
-	    		childDao.read("004");
+	    		//childDao.write("101", aChildRow);
+	    		childDao.read(mychildId);
 	    		LOG.debug("Done");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -88,14 +95,15 @@ public class DoctorTestDaoImpl extends AstyanaxDao implements DoctorTestDao{
 		@Transactional
 		public ResponseDTO delete(int globalId) {
 			ResponseDTO response= new ResponseDTO();
-			DoctorTestDaoImpl childDao = new DoctorTestDaoImpl("192.168.1.94","mykeyspace");
+			String mychildId=Integer.toString(count);
+			DoctorTestDaoImpl childDao = new DoctorTestDaoImpl("192.168.1.91","mykeyspace");
 			Map<String, String> aChildRow = new HashMap<String, String>();
-	    	aChildRow.put("childId","003");
-	    	aChildRow.put("state","TX");
-	    	aChildRow.put("zip","94083");
+//	    	aChildRow.put("childId","102");
+//	    	aChildRow.put("state","TT");
+//	    	aChildRow.put("zip","45678");
 	    	try {
-	    		childDao.write("003", aChildRow);
-	    		childDao.delete("003");
+	    		//childDao.write("102", aChildRow);
+	    		childDao.delete(mychildId);
 	    		LOG.debug("Done");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -115,13 +123,13 @@ public class DoctorTestDaoImpl extends AstyanaxDao implements DoctorTestDao{
 		
 	    public void write(String rowKey, Map<String, String> columns) throws ConnectionException {
 	        MutationBatch mutation = this.getKeyspace().prepareMutationBatch();
-//	        for (Map.Entry<String, String> entry : columns.entrySet()) {
-//	            mutation.withRow(COLUMN_FAMILY, rowKey).putColumn(entry.getKey(), entry.getValue(), null);
-//	        }
-	        mutation.withRow(COLUMN_FAMILY, rowKey)
+	        for (Map.Entry<String, String> entry : columns.entrySet()) {
+	            mutation.withRow(COLUMN_FAMILY, rowKey).putColumn(entry.getKey(), entry.getValue(), null);
+	        }
+	       // mutation.withRow(COLUMN_FAMILY, rowKey)
 	      //  .putColumn("childId","005")
-	        .putColumn("state","CA")
-	        .putColumn("zip","94085")
+	       // .putColumn("state","CA")
+	      //  .putColumn("zip","94085")
 	        ;
 	        mutation.execute();
 	        LOG.debug("Wrote child [" + rowKey + "]");
