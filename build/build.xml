@@ -117,6 +117,7 @@
  		<lib dir="${lib.dir}/hibernate"/>
   		<lib dir="${lib.dir}/jdbc"/>
  		<lib dir="${lib.dir}/framework"/>
+ 		<lib dir="${lib.dir}/cassandra"/>
 	    <classes dir="${temp.build.dir}"/>
     </war>
   </target>
@@ -127,7 +128,7 @@
   <target name="deploy" depends="dist"	description="deploy to server" >
   	<!-- copying War file to deployment directory of Server -->
   	<copy file="${resource.dir}/context_${build.env.name}.properties" 
-  	  		  tofile="${nv.conf.dir}/youNeverWait.properties"/>
+  	  		  tofile="${nv.conf.dir}/youNeverWaitCassandraTest.properties"/>
   	<copy file="${dist.dir}/${ant.project.name}.war" todir="${nv.deploy.dir}"/>
   </target>
   <target name="all" depends="clean,deploy"> 
