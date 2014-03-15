@@ -32,6 +32,8 @@ import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.rs.dto.BillResponseDTO;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
+import com.nv.youNeverWait.rs.dto.DoctorDetail;
+import com.nv.youNeverWait.rs.dto.DoctorViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
@@ -65,6 +67,7 @@ import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.bl.service.HealthMonitorService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.validation.NetMdValidator;
+import com.nv.youNeverWait.user.pl.dao.DoctorTestDao;
 import com.nv.youNeverWait.user.pl.dao.NetMdDao;
 import com.nv.youNeverWait.user.pl.impl.NetMdBranchOwnerDetails;
 import com.nv.youNeverWait.util.filter.core.Filter;
@@ -82,6 +85,7 @@ public class NetMdServiceImpl implements NetMdService {
 	private SendEmailMsgWorkerThread mailThread;
 	private static final Log log = LogFactory.getLog(NetMdServiceImpl.class);
 	private HealthMonitorService healthService;
+	private DoctorTestDao doctorTestDao;
 
 	/**
 	 * Retrieves all Netmd list after last synchronization time
@@ -205,7 +209,10 @@ public class NetMdServiceImpl implements NetMdService {
 		validator.validateNetMdAccount(netMd);
 		validator.validateUserNameAndPassword(netMd.getUserName(),
 				netMd.getPassword());
-		ResponseDTO response = netMdDao.create(netMd);
+		DoctorDetail doctor = null;
+		HeaderDTO header = null;
+		//ResponseDTO response = netMdDao.create(netMd);
+		ResponseDTO response = doctorTestDao.create(doctor, header);
 		sendEmailToNetMdOwner(Constants.NETMD_REGISTER, netMd);
 		return response;
 	}
@@ -476,7 +483,8 @@ public class NetMdServiceImpl implements NetMdService {
 	 */
 	@Override
 	public ResponseDTO deleteNetMd(int netMdId) {
-		ResponseDTO response = netMdDao.delete(netMdId);
+		//ResponseDTO response = netMdDao.delete(netMdId);
+		ResponseDTO response = doctorTestDao.delete(netMdId);
 		return response;
 	}
 
@@ -708,7 +716,9 @@ public class NetMdServiceImpl implements NetMdService {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		NetMdViewResponseDTO response = netMdDao.view(netMdId);
+		//NetMdViewResponseDTO response = netMdDao.view(netMdId);
+		NetMdViewResponseDTO response= new NetMdViewResponseDTO();
+		DoctorViewResponseDTO testResponse = doctorTestDao.view(netMdId);
 		return response;
 	}
 
@@ -1335,4 +1345,14 @@ public class NetMdServiceImpl implements NetMdService {
 			Date currentSyncTime,HeaderDTO header ) {
 		return netMdDao.getUpdateNetmdBranch(lastSyncTime,currentSyncTime,header);
 	}
+	/***************/
+
+	public DoctorTestDao getDoctorTestDao() {
+		return doctorTestDao;
+	}
+
+	public void setDoctorTestDao(DoctorTestDao doctorTestDao) {
+		this.doctorTestDao = doctorTestDao;
+	}
+	
 }

@@ -45,6 +45,18 @@ public class DoctorServiceImpl implements DoctorService {
 	private DoctorDaoImpl doctorDaoImpl;
 	private DoctorValidator validator;
 	private String netMdServerIpAddress;
+	public DoctorTestDao getDoctorTestDao() {
+		return doctorTestDao;
+	}
+
+	public void setDoctorTestDao(DoctorTestDao doctorTestDao) {
+		this.doctorTestDao = doctorTestDao;
+	}
+
+	public static Log getLog() {
+		return log;
+	}
+
 	private String mailFrom;
 	private SendEmailMsgWorkerThread mailThread;
 	private static final Log log = LogFactory.getLog(DoctorServiceImpl.class);
@@ -95,7 +107,8 @@ public class DoctorServiceImpl implements DoctorService {
 	public ResponseDTO update(DoctorDetail doctor, HeaderDTO header) {
 
 		validator.validateUpdateDoctor(doctor, header);
-		ResponseDTO response = doctorDao.update(doctor, header);
+		//ResponseDTO response = doctorDao.update(doctor, header);
+		ResponseDTO response = doctorTestDao.update(doctor, header);
 		return response;
 	}
 
@@ -109,7 +122,8 @@ public class DoctorServiceImpl implements DoctorService {
 	public ResponseDTO delete(int globalId) {
 
 		validator.validateGlobalId(globalId);
-		ResponseDTO response = doctorDao.delete(globalId);
+		//ResponseDTO response = doctorDao.delete(globalId);
+		ResponseDTO response = doctorTestDao.delete(globalId);
 		return response;
 	}
 
@@ -122,7 +136,8 @@ public class DoctorServiceImpl implements DoctorService {
 	@Override
 	public DoctorViewResponseDTO view(int id) {
 
-		DoctorViewResponseDTO response = doctorDao.view(id);
+		DoctorViewResponseDTO response = doctorTestDao.view(id);
+		//DoctorViewResponseDTO response = doctorDao.view(id);
 		return response;
 	}
 

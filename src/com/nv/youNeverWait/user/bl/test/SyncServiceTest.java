@@ -254,16 +254,16 @@ public class SyncServiceTest {
 		header.setBranchId(72);
 		sync.setHeader(header);
 
-		// /* New doctors list */
-		// List<DoctorDetail> doctor = new ArrayList<DoctorDetail>();
-		// DoctorDetail doctorDetail1 = new DoctorDetail();
-		// doctorDetail1.setAddress("vadakkan");
-		// doctorDetail1.setEmail("luciya.jose@netvarth.com");
-		// doctorDetail1.setFirstName("Dr.Radha");
-		// doctorDetail1.setLastName("Krishnanan");
-		// doctorDetail1.setDateOfBirth("1989-10-10");
-		// doctorDetail1.setConsultationInterval("15");
-		// doctor.add(doctorDetail1);
+		 /* New doctors list */
+		 List<DoctorDetail> doctor = new ArrayList<DoctorDetail>();
+		 DoctorDetail doctorDetail1 = new DoctorDetail();
+		 doctorDetail1.setAddress("vadakkan");
+		 doctorDetail1.setEmail("luciya.jose@netvarth.com");
+		 doctorDetail1.setFirstName("Dr.Radha");
+		 doctorDetail1.setLastName("Krishnanan");
+		 doctorDetail1.setDateOfBirth("1989-10-10");
+		 doctorDetail1.setConsultationInterval("15");
+		 doctor.add(doctorDetail1);
 
 		// DoctorDetail doctorDetail2 = new DoctorDetail();
 		// doctorDetail2.setAddress("Thekkkan");
@@ -291,7 +291,7 @@ public class SyncServiceTest {
 		// doctorDetail3.setConsultationInterval("15");
 		// doctor.add(doctorDetail3);
 
-		// sync.setNewDoctorList(doctor);
+	sync.setNewDoctorList(doctor);
 
 		// /* Doctor Update List */
 		// List<DoctorDetail> upDoctor = new ArrayList<DoctorDetail>();
