@@ -202,16 +202,20 @@ public class BloodLossEntity {
 			public Map<String, Map<String, Integer>> getClusterMap() {
 				Map<String,Map<String,Integer>> outerMap = new LinkedHashMap<String,Map<String,Integer>>();
 				Map<String, Integer> innerMap = new LinkedHashMap<String,Integer>();
-				innerMap.put("<500",bldLosLs500Vag );
-				innerMap.put("500-999", bldLosBtw500And1000Vag);
-				innerMap.put(">1000", bldLosGr1000Vag);
-				outerMap.put("Vaginal Delivery", innerMap);
-				innerMap = new HashMap<String,Integer>();
-				innerMap.put("<500",bldLosLs500Cs );
-				innerMap.put("500-999", bldLosBtw500And1000Cs);
-				innerMap.put(">1000", bldLosGr1000Cs);
-				outerMap.put("CS", innerMap);
-				
+				innerMap.put("Vag Del",bldLosLs500Vag);
+				innerMap.put("CS", bldLosLs500Cs);
+				innerMap.put("Total", bldLosLs500Total);
+				outerMap.put("<500", innerMap);
+				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap.put("Vag Del",bldLosBtw500And1000Vag);
+				innerMap.put("CS", bldLosBtw500And1000Cs);
+				innerMap.put("Total", bldLosBtw500And1000Total);
+				outerMap.put("500-999", innerMap);
+				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap.put("Vag Del", bldLosGr1000Vag);
+				innerMap.put("CS", bldLosGr1000Cs);
+				innerMap.put("Total", bldLosGr1000Total);
+				outerMap.put(">1000", innerMap);
 			
 				return outerMap ;
 			}

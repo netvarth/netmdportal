@@ -5,28 +5,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
-import com.nv.youNeverWait.analatic.bl.Measure;
-import com.nv.youNeverWait.analatic.bl.impl.PlacentalWt;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
 import com.nv.youNeverWait.analatic.pl.entity.ApgarScoreEntity;
 import com.nv.youNeverWait.analatic.pl.entity.BirthWeightEntity;
@@ -37,17 +19,22 @@ import com.nv.youNeverWait.analatic.pl.entity.BookedStatisticsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.CaesareanSectionEntity;
 import com.nv.youNeverWait.analatic.pl.entity.EpisiotomyEntity;
 import com.nv.youNeverWait.analatic.pl.entity.FetalComplexitesEntity;
+import com.nv.youNeverWait.analatic.pl.entity.FourthStageEntity;
 import com.nv.youNeverWait.analatic.pl.entity.InductionEntity;
+import com.nv.youNeverWait.analatic.pl.entity.IntravenusFluidEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalAgeEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalComplicationsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalHeightEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalMortalityMorbidityEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalWeightEntity;
+import com.nv.youNeverWait.analatic.pl.entity.OxyTocicEntity;
 import com.nv.youNeverWait.analatic.pl.entity.ParityEntity;
 import com.nv.youNeverWait.analatic.pl.entity.PerinealTearEntity;
+import com.nv.youNeverWait.analatic.pl.entity.PlacentalWtEntity;
 import com.nv.youNeverWait.analatic.pl.entity.PresentationEntity;
 import com.nv.youNeverWait.analatic.pl.entity.PreviousCSEntity;
 import com.nv.youNeverWait.analatic.pl.entity.RobsonClassEntity;
+import com.nv.youNeverWait.analatic.pl.entity.ThirdStageEntity;
 import com.nv.youNeverWait.analatic.pl.entity.VaginalDeliveryEntity;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 
@@ -1045,9 +1032,8 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	fetalComplexitesEntity.setMonth((Integer)entity[2]);
 	    	fetalComplexitesEntity.setFetalStllBrth((BigDecimal)entity[3]);
 	    	fetalComplexitesEntity.setFetal1NeonatalDeath((BigDecimal)entity[4]);
-	    	fetalComplexitesEntity.setFetalAdmission((BigDecimal)entity[5]);
-	    	fetalComplexitesEntity.setFetalNICUAdmn((BigDecimal)entity[6]);
-	    	fetalComplexitesEntity.setFetalAnomalies((BigDecimal)entity[7]);
+	    	fetalComplexitesEntity.setFetalNICUAdmn((BigDecimal)entity[5]);
+	    	fetalComplexitesEntity.setFetalAnomalies((BigDecimal)entity[6]);
 	    	fetalComplexitesEntityList.add(fetalComplexitesEntity);
 	    }
 	    	return fetalComplexitesEntityList;
@@ -1056,7 +1042,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	public List<FetalComplexitesEntity> getFetalComplexitesInferences(
 			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear,
 			Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.FETAL_COMPLEXITES);
+		Query query = em.createNativeQuery(AnalaticQuery.FETAL_COMPLEXITES_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1073,9 +1059,8 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	fetalComplexitesEntity.setMonth((Integer)entity[2]);
 	    	fetalComplexitesEntity.setFetalStllBrth((BigDecimal)entity[3]);
 	    	fetalComplexitesEntity.setFetal1NeonatalDeath((BigDecimal)entity[4]);
-	    	fetalComplexitesEntity.setFetalAdmission((BigDecimal)entity[5]);
-	    	fetalComplexitesEntity.setFetalNICUAdmn((BigDecimal)entity[6]);
-	    	fetalComplexitesEntity.setFetalAnomalies((BigDecimal)entity[7]);
+	    	fetalComplexitesEntity.setFetalNICUAdmn((BigDecimal)entity[5]);
+	    	fetalComplexitesEntity.setFetalAnomalies((BigDecimal)entity[6]);
 	    	fetalComplexitesEntityList.add(fetalComplexitesEntity);
 	    }
 	    	return fetalComplexitesEntityList;
@@ -1246,7 +1231,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	public List<BloodLossEntity> getBloodLossInferences(
 			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear) {
 		
-		Query query = em.createNativeQuery(AnalaticQuery.MATERNAL_MORTALITY_MORBIDITY_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalaticQuery.BLOODLOSS);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1284,7 +1269,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	public List<BloodLossEntity> getBloodLossInferences(
 			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear,Integer hospital) {
 		
-		Query query = em.createNativeQuery(AnalaticQuery.MATERNAL_MORTALITY_MORBIDITY_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalaticQuery.BLOODLOSS_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1308,102 +1293,273 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	bloodLossEntity.setBldLosLs500Total((BigDecimal)entity[9]);
 	    	bloodLossEntity.setBldLosBtw500And1000Total((BigDecimal)entity[10]);
 	    	bloodLossEntity.setBldLosGr1000Total((BigDecimal)entity[11]);
-	    
-	    	
 	    	bloodLossEntityList.add(bloodLossEntity);
 	    }
 		return bloodLossEntityList;
 	}
+	@Override
+	public List<PlacentalWtEntity> getPlacentalWtInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear) {
+		Query query = em.createNativeQuery(AnalaticQuery.PLACENTAL_WEIGHT);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		
+		
+		List<Object[]>entityList = query.getResultList();
+		List<PlacentalWtEntity> placentalWtEntityList  = new ArrayList<PlacentalWtEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	PlacentalWtEntity placentalWtEntity = new PlacentalWtEntity();
+	    	placentalWtEntity.setHospital((String)entity[0]);
+	    	placentalWtEntity.setYear((String)entity[1]);
+	    	placentalWtEntity.setMonth((Integer)entity[2]);
+	    	placentalWtEntity.setPlacentalWghtLs200((BigDecimal)entity[3]);
+	    	placentalWtEntity.setPlacentalWghtBtw200And399((BigDecimal)entity[4]);
+	    	placentalWtEntity.setPlacentalWghtGr400((BigDecimal)entity[5]);
+	    	placentalWtEntityList.add(placentalWtEntity);
+	    }
+		return placentalWtEntityList;
+	}
+	@Override
+	public List<PlacentalWtEntity> getPlacentalWtInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
+		Query query = em.createNativeQuery(AnalaticQuery.PLACENTAL_WEIGHT_PER_HOSPITAL);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		query.setParameter("hospital",hospital);
+		
+		List<Object[]>entityList = query.getResultList();
+		List<PlacentalWtEntity> placentalWtEntityList  = new ArrayList<PlacentalWtEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	PlacentalWtEntity placentalWtEntity = new PlacentalWtEntity();
+	    	placentalWtEntity.setHospital((String)entity[0]);
+	    	placentalWtEntity.setYear((String)entity[1]);
+	    	placentalWtEntity.setMonth((Integer)entity[2]);
+	    	placentalWtEntity.setPlacentalWghtLs200((BigDecimal)entity[3]);
+	    	placentalWtEntity.setPlacentalWghtBtw200And399((BigDecimal)entity[4]);
+	    	placentalWtEntity.setPlacentalWghtGr400((BigDecimal)entity[5]);
+	    	placentalWtEntityList.add(placentalWtEntity);
+	    }
+		return placentalWtEntityList;
+	}
+	@Override
+	public List<ThirdStageEntity> getTSDInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear) {
+		Query query = em.createNativeQuery(AnalaticQuery.THIRD_STAGE_DURATION);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		
+		
+		List<Object[]>entityList = query.getResultList();
+		List<ThirdStageEntity> thirdStageEntityList  = new ArrayList<ThirdStageEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	ThirdStageEntity thirdStageEntity = new ThirdStageEntity();
+	    	thirdStageEntity.setHospital((String)entity[0]);
+	    	thirdStageEntity.setYear((String)entity[1]);
+	    	thirdStageEntity.setMonth((Integer)entity[2]);
+	    	thirdStageEntity.setThrdStgDurtnLs10((BigDecimal)entity[3]);
+	    	thirdStageEntity.setThrdStgDurtn10To29((BigDecimal)entity[4]);
+	    	thirdStageEntity.setThrdStgDurtnGr30((BigDecimal)entity[5]);
+	    	thirdStageEntityList.add(thirdStageEntity);
+	    }
+		return thirdStageEntityList;
+		
+	}
+	@Override
+	public List<ThirdStageEntity> getTSDInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
+		Query query = em.createNativeQuery(AnalaticQuery.THIRD_STAGE_DURATION_PER_HOSPITAL);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		query.setParameter("hospital",hospital);
+		
+		
+		List<Object[]>entityList = query.getResultList();
+		List<ThirdStageEntity> thirdStageEntityList  = new ArrayList<ThirdStageEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	ThirdStageEntity thirdStageEntity = new ThirdStageEntity();
+	    	thirdStageEntity.setHospital((String)entity[0]);
+	    	thirdStageEntity.setYear((String)entity[1]);
+	    	thirdStageEntity.setMonth((Integer)entity[2]);
+	    	thirdStageEntity.setThrdStgDurtnLs10((BigDecimal)entity[3]);
+	    	thirdStageEntity.setThrdStgDurtn10To29((BigDecimal)entity[4]);
+	    	thirdStageEntity.setThrdStgDurtnGr30((BigDecimal)entity[5]);
+	    	thirdStageEntityList.add(thirdStageEntity);
+	    }
+		return thirdStageEntityList;
+	}
+	@Override
+	public List<FourthStageEntity> getFSDInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear) {
+		Query query = em.createNativeQuery(AnalaticQuery.FORTH_STAGE_OBSERVATION);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		
+		
+		List<Object[]>entityList = query.getResultList();
+		List<FourthStageEntity> forthStageEntityList  = new ArrayList<FourthStageEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	FourthStageEntity fourthStageEntity = new FourthStageEntity();
+	    	fourthStageEntity.setHospital((String)entity[0]);
+	    	fourthStageEntity.setYear((String)entity[1]);
+	    	fourthStageEntity.setMonth((Integer)entity[2]);
+	    	fourthStageEntity.setFourthStgObsrve((BigDecimal)entity[3]);
+	    	fourthStageEntity.setManualRmvl((BigDecimal)entity[4]);
+	    	fourthStageEntity.setHypotensn((BigDecimal)entity[5]);
+	    	forthStageEntityList.add(fourthStageEntity);
+	    }
+		return forthStageEntityList;
+	}
+	@Override
+	public List<FourthStageEntity> getFSDInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
+		Query query = em.createNativeQuery(AnalaticQuery.FORTH_STAGE_OBSERVATION_PER_HOSPITAL);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		query.setParameter("hospital",hospital);
+		
+		List<Object[]>entityList = query.getResultList();
+		List<FourthStageEntity> forthStageEntityList  = new ArrayList<FourthStageEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	FourthStageEntity fourthStageEntity = new FourthStageEntity();
+	    	fourthStageEntity.setHospital((String)entity[0]);
+	    	fourthStageEntity.setYear((String)entity[1]);
+	    	fourthStageEntity.setMonth((Integer)entity[2]);
+	    	fourthStageEntity.setFourthStgObsrve((BigDecimal)entity[3]);
+	    	fourthStageEntity.setManualRmvl((BigDecimal)entity[4]);
+	    	fourthStageEntity.setHypotensn((BigDecimal)entity[5]);
+	    	forthStageEntityList.add(fourthStageEntity);
+	    }
+		return forthStageEntityList;
+	}
+	@Override
+	public List<OxyTocicEntity> getOxyTocicInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear) {
+		Query query = em.createNativeQuery(AnalaticQuery.OXYTOCIC);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		
+		
+		List<Object[]>entityList = query.getResultList();
+		List<OxyTocicEntity> oxytocicEntityList  = new ArrayList<OxyTocicEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	OxyTocicEntity oxytocicEntity = new OxyTocicEntity();
+	    	oxytocicEntity.setHospital((String)entity[0]);
+	    	oxytocicEntity.setYear((String)entity[1]);
+	    	oxytocicEntity.setMonth((Integer)entity[2]);
+	    	oxytocicEntity.setOxytoxinReciv((BigDecimal)entity[3]);
+	    	oxytocicEntity.setIV((BigDecimal)entity[4]);
+	    	oxytocicEntity.setIM((BigDecimal)entity[5]);
+	    	oxytocicEntity.setRectal((BigDecimal)entity[6]);
+	    	oxytocicEntity.setIntra((BigDecimal)entity[7]);
+	    	oxytocicEntityList.add(oxytocicEntity);
+	    }
+		return oxytocicEntityList;
+	}
+	
+	@Override
+	public List<OxyTocicEntity> getOxyTocicInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
+		Query query = em.createNativeQuery(AnalaticQuery.OXYTOCIC_PER_HOSPITAL);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		query.setParameter("hospital",hospital);
+		
+		List<Object[]>entityList = query.getResultList();
+		List<OxyTocicEntity> oxytocicEntityList  = new ArrayList<OxyTocicEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	OxyTocicEntity oxytocicEntity = new OxyTocicEntity();
+	    	oxytocicEntity.setHospital((String)entity[0]);
+	    	oxytocicEntity.setYear((String)entity[1]);
+	    	oxytocicEntity.setMonth((Integer)entity[2]);
+	    	oxytocicEntity.setIV((BigDecimal)entity[3]);
+	    	oxytocicEntity.setIM((BigDecimal)entity[4]);
+	    	oxytocicEntity.setRectal((BigDecimal)entity[5]);
+	    	oxytocicEntity.setIntra((BigDecimal)entity[6]);
+	    	oxytocicEntityList.add(oxytocicEntity);
+	    }
+		return oxytocicEntityList;
+	}
+	
+	@Override
+	public List<IntravenusFluidEntity> getIvFluidInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear) {
+		Query query = em.createNativeQuery(AnalaticQuery.INTRA_VENUS_FLUID_USED);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		
+		
+		List<Object[]>entityList = query.getResultList();
+		List<IntravenusFluidEntity> intravenusFluidEntityList  = new ArrayList<IntravenusFluidEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	IntravenusFluidEntity intravenusFluidEntity = new IntravenusFluidEntity();
+	    	intravenusFluidEntity.setHospital((String)entity[0]);
+	    	intravenusFluidEntity.setYear((String)entity[1]);
+	    	intravenusFluidEntity.setMonth((Integer)entity[2]);
+	    	intravenusFluidEntity.setAmtFluidsLs1000((BigDecimal)entity[3]);
+	    	intravenusFluidEntity.setAmtFluidsBtw1000And3000((BigDecimal)entity[4]);
+	    	intravenusFluidEntity.setAmtFluidsGr3000((BigDecimal)entity[5]);
+	    	intravenusFluidEntityList.add(intravenusFluidEntity);
+	    }
+		return intravenusFluidEntityList;
+	}
+	@Override
+	public List<IntravenusFluidEntity> getIvFluidInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
+		Query query = em.createNativeQuery(AnalaticQuery.INTRA_VENUS__FLUID_USED_PER_HOSPITAL);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		query.setParameter("hospital",hospital);
+		
+		List<Object[]>entityList = query.getResultList();
+		List<IntravenusFluidEntity> intravenusFluidEntityList  = new ArrayList<IntravenusFluidEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	IntravenusFluidEntity intravenusFluidEntity = new IntravenusFluidEntity();
+	    	intravenusFluidEntity.setHospital((String)entity[0]);
+	    	intravenusFluidEntity.setYear((String)entity[1]);
+	    	intravenusFluidEntity.setMonth((Integer)entity[2]);
+	    	intravenusFluidEntity.setAmtFluidsLs1000((BigDecimal)entity[3]);
+	    	intravenusFluidEntity.setAmtFluidsBtw1000And3000((BigDecimal)entity[4]);
+	    	intravenusFluidEntity.setAmtFluidsGr3000((BigDecimal)entity[5]);
+	    	intravenusFluidEntityList.add(intravenusFluidEntity);
+	    }
+		return intravenusFluidEntityList;
+	}
 	
 	
 	
 	
 	
 	
-	@Override
-	public Measure getTSDInferences(String fyear, String fmonth, String toyear,
-			String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getTSDInferences(String fyear, String fmonth, String toyear,
-			String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getBabySexInferences(String fyear, String fmonth,
-			String toyear, String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getBabySexInferences(String fyear, String fmonth,
-			String toyear, String tomonth, Integer hostpital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getBabyWeightIferences(String fyear, String fmonth,
-			String toyear, String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getBabyWeightIferences(String fyear, String fmonth,
-			String toyear, String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getFSDInferences(String fyear, String fmonth, String toyear,
-			String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getFSDInferences(String fyear, String fmonth, String toyear,
-			String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getMaternalDeathInferences(String fyear, String fmonth,
-			String toyear, String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getMaternalDeathInferences(String fyear, String fmonth,
-			String toyear, String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getMaternalMorbidityInferences(String fyear, String fmonth,
-			String toyear, String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getMaternalMorbidityInferences(String fyear, String fmonth,
-			String toyear, String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getPlacentalWtInferences(String fyear, String fmonth,
-			String toyear, String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getPlacentalWtInferences(String fyear, String fmonth,
-			String toyear, String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 
 	

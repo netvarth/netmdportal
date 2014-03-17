@@ -56,8 +56,8 @@ public class MaternalMortalityMorbidityEntity {
 		public Map<String,Integer> getSubClusters(){
 			
 			Map<String,Integer>map = new LinkedHashMap<String,Integer>();
-			   map.put("Maternal Mortality", maternalDth);
-			   map.put("Maternal Mobidity", matMorbidility);
+			   map.put("Mortality", maternalDth);
+			   map.put("Morbidity", matMorbidility);
 			return map;
 		} 
 		
