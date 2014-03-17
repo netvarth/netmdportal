@@ -9,44 +9,43 @@ import com.nv.youNeverWait.analatic.bl.Inference;
 import com.nv.youNeverWait.analatic.bl.Measure;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
 import com.nv.youNeverWait.analatic.pl.entity.EpisiotomyEntity;
-import com.nv.youNeverWait.analatic.pl.entity.FourthStageEntity;
-import com.nv.youNeverWait.analatic.pl.entity.OxyTocicEntity;
+import com.nv.youNeverWait.analatic.pl.entity.IntravenusFluidEntity;
 
-public class FourthStageDuration implements Cluster{
-
+public class IntravenusFluid implements Cluster {
 	private AnalaticDao analaticDao;
-	private String name ="Fourth Stage Observed";
-
+	private String name ="Intravenus Fluid Used";
 	@Override
 	public Inference getInference(String fmonth, String fyear, String toMonth,
 			String toYear) {
+	     Inference inference = new Inference();
+         inference.setCluster(name);
+	     
+		 List<IntravenusFluidEntity> entityList= analaticDao.getIvFluidInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear));
+	     List<Measure> measures = getMeasures(entityList);
+	     inference.setEvaluations(measures);
 
-		Inference inference = new Inference();
-		inference.setCluster(name);
-
-		List<FourthStageEntity> entityList= analaticDao.getFSDInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear));
-		List<Measure> measures = getMeasures(entityList);
-		inference.setEvaluations(measures);
-		return inference;
+  
+	return inference;
 	}
 
 	@Override
 	public Inference getInference(String fmonth, String fyear, String toMonth,
 			String toYear, Integer hospital) {
 		Inference inference = new Inference();
-		inference.setCluster(name);
-
-		List<FourthStageEntity> entityList= analaticDao.getFSDInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear),hospital);
-		List<Measure> measures = getMeasures(entityList);
-		inference.setEvaluations(measures);
-
-		return inference;
+        inference.setCluster(name);
+	     
+		 List<IntravenusFluidEntity> entityList= analaticDao.getIvFluidInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear),hospital);
+	     List<Measure> measures = getMeasures(entityList);
+	     inference.setEvaluations(measures);
+	     
+	return inference;
 	}
 
-	  private  List<Measure>  getMeasures(List<FourthStageEntity> data){
+
+	  private  List<Measure>  getMeasures(List<IntravenusFluidEntity> data){
 	    	List<Measure> measures = new ArrayList<Measure>();
 	    	Measure measure;
-	    	for (FourthStageEntity entity :data){
+	    	for (IntravenusFluidEntity entity :data){
 	    	     
 	    		for(Map.Entry<String, Integer> entry :entity.getSubClusters().entrySet()){
 	    		measure = new Measure();
@@ -64,7 +63,6 @@ public class FourthStageDuration implements Cluster{
 	    	}
 	    return measures;
 	    }
-	
 
 	public AnalaticDao getAnalaticDao() {
 		return analaticDao;
@@ -74,7 +72,7 @@ public class FourthStageDuration implements Cluster{
 		this.analaticDao = analaticDao;
 	}
 
-
 	
+
 
 }

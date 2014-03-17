@@ -73,11 +73,11 @@ public class BloodLoss implements Cluster {
 					
 					for ( Entry<String, Integer> onesubCluster:clusterMap.getValue().entrySet()){
 						measure = new Measure();
-						measure.setColumn(clusterMap.getKey());
+						measure.setColumn(onesubCluster.getKey());
 						measure.setHospital(subCluster.getHospital());
 						measure.setMonth(subCluster.getMonth());
 						measure.setYear(entity.getYear());
-						measure.setRow(onesubCluster.getKey());
+						measure.setRow(clusterMap.getKey());
 						measure.setMeasure(onesubCluster.getValue());
 						measures.add(measure);
 					}

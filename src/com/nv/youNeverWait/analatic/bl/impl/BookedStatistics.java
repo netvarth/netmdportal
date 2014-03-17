@@ -17,7 +17,7 @@ public class BookedStatistics implements Cluster {
    
     
     private AnalaticDao analaticDao;
-    private String name ="Booked( At least 1 Visit in each trimester)";
+    private String name ="Booked( At least 1 visit in each trimester)";
     
     @Override
 	public Inference getInference( String fmonth, String fyear,

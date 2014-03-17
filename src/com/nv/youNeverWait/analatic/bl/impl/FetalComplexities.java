@@ -11,7 +11,7 @@ import com.nv.youNeverWait.analatic.pl.AnalaticDao;
 import com.nv.youNeverWait.analatic.pl.entity.EpisiotomyEntity;
 import com.nv.youNeverWait.analatic.pl.entity.FetalComplexitesEntity;
 
-public class FetalComplexties implements Cluster{
+public class FetalComplexities implements Cluster{
 
 	private AnalaticDao analaticDao;
 	private String name ="Fetal Complexities";
