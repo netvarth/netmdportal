@@ -334,7 +334,68 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	      </property>
 	</bean>
 	
+	<bean id ="oxytocic.route.cluster" class="com.nv.youNeverWait.analatic.bl.impl.Oxytocic">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
 	
+	<bean id ="third.stage.cluster" class="com.nv.youNeverWait.analatic.bl.impl.ThirdStageDuration">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+	
+	
+	<bean id ="blood.loss.cluster" class="com.nv.youNeverWait.analatic.bl.impl.BloodLoss">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+	
+	<bean id ="placental.weight.cluster" class="com.nv.youNeverWait.analatic.bl.impl.PlacentalWt">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+
+
+    <bean id = "maternal.mortality" class="com.nv.youNeverWait.analatic.bl.impl.MaternalMortalityMorbidity">
+          <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+    
+    
+    <bean id ="fourth.stage.cluster" class="com.nv.youNeverWait.analatic.bl.impl.FourthStageDuration">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+
+	 <bean id ="ivfluid.amount.cluster" class="com.nv.youNeverWait.analatic.bl.impl.IntravenusFluid">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+	</bean>
+
+  <bean id ="birth.weight.cluster" class="com.nv.youNeverWait.analatic.bl.impl.BirthWeight">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+ </bean>
+ <bean id ="apgar.score.cluster" class="com.nv.youNeverWait.analatic.bl.impl.ApgarScore">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+ </bean>
+
+	<bean id ="fetal.complexites" class="com.nv.youNeverWait.analatic.bl.impl.FetalComplexities">
+	      <property name="analaticDao">
+	          <ref bean ="analatic.dao"/>
+	      </property>
+ 	</bean>
+
 	
 	<bean id="analatic.bean" class="com.nv.youNeverWait.analatic.bl.Analatic">
 	     <property name ="clusters">
@@ -354,7 +415,16 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	          <ref bean="episiotomy.cluster"/>
 	          <ref bean="perineal.tear.cluster"/>
 	          <ref bean="induced.labour.cluster"/>
-	              
+	          <ref bean="oxytocic.route.cluster"/>  
+	          <ref bean ="third.stage.cluster"/>
+	          <ref bean ="blood.loss.cluster"/>
+	          <ref bean="placental.weight.cluster"/>
+	          <ref bean="fourth.stage.cluster"/>
+	          <ref bean="ivfluid.amount.cluster"/>
+	          <ref bean="maternal.mortality"/>
+	          <ref bean="birth.weight.cluster"/>
+	          <ref bean="apgar.score.cluster"/>
+	          <ref bean="fetal.complexites"/>
 	     </list>
 	     </property>
 	
