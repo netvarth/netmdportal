@@ -47,7 +47,7 @@
 		<band height="125" splitType="Stretch">
 			<elementGroup/>
 			<crosstab>
-				<reportElement  x="0" y="0" width="555" height="125"/>
+				<reportElement  x="0" y="0" width="555" height="115"/>
 					<crosstabParameter name="parameter1">
 					<parameterValueExpression><![CDATA[$F{cluster}]]></parameterValueExpression>
 				</crosstabParameter>
