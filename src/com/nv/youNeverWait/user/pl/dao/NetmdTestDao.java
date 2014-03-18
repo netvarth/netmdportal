@@ -10,15 +10,18 @@ import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.DoctorViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.NetMdDTO;
+import com.nv.youNeverWait.rs.dto.NetMdViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 
 /**
  * @author Luciya
  *
  */
-public interface DoctorTestDao {
-	public ResponseDTO create(DoctorDetail doctor, HeaderDTO header);
-	public ResponseDTO update(DoctorDetail doctor,HeaderDTO header);
-	public ResponseDTO delete(int globalId);
-	public DoctorViewResponseDTO view(int doctorId);
+public interface NetmdTestDao {
+	
+	public ResponseDTO  create(NetMdDTO netMd);
+	public ResponseDTO  update(NetMdDTO netMd);
+	public ResponseDTO  delete(int netMdId);
+	public NetMdViewResponseDTO view(int netMdId);
 }

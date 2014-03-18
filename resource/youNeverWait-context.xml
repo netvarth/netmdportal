@@ -227,12 +227,10 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="mailThread">
 			<ref bean="email.worker.thread" />
 		</property>
-		<property name="doctorTestDao">
-			<ref bean="doctor.testDao" />
-		</property>
+		
 	</bean>
 	
-	<bean  id ="doctor.testDao" class = "com.nv.youNeverWait.user.pl.impl.DoctorTestDaoImpl" parent="astyanax.dao"/>
+	<bean  id ="netmd.testDao" class = "com.nv.youNeverWait.user.pl.impl.NetmdTestDaoImpl" parent="astyanax.dao"/>
 	<bean id="astyanax.dao" class="com.nv.youNeverWait.user.pl.dao.AstyanaxDao" />
 	
 	<bean  id ="analatic.dao" class = "com.nv.youNeverWait.analatic.pl.impl.AnalaticDaoImpl" parent="generic.dao"/>
@@ -604,8 +602,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="healthService">
 			<ref bean="health.service" />
 		</property>
-		<property name="doctorTestDao">
-			<ref bean="doctor.testDao" />
+		<property name="netmdTestDao">
+			<ref bean="netmd.testDao" />
 		</property>
 
 	</bean>

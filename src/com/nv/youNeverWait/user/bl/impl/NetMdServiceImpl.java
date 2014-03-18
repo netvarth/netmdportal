@@ -67,7 +67,7 @@ import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.bl.service.HealthMonitorService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.validation.NetMdValidator;
-import com.nv.youNeverWait.user.pl.dao.DoctorTestDao;
+import com.nv.youNeverWait.user.pl.dao.NetmdTestDao;
 import com.nv.youNeverWait.user.pl.dao.NetMdDao;
 import com.nv.youNeverWait.user.pl.impl.NetMdBranchOwnerDetails;
 import com.nv.youNeverWait.util.filter.core.Filter;
@@ -85,7 +85,7 @@ public class NetMdServiceImpl implements NetMdService {
 	private SendEmailMsgWorkerThread mailThread;
 	private static final Log log = LogFactory.getLog(NetMdServiceImpl.class);
 	private HealthMonitorService healthService;
-	private DoctorTestDao doctorTestDao;
+	private NetmdTestDao netmdTestDao;
 
 	/**
 	 * Retrieves all Netmd list after last synchronization time
@@ -209,10 +209,9 @@ public class NetMdServiceImpl implements NetMdService {
 		validator.validateNetMdAccount(netMd);
 		validator.validateUserNameAndPassword(netMd.getUserName(),
 				netMd.getPassword());
-		DoctorDetail doctor = null;
-		HeaderDTO header = null;
-		//ResponseDTO response = netMdDao.create(netMd);
-		ResponseDTO response = doctorTestDao.create(doctor, header);
+		
+		ResponseDTO response = netMdDao.create(netMd);
+		ResponseDTO respnse = netmdTestDao.create(netMd);
 		sendEmailToNetMdOwner(Constants.NETMD_REGISTER, netMd);
 		return response;
 	}
@@ -483,8 +482,8 @@ public class NetMdServiceImpl implements NetMdService {
 	 */
 	@Override
 	public ResponseDTO deleteNetMd(int netMdId) {
-		//ResponseDTO response = netMdDao.delete(netMdId);
-		ResponseDTO response = doctorTestDao.delete(netMdId);
+		ResponseDTO response = netMdDao.delete(netMdId);
+		ResponseDTO respnse = netmdTestDao.delete(netMdId);
 		return response;
 	}
 
@@ -716,9 +715,9 @@ public class NetMdServiceImpl implements NetMdService {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		//NetMdViewResponseDTO response = netMdDao.view(netMdId);
-		NetMdViewResponseDTO response= new NetMdViewResponseDTO();
-		DoctorViewResponseDTO testResponse = doctorTestDao.view(netMdId);
+		NetMdViewResponseDTO response = netMdDao.view(netMdId);
+		//NetMdViewResponseDTO response= new NetMdViewResponseDTO();
+		NetMdViewResponseDTO testResponse = netmdTestDao.view(netMdId);
 		return response;
 	}
 
@@ -1347,12 +1346,14 @@ public class NetMdServiceImpl implements NetMdService {
 	}
 	/***************/
 
-	public DoctorTestDao getDoctorTestDao() {
-		return doctorTestDao;
+	public NetmdTestDao getNetmdTestDao() {
+		return netmdTestDao;
 	}
 
-	public void setDoctorTestDao(DoctorTestDao doctorTestDao) {
-		this.doctorTestDao = doctorTestDao;
+	public void setNetmdTestDao(NetmdTestDao netmdTestDao) {
+		this.netmdTestDao = netmdTestDao;
 	}
+
+	
 	
 }
