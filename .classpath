@@ -62,5 +62,24 @@
 	<classpathentry kind="lib" path="thirdparty/jars/amazon/mail-1.4.3.jar"/>
 	<classpathentry kind="lib" path="thirdparty/jars/amazon/stax-1.2.0.jar"/>
 	<classpathentry kind="lib" path="thirdparty/jars/amazon/stax-api-1.0.1.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/guava-15.0.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/high-scale-lib-1.1.4.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/libthrift-0.9.0.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/log4j.properties.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/framework/easymock-3.2.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/junit/easymock-3.2.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/apache-cassandra-thrift-2.0.5.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/astyanax-1.56.42.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/astyanax-cassandra-1.56.37.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/astyanax-core-1.56.37.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/astyanax-thrift-1.56.48.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/cassandra-all-1.2.12.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/cassandra-all-2.0.4.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/cassandra-driver-core-2.0.0.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/cassandra-thrift-2.0.3.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/cassandra-thrift-2.0.5.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/slf4j-api-1.7.6.jar"/>
+	<classpathentry kind="lib" path="thirdparty/jars/cassandra/slf4j-log4j12-1.7.6.jar"/>
 	<classpathentry kind="output" path="src"/>
 </classpath>
