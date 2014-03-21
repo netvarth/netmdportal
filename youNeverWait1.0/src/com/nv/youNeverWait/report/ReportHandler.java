@@ -23,8 +23,10 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
+import com.nv.youNeverWait.analatic.bl.AggregateMeasure;
 import com.nv.youNeverWait.analatic.bl.Analatic;
 import com.nv.youNeverWait.analatic.bl.Inference;
+import com.nv.youNeverWait.analatic.bl.Measure;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.user.pl.dao.ReportDao;
@@ -36,13 +38,15 @@ import com.nv.youNeverWait.user.pl.dao.ReportDao;
  *
  */
 public class ReportHandler {
-	private ReportDao reportDao;
-	private Analatic analatic;
+	
+	
+	private Map<ReportEnum,ReportData> reportMap;
+
 	
 	public InputStream getJRXml(Map<String,Object> map,ServletContext context) {
 		String reportName = (String) map.get("reportName");
-		
-		String realPath = context.getRealPath("jrxml"+File.separator+"vertical"+".jrxml");
+		ReportEnum reportEnum = ReportEnum.getEnum(reportName);
+		String realPath = context.getRealPath("jrxml"+File.separator+reportEnum.getJrxml()+".jrxml");
 		File file = new File(realPath);
 		try {
 			return new FileInputStream(file);
@@ -57,36 +61,33 @@ public class ReportHandler {
 	
 	
 	
-	public ReportDao getReportDao() {
-		return reportDao;
-	}
-	public void setReportDao(ReportDao reportDao) {
-		this.reportDao = reportDao;
-	}
-	
+
 	
 	public JasperPrint createReport(InputStream is,Map<String,Object> map){
-		
+		String reportName = (String) map.get("reportName");
 		String fMonth = (String) map.get("startMonth");
 		String fYear = (String) map.get("startYear");
 		String toMonth = (String) map.get("endMonth");
 		String toYear = (String) map.get("endYear");
-		Integer hospital = (Integer) map.get("paramList");
-		
-		
-		List<Inference> dataBeanList=null;
+		String hospitalString = (String) map.get("paramList");
+		Integer hospital=null;
+		if (hospitalString !=null)
+		hospital = Integer.parseInt(hospitalString);
+		ReportEnum reportEnum = ReportEnum.getEnum(reportName);
+		ReportData dataBean = reportMap.get(reportEnum);
+		List<Inference<? extends Measure>> dataBeanList= null;
 		if (hospital !=null){
-			
-			dataBeanList = analatic.getInferencesPerHospital(fMonth, fYear, toMonth, toYear,hospital);
+			dataBeanList = dataBean.getDataBeans(fMonth, fYear, toMonth, toYear,hospital);
 		}else{
-		
-		   dataBeanList = analatic.getInferences(fMonth, fYear, toMonth, toYear);
+			dataBeanList = dataBean.getDataBeans(fMonth, fYear, toMonth, toYear);
 		}
+		
 		JasperReport jasperReport = null;
 		JasperPrint jasperPrint = null;
 		try{
 			HashMap<String, Object> reportParms = new HashMap<String, Object>();
 			JasperDesign jasperDesign = JRXmlLoader.load(is);
+		
 			jasperReport = JasperCompileManager.compileReport(jasperDesign);
 			JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(dataBeanList);
 			jasperPrint = JasperFillManager.fillReport(jasperReport,reportParms,beanColDataSource);
@@ -103,17 +104,24 @@ public class ReportHandler {
 
 
 
-	public Analatic getAnalatic() {
-		return analatic;
+
+
+	public Map<ReportEnum, ReportData> getReportMap() {
+		return reportMap;
 	}
 
 
 
 
-	public void setAnalatic(Analatic analatic) {
-		this.analatic = analatic;
+
+
+	public void setReportMap(Map<ReportEnum, ReportData> reportMap) {
+		this.reportMap = reportMap;
 	}
-	
+
+
+
+
 	
 	
 	

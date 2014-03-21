@@ -11,7 +11,7 @@ public class InductionEntity {
 	
 	private String hospital;
 	private String year;
-	private String month;
+	private Integer month;
 	private Integer inducedLabourGr24HrVag;
 	private Integer inducedLabourLs24HrVag;
 	private Integer inducedLabourCs;
@@ -33,10 +33,11 @@ public class InductionEntity {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getMonth() {
+	
+	public Integer getMonth() {
 		return month;
 	}
-	public void setMonth(String month) {
+	public void setMonth(Integer month) {
 		this.month = month;
 	}
 	public Integer getInducedLabourGr24HrVag() {
@@ -101,7 +102,7 @@ public class InductionEntity {
 		final class RobsonSubclusters implements SubClusters {
 			private String hospitl= hospital;
 			private String yer=year;
-			private String mnth=month;
+			private Integer mnth=month;
 			@Override
 			public String getHospital() {
 
@@ -113,7 +114,7 @@ public class InductionEntity {
 				return this.yer;
 			}
 			@Override
-			public String getMonth() {
+			public Integer getMonth() {
 
 				return this.mnth;
 			}

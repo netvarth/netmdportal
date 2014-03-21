@@ -67,20 +67,23 @@ public class PreviousCS implements Cluster{
 	    private  List<Measure>  getMeasures(List<PreviousCSEntity> data){
 	    	List<Measure> measures = new ArrayList<Measure>();
 	    	Measure measure;
+            int typeOrder=0;
 	    	for (PreviousCSEntity entity :data){
 				SubClusters subCluster =entity.getSubClusters();
 				for( Entry<String, Map<String, Integer>> clusterMap :subCluster.getClusterMap().entrySet()){
+					 typeOrder=1;
 					for ( Entry<String, Integer> onesubCluster:clusterMap.getValue().entrySet()){
 						measure = new Measure();
-						measure.setColumn(clusterMap.getKey());
+						measure.setTypeOrder(typeOrder);
+						measure.setRow(clusterMap.getKey() );
 						measure.setHospital(subCluster.getHospital());
 						measure.setMonth(subCluster.getMonth());
 						measure.setYear(entity.getYear());
-						measure.setKey(onesubCluster.getKey());
+						measure.setColumn(onesubCluster.getKey());
 						measure.setMeasure(onesubCluster.getValue());
 						measures.add(measure);
 					}
-
+                    typeOrder++;
 				}	
 
 			}

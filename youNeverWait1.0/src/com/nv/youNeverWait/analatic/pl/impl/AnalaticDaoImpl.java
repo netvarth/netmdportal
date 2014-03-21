@@ -5,28 +5,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
-import com.nv.youNeverWait.analatic.bl.Measure;
-import com.nv.youNeverWait.analatic.bl.impl.PlacentalWt;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
 import com.nv.youNeverWait.analatic.pl.entity.ApgarScoreEntity;
 import com.nv.youNeverWait.analatic.pl.entity.BirthWeightEntity;
@@ -37,17 +19,22 @@ import com.nv.youNeverWait.analatic.pl.entity.BookedStatisticsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.CaesareanSectionEntity;
 import com.nv.youNeverWait.analatic.pl.entity.EpisiotomyEntity;
 import com.nv.youNeverWait.analatic.pl.entity.FetalComplexitesEntity;
+import com.nv.youNeverWait.analatic.pl.entity.FourthStageEntity;
 import com.nv.youNeverWait.analatic.pl.entity.InductionEntity;
+import com.nv.youNeverWait.analatic.pl.entity.IntravenusFluidEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalAgeEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalComplicationsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalHeightEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalMortalityMorbidityEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalWeightEntity;
+import com.nv.youNeverWait.analatic.pl.entity.OxyTocicEntity;
 import com.nv.youNeverWait.analatic.pl.entity.ParityEntity;
 import com.nv.youNeverWait.analatic.pl.entity.PerinealTearEntity;
+import com.nv.youNeverWait.analatic.pl.entity.PlacentalWtEntity;
 import com.nv.youNeverWait.analatic.pl.entity.PresentationEntity;
 import com.nv.youNeverWait.analatic.pl.entity.PreviousCSEntity;
 import com.nv.youNeverWait.analatic.pl.entity.RobsonClassEntity;
+import com.nv.youNeverWait.analatic.pl.entity.ThirdStageEntity;
 import com.nv.youNeverWait.analatic.pl.entity.VaginalDeliveryEntity;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 
@@ -86,7 +73,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	MaternalAgeEntity maternalAgeEntity = new MaternalAgeEntity();
 	    	maternalAgeEntity.setHospital((String)entity[0]);
 	    	maternalAgeEntity.setYear((String)entity[1]);
-	    	maternalAgeEntity.setMonth((String)entity[2]);
+	    	maternalAgeEntity.setMonth((Integer)entity[2]);
             maternalAgeEntity.setLt20((BigDecimal)entity[3]);
             maternalAgeEntity.setBt20to24((BigDecimal)entity[4]);
             maternalAgeEntity.setBt25to29((BigDecimal)entity[5]);
@@ -116,7 +103,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	MaternalAgeEntity maternalAgeEntity = new MaternalAgeEntity();
 	    	maternalAgeEntity.setHospital((String)entity[0]);
 	    	maternalAgeEntity.setYear((String)entity[1]);
-	    	maternalAgeEntity.setMonth((String)entity[2]);
+	    	maternalAgeEntity.setMonth((Integer)entity[2]);
             maternalAgeEntity.setLt20((BigDecimal)entity[3]);
             maternalAgeEntity.setBt20to24((BigDecimal)entity[4]);
             maternalAgeEntity.setBt25to29((BigDecimal)entity[5]);
@@ -146,7 +133,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 		    	BookedStatisticsEntity bookedStatisticsEntity = new BookedStatisticsEntity();
 		    	bookedStatisticsEntity.setHospital((String)entity[0]);
 		    	bookedStatisticsEntity.setYear((String)entity[1]);
-		    	bookedStatisticsEntity.setMonth((String)entity[2]);
+		    	bookedStatisticsEntity.setMonth((Integer)entity[2]);
 		    	bookedStatisticsEntity.setBooked((BigDecimal)entity[3]);
 		    	bookedStatisticsEntity.setUnbooked((BigDecimal)entity[4]);
 	            dataList.add(bookedStatisticsEntity);
@@ -176,7 +163,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	BookedStatisticsEntity bookedStatisticsEntity = new BookedStatisticsEntity();
 	    	bookedStatisticsEntity.setHospital((String)entity[0]);
 	    	bookedStatisticsEntity.setYear((String)entity[1]);
-	    	bookedStatisticsEntity.setMonth((String)entity[2]);
+	    	bookedStatisticsEntity.setMonth((Integer)entity[2]);
 	    	bookedStatisticsEntity.setBooked((BigDecimal)entity[3]);
 	    	bookedStatisticsEntity.setUnbooked((BigDecimal)entity[4]);
             dataList.add(bookedStatisticsEntity);
@@ -200,7 +187,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	MaternalHeightEntity maternalHeightEntity = new MaternalHeightEntity();
 	    	maternalHeightEntity.setHospital((String)entity[0]);
 	    	maternalHeightEntity.setYear((String)entity[1]);
-	    	maternalHeightEntity.setMonth((String)entity[2]);
+	    	maternalHeightEntity.setMonth((Integer)entity[2]);
 	    	maternalHeightEntity.setLt45((BigDecimal)entity[3]);
 	    	maternalHeightEntity.setBt145to149((BigDecimal)entity[4]);
 	    	maternalHeightEntity.setBt150to170((BigDecimal)entity[5]);
@@ -229,7 +216,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	MaternalHeightEntity maternalHeightEntity = new MaternalHeightEntity();
 	    	maternalHeightEntity.setHospital((String)entity[0]);
 	    	maternalHeightEntity.setYear((String)entity[1]);
-	    	maternalHeightEntity.setMonth((String)entity[2]);
+	    	maternalHeightEntity.setMonth((Integer)entity[2]);
 	    	maternalHeightEntity.setLt45((BigDecimal)entity[3]);
 	    	maternalHeightEntity.setBt145to149((BigDecimal)entity[4]);
 	    	maternalHeightEntity.setBt150to170((BigDecimal)entity[5]);
@@ -255,7 +242,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	MaternalWeightEntity maternalWeightEntity = new MaternalWeightEntity();
 	    	maternalWeightEntity.setHospital((String)entity[0]);
 	    	maternalWeightEntity.setYear((String)entity[1]);
-	    	maternalWeightEntity.setMonth((String)entity[2]);
+	    	maternalWeightEntity.setMonth((Integer)entity[2]);
 	    	maternalWeightEntity.setBt40to49((BigDecimal)entity[3]);
 	    	maternalWeightEntity.setBt50to69((BigDecimal)entity[4]);
 	    	maternalWeightEntity.setBt70to89((BigDecimal)entity[5]);
@@ -283,7 +270,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	MaternalWeightEntity maternalWeightEntity = new MaternalWeightEntity();
 	    	maternalWeightEntity.setHospital((String)entity[0]);
 	    	maternalWeightEntity.setYear((String)entity[1]);
-	    	maternalWeightEntity.setMonth((String)entity[2]);
+	    	maternalWeightEntity.setMonth((Integer)entity[2]);
 	    	maternalWeightEntity.setBt40to49((BigDecimal)entity[3]);
 	    	maternalWeightEntity.setBt50to69((BigDecimal)entity[4]);
 	    	maternalWeightEntity.setBt70to89((BigDecimal)entity[5]);
@@ -309,7 +296,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	MaternalComplicationsEntity maternalComplicationsEntity = new MaternalComplicationsEntity();
 	    	maternalComplicationsEntity.setHospital((String)entity[0]);
 	    	maternalComplicationsEntity.setYear((String)entity[1]);
-	    	maternalComplicationsEntity.setMonth((String)entity[2]);
+	    	maternalComplicationsEntity.setMonth((Integer)entity[2]);
 	    	maternalComplicationsEntity.setAnemia((BigDecimal)entity[3]);
 	    	maternalComplicationsEntity.setDiabetes((BigDecimal)entity[4]);
 	    	maternalComplicationsEntity.setHeartDisease((BigDecimal)entity[5]);
@@ -335,7 +322,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	MaternalComplicationsEntity maternalComplicationsEntity = new MaternalComplicationsEntity();
 	    	maternalComplicationsEntity.setHospital((String)entity[0]);
 	    	maternalComplicationsEntity.setYear((String)entity[1]);
-	    	maternalComplicationsEntity.setMonth((String)entity[2]);
+	    	maternalComplicationsEntity.setMonth((Integer)entity[2]);
 	    	maternalComplicationsEntity.setAnemia((BigDecimal)entity[3]);
 	    	maternalComplicationsEntity.setDiabetes((BigDecimal)entity[4]);
 	    	maternalComplicationsEntity.setHeartDisease((BigDecimal)entity[5]);
@@ -362,7 +349,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	BodyMassIndexEntity bodyMassIndexEntity = new BodyMassIndexEntity();
 	    	bodyMassIndexEntity.setHospital((String)entity[0]);
 	    	bodyMassIndexEntity.setYear((String)entity[1]);
-	    	bodyMassIndexEntity.setMonth((String)entity[2]);
+	    	bodyMassIndexEntity.setMonth((Integer)entity[2]);
 	    	bodyMassIndexEntity.setLt20((BigDecimal)entity[3]);
 	    	bodyMassIndexEntity.setBt20to24((BigDecimal)entity[4]);
 	    	bodyMassIndexEntity.setBt25to29((BigDecimal)entity[5]);
@@ -393,7 +380,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	BodyMassIndexEntity bodyMassIndexEntity = new BodyMassIndexEntity();
 	    	bodyMassIndexEntity.setHospital((String)entity[0]);
 	    	bodyMassIndexEntity.setYear((String)entity[1]);
-	    	bodyMassIndexEntity.setMonth((String)entity[2]);
+	    	bodyMassIndexEntity.setMonth((Integer)entity[2]);
 	    	bodyMassIndexEntity.setLt20((BigDecimal)entity[3]);
 	    	bodyMassIndexEntity.setBt20to24((BigDecimal)entity[4]);
 	    	bodyMassIndexEntity.setBt25to29((BigDecimal)entity[5]);
@@ -421,7 +408,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	BloodGroupEntity bloodGroupEntity = new BloodGroupEntity();
 	    	bloodGroupEntity.setHospital((String)entity[0]);
 	    	bloodGroupEntity.setYear((String)entity[1]);
-	    	bloodGroupEntity.setMonth((String)entity[2]);
+	    	bloodGroupEntity.setMonth((Integer)entity[2]);
 	    	bloodGroupEntity.setA((BigDecimal)entity[3]);
 	    	bloodGroupEntity.setB((BigDecimal)entity[4]);
 	    	bloodGroupEntity.setAb((BigDecimal)entity[5]);
@@ -451,7 +438,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	BloodGroupEntity bloodGroupEntity = new BloodGroupEntity();
 	    	bloodGroupEntity.setHospital((String)entity[0]);
 	    	bloodGroupEntity.setYear((String)entity[1]);
-	    	bloodGroupEntity.setMonth((String)entity[2]);
+	    	bloodGroupEntity.setMonth((Integer)entity[2]);
 	    	bloodGroupEntity.setA((BigDecimal)entity[3]);
 	    	bloodGroupEntity.setB((BigDecimal)entity[4]);
 	    	bloodGroupEntity.setAb((BigDecimal)entity[5]);
@@ -482,7 +469,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	ParityEntity parityEntity = new ParityEntity();
 	    	parityEntity.setHospital((String)entity[0]);
 	    	parityEntity.setYear((String)entity[1]);
-	    	parityEntity.setMonth((String)entity[2]);
+	    	parityEntity.setMonth((Integer)entity[2]);
 	    	parityEntity.setEq1((BigDecimal)entity[3]);
 	    	parityEntity.setEq2((BigDecimal)entity[4]);
 	    	parityEntity.setEq3((BigDecimal)entity[5]);
@@ -510,7 +497,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	ParityEntity parityEntity = new ParityEntity();
 	    	parityEntity.setHospital((String)entity[0]);
 	    	parityEntity.setYear((String)entity[1]);
-	    	parityEntity.setMonth((String)entity[2]);
+	    	parityEntity.setMonth((Integer)entity[2]);
 	    	parityEntity.setEq1((BigDecimal)entity[3]);
 	    	parityEntity.setEq2((BigDecimal)entity[4]);
 	    	parityEntity.setEq3((BigDecimal)entity[5]);
@@ -540,7 +527,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	PreviousCSEntity peviousCSEntity = new PreviousCSEntity();
 	    	peviousCSEntity.setHospital((String)entity[0]);
 	    	peviousCSEntity.setYear((String)entity[1]);
-	    	peviousCSEntity.setMonth((String)entity[2]);
+	    	peviousCSEntity.setMonth((Integer)entity[2]);
 	    	peviousCSEntity.setSame1((BigDecimal)entity[3]);
 	    	peviousCSEntity.setSame2((BigDecimal)entity[4]);
 	    	peviousCSEntity.setSame3((BigDecimal)entity[5]);
@@ -574,7 +561,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	PreviousCSEntity peviousCSEntity = new PreviousCSEntity();
 	    	peviousCSEntity.setHospital((String)entity[0]);
 	    	peviousCSEntity.setYear((String)entity[1]);
-	    	peviousCSEntity.setMonth((String)entity[2]);
+	    	peviousCSEntity.setMonth((Integer)entity[2]);
 	    	peviousCSEntity.setSame1((BigDecimal)entity[3]);
 	    	peviousCSEntity.setSame2((BigDecimal)entity[4]);
 	    	peviousCSEntity.setSame3((BigDecimal)entity[5]);
@@ -608,7 +595,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	VaginalDeliveryEntity vaginalDeliveryEntity = new VaginalDeliveryEntity();
 	    	vaginalDeliveryEntity.setHospital((String)entity[0]);
 	    	vaginalDeliveryEntity.setYear((String)entity[1]);
-	    	vaginalDeliveryEntity.setMonth((String)entity[2]);
+	    	vaginalDeliveryEntity.setMonth((Integer)entity[2]);
 	    	vaginalDeliveryEntity.setSpontaneous((BigDecimal)entity[3]);
 	    	vaginalDeliveryEntity.setForceps((BigDecimal)entity[4]);
 	    	vaginalDeliveryEntity.setVacum((BigDecimal)entity[5]);
@@ -639,7 +626,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	VaginalDeliveryEntity vaginalDeliveryEntity = new VaginalDeliveryEntity();
 	    	vaginalDeliveryEntity.setHospital((String)entity[0]);
 	    	vaginalDeliveryEntity.setYear((String)entity[1]);
-	    	vaginalDeliveryEntity.setMonth((String)entity[2]);
+	    	vaginalDeliveryEntity.setMonth((Integer)entity[2]);
 	    	vaginalDeliveryEntity.setSpontaneous((BigDecimal)entity[3]);
 	    	vaginalDeliveryEntity.setForceps((BigDecimal)entity[4]);
 	    	vaginalDeliveryEntity.setVacum((BigDecimal)entity[5]);
@@ -668,7 +655,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	CaesareanSectionEntity caesareanSectionEntity = new CaesareanSectionEntity();
 	    	caesareanSectionEntity.setHospital((String)entity[0]);
 	    	caesareanSectionEntity.setYear((String)entity[1]);
-	    	caesareanSectionEntity.setMonth((String)entity[2]);
+	    	caesareanSectionEntity.setMonth((Integer)entity[2]);
 	    	caesareanSectionEntity.setTotalCs((BigDecimal)entity[3]);
 	    	caesareanDeliveryList.add(caesareanSectionEntity);
 	    }
@@ -691,7 +678,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	CaesareanSectionEntity caesareanSectionEntity = new CaesareanSectionEntity();
 	    	caesareanSectionEntity.setHospital((String)entity[0]);
 	    	caesareanSectionEntity.setYear((String)entity[1]);
-	    	caesareanSectionEntity.setMonth((String)entity[2]);
+	    	caesareanSectionEntity.setMonth((Integer)entity[2]);
 	    	caesareanSectionEntity.setTotalCs((BigDecimal)entity[3]);
 	    	caesareanDeliveryList.add(caesareanSectionEntity);
 	    }
@@ -716,7 +703,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	PresentationEntity presentationEntity = new PresentationEntity();
 	    	presentationEntity.setHospital((String)entity[0]);
 	    	presentationEntity.setYear((String)entity[1]);
-	    	presentationEntity.setMonth((String)entity[2]);
+	    	presentationEntity.setMonth((Integer)entity[2]);
 	    	presentationEntity.setVxoccAnt((BigDecimal)entity[3]);
 	    	presentationEntity.setVxoccPost((BigDecimal)entity[4]);
 	    	presentationEntity.setBreechVag((BigDecimal)entity[5]);
@@ -745,7 +732,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	PresentationEntity presentationEntity = new PresentationEntity();
 	    	presentationEntity.setHospital((String)entity[0]);
 	    	presentationEntity.setYear((String)entity[1]);
-	    	presentationEntity.setMonth((String)entity[2]);
+	    	presentationEntity.setMonth((Integer)entity[2]);
 	    	presentationEntity.setVxoccAnt((BigDecimal)entity[3]);
 	    	presentationEntity.setVxoccPost((BigDecimal)entity[4]);
 	    	presentationEntity.setBreechVag((BigDecimal)entity[5]);
@@ -775,7 +762,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	RobsonClassEntity robsonClassEntity = new RobsonClassEntity();
 	    	robsonClassEntity.setHospital((String)entity[0]);
 	    	robsonClassEntity.setYear((String)entity[1]);
-	    	robsonClassEntity.setMonth((String)entity[2]);
+	    	robsonClassEntity.setMonth((Integer)entity[2]);
 	    	robsonClassEntity.setTotal1((BigDecimal)entity[3]);
 	    	robsonClassEntity.setTotal2e((BigDecimal)entity[4]);
 	    	robsonClassEntity.setTotal2i((BigDecimal)entity[5]);
@@ -822,7 +809,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	RobsonClassEntity robsonClassEntity = new RobsonClassEntity();
 	    	robsonClassEntity.setHospital((String)entity[0]);
 	    	robsonClassEntity.setYear((String)entity[1]);
-	    	robsonClassEntity.setMonth((String)entity[2]);
+	    	robsonClassEntity.setMonth((Integer)entity[2]);
 	    	robsonClassEntity.setTotal1((BigDecimal)entity[3]);
 	    	robsonClassEntity.setTotal2e((BigDecimal)entity[4]);
 	    	robsonClassEntity.setTotal2i((BigDecimal)entity[5]);
@@ -870,7 +857,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	EpisiotomyEntity episiotomyEntity = new EpisiotomyEntity();
 	    	episiotomyEntity.setHospital((String)entity[0]);
 	    	episiotomyEntity.setYear((String)entity[1]);
-	    	episiotomyEntity.setMonth((String)entity[2]);
+	    	episiotomyEntity.setMonth((Integer)entity[2]);
 	    	episiotomyEntity.setMidlineEpisiotomy((BigDecimal)entity[3]);
 	    	episiotomyEntity.setMedioLateralEpisiotomy((BigDecimal)entity[4]);
 	    	
@@ -896,7 +883,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	EpisiotomyEntity episiotomyEntity = new EpisiotomyEntity();
 	    	episiotomyEntity.setHospital((String)entity[0]);
 	    	episiotomyEntity.setYear((String)entity[1]);
-	    	episiotomyEntity.setMonth((String)entity[2]);
+	    	episiotomyEntity.setMonth((Integer)entity[2]);
 	    	episiotomyEntity.setMidlineEpisiotomy((BigDecimal)entity[3]);
 	    	episiotomyEntity.setMedioLateralEpisiotomy((BigDecimal)entity[4]);
 	    	
@@ -923,7 +910,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	PerinealTearEntity perinealTearEntity = new PerinealTearEntity();
 	    	perinealTearEntity.setHospital((String)entity[0]);
 	    	perinealTearEntity.setYear((String)entity[1]);
-	    	perinealTearEntity.setMonth((String)entity[2]);
+	    	perinealTearEntity.setMonth((Integer)entity[2]);
 	    	perinealTearEntity.setPerinealTear1((BigDecimal)entity[3]);
 	    	perinealTearEntity.setPerinealTear2((BigDecimal)entity[4]);
 	    	perinealTearEntity.setPerinealTear3a((BigDecimal)entity[5]);
@@ -950,7 +937,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	PerinealTearEntity perinealTearEntity = new PerinealTearEntity();
 	    	perinealTearEntity.setHospital((String)entity[0]);
 	    	perinealTearEntity.setYear((String)entity[1]);
-	    	perinealTearEntity.setMonth((String)entity[2]);
+	    	perinealTearEntity.setMonth((Integer)entity[2]);
 	    	perinealTearEntity.setPerinealTear1((BigDecimal)entity[3]);
 	    	perinealTearEntity.setPerinealTear2((BigDecimal)entity[4]);
 	    	perinealTearEntity.setPerinealTear3a((BigDecimal)entity[5]);
@@ -981,7 +968,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	InductionEntity inductionEntity = new InductionEntity();
 	    	inductionEntity.setHospital((String)entity[0]);
 	    	inductionEntity.setYear((String)entity[1]);
-	    	inductionEntity.setMonth((String)entity[2]);
+	    	inductionEntity.setMonth((Integer)entity[2]);
 	    	inductionEntity.setInducedLabourLs24HrVag((BigDecimal)entity[3]);
 	    	inductionEntity.setInducedLabourGr24HrVag((BigDecimal)entity[4]);
 	    	inductionEntity.setElectiveInductionLs24HrVag((BigDecimal)entity[5]);
@@ -1010,7 +997,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	InductionEntity inductionEntity = new InductionEntity();
 	    	inductionEntity.setHospital((String)entity[0]);
 	    	inductionEntity.setYear((String)entity[1]);
-	    	inductionEntity.setMonth((String)entity[2]);
+	    	inductionEntity.setMonth((Integer)entity[2]);
 	    	inductionEntity.setInducedLabourLs24HrVag((BigDecimal)entity[3]);
 	    	inductionEntity.setInducedLabourGr24HrVag((BigDecimal)entity[4]);
 	    	inductionEntity.setElectiveInductionLs24HrVag((BigDecimal)entity[5]);
@@ -1042,12 +1029,11 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	FetalComplexitesEntity fetalComplexitesEntity = new FetalComplexitesEntity();
 	    	fetalComplexitesEntity.setHospital((String)entity[0]);
 	    	fetalComplexitesEntity.setYear((String)entity[1]);
-	    	fetalComplexitesEntity.setMonth((String)entity[2]);
+	    	fetalComplexitesEntity.setMonth((Integer)entity[2]);
 	    	fetalComplexitesEntity.setFetalStllBrth((BigDecimal)entity[3]);
 	    	fetalComplexitesEntity.setFetal1NeonatalDeath((BigDecimal)entity[4]);
-	    	fetalComplexitesEntity.setFetalAdmission((BigDecimal)entity[5]);
-	    	fetalComplexitesEntity.setFetalNICUAdmn((BigDecimal)entity[6]);
-	    	fetalComplexitesEntity.setFetalAnomalies((BigDecimal)entity[7]);
+	    	fetalComplexitesEntity.setFetalNICUAdmn((BigDecimal)entity[5]);
+	    	fetalComplexitesEntity.setFetalAnomalies((BigDecimal)entity[6]);
 	    	fetalComplexitesEntityList.add(fetalComplexitesEntity);
 	    }
 	    	return fetalComplexitesEntityList;
@@ -1056,7 +1042,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	public List<FetalComplexitesEntity> getFetalComplexitesInferences(
 			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear,
 			Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.FETAL_COMPLEXITES);
+		Query query = em.createNativeQuery(AnalaticQuery.FETAL_COMPLEXITES_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1070,12 +1056,11 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	FetalComplexitesEntity fetalComplexitesEntity = new FetalComplexitesEntity();
 	    	fetalComplexitesEntity.setHospital((String)entity[0]);
 	    	fetalComplexitesEntity.setYear((String)entity[1]);
-	    	fetalComplexitesEntity.setMonth((String)entity[2]);
+	    	fetalComplexitesEntity.setMonth((Integer)entity[2]);
 	    	fetalComplexitesEntity.setFetalStllBrth((BigDecimal)entity[3]);
 	    	fetalComplexitesEntity.setFetal1NeonatalDeath((BigDecimal)entity[4]);
-	    	fetalComplexitesEntity.setFetalAdmission((BigDecimal)entity[5]);
-	    	fetalComplexitesEntity.setFetalNICUAdmn((BigDecimal)entity[6]);
-	    	fetalComplexitesEntity.setFetalAnomalies((BigDecimal)entity[7]);
+	    	fetalComplexitesEntity.setFetalNICUAdmn((BigDecimal)entity[5]);
+	    	fetalComplexitesEntity.setFetalAnomalies((BigDecimal)entity[6]);
 	    	fetalComplexitesEntityList.add(fetalComplexitesEntity);
 	    }
 	    	return fetalComplexitesEntityList;
@@ -1100,7 +1085,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	BirthWeightEntity birthWeightEntity = new BirthWeightEntity();
 	    	birthWeightEntity.setHospital((String)entity[0]);
 	    	birthWeightEntity.setYear((String)entity[1]);
-	    	birthWeightEntity.setMonth((String)entity[2]);
+	    	birthWeightEntity.setMonth((Integer)entity[2]);
 	    	birthWeightEntity.setBaby1GnderM((BigDecimal)entity[3]);
 	    	birthWeightEntity.setBaby1WtLs1500((BigDecimal)entity[4]);
 	    	birthWeightEntity.setBaby1WtBtw1500And2499((BigDecimal)entity[5]);
@@ -1127,7 +1112,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	BirthWeightEntity birthWeightEntity = new BirthWeightEntity();
 	    	birthWeightEntity.setHospital((String)entity[0]);
 	    	birthWeightEntity.setYear((String)entity[1]);
-	    	birthWeightEntity.setMonth((String)entity[2]);
+	    	birthWeightEntity.setMonth((Integer)entity[2]);
 	    	birthWeightEntity.setBaby1GnderM((BigDecimal)entity[3]);
 	    	birthWeightEntity.setBaby1WtLs1500((BigDecimal)entity[4]);
 	    	birthWeightEntity.setBaby1WtBtw1500And2499((BigDecimal)entity[5]);
@@ -1157,7 +1142,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	ApgarScoreEntity apgarScoreEntity = new ApgarScoreEntity();
 	    	apgarScoreEntity.setHospital((String)entity[0]);
 	    	apgarScoreEntity.setYear((String)entity[1]);
-	    	apgarScoreEntity.setMonth((String)entity[2]);
+	    	apgarScoreEntity.setMonth((Integer)entity[2]);
 	    	apgarScoreEntity.setOneAtFive((BigDecimal)entity[3]);
 	    	apgarScoreEntity.setFiveAt5((BigDecimal)entity[4]);
 	    	apgarScoreEntityList.add(apgarScoreEntity);
@@ -1182,7 +1167,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	ApgarScoreEntity apgarScoreEntity = new ApgarScoreEntity();
 	    	apgarScoreEntity.setHospital((String)entity[0]);
 	    	apgarScoreEntity.setYear((String)entity[1]);
-	    	apgarScoreEntity.setMonth((String)entity[2]);
+	    	apgarScoreEntity.setMonth((Integer)entity[2]);
 	    	apgarScoreEntity.setOneAtFive((BigDecimal)entity[3]);
 	    	apgarScoreEntity.setFiveAt5((BigDecimal)entity[4]);
 	    	apgarScoreEntityList.add(apgarScoreEntity);
@@ -1206,7 +1191,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	MaternalMortalityMorbidityEntity maternalMortalityMorbidityEntity = new MaternalMortalityMorbidityEntity();
 	    	maternalMortalityMorbidityEntity.setHospital((String)entity[0]);
 	    	maternalMortalityMorbidityEntity.setYear((String)entity[1]);
-	    	maternalMortalityMorbidityEntity.setMonth((String)entity[2]);
+	    	maternalMortalityMorbidityEntity.setMonth((Integer)entity[2]);
 	    	maternalMortalityMorbidityEntity.setMaternalDth((BigDecimal)entity[3]);
 	    	maternalMortalityMorbidityEntity.setMatMorbidility((BigDecimal)entity[4]);
 	    	apgarScoreEntityList.add(maternalMortalityMorbidityEntity);
@@ -1233,7 +1218,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	MaternalMortalityMorbidityEntity maternalMortalityMorbidityEntity = new MaternalMortalityMorbidityEntity();
 	    	maternalMortalityMorbidityEntity.setHospital((String)entity[0]);
 	    	maternalMortalityMorbidityEntity.setYear((String)entity[1]);
-	    	maternalMortalityMorbidityEntity.setMonth((String)entity[2]);
+	    	maternalMortalityMorbidityEntity.setMonth((Integer)entity[2]);
 	    	maternalMortalityMorbidityEntity.setMaternalDth((BigDecimal)entity[3]);
 	    	maternalMortalityMorbidityEntity.setMatMorbidility((BigDecimal)entity[4]);
 	    	maternalMortalityMorbidityEntityList.add(maternalMortalityMorbidityEntity);
@@ -1246,7 +1231,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	public List<BloodLossEntity> getBloodLossInferences(
 			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear) {
 		
-		Query query = em.createNativeQuery(AnalaticQuery.MATERNAL_MORTALITY_MORBIDITY_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalaticQuery.BLOODLOSS);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1259,7 +1244,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	BloodLossEntity bloodLossEntity = new BloodLossEntity();
 	    	bloodLossEntity.setHospital((String)entity[0]);
 	    	bloodLossEntity.setYear((String)entity[1]);
-	    	bloodLossEntity.setMonth((String)entity[2]);
+	    	bloodLossEntity.setMonth((Integer)entity[2]);
 	    	bloodLossEntity.setBldLosLs500Cs((BigDecimal)entity[3]);
 	    	bloodLossEntity.setBldLosBtw500And1000Cs((BigDecimal)entity[4]);
 	    	bloodLossEntity.setBldLosGr1000Cs((BigDecimal)entity[5]);
@@ -1284,7 +1269,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	public List<BloodLossEntity> getBloodLossInferences(
 			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear,Integer hospital) {
 		
-		Query query = em.createNativeQuery(AnalaticQuery.MATERNAL_MORTALITY_MORBIDITY_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalaticQuery.BLOODLOSS_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1298,7 +1283,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	BloodLossEntity bloodLossEntity = new BloodLossEntity();
 	    	bloodLossEntity.setHospital((String)entity[0]);
 	    	bloodLossEntity.setYear((String)entity[1]);
-	    	bloodLossEntity.setMonth((String)entity[2]);
+	    	bloodLossEntity.setMonth((Integer)entity[2]);
 	    	bloodLossEntity.setBldLosLs500Cs((BigDecimal)entity[3]);
 	    	bloodLossEntity.setBldLosBtw500And1000Cs((BigDecimal)entity[4]);
 	    	bloodLossEntity.setBldLosGr1000Cs((BigDecimal)entity[5]);
@@ -1308,102 +1293,273 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	bloodLossEntity.setBldLosLs500Total((BigDecimal)entity[9]);
 	    	bloodLossEntity.setBldLosBtw500And1000Total((BigDecimal)entity[10]);
 	    	bloodLossEntity.setBldLosGr1000Total((BigDecimal)entity[11]);
-	    
-	    	
 	    	bloodLossEntityList.add(bloodLossEntity);
 	    }
 		return bloodLossEntityList;
 	}
+	@Override
+	public List<PlacentalWtEntity> getPlacentalWtInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear) {
+		Query query = em.createNativeQuery(AnalaticQuery.PLACENTAL_WEIGHT);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		
+		
+		List<Object[]>entityList = query.getResultList();
+		List<PlacentalWtEntity> placentalWtEntityList  = new ArrayList<PlacentalWtEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	PlacentalWtEntity placentalWtEntity = new PlacentalWtEntity();
+	    	placentalWtEntity.setHospital((String)entity[0]);
+	    	placentalWtEntity.setYear((String)entity[1]);
+	    	placentalWtEntity.setMonth((Integer)entity[2]);
+	    	placentalWtEntity.setPlacentalWghtLs200((BigDecimal)entity[3]);
+	    	placentalWtEntity.setPlacentalWghtBtw200And399((BigDecimal)entity[4]);
+	    	placentalWtEntity.setPlacentalWghtGr400((BigDecimal)entity[5]);
+	    	placentalWtEntityList.add(placentalWtEntity);
+	    }
+		return placentalWtEntityList;
+	}
+	@Override
+	public List<PlacentalWtEntity> getPlacentalWtInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
+		Query query = em.createNativeQuery(AnalaticQuery.PLACENTAL_WEIGHT_PER_HOSPITAL);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		query.setParameter("hospital",hospital);
+		
+		List<Object[]>entityList = query.getResultList();
+		List<PlacentalWtEntity> placentalWtEntityList  = new ArrayList<PlacentalWtEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	PlacentalWtEntity placentalWtEntity = new PlacentalWtEntity();
+	    	placentalWtEntity.setHospital((String)entity[0]);
+	    	placentalWtEntity.setYear((String)entity[1]);
+	    	placentalWtEntity.setMonth((Integer)entity[2]);
+	    	placentalWtEntity.setPlacentalWghtLs200((BigDecimal)entity[3]);
+	    	placentalWtEntity.setPlacentalWghtBtw200And399((BigDecimal)entity[4]);
+	    	placentalWtEntity.setPlacentalWghtGr400((BigDecimal)entity[5]);
+	    	placentalWtEntityList.add(placentalWtEntity);
+	    }
+		return placentalWtEntityList;
+	}
+	@Override
+	public List<ThirdStageEntity> getTSDInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear) {
+		Query query = em.createNativeQuery(AnalaticQuery.THIRD_STAGE_DURATION);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		
+		
+		List<Object[]>entityList = query.getResultList();
+		List<ThirdStageEntity> thirdStageEntityList  = new ArrayList<ThirdStageEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	ThirdStageEntity thirdStageEntity = new ThirdStageEntity();
+	    	thirdStageEntity.setHospital((String)entity[0]);
+	    	thirdStageEntity.setYear((String)entity[1]);
+	    	thirdStageEntity.setMonth((Integer)entity[2]);
+	    	thirdStageEntity.setThrdStgDurtnLs10((BigDecimal)entity[3]);
+	    	thirdStageEntity.setThrdStgDurtn10To29((BigDecimal)entity[4]);
+	    	thirdStageEntity.setThrdStgDurtnGr30((BigDecimal)entity[5]);
+	    	thirdStageEntityList.add(thirdStageEntity);
+	    }
+		return thirdStageEntityList;
+		
+	}
+	@Override
+	public List<ThirdStageEntity> getTSDInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
+		Query query = em.createNativeQuery(AnalaticQuery.THIRD_STAGE_DURATION_PER_HOSPITAL);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		query.setParameter("hospital",hospital);
+		
+		
+		List<Object[]>entityList = query.getResultList();
+		List<ThirdStageEntity> thirdStageEntityList  = new ArrayList<ThirdStageEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	ThirdStageEntity thirdStageEntity = new ThirdStageEntity();
+	    	thirdStageEntity.setHospital((String)entity[0]);
+	    	thirdStageEntity.setYear((String)entity[1]);
+	    	thirdStageEntity.setMonth((Integer)entity[2]);
+	    	thirdStageEntity.setThrdStgDurtnLs10((BigDecimal)entity[3]);
+	    	thirdStageEntity.setThrdStgDurtn10To29((BigDecimal)entity[4]);
+	    	thirdStageEntity.setThrdStgDurtnGr30((BigDecimal)entity[5]);
+	    	thirdStageEntityList.add(thirdStageEntity);
+	    }
+		return thirdStageEntityList;
+	}
+	@Override
+	public List<FourthStageEntity> getFSDInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear) {
+		Query query = em.createNativeQuery(AnalaticQuery.FORTH_STAGE_OBSERVATION);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		
+		
+		List<Object[]>entityList = query.getResultList();
+		List<FourthStageEntity> forthStageEntityList  = new ArrayList<FourthStageEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	FourthStageEntity fourthStageEntity = new FourthStageEntity();
+	    	fourthStageEntity.setHospital((String)entity[0]);
+	    	fourthStageEntity.setYear((String)entity[1]);
+	    	fourthStageEntity.setMonth((Integer)entity[2]);
+	    	fourthStageEntity.setFourthStgObsrve((BigDecimal)entity[3]);
+	    	fourthStageEntity.setManualRmvl((BigDecimal)entity[4]);
+	    	fourthStageEntity.setHypotensn((BigDecimal)entity[5]);
+	    	forthStageEntityList.add(fourthStageEntity);
+	    }
+		return forthStageEntityList;
+	}
+	@Override
+	public List<FourthStageEntity> getFSDInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
+		Query query = em.createNativeQuery(AnalaticQuery.FORTH_STAGE_OBSERVATION_PER_HOSPITAL);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		query.setParameter("hospital",hospital);
+		
+		List<Object[]>entityList = query.getResultList();
+		List<FourthStageEntity> forthStageEntityList  = new ArrayList<FourthStageEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	FourthStageEntity fourthStageEntity = new FourthStageEntity();
+	    	fourthStageEntity.setHospital((String)entity[0]);
+	    	fourthStageEntity.setYear((String)entity[1]);
+	    	fourthStageEntity.setMonth((Integer)entity[2]);
+	    	fourthStageEntity.setFourthStgObsrve((BigDecimal)entity[3]);
+	    	fourthStageEntity.setManualRmvl((BigDecimal)entity[4]);
+	    	fourthStageEntity.setHypotensn((BigDecimal)entity[5]);
+	    	forthStageEntityList.add(fourthStageEntity);
+	    }
+		return forthStageEntityList;
+	}
+	@Override
+	public List<OxyTocicEntity> getOxyTocicInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear) {
+		Query query = em.createNativeQuery(AnalaticQuery.OXYTOCIC);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		
+		
+		List<Object[]>entityList = query.getResultList();
+		List<OxyTocicEntity> oxytocicEntityList  = new ArrayList<OxyTocicEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	OxyTocicEntity oxytocicEntity = new OxyTocicEntity();
+	    	oxytocicEntity.setHospital((String)entity[0]);
+	    	oxytocicEntity.setYear((String)entity[1]);
+	    	oxytocicEntity.setMonth((Integer)entity[2]);
+	    	oxytocicEntity.setOxytoxinReciv((BigDecimal)entity[3]);
+	    	oxytocicEntity.setIV((BigDecimal)entity[4]);
+	    	oxytocicEntity.setIM((BigDecimal)entity[5]);
+	    	oxytocicEntity.setRectal((BigDecimal)entity[6]);
+	    	oxytocicEntity.setIntra((BigDecimal)entity[7]);
+	    	oxytocicEntityList.add(oxytocicEntity);
+	    }
+		return oxytocicEntityList;
+	}
+	
+	@Override
+	public List<OxyTocicEntity> getOxyTocicInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
+		Query query = em.createNativeQuery(AnalaticQuery.OXYTOCIC_PER_HOSPITAL);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		query.setParameter("hospital",hospital);
+		
+		List<Object[]>entityList = query.getResultList();
+		List<OxyTocicEntity> oxytocicEntityList  = new ArrayList<OxyTocicEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	OxyTocicEntity oxytocicEntity = new OxyTocicEntity();
+	    	oxytocicEntity.setHospital((String)entity[0]);
+	    	oxytocicEntity.setYear((String)entity[1]);
+	    	oxytocicEntity.setMonth((Integer)entity[2]);
+	    	oxytocicEntity.setIV((BigDecimal)entity[3]);
+	    	oxytocicEntity.setIM((BigDecimal)entity[4]);
+	    	oxytocicEntity.setRectal((BigDecimal)entity[5]);
+	    	oxytocicEntity.setIntra((BigDecimal)entity[6]);
+	    	oxytocicEntityList.add(oxytocicEntity);
+	    }
+		return oxytocicEntityList;
+	}
+	
+	@Override
+	public List<IntravenusFluidEntity> getIvFluidInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear) {
+		Query query = em.createNativeQuery(AnalaticQuery.INTRA_VENUS_FLUID_USED);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		
+		
+		List<Object[]>entityList = query.getResultList();
+		List<IntravenusFluidEntity> intravenusFluidEntityList  = new ArrayList<IntravenusFluidEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	IntravenusFluidEntity intravenusFluidEntity = new IntravenusFluidEntity();
+	    	intravenusFluidEntity.setHospital((String)entity[0]);
+	    	intravenusFluidEntity.setYear((String)entity[1]);
+	    	intravenusFluidEntity.setMonth((Integer)entity[2]);
+	    	intravenusFluidEntity.setAmtFluidsLs1000((BigDecimal)entity[3]);
+	    	intravenusFluidEntity.setAmtFluidsBtw1000And3000((BigDecimal)entity[4]);
+	    	intravenusFluidEntity.setAmtFluidsGr3000((BigDecimal)entity[5]);
+	    	intravenusFluidEntityList.add(intravenusFluidEntity);
+	    }
+		return intravenusFluidEntityList;
+	}
+	@Override
+	public List<IntravenusFluidEntity> getIvFluidInferences(Integer fmonth,
+			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
+		Query query = em.createNativeQuery(AnalaticQuery.INTRA_VENUS__FLUID_USED_PER_HOSPITAL);
+		query.setParameter("fYear", fyear);
+		query.setParameter("fMonth", fmonth);
+		query.setParameter("toYear", toYear);
+		query.setParameter("toMonth", toMonth);
+		query.setParameter("hospital",hospital);
+		
+		List<Object[]>entityList = query.getResultList();
+		List<IntravenusFluidEntity> intravenusFluidEntityList  = new ArrayList<IntravenusFluidEntity>();      
+	    for(Object[] entity:entityList){
+	    	
+	    	IntravenusFluidEntity intravenusFluidEntity = new IntravenusFluidEntity();
+	    	intravenusFluidEntity.setHospital((String)entity[0]);
+	    	intravenusFluidEntity.setYear((String)entity[1]);
+	    	intravenusFluidEntity.setMonth((Integer)entity[2]);
+	    	intravenusFluidEntity.setAmtFluidsLs1000((BigDecimal)entity[3]);
+	    	intravenusFluidEntity.setAmtFluidsBtw1000And3000((BigDecimal)entity[4]);
+	    	intravenusFluidEntity.setAmtFluidsGr3000((BigDecimal)entity[5]);
+	    	intravenusFluidEntityList.add(intravenusFluidEntity);
+	    }
+		return intravenusFluidEntityList;
+	}
 	
 	
 	
 	
 	
 	
-	@Override
-	public Measure getTSDInferences(String fyear, String fmonth, String toyear,
-			String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getTSDInferences(String fyear, String fmonth, String toyear,
-			String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getBabySexInferences(String fyear, String fmonth,
-			String toyear, String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getBabySexInferences(String fyear, String fmonth,
-			String toyear, String tomonth, Integer hostpital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getBabyWeightIferences(String fyear, String fmonth,
-			String toyear, String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getBabyWeightIferences(String fyear, String fmonth,
-			String toyear, String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getFSDInferences(String fyear, String fmonth, String toyear,
-			String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getFSDInferences(String fyear, String fmonth, String toyear,
-			String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getMaternalDeathInferences(String fyear, String fmonth,
-			String toyear, String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getMaternalDeathInferences(String fyear, String fmonth,
-			String toyear, String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getMaternalMorbidityInferences(String fyear, String fmonth,
-			String toyear, String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getMaternalMorbidityInferences(String fyear, String fmonth,
-			String toyear, String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getPlacentalWtInferences(String fyear, String fmonth,
-			String toyear, String tomonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Measure getPlacentalWtInferences(String fyear, String fmonth,
-			String toyear, String tomonth, Integer hospital) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 
 	

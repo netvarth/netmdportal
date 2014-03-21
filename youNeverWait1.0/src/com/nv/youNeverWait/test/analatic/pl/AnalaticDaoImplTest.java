@@ -12,21 +12,31 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.nv.youNeverWait.analatic.bl.impl.MaternalComplications;
+import com.nv.youNeverWait.analatic.bl.impl.MaternalMortalityMorbidity;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
+import com.nv.youNeverWait.analatic.pl.entity.ApgarScoreEntity;
+import com.nv.youNeverWait.analatic.pl.entity.BirthWeightEntity;
+import com.nv.youNeverWait.analatic.pl.entity.BloodLossEntity;
 import com.nv.youNeverWait.analatic.pl.entity.BodyMassIndexEntity;
 import com.nv.youNeverWait.analatic.pl.entity.BookedStatisticsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.CaesareanSectionEntity;
 import com.nv.youNeverWait.analatic.pl.entity.EpisiotomyEntity;
+import com.nv.youNeverWait.analatic.pl.entity.FetalComplexitesEntity;
 import com.nv.youNeverWait.analatic.pl.entity.InductionEntity;
+import com.nv.youNeverWait.analatic.pl.entity.IntravenusFluidEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalAgeEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalComplicationsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalHeightEntity;
+import com.nv.youNeverWait.analatic.pl.entity.MaternalMortalityMorbidityEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalWeightEntity;
+import com.nv.youNeverWait.analatic.pl.entity.OxyTocicEntity;
 import com.nv.youNeverWait.analatic.pl.entity.ParityEntity;
 import com.nv.youNeverWait.analatic.pl.entity.PerinealTearEntity;
+import com.nv.youNeverWait.analatic.pl.entity.PlacentalWtEntity;
 import com.nv.youNeverWait.analatic.pl.entity.PresentationEntity;
 import com.nv.youNeverWait.analatic.pl.entity.PreviousCSEntity;
 import com.nv.youNeverWait.analatic.pl.entity.RobsonClassEntity;
+import com.nv.youNeverWait.analatic.pl.entity.ThirdStageEntity;
 import com.nv.youNeverWait.analatic.pl.entity.VaginalDeliveryEntity;
 
 
@@ -298,7 +308,177 @@ public class AnalaticDaoImplTest {
 	}
 	
 
+	@Test
+	public void oxyTocicTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+         List<OxyTocicEntity> entityList =analaticDao.getOxyTocicInferences(1,2013, 1, 2015 );
+		 	System.out.println(entityList.toArray());  
+	}
 	
+	
+	@Test
+	public void oxyTocicHospitalTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+         List<OxyTocicEntity> entityList =analaticDao.getOxyTocicInferences(1,2013, 1, 2015 ,20);
+		 	System.out.println(entityList.toArray());  
+	}
+	
+	@Test
+	public void thirdStageDurationTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+         List<ThirdStageEntity> entityList =analaticDao.getTSDInferences(1,2013, 1, 2015 );
+		 	System.out.println(entityList.toArray());  
+	}
+	
+	
+	@Test
+	public void thirdStageDurationPerHospitalTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+         List<ThirdStageEntity> entityList =analaticDao.getTSDInferences(1,2013, 1, 2015 ,20);
+		 	System.out.println(entityList.toArray());  
+	}
+
+	@Test
+	public void bloodLossTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+          List<BloodLossEntity> entityList =analaticDao.getBloodLossInferences(1,2013, 1, 2015 );
+		 	System.out.println(entityList.toArray());  
+	}
+	
+	
+	@Test
+	public void bloodLossPerHospitalTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+          List<BloodLossEntity> entityList =analaticDao.getBloodLossInferences(1,2013, 1, 2015 ,20);
+		 	System.out.println(entityList.toArray());  
+	}
+
+	@Test
+	public void maternalMortalityMorbidityTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+          List<MaternalMortalityMorbidityEntity> entityList =analaticDao.getMaternalMortalityMorbidityInferences(1,2013, 1, 2015 );
+		 	System.out.println(entityList.toArray());  
+	}
+	
+	
+	@Test
+	public void maternalMortalityMorbidityPerHospitalTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+          List<MaternalMortalityMorbidityEntity> entityList =analaticDao.getMaternalMortalityMorbidityInferences(1,2013, 1, 2015 ,20);
+		 	System.out.println(entityList.toArray());  
+	}
+	
+	@Test
+	public void IntravenusFluidTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+         List<IntravenusFluidEntity> entityList =analaticDao.getIvFluidInferences(1,2013, 1, 2015 );
+		 	System.out.println(entityList.toArray());  
+	}
+	
+	
+	@Test
+	public void intravenusFluidPerHospitalTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+          List<IntravenusFluidEntity> entityList =analaticDao.getIvFluidInferences(1,2013, 1, 2015 ,20);
+		 	System.out.println(entityList.toArray());  
+	}
+	
+	@Test
+	public void babyWeightTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+         List<BirthWeightEntity> entityList =analaticDao.getBirthWeightInferences(1,2013, 1, 2015 );
+		 	System.out.println(entityList.toArray());  
+	}
+	
+	
+	@Test
+	public void babyWeightPerHospitalTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+         List<BirthWeightEntity> entityList =analaticDao.getBirthWeightInferences(1,2013, 1, 2015 ,20);
+		 	System.out.println(entityList.toArray());  
+	}
+	
+	@Test
+	public void upgarTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+         List<ApgarScoreEntity> entityList =analaticDao.getApgarScoreInferences(1,2013, 1, 2015 );
+		 	System.out.println(entityList.toArray());  
+	}
+	
+	
+	@Test
+	public void apgarPerHospitalTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+         List<ApgarScoreEntity> entityList =analaticDao.getApgarScoreInferences(1,2013, 1, 2015 ,20);
+		 	System.out.println(entityList.toArray());  
+	}
+    
+
+	@Test
+	public void fetalComplexitesTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+          List<FetalComplexitesEntity> entityList =analaticDao.getFetalComplexitesInferences(1,2013, 1, 2015 );
+		 	System.out.println(entityList.toArray());  
+	}
+	
+	
+	@Test
+	public void fetalComplexitesPerHospitalTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+          List<FetalComplexitesEntity> entityList =analaticDao.getFetalComplexitesInferences(1,2013, 1, 2015 ,20);
+		 	System.out.println(entityList.toArray());  
+	}
+
+	@Test
+	public void PlacentalWtTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+          List<PlacentalWtEntity> entityList =analaticDao.getPlacentalWtInferences(1,2013, 1, 2015 );
+		 	System.out.println(entityList.toArray());  
+	}
+	
+	
+	@Test
+	public void PlacentalWtPerHospitalTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+          List<PlacentalWtEntity> entityList =analaticDao.getPlacentalWtInferences(1,2013, 1, 2015 ,20);
+		 	System.out.println(entityList.toArray());  
+	}
+
+	@Test
+	public void ivFluidTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+          List<IntravenusFluidEntity> entityList =analaticDao.getIvFluidInferences(1,2013, 1, 2015 );
+		 	System.out.println(entityList.toArray());  
+	}
+	
+	
+	@Test
+	public void ivFluidPerHospitalTest() {
+         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
+          List<IntravenusFluidEntity> entityList =analaticDao.getIvFluidInferences(1,2013, 1, 2015 ,20);
+		 	System.out.println(entityList.toArray());  
+	}
+
 	
 	
 }

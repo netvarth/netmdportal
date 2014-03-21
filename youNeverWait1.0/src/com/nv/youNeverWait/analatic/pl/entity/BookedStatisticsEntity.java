@@ -9,7 +9,7 @@ public class BookedStatisticsEntity {
 
 	private String hospital;
 	private String year;
-	private String month;
+	private Integer month;
 	private Integer booked; 
 	private Integer unbooked;
 	public String getHospital() {
@@ -24,10 +24,14 @@ public class BookedStatisticsEntity {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getMonth() {
+
+	
+	
+	
+	public Integer getMonth() {
 		return month;
 	}
-	public void setMonth(String month) {
+	public void setMonth(Integer month) {
 		this.month = month;
 	}
 	public Integer getBooked() {

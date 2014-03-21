@@ -10,7 +10,7 @@ import com.nv.youNeverWait.analatic.bl.SubClusters;
 public class PreviousCSEntity {
 	private String hospital;
 	private String year;
-	private String month;
+	private Integer month;
 	
 	
 	private Integer same1;
@@ -35,15 +35,16 @@ public class PreviousCSEntity {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getMonth() {
+
+	
+	
+	
+	public Integer getMonth() {
 		return month;
 	}
-	public void setMonth(String month) {
+	public void setMonth(Integer month) {
 		this.month = month;
 	}
-	
-	
-	
 	public Integer getSame1() {
 		return same1;
 	}
@@ -99,7 +100,7 @@ public class PreviousCSEntity {
 		final class PreviousCSsubclusters implements SubClusters {
 			private String hospitl=hospital;
 			private String yer=year;
-			private String mnth=month;
+			private Integer mnth=month;
 			@Override
 			public String getHospital() {
 				
@@ -113,26 +114,40 @@ public class PreviousCSEntity {
 			}
 
 			@Override
-			public String getMonth() {
+			public Integer getMonth() {
 				
 				return this.mnth;
 			}
 
 			@Override
 			public Map<String,Map<String,Integer>> getClusterMap() {
-				Map<String,Map<String,Integer>> outerMap = new HashMap<String,Map<String,Integer>>();
+				Map<String,Map<String,Integer>> outerMap = new LinkedHashMap<String,Map<String,Integer>>();
 				
 				Map<String, Integer> innerMap = new LinkedHashMap<String,Integer>();
-				innerMap.put("One CS",same1);
-				innerMap.put("Two CS",same2);
-				innerMap.put("Three CS",same3);
-				innerMap.put("> Three CS",samegt3);
-				outerMap.put("Same Hospital",innerMap );
-				innerMap.put("One CS",other1);
-				innerMap.put("Two CS",other2);
-				innerMap.put("Three CS",other3);
-				innerMap.put("> Three CS",othergt3);
-				outerMap.put("Other Hospital",innerMap );
+				innerMap.put("same Hospital",same1);
+				innerMap.put("Other Hospital",other1);
+				outerMap.put("One CS",innerMap );
+				
+				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap.put("same Hospital",same2);
+				innerMap.put("Other Hospital",other2);
+				outerMap.put("Two CS",innerMap );
+				
+				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap.put("same Hospital",same3);
+				innerMap.put("Other Hospital",other3);
+				outerMap.put("Three CS",innerMap );
+				
+				innerMap = new LinkedHashMap<String,Integer>();
+				innerMap.put("same Hospital",samegt3);
+				innerMap.put("Other Hospital",othergt3);
+				outerMap.put("> Three CS",innerMap );
+				
+			
+				
+				
+				
+				
 				
 				return outerMap;
 			}

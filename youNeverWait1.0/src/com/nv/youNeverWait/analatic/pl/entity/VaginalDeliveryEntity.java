@@ -8,7 +8,7 @@ import java.util.Map;
 public class VaginalDeliveryEntity {
 	private String hospital;
 	private String year;
-	private String month;
+	private Integer month;
 	private Integer tVaginal;
 	private Integer spontaneous;
 	private Integer forceps;
@@ -30,16 +30,17 @@ public class VaginalDeliveryEntity {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getMonth() {
+	
+	
+	
+	
+	
+	public Integer getMonth() {
 		return month;
 	}
-	public void setMonth(String month) {
+	public void setMonth(Integer month) {
 		this.month = month;
 	}
-	
-	
-	
-	
 	public Integer gettVaginal() {
 		return tVaginal;
 	}

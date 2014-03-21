@@ -15,17 +15,22 @@ import com.nv.youNeverWait.analatic.pl.entity.BookedStatisticsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.CaesareanSectionEntity;
 import com.nv.youNeverWait.analatic.pl.entity.EpisiotomyEntity;
 import com.nv.youNeverWait.analatic.pl.entity.FetalComplexitesEntity;
+import com.nv.youNeverWait.analatic.pl.entity.FourthStageEntity;
 import com.nv.youNeverWait.analatic.pl.entity.InductionEntity;
+import com.nv.youNeverWait.analatic.pl.entity.IntravenusFluidEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalAgeEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalComplicationsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalHeightEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalMortalityMorbidityEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalWeightEntity;
+import com.nv.youNeverWait.analatic.pl.entity.OxyTocicEntity;
 import com.nv.youNeverWait.analatic.pl.entity.ParityEntity;
 import com.nv.youNeverWait.analatic.pl.entity.PerinealTearEntity;
+import com.nv.youNeverWait.analatic.pl.entity.PlacentalWtEntity;
 import com.nv.youNeverWait.analatic.pl.entity.PresentationEntity;
 import com.nv.youNeverWait.analatic.pl.entity.PreviousCSEntity;
 import com.nv.youNeverWait.analatic.pl.entity.RobsonClassEntity;
+import com.nv.youNeverWait.analatic.pl.entity.ThirdStageEntity;
 import com.nv.youNeverWait.analatic.pl.entity.VaginalDeliveryEntity;
 import com.nv.youNeverWait.pl.dao.GenericDao;
 
@@ -40,42 +45,36 @@ public interface AnalaticDao extends GenericDao {
 	public List<MaternalWeightEntity> getMaternalWeightInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
 	public List<MaternalWeightEntity> getMaternalWeightInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
 	
-	public Measure getMaternalDeathInferences(String fyear,String fmonth, String toyear, String tomonth);
-	public Measure getMaternalDeathInferences(String fyear,String fmonth, String toyear, String tomonth,Integer hospital);
+	
 	
 	public List<MaternalComplicationsEntity> getMaternalComplicationsInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
 	public List<MaternalComplicationsEntity> getMaternalComplicationsInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
 	
-	public Measure getMaternalMorbidityInferences(String fyear,String fmonth, String toyear, String tomonth);
-	public Measure getMaternalMorbidityInferences(String fyear,String fmonth, String toyear, String tomonth,Integer hospital);
+
 	
 	public List<ParityEntity> getParityInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
 	public List<ParityEntity> getParityInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
 	
-	public Measure getPlacentalWtInferences(String fyear,String fmonth, String toyear, String tomonth);
-	public Measure getPlacentalWtInferences(String fyear,String fmonth, String toyear, String tomonth,Integer hospital);
+	public List<PlacentalWtEntity> getPlacentalWtInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
+	public List<PlacentalWtEntity> getPlacentalWtInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
 	
-	public List<PreviousCSEntity> getPrevCsInferences(Integer fyear,Integer fmonth, Integer toyear, Integer tomonth);
-	public List<PreviousCSEntity> getPrevCsInferences(Integer fyear,Integer fmonth, Integer toyear, Integer tomonth,Integer hospital);
+	public List<PreviousCSEntity> getPrevCsInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
+	public List<PreviousCSEntity> getPrevCsInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
 	
-	public List<RobsonClassEntity> getRobsonClassInferences(Integer fyear,Integer fmonth, Integer toyear, Integer tomonth);
-	public List<RobsonClassEntity> getRobsonClassInferences(Integer fyear,Integer fmonth, Integer toyear, Integer tomonth, Integer hospital);
+	public List<RobsonClassEntity> getRobsonClassInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
+	public List<RobsonClassEntity> getRobsonClassInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear, Integer hospital);
 	
-	public Measure getTSDInferences(String fyear,String fmonth, String toyear, String tomonth);
-	public Measure getTSDInferences(String fyear,String fmonth, String toyear, String tomonth,Integer hospital);
+	public List<ThirdStageEntity> getTSDInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
+	public List<ThirdStageEntity> getTSDInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
 	
-	public List<VaginalDeliveryEntity> getVaginalDeliveryInferences(Integer fyear,Integer fmonth, Integer toyear, Integer tomonth);
-	public List<VaginalDeliveryEntity> getVaginalDeliveryInferences(Integer fyear,Integer fmonth, Integer toyear, Integer tomonth,Integer hospital);
+	public List<VaginalDeliveryEntity> getVaginalDeliveryInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
+	public List<VaginalDeliveryEntity> getVaginalDeliveryInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
 	
-	public Measure getBabySexInferences(String fyear,String fmonth, String toyear, String tomonth);
-    public Measure getBabySexInferences(String fyear,String fmonth, String toyear, String tomonth,Integer hostpital);
+
     
     public List<ApgarScoreEntity> getApgarScoreInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
     public List<ApgarScoreEntity> getApgarScoreInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
-    
-    public Measure getBabyWeightIferences(String fyear,String fmonth, String toyear, String tomonth);
-    public Measure getBabyWeightIferences(String fyear,String fmonth, String toyear, String tomonth,Integer hospital);
-    
+ 
     public List<BloodGroupEntity> getBloodGroupInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
     public List<BloodGroupEntity> getBloodGroupInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
     
@@ -91,8 +90,15 @@ public interface AnalaticDao extends GenericDao {
     public List<BookedStatisticsEntity> getBookedStatInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
     public List<BookedStatisticsEntity> getBookedStatInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
     
-    public Measure getFSDInferences(String fyear,String fmonth, String toyear, String tomonth);
-    public Measure getFSDInferences(String fyear,String fmonth, String toyear, String tomonth,Integer hospital);
+    
+    public List<OxyTocicEntity> getOxyTocicInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
+    public List<OxyTocicEntity> getOxyTocicInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
+    
+    
+    public List<FourthStageEntity> getFSDInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
+    public List<FourthStageEntity> getFSDInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
+    
+  
     
     public List<InductionEntity> getInductionInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
     public List<InductionEntity> getInductionInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
@@ -114,4 +120,8 @@ public interface AnalaticDao extends GenericDao {
 	
 	public List<MaternalMortalityMorbidityEntity> getMaternalMortalityMorbidityInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
 	public List<MaternalMortalityMorbidityEntity> getMaternalMortalityMorbidityInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
+	
+	public List<IntravenusFluidEntity> getIvFluidInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
+	public List<IntravenusFluidEntity> getIvFluidInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
+	
 }

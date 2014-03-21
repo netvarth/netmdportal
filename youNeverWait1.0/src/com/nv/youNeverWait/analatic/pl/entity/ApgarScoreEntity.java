@@ -10,7 +10,7 @@ public class ApgarScoreEntity {
 	 
      private String hospital;
      private String year;
-     private String month;
+     private Integer month;
  	 private Integer oneAtFive;
 	 private Integer fiveAt5;
 	 
@@ -42,14 +42,17 @@ public class ApgarScoreEntity {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getMonth() {
+	
+	
+	
+	 
+	 
+public Integer getMonth() {
 		return month;
 	}
-	public void setMonth(String month) {
+	public void setMonth(Integer month) {
 		this.month = month;
 	}
-	 
-	 
 public Map<String,Integer> getSubClusters(){
 		
 		Map<String,Integer>map = new LinkedHashMap<String,Integer>();

@@ -3,25 +3,24 @@ package com.nv.youNeverWait.analatic.bl.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import com.nv.youNeverWait.analatic.bl.Cluster;
 import com.nv.youNeverWait.analatic.bl.Inference;
 import com.nv.youNeverWait.analatic.bl.Measure;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
-
 import com.nv.youNeverWait.analatic.pl.entity.EpisiotomyEntity;
+import com.nv.youNeverWait.analatic.pl.entity.IntravenusFluidEntity;
 
-public class Episiotomy implements Cluster {
-
+public class IntravenusFluid implements Cluster {
 	private AnalaticDao analaticDao;
-	private String name ="Episiotomy";
-	
+	private String name ="Intravenus Fluid Used";
 	@Override
 	public Inference getInference(String fmonth, String fyear, String toMonth,
 			String toYear) {
 	     Inference inference = new Inference();
          inference.setCluster(name);
 	     
-		 List<EpisiotomyEntity> entityList= analaticDao.getEpisiotomyInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear));
+		 List<IntravenusFluidEntity> entityList= analaticDao.getIvFluidInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear));
 	     List<Measure> measures = getMeasures(entityList);
 	     inference.setEvaluations(measures);
 
@@ -35,7 +34,7 @@ public class Episiotomy implements Cluster {
 		Inference inference = new Inference();
         inference.setCluster(name);
 	     
-		 List<EpisiotomyEntity> entityList= analaticDao.getEpisiotomyInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear),hospital);
+		 List<IntravenusFluidEntity> entityList= analaticDao.getIvFluidInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear),hospital);
 	     List<Measure> measures = getMeasures(entityList);
 	     inference.setEvaluations(measures);
 	     
@@ -43,10 +42,10 @@ public class Episiotomy implements Cluster {
 	}
 
 
-	  private  List<Measure>  getMeasures(List<EpisiotomyEntity> data){
+	  private  List<Measure>  getMeasures(List<IntravenusFluidEntity> data){
 	    	List<Measure> measures = new ArrayList<Measure>();
 	    	Measure measure;
-	    	for (EpisiotomyEntity entity :data){
+	    	for (IntravenusFluidEntity entity :data){
 	    	     
 	    		for(Map.Entry<String, Integer> entry :entity.getSubClusters().entrySet()){
 	    		measure = new Measure();
@@ -74,5 +73,6 @@ public class Episiotomy implements Cluster {
 	}
 
 	
+
 
 }

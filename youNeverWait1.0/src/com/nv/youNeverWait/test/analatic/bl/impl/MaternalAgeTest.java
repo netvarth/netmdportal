@@ -50,7 +50,7 @@ public class MaternalAgeTest {
 		        	      List<MaternalAgeEntity> entityList = new ArrayList<MaternalAgeEntity>();
 		        	      MaternalAgeEntity maternalAgeEntity= new MaternalAgeEntity();
 		        	      maternalAgeEntity.setHospital("Mother Hospital");
-		        	      maternalAgeEntity.setMonth("January");
+		        	      maternalAgeEntity.setMonth(1);
 		        	      maternalAgeEntity.setYear("2013");
 		        	      
 		        		  entityList.add(maternalAgeEntity);        	

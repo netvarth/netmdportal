@@ -2,18 +2,19 @@ package com.nv.youNeverWait.analatic.bl;
 
 public class Measure {
 	
-	private String  key;
+	private String  row;
 	private Integer measure;
 	private String  year;
-	private String  month;
+	private int typeOrder=1;
+	private int  month;
 	private String  hospital;
-    private String  column=null;
+    private String  column="";
 	
 	
-	public Measure(String key, Integer measure, String year, String month,
+	public Measure(String row, Integer measure, String year, int month,
 			String hospital) {
 		super();
-		this.key = key;
+		this.row = row;
 		this.measure = measure;
 		this.year = year;
 		this.month = month;
@@ -29,11 +30,35 @@ public class Measure {
 
 
 
-	public String getKey() {
-		return key;
+	public int getMonth() {
+		return month;
 	}
-	public void setKey(String key) {
-		this.key = key;
+
+
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
+
+
+	public int getTypeOrder() {
+		return typeOrder;
+	}
+
+
+
+	public void setTypeOrder(int typeOrder) {
+		this.typeOrder = typeOrder;
+	}
+
+
+
+	public String getRow() {
+		return row;
+	}
+	public void setRow(String row) {
+		this.row = row;
 	}
 	public Integer getMeasure() {
 		return measure;
@@ -47,12 +72,6 @@ public class Measure {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getMonth() {
-		return month;
-	}
-	public void setMonth(String month) {
-		this.month = month;
-	}
 	public String getHospital() {
 		return hospital;
 	}
@@ -65,8 +84,4 @@ public class Measure {
 	public void setColumn(String column) {
 		this.column = column;
 	}
-	
-	
-
-
 }

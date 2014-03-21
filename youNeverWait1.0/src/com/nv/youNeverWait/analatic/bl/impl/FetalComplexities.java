@@ -11,7 +11,7 @@ import com.nv.youNeverWait.analatic.pl.AnalaticDao;
 import com.nv.youNeverWait.analatic.pl.entity.EpisiotomyEntity;
 import com.nv.youNeverWait.analatic.pl.entity.FetalComplexitesEntity;
 
-public class FetalComplexties implements Cluster{
+public class FetalComplexities implements Cluster{
 
 	private AnalaticDao analaticDao;
 	private String name ="Fetal Complexities";
@@ -51,7 +51,7 @@ public class FetalComplexties implements Cluster{
 	    	     
 	    		for(Map.Entry<String, Integer> entry :entity.getSubClusters().entrySet()){
 	    		measure = new Measure();
-	    	    measure.setKey(entry.getKey());
+	    	    measure.setRow(entry.getKey());
 	    	    measure.setMeasure(entry.getValue());
 	    	    measure.setMonth(entity.getMonth());
 	    	    measure.setYear(entity.getYear());

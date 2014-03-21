@@ -14,7 +14,7 @@ import com.nv.youNeverWait.analatic.pl.entity.FetalComplexitesEntity;
 public class BirthWeight implements Cluster {
 
 	private AnalaticDao analaticDao;
-	private String name ="Episiotomy";
+	private String name ="Birth Weight";
 	
 	@Override
 	public Inference getInference(String fmonth, String fyear, String toMonth,
@@ -51,7 +51,7 @@ public class BirthWeight implements Cluster {
 	    	     
 	    		for(Map.Entry<String, Integer> entry :entity.getSubClusters().entrySet()){
 	    		measure = new Measure();
-	    	    measure.setKey(entry.getKey());
+	    	    measure.setRow(entry.getKey());
 	    	    measure.setMeasure(entry.getValue());
 	    	    measure.setMonth(entity.getMonth());
 	    	    measure.setYear(entity.getYear());

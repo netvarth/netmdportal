@@ -6,7 +6,7 @@ public interface SubClusters {
 	
 	public String getHospital();
 	public String getYear();
-	public String getMonth();
+	public Integer getMonth();
 	public Map<String,Map<String,Integer>> getClusterMap();
 
 }

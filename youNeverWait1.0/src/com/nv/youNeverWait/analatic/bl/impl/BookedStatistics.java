@@ -17,7 +17,7 @@ public class BookedStatistics implements Cluster {
    
     
     private AnalaticDao analaticDao;
-    private String name ="Booked( At least 1 Visit in each trimester)";
+    private String name ="Booked( At least 1 visit in each trimester)";
     
     @Override
 	public Inference getInference( String fmonth, String fyear,
@@ -74,7 +74,7 @@ public class BookedStatistics implements Cluster {
     	     
     		for(Map.Entry<String, Integer> entry :ageEntity.getSubClusters().entrySet()){
     		measure = new Measure();
-    	    measure.setKey(entry.getKey());
+    	    measure.setRow(entry.getKey());
     	    measure.setMeasure(entry.getValue());
     	    measure.setMonth(ageEntity.getMonth());
     	    measure.setYear(ageEntity.getYear());

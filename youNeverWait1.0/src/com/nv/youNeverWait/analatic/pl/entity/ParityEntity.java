@@ -8,7 +8,7 @@ import java.util.Map;
 public class ParityEntity {
 	private String hospital;
 	private String year;
-	private String month;
+	private Integer month;
 	private Integer eq1;
 	private Integer eq2;
 	private Integer eq3;
@@ -26,14 +26,15 @@ public class ParityEntity {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getMonth() {
+
+	
+	
+	public Integer getMonth() {
 		return month;
 	}
-	public void setMonth(String month) {
+	public void setMonth(Integer month) {
 		this.month = month;
 	}
-	
-	
 	public Integer getEq1() {
 		return eq1;
 	}
