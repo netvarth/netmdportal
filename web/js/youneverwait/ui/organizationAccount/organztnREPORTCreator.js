@@ -22,12 +22,13 @@ organztnReportCreator.prototype.viewReport= function(url,parent,netMdlistdata) {
 }
 
 organztnReportCreator.prototype.bindEvents = function(netMdlistdata) {
+
 	self = this;
 	self.fillMonth("#reportViewForm #startMonth");
 	self.fillMonth("#reportViewForm #endMonth");
 	self.fillYear("#reportViewForm #startYear");
 	self.fillYear("#reportViewForm #endYear");
-	$j("#reportViewForm #reportName").attr('value',"GynecologySummaryReport");
+
 	var myDiv = $j('#netmdlist');
 	var toolbutton= $j('<a href="#" class="anchorbutton remMarginRight genMarginLeft" name="reportfilter" id="btn_reportfilter_filter_id"><span><b>Hospitals</b></span></a>');
 		var inputTag=$j('<select></select>');
@@ -58,6 +59,8 @@ organztnReportCreator.prototype.bindEvents = function(netMdlistdata) {
 	
 	$j("#reportViewForm #showreport").die('click').live('click',function(){	
 		commonMethodInvoker.removeErrors();
+			var report=$j('#reportViewForm #report option:selected').val()
+	$j("#reportViewForm #reportName").attr('value',report);
 		if(self.validateMonthYer()){
 		$j("#reportViewForm").attr('method','post');
 		$j("#reportViewForm").attr('action',constants.REPORTGENERATEURL);
