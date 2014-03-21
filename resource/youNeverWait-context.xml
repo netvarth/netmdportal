@@ -430,6 +430,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	
 	</bean>
 
+
+	
+	
 	<bean id="doctor.validator" class="com.nv.youNeverWait.user.bl.validation.DoctorValidator"></bean>
 
 	<bean id="sync.service" class="com.nv.youNeverWait.user.bl.impl.SyncServiceImpl">
@@ -746,8 +749,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 		<property name="queryBuilderMap">
 			<map>
-				<entry key="lab"
-					value="com.nv.youNeverWait.util.filter.queryBuilder.LabQueryBuilder" />
+				
 				<entry key="branch"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.BranchQueryBuilder" />
 				<entry key="labUser"
@@ -970,12 +972,28 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	</bean>
 	
 	<bean id="report.handler" class="com.nv.youNeverWait.report.ReportHandler">
-		<property name="reportDao" ref="report.dao" />
-		<property name="analatic">
-		      <ref bean="analatic.bean"/>
-		</property> 
-		
+	     <property name="reportMap">
+		 <map key-type="com.nv.youNeverWait.report.ReportEnum">
+		          <entry key="DETAILED" value-ref="detailed.report" />
+				  <entry key="SUMMARY" value-ref="summary.report" />	
+		 </map>
+		</property>
 	</bean>
+	
+	<bean id="detailed.report" class="com.nv.youNeverWait.report.DetailedReport">
+	    <property name ="analatic">
+	         <ref bean ="analatic.bean"/>
+	    </property>
+	</bean>
+
+	<bean id="summary.report" class="com.nv.youNeverWait.report.SummaryReport">
+	    <property name ="analatic">
+	         <ref bean ="analatic.bean"/>
+	    </property>
+	</bean>
+
+
+	
 	<bean id="report.dao" class="com.nv.youNeverWait.user.pl.impl.ReportDaoImpl"
 		parent="generic.dao">
 		<property name="serverPath">
