@@ -61,7 +61,8 @@ public class PDFReportView  implements View  {
 	public void render(Map model, HttpServletRequest request,
 	HttpServletResponse response) throws JRException, SQLException,
 	IOException {
-	response.addHeader("Content-Disposition", "inline;");
+	response.setContentType("application/pdf");	
+	response.addHeader("Content-Disposition", "inline;filename=\"report.pdf\"");
 	JasperPrint jPrint = (JasperPrint) model.get("jPrint");
 	JRExporter exporter = new JRPdfExporter();
 	exporter.setParameter(JRPdfExporterParameter.JASPER_PRINT, jPrint);
