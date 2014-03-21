@@ -15,12 +15,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.nv.youNeverWait.analatic.bl.AggregateMeasure;
 import com.nv.youNeverWait.analatic.bl.Analatic;
 import com.nv.youNeverWait.analatic.bl.Cluster;
 import com.nv.youNeverWait.analatic.bl.Inference;
+import com.nv.youNeverWait.analatic.bl.Measure;
 import com.nv.youNeverWait.analatic.bl.impl.MaternalAge;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalAgeEntity;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:resource/context.xml",
@@ -72,10 +75,20 @@ public class AnalaticTest {
 	@Test
 	public void getInferenceTest(){
 		
-	List<Inference> actualInference=analatic.getInferences("1", "2014", "12", "2014");
+	List<Inference<? extends Measure>> actualInference=analatic.getInferences("1", "2014", "12", "2014");
 	
 	Assert.assertNotNull(actualInference);
 	}
+	
+	
+	@Test
+	public void getAggregaeInferenceTest(){
+		
+		List<Inference<? extends Measure>> actualInference=analatic.getAggregatedInferences("1", "2013", "12", "2015");
+	
+	Assert.assertNotNull(actualInference);
+	}
+	
 	
 	
 }
