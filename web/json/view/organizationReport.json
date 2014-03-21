@@ -25,23 +25,27 @@
                             "data": [
                                 {
                                     "className": "column-left",
-                                    "elements": [ {
-                                    "name": "startMonth",
-                                    "id": "startMonth",
-                                    "type": "select",
-                                    "title": "Start month",
-									"style": "width: 60px;"
-                                }]
+                                    "elements": [
+                                        {
+                                            "name": "startMonth",
+                                            "id": "startMonth",
+                                            "type": "select",
+                                            "title": "Start month",
+                                            "style": "width: 60px;"
+                                        }
+                                    ]
                                 },
                                 {
                                     "className": "column-right",
-                                    "elements": [ {
-                                    "name": "startYear",
-                                    "id": "startYear",
-                                    "type": "select",
-                                    "title": "Start year",
-									"style": "width: 60px;"
-                                }]
+                                    "elements": [
+                                        {
+                                            "name": "startYear",
+                                            "id": "startYear",
+                                            "type": "select",
+                                            "title": "Start year",
+                                            "style": "width: 60px;"
+                                        }
+                                    ]
                                 }
                             ]
                         },
@@ -50,27 +54,31 @@
                             "data": [
                                 {
                                     "className": "column-left",
-                                    "elements": [{
+                                    "elements": [
+                                        {
                                             "name": "endMonth",
                                             "id": "endMonth",
                                             "type": "select",
                                             "title": "End month",
-											"style": "width: 60px;"
-                                        }]
+                                            "style": "width: 60px;"
+                                        }
+                                    ]
                                 },
                                 {
                                     "className": "column-right",
-                                    "elements": [{
+                                    "elements": [
+                                        {
                                             "name": "endYear",
                                             "id": "endYear",
                                             "type": "select",
                                             "title": "End year",
-											"style": "width: 60px;"
-                                        }]
+                                            "style": "width: 60px;"
+                                        }
+                                    ]
                                 },
-								{
-									"className": "column-right",
-									"style":"display:none;",
+                                {
+                                    "className": "column-right",
+                                    "style": "display:none;",
                                     "elements": [
                                         {
                                             "name": "reportName",
@@ -78,7 +86,7 @@
                                             "type": "text"
                                         }
                                     ]
-								}
+                                }
                             ]
                         }
                     ]
@@ -88,29 +96,72 @@
                     "data": [
                         {
                             "className": "five-sixth",
-                            "data": [{
+                            "data": [
+                                {
                                     "className": "five-sixth",
                                     "id": "netmdlist",
                                     "style": "margin-top:15px"
-                                }]
+                                }
+                            ]
                         },
                         {
-                            "className": "column-right",
-                            "elements": [{
-                                    "type": "button",
-                                    "content": {
-                                        "buttons": [
-                                            {
-                                                "name": "showreport",
-                                                "id": "showreport",
-                                                "title": "Show Report",
-                                                "type": "button",
-                                                "className": "stdbtn btn_black",
-                                                "style": "opacity:1;margin: -20% 0% 0% 20%;"
+                            "className": "five-sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "reportType",
+                                            "id": "reportType",
+                                            "type": "combined",
+                                            "title": "Report Type",
+                                            "items": [
+                                                {
+                                                    "name": "report",
+                                                    "id": "report",
+                                                    "type": "select",
+                                                    "className": "select",
+                                                    "value": [
+                                                        {
+                                                            "title": "Select Report Type",
+															"value":"select"
+                                                          
+                                                        },
+                                                        {
+                                                            "title": "Detailed Report",
+															"value":"Detailed"
+                                                        },
+                                                        {
+                                                            "title": "Summary Report",
+															"value":"Summary"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "type": "button",
+                                            "content": {
+                                                "buttons": [
+                                                    {
+                                                        "name": "showreport",
+                                                        "id": "showreport",
+                                                        "title": "Show Report",
+                                                        "type": "button",
+                                                        "className": "stdbtn btn_black",
+                                                        "style": "opacity:1;margin: 10% 0% 0% 20%;"
+                                                    }
+                                                ]
                                             }
-                                        ]
-                                    }
-                                }]
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 }
