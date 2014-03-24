@@ -740,6 +740,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 	</bean>
 
+
 	<bean id="lab.validator" class="com.nv.youNeverWait.user.bl.validation.LabValidator"></bean>
 
 	<bean id="queryBuilder.Factory"
