@@ -5,6 +5,7 @@
 		{"title" 	: 	"Sync Log","className":"d15",  "name":"btnSyncLogList"},
 		{"title" 	: 	"Test","className":"d4",  "name":"btnTestList"},
 		{"title" 	: 	"Specimen","className":"d5",  "name":"btnSpecimenList"}
+		{"title" 	: 	"UploadInstaller","className":"d6",  "name":"btnUploadInstaller"}
 		
 	]
 }

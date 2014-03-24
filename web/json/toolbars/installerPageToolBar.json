@@ -1,0 +1,20 @@
+{		
+	"buttons":	[
+		
+			
+		{
+			"name" 	: 	"delete",
+			"title"	:	"Delete"
+			
+		},
+		{
+			"name" 	: 	"view",
+			"title"	:	"View"
+			
+		},
+		{
+			"name" 	: 	"new",
+			"title"	:	"New"
+		}
+	]
+}
