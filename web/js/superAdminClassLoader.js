@@ -140,7 +140,19 @@ $j.cachedScript("/youNeverWait/js/youneverwait/ui/SASyncStatusProcessor.js").don
 		})
 		$j.cachedScript("/youNeverWait/js/youneverwait/ui/netrx/netrxClassLoader.js").done(function(script,textStatus){
 		})
-		
+	
+		/* scripts of uploadInstaller*/
+		$j.cachedScript("/youNeverWait/js/youneverwait/ui/installer/installerUIStartUp.js").done(function(script,textStatus){
+		}) 
+		$j.cachedScript("/youNeverWait/js/youneverwait/ui/installer/newInstallerUI.js").done(function(script,textStatus){
+		})
+		$j.cachedScript("/youNeverWait/js/youneverwait/ui/installer/viewInstaller.js").done(function(script,textStatus){
+		})
+		$j.cachedScript("/youNeverWait/js/youneverwait/ui/installer/viewInstallerPTB.js").done(function(script,textStatus){
+		})
+		$j.cachedScript("/youNeverWait/js/impl/InstallerServiceImpl.js").done(function(script,textStatus){
+		})
+			
 		$j.getScript("/youNeverWait/js/youneverwait/ui/netpos/netposClassLoader.js").done(function(script,textStatus){
 		}).fail(function(xhr,status,exception) {
 			alert("netposClassLoader" + xhr + exception);
@@ -159,14 +171,6 @@ $j.cachedScript("/youNeverWait/js/youneverwait/ui/SASyncStatusProcessor.js").don
 		{
         alert("NetPosDTO" + xhr.status + exception);
 		}) 
-		
-		
-		/* $j.getScript("/youNeverWait/js/validation/editNetPosValidator.js").
-		done(function(script,textStatus){
-		}).fail(function (xhr, status, exception)
-		{
-        alert("editNetPosValidator" + xhr.status + exception);
-		})  */
 		
 	}
 }
