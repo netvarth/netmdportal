@@ -5,6 +5,7 @@ function SuperAdminSettingsToolBarProcessor() {
 	this.btnSyncLogList="#btnSyncLogList";
 	this.btnTestList="#btnTestList";
 	this.btnSpecimenList="#btnSpecimenList";
+	this.btnUploadInstaller="#btnUploadInstaller";
 	this.pageTitle = $j('#pageTitle');
 	
 }
@@ -79,6 +80,12 @@ SuperAdminSettingsToolBarProcessor.prototype.bindAdminTBEvents=function() {
 		commonMethodInvoker.removeErrors();
 		$j.cachedScript(constants.SYNCLOGENTRYURL).done(function(script, textStatus) {
 		})
+		
+	});
+	$j(self.btnUploadInstaller).die('click').click(function(){
+		commonMethodInvoker.removeErrors();
+		var installerUI = new InstallerUIStartup();			
+		installerUI.init();
 		
 	});
 }

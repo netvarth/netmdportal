@@ -138,7 +138,7 @@ function Constants() {
 	this.SUPERADMINSYNCJSON="/youNeverWait/json/new/newsetSync.json";
 	this.SYNCDATASUPERADMINURL="/youNeverWait/ws/ui/superAdmin/getSyncDetails";
 	this.SETSUPERADMINSYCURL="/youNeverWait/ws/ui/superAdmin/setSync";
-	this.SUPERADMINTOOLBARJSON="/youNeverWait/json/toolbars/adminChangePwd.json";
+	this.SUPERADMINTOOLBARJSON="/youNeverWait/json/toolbars/settingToolbar.json";
 	this.NEWSUPERADMINPASWRDCHGMODAL="superadminchgpaswrdModal";
 	this.NEWSUPERADMINPASWRDCHGJSON="/youNeverWait/json/changepassword/adminChangePassword.json";
 	this.SUPERADMINCHGPASWRDURL="/youNeverWait/ws/ui/superAdmin/changePassword";
@@ -545,5 +545,37 @@ function Constants() {
 	this.SETTINGDELETECONFIRM="Do you really want to delete  ";
 	this.SETTINGDELETESUCCESS="Setting deleted successfully"
 	/*************--------------------------------------------------**********/
-	
+		
+	/*****************---------------installer---------------****************/
+ 	this.INSTALLERTITLE="Version Uploads";
+	this.INSTALLER="installer";
+	this.INSTALLERPAGETOOLBARJSON="/youNeverWait/json/toolbars/installerPageToolBar.json";
+	this.INSTALLERLISTJSON="/youNeverWait/json/list/installerTable.json"; 
+	this.CREATEINSTALLERUI="/youNeverWait/json/new/newInstaller.json";
+	this.INSTALLERMODAL="InstallerModal";
+	this.INSTALLERLISTURL="/youNeverWait/ws/ui/installer/list";
+	/*************--------------------------------------------------**********/
+		/**********************Department---------------------------------------*/
+	this.DEPARTMENTLISTURL="/netmd/ws/ui/department/list";
+	this.DEPARTMENTTABLELIST="/netmd/json/list/departmentTable.json";
+	this.DEPARTMENTCREATEURL="/netmd/ws/ui/department/create";
+	this.DEPARTMENTUPDATEURL="/netmd/ws/ui/department/update";
+	this.DEPARTMENTDELETEURL="/netmd/ws/ui/department/delete/";
+	this.DEPARTMENTVIEWURL="/netmd/ws/ui/department/view/";
+	this.DEPARTMENTTITLE="Departments";
+	this.VIEWDEPARTMENTTITLE="Department";
+	this.DEPARTMENTPAGETOOLBAR="/netmd/json/toolbars/departmentPageToolBar.json";
+	this.DEPARTMENTMODEL="departmentModal";
+	this.DEPARTMENTUPDATESUCCESS="Department updated successfully";
+	this.DEPARTMENTCREATESUCCESS="Department created successfully";
+	this.CREATEDEPARTMENTUI="/netmd/json/new/newDepartment.json";
+	this.DEPARTMENT="department";
+	this.SELECTDEPARTMENT="select atleast one department";
+	this.SELECTDEPARTMENTONLY="Select only one department";
+	this.DEPARTMENTGENERAL="departmentGeneral";
+	this.DEPARTMENTGENERALPTBURL="/netmd/json/toolbars/viewGeneralToolbar.json";
+	this.VIEWDEPARTMENTURL="/netmd/json/view/viewDepartment.json";
+	this.DEPARTMENTDELETECONFIRM="Do you really want to delete department ";
+	this.DEPARTMENTDELETESUCCESS="Department deleted successfully";
+	this.GETDEPARTMENTS="/netmd/ws/ui/department/getDepartments"
 }
