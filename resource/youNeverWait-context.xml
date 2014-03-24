@@ -200,6 +200,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.OrganisationUserPropertyEnum
 				</value>
 				<value>com.nv.youNeverWait.pl.entity.UserTypeEnum</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.InstallerPropertyEnum
+				</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.TransferredOrderPropertyEnum
 				</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.TransferredResultPropertyEnum
@@ -791,6 +793,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 					value="com.nv.youNeverWait.util.filter.queryBuilder.TransferredOrderQueryBuilder" />
 				<entry key="transferredResults"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.TransferredResultQueryBuilder" />
+				<entry key="installer"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.InstallerQueryBuilder" />
 			</map>
 		</property>
 
@@ -1026,5 +1030,31 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 
 	<bean id="questionnaire.dao" class="com.nv.youNeverWait.user.pl.impl.QuestionnaireDaoImpl">
 	</bean>
+	
+	<bean id="installer.dao" class="com.nv.youNeverWait.user.pl.impl.InstallerDaoImpl">
+
+		</bean>
+		
+		<bean id="installer.service" class="com.nv.youNeverWait.user.bl.impl.InstallerServiceImpl">
+		<property name="installerDao">
+			<ref bean="installer.dao" />
+		</property>
+		<property name="applicationVersionPath">
+			<value>${appVersion.path}</value>
+		</property>
+		
+			<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
+		<property name="validator">
+			<ref bean="installer.validator" />
+		</property>
+	</bean>
+	
+		<bean id="installer.validator"
+		class="com.nv.youNeverWait.user.bl.validation.InstallerValidator"></bean>
 </beans>		
 	
