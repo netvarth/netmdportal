@@ -78,6 +78,7 @@
 		<class>com.nv.youNeverWait.pl.entity.NetmdAnswerTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdQuestionTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdQuestionnaireTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.UploadInstallerTbl</class>
 		
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
