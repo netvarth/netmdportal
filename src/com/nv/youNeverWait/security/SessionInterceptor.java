@@ -17,7 +17,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		if (request.getSession(true).getAttribute("user") == null) {
 
 			/* youneverwait domain */
-			if (request.getServerName().equals("www.uneverwait.com")) {
+			if (request.getServerName().equals("www.youneverwait.com")) {
 
 				/* Patient login */
 				if (!request.getRequestURI().equals(
@@ -42,7 +42,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			} // end of if loop of youNeverWait domain
 
 			/* netLims domain */
-			if (request.getServerName().equals("www.netlms.in")) {
+			if (request.getServerName().equals("www.netlims.in")) {
 
 				String container = request.getRequestURI();
 				String adminContent = "youNeverWait/ws/ui/superAdmin/";
@@ -126,7 +126,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			} // end of netlims if loop
 
 			/* netRx domain */
-			if (request.getServerName().equals("www.ntrx.in")) {
+			if (request.getServerName().equals("www.netrx.in")) {
 
 				if (!request.getRequestURI().equals(
 						"/youNeverWait/ws/ui/netRx/rForm")
@@ -153,7 +153,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			} // end of netrx if loop
 
 			/* netMd domain */
-			if (request.getServerName().equals("www.ntmd.co.in")) {
+			if (request.getServerName().equals("www.netmd.co.in")) {
 				String containr = request.getRequestURI();
 				String orgnContent = "youNeverWait/ws/ui/orgn/";
 				/* Organization domain */
