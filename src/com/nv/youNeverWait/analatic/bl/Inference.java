@@ -2,11 +2,11 @@ package com.nv.youNeverWait.analatic.bl;
 
 import java.util.List;
 
-public class Inference<T> {
+public class Inference {
 	
 private String cluster ; 
  
-private  List<T> evaluations ;
+private  List<? extends Measure> evaluations ;
 
 public String getCluster() {
 	return cluster;
@@ -16,12 +16,15 @@ public void setCluster(String cluster) {
 	this.cluster = cluster;
 }
 
-public List<T> getEvaluations() {
-  return this.evaluations;	
+public List<? extends Measure> getEvaluations() {
+	return evaluations;
 }
 
-
-public void setEvaluations(List<T> evaluations) {
+public void setEvaluations(List<? extends Measure> evaluations) {
 	this.evaluations = evaluations;
 }
+
+
+
+
 }

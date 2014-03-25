@@ -5,15 +5,15 @@ import java.util.List;
 
 
 
-public class Analatic {
+public class Analatic implements Runnable {
 	
 private List<Cluster>clusters = new ArrayList<Cluster>();
 
 
 
-public List<Inference<? extends Measure>> getInferences(String fmonth, String fyear, String toMonth, String toYear){
-	 List<Inference<? extends Measure>>inferences = new ArrayList<Inference<? extends Measure>>();
-	 Inference<Measure> inference ;
+public List<Inference> getInferences(String fmonth, String fyear, String toMonth, String toYear){
+	 List<Inference>inferences = new ArrayList<Inference>();
+	 Inference inference ;
 	 for (Cluster cluster:clusters){
 	     inference = cluster.getInference(fmonth, fyear, toMonth, toYear);
 	     inferences.add(inference);
@@ -22,10 +22,10 @@ public List<Inference<? extends Measure>> getInferences(String fmonth, String fy
  return inferences;
  }
 
- public List<Inference<? extends Measure>> getInferencesPerHospital(String fmonth, String fyear, String toMonth, String toYear,Integer hospital){
+ public List<Inference> getInferencesPerHospital(String fmonth, String fyear, String toMonth, String toYear,Integer hospital){
 	 
-	 List<Inference<? extends Measure>>inferences = new ArrayList<Inference<? extends Measure>>();
-	 Inference<Measure> inference ;
+	 List<Inference>inferences = new ArrayList<Inference>();
+	 Inference inference ;
 	 for (Cluster cluster:clusters){
 	     inference = cluster.getInference(fmonth, fyear, toMonth, toYear,hospital);
 	     inferences.add(inference);
@@ -34,11 +34,11 @@ public List<Inference<? extends Measure>> getInferences(String fmonth, String fy
  return inferences;
  }
 
-public  List<Inference<? extends Measure>> getAggregatedInferences(String fmonth, String fyear, String toMonth, String toYear){
+public  List<Inference> getAggregatedInferences(String fmonth, String fyear, String toMonth, String toYear){
 	
-	Inference<Measure> inference=null ;
+	Inference inference=null ;
 	 List<AggregateMeasure>aggregatedMeasures=new ArrayList<AggregateMeasure>();
-	 List<Measure> measures=null;
+	 List<? extends Measure> measures=null;
 	 for (Cluster cluster:clusters){
 		 inference = cluster.getInference(fmonth, fyear, toMonth, toYear);
 		 measures = inference.getEvaluations();
@@ -46,10 +46,10 @@ public  List<Inference<? extends Measure>> getAggregatedInferences(String fmonth
 			 aggregatedMeasures.add(new AggregateMeasure(inference.getCluster(), measure));
 		 }
 	 }
-	 Inference<AggregateMeasure> aginference= new Inference<AggregateMeasure>();
-	 aginference.setCluster("");
+	 Inference aginference= new Inference();
+	 aginference.setCluster("Aggregated Inference");
 	 aginference.setEvaluations(aggregatedMeasures);
-	 List<Inference<? extends Measure>> inferenceList = new ArrayList<Inference<? extends Measure>>();
+	 List<Inference> inferenceList = new ArrayList<Inference>();
 	 inferenceList.add(aginference);
 return inferenceList;
 }
@@ -57,11 +57,11 @@ return inferenceList;
  
  
  
-public List<Inference<? extends Measure>> getAggregatedInferencesPerHospital(String fmonth, String fyear, String toMonth, String toYear,Integer hospital){
+public List<Inference> getAggregatedInferencesPerHospital(String fmonth, String fyear, String toMonth, String toYear,Integer hospital){
 	
-	Inference<Measure> inference=null ;
+	Inference inference=null ;
 	 List<AggregateMeasure>aggregatedMeasures=new ArrayList<AggregateMeasure>();
-	 List<Measure> measures=null;
+	 List<? extends Measure> measures=null;
 	 for (Cluster cluster:clusters){
 		 inference = cluster.getInference(fmonth, fyear, toMonth, toYear,hospital);
 		 measures = inference.getEvaluations();
@@ -69,10 +69,10 @@ public List<Inference<? extends Measure>> getAggregatedInferencesPerHospital(Str
 			 aggregatedMeasures.add(new AggregateMeasure(inference.getCluster(), measure));
 		 }
 	 }
-	 Inference<AggregateMeasure> aginference= new Inference<AggregateMeasure>();
+	 Inference aginference= new Inference();
 	 aginference.setCluster("");
 	 aginference.setEvaluations(aggregatedMeasures);
-	 List<Inference<? extends Measure>> inferenceList = new ArrayList<Inference<? extends Measure>>();
+	 List<Inference> inferenceList = new ArrayList<Inference>();
 	 inferenceList.add(aginference);
 return inferenceList;
 }
@@ -85,6 +85,19 @@ return inferenceList;
 
 public void setClusters(List<Cluster> clusters) {
 	this.clusters = clusters;
+}
+
+@Override
+public void run() {
+	while (true){
+		for (Cluster cluster:clusters){
+			
+		    	
+		}
+		
+		
+	}
+	
 }
  
  
