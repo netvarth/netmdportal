@@ -75,7 +75,7 @@ public class AnalaticTest {
 	@Test
 	public void getInferenceTest(){
 		
-	List<Inference<? extends Measure>> actualInference=analatic.getInferences("1", "2014", "12", "2014");
+	List<Inference> actualInference=analatic.getInferences("1", "2014", "12", "2014");
 	
 	Assert.assertNotNull(actualInference);
 	}
@@ -84,7 +84,7 @@ public class AnalaticTest {
 	@Test
 	public void getAggregaeInferenceTest(){
 		
-		List<Inference<? extends Measure>> actualInference=analatic.getAggregatedInferences("1", "2013", "12", "2015");
+		List<Inference> actualInference=analatic.getAggregatedInferences("1", "2013", "12", "2015");
 	
 	Assert.assertNotNull(actualInference);
 	}
