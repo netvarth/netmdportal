@@ -10,7 +10,7 @@ public class MaternalHeightEntity {
 	private String hospital;
 	private String year;
 	private Integer month;
-	private Integer lt45;
+	private Integer lt145;
 	private Integer bt145to149;
 	private Integer bt150to170;
 	private Integer gt170;
@@ -35,11 +35,11 @@ public class MaternalHeightEntity {
 	public void setMonth(Integer month) {
 		this.month = month;
 	}
-	public Integer getLt45() {
-		return lt45;
+	public Integer getLt145() {
+		return lt145;
 	}
-	public void setLt45(BigDecimal lt45) {
-		this.lt45 = lt45.intValueExact();
+	public void setLt145(BigDecimal lt45) {
+		this.lt145 = lt45.intValueExact();
 	}
 	public Integer getBt145to149() {
 		return bt145to149;
@@ -62,7 +62,7 @@ public class MaternalHeightEntity {
 	public Map<String,Integer> getSubClusters(){
 		
 		Map<String,Integer>map = new LinkedHashMap<String,Integer>();
-		   map.put("<40", lt45);
+		   map.put("<145", lt145);
 		   map.put("145-149", bt145to149);
 		   map.put("150-170", bt150to170);
 		   map.put(">170", gt170);

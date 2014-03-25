@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FetalComplexitesEntity {
+public class FetalComplicationsEntity {
 
 	private String hospital;
 	private String year;
