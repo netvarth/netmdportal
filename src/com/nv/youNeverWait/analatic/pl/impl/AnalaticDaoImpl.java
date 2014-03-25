@@ -18,7 +18,7 @@ import com.nv.youNeverWait.analatic.pl.entity.BodyMassIndexEntity;
 import com.nv.youNeverWait.analatic.pl.entity.BookedStatisticsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.CaesareanSectionEntity;
 import com.nv.youNeverWait.analatic.pl.entity.EpisiotomyEntity;
-import com.nv.youNeverWait.analatic.pl.entity.FetalComplexitesEntity;
+import com.nv.youNeverWait.analatic.pl.entity.FetalComplicationsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.FourthStageEntity;
 import com.nv.youNeverWait.analatic.pl.entity.InductionEntity;
 import com.nv.youNeverWait.analatic.pl.entity.IntravenusFluidEntity;
@@ -188,7 +188,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	maternalHeightEntity.setHospital((String)entity[0]);
 	    	maternalHeightEntity.setYear((String)entity[1]);
 	    	maternalHeightEntity.setMonth((Integer)entity[2]);
-	    	maternalHeightEntity.setLt45((BigDecimal)entity[3]);
+	    	maternalHeightEntity.setLt145((BigDecimal)entity[3]);
 	    	maternalHeightEntity.setBt145to149((BigDecimal)entity[4]);
 	    	maternalHeightEntity.setBt150to170((BigDecimal)entity[5]);
 	    	maternalHeightEntity.setGt170((BigDecimal)entity[6]);
@@ -217,7 +217,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	maternalHeightEntity.setHospital((String)entity[0]);
 	    	maternalHeightEntity.setYear((String)entity[1]);
 	    	maternalHeightEntity.setMonth((Integer)entity[2]);
-	    	maternalHeightEntity.setLt45((BigDecimal)entity[3]);
+	    	maternalHeightEntity.setLt145((BigDecimal)entity[3]);
 	    	maternalHeightEntity.setBt145to149((BigDecimal)entity[4]);
 	    	maternalHeightEntity.setBt150to170((BigDecimal)entity[5]);
 	    	maternalHeightEntity.setGt170((BigDecimal)entity[6]);
@@ -1014,7 +1014,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	
 
 	@Override
-	public List<FetalComplexitesEntity> getFetalComplexitesInferences(
+	public List<FetalComplicationsEntity> getFetalComplicationsInferences(
 			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear) {
 		Query query = em.createNativeQuery(AnalaticQuery.FETAL_COMPLEXITES);
 		query.setParameter("fYear", fyear);
@@ -1023,10 +1023,10 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 		query.setParameter("toMonth", toMonth);
 	     
 		List<Object[]>entityList = query.getResultList();
-		List<FetalComplexitesEntity> fetalComplexitesEntityList  = new ArrayList<FetalComplexitesEntity>();      
+		List<FetalComplicationsEntity> fetalComplicationsEntityList  = new ArrayList<FetalComplicationsEntity>();      
 	    for(Object[] entity:entityList){
 	    	
-	    	FetalComplexitesEntity fetalComplexitesEntity = new FetalComplexitesEntity();
+	    	FetalComplicationsEntity fetalComplexitesEntity = new FetalComplicationsEntity();
 	    	fetalComplexitesEntity.setHospital((String)entity[0]);
 	    	fetalComplexitesEntity.setYear((String)entity[1]);
 	    	fetalComplexitesEntity.setMonth((Integer)entity[2]);
@@ -1034,12 +1034,12 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	    	fetalComplexitesEntity.setFetal1NeonatalDeath((BigDecimal)entity[4]);
 	    	fetalComplexitesEntity.setFetalNICUAdmn((BigDecimal)entity[5]);
 	    	fetalComplexitesEntity.setFetalAnomalies((BigDecimal)entity[6]);
-	    	fetalComplexitesEntityList.add(fetalComplexitesEntity);
+	    	fetalComplicationsEntityList.add(fetalComplexitesEntity);
 	    }
-	    	return fetalComplexitesEntityList;
+	    	return fetalComplicationsEntityList;
 	}
 	@Override
-	public List<FetalComplexitesEntity> getFetalComplexitesInferences(
+	public List<FetalComplicationsEntity> getFetalComplicationsInferences(
 			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear,
 			Integer hospital) {
 		Query query = em.createNativeQuery(AnalaticQuery.FETAL_COMPLEXITES_PER_HOSPITAL);
@@ -1050,10 +1050,10 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 		query.setParameter("hospital",hospital);
 	     
 		List<Object[]>entityList = query.getResultList();
-		List<FetalComplexitesEntity> fetalComplexitesEntityList  = new ArrayList<FetalComplexitesEntity>();      
+		List<FetalComplicationsEntity> fetalComplexitesEntityList  = new ArrayList<FetalComplicationsEntity>();      
 	    for(Object[] entity:entityList){
 	    	
-	    	FetalComplexitesEntity fetalComplexitesEntity = new FetalComplexitesEntity();
+	    	FetalComplicationsEntity fetalComplexitesEntity = new FetalComplicationsEntity();
 	    	fetalComplexitesEntity.setHospital((String)entity[0]);
 	    	fetalComplexitesEntity.setYear((String)entity[1]);
 	    	fetalComplexitesEntity.setMonth((Integer)entity[2]);
