@@ -14,7 +14,7 @@ import com.nv.youNeverWait.analatic.pl.entity.BodyMassIndexEntity;
 import com.nv.youNeverWait.analatic.pl.entity.BookedStatisticsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.CaesareanSectionEntity;
 import com.nv.youNeverWait.analatic.pl.entity.EpisiotomyEntity;
-import com.nv.youNeverWait.analatic.pl.entity.FetalComplexitesEntity;
+import com.nv.youNeverWait.analatic.pl.entity.FetalComplicationsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.FourthStageEntity;
 import com.nv.youNeverWait.analatic.pl.entity.InductionEntity;
 import com.nv.youNeverWait.analatic.pl.entity.IntravenusFluidEntity;
@@ -112,8 +112,8 @@ public interface AnalaticDao extends GenericDao {
 	public List<PerinealTearEntity> getPerinealTearInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
 	public List<PerinealTearEntity> getPerinealTearInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
 	
-	public List<FetalComplexitesEntity> getFetalComplexitesInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
-	public List<FetalComplexitesEntity> getFetalComplexitesInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
+	public List<FetalComplicationsEntity> getFetalComplicationsInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
+	public List<FetalComplicationsEntity> getFetalComplicationsInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
 	
 	public List<BirthWeightEntity> getBirthWeightInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear);
 	public List<BirthWeightEntity> getBirthWeightInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital);
