@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,14 +22,10 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
-
-import com.nv.youNeverWait.analatic.bl.AggregateMeasure;
-import com.nv.youNeverWait.analatic.bl.Analatic;
 import com.nv.youNeverWait.analatic.bl.Inference;
 import com.nv.youNeverWait.analatic.bl.Measure;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
-import com.nv.youNeverWait.user.pl.dao.ReportDao;
 
 
 
@@ -75,7 +71,7 @@ public class ReportHandler {
 		hospital = Integer.parseInt(hospitalString);
 		ReportEnum reportEnum = ReportEnum.getEnum(reportName);
 		ReportData dataBean = reportMap.get(reportEnum);
-		List<Inference<? extends Measure>> dataBeanList= null;
+		List<Inference> dataBeanList= null;
 		if (hospital !=null){
 			dataBeanList = dataBean.getDataBeans(fMonth, fYear, toMonth, toYear,hospital);
 		}else{
@@ -87,7 +83,6 @@ public class ReportHandler {
 		try{
 			HashMap<String, Object> reportParms = new HashMap<String, Object>();
 			JasperDesign jasperDesign = JRXmlLoader.load(is);
-		
 			jasperReport = JasperCompileManager.compileReport(jasperDesign);
 			JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(dataBeanList);
 			jasperPrint = JasperFillManager.fillReport(jasperReport,reportParms,beanColDataSource);

@@ -11,14 +11,14 @@ public class SummaryReport implements ReportData{
 	private Analatic analatic;
 
 	@Override
-	public List<Inference<? extends Measure>> getDataBeans(String fMonth,
+	public List<Inference> getDataBeans(String fMonth,
 			String fYear, String toMonth, String toYear, Integer hospital) {
 		
 		return analatic.getAggregatedInferencesPerHospital(fMonth, fYear, toMonth, toYear,hospital);
 	}
 
 	@Override
-	public List<Inference<? extends Measure>> getDataBeans(String fMonth,
+	public List<Inference> getDataBeans(String fMonth,
 			String fYear, String toMonth, String toYear) {
 	
 		return analatic.getAggregatedInferences(fMonth, fYear, toMonth, toYear);
