@@ -21,7 +21,7 @@ import com.nv.youNeverWait.analatic.pl.entity.BodyMassIndexEntity;
 import com.nv.youNeverWait.analatic.pl.entity.BookedStatisticsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.CaesareanSectionEntity;
 import com.nv.youNeverWait.analatic.pl.entity.EpisiotomyEntity;
-import com.nv.youNeverWait.analatic.pl.entity.FetalComplexitesEntity;
+import com.nv.youNeverWait.analatic.pl.entity.FetalComplicationsEntity;
 import com.nv.youNeverWait.analatic.pl.entity.InductionEntity;
 import com.nv.youNeverWait.analatic.pl.entity.IntravenusFluidEntity;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalAgeEntity;
@@ -432,7 +432,7 @@ public class AnalaticDaoImplTest {
 	public void fetalComplexitesTest() {
          AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
-          List<FetalComplexitesEntity> entityList =analaticDao.getFetalComplexitesInferences(1,2013, 1, 2015 );
+          List<FetalComplicationsEntity> entityList =analaticDao.getFetalComplicationsInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
 	}
 	
@@ -441,7 +441,7 @@ public class AnalaticDaoImplTest {
 	public void fetalComplexitesPerHospitalTest() {
          AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
-          List<FetalComplexitesEntity> entityList =analaticDao.getFetalComplexitesInferences(1,2013, 1, 2015 ,20);
+          List<FetalComplicationsEntity> entityList =analaticDao.getFetalComplicationsInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
 	}
 
