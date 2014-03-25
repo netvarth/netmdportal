@@ -8,10 +8,10 @@ import com.nv.youNeverWait.analatic.bl.Cluster;
 import com.nv.youNeverWait.analatic.bl.Inference;
 import com.nv.youNeverWait.analatic.bl.Measure;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
-import com.nv.youNeverWait.analatic.pl.entity.EpisiotomyEntity;
-import com.nv.youNeverWait.analatic.pl.entity.FetalComplexitesEntity;
 
-public class FetalComplexities implements Cluster{
+import com.nv.youNeverWait.analatic.pl.entity.FetalComplicationsEntity;
+
+public class FetalComplications implements Cluster{
 
 	private AnalaticDao analaticDao;
 	private String name ="Fetal Complexities";
@@ -22,7 +22,7 @@ public class FetalComplexities implements Cluster{
 	     Inference inference = new Inference();
          inference.setCluster(name);
 	     
-		 List<FetalComplexitesEntity> entityList= analaticDao.getFetalComplexitesInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear));
+		 List<FetalComplicationsEntity> entityList= analaticDao.getFetalComplicationsInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear));
 	     List<Measure> measures = getMeasures(entityList);
 	     inference.setEvaluations(measures);
 
@@ -36,7 +36,7 @@ public class FetalComplexities implements Cluster{
 		Inference inference = new Inference();
         inference.setCluster(name);
 	     
-		 List<FetalComplexitesEntity> entityList= analaticDao.getFetalComplexitesInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear),hospital);
+		 List<FetalComplicationsEntity> entityList= analaticDao.getFetalComplicationsInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear),hospital);
 	     List<Measure> measures = getMeasures(entityList);
 	     inference.setEvaluations(measures);
 	     
@@ -44,10 +44,10 @@ public class FetalComplexities implements Cluster{
 	}
 
 
-	  private  List<Measure>  getMeasures(List<FetalComplexitesEntity> data){
+	  private  List<Measure>  getMeasures(List<FetalComplicationsEntity> data){
 	    	List<Measure> measures = new ArrayList<Measure>();
 	    	Measure measure;
-	    	for (FetalComplexitesEntity entity :data){
+	    	for (FetalComplicationsEntity entity :data){
 	    	     
 	    		for(Map.Entry<String, Integer> entry :entity.getSubClusters().entrySet()){
 	    		measure = new Measure();

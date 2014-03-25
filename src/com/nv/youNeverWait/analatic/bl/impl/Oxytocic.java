@@ -3,15 +3,14 @@ package com.nv.youNeverWait.analatic.bl.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+
 
 import com.nv.youNeverWait.analatic.bl.Cluster;
 import com.nv.youNeverWait.analatic.bl.Inference;
 import com.nv.youNeverWait.analatic.bl.Measure;
-import com.nv.youNeverWait.analatic.bl.SubClusters;
+
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
-import com.nv.youNeverWait.analatic.pl.entity.FourthStageEntity;
-import com.nv.youNeverWait.analatic.pl.entity.InductionEntity;
+
 import com.nv.youNeverWait.analatic.pl.entity.OxyTocicEntity;
 
 public class Oxytocic implements Cluster {

@@ -14,6 +14,7 @@ public class MaternalAge implements Cluster{
 	
     private AnalaticDao analaticDao;
     private String name ="Maternal Age";
+    private List<MaternalAgeEntity> maternalAgeEntity = new ArrayList<MaternalAgeEntity>();
     
     @Override
 	public Inference getInference( String fmonth, String fyear,

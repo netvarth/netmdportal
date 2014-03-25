@@ -9,7 +9,7 @@ import com.nv.youNeverWait.analatic.bl.Inference;
 import com.nv.youNeverWait.analatic.bl.Measure;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
 import com.nv.youNeverWait.analatic.pl.entity.ThirdStageEntity;
-import com.nv.youNeverWait.analatic.pl.entity.VaginalDeliveryEntity;
+
 
 public class ThirdStageDuration implements Cluster {
 

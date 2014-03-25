@@ -8,7 +8,7 @@ import com.nv.youNeverWait.analatic.bl.Cluster;
 import com.nv.youNeverWait.analatic.bl.Inference;
 import com.nv.youNeverWait.analatic.bl.Measure;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
-import com.nv.youNeverWait.analatic.pl.entity.PerinealTearEntity;
+
 import com.nv.youNeverWait.analatic.pl.entity.PlacentalWtEntity;
 
 public class PlacentalWt implements Cluster {

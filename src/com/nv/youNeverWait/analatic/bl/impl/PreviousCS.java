@@ -11,7 +11,7 @@ import com.nv.youNeverWait.analatic.bl.Measure;
 import com.nv.youNeverWait.analatic.bl.SubClusters;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
 import com.nv.youNeverWait.analatic.pl.entity.PreviousCSEntity;
-import com.nv.youNeverWait.analatic.pl.entity.RobsonClassEntity;
+
 
 public class PreviousCS implements Cluster{
 

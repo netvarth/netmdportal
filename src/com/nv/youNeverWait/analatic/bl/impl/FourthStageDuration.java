@@ -8,9 +8,8 @@ import com.nv.youNeverWait.analatic.bl.Cluster;
 import com.nv.youNeverWait.analatic.bl.Inference;
 import com.nv.youNeverWait.analatic.bl.Measure;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
-import com.nv.youNeverWait.analatic.pl.entity.EpisiotomyEntity;
 import com.nv.youNeverWait.analatic.pl.entity.FourthStageEntity;
-import com.nv.youNeverWait.analatic.pl.entity.OxyTocicEntity;
+
 
 public class FourthStageDuration implements Cluster{
 

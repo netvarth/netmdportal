@@ -15,7 +15,8 @@ public class ApgarScore implements Cluster {
 
 	private AnalaticDao analaticDao;
 	  private String name ="Apgar Score";
-	    
+	  
+	  private List<ApgarScoreEntity> entityList;  
 	    @Override
 		public Inference getInference( String fmonth, String fyear,
 				String toMonth, String toYear) {
@@ -24,7 +25,7 @@ public class ApgarScore implements Cluster {
 		         Inference inference = new Inference();
 		         inference.setCluster(name);
 			     
-		         List<ApgarScoreEntity> entityList =analaticDao.getApgarScoreInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear));
+		         entityList =analaticDao.getApgarScoreInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear));
 			     List<Measure> measures = getMeasures(entityList);
 			     inference.setEvaluations(measures);
 					 
@@ -41,7 +42,7 @@ public class ApgarScore implements Cluster {
 		     Inference inference = new Inference();
 	         inference.setCluster(name);
 		     
-		     List<ApgarScoreEntity> entityList =analaticDao.getApgarScoreInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear),hosptl);
+		     entityList =analaticDao.getApgarScoreInferences(Integer.parseInt(fmonth),Integer.parseInt(fyear),Integer.parseInt(toMonth), Integer.parseInt(toYear),hosptl);
 		     List<Measure> measures = getMeasures(entityList);
 		     inference.setEvaluations(measures);
 			
@@ -82,6 +83,7 @@ public class ApgarScore implements Cluster {
 	    	}
 	    return measures;
 	    }
+
 
 
 	

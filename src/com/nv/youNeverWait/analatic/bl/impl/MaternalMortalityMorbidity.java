@@ -9,7 +9,7 @@ import com.nv.youNeverWait.analatic.bl.Inference;
 import com.nv.youNeverWait.analatic.bl.Measure;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
 import com.nv.youNeverWait.analatic.pl.entity.MaternalMortalityMorbidityEntity;
-import com.nv.youNeverWait.analatic.pl.entity.MaternalWeightEntity;
+
 
 public class MaternalMortalityMorbidity implements Cluster{
 

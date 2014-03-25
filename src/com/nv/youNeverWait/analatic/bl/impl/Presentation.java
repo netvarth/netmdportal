@@ -8,7 +8,7 @@ import com.nv.youNeverWait.analatic.bl.Cluster;
 import com.nv.youNeverWait.analatic.bl.Inference;
 import com.nv.youNeverWait.analatic.bl.Measure;
 import com.nv.youNeverWait.analatic.pl.AnalaticDao;
-import com.nv.youNeverWait.analatic.pl.entity.ParityEntity;
+
 import com.nv.youNeverWait.analatic.pl.entity.PresentationEntity;
 
 public class Presentation implements Cluster {
