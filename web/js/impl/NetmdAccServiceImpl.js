@@ -15,13 +15,18 @@ function NetmdAccServiceImpl () {
 					}
 				}
 			else{
-					if(branchResult.branchBillList.length>0) {			
+					if(branchResult.branchBillList.length>0) {						
 						$j(branchResult.branchBillList).each(function (index, netmd) {
 							var id=netmd.branchId;
-							var rowData=$j(tableObj).dataTable().fnAddData([netmd.uid,netmd.orderDate,netmd.patientName,netmd.payStatus,netmd.billAmount,netmd.amountPaid]);
+							$j("#accBillDetailsModalForm #fromDate label").text(branchResult.fromDate);
+							$j("#accBillDetailsModalForm #toDate label").text(branchResult.toDate);
+							$j("#accBillDetailsModalForm #totalBillAmount label").text(branchResult.totalBillAmt);
+							$j("#accBillDetailsModalForm #totalAmountPaid label").text(branchResult.totalAmtPaid);
+							$j("#accBillDetailsModalForm #totalAmountDue label").text(branchResult.totalAmtDue);
+							var rowData=$j(tableObj).dataTable().fnAddData([netmd.uid,netmd.orderDate,netmd.patientName,netmd.payStatus,netmd.billAmount,netmd.amountPaid,netmd.amountDue]);
 							var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 							$j(row).attr('id',id);	
-							//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
+							$j(row).children("td:nth-child(5),td:nth-child(6),td:nth-child(7)").addClass('column-2');
 						});	
 					}
 			
@@ -39,7 +44,6 @@ function NetmdAccServiceImpl () {
 					var rowData=$j(tableObj).dataTable().fnAddData([netmd.uid,netmd.orderDate,netmd.patientName,netmd.payStatus,netmd.billAmount,netmd.amountPaid]);
 					var row=$j(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 					$j(row).attr('id',id);	
-					//$j(row).children("td:nth-child(1)").attr("class","netlimsIdCol Ustyle");
 					});	
 			}
 	 
@@ -50,7 +54,7 @@ function NetmdAccServiceImpl () {
 	return ajaxProcessor.post(netmdObj);
 }
 NetmdAccServiceImpl.prototype.updateAccBranchNetmd=function(netmdObj) {
-	//alert(JSON.stringify(netlimsObj));
+
 	ajaxProcessor.setUrl(constants.UPDATENETMDACCBRCHURL);
 	return ajaxProcessor.post(netmdObj);
 }

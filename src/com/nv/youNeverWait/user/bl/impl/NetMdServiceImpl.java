@@ -1143,6 +1143,9 @@ public class NetMdServiceImpl implements NetMdService {
 	@Override
 	public BranchBillListResponseDTO billList(FilterDTO filterDTO) {
 		BranchBillListResponseDTO response = new BranchBillListResponseDTO();
+		String netmdBranchId="";
+		String fromDate="";
+		String toDate="";
 		// validate filterDTO to identify invalid expressions and if there is
 		// any,return result with appropriate error code
 		ErrorDTO error = validator.validateBillFilter(filterDTO);
@@ -1160,6 +1163,21 @@ public class NetMdServiceImpl implements NetMdService {
 		}
 		for (ExpressionDTO exp : filterDTO.getExp()) {
 
+			
+			if(exp.getName().equals("orderDate")&& exp.getOperator().equals("ge"))
+			{
+				response.setFromDate(exp.getValue());
+				fromDate=exp.getValue();
+			}
+			if(exp.getName().equals("orderDate")&& exp.getOperator().equals("le"))
+			{
+				response.setToDate(exp.getValue());
+				toDate=exp.getValue();
+			}
+			if(exp.getName().equals("netmdBranchId"))
+			{
+				netmdBranchId=exp.getValue();
+			}
 			// get filter from filter factory by setting expression name and
 			// value to filter
 			Filter filter = filterFactory.getFilter(exp);
@@ -1174,7 +1192,17 @@ public class NetMdServiceImpl implements NetMdService {
 
 		// execute query
 		List<NetmdBillTbl> bills = queryBuilder.executeQuery(q);
-		response = getNetMdBillList(bills);
+		/**
+		 * getting bill list
+		 */
+		BranchBillListResponseDTO branchBillList= getNetMdBillList(bills);
+		response.setBranchBillList(branchBillList.getBranchBillList());
+		
+		/*Query for getting total amt paid, bill amount and due*/
+		BranchBillListResponseDTO branchBillAmt=netMdDao.getBranchBillAmount(netmdBranchId,fromDate,toDate);
+		response.setTotalBillAmt(branchBillAmt.getTotalBillAmt());
+		response.setTotalAmtPaid(branchBillAmt.getTotalAmtPaid());
+		response.setTotalAmtDue(branchBillAmt.getTotalAmtDue());
 		response.setCount(count);
 		response.setSuccess(true);
 		return response;
@@ -1185,15 +1213,18 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @return
 	 */
 	private BranchBillListResponseDTO getNetMdBillList(List<NetmdBillTbl> bills) {
+		
 		BranchBillListResponseDTO response = new BranchBillListResponseDTO();
+		List<BillSummaryDTO> netMdBillDetails = new ArrayList<BillSummaryDTO>();
 		if (bills == null) {
 			return response;
 		}
-		List<BillSummaryDTO> netMdBillDetails = new ArrayList<BillSummaryDTO>();
+		
 		for (NetmdBillTbl netmdBillTbl : bills) {
+			
 			netMdBillDetails.add(new BillSummaryDTO(netmdBillTbl));
 		}
-		response.setBranchBillList(netMdBillDetails);
+		response.setBranchBillList(netMdBillDetails);	
 		return response;
 	}
 

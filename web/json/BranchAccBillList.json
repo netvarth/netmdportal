@@ -1,10 +1,97 @@
 {
-    "title": "Bill Details ",
+    "title": "Bill Summary Details ",
+    "style": "width:80%;margin:0 10%",
     "data": [
         {
             "name": "accBillDetailsModalForm",
             "id": "accBillDetailsModalForm",
             "content": [
+                {
+                    "className": "sep-div-view",
+                    "id": "TotalDetailsHeader",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "data": [
+                                        {
+                                            "className": "column-left",
+                                            "elements": [
+                                                {
+                                                    "name": "fromDate",
+                                                    "id": "fromDate",
+                                                    "type": "newlabel",
+                                                    "title": "From Date"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "className": "column-right",
+                                            "elements": [
+                                                {
+                                                    "name": "toDate",
+                                                    "id": "toDate",
+                                                    "type": "newlabel",
+                                                    "title": "To Date"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "data": [
+                                        {
+                                            "className": "column-left",
+                                            "elements": [
+                                                {
+                                                    "name": "totalBillAmount",
+                                                    "id": "totalBillAmount",
+                                                    "type": "newlabel",
+                                                    "title": "Total BillAmount"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "className": "column-right",
+                                            "elements": [
+                                                {
+                                                    "name": "totalAmountPaid",
+                                                    "id": "totalAmountPaid",
+                                                    "type": "newlabel",
+                                                    "title": "Total AmountPaid"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "data": [
+                                        {
+                                            "className": "column-left",
+                                            "elements": [
+                                                {
+                                                    "name": "totalAmountDue",
+                                                    "id": "totalAmountDue",
+                                                    "type": "newlabel",
+                                                    "title": "Total Amount Due"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
                 {
                     "className": "sep-div-view",
                     "id": "viewBranchHeader",
@@ -18,18 +105,17 @@
                                         "name": "accBillDetailsViewTable",
                                         "idProperty": "accBillDetailsViewTable",
                                         "className": "stdtable stdtablecb",
-                                        "style": "border-spacing:0;border-collapse:collapse; border:0;",
+                                        "style": "border-spacing:0;border-collapse:collapse; border:0;font-size: 12px;",
                                         "colHeaders": [
-                                            
                                             {
                                                 "className": "head0",
-                                                "name": "Uid",
-                                                "style": "width:10%"
+                                                "name": "Bill No",
+                                                "style": "width:5%"
                                             },
-											{
+                                            {
                                                 "className": "head1",
                                                 "name": "Bill Date",
-                                                "style": "width:15%"
+                                                "style": "width:10%"
                                             },
                                             {
                                                 "className": "head0",
@@ -44,14 +130,21 @@
                                             {
                                                 "className": "head0",
                                                 "name": "Bill Amount",
-                                                "style": "width:10%"
+                                                "style": "width:10%",
+												"image":"/youNeverWait/images/rupee-symbel.png"
                                             },
                                             {
                                                 "className": "head1",
                                                 "name": "Amount Paid",
-                                                "style": "width:10%"
+                                                "style": "width:10%",
+												"image":"/youNeverWait/images/rupee-symbel.png"
+                                            },
+                                            {
+                                                "className": "head0",
+                                                "name": "Amount Due",
+                                                "style": "width:10%",
+												"image":"/youNeverWait/images/rupee-symbel.png"
                                             }
-											 
                                         ]
                                     }
                                 }
