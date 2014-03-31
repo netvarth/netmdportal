@@ -34,7 +34,7 @@ import com.nv.youNeverWait.analytic.pl.entity.ThirdStageEntity;
 import com.nv.youNeverWait.analytic.pl.entity.VaginalDeliveryEntity;
 import com.nv.youNeverWait.pl.dao.GenericDao;
 
-public interface AnalaticDao extends GenericDao {
+public interface AnalyticDao extends GenericDao {
 	
 	public List<MaternalAgeEntity> getMaternalAgeInferences(Integer fmonth,Integer fyear,Integer tomonth,Integer toyear);
 	public List<MaternalAgeEntity> getMaternalAgeInferences(Integer fmonth,Integer fyear,Integer tomonth,Integer toyear,Integer hospital);
