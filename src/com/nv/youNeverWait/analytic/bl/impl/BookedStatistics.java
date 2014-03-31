@@ -7,7 +7,7 @@ import java.util.Map;
 import com.nv.youNeverWait.analytic.bl.Cluster;
 import com.nv.youNeverWait.analytic.bl.Inference;
 import com.nv.youNeverWait.analytic.bl.Measure;
-import com.nv.youNeverWait.analytic.pl.AnalaticDao;
+import com.nv.youNeverWait.analytic.pl.AnalyticDao;
 import com.nv.youNeverWait.analytic.pl.entity.BookedStatisticsEntity;
 
 public class BookedStatistics implements Cluster {
@@ -16,7 +16,7 @@ public class BookedStatistics implements Cluster {
     
    
     
-    private AnalaticDao analaticDao;
+    private AnalyticDao analaticDao;
     private String name ="Booked( At least 1 visit in each trimester)";
     
     @Override
@@ -54,13 +54,13 @@ public class BookedStatistics implements Cluster {
 
 
 
-	public AnalaticDao getAnalaticDao() {
+	public AnalyticDao getAnalaticDao() {
 		return analaticDao;
 	}
 
 
 
-	public void setAnalaticDao(AnalaticDao analaticDao) {
+	public void setAnalaticDao(AnalyticDao analaticDao) {
 		this.analaticDao = analaticDao;
 	}
 

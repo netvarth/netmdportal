@@ -7,13 +7,13 @@ import java.util.Map;
 import com.nv.youNeverWait.analytic.bl.Cluster;
 import com.nv.youNeverWait.analytic.bl.Inference;
 import com.nv.youNeverWait.analytic.bl.Measure;
-import com.nv.youNeverWait.analytic.pl.AnalaticDao;
+import com.nv.youNeverWait.analytic.pl.AnalyticDao;
 import com.nv.youNeverWait.analytic.pl.entity.BodyMassIndexEntity;
 
 
 public class BodyMassIndex implements Cluster{
 
-	  private AnalaticDao analaticDao;
+	  private AnalyticDao analaticDao;
 	  private String name ="Body Mass Index";
 	    
 	    @Override
@@ -51,13 +51,13 @@ public class BodyMassIndex implements Cluster{
 
 
 
-		public AnalaticDao getAnalaticDao() {
+		public AnalyticDao getAnalaticDao() {
 			return analaticDao;
 		}
 
 
 
-		public void setAnalaticDao(AnalaticDao analaticDao) {
+		public void setAnalaticDao(AnalyticDao analaticDao) {
 			this.analaticDao = analaticDao;
 		}
 

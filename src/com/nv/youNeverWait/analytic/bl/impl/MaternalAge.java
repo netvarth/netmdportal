@@ -7,12 +7,12 @@ import java.util.Map;
 import com.nv.youNeverWait.analytic.bl.Cluster;
 import com.nv.youNeverWait.analytic.bl.Inference;
 import com.nv.youNeverWait.analytic.bl.Measure;
-import com.nv.youNeverWait.analytic.pl.AnalaticDao;
+import com.nv.youNeverWait.analytic.pl.AnalyticDao;
 import com.nv.youNeverWait.analytic.pl.entity.MaternalAgeEntity;
 
 public class MaternalAge implements Cluster{
 	
-    private AnalaticDao analaticDao;
+    private AnalyticDao analaticDao;
     private String name ="Maternal Age";
     private List<MaternalAgeEntity> maternalAgeEntity = new ArrayList<MaternalAgeEntity>();
     
@@ -49,13 +49,13 @@ public class MaternalAge implements Cluster{
 
 
 
-	public AnalaticDao getAnalaticDao() {
+	public AnalyticDao getAnalaticDao() {
 		return analaticDao;
 	}
 
 
 
-	public void setAnalaticDao(AnalaticDao analaticDao) {
+	public void setAnalaticDao(AnalyticDao analaticDao) {
 		this.analaticDao = analaticDao;
 	}
 

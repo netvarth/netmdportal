@@ -9,13 +9,13 @@ import com.nv.youNeverWait.analytic.bl.Cluster;
 import com.nv.youNeverWait.analytic.bl.Inference;
 import com.nv.youNeverWait.analytic.bl.Measure;
 import com.nv.youNeverWait.analytic.bl.SubClusters;
-import com.nv.youNeverWait.analytic.pl.AnalaticDao;
+import com.nv.youNeverWait.analytic.pl.AnalyticDao;
 import com.nv.youNeverWait.analytic.pl.entity.InductionEntity;
 
 
 public class Induction implements Cluster{
 	
-	private AnalaticDao analaticDao;
+	private AnalyticDao analaticDao;
 	private String name ="Induced Delivery";
 
 	@Override
@@ -72,11 +72,11 @@ public class Induction implements Cluster{
 		return measures;
 	}
 
-	public AnalaticDao getAnalaticDao() {
+	public AnalyticDao getAnalaticDao() {
 		return analaticDao;
 	}
 
-	public void setAnalaticDao(AnalaticDao analaticDao) {
+	public void setAnalaticDao(AnalyticDao analaticDao) {
 		this.analaticDao = analaticDao;
 	}
 
