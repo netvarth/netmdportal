@@ -752,7 +752,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 		<property name="queryBuilderMap">
 			<map>
-				
+				<entry key="lab"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.LabQueryBuilder" />
 				<entry key="branch"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.BranchQueryBuilder" />
 				<entry key="labUser"
