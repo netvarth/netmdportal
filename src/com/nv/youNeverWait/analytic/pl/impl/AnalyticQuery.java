@@ -1,6 +1,6 @@
 package com.nv.youNeverWait.analytic.pl.impl;
 
-public class AnalaticQuery {
+public class AnalyticQuery {
 
 	public static final String MATERNAL_AGE_QUERY ="select nmd.name as hospital,yer as year, month(str_to_date(mnth,'%M')) as month,"+
 			"sum(if(age='20',1,0)) as lt20,"+

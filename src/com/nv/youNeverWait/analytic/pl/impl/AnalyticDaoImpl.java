@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.nv.youNeverWait.analytic.pl.AnalaticDao;
+import com.nv.youNeverWait.analytic.pl.AnalyticDao;
 import com.nv.youNeverWait.analytic.pl.entity.ApgarScoreEntity;
 import com.nv.youNeverWait.analytic.pl.entity.BirthWeightEntity;
 import com.nv.youNeverWait.analytic.pl.entity.BloodGroupEntity;
@@ -41,7 +41,7 @@ import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 
 
 
-public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements AnalaticDao  {
+public class AnalyticDaoImpl extends GenericDaoHibernateImpl implements AnalyticDao  {
 
 	
 	/**
@@ -57,7 +57,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<MaternalAgeEntity> getMaternalAgeInferences(Integer fmonth,Integer fyear,
 			 Integer tomonth,Integer toyear) {
-		 Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.MATERNAL_AGE_QUERY);	
+		 Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.MATERNAL_AGE_QUERY);	
 	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
@@ -87,7 +87,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<MaternalAgeEntity> getMaternalAgeInferences(Integer fmonth,Integer fyear,
 			 Integer tomonth,Integer toyear, Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.MATERNAL_AGE_QUERY_WITH_HOSPITAL);	
+		Query query = em.createNativeQuery(AnalyticQuery.MATERNAL_AGE_QUERY_WITH_HOSPITAL);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -117,7 +117,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<BookedStatisticsEntity> getBookedStatInferences(Integer fmonth,Integer fyear,
 			 Integer tomonth,Integer toyear) {
-		     Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.BOOKED_STATISTICS_QUERY);	
+		     Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.BOOKED_STATISTICS_QUERY);	
 			
 			query.setParameter("fYear", fyear);
 			query.setParameter("fMonth", fmonth);
@@ -147,7 +147,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	public List<BookedStatisticsEntity> getBookedStatInferences(Integer fmonth,Integer fyear,
 			 Integer tomonth,Integer toyear, Integer hospital) {
 		
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.BOOKED_STATISTICS_QUERY_WITH_HOSPITAL);	
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.BOOKED_STATISTICS_QUERY_WITH_HOSPITAL);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -175,7 +175,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<MaternalHeightEntity> getMaternalHeightInferences(Integer fmonth,Integer fyear,
 			 Integer tomonth,Integer toyear) {
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.MATERNAL_HEIGHT_QUERY);	
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.MATERNAL_HEIGHT_QUERY);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -203,7 +203,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<MaternalHeightEntity> getMaternalHeightInferences(Integer fmonth,Integer fyear,
 			 Integer tomonth,Integer toyear, Integer hospital) {
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.MATERNAL_HEIGHT_QUERY_WITH_HOSPITAL);	
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.MATERNAL_HEIGHT_QUERY_WITH_HOSPITAL);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -230,7 +230,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<MaternalWeightEntity> getMaternalWeightInferences(Integer fmonth,Integer fyear,
 			 Integer tomonth,Integer toyear) {
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.MATERNAL_WEIGHT_QUERY);	
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.MATERNAL_WEIGHT_QUERY);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -257,7 +257,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<MaternalWeightEntity> getMaternalWeightInferences(Integer fmonth,Integer fyear,
 			 Integer tomonth,Integer toyear, Integer hospital) {
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.MATERNAL_WEIGHT_QUERY_WITH_HOSPITAL);	
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.MATERNAL_WEIGHT_QUERY_WITH_HOSPITAL);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -284,7 +284,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<MaternalComplicationsEntity> getMaternalComplicationsInferences(
 			 Integer fmonth,Integer fyear, Integer tomonth, Integer toyear) {
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.MATERNAL_COMPLICATIONS_QUERY);	
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.MATERNAL_COMPLICATIONS_QUERY);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -309,7 +309,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 
 	@Override
 	public List<MaternalComplicationsEntity> getMaternalComplicationsInferences(Integer fmonth,Integer fyear,Integer toMonth,Integer toYear,Integer hospital) {
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.MATERNAL_COMPLICATIONS_QUERY_WITH_HOSPITAL);	
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.MATERNAL_COMPLICATIONS_QUERY_WITH_HOSPITAL);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -337,7 +337,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<BodyMassIndexEntity> getBMIInferences(Integer fmonth,Integer fyear, Integer tomonth, Integer toyear) {
 		
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.BODY_MASS_INDEX);	
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.BODY_MASS_INDEX);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -367,7 +367,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 
 	@Override
 	public List<BodyMassIndexEntity> getBMIInferences(Integer fmonth,Integer fyear, Integer tomonth, Integer toyear, Integer hospital) {
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.BODY_MASS_INDEX_WITH_HOSPITAL);	
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.BODY_MASS_INDEX_WITH_HOSPITAL);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -395,7 +395,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	
 	@Override
 	public List<BloodGroupEntity> getBloodGroupInferences(Integer fmonth,Integer fyear, Integer tomonth, Integer toyear){
-		Query query = em.createQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.BLOOD_GROUP_QUERY);	
+		Query query = em.createQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.BLOOD_GROUP_QUERY);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -425,7 +425,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	
 	@Override
 	public List<BloodGroupEntity> getBloodGroupInferences(Integer fmonth,Integer fyear, Integer tomonth, Integer toyear, Integer hospital) {
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.BLOOD_GROUP_QUERY_WITH_HOSPITAL);	
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.BLOOD_GROUP_QUERY_WITH_HOSPITAL);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -456,7 +456,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 
 	@Override
 	public List<ParityEntity> getParityInferences(Integer fmonth,Integer fyear, Integer tomonth, Integer toyear) {
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.PARITY_QUERY);	
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.PARITY_QUERY);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -484,7 +484,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 
 	@Override
 	public List<ParityEntity> getParityInferences(Integer fmonth,Integer fyear, Integer tomonth, Integer toyear, Integer hospital) {
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.PARITY_QUERY_WITH_HOSPITAL);	
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.PARITY_QUERY_WITH_HOSPITAL);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -515,7 +515,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	
 	@Override
 	public List<PreviousCSEntity> getPrevCsInferences(Integer fmonth,Integer fyear, Integer tomonth, Integer toyear) {
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.PREVIOUS_CS_QUERY);	
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.PREVIOUS_CS_QUERY);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -547,7 +547,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<PreviousCSEntity> getPrevCsInferences(Integer fyear,
 			Integer fmonth, Integer toyear, Integer tomonth, Integer hospital) {
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.PREVIOUS_CS_QUERY_WITH_HOSPITAL);	
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.PREVIOUS_CS_QUERY_WITH_HOSPITAL);	
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -582,7 +582,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	public List<VaginalDeliveryEntity> getVaginalDeliveryInferences(
 			Integer fmonth,Integer fyear, Integer tomonth, Integer toyear) {
 		
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.VAGILE_DELIVERY_QUERY);
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.VAGILE_DELIVERY_QUERY);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -613,7 +613,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	public List<VaginalDeliveryEntity> getVaginalDeliveryInferences(
 			Integer fmonth,Integer fyear, Integer tomonth, Integer toyear,
 			Integer hospital) {
-		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalaticQuery.VAGILE_DELIVERY_PER_HOSPITAL);
+		Query query = em.createNativeQuery(com.nv.youNeverWait.analytic.pl.impl.AnalyticQuery.VAGILE_DELIVERY_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -642,7 +642,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<CaesareanSectionEntity> getCaesareanSectionInferences(
 			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear) {
-		Query query = em.createNativeQuery(AnalaticQuery.CAESERIAN_DELIVERY);
+		Query query = em.createNativeQuery(AnalyticQuery.CAESERIAN_DELIVERY);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -665,7 +665,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	public List<CaesareanSectionEntity> getCaesareanSectionInferences(
 			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear,
 			Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.CAESERIAN_DELIVERY_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.CAESERIAN_DELIVERY_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -690,7 +690,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<PresentationEntity> getPresentationInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear) {
-		Query query = em.createNativeQuery(AnalaticQuery.PRESENTATION);
+		Query query = em.createNativeQuery(AnalyticQuery.PRESENTATION);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -719,7 +719,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<PresentationEntity> getPresentationInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.PRESENTATION_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.PRESENTATION_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -749,7 +749,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 		
 	@Override
 	public List<RobsonClassEntity> getRobsonClassInferences(Integer fmonth,Integer fyear, Integer tomonth, Integer toyear) {
-		Query query = em.createNativeQuery(AnalaticQuery.ROBSON_CLASS);
+		Query query = em.createNativeQuery(AnalyticQuery.ROBSON_CLASS);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -796,7 +796,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	
 	@Override
 	public List<RobsonClassEntity> getRobsonClassInferences(Integer fmonth,Integer fyear, Integer tomonth, Integer toyear, Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.ROBSON_CLASS_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.ROBSON_CLASS_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -844,7 +844,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<EpisiotomyEntity> getEpisiotomyInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear) {
-		Query query = em.createNativeQuery(AnalaticQuery.EPISIOTOMY);
+		Query query = em.createNativeQuery(AnalyticQuery.EPISIOTOMY);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -870,7 +870,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<EpisiotomyEntity> getEpisiotomyInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.EPISIOTOMY_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.EPISIOTOMY_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -897,7 +897,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	
 	@Override
 	public List<PerinealTearEntity> getPerinealTearInferences(Integer fmonth,Integer fyear, Integer tomonth, Integer toyear) {
-		Query query = em.createNativeQuery(AnalaticQuery.PERINEAL_QUERY);
+		Query query = em.createNativeQuery(AnalyticQuery.PERINEAL_QUERY);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -924,7 +924,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	
 	@Override
 	public List<PerinealTearEntity> getPerinealTearInferences(Integer fmonth,Integer fyear, Integer tomonth, Integer toyear, Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.PERINEAL_QUERY_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.PERINEAL_QUERY_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -955,7 +955,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	
 	@Override
 	public List<InductionEntity> getInductionInferences(Integer fmonth,Integer fyear, Integer tomonth, Integer toyear) {
-		Query query = em.createNativeQuery(AnalaticQuery.INDUCED_LABOUR);
+		Query query = em.createNativeQuery(AnalyticQuery.INDUCED_LABOUR);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -984,7 +984,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	}
 	@Override
 	public List<InductionEntity> getInductionInferences(Integer fmonth,Integer fyear, Integer tomonth, Integer toyear, Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.INDUCED_LABOUR_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.INDUCED_LABOUR_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toyear);
@@ -1016,7 +1016,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<FetalComplicationsEntity> getFetalComplicationsInferences(
 			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear) {
-		Query query = em.createNativeQuery(AnalaticQuery.FETAL_COMPLEXITES);
+		Query query = em.createNativeQuery(AnalyticQuery.FETAL_COMPLEXITES);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1042,7 +1042,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	public List<FetalComplicationsEntity> getFetalComplicationsInferences(
 			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear,
 			Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.FETAL_COMPLEXITES_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.FETAL_COMPLEXITES_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1072,7 +1072,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 		
 		
 		
-		Query query = em.createNativeQuery(AnalaticQuery.BIRTH_WEIGHT_PER_GENTER);
+		Query query = em.createNativeQuery(AnalyticQuery.BIRTH_WEIGHT_PER_GENTER);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1099,7 +1099,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	public List<BirthWeightEntity> getBirthWeightInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
 	
-		Query query = em.createNativeQuery(AnalaticQuery.BIRTH_WEIGHT_PER_GENTER_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.BIRTH_WEIGHT_PER_GENTER_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1129,7 +1129,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<ApgarScoreEntity> getApgarScoreInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear) {
-		Query query = em.createNativeQuery(AnalaticQuery.APGAR_SCORE);
+		Query query = em.createNativeQuery(AnalyticQuery.APGAR_SCORE);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1154,7 +1154,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<ApgarScoreEntity> getApgarScoreInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.APGAR_SCORE_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.APGAR_SCORE_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1178,7 +1178,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	
 	@Override
 	public List<MaternalMortalityMorbidityEntity> getMaternalMortalityMorbidityInferences(Integer fmonth, Integer fyear, Integer toMonth, Integer toYear) {
-		Query query = em.createNativeQuery(AnalaticQuery.MATERNAL_MORTALITY_MORBIDITY);
+		Query query = em.createNativeQuery(AnalyticQuery.MATERNAL_MORTALITY_MORBIDITY);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1205,7 +1205,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear,
 			Integer hospital) {
 		
-		Query query = em.createNativeQuery(AnalaticQuery.MATERNAL_MORTALITY_MORBIDITY_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.MATERNAL_MORTALITY_MORBIDITY_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1231,7 +1231,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	public List<BloodLossEntity> getBloodLossInferences(
 			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear) {
 		
-		Query query = em.createNativeQuery(AnalaticQuery.BLOODLOSS);
+		Query query = em.createNativeQuery(AnalyticQuery.BLOODLOSS);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1269,7 +1269,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	public List<BloodLossEntity> getBloodLossInferences(
 			Integer fmonth, Integer fyear, Integer toMonth, Integer toYear,Integer hospital) {
 		
-		Query query = em.createNativeQuery(AnalaticQuery.BLOODLOSS_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.BLOODLOSS_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1300,7 +1300,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<PlacentalWtEntity> getPlacentalWtInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear) {
-		Query query = em.createNativeQuery(AnalaticQuery.PLACENTAL_WEIGHT);
+		Query query = em.createNativeQuery(AnalyticQuery.PLACENTAL_WEIGHT);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1325,7 +1325,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<PlacentalWtEntity> getPlacentalWtInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.PLACENTAL_WEIGHT_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.PLACENTAL_WEIGHT_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1350,7 +1350,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<ThirdStageEntity> getTSDInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear) {
-		Query query = em.createNativeQuery(AnalaticQuery.THIRD_STAGE_DURATION);
+		Query query = em.createNativeQuery(AnalyticQuery.THIRD_STAGE_DURATION);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1376,7 +1376,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<ThirdStageEntity> getTSDInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.THIRD_STAGE_DURATION_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.THIRD_STAGE_DURATION_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1402,7 +1402,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<FourthStageEntity> getFSDInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear) {
-		Query query = em.createNativeQuery(AnalaticQuery.FORTH_STAGE_OBSERVATION);
+		Query query = em.createNativeQuery(AnalyticQuery.FORTH_STAGE_OBSERVATION);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1427,7 +1427,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<FourthStageEntity> getFSDInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.FORTH_STAGE_OBSERVATION_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.FORTH_STAGE_OBSERVATION_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1452,7 +1452,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<OxyTocicEntity> getOxyTocicInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear) {
-		Query query = em.createNativeQuery(AnalaticQuery.OXYTOCIC);
+		Query query = em.createNativeQuery(AnalyticQuery.OXYTOCIC);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1480,7 +1480,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<OxyTocicEntity> getOxyTocicInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.OXYTOCIC_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.OXYTOCIC_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1507,7 +1507,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<IntravenusFluidEntity> getIvFluidInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear) {
-		Query query = em.createNativeQuery(AnalaticQuery.INTRA_VENUS_FLUID_USED);
+		Query query = em.createNativeQuery(AnalyticQuery.INTRA_VENUS_FLUID_USED);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
@@ -1532,7 +1532,7 @@ public class AnalaticDaoImpl extends GenericDaoHibernateImpl implements Analatic
 	@Override
 	public List<IntravenusFluidEntity> getIvFluidInferences(Integer fmonth,
 			Integer fyear, Integer toMonth, Integer toYear, Integer hospital) {
-		Query query = em.createNativeQuery(AnalaticQuery.INTRA_VENUS__FLUID_USED_PER_HOSPITAL);
+		Query query = em.createNativeQuery(AnalyticQuery.INTRA_VENUS__FLUID_USED_PER_HOSPITAL);
 		query.setParameter("fYear", fyear);
 		query.setParameter("fMonth", fmonth);
 		query.setParameter("toYear", toYear);
