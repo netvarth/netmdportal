@@ -2,7 +2,7 @@ package com.nv.youNeverWait.report;
 
 import java.util.List;
 
-import com.nv.youNeverWait.analatic.bl.Inference;
+import com.nv.youNeverWait.analytic.bl.Inference;
 
 
 public interface ReportData {
