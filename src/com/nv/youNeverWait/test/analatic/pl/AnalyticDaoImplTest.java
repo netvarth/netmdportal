@@ -11,33 +11,33 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.nv.youNeverWait.analatic.bl.impl.MaternalComplications;
-import com.nv.youNeverWait.analatic.bl.impl.MaternalMortalityMorbidity;
-import com.nv.youNeverWait.analatic.pl.AnalaticDao;
-import com.nv.youNeverWait.analatic.pl.entity.ApgarScoreEntity;
-import com.nv.youNeverWait.analatic.pl.entity.BirthWeightEntity;
-import com.nv.youNeverWait.analatic.pl.entity.BloodLossEntity;
-import com.nv.youNeverWait.analatic.pl.entity.BodyMassIndexEntity;
-import com.nv.youNeverWait.analatic.pl.entity.BookedStatisticsEntity;
-import com.nv.youNeverWait.analatic.pl.entity.CaesareanSectionEntity;
-import com.nv.youNeverWait.analatic.pl.entity.EpisiotomyEntity;
-import com.nv.youNeverWait.analatic.pl.entity.FetalComplicationsEntity;
-import com.nv.youNeverWait.analatic.pl.entity.InductionEntity;
-import com.nv.youNeverWait.analatic.pl.entity.IntravenusFluidEntity;
-import com.nv.youNeverWait.analatic.pl.entity.MaternalAgeEntity;
-import com.nv.youNeverWait.analatic.pl.entity.MaternalComplicationsEntity;
-import com.nv.youNeverWait.analatic.pl.entity.MaternalHeightEntity;
-import com.nv.youNeverWait.analatic.pl.entity.MaternalMortalityMorbidityEntity;
-import com.nv.youNeverWait.analatic.pl.entity.MaternalWeightEntity;
-import com.nv.youNeverWait.analatic.pl.entity.OxyTocicEntity;
-import com.nv.youNeverWait.analatic.pl.entity.ParityEntity;
-import com.nv.youNeverWait.analatic.pl.entity.PerinealTearEntity;
-import com.nv.youNeverWait.analatic.pl.entity.PlacentalWtEntity;
-import com.nv.youNeverWait.analatic.pl.entity.PresentationEntity;
-import com.nv.youNeverWait.analatic.pl.entity.PreviousCSEntity;
-import com.nv.youNeverWait.analatic.pl.entity.RobsonClassEntity;
-import com.nv.youNeverWait.analatic.pl.entity.ThirdStageEntity;
-import com.nv.youNeverWait.analatic.pl.entity.VaginalDeliveryEntity;
+import com.nv.youNeverWait.analytic.bl.impl.MaternalComplications;
+import com.nv.youNeverWait.analytic.bl.impl.MaternalMortalityMorbidity;
+import com.nv.youNeverWait.analytic.pl.AnalyticDao;
+import com.nv.youNeverWait.analytic.pl.entity.ApgarScoreEntity;
+import com.nv.youNeverWait.analytic.pl.entity.BirthWeightEntity;
+import com.nv.youNeverWait.analytic.pl.entity.BloodLossEntity;
+import com.nv.youNeverWait.analytic.pl.entity.BodyMassIndexEntity;
+import com.nv.youNeverWait.analytic.pl.entity.BookedStatisticsEntity;
+import com.nv.youNeverWait.analytic.pl.entity.CaesareanSectionEntity;
+import com.nv.youNeverWait.analytic.pl.entity.EpisiotomyEntity;
+import com.nv.youNeverWait.analytic.pl.entity.FetalComplicationsEntity;
+import com.nv.youNeverWait.analytic.pl.entity.InductionEntity;
+import com.nv.youNeverWait.analytic.pl.entity.IntravenusFluidEntity;
+import com.nv.youNeverWait.analytic.pl.entity.MaternalAgeEntity;
+import com.nv.youNeverWait.analytic.pl.entity.MaternalComplicationsEntity;
+import com.nv.youNeverWait.analytic.pl.entity.MaternalHeightEntity;
+import com.nv.youNeverWait.analytic.pl.entity.MaternalMortalityMorbidityEntity;
+import com.nv.youNeverWait.analytic.pl.entity.MaternalWeightEntity;
+import com.nv.youNeverWait.analytic.pl.entity.OxyTocicEntity;
+import com.nv.youNeverWait.analytic.pl.entity.ParityEntity;
+import com.nv.youNeverWait.analytic.pl.entity.PerinealTearEntity;
+import com.nv.youNeverWait.analytic.pl.entity.PlacentalWtEntity;
+import com.nv.youNeverWait.analytic.pl.entity.PresentationEntity;
+import com.nv.youNeverWait.analytic.pl.entity.PreviousCSEntity;
+import com.nv.youNeverWait.analytic.pl.entity.RobsonClassEntity;
+import com.nv.youNeverWait.analytic.pl.entity.ThirdStageEntity;
+import com.nv.youNeverWait.analytic.pl.entity.VaginalDeliveryEntity;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -45,7 +45,7 @@ import com.nv.youNeverWait.analatic.pl.entity.VaginalDeliveryEntity;
 		"file:resource/testDataSource.xml",
 		"file:resource/youNeverWait-context.xml" })
 
-public class AnalaticDaoImplTest {
+public class AnalyticDaoImplTest {
 	
 	
 	@Autowired
@@ -53,7 +53,7 @@ public class AnalaticDaoImplTest {
 
 	@Test
 	public void ageInferencesTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
 		  List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(1,2013, 1, 2015);
 		 	  
@@ -61,7 +61,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void ageInferencesTestwithHospital() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
 		  List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -70,7 +70,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void bookedStatiInferencesTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
 		  List<BookedStatisticsEntity> entityList =analaticDao.getBookedStatInferences(1,2013, 1, 2015);
 		  System.out.println(entityList.toArray());  
@@ -78,7 +78,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void bookedStatiInferencesHospital() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
 		  List<BookedStatisticsEntity> entityList =analaticDao.getBookedStatInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -87,7 +87,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void heightInferencesTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
 		  List<MaternalHeightEntity> entityList =analaticDao.getMaternalHeightInferences(1,2013, 1, 2015);
 		  System.out.println(entityList.toArray());  
@@ -95,7 +95,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void heightInferencesHospital() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<MaternalHeightEntity> entityList =analaticDao.getMaternalHeightInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -104,7 +104,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void weightInferencesTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
 		  List<MaternalWeightEntity> entityList =analaticDao.getMaternalWeightInferences(1,2013, 1, 2015);
 		  System.out.println(entityList.toArray());  
@@ -112,7 +112,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void weightInferencesHospital() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<MaternalWeightEntity> entityList =analaticDao.getMaternalWeightInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -120,7 +120,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void complicationsInferencesTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
 		  List<MaternalComplicationsEntity> entityList =analaticDao.getMaternalComplicationsInferences(1,2013, 1, 2015);
 		  System.out.println(entityList.toArray());  
@@ -128,7 +128,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void complicationsInferencesHospital() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<MaternalComplicationsEntity> entityList =analaticDao.getMaternalComplicationsInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -137,7 +137,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void bmiInferencesTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
 		  List<BodyMassIndexEntity> entityList =analaticDao.getBMIInferences(1,2013, 1, 2015);
 		  System.out.println(entityList.toArray());  
@@ -145,7 +145,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void bmiInferencesHospital() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<BodyMassIndexEntity> entityList =analaticDao.getBMIInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -154,7 +154,7 @@ public class AnalaticDaoImplTest {
 
 	@Test
 	public void parityInferencesTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
 		  List<ParityEntity> entityList =analaticDao.getParityInferences(1,2013, 1, 2015);
 		  System.out.println(entityList.toArray());  
@@ -162,7 +162,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void parityInferencesHospital() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<ParityEntity> entityList =analaticDao.getParityInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -171,7 +171,7 @@ public class AnalaticDaoImplTest {
 
 	@Test
 	public void previousCSTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
 		  List<PreviousCSEntity> entityList =analaticDao.getPrevCsInferences(1,2013, 1, 2015);
 		  System.out.println(entityList.toArray());  
@@ -179,7 +179,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void previousCSPerHospital() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<PreviousCSEntity> entityList =analaticDao.getPrevCsInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -187,7 +187,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void vaginalDeliveryTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
 		  List<VaginalDeliveryEntity> entityList =analaticDao.getVaginalDeliveryInferences(1,2013, 1, 2015);
 		  System.out.println(entityList.toArray());  
@@ -195,7 +195,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void vaginalDeliveryPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<VaginalDeliveryEntity> entityList =analaticDao.getVaginalDeliveryInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -204,7 +204,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void caesareanSectionTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<CaesareanSectionEntity> entityList =analaticDao.getCaesareanSectionInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -213,7 +213,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void caesareanSectionPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<CaesareanSectionEntity> entityList =analaticDao.getCaesareanSectionInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -222,7 +222,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void robSonClassTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<RobsonClassEntity> entityList =analaticDao.getRobsonClassInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -231,7 +231,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void robSonClassPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<RobsonClassEntity> entityList =analaticDao.getRobsonClassInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -240,7 +240,7 @@ public class AnalaticDaoImplTest {
 
 	@Test
 	public void presentationTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<PresentationEntity> entityList =analaticDao.getPresentationInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -249,7 +249,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void presentationPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<PresentationEntity> entityList =analaticDao.getPresentationInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -257,7 +257,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void episiotomyTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<EpisiotomyEntity> entityList =analaticDao.getEpisiotomyInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -266,7 +266,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void episiotomyPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<EpisiotomyEntity> entityList =analaticDao.getEpisiotomyInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -274,7 +274,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void perinealTearTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<PerinealTearEntity> entityList =analaticDao.getPerinealTearInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -283,7 +283,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void perinealTearPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<PerinealTearEntity> entityList =analaticDao.getPerinealTearInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -292,7 +292,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void inducedTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<InductionEntity> entityList =analaticDao.getInductionInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -301,7 +301,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void inducedPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<InductionEntity> entityList =analaticDao.getInductionInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -310,7 +310,7 @@ public class AnalaticDaoImplTest {
 
 	@Test
 	public void oxyTocicTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<OxyTocicEntity> entityList =analaticDao.getOxyTocicInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -319,7 +319,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void oxyTocicHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<OxyTocicEntity> entityList =analaticDao.getOxyTocicInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -327,7 +327,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void thirdStageDurationTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<ThirdStageEntity> entityList =analaticDao.getTSDInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -336,7 +336,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void thirdStageDurationPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<ThirdStageEntity> entityList =analaticDao.getTSDInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -344,7 +344,7 @@ public class AnalaticDaoImplTest {
 
 	@Test
 	public void bloodLossTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
           List<BloodLossEntity> entityList =analaticDao.getBloodLossInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -353,7 +353,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void bloodLossPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
           List<BloodLossEntity> entityList =analaticDao.getBloodLossInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -361,7 +361,7 @@ public class AnalaticDaoImplTest {
 
 	@Test
 	public void maternalMortalityMorbidityTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
           List<MaternalMortalityMorbidityEntity> entityList =analaticDao.getMaternalMortalityMorbidityInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -370,7 +370,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void maternalMortalityMorbidityPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
           List<MaternalMortalityMorbidityEntity> entityList =analaticDao.getMaternalMortalityMorbidityInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -378,7 +378,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void IntravenusFluidTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<IntravenusFluidEntity> entityList =analaticDao.getIvFluidInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -387,7 +387,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void intravenusFluidPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
           List<IntravenusFluidEntity> entityList =analaticDao.getIvFluidInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -395,7 +395,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void babyWeightTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<BirthWeightEntity> entityList =analaticDao.getBirthWeightInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -404,7 +404,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void babyWeightPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<BirthWeightEntity> entityList =analaticDao.getBirthWeightInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -412,7 +412,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void upgarTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<ApgarScoreEntity> entityList =analaticDao.getApgarScoreInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -421,7 +421,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void apgarPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
          List<ApgarScoreEntity> entityList =analaticDao.getApgarScoreInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -430,7 +430,7 @@ public class AnalaticDaoImplTest {
 
 	@Test
 	public void fetalComplexitesTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
           List<FetalComplicationsEntity> entityList =analaticDao.getFetalComplicationsInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -439,7 +439,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void fetalComplexitesPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
           List<FetalComplicationsEntity> entityList =analaticDao.getFetalComplicationsInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -447,7 +447,7 @@ public class AnalaticDaoImplTest {
 
 	@Test
 	public void PlacentalWtTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
           List<PlacentalWtEntity> entityList =analaticDao.getPlacentalWtInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -456,7 +456,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void PlacentalWtPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
           List<PlacentalWtEntity> entityList =analaticDao.getPlacentalWtInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
@@ -464,7 +464,7 @@ public class AnalaticDaoImplTest {
 
 	@Test
 	public void ivFluidTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
           List<IntravenusFluidEntity> entityList =analaticDao.getIvFluidInferences(1,2013, 1, 2015 );
 		 	System.out.println(entityList.toArray());  
@@ -473,7 +473,7 @@ public class AnalaticDaoImplTest {
 	
 	@Test
 	public void ivFluidPerHospitalTest() {
-         AnalaticDao analaticDao = (AnalaticDao) applicationContext.getBean("analatic.dao");     
+         AnalyticDao analaticDao = (AnalyticDao) applicationContext.getBean("analatic.dao");     
 		  //List<MaternalAgeEntity> entityList =analaticDao.getMaternalAgeInferences(2013, 1, 2014, 12);
           List<IntravenusFluidEntity> entityList =analaticDao.getIvFluidInferences(1,2013, 1, 2015 ,20);
 		 	System.out.println(entityList.toArray());  
