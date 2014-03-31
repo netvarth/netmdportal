@@ -280,8 +280,8 @@ public class SyncServiceImpl implements SyncService {
 
 				ResponseDTO response = questionnaireService.updateQuestionnaire(netmdQuestionAnswer, header);
 				NetmdQuestionAnswerSyncResponseDTO updateQuestionAnswerDTOSyncResponse = new NetmdQuestionAnswerSyncResponseDTO();
-				updateQuestionAnswerDTOSyncResponse.setActionName(ActionNameEnum.UPDATE
-						.getDisplayName());
+				updateQuestionAnswerDTOSyncResponse.setActionName(ActionNameEnum.UPDATE.getDisplayName());
+				
 				updateQuestionAnswerDTOSyncResponse.setUpdateDateTime(response.getUpdateDateTime());
 				updateQuestionAnswerDTOSyncResponse.setGlobalId(response.getGlobalId());
 				updateQuestionAnswerDTOSyncResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
