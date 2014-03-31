@@ -988,13 +988,13 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	</bean>
 	
 	<bean id="detailed.report" class="com.nv.youNeverWait.report.DetailedReport">
-	    <property name ="analytic">
+	    <property name ="analatic">
 	         <ref bean ="analytic.bean"/>
 	    </property>
 	</bean>
 
 	<bean id="summary.report" class="com.nv.youNeverWait.report.SummaryReport">
-	    <property name ="analytic">
+	    <property name ="analatic">
 	         <ref bean ="analytic.bean"/>
 	    </property>
 	</bean>
