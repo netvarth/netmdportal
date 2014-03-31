@@ -15,14 +15,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.nv.youNeverWait.analatic.bl.AggregateMeasure;
-import com.nv.youNeverWait.analatic.bl.Analatic;
-import com.nv.youNeverWait.analatic.bl.Cluster;
-import com.nv.youNeverWait.analatic.bl.Inference;
-import com.nv.youNeverWait.analatic.bl.Measure;
-import com.nv.youNeverWait.analatic.bl.impl.MaternalAge;
-import com.nv.youNeverWait.analatic.pl.AnalaticDao;
-import com.nv.youNeverWait.analatic.pl.entity.MaternalAgeEntity;
+import com.nv.youNeverWait.analytic.bl.AggregateMeasure;
+import com.nv.youNeverWait.analytic.bl.Analytic;
+import com.nv.youNeverWait.analytic.bl.Cluster;
+import com.nv.youNeverWait.analytic.bl.Inference;
+import com.nv.youNeverWait.analytic.bl.Measure;
+import com.nv.youNeverWait.analytic.bl.impl.MaternalAge;
+import com.nv.youNeverWait.analytic.pl.AnalyticDao;
+import com.nv.youNeverWait.analytic.pl.entity.MaternalAgeEntity;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -31,19 +31,19 @@ import com.nv.youNeverWait.analatic.pl.entity.MaternalAgeEntity;
 		"file:resource/youNeverWait-context.xml" })
 
 
-public class AnalaticTest {
+public class AnalyticTest {
 
 	
 	@Autowired
 	private ApplicationContext applicationContext;
 	
-	private Analatic analatic;
+	private Analytic analatic;
 	
 	
 	@Before
     public void setup(){
 		
-		AnalaticDao analaticDao = EasyMock.createMock(AnalaticDao.class);
+		AnalyticDao analaticDao = EasyMock.createMock(AnalyticDao.class);
 	     EasyMock.expect(analaticDao.getMaternalAgeInferences(EasyMock.anyInt(), EasyMock.anyInt(), EasyMock.anyInt(), EasyMock.anyInt())).andStubAnswer(new IAnswer<List<MaternalAgeEntity>>() {
 		        @Override
 		        public List<MaternalAgeEntity> answer() throws Throwable {
@@ -60,7 +60,7 @@ public class AnalaticTest {
 			});
 		
 	     
-	     analatic = (Analatic) applicationContext.getBean("analatic.bean");
+	     analatic = (Analytic) applicationContext.getBean("analatic.bean");
 	     
 	     List<Cluster> clusters =  analatic.getClusters();
 	     
