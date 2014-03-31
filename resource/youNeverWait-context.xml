@@ -231,7 +231,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 	</bean>
 	
-	<bean  id ="analytic.dao" class = "com.nv.youNeverWait.analytic.pl.impl.analyticDaoImpl" parent="generic.dao"/>
+	<bean  id ="analytic.dao" class = "com.nv.youNeverWait.analytic.pl.impl.AnalyticDaoImpl" parent="generic.dao"/>
 	         
 	      
 
@@ -399,7 +399,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
  	</bean>
 
 	
-	<bean id="analytic.bean" class="com.nv.youNeverWait.analytic.bl.analytic">
+	<bean id="analytic.bean" class="com.nv.youNeverWait.analytic.bl.Analytic">
 	     <property name ="clusters">
 	     <list>
 	          <ref bean="age.cluster"/>
@@ -408,6 +408,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	          <ref bean="weight.cluster"/>
 	          <ref bean="complications.cluster"/>
 	          <ref bean="bmi.cluster"/>
+	          
 	          <ref bean="parity.cluster"/>
 	          <ref bean="previous.cs.cluster"/>
 	          <ref bean="vaginal.delivery.cluster"/>
