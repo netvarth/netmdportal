@@ -18,12 +18,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.nv.youNeverWait.analatic.bl.Analatic;
-import com.nv.youNeverWait.analatic.bl.Inference;
-import com.nv.youNeverWait.analatic.bl.impl.MaternalAge;
-import com.nv.youNeverWait.analatic.pl.AnalaticDao;
-import com.nv.youNeverWait.analatic.pl.entity.MaternalAgeEntity;
-import com.nv.youNeverWait.analatic.pl.impl.AnalaticDaoImpl;
+import com.nv.youNeverWait.analytic.bl.Analytic;
+import com.nv.youNeverWait.analytic.bl.Inference;
+import com.nv.youNeverWait.analytic.bl.impl.MaternalAge;
+import com.nv.youNeverWait.analytic.pl.AnalyticDao;
+import com.nv.youNeverWait.analytic.pl.entity.MaternalAgeEntity;
+import com.nv.youNeverWait.analytic.pl.impl.AnalyticDaoImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:resource/context.xml",
@@ -43,7 +43,7 @@ public class MaternalAgeTest {
 	@Before
     public void setup(){
 		
-		AnalaticDao analaticDao = EasyMock.createMock(AnalaticDao.class);
+		AnalyticDao analaticDao = EasyMock.createMock(AnalyticDao.class);
 	     EasyMock.expect(analaticDao.getMaternalAgeInferences(EasyMock.anyInt(), EasyMock.anyInt(), EasyMock.anyInt(), EasyMock.anyInt())).andStubAnswer(new IAnswer<List<MaternalAgeEntity>>() {
 		        @Override
 		        public List<MaternalAgeEntity> answer() throws Throwable {
