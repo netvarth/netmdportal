@@ -284,7 +284,9 @@ public enum ErrorCodeEnum {
 	QuestionnaireNotFound("4017","questionnaire does not exist"),
 	invalidJrxmlPath("4018","jrxml file does not exist in the given path"),
 	JasperException ("4019","JasperException"), 
-	BillPaymentsNull("4020","No bill payments available");
+	BillPaymentsNull("4020","No bill payments available"), 
+	InValidMedicalRecordName("4021","MedicalRecordName is empty"),
+	InvalidMedicalRecordId("4022","Invalid medicalRecord id");
 	
 	
 	private String errCode;
