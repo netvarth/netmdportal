@@ -12,6 +12,7 @@ import com.nv.youNeverWait.rs.dto.CaseDTO;
 import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientOrderDTO;
@@ -46,4 +47,13 @@ public interface PatientDao {
 			HeaderDTO header);
 	public boolean isEmailExists(int id, String email);
 	public String getDepartmentNameById(int departmentId);
+	public ResponseDTO deleteCase(CaseDTO deletePatientCase, HeaderDTO header);
+	public ResponseDTO createMedicalRecord(MedicalRecordDTO newPatientMedicalRecord, HeaderDTO header);
+	public ResponseDTO updateMedicalRecord(MedicalRecordDTO updatedMedicalRecord, HeaderDTO header);
+	public ResponseDTO deleteMedicalRecord(MedicalRecordDTO deleteMedicalRecord, HeaderDTO header);
+	
+	
+	
+	
+	
 }
