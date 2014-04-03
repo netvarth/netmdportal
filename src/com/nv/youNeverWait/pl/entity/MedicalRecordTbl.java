@@ -22,9 +22,6 @@ public class MedicalRecordTbl implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int id;
 
-    @Temporal( TemporalType.TIMESTAMP)
-	@Column(nullable=false)
-	private Date date;
 
 	@Column(name="medical_record", length=200)
 	private String medicalRecord;
@@ -83,14 +80,6 @@ public class MedicalRecordTbl implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Date getDate() {
-		return this.date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 	public String getMedicalRecord() {
