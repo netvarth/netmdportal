@@ -4,6 +4,7 @@
 package com.nv.youNeverWait.rs.dto;
 
 public class MedicalRecordDTO {
+	private int globalId;
 	private int id;
 	private int doctorId;
 	private int patientId;
@@ -91,5 +92,17 @@ public class MedicalRecordDTO {
 	}
 	public void setSuccess(boolean success) {
 		this.success = success;
+	}
+	/**
+	 * @return the globalId
+	 */
+	public int getGlobalId() {
+		return globalId;
+	}
+	/**
+	 * @param globalId the globalId to set
+	 */
+	public void setGlobalId(int globalId) {
+		this.globalId = globalId;
 	}
 }

@@ -12,6 +12,7 @@ import java.util.List;
  *
  */
 public class SyncDTO {
+
 	private HeaderDTO header;
 	private String lastSyncTime;
 	private NetMdDTO UpdateNetmd;
@@ -36,6 +37,10 @@ public class SyncDTO {
 	private List<BillSummaryDTO> updateBillList=new ArrayList<BillSummaryDTO>();
 	private List<CaseDTO> newCaseList= new ArrayList<CaseDTO>();
 	private List<CaseDTO> updateCaseList= new ArrayList<CaseDTO>();
+	private List<CaseDTO> deleteCaseList=new ArrayList<CaseDTO>();
+	private List<MedicalRecordDTO> newMedicalRecordList=new ArrayList<MedicalRecordDTO>();
+	private List<MedicalRecordDTO> updateMedicalRecordList=new ArrayList<MedicalRecordDTO>();
+	private List<MedicalRecordDTO> deleteMedicalRecordList=new ArrayList<MedicalRecordDTO>();
 	private List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList=new ArrayList<NetmdQuestionAnswerDTO>();
 	private List<NetmdQuestionAnswerDTO>updateNetmdQuestionnaireList=new ArrayList<NetmdQuestionAnswerDTO>();
 	
@@ -44,6 +49,44 @@ public class SyncDTO {
 	 */
 	public List<BillSummaryDTO> getNewBillList() {
 		return newBillList;
+	}
+	/**
+	 * @return the newMedicalRecordList
+	 */
+	public List<MedicalRecordDTO> getNewMedicalRecordList() {
+		return newMedicalRecordList;
+	}
+	/**
+	 * @param newMedicalRecordList the newMedicalRecordList to set
+	 */
+	public void setNewMedicalRecordList(List<MedicalRecordDTO> newMedicalRecordList) {
+		this.newMedicalRecordList = newMedicalRecordList;
+	}
+	/**
+	 * @return the updateMedicalRecordList
+	 */
+	public List<MedicalRecordDTO> getUpdateMedicalRecordList() {
+		return updateMedicalRecordList;
+	}
+	/**
+	 * @param updateMedicalRecordList the updateMedicalRecordList to set
+	 */
+	public void setUpdateMedicalRecordList(
+			List<MedicalRecordDTO> updateMedicalRecordList) {
+		this.updateMedicalRecordList = updateMedicalRecordList;
+	}
+	/**
+	 * @return the deleteMedicalRecordList
+	 */
+	public List<MedicalRecordDTO> getDeleteMedicalRecordList() {
+		return deleteMedicalRecordList;
+	}
+	/**
+	 * @param deleteMedicalRecordList the deleteMedicalRecordList to set
+	 */
+	public void setDeleteMedicalRecordList(
+			List<MedicalRecordDTO> deleteMedicalRecordList) {
+		this.deleteMedicalRecordList = deleteMedicalRecordList;
 	}
 	public List<CaseDTO> getNewCaseList() {
 		return newCaseList;
@@ -297,7 +340,18 @@ public class SyncDTO {
 		this.updateNetmdQuestionnaireList = updateNetmdQuestionnaireList;
 	}
 
-	
+	/**
+	 * @return the deleteCaseList
+	 */
+	public List<CaseDTO> getDeleteCaseList() {
+		return deleteCaseList;
+	}
+	/**
+	 * @param deleteCaseList the deleteCaseList to set
+	 */
+	public void setDeleteCaseList(List<CaseDTO> deleteCaseList) {
+		this.deleteCaseList = deleteCaseList;
+	}
 	
 	
 }
