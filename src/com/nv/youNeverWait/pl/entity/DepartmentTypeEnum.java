@@ -19,7 +19,7 @@ import com.nv.youNeverWait.user.bl.impl.EnumDisplay;
  * @author Luciya Jose
  */
 public enum DepartmentTypeEnum implements EnumDisplay{
-	Obstetrics("obstetrics"),Cardiac("cardiac");
+	Obstetrics("Obstetrics"),Cardiac("cardiac");
 
 	private String displayName;
 
