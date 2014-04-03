@@ -995,13 +995,25 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
+        
+		DoctorTbl doctorTbl = getById(DoctorTbl.class,
+				newPatientMedicalRecord.getDoctorId());
 
+		if (doctorTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDoctorId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
 		Date currentDate = new Date();
 		/* Saving medicalRecord for the patient in medical Record Tbl */
 		MedicalRecordTbl medicalRecordTbl = new MedicalRecordTbl();
 		medicalRecordTbl.setMedicalRecord(newPatientMedicalRecord.getMedicalRecord());
 		medicalRecordTbl.setPatientTbl(patientTbl);
+		medicalRecordTbl.setDoctorTbl(doctorTbl);
 		medicalRecordTbl.setCaseTbl(casetbl);
+		medicalRecordTbl.setType(newPatientMedicalRecord.getType());
+		medicalRecordTbl.setStatus(Constants.ACTIVE);
 		medicalRecordTbl.setCreatedDateTime(currentDate);
 		medicalRecordTbl.setUpdateDateTime(currentDate);
 		save(medicalRecordTbl);
