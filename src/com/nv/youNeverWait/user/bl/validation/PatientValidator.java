@@ -14,6 +14,7 @@ import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientOrderDTO;
@@ -342,6 +343,35 @@ public class PatientValidator extends FilterValidator{
 			throw se;
 		}
 		ActionNameEnum action=ActionNameEnum.getEnum(updatedPatientCase.getActionName());
+		
+	}
+	public void validateDeleteCase(CaseDTO deleteCaseList) {
+		
+		if(deleteCaseList.getGlobalId()<=0){
+			ServiceException se=new ServiceException(ErrorCodeEnum.InvalidCaseId);
+			se.isDisplayErrMsg();
+			throw se;
+		}
+		
+	}
+	public void validateMedicalRecord(MedicalRecordDTO newPatientMedicalRecord) {
+		
+		if (!isValidName(newPatientMedicalRecord.getMedicalRecord())) {
+			ServiceException se=new ServiceException(ErrorCodeEnum.InValidMedicalRecordName);
+			se.isDisplayErrMsg();
+			throw se;
+		}
+		if (newPatientMedicalRecord.getPatientId() <=0) {
+			ServiceException se=new ServiceException(ErrorCodeEnum.InvalidPatientId);
+			se.isDisplayErrMsg();
+			throw se;
+		}
+		if (newPatientMedicalRecord.getCaseId() <=0) {
+			ServiceException se=new ServiceException(ErrorCodeEnum.InvalidCaseId);
+			se.isDisplayErrMsg();
+			throw se;
+		}
+
 		
 	}
 }
