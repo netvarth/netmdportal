@@ -19,5 +19,8 @@ public interface QuestionnaireService {
 	ResponseDTO NetmdQuestionnaire(NetmdQuestionAnswerDTO questionnaire,HeaderDTO header);
 	ResponseDTO updateQuestionnaire(NetmdQuestionAnswerDTO questionAnswer,HeaderDTO header);
 	ResponseDTO deleteQuestionnaire(int id,HeaderDTO header);
+	ResponseDTO delete(int id, HeaderDTO header);
+	
+	
 
 }

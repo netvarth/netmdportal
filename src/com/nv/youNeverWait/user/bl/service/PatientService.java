@@ -5,6 +5,8 @@ package com.nv.youNeverWait.user.bl.service;
 
 
 import java.util.Date;
+import java.util.List;
+
 import com.nv.youNeverWait.rs.dto.Appointment;
 import com.nv.youNeverWait.rs.dto.AppointmentListResponseDTO;
 import com.nv.youNeverWait.rs.dto.AppointmentResponse;
@@ -14,6 +16,7 @@ import com.nv.youNeverWait.rs.dto.DoctorListResponseDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.PastAppointmentListResponseDTO;
@@ -65,5 +68,10 @@ public interface PatientService {
 	public PastAppointmentListResponseDTO getPastAppointments(FilterDTO filter);
 	public ResponseDTO createCase(CaseDTO newPatientCase, HeaderDTO header);
 	public ResponseDTO updateCase(CaseDTO updatedCase, HeaderDTO header);
+	public ResponseDTO deleteCase(CaseDTO deleteCaseList, HeaderDTO header);
+	public ResponseDTO createMedicalRecord(MedicalRecordDTO newPatientMedicalRecord, HeaderDTO header);
+	public ResponseDTO updatePatientMedicalRecord(MedicalRecordDTO updatedMedicalRecord, HeaderDTO header);
+	public ResponseDTO deletePatientMedicalRecord(MedicalRecordDTO deleteMedicalRecord, HeaderDTO header);
 	
+
 	}
