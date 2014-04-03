@@ -61,4 +61,13 @@ public class QuestionnaireManager implements QuestionnaireService{
 		return response;
 	}
 
+	@Override
+	public ResponseDTO delete(int id, HeaderDTO header) {
+		
+		ResponseDTO response= questionnaireDao.delete(id,header);
+		return response;
+	}
+
+
+
 }

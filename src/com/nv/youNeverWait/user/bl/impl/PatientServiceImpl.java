@@ -14,6 +14,8 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
 import com.nv.framework.sendmsg.email.SendMailMsgObj;
@@ -35,6 +37,7 @@ import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.PastAppointmentListResponseDTO;
@@ -685,6 +688,50 @@ public class PatientServiceImpl implements PatientService {
 		return respnse;
 	}
 	
+	
+	@Override
+	@Transactional
+	public ResponseDTO deleteCase(CaseDTO deletePatientCase, HeaderDTO header) {
+		ResponseDTO respnse = new ResponseDTO();
+		validator.validateDeleteCase(deletePatientCase);
+		ResponseDTO response = patientDao.deleteCase(deletePatientCase, header);
+		String departmentName= patientDao.getDepartmentNameById(deletePatientCase.getDepartmentId());
+		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
+			 QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
+			 questionAnswer.setCaseId(response.getGlobalId());
+			 questionAnswer.setDepartmentId(deletePatientCase.getDepartmentId());
+			 questionAnswer.setAnswerDTO(deletePatientCase.getQuestionAnswerDTO().getAnswerDTO());
+			 ResponseDTO rsponse=questionnaireService.delete(response.getId(),header);
+		}
+		respnse.setId(response.getId());
+		respnse.setGlobalId(response.getGlobalId());
+		respnse.setSuccess(true);
+		return respnse;
+	}
+	
+	
+	@Override
+	public ResponseDTO createMedicalRecord(MedicalRecordDTO newPatientMedicalRecord, HeaderDTO header) {
+		validator.validateMedicalRecord(newPatientMedicalRecord);
+		ResponseDTO response = patientDao.createMedicalRecord(newPatientMedicalRecord,header);
+		return response;
+	}
+   
+	@Override
+	public ResponseDTO updatePatientMedicalRecord(MedicalRecordDTO updatedMedicalRecord, HeaderDTO header) {
+		validator.validateMedicalRecord(updatedMedicalRecord);
+		ResponseDTO response = patientDao.updateMedicalRecord(updatedMedicalRecord,header);
+		return response;
+
+		
+	}
+	@Override
+	public ResponseDTO deletePatientMedicalRecord(
+			MedicalRecordDTO deleteMedicalRecord, HeaderDTO header) {
+		ResponseDTO response = patientDao.deleteMedicalRecord(deleteMedicalRecord,header);
+		return response;
+	}
+
 	public QueryBuilderFactory getQueryBuilderFactory() {
 		return queryBuilderFactory;
 	}
@@ -797,5 +844,11 @@ public class PatientServiceImpl implements PatientService {
 	public void setQuestionnaireService(QuestionnaireService questionnaireService) {
 		this.questionnaireService = questionnaireService;
 	}
+
+
+
+
+
+
 	
 }
