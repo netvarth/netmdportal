@@ -2,6 +2,9 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+
+
 import java.util.Date;
 
 
@@ -44,7 +47,34 @@ public class MedicalRecordTbl implements Serializable {
 	@JoinColumn(name="patient_id", nullable=false)
 	private PatientTbl patientTbl;
 
-    public MedicalRecordTbl() {
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="update_date_time")
+	private Date updateDateTime;
+	
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_date_time")
+	private Date createdDateTime;
+   
+	@Column(name="status", length=200)
+	private String status;
+	
+    /**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public MedicalRecordTbl() {
     }
 
 	public int getId() {
@@ -101,6 +131,21 @@ public class MedicalRecordTbl implements Serializable {
 
 	public void setPatientTbl(PatientTbl patientTbl) {
 		this.patientTbl = patientTbl;
+	}
+	public Date getUpdateDateTime() {
+		return this.updateDateTime;
+	}
+
+	public void setUpdateDateTime(Date updateDateTime) {
+		this.updateDateTime = updateDateTime;
+	}
+	
+	public Date getCreatedDateTime() {
+		return this.createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
 	}
 	
 }
