@@ -193,10 +193,10 @@ public class SyncServiceImpl implements SyncService {
 			List<CaseSyncResponseDTO> caseResponseList= getCaseResponseList(sync.getHeader(),sync.getNewCaseList(),sync.getUpdateCaseList(),sync.getDeleteCaseList());
 			syncResponse.setPatientCaseResponse(caseResponseList);
 			
-//			/* Synchronizing patient medical Record details*/
-//			List<MedicalRecordSyncResponseDTO> medicalRecordResponseList= getMedicalRecordResponseList(sync.getHeader(),sync.getNewMedicalRecordList(),sync.getUpdateMedicalRecordList(),sync.getDeleteMedicalRecordList());
-//			syncResponse.setPatientMedicalResponse(medicalRecordResponseList);
-//			
+		/* Synchronizing patient medical Record details*/
+			List<MedicalRecordSyncResponseDTO> medicalRecordResponseList= getMedicalRecordResponseList(sync.getHeader(),sync.getNewMedicalRecordList(),sync.getUpdateMedicalRecordList(),sync.getDeleteMedicalRecordList());
+			syncResponse.setPatientMedicalResponse(medicalRecordResponseList);
+			
 			List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswerList=getNetmdQuestionnaireList(sync.getHeader(),sync.getNewNetmdQuestionnaireList(),sync.getUpdateNetmdQuestionnaireList());
 			syncResponse.setNetmdQuestionAnswer(netmdQuestionAnswerList);
 			
