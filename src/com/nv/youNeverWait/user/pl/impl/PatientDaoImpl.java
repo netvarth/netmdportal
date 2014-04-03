@@ -24,6 +24,7 @@ import com.nv.youNeverWait.pl.entity.CaseTbl;
 import com.nv.youNeverWait.pl.entity.DepartmentTbl;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.pl.entity.MedicalRecordTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
@@ -39,6 +40,7 @@ import com.nv.youNeverWait.rs.dto.CaseDTO;
 import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
@@ -780,6 +782,49 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		caseResponse.setSuccess(true);
 		return caseResponse;
 	}
+	
+	
+
+	@Override
+	@Transactional
+	public ResponseDTO deleteCase(CaseDTO deletePatientCase, HeaderDTO header) {
+		ResponseDTO caseResponse = new ResponseDTO();
+		CaseTbl caseTbl = getById(CaseTbl.class,
+				deletePatientCase.getGlobalId());
+		if (caseTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidCaseId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		PatientTbl patientTbl = getById(PatientTbl.class,
+				deletePatientCase.getPatientId());
+
+		if (patientTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPatientId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		DepartmentTbl dept = getById(DepartmentTbl.class,
+				deletePatientCase.getDepartmentId());
+		if (dept == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDepartmentId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		Date currentDate = new Date();
+		caseTbl.setStatus(CaseStatusEnum.Closed.getDisplayName());
+		caseTbl.setUpdatedDateTime(currentDate);
+		update(caseTbl);
+		caseResponse.setGlobalId(caseTbl.getId());
+		caseResponse.setId(deletePatientCase.getId());
+		caseResponse.setSuccess(true);
+		return caseResponse;
+		
+	}
 
 	@Override
 	@Transactional
@@ -924,6 +969,132 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 	 */
 	public void setEm(EntityManager em) {
 		this.em = em;
+	}
+
+	@Override
+	@Transactional
+	public ResponseDTO createMedicalRecord(MedicalRecordDTO newPatientMedicalRecord, HeaderDTO header) {
+		ResponseDTO medicalCaseResponse = new ResponseDTO();
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITHOUT_TIME);
+
+		PatientTbl patientTbl = getById(PatientTbl.class,
+				newPatientMedicalRecord.getPatientId());
+
+		if (patientTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPatientId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		CaseTbl casetbl = getById(CaseTbl.class,
+				newPatientMedicalRecord.getCaseId());
+		if (casetbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidCaseId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		Date currentDate = new Date();
+		/* Saving medicalRecord for the patient in medical Record Tbl */
+		MedicalRecordTbl medicalRecordTbl = new MedicalRecordTbl();
+		medicalRecordTbl.setMedicalRecord(newPatientMedicalRecord.getMedicalRecord());
+		medicalRecordTbl.setPatientTbl(patientTbl);
+		medicalRecordTbl.setCaseTbl(casetbl);
+		medicalRecordTbl.setCreatedDateTime(currentDate);
+		medicalRecordTbl.setUpdateDateTime(currentDate);
+		save(medicalRecordTbl);
+		medicalCaseResponse.setGlobalId(medicalRecordTbl.getId());
+		medicalCaseResponse.setId(newPatientMedicalRecord.getId());
+		medicalCaseResponse.setSuccess(true);
+		return medicalCaseResponse;
+	
+	}
+
+	@Override
+	@Transactional
+	public ResponseDTO updateMedicalRecord(MedicalRecordDTO updatedMedicalRecord, HeaderDTO header) {
+		ResponseDTO medicalRecordResponse = new ResponseDTO();
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITHOUT_TIME);
+
+		MedicalRecordTbl medicalRecordTbl = getById(MedicalRecordTbl.class,
+				updatedMedicalRecord.getGlobalId());
+		if (medicalRecordTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidMedicalRecordId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		PatientTbl patientTbl = getById(PatientTbl.class,
+				updatedMedicalRecord.getPatientId());
+
+		if (patientTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPatientId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		CaseTbl caseTbl = getById(CaseTbl.class,
+				updatedMedicalRecord.getCaseId());
+		if (caseTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDepartmentId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		Date currentDate = new Date();
+		
+		medicalRecordTbl.setMedicalRecord(updatedMedicalRecord.getMedicalRecord());
+		medicalRecordTbl.setPatientTbl(patientTbl);
+		medicalRecordTbl.setCaseTbl(caseTbl);
+		medicalRecordTbl.setCreatedDateTime(currentDate);
+		medicalRecordTbl.setUpdateDateTime(currentDate);
+		update(medicalRecordTbl);
+		medicalRecordResponse.setGlobalId(caseTbl.getId());
+		medicalRecordResponse.setId(updatedMedicalRecord.getId());
+		medicalRecordResponse.setSuccess(true);
+		return medicalRecordResponse;
+	}
+
+
+	@Override
+	@Transactional
+	public ResponseDTO deleteMedicalRecord(MedicalRecordDTO deleteMedicalRecord, HeaderDTO header) {
+		ResponseDTO medicalRecordResponse = new ResponseDTO();
+		MedicalRecordTbl medicalRecordTbl = getById(MedicalRecordTbl.class,
+				deleteMedicalRecord.getGlobalId());
+		if (medicalRecordTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidMedicalRecordId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		PatientTbl patientTbl = getById(PatientTbl.class,
+				deleteMedicalRecord.getPatientId());
+
+		if (patientTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPatientId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		CaseTbl caseTbl = getById(CaseTbl.class,
+				deleteMedicalRecord.getCaseId());
+		if (caseTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDepartmentId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		medicalRecordTbl.setStatus(CaseStatusEnum.Closed.getDisplayName());
+		update(medicalRecordTbl);
+		medicalRecordResponse.setGlobalId(caseTbl.getId());
+		medicalRecordResponse.setId(deleteMedicalRecord.getId());
+		medicalRecordResponse.setSuccess(true);
+		return medicalRecordResponse;
 	}
 
 }
