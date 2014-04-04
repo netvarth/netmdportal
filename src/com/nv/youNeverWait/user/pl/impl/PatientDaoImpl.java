@@ -1039,6 +1039,14 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
+		DoctorTbl doctorTbl=getById(DoctorTbl.class,updatedMedicalRecord.getDoctorId());
+		if(doctorTbl==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDoctorId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
 		PatientTbl patientTbl = getById(PatientTbl.class,
 				updatedMedicalRecord.getPatientId());
 
@@ -1064,8 +1072,11 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		medicalRecordTbl.setCaseTbl(caseTbl);
 		medicalRecordTbl.setCreatedDateTime(currentDate);
 		medicalRecordTbl.setUpdateDateTime(currentDate);
+		medicalRecordTbl.setType(updatedMedicalRecord.getType());
+		medicalRecordTbl.setMedicalRecord(updatedMedicalRecord.getMedicalRecord());
+		medicalRecordTbl.setDoctorTbl(doctorTbl);
 		update(medicalRecordTbl);
-		medicalRecordResponse.setGlobalId(caseTbl.getId());
+		medicalRecordResponse.setGlobalId(medicalRecordTbl.getId());
 		medicalRecordResponse.setId(updatedMedicalRecord.getId());
 		medicalRecordResponse.setSuccess(true);
 		return medicalRecordResponse;
@@ -1103,7 +1114,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		}
 		medicalRecordTbl.setStatus(CaseStatusEnum.Closed.getDisplayName());
 		update(medicalRecordTbl);
-		medicalRecordResponse.setGlobalId(caseTbl.getId());
+		medicalRecordResponse.setGlobalId(medicalRecordTbl.getId());
 		medicalRecordResponse.setId(deleteMedicalRecord.getId());
 		medicalRecordResponse.setSuccess(true);
 		return medicalRecordResponse;
