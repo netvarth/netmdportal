@@ -6,6 +6,8 @@
 	    
 	          <class>com.nv.netmdkb.pl.entity.OrganisationLoginTbl</class>
 	         <class>com.nv.netmdkb.pl.entity.OrganisationTbl</class>
+	         
+	         
 		
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
