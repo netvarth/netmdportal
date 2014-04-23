@@ -11,6 +11,7 @@ $j.cachedScript = function(url, options) {
   // Return the jqXHR object so we can chain callbacks
   return $j.ajax(options);
 };
+
 var userdata;
 $j(document).ready(function(){
 	var classLoader = new ClassLoader();
