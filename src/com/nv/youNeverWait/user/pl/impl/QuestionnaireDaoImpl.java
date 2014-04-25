@@ -81,11 +81,8 @@ public class QuestionnaireDaoImpl extends GenericDaoHibernateImpl implements Que
 				AnswerTbl answerTbl= new AnswerTbl();
 				QuestionTbl qtable =new QuestionTbl();
 				qtable.setId(qMap.get(answer.getQuestionKey()));
-				answerTbl.setDepartmentTbl(departmentTbl);
-				answerTbl.setCaseTbl(caseTbl);
 				answerTbl.setQuestionTbl(qtable);
 				answerTbl.setAnswer(answer.getAnswer());
-				answerTbl.setNetmdBranchTbl(netmdBranchTbl);
 				save(answerTbl);
 			}
 
@@ -137,10 +134,7 @@ public class QuestionnaireDaoImpl extends GenericDaoHibernateImpl implements Que
 				AnswerTbl answerTbl= new AnswerTbl();
 				QuestionTbl qtable =new QuestionTbl();
 				qtable.setId(qMap.get(answer.getQuestionKey()));
-				answerTbl.setDepartmentTbl(departmentTbl);
-				answerTbl.setCaseTbl(caseTbl);
 				answerTbl.setQuestionTbl(qtable);
-				answerTbl.setNetmdBranchTbl(netmdBranchTbl);
 				answerTbl.setAnswer(answer.getAnswer());
 				save(answerTbl);
 			}
