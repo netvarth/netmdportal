@@ -2,9 +2,9 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.Date;
 import java.util.List;
+
 
 /**
  * The persistent class for the case_tbl database table.
@@ -12,12 +12,12 @@ import java.util.List;
  */
 @Entity
 @Table(name="case_tbl")
+
 public class CaseTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(unique = true, nullable = false)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -39,10 +39,15 @@ public class CaseTbl implements Serializable {
 
 	private float height;
 
+	@Column(name="local_answerset_id")
+	private int localAnswersetId;
+
+	@Column(name="local_case_id")
+	private int localCaseId;
+
 	@Column(name="patient_type")
 	private String patientType;
-	
-	@Column(length = 45)
+
 	private String status;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -50,10 +55,6 @@ public class CaseTbl implements Serializable {
 	private Date updatedDateTime;
 
 	private float weight;
-
-	//bi-directional many-to-one association to AnswerTbl
-	@OneToMany(mappedBy="caseTbl")
-	private List<AnswerTbl> answerTbls;
 
 	//bi-directional many-to-one association to DepartmentTbl
 	@ManyToOne
@@ -136,6 +137,22 @@ public class CaseTbl implements Serializable {
 		this.height = height;
 	}
 
+	public int getLocalAnswersetId() {
+		return this.localAnswersetId;
+	}
+
+	public void setLocalAnswersetId(int localAnswersetId) {
+		this.localAnswersetId = localAnswersetId;
+	}
+
+	public int getLocalCaseId() {
+		return this.localCaseId;
+	}
+
+	public void setLocalCaseId(int localCaseId) {
+		this.localCaseId = localCaseId;
+	}
+
 	public String getPatientType() {
 		return this.patientType;
 	}
@@ -166,28 +183,6 @@ public class CaseTbl implements Serializable {
 
 	public void setWeight(float weight) {
 		this.weight = weight;
-	}
-
-	public List<AnswerTbl> getAnswerTbls() {
-		return this.answerTbls;
-	}
-
-	public void setAnswerTbls(List<AnswerTbl> answerTbls) {
-		this.answerTbls = answerTbls;
-	}
-
-	public AnswerTbl addAnswerTbl(AnswerTbl answerTbl) {
-		getAnswerTbls().add(answerTbl);
-		answerTbl.setCaseTbl(this);
-
-		return answerTbl;
-	}
-
-	public AnswerTbl removeAnswerTbl(AnswerTbl answerTbl) {
-		getAnswerTbls().remove(answerTbl);
-		answerTbl.setCaseTbl(null);
-
-		return answerTbl;
 	}
 
 	public DepartmentTbl getDepartmentTbl() {

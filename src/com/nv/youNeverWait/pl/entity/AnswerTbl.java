@@ -10,37 +10,32 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="answer_tbl")
+
 public class AnswerTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
 	private int id;
 
 	@Lob
-	@Column(nullable=false)
 	private String answer;
 
-	//bi-directional many-to-one association to CaseTbl
-	@ManyToOne
-	@JoinColumn(name="case_id", nullable=false)
-	private CaseTbl caseTbl;
+	@Column(name="answer_set_id")
+	private int answerSetId;
 
-	//bi-directional many-to-one association to DepartmentTbl
-	@ManyToOne
-	@JoinColumn(name="dept_id", nullable=false)
-	private DepartmentTbl departmentTbl;
-
-	//bi-directional many-to-one association to NetmdBranchTbl
-	@ManyToOne
-	@JoinColumn(name="netmd_branch_id", nullable=false)
-	private NetmdBranchTbl netmdBranchTbl;
+	@Column(name="netmd_branch_id")
+	private int netmdBranchId;
 
 	//bi-directional many-to-one association to QuestionTbl
 	@ManyToOne
-	@JoinColumn(name="quest_id", nullable=false)
+	@JoinColumn(name="quest_id")
 	private QuestionTbl questionTbl;
+
+	//bi-directional many-to-one association to QuestionnaireTbl
+	@ManyToOne
+	@JoinColumn(name="questionnare_id")
+	private QuestionnaireTbl questionnaireTbl;
 
 	public AnswerTbl() {
 	}
@@ -61,28 +56,20 @@ public class AnswerTbl implements Serializable {
 		this.answer = answer;
 	}
 
-	public CaseTbl getCaseTbl() {
-		return this.caseTbl;
+	public int getAnswerSetId() {
+		return this.answerSetId;
 	}
 
-	public void setCaseTbl(CaseTbl caseTbl) {
-		this.caseTbl = caseTbl;
+	public void setAnswerSetId(int answerSetId) {
+		this.answerSetId = answerSetId;
 	}
 
-	public DepartmentTbl getDepartmentTbl() {
-		return this.departmentTbl;
+	public int getNetmdBranchId() {
+		return this.netmdBranchId;
 	}
 
-	public void setDepartmentTbl(DepartmentTbl departmentTbl) {
-		this.departmentTbl = departmentTbl;
-	}
-
-	public NetmdBranchTbl getNetmdBranchTbl() {
-		return this.netmdBranchTbl;
-	}
-
-	public void setNetmdBranchTbl(NetmdBranchTbl netmdBranchTbl) {
-		this.netmdBranchTbl = netmdBranchTbl;
+	public void setNetmdBranchId(int netmdBranchId) {
+		this.netmdBranchId = netmdBranchId;
 	}
 
 	public QuestionTbl getQuestionTbl() {
@@ -91,6 +78,14 @@ public class AnswerTbl implements Serializable {
 
 	public void setQuestionTbl(QuestionTbl questionTbl) {
 		this.questionTbl = questionTbl;
+	}
+
+	public QuestionnaireTbl getQuestionnaireTbl() {
+		return this.questionnaireTbl;
+	}
+
+	public void setQuestionnaireTbl(QuestionnaireTbl questionnaireTbl) {
+		this.questionnaireTbl = questionnaireTbl;
 	}
 
 }

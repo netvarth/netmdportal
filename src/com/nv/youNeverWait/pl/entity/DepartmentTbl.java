@@ -79,14 +79,14 @@ public class DepartmentTbl implements Serializable {
 
 	public AnswerTbl addAnswerTbl(AnswerTbl answerTbl) {
 		getAnswerTbls().add(answerTbl);
-		answerTbl.setDepartmentTbl(this);
+		
 
 		return answerTbl;
 	}
 
 	public AnswerTbl removeAnswerTbl(AnswerTbl answerTbl) {
 		getAnswerTbls().remove(answerTbl);
-		answerTbl.setDepartmentTbl(null);
+		
 
 		return answerTbl;
 	}
