@@ -1582,7 +1582,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			}
 			netmdBranch.setUpdateDateTime(newDate);
 			update(netmdBranch);
-			if (netmdBranch.getEnableSync() == true) {
+			if (netmdBranch.isEnableSync() == true) {
 				/**
 				 * Checking whether branch sync time is greater than netmd sync
 				 * time
@@ -1703,7 +1703,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		if (netmdBranch != null) {
 			sync.setSyncFreqType(netmdBranch.getSyncFreqType());
 			sync.setSyncTime(netmdBranch.getSyncTime());
-			sync.setEnableSync(netmdBranch.getEnableSync());
+			sync.setEnableSync(netmdBranch.isEnableSync());
 			sync.setSuccess(true);
 		} else {
 			ServiceException se = new ServiceException(
