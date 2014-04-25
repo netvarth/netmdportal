@@ -38,6 +38,7 @@ import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.OrganisationListResponseDTO;
 import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
+import com.nv.youNeverWait.rs.dto.ReportListFilterDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.security.User;
@@ -261,6 +262,7 @@ public class OrganisationResource   {
 	model.put("startYear", request.getParameter("startYear"));
 	model.put("endMonth", request.getParameter("endMonth"));
 	model.put("endYear", request.getParameter("endYear"));
+	
 	model.put("paramList", request.getParameter("paramList"));
     
     JasperPrint jPrint =organisationService.createReport(model, context);
@@ -291,6 +293,37 @@ public class OrganisationResource   {
 		}
 		return response;
 	}
+	
+
+	/**
+	 * To get Organization FilterList
+	 * 
+	 * @return OrganizationViewResponseDTO
+	 */
+	@RequestMapping(value = "getReportFilterList", method = RequestMethod.GET)
+	@ResponseBody
+	public ReportListFilterDTO getReportFilterList() {
+
+		ReportListFilterDTO response = new ReportListFilterDTO();
+		try {
+			response = organisationService.getFilterList();
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
+	@RequestMapping(value ="getGraphics",method=RequestMethod.GET)
+	public String check(){
+		return "samplehtml";
+	}
+
 	public void setLogService(LogService logService) {
 		this.logService = logService;
 	}
