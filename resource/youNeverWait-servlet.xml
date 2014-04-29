@@ -181,9 +181,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	
 	</bean>
 	<bean id="pdfview" class="com.nv.youNeverWait.report.PDFReportView">
-	    <property name="reportGenerator" ref="report.generator" />
+	  
 	</bean>
-	<bean id="report.generator" class="com.nv.youNeverWait.report.ReportGenerator">
-	</bean>
+	
 
 </beans>
