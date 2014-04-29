@@ -4,10 +4,12 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="youNeverWaitPU">
 	   <class>com.nv.youNeverWait.pl.entity.AnswerTbl</class>
+	    <class>com.nv.youNeverWait.pl.entity.AnswerStatTbl</class>
+	     <class>com.nv.youNeverWait.pl.entity.AnswerSetTbl</class>
 		
 		<class>com.nv.youNeverWait.pl.entity.CaseTbl</class>
 		
-		<class>com.nv.youNeverWait.pl.entity.DepartmentQuestionnaireTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.QuestionnaireTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.DepartmentTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.DoctorAchievementTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.DoctorEducationalQualificationTbl</class>
@@ -16,6 +18,8 @@
 		<class>com.nv.youNeverWait.pl.entity.DoctorPracticeExperienceTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.DoctorScheduleTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.DoctorTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.HealthCareOrganisationTbl</class>
+		
 		
 		<class>com.nv.youNeverWait.pl.entity.LabBranchSystemInfoTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.LabBranchTbl</class>
