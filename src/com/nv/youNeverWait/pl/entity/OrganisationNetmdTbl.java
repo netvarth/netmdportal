@@ -1,6 +1,7 @@
 package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -10,14 +11,17 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="organisation_netmd_tbl")
-public class OrganisationNetmdTbl implements Serializable {
+public class OrganisationNetmdTbl  implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+
+	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(unique = true, nullable = false)
 	private int id;
 
+	 
 	//bi-directional many-to-one association to NetmdBranchTbl
 	@ManyToOne
 	@JoinColumn(name="netmd_branch_id", nullable=false)
@@ -31,21 +35,31 @@ public class OrganisationNetmdTbl implements Serializable {
 	public OrganisationNetmdTbl() {
 	}
 
-	public int getId() {
-		return this.id;
-	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
+
+
+
+
 
 	public NetmdBranchTbl getNetmdBranchTbl() {
-		return this.netmdBranchTbl;
+		return netmdBranchTbl;
 	}
+
+
+
+
+
+
 
 	public void setNetmdBranchTbl(NetmdBranchTbl netmdBranchTbl) {
 		this.netmdBranchTbl = netmdBranchTbl;
 	}
+
+
+
+
+
+
 
 	public OrganisationTbl getOrganisationTbl() {
 		return this.organisationTbl;

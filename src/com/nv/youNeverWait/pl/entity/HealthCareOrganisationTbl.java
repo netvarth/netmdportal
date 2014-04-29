@@ -30,9 +30,9 @@ public class HealthCareOrganisationTbl implements Serializable {
 
 	private String status;
 
-	//bi-directional one-to-one association to NetmdBranchTbl
-	@OneToOne(mappedBy="healthCareOrganisationTbl")
-	private NetmdBranchTbl netmdBranchTbl;
+//	//bi-directional one-to-one association to NetmdBranchTbl
+//	@OneToOne(mappedBy="healthCareOrganisationTbl")
+//	private NetmdBranchTbl netmdBranchTbl;
 
 	//bi-directional one-to-one association to OrganisationTbl
 	@OneToOne(mappedBy="healthCareOrganisationTbl")
@@ -97,13 +97,13 @@ public class HealthCareOrganisationTbl implements Serializable {
 		this.status = status;
 	}
 
-	public NetmdBranchTbl getNetmdBranchTbl() {
-		return this.netmdBranchTbl;
-	}
-
-	public void setNetmdBranchTbl(NetmdBranchTbl netmdBranchTbl) {
-		this.netmdBranchTbl = netmdBranchTbl;
-	}
+//	public NetmdBranchTbl getNetmdBranchTbl() {
+//		return this.netmdBranchTbl;
+//	}
+//
+//	public void setNetmdBranchTbl(NetmdBranchTbl netmdBranchTbl) {
+//		this.netmdBranchTbl = netmdBranchTbl;
+//	}
 
 	public OrganisationTbl getOrganisationTbl() {
 		return this.organisationTbl;

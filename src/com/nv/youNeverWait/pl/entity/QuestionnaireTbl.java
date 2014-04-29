@@ -119,14 +119,14 @@ public class QuestionnaireTbl implements Serializable {
 
 	public AnswerTbl addAnswerTbl(AnswerTbl answerTbl) {
 		getAnswerTbls().add(answerTbl);
-		
+		answerTbl.setQuestionnaireTbl(this);
 
 		return answerTbl;
 	}
 
 	public AnswerTbl removeAnswerTbl(AnswerTbl answerTbl) {
 		getAnswerTbls().remove(answerTbl);
-		
+		answerTbl.setQuestionnaireTbl(null);
 
 		return answerTbl;
 	}

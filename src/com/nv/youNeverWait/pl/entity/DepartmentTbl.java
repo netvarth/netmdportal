@@ -2,7 +2,6 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.List;
 
 
@@ -12,12 +11,12 @@ import java.util.List;
  */
 @Entity
 @Table(name="department_tbl")
+
 public class DepartmentTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(unique = true, nullable = false)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	private String description;
@@ -26,9 +25,11 @@ public class DepartmentTbl implements Serializable {
 
 	private String status;
 
-	//bi-directional many-to-one association to AnswerTbl
-	@OneToMany(mappedBy="departmentTbl")
-	private List<AnswerTbl> answerTbls;
+	private String uid;
+
+//	//bi-directional many-to-one association to CaseTbl
+//	@OneToMany(mappedBy="departmentTbl")
+//	private List<CaseTbl> caseTbls;
 
 	//bi-directional many-to-one association to QuestionTbl
 	@OneToMany(mappedBy="departmentTbl")
@@ -69,27 +70,35 @@ public class DepartmentTbl implements Serializable {
 		this.status = status;
 	}
 
-	public List<AnswerTbl> getAnswerTbls() {
-		return this.answerTbls;
+	public String getUid() {
+		return this.uid;
 	}
 
-	public void setAnswerTbls(List<AnswerTbl> answerTbls) {
-		this.answerTbls = answerTbls;
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
-
-	public AnswerTbl addAnswerTbl(AnswerTbl answerTbl) {
-		getAnswerTbls().add(answerTbl);
-		
-
-		return answerTbl;
-	}
-
-	public AnswerTbl removeAnswerTbl(AnswerTbl answerTbl) {
-		getAnswerTbls().remove(answerTbl);
-		
-
-		return answerTbl;
-	}
+//
+//	public List<CaseTbl> getCaseTbls() {
+//		return this.caseTbls;
+//	}
+//
+//	public void setCaseTbls(List<CaseTbl> caseTbls) {
+//		this.caseTbls = caseTbls;
+//	}
+//
+//	public CaseTbl addCaseTbl(CaseTbl caseTbl) {
+//		getCaseTbls().add(caseTbl);
+//		caseTbl.setDepartmentTbl(this);
+//
+//		return caseTbl;
+//	}
+//
+//	public CaseTbl removeCaseTbl(CaseTbl caseTbl) {
+//		getCaseTbls().remove(caseTbl);
+//		caseTbl.setDepartmentTbl(null);
+//
+//		return caseTbl;
+//	}
 
 	public List<QuestionTbl> getQuestionTbls() {
 		return this.questionTbls;

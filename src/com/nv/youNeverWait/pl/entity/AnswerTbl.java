@@ -10,12 +10,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="answer_tbl")
-
 public class AnswerTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	@Lob
