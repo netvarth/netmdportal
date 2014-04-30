@@ -1,0 +1,2070 @@
+{
+    "test": [
+        {
+            "Report": "Layout1",
+            "Result": {
+                "testLayout": "Layout1",
+                "testName": "WIDAL",
+                "analysis": [
+                    {
+                        "analysisType": "WIDAL REPORT",
+                        "resultContent": [
+                            {
+                                "resultParams": [
+                                    {
+                                        "values": [
+                                            {
+                                                "values": [
+                                                    {
+                                                        "normalRangeAttribute": "Salmonella typhi 'O'",
+                                                        "displayType": "text",
+                                                        "colon": ":",
+                                                        "value": ""
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "values": [
+                                                    {
+                                                        "normalRangeAttribute": "Salmonella typhi 'H'",
+                                                        "displayType": "text",
+                                                        "colon": ":",
+                                                        "value": ""
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "values": [
+                                                    {
+                                                        "normalRangeAttribute": "S.paratyphi 'AH'",
+                                                        "displayType": "text",
+                                                        "colon": ":",
+                                                        "value": ""
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "values": [
+                                                    {
+                                                        "normalRangeAttribute": "S.paratyphi 'BH'",
+                                                        "displayType": "text",
+                                                        "colon": ":",
+                                                        "value": ""
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "Urine",
+            "Result": {
+                "testLayout": "Urine",
+                "testName": "Urine Routine Examination",
+                "values": [
+                    {
+                        "testnameval": "Colour",
+                        "className1": "colour",
+                        "displayType1": "select",
+                        "tabIndex1": "1",
+                        "value1": "",
+                        "testnameval2": "MICROSCOPY"
+                    },
+                    {
+                        "testnameval": "Reaction",
+                        "className1": "acid",
+                        "displayType1": "select",
+                        "tabIndex1": "2",
+                        "value1": "",
+                        "testnameval2": "Red Blood Cells",
+                        "className2": "cell",
+                        "displayType2": "text",
+                        "tabIndex2": "11",
+                        "value2": ""
+                    },
+                    {
+                        "testnameval": "Specific Gravity",
+                        "displayType1": "text",
+                        "tabIndex1": "3",
+                        "value1": "--",
+                        "testnameval2": "Pus Cells",
+                        "className2": "cell",
+                        "displayType2": "text",
+                        "tabIndex2": "12",
+                        "value2": ""
+                    },
+                    {
+                        "testnameval": "Albumin",
+                        "className1": "general",
+                        "displayType1": "text",
+                        "tabIndex1": "4",
+                        "value1": "",
+                        "testnameval2": "Epithelial Cells",
+                        "className2": "general",
+                        "displayType2": "text",
+                        "tabIndex2": "13",
+                        "value2": ""
+                    },
+                    {
+                        "testnameval": "Sugar",
+                        "className1": "general",
+                        "displayType1": "text",
+                        "tabIndex1": "5",
+                        "value1": "",
+                        "testnameval2": "Cast",
+                        "className2": "general",
+                        "displayType2": "text",
+                        "tabIndex2": "14",
+                        "value2": ""
+                    },
+                    {
+                        "testnameval": "Acetone",
+                        "displayType1": "text",
+                        "tabIndex1": "6",
+                        "value1": "--",
+                        "testnameval2": "Crystals",
+                        "className2": "general",
+                        "displayType2": "text",
+                        "tabIndex2": "15",
+                        "value2": ""
+                    },
+                    {
+                        "testnameval": "Bile Pigments",
+                        "displayType1": "text",
+                        "tabIndex1": "7",
+                        "value1": "--",
+                        "testnameval2": "Bacteria",
+                        "className2": "general",
+                        "displayType2": "text",
+                        "tabIndex2": "16",
+                        "value2": ""
+                    },
+                    {
+                        "testnameval": "Bile salt",
+                        "displayType1": "text",
+                        "tabIndex1": "8",
+                        "value1": "--",
+                        "testnameval2": "Ammor.Urates",
+                        "className2": "general",
+                        "displayType2": "text",
+                        "tabIndex2": "17",
+                        "value2": ""
+                    },
+                    {
+                        "testnameval": "Urobilinogen",
+                        "displayType1": "text",
+                        "tabIndex1": "9",
+                        "value1": "",
+                        "testnameval2": "",
+                        "editField": "",
+                        "displayType2": "text",
+                        "tabIndex2": "18",
+                        "value2": ""
+                    },
+                    {
+                        "testnameval": "Porphobilinogen",
+                        "displayType1": "text",
+                        "tabIndex1": "10",
+                        "value1": "",
+                        "testnameval2": "",
+                        "editField": "",
+                        "displayType2": "text",
+                        "tabIndex2": "19",
+                        "value2": ""
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "AFB",
+            "Result": {
+                "testLayout": "AFB",
+                "testTitle": "SMEAR REPORT",
+                "testName": "AFB Smear - Concentration",
+                "values": [
+                    {
+                        "fieldval1": "",
+                        "fieldval2": "",
+                        "classNameOne": "AFB_One",
+                        "classNameTwo": "AFB_Two"
+                    },
+                    {
+                        "fieldval1": "",
+                        "fieldval2": "",
+                        "classNameOne": "AFB_One",
+                        "classNameTwo": "AFB_Two"
+                    },
+                    {
+                        "fieldval1": "",
+                        "fieldval2": "",
+                        "classNameOne": "AFB_One",
+                        "classNameTwo": "AFB_Two"
+                    },
+                    {
+                        "fieldval1": "",
+                        "fieldval2": "",
+                        "classNameOne": "AFB_One",
+                        "classNameTwo": "AFB_Two"
+                    },
+                    {
+                        "fieldval1": "",
+                        "fieldval2": "",
+                        "classNameOne": "AFB_One",
+                        "classNameTwo": "AFB_Two"
+                    },
+                    {
+                        "fieldval1": "",
+                        "fieldval2": "",
+                        "classNameOne": "AFB_One",
+                        "classNameTwo": "AFB_Two"
+                    },
+                    {
+                        "fieldval1": "",
+                        "fieldval2": "",
+                        "classNameOne": "AFB_One",
+                        "classNameTwo": "AFB_Two"
+                    },
+                    {
+                        "fieldval1": "",
+                        "fieldval2": "",
+                        "classNameOne": "AFB_One",
+                        "classNameTwo": "AFB_Two"
+                    },
+                    {
+                        "fieldval1": "",
+                        "fieldval2": "",
+                        "classNameOne": "AFB_One",
+                        "classNameTwo": "AFB_Two"
+                    },
+                    {
+                        "fieldval1": "",
+                        "fieldval2": "",
+                        "classNameOne": "AFB_One",
+                        "classNameTwo": "AFB_Two"
+                    },
+                    {
+                        "fieldval1": "",
+                        "fieldval2": "",
+                        "classNameOne": "AFB_One",
+                        "classNameTwo": "AFB_Two"
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "Osmotic",
+            "Result": {
+                "testLayout": "Osmotic",
+                "testName": "Osmotic Fragility",
+                "Resultheaders": [
+                    {
+                        "headername": "% of Nacl"
+                    },
+                    {
+                        "headername": "% Lysis(Test)"
+                    },
+                    {
+                        "headername": "%Lysis(Normal Control)"
+                    }
+                ],
+                "Resultbody": [
+                    {
+                        "headerOneval": "0.10",
+                        "headerTwoval": "",
+                        "headerThreeVal": "100"
+                    },
+                    {
+                        "headerOneval": "0.20",
+                        "headerTwoval": "",
+                        "headerThreeVal": "100"
+                    },
+                    {
+                        "headerOneval": "0.30",
+                        "headerTwoval": "",
+                        "headerThreeVal": "97-100"
+                    },
+                    {
+                        "headerOneval": "0.35",
+                        "headerTwoval": "",
+                        "headerThreeVal": "90-99"
+                    },
+                    {
+                        "headerOneval": "0.40",
+                        "headerTwoval": "",
+                        "headerThreeVal": "50-95"
+                    },
+                    {
+                        "headerOneval": "0.45",
+                        "headerTwoval": "",
+                        "headerThreeVal": "5-45"
+                    },
+                    {
+                        "headerOneval": "0.50",
+                        "headerTwoval": "",
+                        "headerThreeVal": "0-15"
+                    },
+                    {
+                        "headerOneval": "0.55",
+                        "headerTwoval": "",
+                        "headerThreeVal": "0-6"
+                    },
+                    {
+                        "headerOneval": "0.60",
+                        "headerTwoval": "",
+                        "headerThreeVal": "0"
+                    },
+                    {
+                        "headerOneval": "0.90",
+                        "headerTwoval": "",
+                        "headerThreeVal": "0"
+                    },
+                    {
+                        "headerOneval": "",
+                        "headerTwoval": "",
+                        "headerThreeVal": ""
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "CD",
+            "Result": {
+                "testLayout": "CD",
+                "testName": "CD-4",
+                "values": [
+                    {
+                        "fieldval1": "",
+                        "className1": "cdlist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "",
+                        "className1": "cdlist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "",
+                        "className1": "cdlist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "",
+                        "className1": "cdlist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "",
+                        "className1": "cdlist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "",
+                        "className1": "cdlist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "",
+                        "className1": "cdlist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "",
+                        "className1": "cdlist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "",
+                        "className1": "cdlist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "GTT",
+            "Result": {
+                "testLayout": "GTT",
+                "testName": "EXTENDED GLUCOSE TOLERANCE TEST",
+                "testType": "",
+                "values": [
+                    {
+                        "fieldval1": "",
+                        "className1": "INlist",
+                        "fieldval2": "",
+                        "BldUnit": " mg/dl",
+                        "fieldval3": "",
+                        "className3": "UrClr"
+                    },
+                    {
+                        "fieldval1": "",
+                        "className1": "INlist",
+                        "fieldval2": "",
+                        "BldUnit": " mg/dl",
+                        "fieldval3": "",
+                        "className3": "UrClr"
+                    },
+                    {
+                        "fieldval1": "",
+                        "className1": "INlist",
+                        "fieldval2": "",
+                        "BldUnit": " mg/dl",
+                        "fieldval3": "",
+                        "className3": "UrClr"
+                    },
+                    {
+                        "fieldval1": "",
+                        "className1": "INlist",
+                        "fieldval2": "",
+                        "BldUnit": " mg/dl",
+                        "fieldval3": "",
+                        "className3": "UrClr"
+                    },
+                    {
+                        "fieldval1": "",
+                        "className1": "INlist",
+                        "fieldval2": "",
+                        "BldUnit": " mg/dl",
+                        "fieldval3": "",
+                        "className3": "UrClr"
+                    },
+                    {
+                        "fieldval1": "",
+                        "className1": "INlist",
+                        "fieldval2": "",
+                        "BldUnit": " mg/dl",
+                        "fieldval3": "",
+                        "className3": "UrClr"
+                    },
+                    {
+                        "fieldval1": "",
+                        "className1": "INlist",
+                        "fieldval2": "",
+                        "BldUnit": " mg/dl",
+                        "fieldval3": "",
+                        "className3": "UrClr"
+                    },
+                    {
+                        "fieldval1": "",
+                        "className1": "INlist",
+                        "fieldval2": "",
+                        "BldUnit": " mg/dl",
+                        "fieldval3": "",
+                        "className3": "UrClr"
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "Peripheral",
+            "Result": {
+                "testLayout": "Peripheral",
+                "testName": "Peripheral Smear",
+                "values": [
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    },
+                    {
+                        "fieldval": ""
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "ANA",
+            "Result": {
+                "testLayout": "ANA",
+                "testName": "ANAPROFILE",
+                "values": [
+                    {
+                        "fieldval1": "RNP/Sm",
+                        "className1": "analist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "Sm",
+                        "className1": "analist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "SS-A native (60 kDa)",
+                        "className1": "analist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "Ro - 52 (52 kDa)",
+                        "className1": "analist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "SS - B",
+                        "className1": "analist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "Scl - 70",
+                        "className1": "analist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "PM - Scl",
+                        "className1": "analist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "Jo - 1",
+                        "className1": "analist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "Centromere B",
+                        "className1": "analist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "PCNA",
+                        "className1": "analist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "ds DNA",
+                        "className1": "analist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "Nucleosomes",
+                        "className1": "analist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "Histones",
+                        "className1": "analist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "Ribosomal - P Protein",
+                        "className1": "analist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    },
+                    {
+                        "fieldval1": "AMA-M2",
+                        "className1": "analist",
+                        "fieldval2": "",
+                        "fieldval3": ""
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "Stool Analysis",
+            "Result": {
+                "testLayout": "Stool Analysis",
+                "testName": "Stool Concentration Method",
+                "values": [
+                    {
+                        "testExamine": "Colour",
+                        "value": "",
+                        "className": "common medium",
+                        "id": ""
+                    },
+                    {
+                        "testExamine": "Consistency",
+                        "value": "",
+                        "className": "common large",
+                        "id": ""
+                    },
+                    {
+                        "testExamine": "pH",
+                        "value": "",
+                        "className": " noclass medium",
+                        "id": ""
+                    },
+                    {
+                        "testExamine": "Reducing Substances",
+                        "value": "",
+                        "className": " noclass medium",
+                        "id": ""
+                    }
+                ],
+                "testMicrosopy": [
+                    {
+                        "MSresult1": "Ova & Cyst",
+                        "MSresult2": "",
+                        "className": "common mystyle"
+                    },
+                    {
+                        "MSresult1": "RBC",
+                        "MSresult2": "",
+                        "className": "common mystyle"
+                    },
+                    {
+                        "MSresult1": "Pus Cells",
+                        "MSresult2": "",
+                        "className": "common mystyle"
+                    },
+                    {
+                        "MSresult1": "Yeast Cells",
+                        "MSresult2": "",
+                        "className": "common mystyle"
+                    },
+                    {
+                        "MSresult1": "",
+                        "MSresult2": "",
+                        "className": "common mystyle"
+                    },
+                    {
+                        "MSresult1": "",
+                        "MSresult2": "",
+                        "className": "common mystyle"
+                    },
+                    {
+                        "MSresult1": "",
+                        "MSresult2": "",
+                        "className": "common mystyle"
+                    },
+                    {
+                        "MSresult1": "",
+                        "MSresult2": "",
+                        "className": "common mystyle"
+                    }
+                ],
+                "Occubld": ""
+            }
+        },
+        {
+            "Report": "HistoPath",
+            "Result": {
+                "testLayout": "HistoPath",
+                "testName": "KOHMount",
+                "values": [
+                    {
+                        "fieldval": ""
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "Haemogram",
+            "Result": {
+                "testLayout": "Haemogram",
+                "testName": "Haemogram",
+                "values": [
+                    {
+                        "testnameval": "WBC",
+                        "absoluteValue": "",
+                        "aVUnit": "  /cu mm",
+                        "normalRange": "5,000-12,000 /cu mm",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "NEU(Neutrophil)",
+                        "absoluteValue": "",
+                        "aVUnit": "  /cu mm",
+                        "normalRange": "1,700-7,800/cu mm",
+                        "VUnit": "%N",
+                        "value": "",
+                        "NR": "35.0-65.0%N"
+                    },
+                    {
+                        "testnameval": "LYM(lymphocyte)",
+                        "absoluteValue": "",
+                        "aVUnit": "  /cu mm",
+                        "normalRange": "1,250-5,400 /cu mm",
+                        "VUnit": "%L",
+                        "value": "",
+                        "NR": "25.0-45.0%L"
+                    },
+                    {
+                        "testnameval": "MONO(Monocyte)",
+                        "absoluteValue": "",
+                        "aVUnit": "  /cu mm",
+                        "normalRange": "0-600 /cu mm",
+                        "VUnit": "%M",
+                        "value": "",
+                        "NR": "0.00-6.0% M"
+                    },
+                    {
+                        "testnameval": "EOS(Eosinophil)",
+                        "absoluteValue": "",
+                        "aVUnit": "  /cu mm",
+                        "normalRange": "0-600 /cu mm",
+                        "VUnit": "%E",
+                        "value": "",
+                        "NR": "0.00-6.00% E"
+                    },
+                    {
+                        "testnameval": "BASO(Basophil)",
+                        "absoluteValue": "",
+                        "aVUnit": "  /cu mm",
+                        "normalRange": "0.00-100 /cu mm",
+                        "VUnit": "%B",
+                        "value": "",
+                        "NR": "0.00-2.00% B"
+                    },
+                    {
+                        "testnameval": "RBC",
+                        "absoluteValue": "",
+                        "aVUnit": "M/ul",
+                        "normalRange": "4.50-6.50 M/ul",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "HGB(Hb)",
+                        "absoluteValue": "",
+                        "aVUnit": "g/dl",
+                        "normalRange": "12.0-15.0 g/dL",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "HCT(Hematocrit)-PCV",
+                        "absoluteValue": "",
+                        "aVUnit": "%",
+                        "normalRange": "33.0-45.0 %",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "MCV",
+                        "absoluteValue": "",
+                        "aVUnit": "fL",
+                        "normalRange": "82.0-92.0fl",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "MCH",
+                        "absoluteValue": " ",
+                        "aVUnit": "pg",
+                        "normalRange": "27.0-32.0 pg",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "MCHC",
+                        "absoluteValue": " ",
+                        "aVUnit": "g/dL",
+                        "normalRange": "32.0-36.0f g/dL",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "RDW(Red Cell Distribution Width)",
+                        "absoluteValue": " ",
+                        "aVUnit": "%",
+                        "normalRange": "11.6-14.8 %",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "PLT(Platelets)",
+                        "absoluteValue": "",
+                        "aVUnit": "  /cu mm",
+                        "normalRange": "100000-400000 /cu mm",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "MPV(Mean Platelet Volume)",
+                        "absoluteValue": " ",
+                        "aVUnit": "f L",
+                        "normalRange": "8.1-12.5 fL",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "PCT(Platlet crit)",
+                        "absoluteValue": " ",
+                        "aVUnit": "%",
+                        "normalRange": "0.00-10.0 %",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "PDW(Platlet Distribution Width)",
+                        "absoluteValue": " ",
+                        "aVUnit": " fL",
+                        "normalRange": "9.4-18.0 fL",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "HaemogramESR",
+            "Result": {
+                "testLayout": "HaemogramESR",
+                "testName": "Haemogram & ESR",
+                "values": [
+                    {
+                        "testnameval": "WBC",
+                        "absoluteValue": "",
+                        "aVUnit": "  /cu mm",
+                        "normalRange": "5,000-12,000 /cu mm",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "NEU(Neutrophil)",
+                        "absoluteValue": "",
+                        "aVUnit": "  /cu mm",
+                        "normalRange": "1,700-7,800/cu mm",
+                        "VUnit": "%N",
+                        "value": "",
+                        "NR": "35.0-65.0%N"
+                    },
+                    {
+                        "testnameval": "LYM(lymphocyte)",
+                        "absoluteValue": "",
+                        "aVUnit": "  /cu mm",
+                        "normalRange": "1,250-5,400 /cu mm",
+                        "VUnit": "%L",
+                        "value": "",
+                        "NR": "25.0-45.0%L"
+                    },
+                    {
+                        "testnameval": "MONO(Monocyte)",
+                        "absoluteValue": "",
+                        "aVUnit": "  /cu mm",
+                        "normalRange": "0-600 /cu mm",
+                        "VUnit": "%M",
+                        "value": "",
+                        "NR": "0.00-6.0% M"
+                    },
+                    {
+                        "testnameval": "EOS(Eosinophil)",
+                        "absoluteValue": "",
+                        "aVUnit": "  /cu mm",
+                        "normalRange": "0-600 /cu mm",
+                        "VUnit": "%E",
+                        "value": "",
+                        "NR": "0.00-6.00% E"
+                    },
+                    {
+                        "testnameval": "BASO(Basophil)",
+                        "absoluteValue": "",
+                        "aVUnit": "  /cu mm",
+                        "normalRange": "0.00-100 /cu mm",
+                        "VUnit": "%B",
+                        "value": "",
+                        "NR": "0.00-2.00% B"
+                    },
+                    {
+                        "testnameval": "RBC",
+                        "absoluteValue": "",
+                        "aVUnit": "M/ul",
+                        "normalRange": "4.50-6.50 M/uL",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "HGB(Hb)",
+                        "absoluteValue": "",
+                        "aVUnit": "g/dl",
+                        "normalRange": "12.0-15.0 g/dL",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "HCT(Hematocrit)-PCV",
+                        "absoluteValue": "",
+                        "aVUnit": "%",
+                        "normalRange": "33.0-45.0 %",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "MCV",
+                        "absoluteValue": "",
+                        "aVUnit": "fL",
+                        "normalRange": "82.0-92.0 fL",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "MCH",
+                        "absoluteValue": " ",
+                        "aVUnit": "pg",
+                        "normalRange": "27.0-32.0 pg",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "MCHC",
+                        "absoluteValue": " ",
+                        "aVUnit": "g/dL",
+                        "normalRange": "32.0-36.0f g/dL",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "RDW(Red Cell Distribution Width)",
+                        "absoluteValue": " ",
+                        "aVUnit": "%",
+                        "normalRange": "11.6-14.8 %",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "PLT(Platelets)",
+                        "absoluteValue": "",
+                        "aVUnit": "  /cu mm",
+                        "normalRange": "100000-400000 /cu mm",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "MPV(Mean Platelet Volume)",
+                        "absoluteValue": " ",
+                        "aVUnit": "fL",
+                        "normalRange": "8.1-12.5 fL",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "PCT(Platlet crit)",
+                        "absoluteValue": " ",
+                        "aVUnit": "%",
+                        "normalRange": "0.00-10.0 %",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "PDW(Platlet Distribution Width)",
+                        "absoluteValue": " ",
+                        "aVUnit": " fL",
+                        "normalRange": "9.4-18.0 fL",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    },
+                    {
+                        "testnameval": "ESR",
+                        "absoluteValue": " ",
+                        "aVUnit": " mm/Hr",
+                        "normalRange": "0-20 mm/Hr",
+                        "VUnit": "",
+                        "value": "",
+                        "NR": ""
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "LipidLayout",
+            "Result": {
+                "testLayout": "LipidLayout",
+                "testName": "Lipid Profile",
+                "checked": "false",
+                "values": [
+                    {
+                        "name": "Cholesterol",
+                        "id": "Cholesterol",
+                        "fieldval": "",
+                        "className": "medium",
+                        "tableval": [
+                            {
+                                "name": "Desirable : < 200 mg/dl"
+                            },
+                            {
+                                "name": "Borderline High : 200 - 239 mg/dl"
+                            },
+                            {
+                                "name": "High : > 240  mg/dl"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Triglycerides",
+                        "id": "Triglycerides",
+                        "fieldval": "",
+                        "className": "medium",
+                        "tableval": [
+                            {
+                                "name": "Normal : < 150 mg/dl"
+                            },
+                            {
+                                "name": "Borderline High : 150 - 199 mg/dl"
+                            },
+                            {
+                                "name": "High : > 200 mg/dl"
+                            }
+                        ]
+                    },
+                    {
+                        "name": " HDL Cholesterol",
+                        "id": "HDL",
+                        "fieldval": "",
+                        "className": "medium",
+                        "tableval": [
+                            {
+                                "name": " High Risk : Up to35 mg/dl"
+                            },
+                            {
+                                "name": "Low Risk : > 60  mg/dl"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "LDL Cholesterol",
+                        "id": "LDL",
+                        "fieldval": "",
+                        "className": "newBox medium",
+                        "tableval": [
+                            {
+                                "name": "Desirable : < 130mg/dl"
+                            },
+                            {
+                                "name": "Borderline High : 130-159  mg/dl"
+                            },
+                            {
+                                "name": "High : > 160 mg/dl"
+                            }
+                        ]
+                    },
+                    {
+                        "name": " VLDL Cholesterol",
+                        "id": "VLDL",
+                        "className": "newBox medium",
+                        "fieldval": "",
+                        "fieldvalue": "",
+                        "tableval": [
+                            {
+                                "name": "< 30 mg/dl"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "Semen Layout",
+            "Result": {
+                "testLayout": "Semen Layout",
+                "testName": "SEMEN ANALYSIS",
+                "analysis": [
+                    {
+                        "analysisType": "PHYSICAL EXAMINATION",
+                        "resultContent": [
+                            {
+                                "normalRangeAttribute": "Volume",
+                                "displayType": "text",
+                                "unit": "ml",
+                                "className": "tiny",
+                                "id": "volume",
+                                "value": ""
+                            },
+                            {
+                                "normalRangeAttribute": "pH",
+                                "displayType": "text",
+                                "className": "tiny",
+                                "id": "ph",
+                                "value": ""
+                            },
+                            {
+                                "normalRangeAttribute": "Colour",
+                                "displayType": "text",
+                                "className": "colour large",
+                                "id": "colour",
+                                "value": ""
+                            },
+                            {
+                                "normalRangeAttribute": "Liquefaction",
+                                "displayType": "text",
+                                "unit": "minutes",
+                                "id": "liquefaction",
+                                "className1": "lique",
+                                "className": " min tiny",
+                                "value": "",
+                                "value1": ""
+                            },
+                            {
+                                "normalRangeAttribute": "Viscosity",
+                                "displayType": "text",
+                                "id": "viscosity",
+                                "className": "large viscosity",
+                                "value": ""
+                            }
+                        ]
+                    },
+                    {
+                        "analysisType": "CHEMICAL EXAMINATION",
+                        "resultContent": [
+                            {
+                                "normalRangeAttribute": "Occult blood test",
+                                "displayType": "text",
+                                "className": "large",
+                                "id": "occultBldTest",
+                                "value": ""
+                            },
+                            {
+                                "normalRangeAttribute": "Fructose test",
+                                "displayType": "text",
+                                "className": "large",
+                                "id": "fructose",
+                                "value": ""
+                            }
+                        ]
+                    },
+                    {
+                        "analysisType": "MICROSCOPIC EXAMINATION",
+                        "resultContent": [
+                            {
+                                "displayType": "text",
+                                "className": "large lique",
+                                "id": "spermList",
+                                "value": ""
+                            },
+                            {
+                                "displayType": "text",
+                                "className": "medium",
+                                "id": "spermValue",
+                                "value": ""
+                            },
+                            {
+                                "displayType": "text",
+                                "className": "large microscopic",
+                                "id": "spermUnit",
+                                "value": ""
+                            }
+                        ]
+                    },
+                    {
+                        "analysisType": "SPERM MOTILITY",
+                        "resultContent": [
+                            {
+                                "normalRangeAttribute": "Good forward progressive",
+                                "displayType": "text",
+                                "unit": "%",
+                                "id": "goodProgress",
+                                "className": "tiny",
+                                "value": ""
+                            },
+                            {
+                                "normalRangeAttribute": "Sluggishforward progressive",
+                                "displayType": "text",
+                                "unit": "%",
+                                "id": "sluggProgress",
+                                "className": "tiny",
+                                "value": ""
+                            },
+                            {
+                                "normalRangeAttribute": "Non progressive",
+                                "displayType": "text",
+                                "unit": "%",
+                                "id": "nonProgress",
+                                "className": "tiny",
+                                "value": ""
+                            },
+                            {
+                                "normalRangeAttribute": "Non-motile",
+                                "displayType": "text",
+                                "unit": "%",
+                                "id": "nonMotile",
+                                "className": "tiny",
+                                "value": ""
+                            }
+                        ]
+                    },
+                    {
+                        "analysisType": "SPERM MORPHOLOGY",
+                        "resultContent": [
+                            {
+                                "headerLabel": "Abnormal %",
+                                "values": [
+                                    {
+                                        "normalRangeAttribute": "Head  ",
+                                        "displayType": "text",
+                                        "className": "medium",
+                                        "unit": "%",
+                                        "id": "abnormalHead",
+                                        "value": ""
+                                    },
+                                    {
+                                        "normalRangeAttribute": "Neck  ",
+                                        "displayType": "text",
+                                        "className": "medium",
+                                        "unit": "%",
+                                        "id": "abnormalNeck",
+                                        "value": ""
+                                    },
+                                    {
+                                        "normalRangeAttribute": "Tail  ",
+                                        "displayType": "text",
+                                        "className": "medium",
+                                        "unit": "%",
+                                        "id": "abnormalTail",
+                                        "value": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "headerLabel": "",
+                                "values": [
+                                    {
+                                        "normalRangeAttribute": "Total abnormal ",
+                                        "displayType": "text",
+                                        "readonly": "true",
+                                        "className": "medium",
+                                        "unit": "%",
+                                        "value": "",
+                                        "id": "totalAbnormal"
+                                    },
+                                    {
+                                        "normalRangeAttribute": "Normal Forms ",
+                                        "displayType": "text",
+                                        "readonly": "true",
+                                        "className": "medium",
+                                        "unit": "%",
+                                        "value": "",
+                                        "id": "normalForms"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "analysisType": "OTHER CONSTITUTES",
+                        "resultContent": [
+                            {
+                                "normalRangeAttribute": "Immature sperm cells",
+                                "displayType": "text",
+                                "unit": "mill/ml",
+                                "className": "medium",
+                                "id": "immatureSperm",
+                                "value": ""
+                            },
+                            {
+                                "normalRangeAttribute": "Red Blood Cells",
+                                "displayType": "text",
+                                "id": "redBloodCells",
+                                "className": "large cell",
+                                "value": ""
+                            },
+                            {
+                                "normalRangeAttribute": "Leucocytes",
+                                "displayType": "text",
+                                "id": "leucocytes",
+                                "className": "large cell",
+                                "value": ""
+                            },
+                            {
+                                "normalRangeAttribute": "Epithelial cells",
+                                "displayType": "text",
+                                "className": "large cell",
+                                "id": "epithelialCells",
+                                "value": ""
+                            },
+                            {
+                                "normalRangeAttribute": "Trichomonas vaginalis",
+                                "displayType": "text",
+                                "className": "large cell",
+                                "id": "trichVaginalis",
+                                "value": ""
+                            },
+                            {
+                                "normalRangeAttribute": "Fat Globules",
+                                "displayType": "text",
+                                "className": "large cell",
+                                "id": "fatGlobules",
+                                "value": ""
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "LFT",
+            "Result": {
+                "testLayout": "LFT",
+                "testName": "LIVER FUNCTION TEST",
+                "values": [
+                    {
+                        "name": "Bilirubin Total",
+                        "id": "Cholestrol",
+                        "fieldval": "",
+                        "UnitVal": "mg/dl",
+                        "className": "medium",
+                        "OBSRDVal": "0.1-1.4 mg/dl"
+                    },
+                    {
+                        "name": "Bilirubin Direct",
+                        "id": "Triglycerides",
+                        "fieldval": "",
+                        "UnitVal": "mg/dl",
+                        "className": "medium",
+                        "OBSRDVal": "0.0-0.3 mg/dl"
+                    },
+                    {
+                        "name": "SGOT (AST)",
+                        "id": "HDL",
+                        "fieldval": "",
+                        "UnitVal": "U/L",
+                        "className": "medium",
+                        "OBSRDVal": "5-40 U/L"
+                    },
+                    {
+                        "name": "SGPT (ALT)",
+                        "id": "LDL",
+                        "fieldval": "",
+                        "UnitVal": "U/L",
+                        "className": "medium",
+                        "OBSRDVal": "5-40 U/L"
+                    },
+                    {
+                        "name": "Alkaline Phosphatase",
+                        "id": "VLDL",
+                        "className": "medium",
+                        "fieldval": "",
+                        "UnitVal": "U/L",
+                        "OBSRDVal": "36-141 U/L"
+                    },
+                    {
+                        "name": "Total Protein",
+                        "id": "VLDL",
+                        "className": "medium",
+                        "fieldval": "",
+                        "UnitVal": "mg/dl",
+                        "OBSRDVal": "6.3-8.2 gm/dl"
+                    },
+                    {
+                        "name": "Albumin",
+                        "id": "VLDL",
+                        "className": "medium",
+                        "fieldval": "",
+                        "UnitVal": "mg/dl",
+                        "OBSRDVal": "3.5-5.5 gm/dl"
+                    },
+                    {
+                        "name": "Globulin",
+                        "id": "VLDL",
+                        "className": "newBox medium",
+                        "readonly": "readonly",
+                        "fieldval": "",
+                        "UnitVal": "mg/dl",
+                        "OBSRDVal": "2.3-3.5 gm/dl"
+                    },
+                    {
+                        "name": "A/G Ratio",
+                        "id": "VLDL",
+                        "className": "newBox medium",
+                        "readonly": "readonly",
+                        "fieldval": "",
+                        "UnitVal": "",
+                        "OBSRDVal": ""
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "PT",
+            "Result": {
+                "testLayout": "PT",
+                "testName": "Prothrombin Time (PT&INR)",
+                "values": [
+                    {
+                        "FieldOneName": "Prothrombin Time",
+                        "FieldTwoName": "Patient",
+                        "FieldVal": "",
+                        "className": "part",
+                        "time": "time large",
+                        "unitVal": "",
+                        "UnitType": "",
+                        "FieldThreeName": "12-14 sec"
+                    },
+                    {
+                        "FieldTwoName": "Control",
+                        "FieldVal": "",
+                        "className": "part",
+                        "time": "time large",
+                        "unitVal": "",
+                        "UnitType": ""
+                    },
+                    {
+                        "FieldTwoName": "INR",
+                        "className": "part",
+                        "FieldVal": "",
+                        "time": "",
+                        "unitVal": "",
+                        "UnitType": ""
+                    },
+                    {
+                        "FieldTwoName": "Index",
+                        "className": "large",
+                        "FieldVal": "",
+                        "time": "",
+                        "unitVal": "",
+                        "UnitType": ""
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "APPT",
+            "Result": {
+                "testLayout": "APPT",
+                "testName": "Activated Partial Thromboplastin Time",
+                "values": [
+                    {
+                        "FieldOneName": "Activated Partial Thromboplastin Time",
+                        "FieldTwoName": "Patient",
+                        "FieldVal": "",
+                        "className": "part",
+                        "time": "time large",
+                        "unitVal": "",
+                        "FieldThreeName": "12-14 sec"
+                    },
+                    {
+                        "FieldTwoName": "Control",
+                        "FieldVal": "",
+                        "className": "part",
+                        "time": "time large",
+                        "unitVal": "",
+                        "UnitType": ""
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "Stone Analysis",
+            "Result": {
+                "testLayout": "Stone Analysis",
+                "testName": "Urinary Calculi (Stone)",
+                "analysisType": "ANALYSIS OF STONE",
+                "resultContent": [
+                    {
+                        "title": "Physical:-",
+                        "resultParams": [
+                            {
+                                "Attribute": "Appearance",
+                                "displayType": "text",
+                                "colon": ":",
+                                "className": "colour medium",
+                                "value": ""
+                            },
+                            {
+                                "Attribute": "Weight",
+                                "displayType": "text",
+                                "colon": ":",
+                                "className": "medium",
+                                "value": ""
+                            },
+                            {
+                                "Attribute": "Consistency",
+                                "displayType": "text",
+                                "colon": ":",
+                                "className": "consistency part",
+                                "value": ""
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Chemical:-",
+                        "resultParams": [
+                            {
+                                "Attribute": "Constitution",
+                                "displayType": "textarea",
+                                "colon": ":",
+                                "value": "contains mainly calcium & oxalate with traces of uric acid "
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "WaterCultureReport",
+            "Result": {
+                "testLayout": "WaterCultureReport",
+                "testName": "Water C/S",
+                "analysis": {
+                    "resultTitle": "Water Culture Report",
+                    "columns": [
+                        "RESULT",
+                        "NORMAL RANGE"
+                    ],
+                    "data": [
+                        {
+                            "display": "text",
+                            "unit": "/100ml of Water",
+                            "value": "",
+                            "result": ""
+                        },
+                        {
+                            "display": "textarea",
+                            "value": "Presumptive coliform \n 0 Count/100ml : Class I Excellent \n 1-3 Count/100ml : Class II Satisfactory \n 4-10 Count/100ml : Class III Suspicious \n >10 Count/100ml : Class IV Unsatisfactory"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "Report": "Aminoacidogram",
+            "Result": {
+                "testLayout": "Aminoacidogram",
+                "testName": "AMINOACIDOGRAM",
+                "Resultheaders": [
+                    {
+                        "headername": "AMINO ACID"
+                    },
+                    {
+                        "headername": "AMINOACIDOGRAM"
+                    }
+                ],
+                "Resultbody": [
+                    {
+                        "headerOneval": "Glycine",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Alanine",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Valine",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Leucine",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Isoleucine",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Phenylalanine",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Tyrosine",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Tryptophan",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Aspartic Acid",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Gluctamic Acid",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Lysine",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Arginine",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Histidine",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Proline",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Hydroxyproline",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Cystiene",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Ornithine",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Methionine",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Citriulline",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Glutamine",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Threonine",
+                        "value": ""
+                    },
+                    {
+                        "headerOneval": "Serine",
+                        "value": ""
+                    }
+                ],
+                "footer": {
+                    "values": [
+                        {
+                            "name": "Detected",
+                            "value": "D = Detected"
+                        },
+                        {
+                            "name": "NotDetected",
+                            "value": "ND = Not detected"
+                        },
+                        {
+                            "name": "DetectedModerate",
+                            "value": "M = Detected in moderate levels"
+                        },
+                        {
+                            "name": "Detectedsignificant",
+                            "value": "S=Detected in significant levels"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "Report": "Culture Report",
+            "Result": {
+                "testLayout": "Culture Report",
+                "testName": "Pyogenic C/S",
+                "analysis": {
+                    "resultTitle": "MICROBIOLOGY: Culture Report",
+                    "organismGrownLabel": "Organism Grown :",
+                    "organismGrownValue": "",
+                    "columnValue1": "",
+                    "columnValue1Sub": "",
+                    "columnValue2": "",
+                    "columnValue2Sub": "",
+                    "columns": [
+                        "ANTIBIOTICS",
+                        "1",
+                        "2"
+                    ],
+                    "data": [
+                        {
+                            "name": "CEPHALEXIN",
+                            "value1": "",
+                            "value2": "",
+                            "idProperty": "CEPHALEXIN"
+                        },
+                        {
+                            "name": "NORFLOXACIN",
+                            "idProperty": "NORFLOXACIN"
+                        },
+                        {
+                            "name": "CEFACLOR",
+                            "idProperty": "CEFACLOR"
+                        },
+                        {
+                            "name": "CIPROFLOXACIN",
+                            "idProperty": "CIPROFLOXACIN"
+                        },
+                        {
+                            "name": "CEFUROXIME",
+                            "idProperty": "CEFUROXIME"
+                        },
+                        {
+                            "name": "OFLOXACIN",
+                            "idProperty": "OFLOXACIN"
+                        },
+                        {
+                            "name": "CEFADROXIL",
+                            "idProperty": "CEFADROXIL"
+                        },
+                        {
+                            "name": "SPARFLOXACIN",
+                            "idProperty": "SPARFLOXACIN"
+                        },
+                        {
+                            "name": "CEFOTAXIME",
+                            "idProperty": "CEFOTAXIME"
+                        },
+                        {
+                            "name": "LEVOFLOXACIN",
+                            "idProperty": "LEVOFLOXACIN"
+                        },
+                        {
+                            "name": "CEFTAZIDIME",
+                            "idProperty": "CEFTAZIDIME"
+                        },
+                        {
+                            "name": "TETRACYCLINE",
+                            "idProperty": "TETRACYCLINE"
+                        },
+                        {
+                            "name": "CEFIXIME",
+                            "idProperty": "CEFIXIME"
+                        },
+                        {
+                            "name": "ERYTHROMYCIN",
+                            "idProperty": "ERYTHROMYCIN"
+                        },
+                        {
+                            "name": "CEFPODOXIME",
+                            "idProperty": "CEFPODOXIME"
+                        },
+                        {
+                            "name": "AZITHROMYCIN",
+                            "idProperty": "AZITHROMYCIN"
+                        },
+                        {
+                            "name": "CEFTRIAXONE",
+                            "idProperty": "CEFTRIAXONE"
+                        },
+                        {
+                            "name": "ROXITHROMYCIN",
+                            "idProperty": "ROXITHROMYCIN"
+                        },
+                        {
+                            "name": "CEFEPIME",
+                            "idProperty": "CEFEPIME"
+                        },
+                        {
+                            "name": "CLINDAMYCIN",
+                            "idProperty": "CLINDAMYCIN"
+                        },
+                        {
+                            "name": "AMIKACIN",
+                            "idProperty": "AMIKACIN"
+                        },
+                        {
+                            "name": "VANCOMYCIN",
+                            "idProperty": "VANCOMYCIN"
+                        },
+                        {
+                            "name": "GENTAMICIN",
+                            "idProperty": "GENTAMICIN"
+                        },
+                        {
+                            "name": "LINEZOLID",
+                            "idProperty": "LINEZOLID"
+                        },
+                        {
+                            "name": "TOBRAMYCIN",
+                            "value3": "TOBRAMYCIN"
+                        },
+                        {
+                            "name": "MEROPENEM",
+                            "idProperty": "MEROPENEM"
+                        },
+                        {
+                            "name": "PENICILLIN G",
+                            "idProperty": "PENICILLIN G"
+                        },
+                        {
+                            "name": "CHLORAMPHENICOL",
+                            "idProperty": "CHLORAMPHENICOL"
+                        },
+                        {
+                            "name": "AMPICILLIN",
+                            "idProperty": "AMPICILLIN"
+                        },
+                        {
+                            "name": "NITROFURANTOIN",
+                            "idProperty": "NITROFURANTOIN"
+                        },
+                        {
+                            "name": "AMOXYCILLIN",
+                            "idProperty": "AMOXYCILLIN"
+                        },
+                        {
+                            "name": "CEFTRIAXONE/SULBACTAM",
+                            "idProperty": "CEFTRIAXONE/SULBACTAM"
+                        },
+                        {
+                            "name": "CLOXACILLIN",
+                            "idProperty": "CLOXACILLIN"
+                        },
+                        {
+                            "name": "PIP/TAZOBACTAM",
+                            "idProperty": "PIP/TAZOBACTAM"
+                        },
+                        {
+                            "name": "OXACILLIN",
+                            "idProperty": "OXACILLIN"
+                        },
+                        {
+                            "name": "CEFOPERAZONE/SULBACTAM",
+                            "idProperty": "CEFOPERAZONE/SULBACTAM"
+                        },
+                        {
+                            "name": "CO-TRIMOXAZOLE",
+                            "idProperty": "CO-TRIMOXAZOLE"
+                        },
+                        {
+                            "name": "AMOXY/CLAV",
+                            "idProperty": "AMOXY/CLAV"
+                        },
+                        {
+                            "name": "NALIDIXIC ACID",
+                            "idProperty": "NALIDIXIC ACID"
+                        },
+                        {
+                            "name": "AMP/SULBACTAM",
+                            "idProperty": "AMP/SULBACTAM"
+                        }
+                    ],
+                    "footer": {
+                        "values": [
+                            {
+                                "name": "sensitive",
+                                "value": "S = Sensitive"
+                            },
+                            {
+                                "name": "moderatesensitive",
+                                "value": "MS = Moderate Sensitive"
+                            },
+                            {
+                                "name": "resistant",
+                                "value": "R = Resistant"
+                            },
+                            {
+                                "name": "significantbact",
+                                "value": "Significant bacteriuria is >10&#8309; CFU/ml"
+                            },
+                            {
+                                "name": "cfuunit",
+                                "value": "CFU = Colony Forming Unit"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "Report": "ENA",
+            "Result": {
+                "testLayout": "ENA",
+                "testName": "ENAProfile",
+                "Resultheaders": [
+                    {
+                        "headername": "No"
+                    },
+                    {
+                        "headername": "INVESTIGATIONS"
+                    },
+                    {
+                        "headername": "RESULT"
+                    }
+                ],
+                "Resultbody": [
+                    {
+                        "headerOneval": "1",
+                        "headerTwoval": "Sm",
+                        "headerThreeval": ""
+                    },
+                    {
+                        "headerOneval": "2",
+                        "headerTwoval": "Sm/RNP",
+                        "headerThreeval": ""
+                    },
+                    {
+                        "headerOneval": "3",
+                        "headerTwoval": "SSA",
+                        "headerThreeval": ""
+                    },
+                    {
+                        "headerOneval": "4",
+                        "headerTwoval": "SSB",
+                        "headerThreeval": ""
+                    },
+                    {
+                        "headerOneval": "5",
+                        "headerTwoval": "Jo-1",
+                        "headerThreeval": ""
+                    },
+                    {
+                        "headerOneval": "6",
+                        "headerTwoval": "Scl-70",
+                        "headerThreeval": ""
+                    }
+                ]
+            }
+        },
+        {
+            "Report": "DC",
+            "Result": {
+                "testLayout": "DC",
+                "testName": "DC",
+                "values": [
+                    {
+                        "key": "DC-Polymorphs",
+                        "fieldvaltwo": "",
+                        "fieldvalthree": "35-65",
+                        "unit": "%"
+                    },
+                    {
+                        "key": "Lymphocyte",
+                        "fieldvaltwo": "",
+                        "fieldvalthree": "25-45",
+                        "unit": "%"
+                    },
+                    {
+                        "key": "Eosinophil",
+                        "fieldvaltwo": "",
+                        "fieldvalthree": "1-4",
+                        "unit": "%"
+                    },
+                    {
+                        "key": "Monocyte",
+                        "fieldvaltwo": "",
+                        "className3": "ref",
+                        "fieldvalthree": "",
+                        "unit": "%"
+                    },
+                    {
+                        "key": "Basophil",
+                        "fieldvaltwo": "",
+                        "className3": "ref",
+                        "fieldvalthree": "",
+                        "unit": "%"
+                    },
+                    {
+                        "key": "",
+                        "className1": "dc",
+                        "fieldvaltwo": "",
+                        "fieldvalthree": "",
+                        "unit": "%"
+                    },
+                    {
+                        "key": "",
+                        "className1": "dc",
+                        "fieldvaltwo": "",
+                        "fieldvalthree": "",
+                        "unit": "%"
+                    },
+                    {
+                        "key": "",
+                        "className1": "dc",
+                        "fieldvaltwo": "",
+                        "fieldvalthree": "",
+                        "unit": "%"
+                    },
+                    {
+                        "key": "",
+                        "className1": "dc",
+                        "fieldvaltwo": "",
+                        "fieldvalthree": "",
+                        "unit": "%"
+                    }
+                ]
+            }
+        }
+    ]
+}
