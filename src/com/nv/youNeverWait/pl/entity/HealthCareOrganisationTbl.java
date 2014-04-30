@@ -44,6 +44,9 @@ public class HealthCareOrganisationTbl implements Serializable {
 	public int getId() {
 		return this.id;
 	}
+	
+	
+	
 
 	public void setId(int id) {n
 		this.id = id;
