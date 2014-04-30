@@ -1,0 +1,171 @@
+{
+    "name": "reportViewForm",
+    "id": "reportViewForm",
+    "content": [
+        {
+            "className": "sep-div",
+            "style": "display:none",
+            "id": "errorDivHeader",
+            "data": [
+                {
+                    "className": "five_sixth",
+                    "id": "errorDivvwreportData"
+                }
+            ]
+        },
+        {
+            "className": "sep-div-view",
+            "id": "viewReportHeader",
+            "data": [
+                {
+                    "className": "column-left",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "startMonth",
+                                            "id": "startMonth",
+                                            "type": "select",
+                                            "title": "Start month",
+                                            "style": "width: 60px;"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "startYear",
+                                            "id": "startYear",
+                                            "type": "select",
+                                            "title": "Start year",
+                                            "style": "width: 60px;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "column-right",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "endMonth",
+                                            "id": "endMonth",
+                                            "type": "select",
+                                            "title": "End month",
+                                            "style": "width: 60px;"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "endYear",
+                                            "id": "endYear",
+                                            "type": "select",
+                                            "title": "End year",
+                                            "style": "width: 60px;"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "style": "display:none;",
+                                    "elements": [
+                                        {
+                                            "name": "reportName",
+                                            "id": "reportName",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "column-right",
+                    "data": [
+                        {
+                            "className": "five-sixth",
+                            "data": [
+                                {
+                                    "className": "five-sixth",
+                                    "id": "netmdlist",
+                                    "style": "margin-top:15px"
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five-sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "reportType",
+                                            "id": "reportType",
+                                            "type": "combined",
+                                            "title": "Report Type",
+                                            "items": [
+                                                {
+                                                    "name": "report",
+                                                    "id": "report",
+                                                    "type": "select",
+                                                    "className": "select",
+                                                    "value": [
+                                                        {
+                                                            "title": "Select Report Type",
+															"value":"select"
+                                                          
+                                                        },
+                                                        {
+                                                            "title": "Detailed Report",
+															"value":"Detailed"
+                                                        },
+                                                        {
+                                                            "title": "Summary Report",
+															"value":"Summary"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "type": "button",
+                                            "content": {
+                                                "buttons": [
+                                                    {
+                                                        "name": "showreport",
+                                                        "id": "showreport",
+                                                        "title": "Show Report",
+                                                        "type": "button",
+                                                        "className": "stdbtn btn_black",
+                                                        "style": "opacity:1;margin: 10% 0% 0% 20%;"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

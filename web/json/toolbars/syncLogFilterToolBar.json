@@ -1,0 +1,20 @@
+{	
+		"buttons":	[
+		
+		{
+			"name" 	: 	"ipAddress",
+			"type"	:	"text",
+			"title"	:	"IP Address",
+			"className"	:"generalType"
+		},
+		
+				
+		{
+			"name" 	: 	"applicationName",
+			"type"	:	"select",
+			 "value":	[{"app":"Netlims"},{"app":"Netmd"},{"app":"Netrx"},{"app":"SuperAdmin"}],
+			"title"	:	"Application Name",
+			"className"	:"generalType"
+		}
+	]
+}

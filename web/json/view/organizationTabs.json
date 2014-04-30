@@ -1,0 +1,20 @@
+[
+    
+    {
+        "name": "home",
+        "title": "HOME",
+        "id": "homeInfoTab",
+        "content": [
+            {}
+        ]
+    },
+	{
+        "name": "reports",
+        "title": "REPORTS",
+        "id": "reportInfoTab",
+		
+		       "content": [
+            {}
+        ]
+    }
+]

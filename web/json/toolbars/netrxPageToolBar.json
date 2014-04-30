@@ -1,0 +1,34 @@
+{		
+	"buttons":	[
+		
+			
+		{
+			"name" 	: 	"delete",
+			"title"	:	"Delete"
+			
+		},
+		{
+			"name" 	: 	"view",
+			"title"	:	"View"
+			
+		},
+		{
+			"name" 	: 	"new",
+			"title"	:	"New"
+		},
+		{
+			"name" 	: 	"newbranch",
+			"title"	:	"New Branch"
+		},
+				
+		{
+			"name" 	: 	"brannchlist",
+			"title"	:	"Branch List"
+		},
+		{
+			"name" 	: 	"change",
+			"title"	:	"Sync Set"
+		}
+
+	]
+}
