@@ -2,6 +2,7 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="netmd_branch_tbl")
 public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
