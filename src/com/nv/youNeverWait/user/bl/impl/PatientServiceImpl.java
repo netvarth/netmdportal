@@ -651,14 +651,14 @@ public class PatientServiceImpl implements PatientService {
 		ResponseDTO respnse= new ResponseDTO();
 		 ResponseDTO response = patientDao.createCase(newPatientCase,header);
 		
-		String departmentName= patientDao.getDepartmentNameById(newPatientCase.getDepartmentId());
-		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
-			QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
-			 questionAnswer.setCaseId(response.getGlobalId());
-			 questionAnswer.setDepartmentId(newPatientCase.getDepartmentId());
-			 questionAnswer.setAnswerDTO(newPatientCase.getQuestionAnswerDTO().getAnswerDTO());
-			ResponseDTO rsponse=questionnaireService.create(questionAnswer,header);
-		}
+//		String departmentName= patientDao.getDepartmentNameById(newPatientCase.getDepartmentId());
+//		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
+//			QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
+//			 questionAnswer.setCaseId(response.getGlobalId());
+//			 questionAnswer.setDepartmentId(newPatientCase.getDepartmentId());
+//			 questionAnswer.setAnswerDTO(newPatientCase.getQuestionAnswerDTO().getAnswerDTO());
+//			ResponseDTO rsponse=questionnaireService.create(questionAnswer,header);
+//		}
 		respnse.setGlobalId(response.getGlobalId());
 		respnse.setId(response.getId());
 		respnse.setSuccess(true);
@@ -674,14 +674,14 @@ public class PatientServiceImpl implements PatientService {
 		validator.validateUpdatedCase(updatedPatientCase);
 		 
 		ResponseDTO response = patientDao.updateCase(updatedPatientCase, header);
-		String departmentName= patientDao.getDepartmentNameById(updatedPatientCase.getDepartmentId());
-		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
-			 QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
-			 questionAnswer.setCaseId(response.getGlobalId());
-			 questionAnswer.setDepartmentId(updatedPatientCase.getDepartmentId());
-			 questionAnswer.setAnswerDTO(updatedPatientCase.getQuestionAnswerDTO().getAnswerDTO());
-			 ResponseDTO rsponse=questionnaireService.update(questionAnswer,header);
-		}
+//		String departmentName= patientDao.getDepartmentNameById(updatedPatientCase.getDepartmentId());
+//		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
+//			 QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
+//			 questionAnswer.setCaseId(response.getGlobalId());
+//			 questionAnswer.setDepartmentId(updatedPatientCase.getDepartmentId());
+//			 questionAnswer.setAnswerDTO(updatedPatientCase.getQuestionAnswerDTO().getAnswerDTO());
+//			 ResponseDTO rsponse=questionnaireService.update(questionAnswer,header);
+//		}
 		respnse.setId(response.getId());
 		respnse.setGlobalId(response.getGlobalId());
 		respnse.setSuccess(true);
@@ -695,14 +695,14 @@ public class PatientServiceImpl implements PatientService {
 		ResponseDTO respnse = new ResponseDTO();
 		validator.validateDeleteCase(deletePatientCase);
 		ResponseDTO response = patientDao.deleteCase(deletePatientCase, header);
-		String departmentName= patientDao.getDepartmentNameById(deletePatientCase.getDepartmentId());
-		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
-			 QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
-			 questionAnswer.setCaseId(response.getGlobalId());
-			 questionAnswer.setDepartmentId(deletePatientCase.getDepartmentId());
-			 questionAnswer.setAnswerDTO(deletePatientCase.getQuestionAnswerDTO().getAnswerDTO());
-			 ResponseDTO rsponse=questionnaireService.delete(response.getId(),header);
-		}
+//		String departmentName= patientDao.getDepartmentNameById(deletePatientCase.getDepartmentId());
+//		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
+//			 QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
+//			 questionAnswer.setCaseId(response.getGlobalId());
+//			 questionAnswer.setDepartmentId(deletePatientCase.getDepartmentId());
+//			 questionAnswer.setAnswerDTO(deletePatientCase.getQuestionAnswerDTO().getAnswerDTO());
+//			 ResponseDTO rsponse=questionnaireService.delete(response.getId(),header);
+//		}
 		respnse.setId(response.getId());
 		respnse.setGlobalId(response.getGlobalId());
 		respnse.setSuccess(true);
