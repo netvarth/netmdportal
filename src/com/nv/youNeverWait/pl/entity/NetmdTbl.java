@@ -43,7 +43,7 @@ public class NetmdTbl implements Serializable {
 	@Column(length=45)
 	private String name;
 	
-	@Column(name="logo")
+	@Lob
 	private String logo;
 
 	@Column(name="owner_address", length=145)
