@@ -26,7 +26,7 @@ public class MedicalRecordTbl implements Serializable {
 	@Column(name="medical_record", length=200)
 	private String medicalRecord;
 
-	@Column(nullable=false, length=1)
+	@Column(name="type",length=200)
 	private String type;
 
 	//bi-directional many-to-one association to CaseTbl
