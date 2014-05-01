@@ -34,7 +34,7 @@ public class SyncResponseDTO {
 	private List<BillSyncResponseDTO> billResponse=new ArrayList<BillSyncResponseDTO>();
 	private List<CaseSyncResponseDTO> patientCaseResponse=new ArrayList<CaseSyncResponseDTO>();
 	private List<MedicalRecordSyncResponseDTO> patientMedicalResponse= new ArrayList<MedicalRecordSyncResponseDTO>();
-	private List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswer=new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
+	//private List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswer=new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
 	private String lastSynctime;
 //	private boolean syncStatus;
 //	private String syncFreqType;
@@ -351,13 +351,13 @@ public class SyncResponseDTO {
 			List<MedicalRecordSyncResponseDTO> patientMedicalResponse) {
 		this.patientMedicalResponse = patientMedicalResponse;
 	}
-	public List<NetmdQuestionAnswerSyncResponseDTO> getNetmdQuestionAnswer() {
-		return netmdQuestionAnswer;
-	}
-	public void setNetmdQuestionAnswer(
-			List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswer) {
-		this.netmdQuestionAnswer = netmdQuestionAnswer;
-	}
+//	public List<NetmdQuestionAnswerSyncResponseDTO> getNetmdQuestionAnswer() {
+//		return netmdQuestionAnswer;
+//	}
+//	public void setNetmdQuestionAnswer(
+//			List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswer) {
+//		this.netmdQuestionAnswer = netmdQuestionAnswer;
+//	}
 	
 
 }

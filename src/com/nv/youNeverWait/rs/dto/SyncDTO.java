@@ -41,8 +41,9 @@ public class SyncDTO {
 	private List<MedicalRecordDTO> newMedicalRecordList=new ArrayList<MedicalRecordDTO>();
 	private List<MedicalRecordDTO> updateMedicalRecordList=new ArrayList<MedicalRecordDTO>();
 	private List<MedicalRecordDTO> deleteMedicalRecordList=new ArrayList<MedicalRecordDTO>();
-	private List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList=new ArrayList<NetmdQuestionAnswerDTO>();
-	private List<NetmdQuestionAnswerDTO>updateNetmdQuestionnaireList=new ArrayList<NetmdQuestionAnswerDTO>();
+	
+	//private List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList=new ArrayList<NetmdQuestionAnswerDTO>();
+	//private List<NetmdQuestionAnswerDTO>updateNetmdQuestionnaireList=new ArrayList<NetmdQuestionAnswerDTO>();
 	
 	/**
 	 * @return the newBillList
@@ -325,20 +326,20 @@ public class SyncDTO {
 			List<AppointmentDetailsDTO> deletedAppointmentList) {
 		this.deletedAppointmentList = deletedAppointmentList;
 	}
-	public List<NetmdQuestionAnswerDTO> getNewNetmdQuestionnaireList() {
-		return newNetmdQuestionnaireList;
-	}
-	public void setNewNetmdQuestionnaireList(
-			List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList) {
-		this.newNetmdQuestionnaireList = newNetmdQuestionnaireList;
-	}
-	public List<NetmdQuestionAnswerDTO> getUpdateNetmdQuestionnaireList() {
-		return updateNetmdQuestionnaireList;
-	}
-	public void setUpdateNetmdQuestionnaireList(
-			List<NetmdQuestionAnswerDTO> updateNetmdQuestionnaireList) {
-		this.updateNetmdQuestionnaireList = updateNetmdQuestionnaireList;
-	}
+//	public List<NetmdQuestionAnswerDTO> getNewNetmdQuestionnaireList() {
+//		return newNetmdQuestionnaireList;
+//	}
+//	public void setNewNetmdQuestionnaireList(
+//			List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList) {
+//		this.newNetmdQuestionnaireList = newNetmdQuestionnaireList;
+//	}
+//	public List<NetmdQuestionAnswerDTO> getUpdateNetmdQuestionnaireList() {
+//		return updateNetmdQuestionnaireList;
+//	}
+//	public void setUpdateNetmdQuestionnaireList(
+//			List<NetmdQuestionAnswerDTO> updateNetmdQuestionnaireList) {
+//		this.updateNetmdQuestionnaireList = updateNetmdQuestionnaireList;
+//	}
 
 	/**
 	 * @return the deleteCaseList
