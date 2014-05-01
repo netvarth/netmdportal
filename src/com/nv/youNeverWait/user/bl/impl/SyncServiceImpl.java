@@ -197,8 +197,8 @@ public class SyncServiceImpl implements SyncService {
 			List<MedicalRecordSyncResponseDTO> medicalRecordResponseList= getMedicalRecordResponseList(sync.getHeader(),sync.getNewMedicalRecordList(),sync.getUpdateMedicalRecordList(),sync.getDeleteMedicalRecordList());
 			syncResponse.setPatientMedicalResponse(medicalRecordResponseList);
 			
-			List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswerList=getNetmdQuestionnaireList(sync.getHeader(),sync.getNewNetmdQuestionnaireList(),sync.getUpdateNetmdQuestionnaireList());
-			syncResponse.setNetmdQuestionAnswer(netmdQuestionAnswerList);
+//			List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswerList=getNetmdQuestionnaireList(sync.getHeader(),sync.getNewNetmdQuestionnaireList(),sync.getUpdateNetmdQuestionnaireList());
+//			syncResponse.setNetmdQuestionAnswer(netmdQuestionAnswerList);
 			
 			
 		}
@@ -266,91 +266,90 @@ public class SyncServiceImpl implements SyncService {
 
 
 
-	private List<NetmdQuestionAnswerSyncResponseDTO> getNetmdQuestionnaireList(
-			HeaderDTO header, List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList, List<NetmdQuestionAnswerDTO> updateNetmdQuestionnaireList) {
-		List<NetmdQuestionAnswerSyncResponseDTO> netmdQuesstionAnswer=new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
-		List<NetmdQuestionAnswerSyncResponseDTO> newNetmdQuestionnaireResponseList = syncNewNetmdQuestionnaire(
-						newNetmdQuestionnaireList, header);
-		List<NetmdQuestionAnswerSyncResponseDTO> updatedNetmdQuestionnaireResponseList = syncUpdatedNetmdQuestionnaire(
-						updateNetmdQuestionnaireList, header);
-		netmdQuesstionAnswer.addAll(newNetmdQuestionnaireResponseList);
-		netmdQuesstionAnswer.addAll(updatedNetmdQuestionnaireResponseList);
-		return netmdQuesstionAnswer;
-	}
-
-	private List<NetmdQuestionAnswerSyncResponseDTO> syncUpdatedNetmdQuestionnaire(
-			List<NetmdQuestionAnswerDTO> updateNetmdQuestionnaireList,
-			HeaderDTO header) {
-		List<NetmdQuestionAnswerSyncResponseDTO> updateNetmdewQuestionnaireResponseList = new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
-		for (NetmdQuestionAnswerDTO netmdQuestionAnswer : updateNetmdQuestionnaireList) {
-			try {
-
-				ResponseDTO response = questionnaireService.updateQuestionnaire(netmdQuestionAnswer, header);
-				NetmdQuestionAnswerSyncResponseDTO updateQuestionAnswerDTOSyncResponse = new NetmdQuestionAnswerSyncResponseDTO();
-				updateQuestionAnswerDTOSyncResponse.setActionName(ActionNameEnum.UPDATE.getDisplayName());
-				
-				updateQuestionAnswerDTOSyncResponse.setUpdateDateTime(response.getUpdateDateTime());
-				updateQuestionAnswerDTOSyncResponse.setGlobalId(response.getGlobalId());
-				updateQuestionAnswerDTOSyncResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
-				updateQuestionAnswerDTOSyncResponse.setSuccess(true);
-				updateNetmdewQuestionnaireResponseList.add(updateQuestionAnswerDTOSyncResponse);
-			}
-			catch (ServiceException se) {
-				log.error("Error while saving updated NetmdQuestionnaire into portal ", se);
-				List<Parameter> parameters = se.getParamList();
-				ErrorDTO error = new ErrorDTO();
-				error.setErrCode(se.getError().getErrCode());
-				error.setParams(parameters);
-				error.setDisplayErrMsg(se.isDisplayErrMsg());
-				NetmdQuestionAnswerSyncResponseDTO updateNetmdQuestionnaireResponse = new NetmdQuestionAnswerSyncResponseDTO();
-				updateNetmdQuestionnaireResponse.setError(error);
-				updateNetmdQuestionnaireResponse.setSuccess(false);
-				updateNetmdQuestionnaireResponse.setId(updateNetmdQuestionnaireResponse.getId());
-				updateNetmdQuestionnaireResponse.setGlobalId(updateNetmdQuestionnaireResponse.getGlobalId());
-				updateNetmdQuestionnaireResponse.setActionName(ActionNameEnum.UPDATE
-						.getDisplayName());
-
-				updateNetmdewQuestionnaireResponseList.add(updateNetmdQuestionnaireResponse);
-			}
-		}
-		return updateNetmdewQuestionnaireResponseList;
-	}
-
-	private List<NetmdQuestionAnswerSyncResponseDTO> syncNewNetmdQuestionnaire(
-			List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList,
-			HeaderDTO header) {
-		
-		List<NetmdQuestionAnswerSyncResponseDTO> newNetmdQuestionnaireResponseList = new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
-		for (NetmdQuestionAnswerDTO netmdQuestionAnswer : newNetmdQuestionnaireList) {
-			try {
-
-				ResponseDTO response = questionnaireService.NetmdQuestionnaire(netmdQuestionAnswer, header);
-				NetmdQuestionAnswerSyncResponseDTO netmdQuestionAnswerDTOSyncResponse = new NetmdQuestionAnswerSyncResponseDTO();
-				netmdQuestionAnswerDTOSyncResponse.setActionName(ActionNameEnum.ADD
-						.getDisplayName());
-				netmdQuestionAnswerDTOSyncResponse.setCreateDateTime(response.getCreateDateTime());
-				netmdQuestionAnswerDTOSyncResponse.setUpdateDateTime(response.getUpdateDateTime());
-				netmdQuestionAnswerDTOSyncResponse.setGlobalId(response.getGlobalId());
-				netmdQuestionAnswerDTOSyncResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
-				netmdQuestionAnswerDTOSyncResponse.setSuccess(true);
-
-				newNetmdQuestionnaireResponseList.add(netmdQuestionAnswerDTOSyncResponse);
-			} catch (ServiceException se) {
-				log.error("Error while saving new NetmdQuestionnaire into portal ", se);
-				ErrorDTO error = new ErrorDTO();
-				error.setErrCode(se.getError().getErrCode());
-				error.setDisplayErrMsg(se.isDisplayErrMsg());
-				NetmdQuestionAnswerSyncResponseDTO netmdQuestionAnswerResponse = new NetmdQuestionAnswerSyncResponseDTO();
-				netmdQuestionAnswerResponse.setError(error);
-				netmdQuestionAnswerResponse.setSuccess(false);
-				netmdQuestionAnswerResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
-				netmdQuestionAnswerResponse.setActionName(ActionNameEnum.ADD
-						.getDisplayName());
-				newNetmdQuestionnaireResponseList.add(netmdQuestionAnswerResponse);
-			}
-		}
-		return newNetmdQuestionnaireResponseList;
-	}
+//	private List<NetmdQuestionAnswerSyncResponseDTO> getNetmdQuestionnaireList(
+//			HeaderDTO header, List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList, List<NetmdQuestionAnswerDTO> updateNetmdQuestionnaireList) {
+//		List<NetmdQuestionAnswerSyncResponseDTO> netmdQuesstionAnswer=new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
+//		List<NetmdQuestionAnswerSyncResponseDTO> newNetmdQuestionnaireResponseList = syncNewNetmdQuestionnaire(
+//						newNetmdQuestionnaireList, header);
+//		List<NetmdQuestionAnswerSyncResponseDTO> updatedNetmdQuestionnaireResponseList = syncUpdatedNetmdQuestionnaire(
+//						updateNetmdQuestionnaireList, header);
+//		netmdQuesstionAnswer.addAll(newNetmdQuestionnaireResponseList);
+//		netmdQuesstionAnswer.addAll(updatedNetmdQuestionnaireResponseList);
+//		return netmdQuesstionAnswer;
+//	}
+//
+//	private List<NetmdQuestionAnswerSyncResponseDTO> syncUpdatedNetmdQuestionnaire(
+//			List<NetmdQuestionAnswerDTO> updateNetmdQuestionnaireList,
+//			HeaderDTO header) {
+//		List<NetmdQuestionAnswerSyncResponseDTO> updateNetmdewQuestionnaireResponseList = new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
+//		for (NetmdQuestionAnswerDTO netmdQuestionAnswer : updateNetmdQuestionnaireList) {
+//			try {
+//
+//				ResponseDTO response = questionnaireService.updateQuestionnaire(netmdQuestionAnswer, header);
+//				NetmdQuestionAnswerSyncResponseDTO updateQuestionAnswerDTOSyncResponse = new NetmdQuestionAnswerSyncResponseDTO();
+//				updateQuestionAnswerDTOSyncResponse.setActionName(ActionNameEnum.UPDATE.getDisplayName());
+//				updateQuestionAnswerDTOSyncResponse.setUpdateDateTime(response.getUpdateDateTime());
+//				updateQuestionAnswerDTOSyncResponse.setGlobalId(response.getGlobalId());
+//				updateQuestionAnswerDTOSyncResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
+//				updateQuestionAnswerDTOSyncResponse.setSuccess(true);
+//				updateNetmdewQuestionnaireResponseList.add(updateQuestionAnswerDTOSyncResponse);
+//			}
+//			catch (ServiceException se) {
+//				log.error("Error while saving updated NetmdQuestionnaire into portal ", se);
+//				List<Parameter> parameters = se.getParamList();
+//				ErrorDTO error = new ErrorDTO();
+//				error.setErrCode(se.getError().getErrCode());
+//				error.setParams(parameters);
+//				error.setDisplayErrMsg(se.isDisplayErrMsg());
+//				NetmdQuestionAnswerSyncResponseDTO updateNetmdQuestionnaireResponse = new NetmdQuestionAnswerSyncResponseDTO();
+//				updateNetmdQuestionnaireResponse.setError(error);
+//				updateNetmdQuestionnaireResponse.setSuccess(false);
+//				updateNetmdQuestionnaireResponse.setId(updateNetmdQuestionnaireResponse.getId());
+//				updateNetmdQuestionnaireResponse.setGlobalId(updateNetmdQuestionnaireResponse.getGlobalId());
+//				updateNetmdQuestionnaireResponse.setActionName(ActionNameEnum.UPDATE
+//						.getDisplayName());
+//
+//				updateNetmdewQuestionnaireResponseList.add(updateNetmdQuestionnaireResponse);
+//			}
+//		}
+//		return updateNetmdewQuestionnaireResponseList;
+//	}
+//
+//	private List<NetmdQuestionAnswerSyncResponseDTO> syncNewNetmdQuestionnaire(
+//			List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList,
+//			HeaderDTO header) {
+//		
+//		List<NetmdQuestionAnswerSyncResponseDTO> newNetmdQuestionnaireResponseList = new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
+//		for (NetmdQuestionAnswerDTO netmdQuestionAnswer : newNetmdQuestionnaireList) {
+//			try {
+//
+//				ResponseDTO response = questionnaireService.NetmdQuestionnaire(netmdQuestionAnswer, header);
+//				NetmdQuestionAnswerSyncResponseDTO netmdQuestionAnswerDTOSyncResponse = new NetmdQuestionAnswerSyncResponseDTO();
+//				netmdQuestionAnswerDTOSyncResponse.setActionName(ActionNameEnum.ADD
+//						.getDisplayName());
+//				netmdQuestionAnswerDTOSyncResponse.setCreateDateTime(response.getCreateDateTime());
+//				netmdQuestionAnswerDTOSyncResponse.setUpdateDateTime(response.getUpdateDateTime());
+//				netmdQuestionAnswerDTOSyncResponse.setGlobalId(response.getGlobalId());
+//				netmdQuestionAnswerDTOSyncResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
+//				netmdQuestionAnswerDTOSyncResponse.setSuccess(true);
+//
+//				newNetmdQuestionnaireResponseList.add(netmdQuestionAnswerDTOSyncResponse);
+//			} catch (ServiceException se) {
+//				log.error("Error while saving new NetmdQuestionnaire into portal ", se);
+//				ErrorDTO error = new ErrorDTO();
+//				error.setErrCode(se.getError().getErrCode());
+//				error.setDisplayErrMsg(se.isDisplayErrMsg());
+//				NetmdQuestionAnswerSyncResponseDTO netmdQuestionAnswerResponse = new NetmdQuestionAnswerSyncResponseDTO();
+//				netmdQuestionAnswerResponse.setError(error);
+//				netmdQuestionAnswerResponse.setSuccess(false);
+//				netmdQuestionAnswerResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
+//				netmdQuestionAnswerResponse.setActionName(ActionNameEnum.ADD
+//						.getDisplayName());
+//				newNetmdQuestionnaireResponseList.add(netmdQuestionAnswerResponse);
+//			}
+//		}
+//		return newNetmdQuestionnaireResponseList;
+//	}
 
 	private NetMdBranchDTO getNetmdBranchDetails(String lastSyncTime,
 			Date currentSyncTime,HeaderDTO header) {
