@@ -25,6 +25,7 @@ import com.nv.youNeverWait.pl.entity.DepartmentTbl;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.MedicalRecordTbl;
+import com.nv.youNeverWait.pl.entity.MedicalRecordTypeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
@@ -675,6 +676,8 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		caseTbl.setWeight(newPatientCase.getWeight());
 		caseTbl.setHeight(newPatientCase.getHeight());
 		caseTbl.setStatus(CaseStatusEnum.Open.getDisplayName());
+		caseTbl.setLocalAnswersetId(newPatientCase.getAnswerSetId());
+		caseTbl.setLocalCaseId(newPatientCase.getId());
 		caseTbl.setCreatedDateTime(currentDate);
 		caseTbl.setUpdatedDateTime(currentDate);
 		save(caseTbl);
@@ -1012,6 +1015,8 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		medicalRecordTbl.setPatientTbl(patientTbl);
 		medicalRecordTbl.setDoctorTbl(doctorTbl);
 		medicalRecordTbl.setCaseTbl(casetbl);
+		//MedicalRecordTypeEnum medical = MedicalRecordTypeEnum.getEnum(newPatientMedicalRecord.getType());
+		//medicalRecordTbl.setType(MedicalRecordTypeEnum.getEnum(newPatientMedicalRecord.getType()).getDisplayName());
 		medicalRecordTbl.setType(newPatientMedicalRecord.getType());
 		medicalRecordTbl.setStatus(Constants.ACTIVE);
 		medicalRecordTbl.setCreatedDateTime(currentDate);
@@ -1072,6 +1077,8 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		medicalRecordTbl.setCaseTbl(caseTbl);
 		medicalRecordTbl.setCreatedDateTime(currentDate);
 		medicalRecordTbl.setUpdateDateTime(currentDate);
+		//MedicalRecordTypeEnum medical = MedicalRecordTypeEnum.getEnum(updatedMedicalRecord.getType());
+		//medicalRecordTbl.setType(MedicalRecordTypeEnum.getEnum(updatedMedicalRecord.getType()).getDisplayName());
 		medicalRecordTbl.setType(updatedMedicalRecord.getType());
 		medicalRecordTbl.setMedicalRecord(updatedMedicalRecord.getMedicalRecord());
 		medicalRecordTbl.setDoctorTbl(doctorTbl);
