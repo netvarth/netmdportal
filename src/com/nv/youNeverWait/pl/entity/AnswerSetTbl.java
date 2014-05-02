@@ -3,6 +3,7 @@ package com.nv.youNeverWait.pl.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -11,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="answer_set_tbl")
-
+@NamedQuery(name="AnswerSetTbl.findAll", query="SELECT a FROM AnswerSetTbl a")
 public class AnswerSetTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,9 +23,6 @@ public class AnswerSetTbl implements Serializable {
 	@Column(name="local_answer_set")
 	private int localAnswerSet;
 
-	@Column(name="questionnaire_id")
-	private int questionnaireId;
-
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="s_date")
 	private Date sDate;
@@ -34,6 +32,18 @@ public class AnswerSetTbl implements Serializable {
 	@JoinColumn(name="branch_id")
 	private OrganisationTbl organisationTbl;
 
+	//bi-directional many-to-one association to QuestionnaireTbl
+	@ManyToOne
+	@JoinColumn(name="questionnaire_id")
+	private QuestionnaireTbl questionnaireTbl;
+
+	//bi-directional many-to-one association to AnswerTbl
+	@OneToMany(orphanRemoval=true,mappedBy="answerSetTbl")
+	private List<AnswerTbl> answerTbls;
+
+	@Column(name="uid")
+	private String uid;
+	
 	public AnswerSetTbl() {
 	}
 
@@ -53,14 +63,6 @@ public class AnswerSetTbl implements Serializable {
 		this.localAnswerSet = localAnswerSet;
 	}
 
-	public int getQuestionnaireId() {
-		return this.questionnaireId;
-	}
-
-	public void setQuestionnaireId(int questionnaireId) {
-		this.questionnaireId = questionnaireId;
-	}
-
 	public Date getSDate() {
 		return this.sDate;
 	}
@@ -76,5 +78,45 @@ public class AnswerSetTbl implements Serializable {
 	public void setOrganisationTbl(OrganisationTbl organisationTbl) {
 		this.organisationTbl = organisationTbl;
 	}
+
+	public QuestionnaireTbl getQuestionnaireTbl() {
+		return this.questionnaireTbl;
+	}
+
+	public void setQuestionnaireTbl(QuestionnaireTbl questionnaireTbl) {
+		this.questionnaireTbl = questionnaireTbl;
+	}
+
+	public List<AnswerTbl> getAnswerTbls() {
+		return this.answerTbls;
+	}
+
+	public void setAnswerTbls(List<AnswerTbl> answerTbls) {
+		this.answerTbls = answerTbls;
+	}
+
+	public AnswerTbl addAnswerTbl(AnswerTbl answerTbl) {
+		getAnswerTbls().add(answerTbl);
+		answerTbl.setAnswerSetTbl(this);
+
+		return answerTbl;
+	}
+
+	public AnswerTbl removeAnswerTbl(AnswerTbl answerTbl) {
+		getAnswerTbls().remove(answerTbl);
+		answerTbl.setAnswerSetTbl(null);
+
+		return answerTbl;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+	
+	
 
 }

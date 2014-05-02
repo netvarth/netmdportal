@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="department_tbl")
-
+@NamedQuery(name="DepartmentTbl.findAll", query="SELECT d FROM DepartmentTbl d")
 public class DepartmentTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -27,13 +27,13 @@ public class DepartmentTbl implements Serializable {
 
 	private String uid;
 
-//	//bi-directional many-to-one association to CaseTbl
-//	@OneToMany(mappedBy="departmentTbl")
-//	private List<CaseTbl> caseTbls;
+	//bi-directional many-to-one association to CaseTbl
+	//@OneToMany(mappedBy="departmentTbl")
+	//private List<CaseTbl> caseTbls;
 
-	//bi-directional many-to-one association to QuestionTbl
+	//bi-directional many-to-one association to QuestionnaireTbl
 	@OneToMany(mappedBy="departmentTbl")
-	private List<QuestionTbl> questionTbls;
+	private List<QuestionnaireTbl> questionnaireTbls;
 
 	public DepartmentTbl() {
 	}
@@ -77,49 +77,49 @@ public class DepartmentTbl implements Serializable {
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
-//
+
 //	public List<CaseTbl> getCaseTbls() {
 //		return this.caseTbls;
 //	}
-//
+
 //	public void setCaseTbls(List<CaseTbl> caseTbls) {
 //		this.caseTbls = caseTbls;
 //	}
-//
+
 //	public CaseTbl addCaseTbl(CaseTbl caseTbl) {
 //		getCaseTbls().add(caseTbl);
 //		caseTbl.setDepartmentTbl(this);
-//
+
 //		return caseTbl;
 //	}
-//
+
 //	public CaseTbl removeCaseTbl(CaseTbl caseTbl) {
 //		getCaseTbls().remove(caseTbl);
 //		caseTbl.setDepartmentTbl(null);
-//
+
 //		return caseTbl;
 //	}
 
-	public List<QuestionTbl> getQuestionTbls() {
-		return this.questionTbls;
+	public List<QuestionnaireTbl> getQuestionnaireTbls() {
+		return this.questionnaireTbls;
 	}
 
-	public void setQuestionTbls(List<QuestionTbl> questionTbls) {
-		this.questionTbls = questionTbls;
+	public void setQuestionnaireTbls(List<QuestionnaireTbl> questionnaireTbls) {
+		this.questionnaireTbls = questionnaireTbls;
 	}
 
-	public QuestionTbl addQuestionTbl(QuestionTbl questionTbl) {
-		getQuestionTbls().add(questionTbl);
-		questionTbl.setDepartmentTbl(this);
+	public QuestionnaireTbl addQuestionnaireTbl(QuestionnaireTbl questionnaireTbl) {
+		getQuestionnaireTbls().add(questionnaireTbl);
+		questionnaireTbl.setDepartmentTbl(this);
 
-		return questionTbl;
+		return questionnaireTbl;
 	}
 
-	public QuestionTbl removeQuestionTbl(QuestionTbl questionTbl) {
-		getQuestionTbls().remove(questionTbl);
-		questionTbl.setDepartmentTbl(null);
+	public QuestionnaireTbl removeQuestionnaireTbl(QuestionnaireTbl questionnaireTbl) {
+		getQuestionnaireTbls().remove(questionnaireTbl);
+		questionnaireTbl.setDepartmentTbl(null);
 
-		return questionTbl;
+		return questionnaireTbl;
 	}
 
 }

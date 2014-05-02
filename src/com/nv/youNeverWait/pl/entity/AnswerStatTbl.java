@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="answer_stat_tbl")
-
+@NamedQuery(name="AnswerStatTbl.findAll", query="SELECT a FROM AnswerStatTbl a")
 public class AnswerStatTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -78,9 +78,6 @@ public class AnswerStatTbl implements Serializable {
 
 	private float minimum;
 
-	@Column(name="netmd_branch_id")
-	private int netmdBranchId;
-
 	private int question1;
 
 	private int question2;
@@ -95,6 +92,11 @@ public class AnswerStatTbl implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="questionnaire_id")
 	private QuestionnaireTbl questionnaireTbl;
+
+	//bi-directional many-to-one association to DataPointTbl
+	@ManyToOne
+	@JoinColumn(name="data_point")
+	private DataPointTbl dataPointTbl;
 
 	public AnswerStatTbl() {
 	}
@@ -347,14 +349,6 @@ public class AnswerStatTbl implements Serializable {
 		this.minimum = minimum;
 	}
 
-	public int getNetmdBranchId() {
-		return this.netmdBranchId;
-	}
-
-	public void setNetmdBranchId(int netmdBranchId) {
-		this.netmdBranchId = netmdBranchId;
-	}
-
 	public int getQuestion1() {
 		return this.question1;
 	}
@@ -401,6 +395,14 @@ public class AnswerStatTbl implements Serializable {
 
 	public void setQuestionnaireTbl(QuestionnaireTbl questionnaireTbl) {
 		this.questionnaireTbl = questionnaireTbl;
+	}
+
+	public DataPointTbl getDataPointTbl() {
+		return this.dataPointTbl;
+	}
+
+	public void setDataPointTbl(DataPointTbl dataPointTbl) {
+		this.dataPointTbl = dataPointTbl;
 	}
 
 }

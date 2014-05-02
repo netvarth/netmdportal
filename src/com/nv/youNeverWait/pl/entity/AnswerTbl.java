@@ -10,30 +10,25 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="answer_tbl")
+@NamedQuery(name="AnswerTbl.findAll", query="SELECT a FROM AnswerTbl a")
 public class AnswerTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
-	@Lob
 	private String answer;
 
-	@Column(name="answer_set_id")
-	private int answerSetId;
-
-	@Column(name="netmd_branch_id")
-	private int netmdBranchId;
+	//bi-directional many-to-one association to AnswerSetTbl
+	@ManyToOne
+	@JoinColumn(name="answer_set_id")
+	private AnswerSetTbl answerSetTbl;
 
 	//bi-directional many-to-one association to QuestionTbl
 	@ManyToOne
 	@JoinColumn(name="quest_id")
 	private QuestionTbl questionTbl;
-
-	//bi-directional many-to-one association to QuestionnaireTbl
-	@ManyToOne
-	@JoinColumn(name="questionnare_id")
-	private QuestionnaireTbl questionnaireTbl;
 
 	public AnswerTbl() {
 	}
@@ -54,20 +49,12 @@ public class AnswerTbl implements Serializable {
 		this.answer = answer;
 	}
 
-	public int getAnswerSetId() {
-		return this.answerSetId;
+	public AnswerSetTbl getAnswerSetTbl() {
+		return this.answerSetTbl;
 	}
 
-	public void setAnswerSetId(int answerSetId) {
-		this.answerSetId = answerSetId;
-	}
-
-	public int getNetmdBranchId() {
-		return this.netmdBranchId;
-	}
-
-	public void setNetmdBranchId(int netmdBranchId) {
-		this.netmdBranchId = netmdBranchId;
+	public void setAnswerSetTbl(AnswerSetTbl answerSetTbl) {
+		this.answerSetTbl = answerSetTbl;
 	}
 
 	public QuestionTbl getQuestionTbl() {
@@ -76,14 +63,6 @@ public class AnswerTbl implements Serializable {
 
 	public void setQuestionTbl(QuestionTbl questionTbl) {
 		this.questionTbl = questionTbl;
-	}
-
-	public QuestionnaireTbl getQuestionnaireTbl() {
-		return this.questionnaireTbl;
-	}
-
-	public void setQuestionnaireTbl(QuestionnaireTbl questionnaireTbl) {
-		this.questionnaireTbl = questionnaireTbl;
 	}
 
 }

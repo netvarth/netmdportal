@@ -2,7 +2,6 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.List;
 
 
@@ -12,15 +11,19 @@ import java.util.List;
  */
 @Entity
 @Table(name="question_tbl")
+@NamedQuery(name="QuestionTbl.findAll", query="SELECT q FROM QuestionTbl q")
 public class QuestionTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(unique = true, nullable = false)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
-	@Lob
+	@Column(name="answer_type")
+	private String answerType;
+
+	private Boolean mandatory;
+
 	private String question;
 
 	@Column(name="question_key")
@@ -30,10 +33,10 @@ public class QuestionTbl implements Serializable {
 	@OneToMany(mappedBy="questionTbl")
 	private List<AnswerTbl> answerTbls;
 
-	//bi-directional many-to-one association to DepartmentTbl
+	//bi-directional many-to-one association to QuestionnaireTbl
 	@ManyToOne
-	@JoinColumn(name="department_id")
-	private DepartmentTbl departmentTbl;
+	@JoinColumn(name="questionnaire_id")
+	private QuestionnaireTbl questionnaireTbl;
 
 	public QuestionTbl() {
 	}
@@ -44,6 +47,22 @@ public class QuestionTbl implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getAnswerType() {
+		return this.answerType;
+	}
+
+	public void setAnswerType(String answerType) {
+		this.answerType = answerType;
+	}
+
+	public Boolean getMandatory() {
+		return this.mandatory;
+	}
+
+	public void setMandatory(Boolean mandatory) {
+		this.mandatory = mandatory;
 	}
 
 	public String getQuestion() {
@@ -84,12 +103,12 @@ public class QuestionTbl implements Serializable {
 		return answerTbl;
 	}
 
-	public DepartmentTbl getDepartmentTbl() {
-		return this.departmentTbl;
+	public QuestionnaireTbl getQuestionnaireTbl() {
+		return this.questionnaireTbl;
 	}
 
-	public void setDepartmentTbl(DepartmentTbl departmentTbl) {
-		this.departmentTbl = departmentTbl;
+	public void setQuestionnaireTbl(QuestionnaireTbl questionnaireTbl) {
+		this.questionnaireTbl = questionnaireTbl;
 	}
 
 }
