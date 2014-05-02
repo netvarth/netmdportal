@@ -10,6 +10,7 @@
 		<class>com.nv.youNeverWait.pl.entity.CaseTbl</class>
 		
 		<class>com.nv.youNeverWait.pl.entity.QuestionnaireTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.DataPointTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.DepartmentTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.DoctorAchievementTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.DoctorEducationalQualificationTbl</class>
