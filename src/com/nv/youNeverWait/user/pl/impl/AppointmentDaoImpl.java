@@ -325,10 +325,10 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 				// the request is from portal
 			appointmentTbl.setNetmdPassphraseTbl(null);
 		}
-		String patientName=appointment.getAppointmentDetails().getPatientName().toUpperCase();
-		String[] patientNameArray=patientName.split(" ");
-		String firstName=patientNameArray[0];
-		String lastName=patientNameArray[1];
+		String patientName=appointment.getAppointmentDetails().getPatientName().trim().toUpperCase();
+	
+		String firstName=patientName.substring(0,patientName.indexOf(' '));
+		String lastName=patientName.substring(patientName.indexOf(' ')+1).trim();
 		String email=appointment.getAppointmentDetails().getEmailId();
 		PatientTbl patientTbl = (PatientTbl) getByPatientNameAndBranchId(firstName,lastName,email,appointment.getHeader().getBranchId());
 		if (patientTbl == null) {
@@ -475,7 +475,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 	}
 
 	private PatientTbl getByPatientNameAndBranchId(String firstName,
-			String lastName, String email, int branchId) {
+			String lastName, String email,int branchId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_BY_PATIENT_NAME_AND_BRANCH_ID);
 		query.setParameter("param1", firstName);
