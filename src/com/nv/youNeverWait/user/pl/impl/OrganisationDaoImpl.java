@@ -113,7 +113,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		organisationTbl.setHeadOfficeMobile(organztion.getHeadOfficeMobile());
 		organisationTbl.setHeadOfficeName(organztion.getHeadOfficeName());
 		organisationTbl.setHeadOfficePhone(organztion.getHeadOfficePhone());
-		organisationTbl.setPhone(organztion.getHeadOfficePhone());
+		//organisationTbl.setPhone(organztion.getHeadOfficePhone());
 		organisationTbl.setStatus(StatusEnum.Active.getDisplayName());
 		organisationTbl.setDepartmentType(organztion.getDepartmentType());
 		Date createdTime = new Date();
