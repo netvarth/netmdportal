@@ -11,7 +11,6 @@ import java.util.List;
  */
 @Entity
 @Table(name="questionnaire_tbl")
-@NamedQuery(name="QuestionnaireTbl.findAll", query="SELECT q FROM QuestionnaireTbl q")
 public class QuestionnaireTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -30,9 +29,9 @@ public class QuestionnaireTbl implements Serializable {
 	@OneToMany(mappedBy="questionnaireTbl")
 	private List<AnswerSetTbl> answerSetTbls;
 
-	//bi-directional many-to-one association to AnswerStatTbl
+	//bi-directional many-to-one association to AnswerTbl
 	@OneToMany(mappedBy="questionnaireTbl")
-	private List<AnswerStatTbl> answerStatTbls;
+	private List<AnswerTbl> answerTbls;
 
 	//bi-directional many-to-one association to DataPointTbl
 	@OneToMany(mappedBy="questionnaireTbl")
@@ -109,26 +108,26 @@ public class QuestionnaireTbl implements Serializable {
 		return answerSetTbl;
 	}
 
-	public List<AnswerStatTbl> getAnswerStatTbls() {
-		return this.answerStatTbls;
+	public List<AnswerTbl> getAnswerTbls() {
+		return this.answerTbls;
 	}
 
-	public void setAnswerStatTbls(List<AnswerStatTbl> answerStatTbls) {
-		this.answerStatTbls = answerStatTbls;
+	public void setAnswerTbls(List<AnswerTbl> answerTbls) {
+		this.answerTbls = answerTbls;
 	}
 
-	public AnswerStatTbl addAnswerStatTbl(AnswerStatTbl answerStatTbl) {
-		getAnswerStatTbls().add(answerStatTbl);
-		answerStatTbl.setQuestionnaireTbl(this);
+	public AnswerTbl addAnswerTbl(AnswerTbl answerTbl) {
+		getAnswerTbls().add(answerTbl);
+		answerTbl.setQuestionnaireTbl(this);
 
-		return answerStatTbl;
+		return answerTbl;
 	}
 
-	public AnswerStatTbl removeAnswerStatTbl(AnswerStatTbl answerStatTbl) {
-		getAnswerStatTbls().remove(answerStatTbl);
-		answerStatTbl.setQuestionnaireTbl(null);
+	public AnswerTbl removeAnswerTbl(AnswerTbl answerTbl) {
+		getAnswerTbls().remove(answerTbl);
+		answerTbl.setQuestionnaireTbl(null);
 
-		return answerStatTbl;
+		return answerTbl;
 	}
 
 	public List<DataPointTbl> getDataPointTbls() {
@@ -141,14 +140,14 @@ public class QuestionnaireTbl implements Serializable {
 
 	public DataPointTbl addDataPointTbl(DataPointTbl dataPointTbl) {
 		getDataPointTbls().add(dataPointTbl);
-		
+		dataPointTbl.setQuestionnaireTbl(this);
 
 		return dataPointTbl;
 	}
 
 	public DataPointTbl removeDataPointTbl(DataPointTbl dataPointTbl) {
 		getDataPointTbls().remove(dataPointTbl);
-		
+		dataPointTbl.setQuestionnaireTbl(null);
 
 		return dataPointTbl;
 	}

@@ -1,13 +1,12 @@
 package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
 import javax.persistence.*;
 
 
-/**
- * The persistent class for the answer_stat_tbl database table.
- * 
- */
 @Entity
 @Table(name="answer_stat_tbl")
 @NamedQuery(name="AnswerStatTbl.findAll", query="SELECT a FROM AnswerStatTbl a")
@@ -20,59 +19,60 @@ public class AnswerStatTbl implements Serializable {
 
 	private float average;
 
-	private float compute1;
+	private BigDecimal compute1;
 
-	private float compute10;
+	private BigDecimal compute10;
 
-	private float compute11;
+	private BigDecimal compute11;
 
-	private float compute12;
+	private BigDecimal compute12;
 
-	private float compute13;
+	private BigDecimal compute13;
 
-	private float compute14;
+	private BigDecimal compute14;
 
-	private float compute15;
+	private BigDecimal compute15;
 
-	private float compute16;
+	private BigDecimal compute16;
 
-	private float compute17;
+	private BigDecimal compute17;
 
-	private float compute18;
+	private BigDecimal compute18;
 
-	private float compute19;
+	private BigDecimal compute19;
 
-	private float compute2;
+	private BigDecimal compute2;
 
-	private float compute20;
+	private BigDecimal compute20;
 
-	private float compute21;
+	private BigDecimal compute21;
 
-	private float compute22;
+	private BigDecimal compute22;
 
-	private float compute23;
+	private BigDecimal compute23;
 
-	private float compute24;
+	private BigDecimal compute24;
 
-	private float compute25;
+	private BigDecimal compute25;
 
-	private float compute3;
+	private BigDecimal compute3;
 
-	private float compute4;
+	private BigDecimal compute4;
 
-	private float compute5;
+	private BigDecimal compute5;
 
-	private float compute6;
+	private BigDecimal compute6;
 
-	private float compute7;
+	private BigDecimal compute7;
 
-	private float compute8;
+	private BigDecimal compute8;
 
-	private float compute9;
+	private BigDecimal compute9;
 
 	private int count;
 
-	private String date;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date date;
 
 	private float maximum;
 
@@ -88,15 +88,15 @@ public class AnswerStatTbl implements Serializable {
 
 	private int question5;
 
-	//bi-directional many-to-one association to QuestionnaireTbl
-	@ManyToOne
-	@JoinColumn(name="questionnaire_id")
-	private QuestionnaireTbl questionnaireTbl;
-
 	//bi-directional many-to-one association to DataPointTbl
 	@ManyToOne
 	@JoinColumn(name="data_point")
 	private DataPointTbl dataPointTbl;
+
+	//bi-directional many-to-one association to HealthCareOrganisationTbl
+	@ManyToOne
+	@JoinColumn(name="hospital")
+	private HealthCareOrganisationTbl healthCareOrganisationTbl;
 
 	public AnswerStatTbl() {
 	}
@@ -117,203 +117,203 @@ public class AnswerStatTbl implements Serializable {
 		this.average = average;
 	}
 
-	public float getCompute1() {
+	public BigDecimal getCompute1() {
 		return this.compute1;
 	}
 
-	public void setCompute1(float compute1) {
+	public void setCompute1(BigDecimal compute1) {
 		this.compute1 = compute1;
 	}
 
-	public float getCompute10() {
+	public BigDecimal getCompute10() {
 		return this.compute10;
 	}
 
-	public void setCompute10(float compute10) {
+	public void setCompute10(BigDecimal compute10) {
 		this.compute10 = compute10;
 	}
 
-	public float getCompute11() {
+	public BigDecimal getCompute11() {
 		return this.compute11;
 	}
 
-	public void setCompute11(float compute11) {
+	public void setCompute11(BigDecimal compute11) {
 		this.compute11 = compute11;
 	}
 
-	public float getCompute12() {
+	public BigDecimal getCompute12() {
 		return this.compute12;
 	}
 
-	public void setCompute12(float compute12) {
+	public void setCompute12(BigDecimal compute12) {
 		this.compute12 = compute12;
 	}
 
-	public float getCompute13() {
+	public BigDecimal getCompute13() {
 		return this.compute13;
 	}
 
-	public void setCompute13(float compute13) {
+	public void setCompute13(BigDecimal compute13) {
 		this.compute13 = compute13;
 	}
 
-	public float getCompute14() {
+	public BigDecimal getCompute14() {
 		return this.compute14;
 	}
 
-	public void setCompute14(float compute14) {
+	public void setCompute14(BigDecimal compute14) {
 		this.compute14 = compute14;
 	}
 
-	public float getCompute15() {
+	public BigDecimal getCompute15() {
 		return this.compute15;
 	}
 
-	public void setCompute15(float compute15) {
+	public void setCompute15(BigDecimal compute15) {
 		this.compute15 = compute15;
 	}
 
-	public float getCompute16() {
+	public BigDecimal getCompute16() {
 		return this.compute16;
 	}
 
-	public void setCompute16(float compute16) {
+	public void setCompute16(BigDecimal compute16) {
 		this.compute16 = compute16;
 	}
 
-	public float getCompute17() {
+	public BigDecimal getCompute17() {
 		return this.compute17;
 	}
 
-	public void setCompute17(float compute17) {
+	public void setCompute17(BigDecimal compute17) {
 		this.compute17 = compute17;
 	}
 
-	public float getCompute18() {
+	public BigDecimal getCompute18() {
 		return this.compute18;
 	}
 
-	public void setCompute18(float compute18) {
+	public void setCompute18(BigDecimal compute18) {
 		this.compute18 = compute18;
 	}
 
-	public float getCompute19() {
+	public BigDecimal getCompute19() {
 		return this.compute19;
 	}
 
-	public void setCompute19(float compute19) {
+	public void setCompute19(BigDecimal compute19) {
 		this.compute19 = compute19;
 	}
 
-	public float getCompute2() {
+	public BigDecimal getCompute2() {
 		return this.compute2;
 	}
 
-	public void setCompute2(float compute2) {
+	public void setCompute2(BigDecimal compute2) {
 		this.compute2 = compute2;
 	}
 
-	public float getCompute20() {
+	public BigDecimal getCompute20() {
 		return this.compute20;
 	}
 
-	public void setCompute20(float compute20) {
+	public void setCompute20(BigDecimal compute20) {
 		this.compute20 = compute20;
 	}
 
-	public float getCompute21() {
+	public BigDecimal getCompute21() {
 		return this.compute21;
 	}
 
-	public void setCompute21(float compute21) {
+	public void setCompute21(BigDecimal compute21) {
 		this.compute21 = compute21;
 	}
 
-	public float getCompute22() {
+	public BigDecimal getCompute22() {
 		return this.compute22;
 	}
 
-	public void setCompute22(float compute22) {
+	public void setCompute22(BigDecimal compute22) {
 		this.compute22 = compute22;
 	}
 
-	public float getCompute23() {
+	public BigDecimal getCompute23() {
 		return this.compute23;
 	}
 
-	public void setCompute23(float compute23) {
+	public void setCompute23(BigDecimal compute23) {
 		this.compute23 = compute23;
 	}
 
-	public float getCompute24() {
+	public BigDecimal getCompute24() {
 		return this.compute24;
 	}
 
-	public void setCompute24(float compute24) {
+	public void setCompute24(BigDecimal compute24) {
 		this.compute24 = compute24;
 	}
 
-	public float getCompute25() {
+	public BigDecimal getCompute25() {
 		return this.compute25;
 	}
 
-	public void setCompute25(float compute25) {
+	public void setCompute25(BigDecimal compute25) {
 		this.compute25 = compute25;
 	}
 
-	public float getCompute3() {
+	public BigDecimal getCompute3() {
 		return this.compute3;
 	}
 
-	public void setCompute3(float compute3) {
+	public void setCompute3(BigDecimal compute3) {
 		this.compute3 = compute3;
 	}
 
-	public float getCompute4() {
+	public BigDecimal getCompute4() {
 		return this.compute4;
 	}
 
-	public void setCompute4(float compute4) {
+	public void setCompute4(BigDecimal compute4) {
 		this.compute4 = compute4;
 	}
 
-	public float getCompute5() {
+	public BigDecimal getCompute5() {
 		return this.compute5;
 	}
 
-	public void setCompute5(float compute5) {
+	public void setCompute5(BigDecimal compute5) {
 		this.compute5 = compute5;
 	}
 
-	public float getCompute6() {
+	public BigDecimal getCompute6() {
 		return this.compute6;
 	}
 
-	public void setCompute6(float compute6) {
+	public void setCompute6(BigDecimal compute6) {
 		this.compute6 = compute6;
 	}
 
-	public float getCompute7() {
+	public BigDecimal getCompute7() {
 		return this.compute7;
 	}
 
-	public void setCompute7(float compute7) {
+	public void setCompute7(BigDecimal compute7) {
 		this.compute7 = compute7;
 	}
 
-	public float getCompute8() {
+	public BigDecimal getCompute8() {
 		return this.compute8;
 	}
 
-	public void setCompute8(float compute8) {
+	public void setCompute8(BigDecimal compute8) {
 		this.compute8 = compute8;
 	}
 
-	public float getCompute9() {
+	public BigDecimal getCompute9() {
 		return this.compute9;
 	}
 
-	public void setCompute9(float compute9) {
+	public void setCompute9(BigDecimal compute9) {
 		this.compute9 = compute9;
 	}
 
@@ -325,11 +325,11 @@ public class AnswerStatTbl implements Serializable {
 		this.count = count;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return this.date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
@@ -389,20 +389,20 @@ public class AnswerStatTbl implements Serializable {
 		this.question5 = question5;
 	}
 
-	public QuestionnaireTbl getQuestionnaireTbl() {
-		return this.questionnaireTbl;
-	}
-
-	public void setQuestionnaireTbl(QuestionnaireTbl questionnaireTbl) {
-		this.questionnaireTbl = questionnaireTbl;
-	}
-
 	public DataPointTbl getDataPointTbl() {
 		return this.dataPointTbl;
 	}
 
 	public void setDataPointTbl(DataPointTbl dataPointTbl) {
 		this.dataPointTbl = dataPointTbl;
+	}
+
+	public HealthCareOrganisationTbl getHealthCareOrganisationTbl() {
+		return this.healthCareOrganisationTbl;
+	}
+
+	public void setHealthCareOrganisationTbl(HealthCareOrganisationTbl healthCareOrganisationTbl) {
+		this.healthCareOrganisationTbl = healthCareOrganisationTbl;
 	}
 
 }

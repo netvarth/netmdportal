@@ -2,6 +2,7 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -10,12 +11,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="health_care_organisation_tbl")
-@Inheritance(strategy=InheritanceType.JOINED)
+@NamedQuery(name="HealthCareOrganisationTbl.findAll", query="SELECT h FROM HealthCareOrganisationTbl h")
 public class HealthCareOrganisationTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	private String address;
@@ -29,6 +29,14 @@ public class HealthCareOrganisationTbl implements Serializable {
 	private String phone;
 
 	private String status;
+
+	//bi-directional many-to-one association to AnswerSetTbl
+	@OneToMany(mappedBy="healthCareOrganisationTbl")
+	private List<AnswerSetTbl> answerSetTbls;
+
+	//bi-directional many-to-one association to AnswerStatTbl
+	@OneToMany(mappedBy="healthCareOrganisationTbl")
+	private List<AnswerStatTbl> answerStatTbls;
 
 	//bi-directional one-to-one association to NetmdBranchTbl
 	@OneToOne(mappedBy="healthCareOrganisationTbl")
@@ -44,9 +52,6 @@ public class HealthCareOrganisationTbl implements Serializable {
 	public int getId() {
 		return this.id;
 	}
-	
-	
-	
 
 	public void setId(int id) {
 		this.id = id;
@@ -98,6 +103,50 @@ public class HealthCareOrganisationTbl implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public List<AnswerSetTbl> getAnswerSetTbls() {
+		return this.answerSetTbls;
+	}
+
+	public void setAnswerSetTbls(List<AnswerSetTbl> answerSetTbls) {
+		this.answerSetTbls = answerSetTbls;
+	}
+
+	public AnswerSetTbl addAnswerSetTbl(AnswerSetTbl answerSetTbl) {
+		getAnswerSetTbls().add(answerSetTbl);
+		answerSetTbl.setHealthCareOrganisationTbl(this);
+
+		return answerSetTbl;
+	}
+
+	public AnswerSetTbl removeAnswerSetTbl(AnswerSetTbl answerSetTbl) {
+		getAnswerSetTbls().remove(answerSetTbl);
+		answerSetTbl.setHealthCareOrganisationTbl(null);
+
+		return answerSetTbl;
+	}
+
+	public List<AnswerStatTbl> getAnswerStatTbls() {
+		return this.answerStatTbls;
+	}
+
+	public void setAnswerStatTbls(List<AnswerStatTbl> answerStatTbls) {
+		this.answerStatTbls = answerStatTbls;
+	}
+
+	public AnswerStatTbl addAnswerStatTbl(AnswerStatTbl answerStatTbl) {
+		getAnswerStatTbls().add(answerStatTbl);
+		answerStatTbl.setHealthCareOrganisationTbl(this);
+
+		return answerStatTbl;
+	}
+
+	public AnswerStatTbl removeAnswerStatTbl(AnswerStatTbl answerStatTbl) {
+		getAnswerStatTbls().remove(answerStatTbl);
+		answerStatTbl.setHealthCareOrganisationTbl(null);
+
+		return answerStatTbl;
 	}
 
 	public NetmdBranchTbl getNetmdBranchTbl() {

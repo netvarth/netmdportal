@@ -11,7 +11,6 @@ import java.util.List;
  */
 @Entity
 @Table(name="question_tbl")
-@NamedQuery(name="QuestionTbl.findAll", query="SELECT q FROM QuestionTbl q")
 public class QuestionTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,7 +21,7 @@ public class QuestionTbl implements Serializable {
 	@Column(name="answer_type")
 	private String answerType;
 
-	private Boolean mandatory;
+	private boolean mandatory;
 
 	private String question;
 
@@ -57,11 +56,19 @@ public class QuestionTbl implements Serializable {
 		this.answerType = answerType;
 	}
 
-	public Boolean getMandatory() {
-		return this.mandatory;
+
+
+	/**
+	 * @return the mandatory
+	 */
+	public boolean isMandatory() {
+		return mandatory;
 	}
 
-	public void setMandatory(Boolean mandatory) {
+	/**
+	 * @param mandatory the mandatory to set
+	 */
+	public void setMandatory(boolean mandatory) {
 		this.mandatory = mandatory;
 	}
 

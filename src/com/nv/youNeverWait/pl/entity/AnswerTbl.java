@@ -10,7 +10,6 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="answer_tbl")
-@NamedQuery(name="AnswerTbl.findAll", query="SELECT a FROM AnswerTbl a")
 public class AnswerTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -19,6 +18,7 @@ public class AnswerTbl implements Serializable {
 	private int id;
 
 	private String answer;
+
 
 	//bi-directional many-to-one association to AnswerSetTbl
 	@ManyToOne
@@ -29,6 +29,11 @@ public class AnswerTbl implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="quest_id")
 	private QuestionTbl questionTbl;
+
+	//bi-directional many-to-one association to QuestionnaireTbl
+	@ManyToOne
+	@JoinColumn(name="questionnare_id")
+	private QuestionnaireTbl questionnaireTbl;
 
 	public AnswerTbl() {
 	}
@@ -49,6 +54,7 @@ public class AnswerTbl implements Serializable {
 		this.answer = answer;
 	}
 
+
 	public AnswerSetTbl getAnswerSetTbl() {
 		return this.answerSetTbl;
 	}
@@ -63,6 +69,14 @@ public class AnswerTbl implements Serializable {
 
 	public void setQuestionTbl(QuestionTbl questionTbl) {
 		this.questionTbl = questionTbl;
+	}
+
+	public QuestionnaireTbl getQuestionnaireTbl() {
+		return this.questionnaireTbl;
+	}
+
+	public void setQuestionnaireTbl(QuestionnaireTbl questionnaireTbl) {
+		this.questionnaireTbl = questionnaireTbl;
 	}
 
 }

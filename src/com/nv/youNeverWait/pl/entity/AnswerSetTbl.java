@@ -12,7 +12,6 @@ import java.util.List;
  */
 @Entity
 @Table(name="answer_set_tbl")
-@NamedQuery(name="AnswerSetTbl.findAll", query="SELECT a FROM AnswerSetTbl a")
 public class AnswerSetTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -27,10 +26,15 @@ public class AnswerSetTbl implements Serializable {
 	@Column(name="s_date")
 	private Date sDate;
 
-	//bi-directional many-to-one association to OrganisationTbl
+	//bi-directional many-to-one association to HealthCareOrganisationTbl
 	@ManyToOne
 	@JoinColumn(name="branch_id")
-	private OrganisationTbl organisationTbl;
+	private HealthCareOrganisationTbl healthCareOrganisationTbl;
+//
+//	//bi-directional many-to-one association to OrganisationTbl
+//	@ManyToOne
+//	@JoinColumn(name="branch_id")
+//	private OrganisationTbl organisationTbl;
 
 	//bi-directional many-to-one association to QuestionnaireTbl
 	@ManyToOne
@@ -38,12 +42,9 @@ public class AnswerSetTbl implements Serializable {
 	private QuestionnaireTbl questionnaireTbl;
 
 	//bi-directional many-to-one association to AnswerTbl
-	@OneToMany(orphanRemoval=true,mappedBy="answerSetTbl")
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy="answerSetTbl")
 	private List<AnswerTbl> answerTbls;
 
-	@Column(name="uid")
-	private String uid;
-	
 	public AnswerSetTbl() {
 	}
 
@@ -71,13 +72,21 @@ public class AnswerSetTbl implements Serializable {
 		this.sDate = sDate;
 	}
 
-	public OrganisationTbl getOrganisationTbl() {
-		return this.organisationTbl;
+	public HealthCareOrganisationTbl getHealthCareOrganisationTbl() {
+		return this.healthCareOrganisationTbl;
 	}
 
-	public void setOrganisationTbl(OrganisationTbl organisationTbl) {
-		this.organisationTbl = organisationTbl;
+	public void setHealthCareOrganisationTbl(HealthCareOrganisationTbl healthCareOrganisationTbl) {
+		this.healthCareOrganisationTbl = healthCareOrganisationTbl;
 	}
+
+//	public OrganisationTbl getOrganisationTbl() {
+//		return this.organisationTbl;
+//	}
+//
+//	public void setOrganisationTbl(OrganisationTbl organisationTbl) {
+//		this.organisationTbl = organisationTbl;
+//	}
 
 	public QuestionnaireTbl getQuestionnaireTbl() {
 		return this.questionnaireTbl;
@@ -108,15 +117,5 @@ public class AnswerSetTbl implements Serializable {
 
 		return answerTbl;
 	}
-
-	public String getUid() {
-		return uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
-	
-	
 
 }
