@@ -46,8 +46,7 @@ public class SyncDaoImpl extends GenericDaoHibernateImpl implements SyncDao{
 				&& !header.getMacId().isEmpty()
 				&& !header.getPassPhrase().isEmpty()) {
 
-			NetmdPassphraseTbl passPhrase = getByPassphrase(header
-					.getPassPhrase());
+			NetmdPassphraseTbl passPhrase = getByPassphrase(header.getPassPhrase().trim());
 			if (passPhrase == null
 					|| passPhrase.getMacId() == null
 					|| !passPhrase.getMacId().equals(header.getMacId())
@@ -82,7 +81,7 @@ public class SyncDaoImpl extends GenericDaoHibernateImpl implements SyncDao{
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_NETMD_BRANCH_PASSPHRASE);
 		query.setParameter("param1", passPhrase);
-		return executeUniqueQuery(NetmdPassphraseTbl.class, query);
+		return executeUniqueQuery(NetmdPassphraseTbl.class,query);
 	}
 
 	/**
