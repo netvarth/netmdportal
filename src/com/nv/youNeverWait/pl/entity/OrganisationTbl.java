@@ -13,14 +13,11 @@ import java.util.List;
  */
 @Entity
 @Table(name="organisation_tbl")
+@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 @NamedQuery(name="OrganisationTbl.findAll", query="SELECT o FROM OrganisationTbl o")
-public class OrganisationTbl implements Serializable {
+public class OrganisationTbl extends HealthCareOrganisationTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_date_time")
 	private Date createDateTime;
@@ -46,7 +43,7 @@ public class OrganisationTbl implements Serializable {
 	@Column(name="head_office_phone")
 	private String headOfficePhone;
 
-	private String name;
+	//private String name;
 
 	@Column(name="owner_address")
 	private String ownerAddress;
@@ -66,7 +63,7 @@ public class OrganisationTbl implements Serializable {
 	@Column(name="owner_phone")
 	private String ownerPhone;
 
-	private String status;
+	//private String status;
 
 	@Column(name="sync_freq_type")
 	private String syncFreqType;
@@ -99,13 +96,13 @@ public class OrganisationTbl implements Serializable {
 	public OrganisationTbl() {
 	}
 
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+//	public int getId() {
+//		return this.id;
+//	}
+//
+//	public void setId(int id) {
+//		this.id = id;
+//	}
 
 	public Date getCreateDateTime() {
 		return this.createDateTime;
@@ -171,13 +168,13 @@ public class OrganisationTbl implements Serializable {
 		this.headOfficePhone = headOfficePhone;
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+//	public String getName() {
+//		return this.name;
+//	}
+//
+//	public void setName(String name) {
+//		this.name = name;
+//	}
 
 	public String getOwnerAddress() {
 		return this.ownerAddress;
@@ -227,13 +224,13 @@ public class OrganisationTbl implements Serializable {
 		this.ownerPhone = ownerPhone;
 	}
 
-	public String getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
+//	public String getStatus() {
+//		return this.status;
+//	}
+//
+//	public void setStatus(String status) {
+//		this.status = status;
+//	}
 
 	public String getSyncFreqType() {
 		return this.syncFreqType;

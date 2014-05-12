@@ -2,7 +2,6 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.Date;
 import java.util.List;
 
@@ -13,10 +12,9 @@ import java.util.List;
  */
 @Entity
 @Table(name="netmd_branch_tbl")
+@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")	
 public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")	
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_date_time")
@@ -42,6 +40,10 @@ public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Seriali
 	//bi-directional many-to-one association to DoctorTbl
 	@OneToMany(mappedBy="netmdBranchTbl")
 	private List<DoctorTbl> doctorTbls;
+
+	//bi-directional many-to-one association to NetmdAnswerTbl
+	@OneToMany(mappedBy="netmdBranchTbl")
+	private List<NetmdAnswerTbl> netmdAnswerTbls;
 
 	//bi-directional many-to-one association to NetmdBillTbl
 	@OneToMany(mappedBy="netmdBranchTbl")
@@ -89,16 +91,7 @@ public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Seriali
 	}
 
 
-	public Date getCreateDateTime() {
-		return this.createDateTime;
-	}
-
-	public void setCreateDateTime(Date createDateTime) {
-		this.createDateTime = createDateTime;
-	}
-
 	
-
 	public boolean isEnableSync() {
 		return enableSync;
 	}
@@ -107,6 +100,15 @@ public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Seriali
 	public void setEnableSync(boolean enableSync) {
 		this.enableSync = enableSync;
 	}
+
+	public Date getCreateDateTime() {
+		return this.createDateTime;
+	}
+
+	public void setCreateDateTime(Date createDateTime) {
+		this.createDateTime = createDateTime;
+	}
+
 
 
 	public String getSyncFreqType() {
@@ -175,6 +177,28 @@ public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Seriali
 		doctorTbl.setNetmdBranchTbl(null);
 
 		return doctorTbl;
+	}
+
+	public List<NetmdAnswerTbl> getNetmdAnswerTbls() {
+		return this.netmdAnswerTbls;
+	}
+
+	public void setNetmdAnswerTbls(List<NetmdAnswerTbl> netmdAnswerTbls) {
+		this.netmdAnswerTbls = netmdAnswerTbls;
+	}
+
+	public NetmdAnswerTbl addNetmdAnswerTbl(NetmdAnswerTbl netmdAnswerTbl) {
+		getNetmdAnswerTbls().add(netmdAnswerTbl);
+		netmdAnswerTbl.setNetmdBranchTbl(this);
+
+		return netmdAnswerTbl;
+	}
+
+	public NetmdAnswerTbl removeNetmdAnswerTbl(NetmdAnswerTbl netmdAnswerTbl) {
+		getNetmdAnswerTbls().remove(netmdAnswerTbl);
+		netmdAnswerTbl.setNetmdBranchTbl(null);
+
+		return netmdAnswerTbl;
 	}
 
 	public List<NetmdBillTbl> getNetmdBillTbls() {

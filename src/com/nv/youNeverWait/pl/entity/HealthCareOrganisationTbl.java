@@ -11,6 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="health_care_organisation_tbl")
+@Inheritance(strategy=InheritanceType.JOINED)
 @NamedQuery(name="HealthCareOrganisationTbl.findAll", query="SELECT h FROM HealthCareOrganisationTbl h")
 public class HealthCareOrganisationTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
