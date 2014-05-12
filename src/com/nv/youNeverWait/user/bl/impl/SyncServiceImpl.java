@@ -371,9 +371,7 @@ public class SyncServiceImpl implements SyncService {
 
 
 	private NetMdDTO syncNetmdDetails(String lastSyncTime, Date currentSyncTime,HeaderDTO header) {
-
 		NetMdDTO netmd=netMdService.getUpdateNetMd(lastSyncTime,currentSyncTime,header);
-		
 		 return netmd;	
 	}
 
