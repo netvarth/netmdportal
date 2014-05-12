@@ -132,8 +132,7 @@ public class SyncServiceImpl implements SyncService {
 
 		}
 		/* Checking whether primary device or not */
-		HeaderResponseDTO headerResponse = syncDao.getHeaderStatus(sync
-				.getHeader());
+		HeaderResponseDTO headerResponse = syncDao.getHeaderStatus(sync.getHeader());
 
 		if (headerResponse.isPrimaryDevice()) {
 			NetMdDTO NetmdResponse=getNetmdDetails(sync.getLastSyncTime(),currentSyncTime,sync.getHeader());
