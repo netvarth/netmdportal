@@ -30,11 +30,6 @@ public class AnswerTbl implements Serializable {
 	@JoinColumn(name="quest_id")
 	private QuestionTbl questionTbl;
 
-	//bi-directional many-to-one association to QuestionnaireTbl
-	@ManyToOne
-	@JoinColumn(name="questionnare_id")
-	private QuestionnaireTbl questionnaireTbl;
-
 	public AnswerTbl() {
 	}
 
@@ -71,12 +66,6 @@ public class AnswerTbl implements Serializable {
 		this.questionTbl = questionTbl;
 	}
 
-	public QuestionnaireTbl getQuestionnaireTbl() {
-		return this.questionnaireTbl;
-	}
 
-	public void setQuestionnaireTbl(QuestionnaireTbl questionnaireTbl) {
-		this.questionnaireTbl = questionnaireTbl;
-	}
 
 }

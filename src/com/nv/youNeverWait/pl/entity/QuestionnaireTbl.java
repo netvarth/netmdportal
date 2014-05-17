@@ -29,10 +29,6 @@ public class QuestionnaireTbl implements Serializable {
 	@OneToMany(mappedBy="questionnaireTbl")
 	private List<AnswerSetTbl> answerSetTbls;
 
-	//bi-directional many-to-one association to AnswerTbl
-	@OneToMany(mappedBy="questionnaireTbl")
-	private List<AnswerTbl> answerTbls;
-
 	//bi-directional many-to-one association to DataPointTbl
 	@OneToMany(mappedBy="questionnaireTbl")
 	private List<DataPointTbl> dataPointTbls;
@@ -106,28 +102,6 @@ public class QuestionnaireTbl implements Serializable {
 		answerSetTbl.setQuestionnaireTbl(null);
 
 		return answerSetTbl;
-	}
-
-	public List<AnswerTbl> getAnswerTbls() {
-		return this.answerTbls;
-	}
-
-	public void setAnswerTbls(List<AnswerTbl> answerTbls) {
-		this.answerTbls = answerTbls;
-	}
-
-	public AnswerTbl addAnswerTbl(AnswerTbl answerTbl) {
-		getAnswerTbls().add(answerTbl);
-		answerTbl.setQuestionnaireTbl(this);
-
-		return answerTbl;
-	}
-
-	public AnswerTbl removeAnswerTbl(AnswerTbl answerTbl) {
-		getAnswerTbls().remove(answerTbl);
-		answerTbl.setQuestionnaireTbl(null);
-
-		return answerTbl;
 	}
 
 	public List<DataPointTbl> getDataPointTbls() {
