@@ -2448,15 +2448,17 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		
 		
 		List<Object[]> billDetails= getBillTotalAmountDetails(branchId,frmDate,tDate);
-		if(billDetails.isEmpty()){
+		if(billDetails.isEmpty()|| billDetails.size()==0 ||billDetails.equals(null)){
 			throw new ServiceException(ErrorCodeEnum.BillPaymentsNull);
 		}
 		for(Object[] billPayment:billDetails){
-			double bllAmt=(Double) billPayment[0];
-			double amtPd=(Double) billPayment[1];
-			billResponse.setTotalBillAmt(bllAmt);
-			billResponse.setTotalAmtPaid(amtPd);
-			billResponse.setTotalAmtDue(bllAmt-amtPd);
+		if (billPayment[0]!=null&& billPayment[1]!=null){
+				double bllAmt=(Double) billPayment[0];
+				double amtPd=(Double) billPayment[1];
+				billResponse.setTotalBillAmt(bllAmt);
+				billResponse.setTotalAmtPaid(amtPd);
+				billResponse.setTotalAmtDue(bllAmt-amtPd);
+		  	}
 		}
 		
 		return billResponse;
@@ -2471,7 +2473,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			query.setParameter("param1", branchId);
 			query.setParameter("param2", frmDate);
 			query.setParameter("param3",tDate);
-			response=query.getResultList();
+			response=executeQuery(Object[].class,query);
 		}
 		catch (RuntimeException e) {
 			e.printStackTrace();
