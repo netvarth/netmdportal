@@ -25,6 +25,8 @@ public class DataPointTbl implements Serializable {
 	private String name;
 
 	private String uid;
+	
+	private int order;
 
 	//bi-directional many-to-one association to AnswerStatTbl
 	@OneToMany(mappedBy="dataPointTbl")
@@ -68,6 +70,14 @@ public class DataPointTbl implements Serializable {
 
 	public void setUid(String uid) {
 		this.uid = uid;
+	}
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
 	}
 
 	public List<AnswerStatTbl> getAnswerStatTbls() {
