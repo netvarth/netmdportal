@@ -15,11 +15,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
@@ -261,8 +264,8 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		javax.persistence.Query query = em.createQuery(Query.GET_ORDERS);
 		query.setParameter("param1", labId);
 		query.setParameter("param2", labBranchId);
-		query.setParameter("param3", syncTime);
-		query.setParameter("param4", currentSyncTime);
+		query.setParameter("param3", syncTime,TemporalType.TIMESTAMP);
+		query.setParameter("param4", currentSyncTime,TemporalType.TIMESTAMP);
 		return executeQuery(OrderTransferTbl.class, query);
 	}
 
