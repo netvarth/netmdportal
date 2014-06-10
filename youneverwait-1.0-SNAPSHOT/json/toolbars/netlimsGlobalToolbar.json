@@ -1,0 +1,20 @@
+
+{
+    "buttons": [
+		{
+            "title": " New Branch",
+            "className": "big-link",
+            "name": "ribbonNewNetlimsBranch",
+            "image": "/youNeverWait/images/icon/dashboard/1.png"
+        },
+
+		{
+            "title": " Download",
+            "className": "big-link",
+            "name": "ribbonNetlimsDownload",
+            "image": "/youNeverWait/images/icon/dashboard/ready.png"
+        }
+		
+       
+    ]
+}
