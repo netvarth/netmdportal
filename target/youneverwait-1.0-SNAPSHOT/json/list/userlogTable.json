@@ -1,0 +1,29 @@
+{
+    "data": [
+        {
+            "id": "userlogTableCont",
+            "elements": [
+				{
+                    "type": "table",
+                    "content": {
+                        "name" : "userlog",
+						"idProperty" : "userlog",
+						"className" :"stdtable stdtablecb",
+						"style":"border-spacing:0;border-collapse:collapse; border:0;",
+						"colHeaders" : [
+							{ "className" : "head1",	"name" : "Id", "style":"width:8%"},
+							{ "className" : "head1",	"name" : "User Name", "style":"width:8%"},
+							{ "className" : "head1",	"name" : "User Type", "style":"width:8%"},
+							{ "className" : "head1",	"name" : "Login Time", "style":"width:15%"},
+							{ "className" : "head1",	"name" : "Logout Time", "style":"width:15%"},
+							{ "className" : "head1",	"name" : "Application Name", "style":"width:8%"},
+							{ "className" : "head1",	"name" : "Action Name","style":"width:15%"},
+							{ "className" : "head1",	"name" : "Action Date", "style":"width:15%"},
+							{ "className" : "head1",	"name" : "IP Address","style":"width:8%"}
+						]
+                    }
+                }
+            ]
+        }
+    ]
+}

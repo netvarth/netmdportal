@@ -1,0 +1,82 @@
+{
+    "title": "Confirm Clear MacId ",
+    "style": "width:38%;margin:0 35%",
+    "data": [
+        {
+            "name": "macidClearForm",
+            "id": "macidClearForm",
+            "content": [
+					{
+                    "className": "sep-div",
+                    "style": "display:none",
+                    "id": "errorDivclearMacidHeader",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "id": "errorDivNetlimsclearMacidData"
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div",
+                    "id": "changepwddiv",
+                    "data": [
+                        
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                
+                                {
+                                    "className": "five_sixth",
+                                    "elements": [
+                                        {
+                                            "type": "label",
+                                            "title": "Are you sure you want to clear MacId ?",
+                                            "spanstyle": "font-size:13px;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+
+                    ]
+                },
+
+
+                {
+                    "className": "sep-div ",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                            {
+                                                "name": "btnClearMacYes",
+                                                "id": "btnClearMacYes",
+                                                "title": "Yes",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1; margin:2px"
+                                            },
+                                            {
+                                                "name": "btnClearMacNo",
+                                                "id": "btnClearMacNo",
+                                                "title": "No",
+                                                "type": "button",
+                                                "className": "stdbtn",
+                                                "style": "opacity:1; margin:2px"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

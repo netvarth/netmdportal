@@ -1,0 +1,1 @@
+function datalabel(button){this.result=function(){var spanTag=$j('<span/>');if(button.name)spanTag.attr('name',button.name);if(button.id)spanTag.attr('id',button.id);if(button.className)spanTag.attr('class',button.className);if(button.style)spanTag.attr('style',button.style);return spanTag}}

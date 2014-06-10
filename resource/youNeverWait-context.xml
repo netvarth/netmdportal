@@ -1,0 +1,819 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+
+	<bean id="email.worker.thread" class="com.nv.framework.sendmsg.SendEmailMsgWorkerThread"
+		scope="singleton">
+		<property name="maxSize">
+			<value>${Email.Queue.Max.Size}</value>
+		</property>
+		<property name="context">
+			<value>youNeverWait</value>
+		</property>
+		<property name="commonDao">
+			<ref bean="generic.dao" />
+		</property>
+		<property name="companyType">
+			<value>youneverwait</value>
+		</property>
+		<property name="jndiName">
+			<value>${datasource.jndi}</value>
+		</property>
+		<property name="accessKey">
+			<value>${amazon.access.key}</value>
+		</property>
+		<property name="secretKey">
+			<value>${amazon.secret.key}</value>
+		</property>
+		<property name="scalable">
+			<value>${scalable}</value>
+		</property>
+
+		<property name="callbacks">
+			<map>
+				<entry key="23">
+					<ref bean="netmd.mail.handler" />
+				</entry>
+				<entry key="24">
+					<ref bean="netmd.branch.mail.handler" />
+				</entry>
+				<entry key="25">
+					<ref bean="netmd.user.mail.handler" />
+				</entry>
+				<entry key="26">
+					<ref bean="lab.mail.handler" />
+				</entry>
+				<entry key="27">
+					<ref bean="lab.branch.mail.handler" />
+				</entry>
+				<entry key="28">
+					<ref bean="lab.user.mail.handler" />
+				</entry>
+				<entry key="29">
+					<ref bean="superadmin.forgotPassword.mail.handler" />
+				</entry>
+				<entry key="30">
+					<ref bean="patient.registraion.mail.handler" />
+				</entry>
+				<entry key="31">
+					<ref bean="lab.resetPassword.mail.handler" />
+				</entry>
+				<entry key="32">
+					<ref bean="netmd.resetPassword.mail.handler" />
+				</entry>
+				<entry key="33">
+					<ref bean="doctor.registration.mail.handler" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="netmd.mail.handler"
+		class="com.nv.youNeverWait.msg.NetmdRegistrationEmailPerformHandler"
+		scope="singleton" />
+
+	<bean id="doctor.registration.mail.handler"
+		class="com.nv.youNeverWait.msg.DoctorRegistrationEmailPerformHandler"
+		scope="singleton" />
+
+	<bean id="netmd.branch.mail.handler"
+		class="com.nv.youNeverWait.msg.NetmdBranchRegistrationEmailPerformHandler"
+		scope="singleton" />
+
+	<bean id="netmd.user.mail.handler" class="com.nv.youNeverWait.msg.NetmdUserEmailPerformHandler"
+		scope="singleton" />
+
+	<bean id="lab.mail.handler"
+		class="com.nv.youNeverWait.msg.LabRegistrationEmailPerformHandler"
+		scope="singleton" />
+
+	<bean id="lab.branch.mail.handler"
+		class="com.nv.youNeverWait.msg.LabBranchRegistrationEmailPerformHandler"
+		scope="singleton" />
+
+	<bean id="lab.user.mail.handler" class="com.nv.youNeverWait.msg.LabUserEmailPerformHandler"
+		scope="singleton" />
+
+	<bean id="superadmin.forgotPassword.mail.handler"
+		class="com.nv.youNeverWait.msg.SuperAdminForgotPwdEmailPerformHandler"
+		scope="singleton" />
+
+	<bean id="patient.registraion.mail.handler"
+		class="com.nv.youNeverWait.msg.PatientRegistrationEmailPerformHandler"
+		scope="singleton" />
+
+	<bean id="lab.resetPassword.mail.handler" class="com.nv.youNeverWait.msg.LabResetPwdEmailPerformHandler"
+		scope="singleton" />
+
+	<bean id="netmd.resetPassword.mail.handler"
+		class="com.nv.youNeverWait.msg.NetMdResetPwdEmailPerformHandler"
+		scope="singleton" />
+
+	<bean id="generic.dao" class="com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl" />
+
+	<bean id="filter.dao" class="com.nv.youNeverWait.pl.impl.FilterDaoImpl"
+		parent="generic.dao">
+	</bean>
+
+	<bean id="authentication.dao"
+		class="com.nv.youNeverWait.security.pl.impl.AuthenticationDaoImpl"
+		parent="generic.dao" />
+
+	<bean id="doctor.dao" class="com.nv.youNeverWait.user.pl.impl.DoctorDaoImpl"
+		parent="generic.dao" />
+
+	<bean id="sync.dao" class="com.nv.youNeverWait.user.pl.impl.SyncDaoImpl"
+		parent="generic.dao">
+		<property name="doctorDao">
+			<ref bean="doctor.dao" />
+		</property>
+		<property name="patientDao">
+			<ref bean="patient.dao" />
+		</property>
+	</bean>
+
+	<bean id="appointment.Validator"
+		class="com.nv.youNeverWait.user.bl.validation.AppointmentValidator"></bean>
+
+	<bean id="appointment.dao" class="com.nv.youNeverWait.user.pl.impl.AppointmentDaoImpl"
+		parent="generic.dao"></bean>
+
+	<bean id="authentication.service"
+		class="com.nv.youNeverWait.security.bl.impl.AuthenticationServiceimpl">
+		<property name="authenticationDao">
+			<ref bean="authentication.dao" />
+		</property>
+		<property name="validator">
+			<ref bean="authentication.validator" />
+		</property>
+		<property name="enumList">
+			<list>
+				<value>com.nv.youNeverWait.pl.entity.ActionNameEnum</value>
+				<value>com.nv.youNeverWait.pl.entity.LabUserTypeEnum</value>
+				<value>com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum</value>
+				<value>com.nv.youNeverWait.pl.entity.LogUserTypeEnum</value>
+				<value>com.nv.youNeverWait.pl.entity.ApplicationNameEnum</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.LabUserPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.LabPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.BranchPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.OperatorEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.NetMdPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.NetMDBranchPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.UserLogPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.NetRxPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.NetRxBranchPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.ResultPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.AppointmentPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.TestPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.SpecimenPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.SyncLogPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.BillPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.OrderPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.NetPosPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.OrganisationPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.pl.entity.DepartmentTypeEnum</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.OrganisationUserPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.pl.entity.UserTypeEnum</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.TransferredOrderPropertyEnum
+				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.TransferredResultPropertyEnum
+				</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="authentication.validator"
+		class="com.nv.youNeverWait.security.validation.AuthenticationValidator"></bean>
+
+	<bean id="doctor.service" class="com.nv.youNeverWait.user.bl.impl.DoctorServiceImpl">
+		<property name="doctorDao">
+			<ref bean="doctor.dao" />
+		</property>
+		<property name="validator">
+			<ref bean="doctor.validator" />
+		</property>
+		<property name="netMdServerIpAddress">
+			<value>${netmd.server.ip.address}</value>
+		</property>
+		<property name="mailFrom">
+			<value>${mailFrom}</value>
+		</property>
+		<property name="mailThread">
+			<ref bean="email.worker.thread" />
+		</property>
+	</bean>
+
+	<bean id="doctor.validator" class="com.nv.youNeverWait.user.bl.validation.DoctorValidator"></bean>
+
+	<bean id="sync.service" class="com.nv.youNeverWait.user.bl.impl.SyncServiceImpl">
+		<property name="syncDao">
+			<ref bean="sync.dao" />
+		</property>
+		<property name="validator">
+			<ref bean="sync.validator" />
+		</property>
+		<property name="doctorService">
+			<ref bean="doctor.service" />
+		</property>
+		<property name="patientService">
+			<ref bean="patient.service" />
+		</property>
+		<property name="scheduleService">
+			<ref bean="schedule.service" />
+		</property>
+		<property name="appointmentService">
+			<ref bean="appointment.service" />
+		</property>
+		<property name="netMdService">
+			<ref bean="netMd.service" />
+		</property>
+		<property name="labService">
+			<ref bean="lab.service" />
+		</property>
+		<property name="resultService">
+			<ref bean="result.service" />
+		</property>
+		<property name="specimenService">
+			<ref bean="specimen.service" />
+		</property>
+		<property name="testService">
+			<ref bean="test.service" />
+		</property>
+	</bean>
+
+	<bean id="sync.validator" class="com.nv.youNeverWait.user.bl.validation.SyncValidator"></bean>
+
+	<bean id="patient.service" class="com.nv.youNeverWait.user.bl.impl.PatientServiceImpl">
+		<property name="doctorService">
+			<ref bean="doctor.service" />
+		</property>
+		<property name="patientDao">
+			<ref bean="patient.dao" />
+		</property>
+		<property name="validator">
+			<ref bean="patient.validator" />
+		</property>
+		<property name="netMdService">
+			<ref bean="netMd.service" />
+		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
+		<property name="appointmentService">
+			<ref bean="appointment.service" />
+		</property>
+		<property name="scheduleService">
+			<ref bean="schedule.service" />
+		</property>
+		<property name="ynwServerIpAddress">
+			<value>${ynw.server.ip.address}</value>
+		</property>
+		<property name="mailFrom">
+			<value>${mailFrom}</value>
+		</property>
+		<property name="mailThread">
+			<ref bean="email.worker.thread" />
+		</property>
+		<property name="questionnaireService">
+			<ref bean="questionnaire.service" />
+		</property>
+	</bean>
+
+	<bean id="appointment.service" class="com.nv.youNeverWait.user.bl.impl.AppointmentServiceImpl">
+		<property name="appointmentToday">
+			<ref bean="currentday.appointment" />
+		</property>
+		<property name="appointmentForCurrentWeek">
+			<ref bean="appointment.currentWeek" />
+		</property>
+		<property name="appointmentValidator">
+			<ref bean="appointment.Validator" />
+		</property>
+		<!-- <property name="waitingForApproval"> -->
+		<!-- <ref bean="waiting.forapproval" /> -->
+		<!-- </property> -->
+		<property name="futureAppointments">
+			<ref bean="future.appointments" />
+		</property>
+		<property name="appointmentDao">
+			<ref bean="appointment.dao" />
+		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
+	</bean>
+
+	<bean id="future.appointments"
+		class="com.nv.youNeverWait.user.bl.impl.AppointmentListOfFutureAppointments">
+		<property name="appointmentDao">
+			<ref bean="appointment.dao" />
+		</property>
+	</bean>
+
+	<!-- <bean id="waiting.forapproval" class="com.nv.youNeverWait.user.bl.impl.AppointmentListOfWaitingForApproval"> -->
+	<!-- <property name="appointmentDao"> -->
+	<!-- <ref bean="appointment.dao" /> -->
+	<!-- </property> -->
+	<!-- </bean> -->
+
+	<bean id="result.service" class="com.nv.youNeverWait.user.bl.impl.ResultServiceImpl">
+		<property name="resultDao">
+			<ref bean="result.dao" />
+		</property>
+		<property name="resultValidator">
+			<ref bean="result.validator" />
+		</property>
+	</bean>
+
+	<bean id="result.dao" class="com.nv.youNeverWait.user.pl.impl.ResultDaoImpl"
+		parent="generic.dao"></bean>
+
+	<bean id="result.validator" class="com.nv.youNeverWait.user.bl.validation.ResultValidator"></bean>
+
+	<bean id="currentday.appointment" class="com.nv.youNeverWait.user.bl.impl.AppointmentListOfToday">
+		<property name="appointmentDao">
+			<ref bean="appointment.dao" />
+		</property>
+	</bean>
+
+	<bean id="appointment.currentWeek"
+		class="com.nv.youNeverWait.user.bl.impl.AppointmentListOfCurrentWeek">
+		<property name="appointmentDao">
+			<ref bean="appointment.dao" />
+		</property>
+	</bean>
+	<!-- <bean id="rejected.appointment" class="com.nv.youNeverWait.user.bl.impl.AppointmentListOfRejectedAppointments"> -->
+	<!-- <property name="appointmentDao"> -->
+	<!-- <ref bean="appointment.dao" /> -->
+	<!-- </property> -->
+	<!-- </bean> -->
+	<bean id="patient.validator" class="com.nv.youNeverWait.user.bl.validation.PatientValidator"></bean>
+
+	<bean id="patient.dao" class="com.nv.youNeverWait.user.pl.impl.PatientDaoImpl"
+		parent="generic.dao">
+	</bean>
+
+	<bean id="superAdmin.dao" class="com.nv.youNeverWait.user.pl.impl.SuperAdminDaoImpl"
+		parent="generic.dao">
+	</bean>
+
+	<bean id="superAdmin.service" class="com.nv.youNeverWait.user.bl.impl.SuperAdminServiceImpl">
+		<property name="superAdminDao">
+			<ref bean="superAdmin.dao" />
+		</property>
+		<property name="validator">
+			<ref bean="superAdmin.validator" />
+		</property>
+		<property name="netMdService">
+			<ref bean="netMd.service" />
+		</property>
+		<property name="labService">
+			<ref bean="lab.service" />
+		</property>
+		<property name="netRxService">
+			<ref bean="netRx.service" />
+		</property>
+		<property name="testService">
+			<ref bean="test.service" />
+		</property>
+		<property name="specimenService">
+			<ref bean="specimen.service" />
+		</property>
+		<property name="organisationService">
+			<ref bean="organisation.service" />
+		</property>
+		<property name="netlimsServerIpAddress">
+			<value>${netlims.server.ip.address}</value>
+		</property>
+		<property name="mailFrom">
+			<value>${mailFrom}</value>
+		</property>
+		<property name="mailThread">
+			<ref bean="email.worker.thread" />
+		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
+		<property name="netPosService">
+			<ref bean="netPos.service" />
+		</property>
+	</bean>
+
+	<bean id="superAdmin.validator"
+		class="com.nv.youNeverWait.user.bl.validation.SuperAdminValidator"></bean>
+
+	<bean id="netMd.dao" class="com.nv.youNeverWait.user.pl.impl.NetMdDaoImpl"
+		parent="generic.dao">
+	</bean>
+
+	<bean id="netMd.service" class="com.nv.youNeverWait.user.bl.impl.NetMdServiceImpl">
+		<property name="netMdDao">
+			<ref bean="netMd.dao" />
+		</property>
+		<property name="validator">
+			<ref bean="netMd.validator" />
+		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
+		<property name="netMdServerIpAddress">
+			<value>${netmd.server.ip.address}</value>
+		</property>
+		<property name="mailFrom">
+			<value>${mailFrom}</value>
+		</property>
+		<property name="mailThread">
+			<ref bean="email.worker.thread" />
+		</property>
+		<property name="healthService">
+			<ref bean="health.service" />
+		</property>
+
+	</bean>
+
+	<bean id="netPos.service" class="com.nv.youNeverWait.user.bl.impl.NetPosManager">
+		<property name="netPosValidator">
+			<ref bean="netpos.validator" />
+		</property>
+		<property name="netPosDao">
+			<ref bean="netpos.dao" />
+		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
+
+	</bean>
+	<bean id="netpos.dao" class="com.nv.youNeverWait.user.pl.impl.NetPosDaoImpl"></bean>
+	<bean id="netpos.validator" class="com.nv.youNeverWait.user.bl.validation.NetPosValidator"></bean>
+
+	<bean id="netMd.validator" class="com.nv.youNeverWait.user.bl.validation.NetMdValidator"></bean>
+	<bean id="lab.dao" class="com.nv.youNeverWait.user.pl.impl.LabDaoImpl"
+		parent="generic.dao">
+		<property name="netlimsServerIpAddress">
+			<value>${netlims.server.ip.address}</value>
+		</property>
+	</bean>
+
+	<bean id="lab.service" class="com.nv.youNeverWait.user.bl.impl.LabServiceImpl">
+		<property name="labDao">
+			<ref bean="lab.dao" />
+		</property>
+		<property name="validator">
+			<ref bean="lab.validator" />
+		</property>
+
+		<property name="healthService">
+			<ref bean="health.service" />
+		</property>
+
+		<property name="netlimsServerIpAddress">
+			<value>${netlims.server.ip.address}</value>
+		</property>
+		<property name="mailFrom">
+			<value>${mailFrom}</value>
+		</property>
+		<property name="netMdService">
+			<ref bean="netMd.service" />
+		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
+		<property name="mailThread">
+			<ref bean="email.worker.thread" />
+		</property>
+		<property name="orderService">
+			<ref bean="order.service" />
+		</property>
+		<property name="resultService">
+			<ref bean="result.service" />
+		</property>
+	</bean>
+
+	<bean id="lab.validator" class="com.nv.youNeverWait.user.bl.validation.LabValidator"></bean>
+
+	<bean id="queryBuilder.Factory"
+		class="com.nv.youNeverWait.util.filter.core.QueryBuilderFactory">
+		<property name="filterDao">
+			<ref bean="filter.dao" />
+		</property>
+		<property name="queryBuilderMap">
+			<map>
+				<entry key="lab"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.LabQueryBuilder" />
+				<entry key="branch"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.BranchQueryBuilder" />
+				<entry key="labUser"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.LabUserQueryBuilder" />
+				<entry key="netmdBranch"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.NetMdBranchQueryBuilder" />
+				<entry key="netmd"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.NetMdQueryBuilder" />
+				<entry key="log"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.UserLogQueryBuilder" />
+				<entry key="netrx"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.NetRxQueryBuilder" />
+				<entry key="netrxBranch"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.NetRxBranchQueryBuilder" />
+				<entry key="netrxUser"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.NetRxUserQueryBuilder" />
+				<entry key="result"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.ResultQueryBuilder" />
+				<entry key="appointments"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.AppointmentQueryBuilder" />
+				<entry key="tests"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.TestQueryBuilder" />
+				<entry key="specimens"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.SpecimenQueryBuilder" />
+				<entry key="syncLog"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.SyncLogQueryBuilder" />
+				<entry key="bill"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.NetmdBillQueryBuilder" />
+				<entry key="order"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.LabOrderQueryBuilder" />
+				<entry key="netpos"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.NetPosQueryBuilder" />
+				<entry key="organisation"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.OrganisationQueryBuilder" />
+				<entry key="organisationUser"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.OrganisationUserQueryBuilder" />
+				<entry key="transferredOrders"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.TransferredOrderQueryBuilder" />
+				<entry key="transferredResults"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.TransferredResultQueryBuilder" />
+			</map>
+		</property>
+
+	</bean>
+
+	<bean id="filter.Factory" class="com.nv.youNeverWait.util.filter.core.FilterFactory">
+		<property name="filterMap">
+			<map>
+				<entry key="eq"
+					value="com.nv.youNeverWait.util.filter.filters.EqualFilter" />
+				<entry key="neq"
+					value="com.nv.youNeverWait.util.filter.filters.NotEqualFilter" />
+				<entry key="like"
+					value="com.nv.youNeverWait.util.filter.filters.LikeFilter" />
+				<entry key="gt"
+					value="com.nv.youNeverWait.util.filter.filters.GreaterThanFilter" />
+				<entry key="ge"
+					value="com.nv.youNeverWait.util.filter.filters.GreaterThanOrEqualFilter" />
+				<entry key="le"
+					value="com.nv.youNeverWait.util.filter.filters.LessThanOrEqualFilter" />
+				<entry key="lt"
+					value="com.nv.youNeverWait.util.filter.filters.LessThanFilter" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="schedule.service" class="com.nv.youNeverWait.user.bl.impl.ScheduleServiceImpl">
+		<property name="scheduleDao">
+			<ref bean="schedule.dao" />
+		</property>
+		<property name="validator">
+			<ref bean="schedule.validator" />
+		</property>
+	</bean>
+
+	<bean id="schedule.validator"
+		class="com.nv.youNeverWait.user.bl.validation.ScheduleValidator"></bean>
+
+	<bean id="schedule.dao" class="com.nv.youNeverWait.user.pl.impl.ScheduleDaoImpl"
+		parent="generic.dao">
+	</bean>
+	<bean id="log.dao" class="com.nv.youNeverWait.user.pl.impl.LogDaoImpl"
+		parent="generic.dao" />
+	<bean id="log.service" class="com.nv.youNeverWait.user.bl.impl.LogServiceImpl">
+		<property name="logDao">
+			<ref bean="log.dao" />
+		</property>
+	</bean>
+	<bean id="netRx.service" class="com.nv.youNeverWait.user.bl.impl.NetRxServiceImpl">
+		<property name="netRxDao">
+			<ref bean="netRx.dao" />
+		</property>
+		<property name="validator">
+			<ref bean="netRx.validator" />
+		</property>
+		<property name="netRxServerIpAddress">
+			<value>${netrx.server.ip.address}</value>
+		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
+		<property name="mailFrom">
+			<value>${mailFrom}</value>
+		</property>
+		<property name="mailThread">
+			<ref bean="email.worker.thread" />
+		</property>
+
+	</bean>
+	<bean id="netRx.validator" class="com.nv.youNeverWait.user.bl.validation.NetRxValidator"></bean>
+	<bean id="netRx.dao" class="com.nv.youNeverWait.user.pl.impl.NetRxDaoImpl"
+		parent="generic.dao">
+	</bean>
+
+	<bean id="test.service" class="com.nv.youNeverWait.user.bl.impl.TestManager">
+		<property name="testValidator">
+			<ref bean="test.validator" />
+		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
+		<property name="testDao">
+			<ref bean="test.dao" />
+		</property>
+	</bean>
+
+	<bean id="test.validator" class="com.nv.youNeverWait.user.bl.validation.TestValidator"></bean>
+	<bean id="test.dao" class="com.nv.youNeverWait.user.pl.impl.TestDaoImpl">
+		<property name="labDao">
+			<ref bean="lab.dao" />
+		</property>
+	</bean>
+	<bean id="specimen.service" class="com.nv.youNeverWait.user.bl.impl.SpecimenManager">
+		<property name="specimenValidator">
+			<ref bean="specimen.validator" />
+		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
+		<property name="specimenDao">
+			<ref bean="specimen.dao" />
+		</property>
+	</bean>
+	<bean id="specimen.validator"
+		class="com.nv.youNeverWait.user.bl.validation.SpecimenValidator"></bean>
+	<bean id="specimen.dao" class="com.nv.youNeverWait.user.pl.impl.SpecimenDaoImpl">
+		<property name="labDao">
+			<ref bean="lab.dao" />
+		</property>
+	</bean>
+
+	<bean id="config.service" class="com.nv.youNeverWait.user.bl.impl.ConfigManager">
+		<property name="configDao">
+			<ref bean="config.dao" />
+		</property>
+	</bean>
+
+	<bean id="config.validator"
+		class="com.nv.youNeverWait.user.bl.validation.ConfigDataValidator"></bean>
+	<bean id="config.dao" class="com.nv.youNeverWait.user.pl.impl.ConfigDaoImpl"></bean>
+
+	<bean id="order.service" class="com.nv.youNeverWait.user.bl.impl.OrderManager">
+		<property name="orderDao">
+			<ref bean="order.dao" />
+		</property>
+		<property name="validator">
+			<ref bean="order.validator" />
+		</property>
+	</bean>
+	<bean id="order.validator" class="com.nv.youNeverWait.user.bl.validation.OrderValidator"></bean>
+	<bean id="order.dao" class="com.nv.youNeverWait.user.pl.impl.OrderDaoImpl">
+		<property name="labDao">
+			<ref bean="lab.dao" />
+		</property>
+	</bean>
+	<bean id="health.service" class="com.nv.youNeverWait.user.bl.impl.HealthMonitorManager">
+		<property name="hMonitorDao">
+			<ref bean="healthMonitor.dao" />
+		</property>
+		<property name="hMonitorValidator">
+			<ref bean="healthMonitor.validator" />
+		</property>
+	</bean>
+	<bean id="healthMonitor.validator"
+		class="com.nv.youNeverWait.user.bl.validation.HealthMonitorValidator"></bean>
+	<bean id="healthMonitor.dao" class="com.nv.youNeverWait.user.pl.impl.HealthMonitorDaoImpl"></bean>
+
+	<bean id="organisation.service" class="com.nv.youNeverWait.user.bl.impl.OrganisationManager">
+		<property name="organisationDao">
+			<ref bean="organisation.dao" />
+		</property>
+		<property name="validator">
+			<ref bean="organisation.validator" />
+		</property>
+		<property name="organisationServerIpAddress">
+			<value>${organisation.server.ip.address}</value>
+		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
+		<property name="mailFrom">
+			<value>${mailFrom}</value>
+		</property>
+		<property name="mailThread">
+			<ref bean="email.worker.thread" />
+		</property>
+		<property name="reportManager" ref="report.service" />
+	</bean>
+	<bean id="report.service" class="com.nv.youNeverWait.user.bl.impl.ReportManager">
+		<property name="reportHandler" ref="report.handler" />
+	</bean>
+	<bean id="report.handler" class="com.nv.youNeverWait.api.report.ReportHandler">
+		<property name="reportDao" ref="report.dao" />
+	</bean>
+	<bean id="report.dao" class="com.nv.youNeverWait.user.pl.impl.ReportDaoImpl"
+		parent="generic.dao">
+		<property name="serverPath">
+			<value>${server.path}</value>
+		</property>
+		<property name="jrxmlPath">
+			<value>${jrxml.path}</value>
+		</property>
+		<property name="mySqlIpAddress">
+			<value>${mysql.ip.address}</value>
+		</property>
+		<property name="mySqlUserName">
+			<value>${mysql.username}</value>
+		</property>
+		<property name="mySqlPassword">
+			<value>${mysql.password}</value>
+		</property>
+	</bean>
+	<bean id="organisation.validator"
+		class="com.nv.youNeverWait.user.bl.validation.OrganisationValidator"></bean>
+
+	<bean id="organisation.dao" class="com.nv.youNeverWait.user.pl.impl.OrganisationDaoImpl"></bean>
+
+	<bean id="questionnaire.service" class="com.nv.youNeverWait.user.bl.impl.QuestionnaireManager">
+		<property name="questionnaireDao">
+			<ref bean="questionnaire.dao" />
+		</property>
+	</bean>
+
+	<bean id="questionnaire.dao" class="com.nv.youNeverWait.user.pl.impl.QuestionnaireDaoImpl">
+	</bean>
+	
+	<bean id="version.service" class="com.nv.youNeverWait.version.bl.impl.VersionManager">
+		<property name="validator">
+			<ref bean="version.validator" />
+		</property>
+		<property name="versionDao">
+			<ref bean="version.dao" />
+		</property>
+	</bean>
+	
+	<bean id="version.validator" class="com.nv.youNeverWait.version.validation.VersionValidator">
+	</bean>
+	<bean id="version.dao" class="com.nv.youNeverWait.version.pl.impl.VersionDaoImpl">
+	</bean>
+</beans>		
+	

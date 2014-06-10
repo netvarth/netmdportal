@@ -1,0 +1,138 @@
+{
+    "title": "Create NetLims Branch",
+    "style": "width:60%;margin:0 20%",
+    "data": [
+        {
+            "name": "newBranchForm",
+            "id": "newBranchForm",
+            "content": [
+			    {
+                    "className": "sep-div",
+                    "style": "display:none",
+                    "id": "errorDivHeader",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "id": "errorDivNewNetlimsBranchData"
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div",
+                    "id": "referralsdiv",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "data": [
+ 
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "organizationname",
+                                            "id": "organizationname",
+                                            "tabIndex": 1,
+                                            "type": "text",
+                                            "className": "large capital",
+                                            "title": "Branch Name",
+                                            "required": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "organizationaddress",
+                                            "id": "organizationaddress",
+                                            "type": "textarea",
+                                            "className": "large ",
+                                            "title": "Address"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "Email",
+                                            "id": "Email",
+                                            "type": "text",
+                                            "className": "large ",
+                                            "title": "Email"
+											
+                                           
+                                        }
+
+                                    ]
+                                },
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "phone",
+                                            "id": "phone",
+                                            "type": "text",
+                                            "className": "large ",
+											"tabIndex": 2,
+                                            "title": "Phone",
+                                            "required": "true"
+                                        },
+                                        {
+                                            "name": "mobile",
+                                            "id": "mobile",
+                                            "type": "text",
+                                            "className": "large ",
+											"tabIndex": 3,
+                                            "title": "Mobile",
+											"required": "true"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+
+                {
+                    "className": "sep-div ",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                            {
+                                                "name": "btnNewBranchCreate",
+                                                "id": "btnNewBranchCreate",
+                                                "title": "Create",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1; margin:2px"
+                                            },
+                                            {
+                                                "name": "btnNewBranchCancel",
+                                                "id": "btnNewBranchCancel",
+                                                "title": "Cancel",
+                                                "type": "button",
+                                                "className": "stdbtn",
+                                                "style": "opacity:1; margin:2px"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

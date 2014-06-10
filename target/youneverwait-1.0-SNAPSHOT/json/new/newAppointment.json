@@ -1,0 +1,77 @@
+{
+    "title": "Create Appointment",
+    "style": "width:30%;margin:0 30%",
+    "data": [
+        {
+            "name": "newpatintAppointmentForm",
+            "id": "newpatintAppointmentForm",
+            "content": [
+                {
+                    "className": "sep-div",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "Patientappointment",
+                                            "id": "Patientappointment",
+                                            "type": "label",
+                                            "title": "Date"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "elements": [
+                                        {
+                                            "name": "Patientappointmenttime",
+                                            "id": "Patientappointmenttime",
+                                            "type": "label",
+                                            "title": "Time"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div-view",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                            {
+                                                "name": "btnDone",
+                                                "id": "btnDone",
+                                                "title": "Create",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1; margin:2px"
+                                            },
+											{
+                                                "name": "btnCancel",
+                                                "id": "btnCancel",
+                                                "title": "Cancel",
+                                                "type": "button",
+                                                "className": "stdbtn",
+                                                "style": "opacity:1; margin:-35px 0px 0px 80px;"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
