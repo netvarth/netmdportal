@@ -1,0 +1,33 @@
+[
+    
+    {
+        "name": "Cases",
+        "title": "APPOINTMENTS",
+        "image":"/youNeverWait/images/appoint.png",
+        "id": "appointmentInfoTab",
+        "content": [
+            {}
+        ]
+    },
+	{
+        "name": "PersonalInfo",
+        "title": "CLINICS",
+        "image":"/youNeverWait/images/clinics.png",
+        "id": "clinicsInfoTab",
+		
+		       "content": [
+            {}
+        ]
+    },
+    {
+        "name": "Visits",
+        "title": "RESULTS",
+         "style":"margin-left:5%",
+         "image":"/youNeverWait/images/result.png",
+        "id": "resultsInfoTab",
+        "content": [
+            {
+			}
+        ]
+    }
+]

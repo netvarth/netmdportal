@@ -1,0 +1,20 @@
+
+{
+    "buttons": [
+		{
+            "title": " New Branch",
+            "className": "big-link",
+            "name": "ribbonNewNetMdBranch",
+            "image": "/youNeverWait/images/icon/dashboard/2.png"
+        },
+
+		{
+            "title": " Download",
+            "className": "big-link",
+            "name": "ribbonDownload",
+            "image": "/youNeverWait/images/icon/dashboard/ready.png"
+        }
+		
+       
+    ]
+}

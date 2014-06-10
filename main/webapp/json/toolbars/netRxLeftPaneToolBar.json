@@ -1,0 +1,16 @@
+{
+    "buttons": [
+		{
+          "title": "Branch List",
+		  "className": "netrx",
+          "name": "leftPaneNetRxBranch"
+        },
+		
+		{
+          "title": "Settings",
+		  "className": "admin",
+          "name": "leftPaneNetrxSettings"
+        }
+		
+    ]
+}
