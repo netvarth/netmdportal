@@ -27,6 +27,21 @@ import com.nv.youNeverWait.util.filter.validation.FilterValidator;
  *
  */
 public class PatientValidator extends FilterValidator{
+		/**
+	 * Check validity of expression value
+	 * 
+	 * @param value
+	 * @return boolean
+	 * 
+	 */
+	private boolean isValidExpValue(String value) {
+		if (value != null && !value.equals("")) {
+			return true;
+		}
+		return false;
+	}
+	
+	
 	public void validateCreatePatient(PatientDetail patient, HeaderDTO header){
 
 		ValidateHeaderDetails(header);  // validates header info
@@ -67,84 +82,7 @@ public class PatientValidator extends FilterValidator{
 			}
 		}
 	}
-	/**
-	 * Validate login details
-	 * 
-	 * @param userName
-	 * @param password
-	 */
-	public void validateUserNameAndPassword(String userName, String password) {
-		if (userName == null || userName.isEmpty()) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidUserName);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		if (password == null || password.isEmpty()) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidPassword);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-	}
-	/**
-	 * Check validity of passwords
-	 * 
-	 * @param login
-	 * @return ErrorDTO
-	 */
-	public void validatePasswords(PasswordDTO passwords) {
-		if (!isValidExpValue(passwords.getOldPassword())
-				|| !isValidExpValue(passwords.getNewPassword())) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.PasswordNull);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		if (passwords.getUsername() == null
-				|| passwords.getUsername().equals("")) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidUserName);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-	}
-	/**
-	 * Check validity of passwords
-	 * 
-	 * @param login
-	 * @return ErrorDTO
-	 */
-	public void validatePasswordsForCreatePassword(CreatePasswordDTO createPasswordDto) {
-		if (!isValidExpValue(createPasswordDto.getPassword())
-				|| !isValidExpValue(createPasswordDto.getConfirmPassword())) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.PasswordNull);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		if (createPasswordDto.getUsername() == null
-				|| createPasswordDto.getUsername().equals("")) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidUserName);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-	}
-	
-	/**
-	 * Check validity of expression value
-	 * 
-	 * @param value
-	 * @return boolean
-	 * 
-	 */
-	private boolean isValidExpValue(String value) {
-		if (value != null && !value.equals("")) {
-			return true;
-		}
-		return false;
-	}
+
 
 	/**
 	 * Validate details of patient
