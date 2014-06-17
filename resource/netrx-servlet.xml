@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -12,14 +13,14 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<!-- Maps incoming requests to the appropriate controller based on the annotations 
 		on the controller methods. -->
 
-	<bean id="loginInterceptor" class="com.nv.youNeverWait.security.SessionInterceptor" />
+	<bean id="netrxInterceptor" class="com.nv.security.netrx.SessionInterceptor" />
 
 	<!-- this should "map" my interceptor no? -->
 	<bean id="handlerMapping"
 		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
 		<property name="interceptors">
 			<list>
-				<ref bean="loginInterceptor" />
+				<ref bean="netrxInterceptor" />
 			</list>
 		</property>
 	</bean>

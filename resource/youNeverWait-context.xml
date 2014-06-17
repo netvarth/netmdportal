@@ -153,6 +153,10 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="validator">
 			<ref bean="authentication.validator" />
 		</property>
+		
+		<property name="mailSendAdapter">
+		    <ref bean="mail.send.adapter"/>
+		</property>
 		<property name="enumList">
 			<list>
 				<value>com.nv.youNeverWait.pl.entity.ActionNameEnum</value>
@@ -504,7 +508,16 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="scheduleService">
 			<ref bean="schedule.service" />
 		</property>
-		<property name="ynwServerIpAddress">
+		<property name="mailSendAdapter">
+		    <ref bean="mail.send.adapter"/>
+		</property>
+		<property name="questionnaireService">
+			<ref bean="questionnaire.service" />
+		</property>
+	</bean>
+	
+	<bean id="mail.send.adapter" class ="com.nv.security.youNeverWait.MailSendAdapter">
+	    <property name="ynwServerIpAddress">
 			<value>${ynw.server.ip.address}</value>
 		</property>
 		<property name="mailFrom">
@@ -512,9 +525,6 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 		<property name="mailThread">
 			<ref bean="email.worker.thread" />
-		</property>
-		<property name="questionnaireService">
-			<ref bean="questionnaire.service" />
 		</property>
 	</bean>
 
@@ -1059,4 +1069,4 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<bean id="installer.validator"
 		class="com.nv.youNeverWait.user.bl.validation.InstallerValidator"></bean>
 </beans>		
-	
+		
