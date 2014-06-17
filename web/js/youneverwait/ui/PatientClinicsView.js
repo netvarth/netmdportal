@@ -47,7 +47,7 @@ function clinicsInfolist(parent){
 	passjson+='"count":'+interval+',';
 	passjson+='"asc":'+ false+'';
 	passjson+='}';
-	var response=postdataToServer("/youNeverWait/ws/ui/patient/netmdBranchList", passjson );
+	var response=postdataToServer("/youNeverWait/ynw/ui/patient/netmdBranchList", passjson );
 	//alert(JSON.stringify(response));
 	return response;
 }

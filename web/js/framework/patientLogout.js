@@ -1,5 +1,5 @@
 $j("#btnLogout").die('click').live("click",function() {
-	var response = getRequestData('/youNeverWait/ws/ui/patient/logout');
+	var response = getRequestData('/youNeverWait/ynw/auth/logout');
 	if(response.success==true){
 	//var serverPath="";
 	configData ={};
@@ -10,4 +10,6 @@ $j("#btnLogout").die('click').live("click",function() {
 	location.reload();
 	}
 });
+
+
 

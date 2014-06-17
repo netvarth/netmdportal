@@ -51,7 +51,7 @@ function loadSyncLogFilterToolBar(){
 
 function fillSyncLogTable(synclogListJson,tableObj) {
 	$j(tableObj).dataTable().fnClearTable();
-	var syncLogListJson=postdataToServer("/youNeverWait/ws/ui/superAdmin/syncLogList", synclogListJson );
+	var syncLogListJson=postdataToServer("/youNeverWait/superadmin/ui/superAdmin/syncLogList", synclogListJson );
 	//alert(JSON.stringify(syncLogListJson));
 	 if(syncLogListJson.syncLog) {
 		if(syncLogListJson.syncLog.length>0) {			

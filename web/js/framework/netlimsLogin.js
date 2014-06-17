@@ -77,7 +77,7 @@ $j(document).ready(function() {
 					var loginData='{'+'"userName"'+':"'+username+'"'+','+'"password"'+':"' + password +'"'+'}';
 					$j.ajax({
 						type: "POST",
-						url: serverPath + "/youNeverWait/ws/ui/auth/netlimsLogin",
+						url: serverPath + "/youNeverWait/netlims/auth/netlimsLogin",
 						data: loginData,
 						contentType: "application/json",
 						dataType: "json",

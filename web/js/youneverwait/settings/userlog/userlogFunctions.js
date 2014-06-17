@@ -52,7 +52,7 @@ function loadUserlogFilterToolBar(){
 function fillUserLogTable(userlogListJson,tableObj) {
 	$j(tableObj).dataTable().fnClearTable();
 	//alert("inp"+userlogListJson);
-	var userlogListJson=postdataToServer("/youNeverWait/ws/ui/superAdmin/userLogList", userlogListJson );
+	var userlogListJson=postdataToServer("/youNeverWait/superadmin/ui/superAdmin/userLogList", userlogListJson );
 	//alert(JSON.stringify(userlogListJson));
 	if(userlogListJson.log) {
 		if(userlogListJson.log.length>0) {			

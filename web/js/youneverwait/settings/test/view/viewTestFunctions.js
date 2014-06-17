@@ -318,7 +318,7 @@ function setViewJsonforReportModel(ReportList){
 function updateTestInfo(TestSpecimenFilteredData,ReportList,uploadstatus){
 	/* making json data of new order page  section wise*/
 	var resultJson=createUpdateJson(TestSpecimenFilteredData,ReportList,uploadstatus);
-	var response = postdataToServer("/youNeverWait/ws/ui/test/updateTest",resultJson );	
+	var response = postdataToServer("/youNeverWait/superadmin/ui/test/updateTest",resultJson );	
 	return response;
 }
 

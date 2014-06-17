@@ -30,7 +30,7 @@ $j(document).ready(function() {
 			var loginData='{'+'"userName"'+':"'+username+'"'+','+'"password"'+':"' + password +'"'+'}';
 			$j.ajax({
 				type: "POST",
-				url: serverPath + "/youNeverWait/ws/ui/auth/patientLogin",
+				url: serverPath + "/youNeverWait/ynw/auth/patientLogin",
 				data: loginData,
 				contentType: "application/json",
 				dataType: "json",
@@ -42,12 +42,8 @@ $j(document).ready(function() {
 	});
 	
 	function loginSuccess(data) {
-	//alert(JSON.stringify(data));
-		if(data.success==true){
-		//alert("this is current wrking page");
-		//window.location.href = "/youNeverWait/html/patientindex.html";
+		if(data.success==true)
 		location.reload();
-		}
 		else
 		errorTips("Incorrect email/password",'',$j('#loginError'));	
 	}

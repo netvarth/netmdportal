@@ -83,7 +83,7 @@ $j(document).ready(function(){
 		
 		$j.ajax({
 			type: 'GET',
-			url: serverPath + "/youNeverWait/ws/ui/lab/download",
+			url: serverPath + "/youNeverWait/netlims/ui/lab/download",
 			dataType: 'html',
 			contentType: 'text/html',
 			success: function (html) {

@@ -9,7 +9,7 @@ $j.getScript("/youNeverWait/js/youneverwait/common/common.js").done(function(scr
 }) 
 $j(document).ready(function() { 
 	
-	var response = getRequestData("/youNeverWait/ws/ui/auth/getCaptcha");
+	var response = getRequestData("/youNeverWait/superadmin/auth/getCaptcha");
 	if(response.success==true){
 	$j("#log").html('<img src="data:image/png;base64,'+response.image + '"/>');
 	$j('#ancap').show();
@@ -40,7 +40,7 @@ $j(document).ready(function() {
 	});
 	
 	$j('#captcha').die('click').live("click",function(){
-		var response = getRequestData("/youNeverWait/ws/ui/auth/getCaptcha");
+		var response = getRequestData("/youNeverWait/superadmin/auth/getCaptcha");
 		$j("#log").html('<img src="data:image/png;base64,'+response.image + '"/>');
 		$j('#ancap').show();
 		secretcode=response.secretCode;
@@ -63,7 +63,7 @@ $j('#forgotpwd').die('click').live("click",function(){
 				var loginData='{'+'"userName"'+':"'+username+'"'+','+'"password"'+':"' + password +'"'+'}';
 				$j.ajax({
 					type: "POST",
-					url: serverPath + "/youNeverWait/ws/ui/superAdmin/login",
+					url: serverPath + "/youNeverWait/superadmin/ui/superAdmin/login",
 					data: loginData,
 					contentType: "application/json",
 					dataType: "json",
@@ -139,7 +139,7 @@ $j('#forgotpwd').die('click').live("click",function(){
 function verifyCaptcha(captcha,secretCode){
 
 var json='{'+'"secretCode"'+':"'+secretCode+'"'+','+'"verificationCode"'+':"' + captcha +'"'+'}';
-var response = postdataToServer("/youNeverWait/ws/ui/auth/verifyCaptcha", json );
+var response = postdataToServer("/youNeverWait/superadmin/auth/verifyCaptcha", json );
 var resp=response.valid;
 return resp;
 

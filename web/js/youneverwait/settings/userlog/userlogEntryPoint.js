@@ -133,7 +133,7 @@ $j(document).ready(function() {
 
 	});
 	$j('#btn_userlogcontrol_ptb_id').die('click').live("click",function() {
-	var currentstatus=getRequestData('/youNeverWait/ws/ui/superAdmin/enableLogStatus');
+	var currentstatus=getRequestData('/youNeverWait/superadmin/ui/superAdmin/enableLogStatus');
 	var obj=$j(this);
 		createModal(constants.USERLOGJSON,'userLogModal');	
 		openModalBox(obj,'userLogModal');

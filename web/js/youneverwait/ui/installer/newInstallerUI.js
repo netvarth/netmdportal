@@ -97,7 +97,7 @@ NewInstallerUI.prototype.bindEvents = function() {
 
 	   self.createButton.die('click').live('click',function(){
         $j.ajax({
-            url: '/youNeverWait/ws/ui/installer/uploadNewVersion',
+            url: '/youNeverWait/superadmin/ui/installer/uploadNewVersion',
             type: 'POST',
             contentType:false,
             processData: false,

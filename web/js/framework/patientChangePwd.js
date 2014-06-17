@@ -29,7 +29,7 @@ function submitChangePasswordInfo(){
 }
 
 function createSubmitJson(){
-	var username=getRequestData('/youNeverWait/ws/ui/auth/getCurrentUser');
+	var username=getRequestData('/youNeverWait/ynw/auth/getCurrentUser');
     var changepwdDetails = '{"oldPassword":"'+$j('#changepatientPasswordForm #oldpatientpassword').val()  +'",';
 		changepwdDetails += '"username":"'+ username +'",';
 		changepwdDetails +='"newPassword":"' + $j('#changepatientPasswordForm #newpatientpassword').val() + '"}';

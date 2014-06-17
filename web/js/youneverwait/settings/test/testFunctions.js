@@ -33,7 +33,7 @@ function setTestTableStructure() {
 
 function fillTestTable(testListJson,tableObj) {
 	$j(tableObj).dataTable().fnClearTable();
-	var testRateList = postdataToServer("/youNeverWait/ws/ui/superAdmin/testList",testListJson);
+	var testRateList = postdataToServer("/youNeverWait/superadmin/ui/superAdmin/testList",testListJson);
 	//alert(JSON.stringify(testRateList));
 	curSelLength=testRateList.testList.length;
 	if(curSelLength>0) {		
@@ -112,7 +112,7 @@ function updatedTestRate(){
 	var len = getCount();
 	if(len>0) {
 		var resultJson=createPkgJson();
-		var orderResult = postdataToServer("/youNeverWait/ws/ui/test/updateTestRate", resultJson );
+		var orderResult = postdataToServer("/youNeverWait/superadmin/ui/test/updateTestRate", resultJson );
 		$j('.Update').closest('tr').removeAttr('style');
 		return;
 	}

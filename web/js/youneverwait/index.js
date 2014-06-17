@@ -21,7 +21,7 @@ $j(document).ready(function(){
 	var globalToolbar = new SuperAdminGlobalToolBarProcessor();
 		globalToolbar.init();
 		$j('#tabs-1').removeClass('ui-widget-content');
-	ajaxProcessor.setUrl('/youNeverWait/ws/ui/auth/getUser');	
+	ajaxProcessor.setUrl('/youNeverWait/superadmin/auth/getUser');	
 	userdata =ajaxProcessor.get();
 	userName=userdata.userName;
 	$j('#userNameYNW').html(userName);

@@ -99,7 +99,7 @@ GlobalToolBarProcessor.prototype.bindRibbonTBEvents=function() {
 		$j(self.netlimsdownLoad).die('click').live("click",function() {		
 			$j.ajax({
 			type: 'GET',
-			url: "/youNeverWait/ws/ui/lab/download",
+			url: "/youNeverWait/netlims/ui/lab/download",
 			dataType: 'html',
 			contentType: 'text/html',
 			success: function (html) {
@@ -141,7 +141,7 @@ GlobalToolBarProcessor.prototype.bindnetMdAccRibbonTBEvents=function() {
 		$j(self.netmddownLoad).die('click').live("click",function() {		
 			$j.ajax({
 			type: 'GET',
-			url: "/youNeverWait/ws/ui/netMd/download",
+			url: "/youNeverWait/netmd/ui/netMd/download",
 			dataType: 'html',
 			contentType: 'text/html',
 			success: function (html) {
@@ -183,7 +183,7 @@ GlobalToolBarProcessor.prototype.bindnetRxAccRibbonTBEvents=function() {
 		$j(self.netrxdownLoad).die('click').live("click",function() {		
 			$j.ajax({
 			type: 'GET',
-			url: "/youNeverWait/ws/ui/netRx/download",
+			url: "/youNeverWait/netrx/ui/netRx/download",
 			dataType: 'html',
 			contentType: 'text/html',
 			success: function (html) {

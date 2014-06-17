@@ -112,7 +112,7 @@ function setpastAppointmentlistStructure() {
 	
 	function fillpastAppointmentTable(passresultjson,tableObj) {
 	
-	var pastAppointmentList=postdataToServer("/youNeverWait/ws/ui/patient/getPastAppointments", passresultjson );
+	var pastAppointmentList=postdataToServer("/youNeverWait/ynw/ui/patient/getPastAppointments", passresultjson );
 	//alert(JSON.stringify(pastAppointmentList));
 	 if(pastAppointmentList.pastAppointments) {
 		if(pastAppointmentList.pastAppointments.length>0) {	

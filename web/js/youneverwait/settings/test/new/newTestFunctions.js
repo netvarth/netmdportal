@@ -197,7 +197,7 @@ function setJsonforReportModel(ReportList){
 function submitTestInfo(ReportList){
 	/* making json data of new order page  section wise*/
 	var resultJson=createSubmitJson(ReportList);
-	var response = postdataToServer("/youNeverWait/ws/ui/test/createTest",resultJson );	
+	var response = postdataToServer("/youNeverWait/superadmin/ui/test/createTest",resultJson );	
 	return response;
 }
 function resetNewtestForm() {

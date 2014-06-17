@@ -81,7 +81,7 @@ $j(document).ready(function(){
 		
 		$j.ajax({
 			type: 'GET',
-			url: serverPath + "/youNeverWait/ws/ui/netMd/download",
+			url: serverPath + "/youNeverWait/netmd/ui/netMd/download",
 			dataType: 'html',
 			contentType: 'text/html',
 			success: function (html) {

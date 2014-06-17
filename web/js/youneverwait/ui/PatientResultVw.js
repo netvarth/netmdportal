@@ -112,7 +112,7 @@ return boxDiv;
 
 function fillResultLabTable(passjson,pgTableName) {
 	
-	var response=postdataToServer("/youNeverWait/ws/ui/patient/getresultList", passjson );
+	var response=postdataToServer("/youNeverWait/ynw/ui/patient/getresultList", passjson );
 	//alert(JSON.stringify(response));
 	if(response.resultList) {
 		if(response.resultList.length>0) {	

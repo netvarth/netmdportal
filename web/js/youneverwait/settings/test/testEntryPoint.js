@@ -57,7 +57,7 @@ $j(document).ready(function(){
 		var testId = getSelectedTestId(pgTableName);
 		//alert(testId);
 		if(testId!="") {
-				var response = getRequestData('/youNeverWait/ws/ui/test/deleteTest/' + testId);
+				var response = getRequestData('/youNeverWait/superadmin/ui/test/deleteTest/' + testId);
 							
 				if(response.success==true){
 					viewTestList(pgTableName,testListJson);

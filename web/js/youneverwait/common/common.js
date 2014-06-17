@@ -90,7 +90,7 @@ function getNetRxBranchAccData(netrxbranchId) {
 	return response;
 }
 function getTestData(testId){
-	response=getRequestData('/youNeverWait/ws/ui/test/viewTest/'+testId);
+	response=getRequestData('/youNeverWait/superadmin/ui/test/viewTest/'+testId);
 	return response;
 }
  
@@ -112,7 +112,7 @@ function getErrorName(error) {
 }
 function getErrorData() {
 	//get the config data	
-	var errordata = getRequestData('/youNeverWait/ws/ui/auth/getErrorCodes');
+	var errordata = getRequestData('/youNeverWait/ynw/auth/getErrorCodes');
 	return errordata;
 }
 
@@ -179,7 +179,7 @@ function fillRemarksValToControl(selectoptins){
 function fillSpecimenToControl(controlObj) {
 	$j(controlObj).empty();
 	$j(controlObj).append('<option value="select">select specimen</option>');
-	var configData=getRequestData('/youNeverWait/ws/ui/specimen/specimenList');
+	var configData=getRequestData('/youNeverWait/superadmin/ui/specimen/specimenList');
 	//alert(JSON.stringify(configData));
 	$j(configData.specimenList).each(function(index,specimen){
 	$j(controlObj).append('<option value="'+specimen.uid+'">'+specimen.specimenName+'</option>');

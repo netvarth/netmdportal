@@ -22,7 +22,7 @@ $j(document).ready(function(){
 		globalToolbar.netMdAccinit();
 		$j('#tabs-1').removeClass('ui-widget-content');
 		
-	ajaxProcessor.setUrl('/youNeverWait/ws/ui/auth/getUser');
+	ajaxProcessor.setUrl('/youNeverWait/netmd/auth/getUser');
 	userdata =ajaxProcessor.get();
 	var usetType=userdata.userType;
 	var ownerName=userdata.userName;

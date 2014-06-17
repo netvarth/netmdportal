@@ -14,31 +14,31 @@ $j.cachedScript = function(url, options) {
 
 $j.cachedScript("/youNeverWait/js/youneverwait/common/constants.js").done(function(script, textStatus) {
 }).fail(function(xhr,status,exception){
-alert(exception);
+alert("constants:" + exception);
 })
 $j.cachedScript("/youNeverWait/js/resource/Constants.js").done(function(script, textStatus) {
 }) .fail(function(xhr,status,exception){
-alert(exception);
+alert("Constants:" + exception);
 })
 $j.cachedScript("/youNeverWait/js/youneverwait/ui/PatientUIStartup.js").done(function(script, textStatus) {
 }).fail(function(xhr,status,exception){
-alert(exception);
+alert("PatientUIStartup:" + exception);
 })
 $j.cachedScript("/youNeverWait/js/youneverwait/ui/PatientTABCreator.js").done(function(script, textStatus) {
 }).fail(function(xhr,status,exception){
-alert(exception);
+alert("PatientTABCreator:" + exception);
 })
 $j.cachedScript("/youNeverWait/js/youneverwait/ui/PatientAppointmentVw.js").done(function(script, textStatus) {
 }).fail(function(xhr,status,exception){
-alert(exception);
+alert("PatientAppointmentVw:" + exception);
 })
 $j.cachedScript("/youNeverWait/js/youneverwait/ui/PatientResultVw.js").done(function(script, textStatus) {
 }).fail(function(xhr,status,exception){
-alert(exception);
+alert("PatientResultVw:" + exception);
 })
 $j.cachedScript("/youNeverWait/js/youneverwait/ui/PatientClinicsView.js").done(function(script, textStatus) {
 }).fail(function(xhr,status,exception){
-alert(exception);
+alert("PatientClinicsView:" + exception);
 })
 $j.cachedScript("/youNeverWait/js/resource/ServerUrlProcessor.js").done(function(script, textStatus) {
 }) 
@@ -67,7 +67,7 @@ var errorData = getErrorData();
 var constant = new Constants();
 var ajaxProcessor=new ServerUrlProcessor();
 $j(document).ready(function(){
-	var userdata =getRequestData('/youNeverWait/ws/ui/auth/getCurrentUser');
+	var userdata =getRequestData('/youNeverWait/ynw/auth/getCurrentUser');
 	$j('#userloged').html(userdata);
 	var status = fillpatientList("#select");
 	var patientUI = new PatientUIStartup();
@@ -106,7 +106,7 @@ $j(document).ready(function(){
 		}
 		var netBranchId=obj.attr('name');
 		var newdiv1;
-		var response = getRequestData('/youNeverWait/ws/ui/patient/listDoctors/'+ netBranchId);
+		var response = getRequestData('/youNeverWait/ynw/ui/patient/listDoctors/'+ netBranchId);
 		if((response.doctor)!=""){
 		    obj.parents('div').children('.view').empty();
 			$j(response.doctor).each(function(index,doctor){
@@ -180,12 +180,13 @@ function selectAndBack(){
 		var patientUI = new PatientUIStartup();
 		patientUI.initsel();
 }		
+	
+});	
 
 function fillpatientList(controlObj) {
-   
-		var username=getRequestData('/youNeverWait/ws/ui/auth/getCurrentUser');
+		var username=getRequestData('/youNeverWait/ynw/auth/getCurrentUser');
 		var passusername='{"email":"'+ username +'"}';
-		var patientlist=postdataToServer('/youNeverWait/ws/ui/patient/listPatientsForLogin',passusername);
+		var patientlist=postdataToServer('/youNeverWait/ynw/ui/patient/listPatientsForLogin',passusername);
 		//alert(JSON.stringify(patientlist));
 		var add = $j(patientlist.patientList).each(function (patientIndex, patientList) {
 			var value=patientList.id+'_'+patientList.email+'_'+patientList.branchId;
@@ -202,9 +203,4 @@ function fillpatientList(controlObj) {
 		return true;
 		
 }
-
-
-	
-});	
-
 

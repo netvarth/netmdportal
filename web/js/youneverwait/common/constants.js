@@ -22,7 +22,7 @@ constant_NetLimsView_Msg="View NetLims";
 
 /*patient constants*/
 constants_patientChangePwdJsonas='/youNeverWait/json/changepassword/patientChangePassword.json';
-constant_patientChangePassword_Url="/youNeverWait/ws/ui/patient/changePassword";
+constant_patientChangePassword_Url="/youNeverWait/ynw/auth/changePassword";
 constant_patientAppointmentFunctions_Url='/youNeverWait/js/appointment/appointmentFunctions.js';
 constant_patientappointmentEntry_Url='/youNeverWait/js/appointment/appointmentEntry.js';
 constant_index_Url='/youNeverWait/js/youneverwait/patientindex.js';
