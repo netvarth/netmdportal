@@ -12,8 +12,12 @@ import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -21,18 +25,28 @@ import javax.imageio.ImageIO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
+import com.nv.framework.sendmsg.SendMsgCallbackEnum;
+import com.nv.framework.sendmsg.email.SendMailMsgObj;
 import com.nv.framework.util.text.StringEncoder;
+import com.nv.security.youNeverWait.MailSendAdapter;
 import com.nv.youNeverWait.rs.dto.ErrorCodeListResponseDTO;
 import com.nv.youNeverWait.rs.dto.EnumDTO;
 import com.nv.youNeverWait.rs.dto.EnumListResponseDTO;
+import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.rs.dto.CaptchaResponseDTO;
 import com.nv.youNeverWait.rs.dto.CaptchaVerificationDTO;
 import com.nv.youNeverWait.rs.dto.CaptchaVerificationResponseDTO;
+import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
+import com.nv.youNeverWait.rs.dto.PasswordDTO;
+import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.security.bl.service.AuthenticationService;
 import com.nv.youNeverWait.security.pl.dao.AuthenticationDao;
@@ -44,8 +58,10 @@ public class AuthenticationServiceimpl implements AuthenticationService {
 	private AuthenticationValidator validator;
 	private AuthenticationDao authenticationDao;
 	private List<Class<Enum>> enumList;
+	private MailSendAdapter mailSendAdapter;
 	private static final Log log = LogFactory.getLog(AuthenticationServiceimpl.class);
 
+	
 	/**
 	 * Retrieves list of error messages
 	 * 
@@ -145,6 +161,15 @@ public class AuthenticationServiceimpl implements AuthenticationService {
 		return response;
 	}
 
+	
+	@Override
+	public ResponseDTO createPassword(CreatePasswordDTO passwords) {
+		validator.validatePasswordsForCreatePassword(passwords);
+		ResponseDTO response = authenticationDao.createPassword(passwords);
+		return response;
+	}
+
+	
 	/**
 	 * Method performed for NetMd login
 	 * 
@@ -197,6 +222,70 @@ public class AuthenticationServiceimpl implements AuthenticationService {
 
 		return response;
 	}
+	
+	/**
+	 * Method performed when password forgotten
+	 * 
+	 * @param login
+	 * @return ResponseDTO
+	 */
+
+	@Override
+	public ResponseDTO forgotPassword(LoginDTO login) {
+		ResponseDTO response = new ResponseDTO();
+		if (login.getUserName() == null || login.getUserName().equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUserName);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		UserCredentials user = authenticationDao.getUserCredentials(login);
+		if (user.getEmailId() == null || user.getEmailId().equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidMailId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		mailSendAdapter.sendEmailForResetPassword(Constants.RESET_PASSWORD, user);
+		response.setSuccess(true);
+		return response;
+
+	}
+
+	
+	
+	
+	/**
+	 * Method to reset password
+	 * 
+	 * @param login
+	 * @return ResponseDTO
+	 */
+	@Override
+	public ResponseDTO resetPassword(LoginDTO login) {
+		validator.validateUserNameAndPassword(login.getUserName(),
+				login.getPassword());
+		ResponseDTO response = authenticationDao.resetPassword(login);
+		return response;
+
+	}
+
+	
+	/**
+	 * Method which performs password changing
+	 * 
+	 * @param passwords
+	 * @return ResponseDTO
+	 */
+	@Override
+	public ResponseDTO changePassword(PasswordDTO passwords) {
+
+		validator.validatePasswords(passwords);
+		ResponseDTO response = authenticationDao.changePassword(passwords);
+		return response;
+	}
+
 
 	/**
 	 * Method performed to get Netlims user details
@@ -425,6 +514,10 @@ public class AuthenticationServiceimpl implements AuthenticationService {
 	 */
 	public void setEnumList(List<Class<Enum>> enumList) {
 		this.enumList = enumList;
+	}
+
+	public void setMailSendAdapter(MailSendAdapter mailSendAdapter) {
+		this.mailSendAdapter = mailSendAdapter;
 	}
 
 	
