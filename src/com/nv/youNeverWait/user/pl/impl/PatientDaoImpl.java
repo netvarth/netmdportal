@@ -15,7 +15,6 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ActionNameEnum;
@@ -25,7 +24,7 @@ import com.nv.youNeverWait.pl.entity.DepartmentTbl;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.MedicalRecordTbl;
-import com.nv.youNeverWait.pl.entity.MedicalRecordTypeEnum;
+
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
@@ -33,24 +32,23 @@ import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
 import com.nv.youNeverWait.pl.entity.PatientTypeEnum;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
-import com.nv.youNeverWait.pl.entity.StatusEnum;
+
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.UserTypeEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.CaseDTO;
-import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
+
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
-import com.nv.youNeverWait.rs.dto.PasswordDTO;
+
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientOrderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
-import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
+
 import com.nv.youNeverWait.rs.dto.RetrievalPatientResponseDTO;
-import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.PatientDao;
 
@@ -60,6 +58,10 @@ import com.nv.youNeverWait.user.pl.dao.PatientDao;
  */
 public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		PatientDao {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3303752882895351061L;
 	@PersistenceContext()
 	private EntityManager em;
 
@@ -103,30 +105,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		return retrievalPatientResponseDTO;
 	}
 
-	/**
-	 * Method to retrieve details of a lab owner/user
-	 * 
-	 * @param login
-	 * @return UserCredentials
-	 */
-	@Override
-	@Transactional(readOnly = false)
-	public UserCredentials getUserCredentials(LoginDTO login) {
-
-		UserCredentials user = new UserCredentials();
-		NetmdLoginTbl userLogin = getNetMdUserByName(login.getUserName().trim());
-		if (userLogin == null) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidUserName);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		user.setEmailId(userLogin.getUserName());
-		user.setUserName(userLogin.getUserName());
-
-		return user;
-	}
-
+	
 	/**
 	 * 
 	 * @param loginId
@@ -138,32 +117,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		return executeUniqueQuery(NetmdUserTbl.class, query);
 	}
 
-	/**
-	 * Method to reset password
-	 * 
-	 * @param login
-	 * @return ResponseDTO
-	 */
-	@Override
-	@Transactional
-	public ResponseDTO resetPassword(LoginDTO login) {
-		ResponseDTO response = new ResponseDTO();
-		String newPassword = StringEncoder.encryptWithKey(login.getPassword());
-		String decrypedUserName = StringEncoder.decryptWithStaticKey(login
-				.getUserName());
-		NetmdLoginTbl userLogin = getNetMdUserByName(decrypedUserName);
-		if (userLogin == null) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidUserName);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		userLogin.setPassword(newPassword);
-		update(userLogin);
-		response.setSuccess(true);
-		return response;
-	}
-
+	
 	/**
 	 * 
 	 * @param loginId
@@ -460,33 +414,6 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		return response;
 	}
 
-	/**
-	 * Method to reset password
-	 * 
-	 * @param login
-	 * @return ResponseDTO
-	 */
-	@Override
-	@Transactional
-	public ResponseDTO createPassword(CreatePasswordDTO passwords) {
-
-		ResponseDTO response = new ResponseDTO();
-		String newPassword = StringEncoder.encryptWithKey(passwords
-				.getPassword());
-		String decryptedUserName = StringEncoder.decryptWithStaticKey(passwords
-				.getUsername());
-		NetmdLoginTbl loginTbl = (NetmdLoginTbl) getLoginByUserName(decryptedUserName);
-		if (loginTbl == null) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidUser);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		loginTbl.setPassword(newPassword);
-		update(loginTbl);
-		response.setSuccess(true);
-		return response;
-	}
 
 	/**
 	 * Method which performs password changing
@@ -494,34 +421,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 	 * @param passwords
 	 * @return ResponseDTO
 	 */
-	@Override
-	@Transactional(readOnly = false)
-	public ResponseDTO changePassword(PasswordDTO passwords) {
-		ResponseDTO response = new ResponseDTO();
-		String encPassword = StringEncoder.encryptWithKey(passwords
-				.getOldPassword().trim());
-		NetmdLoginTbl login = (NetmdLoginTbl) getLoginByUserName(passwords
-				.getUsername());
-		if (login == null) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.UserNotExists);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		if (!login.getPassword().equals(encPassword)) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.PasswordNotExists);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		String encNewPassword = StringEncoder.encryptWithKey(passwords
-				.getNewPassword().trim());
-		login.setPassword(encNewPassword);
-		update(login);
-		response.setSuccess(true);
-		return response;
-	}
-
+	
 	public String getBranch(int branchId) {
 		NetmdBranchTbl branch = (NetmdBranchTbl) getById(NetmdBranchTbl.class,
 				branchId);
@@ -859,22 +759,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		return executeUniqueQuery(ResultTbl.class, query);
 	}
 
-	public NetmdLoginTbl getLoginByUserName(String userName) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_LOGIN_BY_USERNAME);
-		query.setParameter("param1", userName);
-		return executeUniqueQuery(NetmdLoginTbl.class, query);
-	}
-
-	public List<NetmdLoginTbl> getLoginByUserName(String userName,
-			String firstName) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_LOGIN_BY_USERNAME_FIRSTNAME);
-		query.setParameter("param1", userName);
-		query.setParameter("param2", firstName);
-		return executeQuery(NetmdLoginTbl.class, query);
-	}
-
+	
 	public NetmdPassphraseTbl getBranchByPassPhrase(String passPhrase,
 			String macId) {
 		javax.persistence.Query query = em
@@ -1127,4 +1012,21 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		return medicalRecordResponse;
 	}
 
+	public NetmdLoginTbl getLoginByUserName(String userName) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_LOGIN_BY_USERNAME);
+		query.setParameter("param1", userName);
+		return executeUniqueQuery(NetmdLoginTbl.class, query);
+	}
+
+	public List<NetmdLoginTbl> getLoginByUserName(String userName,
+			String firstName) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_LOGIN_BY_USERNAME_FIRSTNAME);
+		query.setParameter("param1", userName);
+		query.setParameter("param2", firstName);
+		return executeQuery(NetmdLoginTbl.class, query);
+	}
+	
+	
 }
