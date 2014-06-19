@@ -9,7 +9,7 @@
  * All rights reserved
  *
  */
-package com.nv.youNeverWait.pl.entity;
+package com.nv.youNeverWait.exception;
 
 public enum ErrorCodeEnum {
 	
@@ -286,8 +286,7 @@ public enum ErrorCodeEnum {
 	JasperException ("4019","JasperException"), 
 	BillPaymentsNull("4020","No bill payments available"), 
 	InValidMedicalRecordName("4021","MedicalRecordName is empty"),
-	InvalidMedicalRecordId("4022","Invalid medicalRecord id"),
-	InvalidMedicalRecordType("4033","Invalid medicalRecord type");
+	InvalidMedicalRecordId("4022","Invalid medicalRecord id");
 	
 	
 	private String errCode;

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -12,14 +13,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name="organisation_tbl")
-public class OrganisationTbl implements Serializable {
+@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+@NamedQuery(name="OrganisationTbl.findAll", query="SELECT o FROM OrganisationTbl o")
+public class OrganisationTbl extends HealthCareOrganisationTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(unique = true, nullable = false)
-	private int id;
-
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_date_time")
 	private Date createDateTime;
@@ -28,7 +26,7 @@ public class OrganisationTbl implements Serializable {
 	private String departmentType;
 
 	@Column(name="enable_sync")
-	private boolean enableSync;
+	private Boolean enableSync;
 
 	@Column(name="head_office_address")
 	private String headOfficeAddress;
@@ -45,8 +43,7 @@ public class OrganisationTbl implements Serializable {
 	@Column(name="head_office_phone")
 	private String headOfficePhone;
 
-	@Column(name="name")
-	private String name;
+	//private String name;
 
 	@Column(name="owner_address")
 	private String ownerAddress;
@@ -66,33 +63,46 @@ public class OrganisationTbl implements Serializable {
 	@Column(name="owner_phone")
 	private String ownerPhone;
 
-	private String status;
+	//private String status;
 
 	@Column(name="sync_freq_type")
 	private String syncFreqType;
 
 	@Column(name="sync_time")
-	private int syncTime;
+	private Integer syncTime;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="update_date_time")
 	private Date updateDateTime;
+
+	//bi-directional many-to-one association to OrganisationNetmdTbl
+	@OneToMany(mappedBy="organisationTbl")
+	private List<OrganisationNetmdTbl> organisationNetmdTbls;
+
+	//bi-directional one-to-one association to HealthCareOrganisationTbl
+	@OneToOne
+	@JoinColumn(name="id")
+	private HealthCareOrganisationTbl healthCareOrganisationTbl;
 
 	//bi-directional many-to-one association to OrganisationLoginTbl
 	@ManyToOne
 	@JoinColumn(name="login_id")
 	private OrganisationLoginTbl organisationLoginTbl;
 
+	//bi-directional many-to-one association to QuestionnaireTbl
+	@OneToMany(mappedBy="organisationTbl")
+	private List<QuestionnaireTbl> questionnaireTbls;
+
 	public OrganisationTbl() {
 	}
 
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+//	public int getId() {
+//		return this.id;
+//	}
+//
+//	public void setId(int id) {
+//		this.id = id;
+//	}
 
 	public Date getCreateDateTime() {
 		return this.createDateTime;
@@ -110,7 +120,13 @@ public class OrganisationTbl implements Serializable {
 		this.departmentType = departmentType;
 	}
 
-	
+	public Boolean getEnableSync() {
+		return this.enableSync;
+	}
+
+	public void setEnableSync(Boolean enableSync) {
+		this.enableSync = enableSync;
+	}
 
 	public String getHeadOfficeAddress() {
 		return this.headOfficeAddress;
@@ -152,13 +168,13 @@ public class OrganisationTbl implements Serializable {
 		this.headOfficePhone = headOfficePhone;
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+//	public String getName() {
+//		return this.name;
+//	}
+//
+//	public void setName(String name) {
+//		this.name = name;
+//	}
 
 	public String getOwnerAddress() {
 		return this.ownerAddress;
@@ -208,13 +224,13 @@ public class OrganisationTbl implements Serializable {
 		this.ownerPhone = ownerPhone;
 	}
 
-	public String getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
+//	public String getStatus() {
+//		return this.status;
+//	}
+//
+//	public void setStatus(String status) {
+//		this.status = status;
+//	}
 
 	public String getSyncFreqType() {
 		return this.syncFreqType;
@@ -224,13 +240,7 @@ public class OrganisationTbl implements Serializable {
 		this.syncFreqType = syncFreqType;
 	}
 
-	public int getSyncTime() {
-		return this.syncTime;
-	}
-
-	public void setSyncTime(int syncTime) {
-		this.syncTime = syncTime;
-	}
+	
 
 	public Date getUpdateDateTime() {
 		return this.updateDateTime;
@@ -238,6 +248,36 @@ public class OrganisationTbl implements Serializable {
 
 	public void setUpdateDateTime(Date updateDateTime) {
 		this.updateDateTime = updateDateTime;
+	}
+
+	public List<OrganisationNetmdTbl> getOrganisationNetmdTbls() {
+		return this.organisationNetmdTbls;
+	}
+
+	public void setOrganisationNetmdTbls(List<OrganisationNetmdTbl> organisationNetmdTbls) {
+		this.organisationNetmdTbls = organisationNetmdTbls;
+	}
+
+	public OrganisationNetmdTbl addOrganisationNetmdTbl(OrganisationNetmdTbl organisationNetmdTbl) {
+		getOrganisationNetmdTbls().add(organisationNetmdTbl);
+		organisationNetmdTbl.setOrganisationTbl(this);
+
+		return organisationNetmdTbl;
+	}
+
+	public OrganisationNetmdTbl removeOrganisationNetmdTbl(OrganisationNetmdTbl organisationNetmdTbl) {
+		getOrganisationNetmdTbls().remove(organisationNetmdTbl);
+		organisationNetmdTbl.setOrganisationTbl(null);
+
+		return organisationNetmdTbl;
+	}
+
+	public HealthCareOrganisationTbl getHealthCareOrganisationTbl() {
+		return this.healthCareOrganisationTbl;
+	}
+
+	public void setHealthCareOrganisationTbl(HealthCareOrganisationTbl healthCareOrganisationTbl) {
+		this.healthCareOrganisationTbl = healthCareOrganisationTbl;
 	}
 
 	public OrganisationLoginTbl getOrganisationLoginTbl() {
@@ -248,18 +288,36 @@ public class OrganisationTbl implements Serializable {
 		this.organisationLoginTbl = organisationLoginTbl;
 	}
 
-	/**
-	 * @return the enableSync
-	 */
-	public boolean isEnableSync() {
-		return enableSync;
+	public List<QuestionnaireTbl> getQuestionnaireTbls() {
+		return this.questionnaireTbls;
 	}
 
-	/**
-	 * @param enableSync the enableSync to set
-	 */
-	public void setEnableSync(boolean enableSync) {
-		this.enableSync = enableSync;
+	
+
+	public void setQuestionnaireTbls(List<QuestionnaireTbl> questionnaireTbls) {
+		this.questionnaireTbls = questionnaireTbls;
+	}
+
+	public Integer getSyncTime() {
+		return syncTime;
+	}
+
+	public void setSyncTime(Integer syncTime) {
+		this.syncTime = syncTime;
+	}
+
+	public QuestionnaireTbl addQuestionnaireTbl(QuestionnaireTbl questionnaireTbl) {
+		getQuestionnaireTbls().add(questionnaireTbl);
+		questionnaireTbl.setOrganisationTbl(this);
+
+		return questionnaireTbl;
+	}
+
+	public QuestionnaireTbl removeQuestionnaireTbl(QuestionnaireTbl questionnaireTbl) {
+		getQuestionnaireTbls().remove(questionnaireTbl);
+		questionnaireTbl.setOrganisationTbl(null);
+
+		return questionnaireTbl;
 	}
 
 }

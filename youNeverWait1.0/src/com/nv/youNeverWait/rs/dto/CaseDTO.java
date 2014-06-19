@@ -9,6 +9,7 @@ public class CaseDTO {
 	private int globalId;
 	private int id;
 	private int patientId;
+	private int branchId;
 	private String caseName;
 	private String patientType;
 	private String admittedDate;
@@ -22,6 +23,7 @@ public class CaseDTO {
 	private String createdDate;
 	private String status;
 	private String actionName;
+	private int answerSetId;
 	private QuestionAnswerDTO questionAnswerDTO;
 	private ErrorDTO error;
 	private boolean success;
@@ -112,6 +114,12 @@ public class CaseDTO {
 	 */
 	public void setDepartmentName(String departmentName) {
 		this.departmentName = departmentName;
+	}
+	public int getBranchId() {
+		return branchId;
+	}
+	public void setBranchId(int branchId) {
+		this.branchId = branchId;
 	}
 	/**
 	 * @return the height
@@ -256,6 +264,12 @@ public class CaseDTO {
 	 */
 	public void setGlobalId(int globalId) {
 		this.globalId = globalId;
+	}
+	public int getAnswerSetId() {
+		return answerSetId;
+	}
+	public void setAnswerSetId(int answerSetId) {
+		this.answerSetId = answerSetId;
 	}
 	
 }

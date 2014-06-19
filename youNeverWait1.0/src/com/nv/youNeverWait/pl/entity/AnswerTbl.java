@@ -15,31 +15,19 @@ public class AnswerTbl implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
 	private int id;
 
-	@Lob
-	@Column(nullable=false)
 	private String answer;
 
-	//bi-directional many-to-one association to CaseTbl
-	@ManyToOne
-	@JoinColumn(name="case_id", nullable=false)
-	private CaseTbl caseTbl;
 
-	//bi-directional many-to-one association to DepartmentTbl
+	//bi-directional many-to-one association to AnswerSetTbl
 	@ManyToOne
-	@JoinColumn(name="dept_id", nullable=false)
-	private DepartmentTbl departmentTbl;
-
-	//bi-directional many-to-one association to NetmdBranchTbl
-	@ManyToOne
-	@JoinColumn(name="netmd_branch_id", nullable=false)
-	private NetmdBranchTbl netmdBranchTbl;
+	@JoinColumn(name="answer_set_id")
+	private AnswerSetTbl answerSetTbl;
 
 	//bi-directional many-to-one association to QuestionTbl
 	@ManyToOne
-	@JoinColumn(name="quest_id", nullable=false)
+	@JoinColumn(name="quest_id")
 	private QuestionTbl questionTbl;
 
 	public AnswerTbl() {
@@ -61,28 +49,13 @@ public class AnswerTbl implements Serializable {
 		this.answer = answer;
 	}
 
-	public CaseTbl getCaseTbl() {
-		return this.caseTbl;
+
+	public AnswerSetTbl getAnswerSetTbl() {
+		return this.answerSetTbl;
 	}
 
-	public void setCaseTbl(CaseTbl caseTbl) {
-		this.caseTbl = caseTbl;
-	}
-
-	public DepartmentTbl getDepartmentTbl() {
-		return this.departmentTbl;
-	}
-
-	public void setDepartmentTbl(DepartmentTbl departmentTbl) {
-		this.departmentTbl = departmentTbl;
-	}
-
-	public NetmdBranchTbl getNetmdBranchTbl() {
-		return this.netmdBranchTbl;
-	}
-
-	public void setNetmdBranchTbl(NetmdBranchTbl netmdBranchTbl) {
-		this.netmdBranchTbl = netmdBranchTbl;
+	public void setAnswerSetTbl(AnswerSetTbl answerSetTbl) {
+		this.answerSetTbl = answerSetTbl;
 	}
 
 	public QuestionTbl getQuestionTbl() {
@@ -92,5 +65,7 @@ public class AnswerTbl implements Serializable {
 	public void setQuestionTbl(QuestionTbl questionTbl) {
 		this.questionTbl = questionTbl;
 	}
+
+
 
 }

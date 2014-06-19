@@ -33,7 +33,8 @@ public class SyncResponseDTO {
 	private RetrievalAppointmentResponseDTO retrievalAppointmentListForPrimary = new RetrievalAppointmentResponseDTO();
 	private List<BillSyncResponseDTO> billResponse=new ArrayList<BillSyncResponseDTO>();
 	private List<CaseSyncResponseDTO> patientCaseResponse=new ArrayList<CaseSyncResponseDTO>();
-	private List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswer=new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
+	private List<MedicalRecordSyncResponseDTO> patientMedicalResponse= new ArrayList<MedicalRecordSyncResponseDTO>();
+	//private List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswer=new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
 	private String lastSynctime;
 //	private boolean syncStatus;
 //	private String syncFreqType;
@@ -337,13 +338,26 @@ public class SyncResponseDTO {
 	public void setPatientCaseResponse(List<CaseSyncResponseDTO> patientCaseResponse) {
 		this.patientCaseResponse = patientCaseResponse;
 	}
-	public List<NetmdQuestionAnswerSyncResponseDTO> getNetmdQuestionAnswer() {
-		return netmdQuestionAnswer;
+	/**
+	 * @return the patientMedicalResponse
+	 */
+	public List<MedicalRecordSyncResponseDTO> getPatientMedicalResponse() {
+		return patientMedicalResponse;
 	}
-	public void setNetmdQuestionAnswer(
-			List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswer) {
-		this.netmdQuestionAnswer = netmdQuestionAnswer;
+	/**
+	 * @param patientMedicalResponse the patientMedicalResponse to set
+	 */
+	public void setPatientMedicalResponse(
+			List<MedicalRecordSyncResponseDTO> patientMedicalResponse) {
+		this.patientMedicalResponse = patientMedicalResponse;
 	}
+//	public List<NetmdQuestionAnswerSyncResponseDTO> getNetmdQuestionAnswer() {
+//		return netmdQuestionAnswer;
+//	}
+//	public void setNetmdQuestionAnswer(
+//			List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswer) {
+//		this.netmdQuestionAnswer = netmdQuestionAnswer;
+//	}
 	
 
 }

@@ -2,7 +2,6 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.List;
 
 
@@ -12,12 +11,12 @@ import java.util.List;
  */
 @Entity
 @Table(name="department_tbl")
+@NamedQuery(name="DepartmentTbl.findAll", query="SELECT d FROM DepartmentTbl d")
 public class DepartmentTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(unique = true, nullable = false)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	private String description;
@@ -26,13 +25,15 @@ public class DepartmentTbl implements Serializable {
 
 	private String status;
 
-	//bi-directional many-to-one association to AnswerTbl
-	@OneToMany(mappedBy="departmentTbl")
-	private List<AnswerTbl> answerTbls;
+	private String uid;
 
-	//bi-directional many-to-one association to QuestionTbl
+	//bi-directional many-to-one association to CaseTbl
+	//@OneToMany(mappedBy="departmentTbl")
+	//private List<CaseTbl> caseTbls;
+
+	//bi-directional many-to-one association to QuestionnaireTbl
 	@OneToMany(mappedBy="departmentTbl")
-	private List<QuestionTbl> questionTbls;
+	private List<QuestionnaireTbl> questionnaireTbls;
 
 	public DepartmentTbl() {
 	}
@@ -69,48 +70,56 @@ public class DepartmentTbl implements Serializable {
 		this.status = status;
 	}
 
-	public List<AnswerTbl> getAnswerTbls() {
-		return this.answerTbls;
+	public String getUid() {
+		return this.uid;
 	}
 
-	public void setAnswerTbls(List<AnswerTbl> answerTbls) {
-		this.answerTbls = answerTbls;
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
-	public AnswerTbl addAnswerTbl(AnswerTbl answerTbl) {
-		getAnswerTbls().add(answerTbl);
-		answerTbl.setDepartmentTbl(this);
+//	public List<CaseTbl> getCaseTbls() {
+//		return this.caseTbls;
+//	}
 
-		return answerTbl;
+//	public void setCaseTbls(List<CaseTbl> caseTbls) {
+//		this.caseTbls = caseTbls;
+//	}
+
+//	public CaseTbl addCaseTbl(CaseTbl caseTbl) {
+//		getCaseTbls().add(caseTbl);
+//		caseTbl.setDepartmentTbl(this);
+
+//		return caseTbl;
+//	}
+
+//	public CaseTbl removeCaseTbl(CaseTbl caseTbl) {
+//		getCaseTbls().remove(caseTbl);
+//		caseTbl.setDepartmentTbl(null);
+
+//		return caseTbl;
+//	}
+
+	public List<QuestionnaireTbl> getQuestionnaireTbls() {
+		return this.questionnaireTbls;
 	}
 
-	public AnswerTbl removeAnswerTbl(AnswerTbl answerTbl) {
-		getAnswerTbls().remove(answerTbl);
-		answerTbl.setDepartmentTbl(null);
-
-		return answerTbl;
+	public void setQuestionnaireTbls(List<QuestionnaireTbl> questionnaireTbls) {
+		this.questionnaireTbls = questionnaireTbls;
 	}
 
-	public List<QuestionTbl> getQuestionTbls() {
-		return this.questionTbls;
+	public QuestionnaireTbl addQuestionnaireTbl(QuestionnaireTbl questionnaireTbl) {
+		getQuestionnaireTbls().add(questionnaireTbl);
+		questionnaireTbl.setDepartmentTbl(this);
+
+		return questionnaireTbl;
 	}
 
-	public void setQuestionTbls(List<QuestionTbl> questionTbls) {
-		this.questionTbls = questionTbls;
-	}
+	public QuestionnaireTbl removeQuestionnaireTbl(QuestionnaireTbl questionnaireTbl) {
+		getQuestionnaireTbls().remove(questionnaireTbl);
+		questionnaireTbl.setDepartmentTbl(null);
 
-	public QuestionTbl addQuestionTbl(QuestionTbl questionTbl) {
-		getQuestionTbls().add(questionTbl);
-		questionTbl.setDepartmentTbl(this);
-
-		return questionTbl;
-	}
-
-	public QuestionTbl removeQuestionTbl(QuestionTbl questionTbl) {
-		getQuestionTbls().remove(questionTbl);
-		questionTbl.setDepartmentTbl(null);
-
-		return questionTbl;
+		return questionnaireTbl;
 	}
 
 }

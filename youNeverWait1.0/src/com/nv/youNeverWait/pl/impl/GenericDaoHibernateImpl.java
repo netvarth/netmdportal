@@ -299,6 +299,7 @@ public class GenericDaoHibernateImpl implements GenericDao, SendMsgBaseDAO {
 		try {
 			response = (T) query.getSingleResult();
 		} catch (NoResultException e) {
+			//e.printStackTrace();
 			return null;
 		} catch (ClassCastException e) {
 			e.printStackTrace();

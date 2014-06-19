@@ -31,6 +31,9 @@ private float amountPaid;
 private String orderDate;
 private boolean success;
 private ErrorDTO error;
+private float amountDue;
+
+
 /**
  * 
  */
@@ -52,7 +55,7 @@ public BillSummaryDTO() {
  */
 public BillSummaryDTO(int globalId, String uid, String payStatus,
 		String patientName, String patientGlobalId, float billAmount,
-		float amountPaid, String orderDate, boolean success, ErrorDTO error) {
+		float amountPaid,float amountDue, String orderDate, boolean success, ErrorDTO error) {
 	super();
 	this.globalId = globalId;
 	this.uid = uid;
@@ -61,6 +64,7 @@ public BillSummaryDTO(int globalId, String uid, String payStatus,
 	this.patientGlobalId = patientGlobalId;
 	this.billAmount = billAmount;
 	this.amountPaid = amountPaid;
+	this.amountDue = amountDue;
 	this.orderDate = orderDate;
 	this.success = success;
 	this.error = error;
@@ -78,6 +82,7 @@ public BillSummaryDTO(NetmdBillTbl netmdBillTbl) {
 	this.patientGlobalId = Integer.toString(netmdBillTbl.getPatientTbl().getId());
 	this.billAmount = netmdBillTbl.getBillAmount();
 	this.amountPaid = netmdBillTbl.getAmountPaid();
+	this.amountDue = netmdBillTbl.getBillAmount()- netmdBillTbl.getAmountPaid();
 	this.orderDate = sdf.format(netmdBillTbl.getOrderDate());
 }
 
@@ -104,6 +109,12 @@ public String getUid() {
  */
 public void setUid(String uid) {
 	this.uid = uid;
+}
+public float getAmountDue() {
+	return amountDue;
+}
+public void setAmountDue(float amountDue) {
+	this.amountDue = amountDue;
 }
 /**
  * @return the payStatus

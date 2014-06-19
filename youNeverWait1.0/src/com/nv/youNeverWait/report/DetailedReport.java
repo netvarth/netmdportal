@@ -2,34 +2,34 @@ package com.nv.youNeverWait.report;
 
 import java.util.List;
 
-import com.nv.youNeverWait.analatic.bl.Analatic;
-import com.nv.youNeverWait.analatic.bl.Inference;
-import com.nv.youNeverWait.analatic.bl.Measure;
+import com.nv.youNeverWait.analytic.bl.Analytic;
+import com.nv.youNeverWait.analytic.bl.Inference;
+import com.nv.youNeverWait.analytic.bl.Measure;
 
 public class DetailedReport implements ReportData {
 	
 	
-	private Analatic analatic;
+	private Analytic analatic;
 
 	@Override
-	public List<Inference<? extends Measure>> getDataBeans(String fMonth,
+	public List<Inference> getDataBeans(String fMonth,
 			String fYear, String toMonth, String toYear, Integer hospital) {
 		
 		return analatic.getInferencesPerHospital(fMonth, fYear, toMonth, toYear,hospital);
 	}
 
 	@Override
-	public List<Inference<? extends Measure>> getDataBeans(String fMonth,
+	public List<Inference> getDataBeans(String fMonth,
 			String fYear, String toMonth, String toYear) {
 	
 		return analatic.getInferences(fMonth, fYear, toMonth, toYear);
 	}
 
-	public Analatic getAnalatic() {
+	public Analytic getAnalatic() {
 		return analatic;
 	}
 
-	public void setAnalatic(Analatic analatic) {
+	public void setAnalatic(Analytic analatic) {
 		this.analatic = analatic;
 	}
 
