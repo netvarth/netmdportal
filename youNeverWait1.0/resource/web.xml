@@ -39,18 +39,51 @@
 
 
 	<servlet>
-		<servlet-name>youNeverWait</servlet-name>
+		<servlet-name>ynw</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>youNeverWait</servlet-name>
-		<url-pattern>/ws/*</url-pattern>
+		<servlet-name>ynw</servlet-name>
+		<url-pattern>/ynw/*</url-pattern>
 	</servlet-mapping>
 
+	
+	<servlet>
+		<servlet-name>netlims</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 
-	<welcome-file-list>
+	<servlet-mapping>
+		<servlet-name>netlims</servlet-name>
+		<url-pattern>/netlims/*</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
+		<servlet-name>netmd</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>netmd</servlet-name>
+		<url-pattern>/netmd/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>superadmin</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>superadmin</servlet-name>
+		<url-pattern>/superadmin/*</url-pattern>
+	</servlet-mapping>
+	
+ <welcome-file-list>
 		<welcome-file>html/index.html</welcome-file>
 	</welcome-file-list>
 	<session-config>

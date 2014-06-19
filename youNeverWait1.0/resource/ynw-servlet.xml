@@ -12,14 +12,14 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<!-- Maps incoming requests to the appropriate controller based on the annotations 
 		on the controller methods. -->
 
-	<bean id="loginInterceptor" class="com.nv.youNeverWait.security.SessionInterceptor" />
+	<bean id="youNeverWaitInterceptor" class="com.nv.security.youNeverWait.SessionInterceptor" />
 
 	<!-- this should "map" my interceptor no? -->
 	<bean id="handlerMapping"
 		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
 		<property name="interceptors">
 			<list>
-				<ref bean="loginInterceptor" />
+				<ref bean="youNeverWaitInterceptor" />
 			</list>
 		</property>
 	</bean>
@@ -64,11 +64,12 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="500000" />
+		<property name="maxUploadSize" value="70000000" />
 	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.StartUpHtmlEndpoint" />
+	
+	<bean class="com.nv.portal.rs.youNeverWait.StartUpHtmlEndpoint" />
 
-	<bean class="com.nv.youNeverWait.rs.ui.AuthenticationResource">
+	<bean class="com.nv.portal.rs.youNeverWait.AuthenticationResource">
 		<property name="authenticationService">
 			<ref bean="authentication.service" />
 		</property>
@@ -76,12 +77,12 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="log.service" />
 		</property>
 	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.DoctorResource">
+	<!--  <bean class="com.nv.youNeverWait.rs.ui.DoctorResource">
 		<property name="service">
 			<ref bean="doctor.service" />
 		</property>
-	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.PatientResource">
+	</bean>-->
+	<bean class="com.nv.portal.rs.youNeverWait.PatientResource">
 		<property name="service">
 			<ref bean="patient.service" />
 		</property>
@@ -89,20 +90,22 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="log.service" />
 		</property>
 	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.SyncResource">
+	<!-- <bean class="com.nv.youNeverWait.rs.ui.SyncResource">
 		<property name="service">
 			<ref bean="sync.service" />
 		</property>
-	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.SuperAdminResource">
+	</bean>-->
+	
+	
+	<!--  <bean class="com.nv.portal.rs.youNeverWait.SuperAdminResource">
 		<property name="service">
 			<ref bean="superAdmin.service" />
 		</property>
 		<property name="logService">
 			<ref bean="log.service" />
 		</property>
-	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.LabResource">
+	</bean>-->
+<!-- 	<bean class="com.nv.youNeverWait.rs.ui.LabResource">
 		<property name="labService">
 			<ref bean="lab.service" />
 		</property>
@@ -110,8 +113,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="log.service" />
 		</property>
 
-	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.NetMdResource">
+	</bean>-->
+	<!-- <bean class="com.nv.youNeverWait.rs.ui.NetMdResource">
 		<property name="netMdService">
 			<ref bean="netMd.service" />
 		</property>
@@ -138,12 +141,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 	</bean>
 
-	<bean class="com.nv.youNeverWait.rs.ui.TestResource">
-
-		<property name="testService">
-			<ref bean="test.service" />
-		</property>
-	</bean>
+	
 	<bean class="com.nv.youNeverWait.rs.ui.SpecimenResource">
 
 		<property name="specimenService">
@@ -163,8 +161,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="orderService">
 			<ref bean="order.service" />
 		</property>
-	</bean>
-	<bean class="com.nv.youNeverWait.rs.ui.OrganisationResource">
+	</bean>-->
+	<!--<bean class="com.nv.portal.rs.youNeverWait.OrganisationResource">
 		<property name="organisationService">
 			<ref bean="organisation.service" />
 		</property>
@@ -172,8 +170,11 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="log.service" />
 		</property>
 		<property name="view" ref="pdfview" />
-	</bean>
+	</bean>-->
+	
 	<bean id="pdfview" class="com.nv.youNeverWait.report.PDFReportView">
+	  
 	</bean>
+	
 
 </beans>
