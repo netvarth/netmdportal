@@ -15,7 +15,6 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ActionNameEnum;
@@ -24,6 +23,8 @@ import com.nv.youNeverWait.pl.entity.CaseTbl;
 import com.nv.youNeverWait.pl.entity.DepartmentTbl;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.pl.entity.MedicalRecordTbl;
+
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
@@ -31,23 +32,23 @@ import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
 import com.nv.youNeverWait.pl.entity.PatientTypeEnum;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
-import com.nv.youNeverWait.pl.entity.StatusEnum;
+
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.UserTypeEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.CaseDTO;
-import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
+
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
-import com.nv.youNeverWait.rs.dto.PasswordDTO;
+
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientOrderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
-import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
+
 import com.nv.youNeverWait.rs.dto.RetrievalPatientResponseDTO;
-import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.PatientDao;
 
@@ -57,6 +58,10 @@ import com.nv.youNeverWait.user.pl.dao.PatientDao;
  */
 public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		PatientDao {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3303752882895351061L;
 	@PersistenceContext()
 	private EntityManager em;
 
@@ -100,30 +105,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		return retrievalPatientResponseDTO;
 	}
 
-	/**
-	 * Method to retrieve details of a lab owner/user
-	 * 
-	 * @param login
-	 * @return UserCredentials
-	 */
-	@Override
-	@Transactional(readOnly = false)
-	public UserCredentials getUserCredentials(LoginDTO login) {
-
-		UserCredentials user = new UserCredentials();
-		NetmdLoginTbl userLogin = getNetMdUserByName(login.getUserName().trim());
-		if (userLogin == null) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidUserName);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		user.setEmailId(userLogin.getUserName());
-		user.setUserName(userLogin.getUserName());
-
-		return user;
-	}
-
+	
 	/**
 	 * 
 	 * @param loginId
@@ -135,32 +117,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		return executeUniqueQuery(NetmdUserTbl.class, query);
 	}
 
-	/**
-	 * Method to reset password
-	 * 
-	 * @param login
-	 * @return ResponseDTO
-	 */
-	@Override
-	@Transactional
-	public ResponseDTO resetPassword(LoginDTO login) {
-		ResponseDTO response = new ResponseDTO();
-		String newPassword = StringEncoder.encryptWithKey(login.getPassword());
-		String decrypedUserName = StringEncoder.decryptWithStaticKey(login
-				.getUserName());
-		NetmdLoginTbl userLogin = getNetMdUserByName(decrypedUserName);
-		if (userLogin == null) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidUserName);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		userLogin.setPassword(newPassword);
-		update(userLogin);
-		response.setSuccess(true);
-		return response;
-	}
-
+	
 	/**
 	 * 
 	 * @param loginId
@@ -457,33 +414,6 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		return response;
 	}
 
-	/**
-	 * Method to reset password
-	 * 
-	 * @param login
-	 * @return ResponseDTO
-	 */
-	@Override
-	@Transactional
-	public ResponseDTO createPassword(CreatePasswordDTO passwords) {
-
-		ResponseDTO response = new ResponseDTO();
-		String newPassword = StringEncoder.encryptWithKey(passwords
-				.getPassword());
-		String decryptedUserName = StringEncoder.decryptWithStaticKey(passwords
-				.getUsername());
-		NetmdLoginTbl loginTbl = (NetmdLoginTbl) getLoginByUserName(decryptedUserName);
-		if (loginTbl == null) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidUser);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		loginTbl.setPassword(newPassword);
-		update(loginTbl);
-		response.setSuccess(true);
-		return response;
-	}
 
 	/**
 	 * Method which performs password changing
@@ -491,34 +421,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 	 * @param passwords
 	 * @return ResponseDTO
 	 */
-	@Override
-	@Transactional(readOnly = false)
-	public ResponseDTO changePassword(PasswordDTO passwords) {
-		ResponseDTO response = new ResponseDTO();
-		String encPassword = StringEncoder.encryptWithKey(passwords
-				.getOldPassword().trim());
-		NetmdLoginTbl login = (NetmdLoginTbl) getLoginByUserName(passwords
-				.getUsername());
-		if (login == null) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.UserNotExists);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		if (!login.getPassword().equals(encPassword)) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.PasswordNotExists);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		String encNewPassword = StringEncoder.encryptWithKey(passwords
-				.getNewPassword().trim());
-		login.setPassword(encNewPassword);
-		update(login);
-		response.setSuccess(true);
-		return response;
-	}
-
+	
 	public String getBranch(int branchId) {
 		NetmdBranchTbl branch = (NetmdBranchTbl) getById(NetmdBranchTbl.class,
 				branchId);
@@ -673,6 +576,8 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		caseTbl.setWeight(newPatientCase.getWeight());
 		caseTbl.setHeight(newPatientCase.getHeight());
 		caseTbl.setStatus(CaseStatusEnum.Open.getDisplayName());
+		caseTbl.setLocalAnswersetId(newPatientCase.getAnswerSetId());
+		caseTbl.setLocalCaseId(newPatientCase.getId());
 		caseTbl.setCreatedDateTime(currentDate);
 		caseTbl.setUpdatedDateTime(currentDate);
 		save(caseTbl);
@@ -780,6 +685,49 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		caseResponse.setSuccess(true);
 		return caseResponse;
 	}
+	
+	
+
+	@Override
+	@Transactional
+	public ResponseDTO deleteCase(CaseDTO deletePatientCase, HeaderDTO header) {
+		ResponseDTO caseResponse = new ResponseDTO();
+		CaseTbl caseTbl = getById(CaseTbl.class,
+				deletePatientCase.getGlobalId());
+		if (caseTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidCaseId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		PatientTbl patientTbl = getById(PatientTbl.class,
+				deletePatientCase.getPatientId());
+
+		if (patientTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPatientId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		DepartmentTbl dept = getById(DepartmentTbl.class,
+				deletePatientCase.getDepartmentId());
+		if (dept == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDepartmentId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		Date currentDate = new Date();
+		caseTbl.setStatus(CaseStatusEnum.Closed.getDisplayName());
+		caseTbl.setUpdatedDateTime(currentDate);
+		update(caseTbl);
+		caseResponse.setGlobalId(caseTbl.getId());
+		caseResponse.setId(deletePatientCase.getId());
+		caseResponse.setSuccess(true);
+		return caseResponse;
+		
+	}
 
 	@Override
 	@Transactional
@@ -811,22 +759,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		return executeUniqueQuery(ResultTbl.class, query);
 	}
 
-	public NetmdLoginTbl getLoginByUserName(String userName) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_LOGIN_BY_USERNAME);
-		query.setParameter("param1", userName);
-		return executeUniqueQuery(NetmdLoginTbl.class, query);
-	}
-
-	public List<NetmdLoginTbl> getLoginByUserName(String userName,
-			String firstName) {
-		javax.persistence.Query query = em
-				.createQuery(Query.GET_LOGIN_BY_USERNAME_FIRSTNAME);
-		query.setParameter("param1", userName);
-		query.setParameter("param2", firstName);
-		return executeQuery(NetmdLoginTbl.class, query);
-	}
-
+	
 	public NetmdPassphraseTbl getBranchByPassPhrase(String passPhrase,
 			String macId) {
 		javax.persistence.Query query = em
@@ -926,4 +859,174 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		this.em = em;
 	}
 
+	@Override
+	@Transactional
+	public ResponseDTO createMedicalRecord(MedicalRecordDTO newPatientMedicalRecord, HeaderDTO header) {
+		ResponseDTO medicalCaseResponse = new ResponseDTO();
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITHOUT_TIME);
+
+		PatientTbl patientTbl = getById(PatientTbl.class,
+				newPatientMedicalRecord.getPatientId());
+
+		if (patientTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPatientId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		CaseTbl casetbl = getById(CaseTbl.class,
+				newPatientMedicalRecord.getCaseId());
+		if (casetbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidCaseId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+        
+		DoctorTbl doctorTbl = getById(DoctorTbl.class,
+				newPatientMedicalRecord.getDoctorId());
+
+		if (doctorTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDoctorId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		Date currentDate = new Date();
+		/* Saving medicalRecord for the patient in medical Record Tbl */
+		MedicalRecordTbl medicalRecordTbl = new MedicalRecordTbl();
+		medicalRecordTbl.setMedicalRecord(newPatientMedicalRecord.getMedicalRecord());
+		medicalRecordTbl.setPatientTbl(patientTbl);
+		medicalRecordTbl.setDoctorTbl(doctorTbl);
+		medicalRecordTbl.setCaseTbl(casetbl);
+		//MedicalRecordTypeEnum medical = MedicalRecordTypeEnum.getEnum(newPatientMedicalRecord.getType());
+		//medicalRecordTbl.setType(MedicalRecordTypeEnum.getEnum(newPatientMedicalRecord.getType()).getDisplayName());
+		medicalRecordTbl.setType(newPatientMedicalRecord.getType());
+		medicalRecordTbl.setStatus(Constants.ACTIVE);
+		medicalRecordTbl.setCreatedDateTime(currentDate);
+		medicalRecordTbl.setUpdateDateTime(currentDate);
+		save(medicalRecordTbl);
+		medicalCaseResponse.setGlobalId(medicalRecordTbl.getId());
+		medicalCaseResponse.setId(newPatientMedicalRecord.getId());
+		medicalCaseResponse.setSuccess(true);
+		return medicalCaseResponse;
+	
+	}
+
+	@Override
+	@Transactional
+	public ResponseDTO updateMedicalRecord(MedicalRecordDTO updatedMedicalRecord, HeaderDTO header) {
+		ResponseDTO medicalRecordResponse = new ResponseDTO();
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITHOUT_TIME);
+
+		MedicalRecordTbl medicalRecordTbl = getById(MedicalRecordTbl.class,
+				updatedMedicalRecord.getGlobalId());
+		if (medicalRecordTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidMedicalRecordId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		DoctorTbl doctorTbl=getById(DoctorTbl.class,updatedMedicalRecord.getDoctorId());
+		if(doctorTbl==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDoctorId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		
+		PatientTbl patientTbl = getById(PatientTbl.class,
+				updatedMedicalRecord.getPatientId());
+
+		if (patientTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPatientId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		CaseTbl caseTbl = getById(CaseTbl.class,
+				updatedMedicalRecord.getCaseId());
+		if (caseTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDepartmentId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+
+		Date currentDate = new Date();
+		
+		medicalRecordTbl.setMedicalRecord(updatedMedicalRecord.getMedicalRecord());
+		medicalRecordTbl.setPatientTbl(patientTbl);
+		medicalRecordTbl.setCaseTbl(caseTbl);
+		medicalRecordTbl.setCreatedDateTime(currentDate);
+		medicalRecordTbl.setUpdateDateTime(currentDate);
+		//MedicalRecordTypeEnum medical = MedicalRecordTypeEnum.getEnum(updatedMedicalRecord.getType());
+		//medicalRecordTbl.setType(MedicalRecordTypeEnum.getEnum(updatedMedicalRecord.getType()).getDisplayName());
+		medicalRecordTbl.setType(updatedMedicalRecord.getType());
+		medicalRecordTbl.setMedicalRecord(updatedMedicalRecord.getMedicalRecord());
+		medicalRecordTbl.setDoctorTbl(doctorTbl);
+		update(medicalRecordTbl);
+		medicalRecordResponse.setGlobalId(medicalRecordTbl.getId());
+		medicalRecordResponse.setId(updatedMedicalRecord.getId());
+		medicalRecordResponse.setSuccess(true);
+		return medicalRecordResponse;
+	}
+
+
+	@Override
+	@Transactional
+	public ResponseDTO deleteMedicalRecord(MedicalRecordDTO deleteMedicalRecord, HeaderDTO header) {
+		ResponseDTO medicalRecordResponse = new ResponseDTO();
+		MedicalRecordTbl medicalRecordTbl = getById(MedicalRecordTbl.class,
+				deleteMedicalRecord.getGlobalId());
+		if (medicalRecordTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidMedicalRecordId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		PatientTbl patientTbl = getById(PatientTbl.class,
+				deleteMedicalRecord.getPatientId());
+
+		if (patientTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPatientId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		CaseTbl caseTbl = getById(CaseTbl.class,
+				deleteMedicalRecord.getCaseId());
+		if (caseTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDepartmentId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		medicalRecordTbl.setStatus(CaseStatusEnum.Closed.getDisplayName());
+		update(medicalRecordTbl);
+		medicalRecordResponse.setGlobalId(medicalRecordTbl.getId());
+		medicalRecordResponse.setId(deleteMedicalRecord.getId());
+		medicalRecordResponse.setSuccess(true);
+		return medicalRecordResponse;
+	}
+
+	public NetmdLoginTbl getLoginByUserName(String userName) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_LOGIN_BY_USERNAME);
+		query.setParameter("param1", userName);
+		return executeUniqueQuery(NetmdLoginTbl.class, query);
+	}
+
+	public List<NetmdLoginTbl> getLoginByUserName(String userName,
+			String firstName) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_LOGIN_BY_USERNAME_FIRSTNAME);
+		query.setParameter("param1", userName);
+		query.setParameter("param2", firstName);
+		return executeQuery(NetmdLoginTbl.class, query);
+	}
+	
+	
 }

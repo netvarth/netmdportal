@@ -318,6 +318,7 @@ public class Query {
 	/*QuestionTbl*/
 	public static final String GET_ID_BY_KEY = " from QuestionTbl as q where q.questionKey=:param1";
 	public static final String GET_BY_DEPT = "from QuestionTbl as qTbl where qTbl.departmentTbl.id=:param1";
+	public static final String GET_BY_QUESTIONNAIRE_ID = "from AnswerTbl as answer where answer.questionTbl.id=:param1";
 	
 	/*AnswerTbl*/
 	public static final String GET_BY_CASE = "from AnswerTbl as qaTbl where qaTbl.caseTbl.id=:param1";
@@ -329,6 +330,8 @@ public class Query {
 	/*Netmd_question_tbl*/
 	public static final String GET_NETMD_QUESTION_TBL = "from NetmdQuestionTbl";
 	public static final String GET_BY_QUESTIONNAIRE = "from NetmdAnswerTbl as answer where answer.netmdQuestionnaireTbl.id=:param1";
+	public static final String GET_NETMD_BILL_DETAILS ="select sum(bill.billAmount) as billAmt,sum(bill.amountPaid) as amtPaid from NetmdBillTbl  as bill where bill.netmdBranchTbl.id=:param1 and bill.orderDate>=:param2 and bill.orderDate<=:param3";
+
 	
 	
 	

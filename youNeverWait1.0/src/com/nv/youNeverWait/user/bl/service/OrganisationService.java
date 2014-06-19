@@ -25,6 +25,7 @@ import com.nv.youNeverWait.rs.dto.OrganisationListResponseDTO;
 import com.nv.youNeverWait.rs.dto.OrganisationUserDetail;
 import com.nv.youNeverWait.rs.dto.OrganisationUsersList;
 import com.nv.youNeverWait.rs.dto.OrganizationViewResponseDTO;
+import com.nv.youNeverWait.rs.dto.ReportListFilterDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.rs.dto.ViewOrganisationUser;
@@ -108,5 +109,8 @@ public interface OrganisationService {
 	public OrganisationListResponseDTO getOrganisationList();
 
 	public JasperPrint createReport(Map<String,Object> map, ServletContext contexPath);
+
+	public ReportListFilterDTO getFilterList();
+	
 
 }

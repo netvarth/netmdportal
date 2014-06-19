@@ -37,6 +37,8 @@ import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
+import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
+import com.nv.youNeverWait.rs.dto.MedicalRecordSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
 import com.nv.youNeverWait.rs.dto.NetMdDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
@@ -130,8 +132,7 @@ public class SyncServiceImpl implements SyncService {
 
 		}
 		/* Checking whether primary device or not */
-		HeaderResponseDTO headerResponse = syncDao.getHeaderStatus(sync
-				.getHeader());
+		HeaderResponseDTO headerResponse = syncDao.getHeaderStatus(sync.getHeader());
 
 		if (headerResponse.isPrimaryDevice()) {
 			NetMdDTO NetmdResponse=getNetmdDetails(sync.getLastSyncTime(),currentSyncTime,sync.getHeader());
@@ -188,12 +189,15 @@ public class SyncServiceImpl implements SyncService {
 			syncResponse.setBillResponse(billResponseList);
 			
 			/* Synchronizing patient case details*/
-			List<CaseSyncResponseDTO> caseResponseList= getCaseResponseList(sync.getHeader(),sync.getNewCaseList(),sync.getUpdateCaseList());
+			List<CaseSyncResponseDTO> caseResponseList= getCaseResponseList(sync.getHeader(),sync.getNewCaseList(),sync.getUpdateCaseList(),sync.getDeleteCaseList());
 			syncResponse.setPatientCaseResponse(caseResponseList);
 			
+		/* Synchronizing patient medical Record details*/
+			List<MedicalRecordSyncResponseDTO> medicalRecordResponseList= getMedicalRecordResponseList(sync.getHeader(),sync.getNewMedicalRecordList(),sync.getUpdateMedicalRecordList(),sync.getDeleteMedicalRecordList());
+			syncResponse.setPatientMedicalResponse(medicalRecordResponseList);
 			
-			List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswerList=getNetmdQuestionnaireList(sync.getHeader(),sync.getNewNetmdQuestionnaireList(),sync.getUpdateNetmdQuestionnaireList());
-			syncResponse.setNetmdQuestionAnswer(netmdQuestionAnswerList);
+//			List<NetmdQuestionAnswerSyncResponseDTO> netmdQuestionAnswerList=getNetmdQuestionnaireList(sync.getHeader(),sync.getNewNetmdQuestionnaireList(),sync.getUpdateNetmdQuestionnaireList());
+//			syncResponse.setNetmdQuestionAnswer(netmdQuestionAnswerList);
 			
 			
 		}
@@ -259,91 +263,92 @@ public class SyncServiceImpl implements SyncService {
 		return syncResponse;
 	}
 
-	private List<NetmdQuestionAnswerSyncResponseDTO> getNetmdQuestionnaireList(
-			HeaderDTO header, List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList, List<NetmdQuestionAnswerDTO> updateNetmdQuestionnaireList) {
-		List<NetmdQuestionAnswerSyncResponseDTO> netmdQuesstionAnswer=new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
-		List<NetmdQuestionAnswerSyncResponseDTO> newNetmdQuestionnaireResponseList = syncNewNetmdQuestionnaire(
-						newNetmdQuestionnaireList, header);
-		List<NetmdQuestionAnswerSyncResponseDTO> updatedNetmdQuestionnaireResponseList = syncUpdatedNetmdQuestionnaire(
-						updateNetmdQuestionnaireList, header);
-		netmdQuesstionAnswer.addAll(newNetmdQuestionnaireResponseList);
-		netmdQuesstionAnswer.addAll(updatedNetmdQuestionnaireResponseList);
-		return netmdQuesstionAnswer;
-	}
 
-	private List<NetmdQuestionAnswerSyncResponseDTO> syncUpdatedNetmdQuestionnaire(
-			List<NetmdQuestionAnswerDTO> updateNetmdQuestionnaireList,
-			HeaderDTO header) {
-		List<NetmdQuestionAnswerSyncResponseDTO> updateNetmdewQuestionnaireResponseList = new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
-		for (NetmdQuestionAnswerDTO netmdQuestionAnswer : updateNetmdQuestionnaireList) {
-			try {
 
-				ResponseDTO response = questionnaireService.updateQuestionnaire(netmdQuestionAnswer, header);
-				NetmdQuestionAnswerSyncResponseDTO updateQuestionAnswerDTOSyncResponse = new NetmdQuestionAnswerSyncResponseDTO();
-				updateQuestionAnswerDTOSyncResponse.setActionName(ActionNameEnum.UPDATE
-						.getDisplayName());
-				updateQuestionAnswerDTOSyncResponse.setUpdateDateTime(response.getUpdateDateTime());
-				updateQuestionAnswerDTOSyncResponse.setGlobalId(response.getGlobalId());
-				updateQuestionAnswerDTOSyncResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
-				updateQuestionAnswerDTOSyncResponse.setSuccess(true);
-				updateNetmdewQuestionnaireResponseList.add(updateQuestionAnswerDTOSyncResponse);
-			}
-			catch (ServiceException se) {
-				log.error("Error while saving updated NetmdQuestionnaire into portal ", se);
-				List<Parameter> parameters = se.getParamList();
-				ErrorDTO error = new ErrorDTO();
-				error.setErrCode(se.getError().getErrCode());
-				error.setParams(parameters);
-				error.setDisplayErrMsg(se.isDisplayErrMsg());
-				NetmdQuestionAnswerSyncResponseDTO updateNetmdQuestionnaireResponse = new NetmdQuestionAnswerSyncResponseDTO();
-				updateNetmdQuestionnaireResponse.setError(error);
-				updateNetmdQuestionnaireResponse.setSuccess(false);
-				updateNetmdQuestionnaireResponse.setId(updateNetmdQuestionnaireResponse.getId());
-				updateNetmdQuestionnaireResponse.setGlobalId(updateNetmdQuestionnaireResponse.getGlobalId());
-				updateNetmdQuestionnaireResponse.setActionName(ActionNameEnum.UPDATE
-						.getDisplayName());
-
-				updateNetmdewQuestionnaireResponseList.add(updateNetmdQuestionnaireResponse);
-			}
-		}
-		return updateNetmdewQuestionnaireResponseList;
-	}
-
-	private List<NetmdQuestionAnswerSyncResponseDTO> syncNewNetmdQuestionnaire(
-			List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList,
-			HeaderDTO header) {
-		
-		List<NetmdQuestionAnswerSyncResponseDTO> newNetmdQuestionnaireResponseList = new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
-		for (NetmdQuestionAnswerDTO netmdQuestionAnswer : newNetmdQuestionnaireList) {
-			try {
-
-				ResponseDTO response = questionnaireService.NetmdQuestionnaire(netmdQuestionAnswer, header);
-				NetmdQuestionAnswerSyncResponseDTO netmdQuestionAnswerDTOSyncResponse = new NetmdQuestionAnswerSyncResponseDTO();
-				netmdQuestionAnswerDTOSyncResponse.setActionName(ActionNameEnum.ADD
-						.getDisplayName());
-				netmdQuestionAnswerDTOSyncResponse.setCreateDateTime(response.getCreateDateTime());
-				netmdQuestionAnswerDTOSyncResponse.setUpdateDateTime(response.getUpdateDateTime());
-				netmdQuestionAnswerDTOSyncResponse.setGlobalId(response.getGlobalId());
-				netmdQuestionAnswerDTOSyncResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
-				netmdQuestionAnswerDTOSyncResponse.setSuccess(true);
-
-				newNetmdQuestionnaireResponseList.add(netmdQuestionAnswerDTOSyncResponse);
-			} catch (ServiceException se) {
-				log.error("Error while saving new NetmdQuestionnaire into portal ", se);
-				ErrorDTO error = new ErrorDTO();
-				error.setErrCode(se.getError().getErrCode());
-				error.setDisplayErrMsg(se.isDisplayErrMsg());
-				NetmdQuestionAnswerSyncResponseDTO netmdQuestionAnswerResponse = new NetmdQuestionAnswerSyncResponseDTO();
-				netmdQuestionAnswerResponse.setError(error);
-				netmdQuestionAnswerResponse.setSuccess(false);
-				netmdQuestionAnswerResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
-				netmdQuestionAnswerResponse.setActionName(ActionNameEnum.ADD
-						.getDisplayName());
-				newNetmdQuestionnaireResponseList.add(netmdQuestionAnswerResponse);
-			}
-		}
-		return newNetmdQuestionnaireResponseList;
-	}
+//	private List<NetmdQuestionAnswerSyncResponseDTO> getNetmdQuestionnaireList(
+//			HeaderDTO header, List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList, List<NetmdQuestionAnswerDTO> updateNetmdQuestionnaireList) {
+//		List<NetmdQuestionAnswerSyncResponseDTO> netmdQuesstionAnswer=new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
+//		List<NetmdQuestionAnswerSyncResponseDTO> newNetmdQuestionnaireResponseList = syncNewNetmdQuestionnaire(
+//						newNetmdQuestionnaireList, header);
+//		List<NetmdQuestionAnswerSyncResponseDTO> updatedNetmdQuestionnaireResponseList = syncUpdatedNetmdQuestionnaire(
+//						updateNetmdQuestionnaireList, header);
+//		netmdQuesstionAnswer.addAll(newNetmdQuestionnaireResponseList);
+//		netmdQuesstionAnswer.addAll(updatedNetmdQuestionnaireResponseList);
+//		return netmdQuesstionAnswer;
+//	}
+//
+//	private List<NetmdQuestionAnswerSyncResponseDTO> syncUpdatedNetmdQuestionnaire(
+//			List<NetmdQuestionAnswerDTO> updateNetmdQuestionnaireList,
+//			HeaderDTO header) {
+//		List<NetmdQuestionAnswerSyncResponseDTO> updateNetmdewQuestionnaireResponseList = new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
+//		for (NetmdQuestionAnswerDTO netmdQuestionAnswer : updateNetmdQuestionnaireList) {
+//			try {
+//
+//				ResponseDTO response = questionnaireService.updateQuestionnaire(netmdQuestionAnswer, header);
+//				NetmdQuestionAnswerSyncResponseDTO updateQuestionAnswerDTOSyncResponse = new NetmdQuestionAnswerSyncResponseDTO();
+//				updateQuestionAnswerDTOSyncResponse.setActionName(ActionNameEnum.UPDATE.getDisplayName());
+//				updateQuestionAnswerDTOSyncResponse.setUpdateDateTime(response.getUpdateDateTime());
+//				updateQuestionAnswerDTOSyncResponse.setGlobalId(response.getGlobalId());
+//				updateQuestionAnswerDTOSyncResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
+//				updateQuestionAnswerDTOSyncResponse.setSuccess(true);
+//				updateNetmdewQuestionnaireResponseList.add(updateQuestionAnswerDTOSyncResponse);
+//			}
+//			catch (ServiceException se) {
+//				log.error("Error while saving updated NetmdQuestionnaire into portal ", se);
+//				List<Parameter> parameters = se.getParamList();
+//				ErrorDTO error = new ErrorDTO();
+//				error.setErrCode(se.getError().getErrCode());
+//				error.setParams(parameters);
+//				error.setDisplayErrMsg(se.isDisplayErrMsg());
+//				NetmdQuestionAnswerSyncResponseDTO updateNetmdQuestionnaireResponse = new NetmdQuestionAnswerSyncResponseDTO();
+//				updateNetmdQuestionnaireResponse.setError(error);
+//				updateNetmdQuestionnaireResponse.setSuccess(false);
+//				updateNetmdQuestionnaireResponse.setId(updateNetmdQuestionnaireResponse.getId());
+//				updateNetmdQuestionnaireResponse.setGlobalId(updateNetmdQuestionnaireResponse.getGlobalId());
+//				updateNetmdQuestionnaireResponse.setActionName(ActionNameEnum.UPDATE
+//						.getDisplayName());
+//
+//				updateNetmdewQuestionnaireResponseList.add(updateNetmdQuestionnaireResponse);
+//			}
+//		}
+//		return updateNetmdewQuestionnaireResponseList;
+//	}
+//
+//	private List<NetmdQuestionAnswerSyncResponseDTO> syncNewNetmdQuestionnaire(
+//			List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList,
+//			HeaderDTO header) {
+//		
+//		List<NetmdQuestionAnswerSyncResponseDTO> newNetmdQuestionnaireResponseList = new ArrayList<NetmdQuestionAnswerSyncResponseDTO>();
+//		for (NetmdQuestionAnswerDTO netmdQuestionAnswer : newNetmdQuestionnaireList) {
+//			try {
+//
+//				ResponseDTO response = questionnaireService.NetmdQuestionnaire(netmdQuestionAnswer, header);
+//				NetmdQuestionAnswerSyncResponseDTO netmdQuestionAnswerDTOSyncResponse = new NetmdQuestionAnswerSyncResponseDTO();
+//				netmdQuestionAnswerDTOSyncResponse.setActionName(ActionNameEnum.ADD
+//						.getDisplayName());
+//				netmdQuestionAnswerDTOSyncResponse.setCreateDateTime(response.getCreateDateTime());
+//				netmdQuestionAnswerDTOSyncResponse.setUpdateDateTime(response.getUpdateDateTime());
+//				netmdQuestionAnswerDTOSyncResponse.setGlobalId(response.getGlobalId());
+//				netmdQuestionAnswerDTOSyncResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
+//				netmdQuestionAnswerDTOSyncResponse.setSuccess(true);
+//
+//				newNetmdQuestionnaireResponseList.add(netmdQuestionAnswerDTOSyncResponse);
+//			} catch (ServiceException se) {
+//				log.error("Error while saving new NetmdQuestionnaire into portal ", se);
+//				ErrorDTO error = new ErrorDTO();
+//				error.setErrCode(se.getError().getErrCode());
+//				error.setDisplayErrMsg(se.isDisplayErrMsg());
+//				NetmdQuestionAnswerSyncResponseDTO netmdQuestionAnswerResponse = new NetmdQuestionAnswerSyncResponseDTO();
+//				netmdQuestionAnswerResponse.setError(error);
+//				netmdQuestionAnswerResponse.setSuccess(false);
+//				netmdQuestionAnswerResponse.setId(netmdQuestionAnswer.getQuestionnaireId());
+//				netmdQuestionAnswerResponse.setActionName(ActionNameEnum.ADD
+//						.getDisplayName());
+//				newNetmdQuestionnaireResponseList.add(netmdQuestionAnswerResponse);
+//			}
+//		}
+//		return newNetmdQuestionnaireResponseList;
+//	}
 
 	private NetMdBranchDTO getNetmdBranchDetails(String lastSyncTime,
 			Date currentSyncTime,HeaderDTO header) {
@@ -366,12 +371,147 @@ public class SyncServiceImpl implements SyncService {
 
 
 	private NetMdDTO syncNetmdDetails(String lastSyncTime, Date currentSyncTime,HeaderDTO header) {
-
 		NetMdDTO netmd=netMdService.getUpdateNetMd(lastSyncTime,currentSyncTime,header);
-		
 		 return netmd;	
 	}
 
+	/**
+	 * @param header
+	 * @param newMedicalRecordList
+	 * @param updateMedicalRecordList
+	 * @param deleteMedicalRecordList
+	 * @return
+	 */
+	private List<MedicalRecordSyncResponseDTO> getMedicalRecordResponseList(
+			HeaderDTO header, List<MedicalRecordDTO> newMedicalRecordList,
+			List<MedicalRecordDTO> updateMedicalRecordList,
+			List<MedicalRecordDTO> deleteMedicalRecordList) {
+		
+		List<MedicalRecordSyncResponseDTO> patientMedicalRecordResponseList = new ArrayList<MedicalRecordSyncResponseDTO>();
+
+		List<MedicalRecordSyncResponseDTO> newMedicalRecordResponseList = syncNewPatientMedicalRecords(
+				newMedicalRecordList, header);
+		List<MedicalRecordSyncResponseDTO> updatedMedicalRecordResponseList = syncUpdatedPatientMedicalRecords(
+				updateMedicalRecordList, header);
+		List<MedicalRecordSyncResponseDTO> deleteCaseResponseList=syncDeletedPatientMedicalRecords(deleteMedicalRecordList,header);
+		patientMedicalRecordResponseList.addAll(newMedicalRecordResponseList);
+		patientMedicalRecordResponseList.addAll(updatedMedicalRecordResponseList);
+		patientMedicalRecordResponseList.addAll(deleteCaseResponseList);
+
+		return patientMedicalRecordResponseList;
+	}
+
+	private List<MedicalRecordSyncResponseDTO> syncDeletedPatientMedicalRecords(
+			List<MedicalRecordDTO> deleteMedicalRecordList, HeaderDTO header) {
+		List<MedicalRecordSyncResponseDTO> deleteMedicalRecordResponseList = new ArrayList<MedicalRecordSyncResponseDTO>();
+		for (MedicalRecordDTO deleteMedicalRecord : deleteMedicalRecordList) {
+			try {
+
+				ResponseDTO response = patientService.deletePatientMedicalRecord(deleteMedicalRecord,
+						header);
+				MedicalRecordSyncResponseDTO medicalResponse = new MedicalRecordSyncResponseDTO();
+				medicalResponse.setActionName(ActionNameEnum.DELETE.getDisplayName());
+				medicalResponse.setGlobalId(response.getGlobalId());
+				medicalResponse.setId(response.getId());
+				medicalResponse.setSuccess(true);
+				deleteMedicalRecordResponseList.add(medicalResponse);
+			} catch (ServiceException se) {
+				log.error("Error while saving updated cases into portal ", se);
+				List<Parameter> parameters = se.getParamList();
+				ErrorDTO error = new ErrorDTO();
+				error.setErrCode(se.getError().getErrCode());
+				error.setParams(parameters);
+				error.setDisplayErrMsg(se.isDisplayErrMsg());
+				MedicalRecordSyncResponseDTO medicalErrorResponse = new MedicalRecordSyncResponseDTO();
+				medicalErrorResponse.setError(error);
+				medicalErrorResponse.setSuccess(false);
+				medicalErrorResponse.setId(deleteMedicalRecord.getId());
+				medicalErrorResponse.setGlobalId(deleteMedicalRecord.getGlobalId());
+				medicalErrorResponse.setActionName(ActionNameEnum.DELETE
+						.getDisplayName());
+
+				deleteMedicalRecordResponseList.add(medicalErrorResponse);
+			}
+		}
+		return deleteMedicalRecordResponseList;
+	}
+
+
+
+	private List<MedicalRecordSyncResponseDTO> syncUpdatedPatientMedicalRecords(
+			List<MedicalRecordDTO> updateMedicalRecordList, HeaderDTO header) {
+		List<MedicalRecordSyncResponseDTO> updatedMedicalRecordResponseList = new ArrayList<MedicalRecordSyncResponseDTO>();
+		for (MedicalRecordDTO updatedMedicalRecord : updateMedicalRecordList) {
+			try {
+
+				ResponseDTO response = patientService.updatePatientMedicalRecord(updatedMedicalRecord,
+						header);
+				MedicalRecordSyncResponseDTO medicalResponse = new MedicalRecordSyncResponseDTO();
+				medicalResponse.setActionName(ActionNameEnum.UPDATE.getDisplayName());
+				medicalResponse.setUpdateDateTime(response.getUpdateDateTime());
+				medicalResponse.setGlobalId(response.getGlobalId());
+				medicalResponse.setId(response.getId());
+				medicalResponse.setSuccess(true);
+
+				updatedMedicalRecordResponseList.add(medicalResponse);
+			} catch (ServiceException se) {
+				log.error("Error while saving updated cases into portal ", se);
+				List<Parameter> parameters = se.getParamList();
+				ErrorDTO error = new ErrorDTO();
+				error.setErrCode(se.getError().getErrCode());
+				error.setParams(parameters);
+				error.setDisplayErrMsg(se.isDisplayErrMsg());
+				MedicalRecordSyncResponseDTO medicalErrorResponse = new MedicalRecordSyncResponseDTO();
+				medicalErrorResponse.setError(error);
+				medicalErrorResponse.setSuccess(false);
+				medicalErrorResponse.setId(updatedMedicalRecord.getId());
+				medicalErrorResponse.setGlobalId(updatedMedicalRecord.getGlobalId());
+				medicalErrorResponse.setActionName(ActionNameEnum.UPDATE
+						.getDisplayName());
+
+				updatedMedicalRecordResponseList.add(medicalErrorResponse);
+			}
+		}
+		return updatedMedicalRecordResponseList;
+	}
+
+
+
+	private List<MedicalRecordSyncResponseDTO> syncNewPatientMedicalRecords(
+			List<MedicalRecordDTO> newMedicalRecordList, HeaderDTO header) {
+		
+		List<MedicalRecordSyncResponseDTO> newPatientMedicalRecordResponseList = new ArrayList<MedicalRecordSyncResponseDTO>();
+		for (MedicalRecordDTO newPatientMedicalRecord : newMedicalRecordList) {
+			try {
+
+				ResponseDTO response = patientService.createMedicalRecord(newPatientMedicalRecord, header);
+				MedicalRecordSyncResponseDTO medicalRecordResponse = new MedicalRecordSyncResponseDTO();
+				medicalRecordResponse.setActionName(ActionNameEnum.ADD
+						.getDisplayName());
+				medicalRecordResponse.setCreateDateTime(response.getCreateDateTime());
+				medicalRecordResponse.setUpdateDateTime(response.getUpdateDateTime());
+				medicalRecordResponse.setGlobalId(response.getGlobalId());
+				medicalRecordResponse.setId(response.getId());
+				medicalRecordResponse.setSuccess(true);
+				newPatientMedicalRecordResponseList.add(medicalRecordResponse);
+			} catch (ServiceException se) {
+				log.error("Error while saving new patient cases into portal ", se);
+				List<Parameter> parameters = se.getParamList();
+				ErrorDTO error = new ErrorDTO();
+				error.setErrCode(se.getError().getErrCode());
+				error.setParams(parameters);
+				error.setDisplayErrMsg(se.isDisplayErrMsg());
+				MedicalRecordSyncResponseDTO medicalRecordSync = new MedicalRecordSyncResponseDTO();
+				medicalRecordSync.setError(error);
+				medicalRecordSync.setSuccess(false);
+				medicalRecordSync.setId(newPatientMedicalRecord.getId());
+				medicalRecordSync.setActionName(ActionNameEnum.ADD
+						.getDisplayName());
+				newPatientMedicalRecordResponseList.add(medicalRecordSync);
+			}
+		}
+		return newPatientMedicalRecordResponseList;
+	}
 
 
 
@@ -379,20 +519,62 @@ public class SyncServiceImpl implements SyncService {
 	 * @param header
 	 * @param newCaseList
 	 * @param updateCaseList
+	 * @param deleteCaseList
 	 * @return
 	 */
 	private List<CaseSyncResponseDTO> getCaseResponseList(HeaderDTO header,
-			List<CaseDTO> newCaseList, List<CaseDTO> updateCaseList) {
+			List<CaseDTO> newCaseList, List<CaseDTO> updateCaseList,List<CaseDTO> deleteCaseList) {
 		List<CaseSyncResponseDTO> patientCaseResponseList = new ArrayList<CaseSyncResponseDTO>();
 
 		List<CaseSyncResponseDTO> newCaseResponseList = syncNewPatientCases(
 				newCaseList, header);
 		List<CaseSyncResponseDTO> updatedCaseResponseList = syncUpdatedPatientCases(
 				updateCaseList, header);
+		List<CaseSyncResponseDTO> deleteCaseResponseList = syncDeletedPatientCases(deleteCaseList,header);
 		patientCaseResponseList.addAll(newCaseResponseList);
 		patientCaseResponseList.addAll(updatedCaseResponseList);
-
+		patientCaseResponseList.addAll(deleteCaseResponseList);
 		return patientCaseResponseList;
+	}
+
+	private List<CaseSyncResponseDTO> syncDeletedPatientCases(
+			List<CaseDTO> deleteCaseList, HeaderDTO header) {
+		List<CaseSyncResponseDTO> deleteCaseResponseList = new ArrayList<CaseSyncResponseDTO>();
+		for (CaseDTO deleteCase : deleteCaseList) {
+			try {
+
+				ResponseDTO response = patientService.deleteCase(deleteCase,
+						header);
+				CaseSyncResponseDTO caseResponse = new CaseSyncResponseDTO();
+				caseResponse.setActionName(ActionNameEnum.DELETE.getDisplayName());
+				caseResponse.setUpdateDateTime(response.getUpdateDateTime());
+				caseResponse.setGlobalId(response.getGlobalId());
+				caseResponse.setId(response.getId());
+				caseResponse.setSuccess(true);
+
+				deleteCaseResponseList.add(caseResponse);
+			} catch (ServiceException se) {
+				log.error("Error while deleting cases into portal ", se);
+				List<Parameter> parameters = se.getParamList();
+				ErrorDTO error = new ErrorDTO();
+				error.setErrCode(se.getError().getErrCode());
+				error.setParams(parameters);
+				error.setDisplayErrMsg(se.isDisplayErrMsg());
+				CaseSyncResponseDTO caseResponse = new CaseSyncResponseDTO();
+				caseResponse.setError(error);
+				caseResponse.setSuccess(false);
+				caseResponse.setId(deleteCase.getId());
+				caseResponse.setGlobalId(deleteCase.getGlobalId());
+				caseResponse.setActionName(ActionNameEnum.UPDATE
+						.getDisplayName());
+
+				deleteCaseResponseList.add(caseResponse);
+			}
+		}
+
+		
+		// TODO Auto-generated method stub
+		return deleteCaseResponseList ;
 	}
 
 	/**

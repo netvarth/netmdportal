@@ -5,17 +5,17 @@ package com.nv.youNeverWait.user.bl.service;
 
 
 import java.util.Date;
+
 import com.nv.youNeverWait.rs.dto.Appointment;
 import com.nv.youNeverWait.rs.dto.AppointmentListResponseDTO;
 import com.nv.youNeverWait.rs.dto.AppointmentResponse;
 import com.nv.youNeverWait.rs.dto.CaseDTO;
-import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
 import com.nv.youNeverWait.rs.dto.DoctorListResponseDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
-import com.nv.youNeverWait.rs.dto.LoginDTO;
+
+import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
-import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.PastAppointmentListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientListResponseDTO;
@@ -44,12 +44,11 @@ public interface PatientService {
 	public PastAppointmentListResponseDTO getPastAppointmentList(String patientId);
 	//public AppointmentResponse createAppointment(Appointment appointment);
 	//public AppointmentResponse deleteAppointment(int id);
-	public ResponseDTO changePassword(PasswordDTO passwords);
-	public ResponseDTO createPassword(CreatePasswordDTO passwords);
+	
 	//public AppointmentResponse updateAppointment(Appointment appointment);
 	public RetrievalPatientResponseDTO retrievePatientsForNetMd(String lastSyncTime, String passPhrase, int netMdBranchId, Date currentSyncTime);
-	public ResponseDTO forgotPassword(LoginDTO login);
-	public ResponseDTO resetPassword(LoginDTO login) ;
+	
+	
 	public ResultListResponseDTO getresultList(FilterDTO filter);
 	public ResultDTO patientTestResult(PatientOrderDTO patient);
 	public AppointmentResponse deleteAppointmentFromPortal(int id);
@@ -65,5 +64,10 @@ public interface PatientService {
 	public PastAppointmentListResponseDTO getPastAppointments(FilterDTO filter);
 	public ResponseDTO createCase(CaseDTO newPatientCase, HeaderDTO header);
 	public ResponseDTO updateCase(CaseDTO updatedCase, HeaderDTO header);
+	public ResponseDTO deleteCase(CaseDTO deleteCaseList, HeaderDTO header);
+	public ResponseDTO createMedicalRecord(MedicalRecordDTO newPatientMedicalRecord, HeaderDTO header);
+	public ResponseDTO updatePatientMedicalRecord(MedicalRecordDTO updatedMedicalRecord, HeaderDTO header);
+	public ResponseDTO deletePatientMedicalRecord(MedicalRecordDTO deleteMedicalRecord, HeaderDTO header);
 	
+
 	}

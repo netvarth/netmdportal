@@ -81,11 +81,8 @@ public class QuestionnaireDaoImpl extends GenericDaoHibernateImpl implements Que
 				AnswerTbl answerTbl= new AnswerTbl();
 				QuestionTbl qtable =new QuestionTbl();
 				qtable.setId(qMap.get(answer.getQuestionKey()));
-				answerTbl.setDepartmentTbl(departmentTbl);
-				answerTbl.setCaseTbl(caseTbl);
 				answerTbl.setQuestionTbl(qtable);
 				answerTbl.setAnswer(answer.getAnswer());
-				answerTbl.setNetmdBranchTbl(netmdBranchTbl);
 				save(answerTbl);
 			}
 
@@ -137,10 +134,7 @@ public class QuestionnaireDaoImpl extends GenericDaoHibernateImpl implements Que
 				AnswerTbl answerTbl= new AnswerTbl();
 				QuestionTbl qtable =new QuestionTbl();
 				qtable.setId(qMap.get(answer.getQuestionKey()));
-				answerTbl.setDepartmentTbl(departmentTbl);
-				answerTbl.setCaseTbl(caseTbl);
 				answerTbl.setQuestionTbl(qtable);
-				answerTbl.setNetmdBranchTbl(netmdBranchTbl);
 				answerTbl.setAnswer(answer.getAnswer());
 				save(answerTbl);
 			}
@@ -326,6 +320,32 @@ public class QuestionnaireDaoImpl extends GenericDaoHibernateImpl implements Que
 		delete(netmdQuestionnaireTbl);
 		response.setSuccess(true);
 		return response;
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public ResponseDTO delete(int id, HeaderDTO header) {
+		ResponseDTO response=new ResponseDTO();
+		QuestionTbl questionTbl=getById(QuestionTbl.class,id);
+		if(questionTbl==null){
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.QuestionnaireNotFound);
+			throw se;
+		}
+		List<AnswerTbl> answerlist=getAnswers(id);
+		for(AnswerTbl answer:answerlist){
+			delete(answer);
+		}
+		response.setSuccess(true);
+		return response;
+	}
+
+	private List<AnswerTbl> getAnswers(int id) {
+		
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_BY_QUESTIONNAIRE_ID);
+		query.setParameter("param1", id);
+		return executeQuery(AnswerTbl.class, query);
 	}
 
 }

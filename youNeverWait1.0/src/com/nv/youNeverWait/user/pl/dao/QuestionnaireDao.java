@@ -21,5 +21,7 @@ public interface QuestionnaireDao {
     ResponseDTO createNetmdQuestionnaire(NetmdQuestionAnswerDTO questionnaire,HeaderDTO header);
     ResponseDTO updateQuestionnaire(NetmdQuestionAnswerDTO questionAnswer,HeaderDTO header);
 	ResponseDTO deleteQuestionnaire(int id,HeaderDTO header);
+	ResponseDTO delete(int id, HeaderDTO header);
+	
 
 }

@@ -45,8 +45,10 @@ import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.AppointmentDTO;
 import com.nv.youNeverWait.rs.dto.BillResponseDTO;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
+import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetMdActivationResponseDTO;
@@ -1580,7 +1582,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			}
 			netmdBranch.setUpdateDateTime(newDate);
 			update(netmdBranch);
-			if (netmdBranch.getEnableSync() == true) {
+			if (netmdBranch.isEnableSync() == true) {
 				/**
 				 * Checking whether branch sync time is greater than netmd sync
 				 * time
@@ -1701,7 +1703,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		if (netmdBranch != null) {
 			sync.setSyncFreqType(netmdBranch.getSyncFreqType());
 			sync.setSyncTime(netmdBranch.getSyncTime());
-			sync.setEnableSync(netmdBranch.getEnableSync());
+			sync.setEnableSync(netmdBranch.isEnableSync());
 			sync.setSuccess(true);
 		} else {
 			ServiceException se = new ServiceException(
@@ -2425,6 +2427,58 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		query.setParameter("param2", currentSyncTime);
 		query.setParameter("param3",header.getBranchId());
 		return executeUniqueQuery(NetmdBranchTbl.class, query);
+	}
+
+	@Override
+	@Transactional
+	public BranchBillListResponseDTO getBranchBillAmount(String netmdBranchId,
+			String fromDate, String toDate) {
+		BranchBillListResponseDTO billResponse= new BranchBillListResponseDTO();
+		int branchId=Integer.parseInt(netmdBranchId);
+		SimpleDateFormat sdf= new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
+		Date frmDate = null;
+		Date tDate = null;
+		try {
+			frmDate = sdf.parse(fromDate);
+			tDate=sdf.parse(toDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		List<Object[]> billDetails= getBillTotalAmountDetails(branchId,frmDate,tDate);
+		if(billDetails.isEmpty()|| billDetails.size()==0 ||billDetails.equals(null)){
+			throw new ServiceException(ErrorCodeEnum.BillPaymentsNull);
+		}
+		for(Object[] billPayment:billDetails){
+		if (billPayment[0]!=null&& billPayment[1]!=null){
+				double bllAmt=(Double) billPayment[0];
+				double amtPd=(Double) billPayment[1];
+				billResponse.setTotalBillAmt(bllAmt);
+				billResponse.setTotalAmtPaid(amtPd);
+				billResponse.setTotalAmtDue(bllAmt-amtPd);
+		  	}
+		}
+		
+		return billResponse;
+	}
+
+	private List<Object[]> getBillTotalAmountDetails(int branchId, Date frmDate,
+			Date tDate) {
+		List<Object[]> response=null;
+		try{
+			javax.persistence.Query query = em
+					.createQuery(Query.GET_NETMD_BILL_DETAILS);
+			query.setParameter("param1", branchId);
+			query.setParameter("param2", frmDate);
+			query.setParameter("param3",tDate);
+			response=executeQuery(Object[].class,query);
+		}
+		catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return response;
 	}
 
 }

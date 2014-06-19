@@ -15,8 +15,12 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.CaptchaVerificationDTO;
+import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
+
 import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.PasswordDTO;
+
 
 public class AuthenticationValidator {
 	/**
@@ -41,6 +45,74 @@ public class AuthenticationValidator {
 		return null;
 	}
 
+	/**
+	 * Validate login details
+	 * 
+	 * @param userName
+	 * @param password
+	 */
+	public void validateUserNameAndPassword(String userName, String password) {
+		if (userName == null || userName.isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUserName);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (password == null || password.isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPassword);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+	}
+	/**
+	 * Check validity of passwords
+	 * 
+	 * @param login
+	 * @return ErrorDTO
+	 */
+	public void validatePasswords(PasswordDTO passwords) {
+		if (!isValidExpValue(passwords.getOldPassword())
+				|| !isValidExpValue(passwords.getNewPassword())) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.PasswordNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (passwords.getUsername() == null
+				|| passwords.getUsername().equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUserName);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+	}
+	/**
+	 * Check validity of passwords
+	 * 
+	 * @param login
+	 * @return ErrorDTO
+	 */
+	public void validatePasswordsForCreatePassword(CreatePasswordDTO createPasswordDto) {
+		if (!isValidExpValue(createPasswordDto.getPassword())
+				|| !isValidExpValue(createPasswordDto.getConfirmPassword())) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.PasswordNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (createPasswordDto.getUsername() == null
+				|| createPasswordDto.getUsername().equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUserName);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+	}
+	
+
+	
+	
 	/**
 	 * Check validity of username and userType
 	 * 

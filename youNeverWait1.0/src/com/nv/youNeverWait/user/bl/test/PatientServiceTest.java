@@ -97,59 +97,59 @@ public class PatientServiceTest {
 			System.out.println(e.getParamList());
 		}
 	}
-	@Test
-	public void changepassword() {
-		PatientService service = (PatientService) applicationContext
-				.getBean("patient.service");
-		try {
-			PasswordDTO passwords = new PasswordDTO();
-			passwords.setUsername("vbn");
-			passwords.setOldPassword("netvarth");
-			passwords.setNewPassword("ricky");
-			service.changePassword(passwords);
-		} catch (ServiceException e) {
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void forgotPassword(){
-		PatientService service = (PatientService) applicationContext
-				.getBean("patient.service");
-		try{
-		LoginDTO login = new LoginDTO();
-		login.setUserName("+BxeQK9EYSBLFI93CMEeSQ==");
-		service.forgotPassword(login);
-		}catch (ServiceException e) {
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-	@Test
-	public void createPassword() {
-		PatientService service = (PatientService) applicationContext
-				.getBean("patient.service");
-		try {
-			CreatePasswordDTO passwords = new CreatePasswordDTO();
-			String userName = "netvarth";
-			String encryptedUserName = StringEncoder
-					.encryptWithStaticKey(userName);
-			passwords.setConfirmPassword("netvarth");
-			passwords.setPassword("netvarth");
-			passwords.setUsername(encryptedUserName);
-			service.createPassword(passwords);
-		} catch (ServiceException e) {
-
-			System.out.println(e.isDisplayErrMsg());
-			System.out.println(e.getError());
-			System.out.println(e.getParamList());
-		}
-	}
-
+//	@Test
+//	public void changepassword() {
+//		PatientService service = (PatientService) applicationContext
+//				.getBean("patient.service");
+//		try {
+//			PasswordDTO passwords = new PasswordDTO();
+//			passwords.setUsername("vbn");
+//			passwords.setOldPassword("netvarth");
+//			passwords.setNewPassword("ricky");
+//			service.changePassword(passwords);
+//		} catch (ServiceException e) {
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void forgotPassword(){
+//		PatientService service = (PatientService) applicationContext
+//				.getBean("patient.service");
+//		try{
+//		LoginDTO login = new LoginDTO();
+//		login.setUserName("+BxeQK9EYSBLFI93CMEeSQ==");
+//		service.forgotPassword(login);
+//		}catch (ServiceException e) {
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//	@Test
+//	public void createPassword() {
+//		PatientService service = (PatientService) applicationContext
+//				.getBean("patient.service");
+//		try {
+//			CreatePasswordDTO passwords = new CreatePasswordDTO();
+//			String userName = "netvarth";
+//			String encryptedUserName = StringEncoder
+//					.encryptWithStaticKey(userName);
+//			passwords.setConfirmPassword("netvarth");
+//			passwords.setPassword("netvarth");
+//			passwords.setUsername(encryptedUserName);
+//			service.createPassword(passwords);
+//		} catch (ServiceException e) {
+//
+//			System.out.println(e.isDisplayErrMsg());
+//			System.out.println(e.getError());
+//			System.out.println(e.getParamList());
+//		}
+//	}
+//
 	@Test
 	public void createFailed() {
 		System.out.println("$$$$$$$$$$$$$$$$Create Patient$$$$$$$$$$$ ");

@@ -8,10 +8,13 @@
 package com.nv.youNeverWait.user.pl.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import com.nv.youNeverWait.rs.dto.BillResponseDTO;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
+import com.nv.youNeverWait.rs.dto.BranchBillListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
+import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.NetMdActivationResponseDTO;
@@ -73,6 +76,9 @@ public interface NetMdDao {
 	public NetMdBranchListResponseDTO getNetMdBrnchList(int organisationId);
 	public NetMdBranchDTO getUpdateNetmdBranch(String lastSyncTime,
 			Date currentSyncTime,HeaderDTO header);
+	
+	public BranchBillListResponseDTO getBranchBillAmount(String netmdBranchId,
+			String fromDate, String toDate);
 	
 
 }

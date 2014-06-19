@@ -9,10 +9,9 @@ import java.util.List;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.rs.dto.CaseDTO;
-import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
-import com.nv.youNeverWait.rs.dto.PasswordDTO;
+import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientOrderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
@@ -34,16 +33,24 @@ public interface PatientDao {
 	//public PatientDetail listNetMdBranches(String userName);
 	public List<DoctorTbl> listDoctors(String clinicId, String patientId);
 	public List<PatientTbl> listOfPatientsOnLogin(String patientEmailId);
-	public ResponseDTO changePassword(PasswordDTO passwords);
-	public ResponseDTO createPassword(CreatePasswordDTO passwords);
+	
 	public String getBranch(int branchId);
 	public RetrievalPatientResponseDTO retrievePatientsForNetMd(String lastSyncTime, String passPhrase, int netMdBranchId, Date currentSyncTime);
-	public UserCredentials getUserCredentials(LoginDTO login);
-	public ResponseDTO resetPassword(LoginDTO login);
+
+	
 	public ResultDTO patientTestResult(PatientOrderDTO patient);
 	public ResponseDTO createCase(CaseDTO newPatientCase, HeaderDTO header);
 	public ResponseDTO updateCase(CaseDTO updatedPatientCase,
 			HeaderDTO header);
 	public boolean isEmailExists(int id, String email);
 	public String getDepartmentNameById(int departmentId);
+	public ResponseDTO deleteCase(CaseDTO deletePatientCase, HeaderDTO header);
+	public ResponseDTO createMedicalRecord(MedicalRecordDTO newPatientMedicalRecord, HeaderDTO header);
+	public ResponseDTO updateMedicalRecord(MedicalRecordDTO updatedMedicalRecord, HeaderDTO header);
+	public ResponseDTO deleteMedicalRecord(MedicalRecordDTO deleteMedicalRecord, HeaderDTO header);
+	
+	
+	
+	
+	
 }

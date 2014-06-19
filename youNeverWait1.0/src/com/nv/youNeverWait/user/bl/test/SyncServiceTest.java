@@ -21,6 +21,7 @@ import com.nv.youNeverWait.rs.dto.AppointmentDetailsDTO;
 import com.nv.youNeverWait.rs.dto.BillSummaryDTO;
 import com.nv.youNeverWait.rs.dto.CaseDTO;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
+import com.nv.youNeverWait.rs.dto.DoctorExperienceDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
@@ -152,24 +153,29 @@ public class SyncServiceTest {
 		 */
 		doctor.add(doctorDetail1);
 
-		/*
-		 * DoctorDetail doctorDetail2= new DoctorDetail();
-		 * doctorDetail2.setAddress("Thekkkan");
-		 * doctorDetail2.setEmail("nithesh.mohanan@netvarth.com");
-		 * doctorDetail2.setFirstName("nithesh");
-		 * doctorDetail2.setLastName("mohanan");
-		 * doctorDetail2.setPhone("0487 2535353");
-		 * doctorDetail2.setDateOfBirth("2000-10-10");
-		 * doctorDetail2.setConsultationInterval("14"); List<DoctorExpertiseDTO>
-		 * doctorExpertisee2= new ArrayList<DoctorExpertiseDTO>();
-		 * DoctorExpertiseDTO docExpt = new DoctorExpertiseDTO();
-		 * docExpt.setExpertise("m phil"); doctorExpertisee2.add(docExpt);
-		 * doctorDetail2.setExpertise(doctorExpertisee2);
-		 * 
-		 * LoginDTO login2= new LoginDTO(); login2.setPassword("netvarth");
-		 * login2.setUserName("sreeram"); login2.setUserType("doctor");
-		 * doctorDetail2.setLogin(login2); doctor.add(doctorDetail2);
-		 * 
+		
+		 DoctorDetail doctorDetail2= new DoctorDetail();
+		  doctorDetail2.setAddress("Thekkkan");
+		  doctorDetail2.setEmail("nithesh.mohanan@netvarth.com");
+		 doctorDetail2.setFirstName("nithesh");
+		 doctorDetail2.setLastName("mohanan");
+		  doctorDetail2.setPhone("0487 2535353");
+		  doctorDetail2.setDateOfBirth("2000-10-10");
+//		  doctorDetail2.setConsultationInterval("14"); List<DoctorExpertiseDTO>
+//		  doctorExpertisee2= new ArrayList<DoctorExpertiseDTO>();
+//		  DoctorExpertiseDTO docExpt = new DoctorExpertiseDTO();
+//		  docExpt.setExpertise("m phil"); doctorExpertisee2.add(docExpt);
+//		  doctorDetail2.setExpertise(doctorExpertisee2);
+		  
+		  LoginDTO login2= new LoginDTO(); login2.setPassword("netvarth");
+		  login2.setUserName("sreeram"); login2.setUserType("doctor");
+		  doctorDetail2.setLogin(login2); doctor.add(doctorDetail2);
+		  List<DoctorExperienceDTO> doctorExperience5= new ArrayList<DoctorExperienceDTO>(); 
+		  DoctorExperienceDTO docExp5 = new DoctorExperienceDTO(); 
+		  docExp5.setDesignation("head Nurse");
+		  docExp5.setToDate("2012-10-10"); doctorExperience5.add(docExp5);
+		 // doctorDetail5.setDoctorExperience(doctorExperience5);
+		 /* 
 		 * DoctorDetail doctorDetail3= new DoctorDetail();
 		 * doctorDetail3.setAddress("Mgfsdgfsd");
 		 * doctorDetail3.setEmail("ranjith.sankar@netvarth.com");

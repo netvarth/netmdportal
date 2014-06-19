@@ -7,9 +7,12 @@
  */
 package com.nv.youNeverWait.util.filter.core;
 
+import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,21 +59,33 @@ public class PropertyUtil {
 	 * @return Class<?>
 	 *
 	 */
+	public static List<Field > getAllFields(List<Field> fields, Class<?> type) {
+	    for (Field field: type.getDeclaredFields()) {
+	        fields.add(field);
+	    }
+	    if (type.getSuperclass() != null) {
+	        fields = getAllFields(fields, type.getSuperclass());
+	    }
+	    return fields;
+	}
+	
 	public static Class<?> getFieldType(String fieldName,String entityName){
-		Class<?> t = null ;
+		
+		Class<?> cls=null;
 		try {
-			Class cls = Class.forName(entityName);
-			t= cls.getDeclaredField(fieldName).getType();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
+			cls = Class.forName(entityName);
 		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return t;
-
-	}
+	
+		List<Field> fieldList= getAllFields(new ArrayList<Field>(),cls);
+		 
+		for(Field field:fieldList){
+			if (field.getName().equals(fieldName)) return field.getType();
+		}	 
+	return cls;
+  }
 	/**
 	 * Check validity of property value
 	 * @param type

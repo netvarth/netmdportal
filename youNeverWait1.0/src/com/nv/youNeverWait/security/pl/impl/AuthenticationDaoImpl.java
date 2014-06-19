@@ -12,6 +12,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.rs.dto.Error;
 import com.nv.youNeverWait.rs.dto.ErrorCodeListResponseDTO;
 import com.nv.youNeverWait.common.Constants;
@@ -31,12 +33,17 @@ import com.nv.youNeverWait.pl.entity.NetrxTbl;
 import com.nv.youNeverWait.pl.entity.NetrxUserTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
+import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
+import com.nv.youNeverWait.rs.dto.PasswordDTO;
+import com.nv.youNeverWait.rs.dto.ResponseDTO;
+import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.security.pl.dao.AuthenticationDao;
+
 
 public class AuthenticationDaoImpl extends GenericDaoHibernateImpl implements
 AuthenticationDao {
@@ -61,6 +68,36 @@ AuthenticationDao {
 		errorCodeList.setError(errorList);
 		return errorCodeList;
 	}
+
+	/**
+	 * Method to reset password
+	 * 
+	 * @param login
+	 * @return ResponseDTO
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO createPassword(CreatePasswordDTO passwords) {
+
+		ResponseDTO response = new ResponseDTO();
+		String newPassword = StringEncoder.encryptWithKey(passwords
+				.getPassword());
+		String decryptedUserName = StringEncoder.decryptWithStaticKey(passwords
+				.getUsername());
+		NetmdLoginTbl loginTbl = (NetmdLoginTbl) getLoginByUserName(decryptedUserName);
+		if (loginTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUser);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		loginTbl.setPassword(newPassword);
+		update(loginTbl);
+		response.setSuccess(true);
+		return response;
+	}
+
+
 
 	/**
 	 * Method performed for NetLims login
@@ -155,7 +192,35 @@ AuthenticationDao {
 	}
 
 
-	
+	/**
+	 * Method to reset password
+	 * 
+	 * @param login
+	 * @return ResponseDTO
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO resetPassword(LoginDTO login) {
+		ResponseDTO response = new ResponseDTO();
+		String newPassword = StringEncoder.encryptWithKey(login.getPassword());
+		String decrypedUserName = StringEncoder.decryptWithStaticKey(login
+				.getUserName());
+		NetmdLoginTbl userLogin = getNetMdUserByName(decrypedUserName);
+		if (userLogin == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUserName);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		userLogin.setPassword(newPassword);
+		update(userLogin);
+		response.setSuccess(true);
+		return response;
+	}
+
+
+
+
 	/**
 	 * Method performed to get Netlims user details
 	 * 
@@ -194,6 +259,9 @@ AuthenticationDao {
 				UserDetails user = new UserDetails();
 				user.setId(labUser.getId());
 				user.setName(labUser.getFirstName());
+				for (LabTbl lab:labUser.getLabLoginTbl().getLabTbls()){
+					user.setLabId(lab.getId());
+				}
 				user.setUserType(userType.getDisplayName());
 				return user;
 			}
@@ -330,6 +398,36 @@ AuthenticationDao {
 		return user;
 
 	}
+
+
+	@Override
+	@Transactional(readOnly = false)
+	public ResponseDTO changePassword(PasswordDTO passwords) {
+		ResponseDTO response = new ResponseDTO();
+		String encPassword = StringEncoder.encryptWithKey(passwords
+				.getOldPassword().trim());
+		NetmdLoginTbl login = (NetmdLoginTbl) getLoginByUserName(passwords
+				.getUsername());
+		if (login == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.UserNotExists);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (!login.getPassword().equals(encPassword)) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.PasswordNotExists);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		String encNewPassword = StringEncoder.encryptWithKey(passwords
+				.getNewPassword().trim());
+		login.setPassword(encNewPassword);
+		update(login);
+		response.setSuccess(true);
+		return response;
+	}
+
 
 	/**
 	 * Get patient details
@@ -537,6 +635,61 @@ AuthenticationDao {
 		this.em = em;
 	}
 
-	
+	public NetmdLoginTbl getLoginByUserName(String userName) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_LOGIN_BY_USERNAME);
+		query.setParameter("param1", userName);
+		return executeUniqueQuery(NetmdLoginTbl.class, query);
+	}
+
+	public List<NetmdLoginTbl> getLoginByUserName(String userName,
+			String firstName) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_LOGIN_BY_USERNAME_FIRSTNAME);
+		query.setParameter("param1", userName);
+		query.setParameter("param2", firstName);
+		return executeQuery(NetmdLoginTbl.class, query);
+	}
+
+
+
+
+	/**
+	 * Method to retrieve details of a lab owner/user
+	 * 
+	 * @param login
+	 * @return UserCredentials
+	 */
+	@Override
+	@Transactional(readOnly = false)
+	public UserCredentials getUserCredentials(LoginDTO login) {
+
+		UserCredentials user = new UserCredentials();
+		NetmdLoginTbl userLogin = getNetMdUserByName(login.getUserName().trim());
+		if (userLogin == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUserName);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		user.setEmailId(userLogin.getUserName());
+		user.setUserName(userLogin.getUserName());
+
+		return user;
+	}
+
+
+
+	/**
+	 * 
+	 * @param userName
+	 * @return NetmdLoginTbl
+	 */
+	public NetmdLoginTbl getNetMdUserByName(String userName) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_LOGIN_PATIENT_BY_USERNAME);
+		query.setParameter("param1", userName);
+		return executeUniqueQuery(NetmdLoginTbl.class, query);
+	}
 
 }
