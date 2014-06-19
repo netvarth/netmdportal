@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="NetlimsPortal">
+	
+
+		
+		<class>com.nv.NetlimsPortal.pl.entity.LabBranchSystemInfoTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.LabBranchTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.LabHealthMonitorTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.LabLoginTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.LabPassphraseTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.LabTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.LabUserBranchTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.LabUserTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.LogTbl</class>
+
+		<class>com.nv.NetlimsPortal.pl.entity.NetposBranchTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.NetposLoginTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.NetposPassphraseTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.NetposTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.NetposUserTbl</class>
+		
+		
+		<class>com.nv.NetlimsPortal.pl.entity.OrderAmountTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.OrderBranchTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.OrderResultTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.OrderTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.OrderTransferTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.OrganisationLoginTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.OrganisationTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.OrganisationUserTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.OrganisationNetmdTbl</class>
+		
+
+		<class>com.nv.NetlimsPortal.pl.entity.PatientTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.PendingMessageTbl</class>
+		
+		<class>com.nv.NetlimsPortal.pl.entity.QuestionTbl</class>
+		
+		<class>com.nv.NetlimsPortal.pl.entity.ResultTbl</class>
+		
+		<class>com.nv.NetlimsPortal.pl.entity.SeriesTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.SpecimenTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.SuperAdminTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.SyncLogTbl</class>
+		
+		<class>com.nv.NetlimsPortal.pl.entity.TestSpecimenTbl</class>
+		<class>com.nv.NetlimsPortal.pl.entity.TestTbl</class>
+		
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+		</properties>
+	</persistence-unit>
+</persistence>
+

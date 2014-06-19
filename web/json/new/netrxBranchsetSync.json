@@ -1,0 +1,116 @@
+{
+    "title": "Set Synchronisation",
+    "style": "width:60%;margin:0 20%",
+    "data": [
+        {
+            "name": "newnetrxBranchsetSyncForm",
+            "id": "newnetrxBranchsetSyncForm",
+            "content": [
+                {
+                    "className": "sep-div",
+                    "style": "display:none",
+                    "id": "errorDivHeader",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "id": "errorDivNewNetrxBranchData"
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div",
+                    "id": "referralsdiv",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "elements": [
+                                        {
+                                            "name": "NetrxbrSyncType",
+                                            "id": "syncTypeEn",
+                                            "type": "radio",
+                                            "title": "Synchornisation",
+                                            "value": [
+                                                {
+                                                    "title": "Enable",
+                                                    "value": "enable",
+                                                    "id": "netrxbrchEnable"
+                                                },
+                                                {
+                                                    "title": "Disable",
+                                                    "value": "disable",
+                                                    "id": "netrxbrchDisable",
+                                                    "style": "margin-left: 20%;"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                {
+                                    "className": "column-left",
+                                    "id": "syctxtnetrxBranchEnTime",
+									 "style": "display:none",
+                                    "elements": [
+                                        {
+                                            "name": "NetrxBranchSyncTime",
+                                            "id": "NetrxBranchSyncTime",
+                                            "title": "SyncFreqType",
+                                            "type": "select",
+                                            "className": "large "
+                                        }
+                                    ]
+                                },
+                                {
+                                    "className": "column-right",
+                                    "id": "syctxtnetrxBranchEnInr",
+                                    "style": "margin: -6% 34% 0% 0%;display:none;",
+                                    "elements": [
+                                        {
+                                            "name": "NetrxBranchSyncInterval",
+                                            "id": "NetrxBranchSyncInterval",
+                                            "title": "SyncInterval",
+                                            "type": "text",
+                                            "className": "small "
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div ",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                             {
+                                                "name": "btnnetrxbrchSubmit",
+                                                "id": "btnnetrxbrchSubmit",
+                                                "title": "Submit",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1;margin:2px"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

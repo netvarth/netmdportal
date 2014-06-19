@@ -1,0 +1,24 @@
+{
+    "data": [
+        {
+            "id": "netlimsTableCont",
+            "elements": [
+				{
+                    "type": "table",
+                    "content": {
+                        "name" : "netlims",
+						"idProperty" : "netlims",
+						"className" :"stdtable stdtablecb",
+						"style":"border-spacing:0;border-collapse:collapse; border:0;",
+						"colHeaders" : [
+							{ "className" : "head1",	"name" : "Id", "style":"width:15%"},
+							{ "className" : "head1",	"name" : "Organization Name", "style":"width:30%"},
+							{ "className" : "head1",	"name" : "Email", "style":"width:35%"},
+							{ "className" : "head1",	"name" : "Status","style":"width:15%"}
+						]
+                    }
+                }
+            ]
+        }
+    ]
+}

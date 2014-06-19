@@ -1,0 +1,112 @@
+{
+    "title": "Order Type",
+    "style": "width:35%;margin:0 35%",
+    "data": [
+        {
+            "name": "ordertypeFormNetLimsAcc",
+            "id": "ordertypeFormNetLimsAcc",
+            "content": [
+			                {
+                    "className": "sep-div",
+                    "style": "display:none",
+                    "id": "errorDivHeader",
+                    "data": [
+                        {
+                            "className": "five_sixth",
+                            "id": "errorDivChangePwdData"
+                        }
+                    ]
+                },
+                {
+                    "className": "sep-div",
+                    "id": "changetypediv",
+                    "data": [
+                        
+                        {
+                            "className": "five_sixth",
+                            "data": [
+                                
+                                {
+                                    "className": "five_sixth",
+                                    "elements": [
+                                        {
+                                            "name": "agentorder",
+                                            "id": "agentorder",
+                                            "type": "text",
+											  "tabIndex": 1,
+                                            "className": "small ",
+                                            "title": "Agent Order",
+											"maxlength":"2",
+											"style":"width:15%",
+                                            "required": "true"
+                                        },
+                                        {
+                                            "name": "blanketorder",
+                                            "id": "blanketorder",
+                                            "type": "text",
+											  "tabIndex": 2,
+                                            "className": "small ",
+											"maxlength":"2",
+											"style":"width:15%",
+                                            "title": "Blanket Order",
+											"required": "true"
+                                        },
+										 {
+                                            "name": "walkinorder",
+                                            "id": "walkinorder",
+                                            "tabIndex": 3,
+                                            "type": "text",
+											"maxlength":"2",
+                                            "className": "small",
+											"style":"width:15%",
+                                            "title": "Walkin Order",
+                                            "required": true
+                                        }
+
+                                    ]
+                                }
+                            ]
+                        }
+
+                    ]
+                },
+
+
+                {
+                    "className": "sep-div ",
+                    "data": [
+                        {
+                            "className": "column-left",
+                            "elements": [
+                                {
+                                    "type": "button",
+                                    "content": {
+                                        "buttons": [
+                                            {
+                                                "name": "btnordertypeSubmit",
+                                                "id": "btnordertypeSubmit",
+                                                "title": "Submit",
+                                                "type": "button",
+                                                "className": "stdbtn btn_black",
+                                                "style": "opacity:1; margin:2px"
+                                            },
+                                            {
+                                                "name": "btnordertypeCancel",
+                                                "id": "btnordertypeCancel",
+                                                "title": "Cancel",
+                                                "type": "button",
+                                                "className": "stdbtn",
+                                                "style": "opacity:1;margin: -35px 0px 0px 80px;"
+   
+										   }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
