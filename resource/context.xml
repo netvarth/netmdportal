@@ -20,6 +20,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 <!-- <value>file:///D:/Installations/jboss-as-7.1.2.Final/standalone/configuration/youNeverWait.properties</value> -->
 <!-- this CONFIG_DIR will refer the environment variable in that system-->
 <value>file:////opt/jboss-as-7.1.2.Final-SNAPSHOT/standalone/configuration/youNeverWait.properties</value>
+
 </list>
 </property>
 <property name="ignoreResourceNotFound" value="true" />
