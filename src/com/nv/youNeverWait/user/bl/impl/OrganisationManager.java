@@ -37,7 +37,6 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.OrganisationTbl;
 import com.nv.youNeverWait.pl.entity.OrganisationUserTbl;
-import com.nv.youNeverWait.report.ReportHandler;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
@@ -76,7 +75,7 @@ public class OrganisationManager  implements OrganisationService{
 	private String organisationServerIpAddress;
 	private String mailFrom;
 	private SendEmailMsgWorkerThread mailThread;
-	private ReportHandler reportHandler;
+	//private ReportHandler reportHandler;
 	private static final Log log = LogFactory.getLog(NetMdServiceImpl.class);
 
 	/* (non-Javadoc)
@@ -708,21 +707,7 @@ public class OrganisationManager  implements OrganisationService{
 		return log;
 	}
 
-	public ReportHandler getReportHandler() {
-		return reportHandler;
-	}
-
-	public void setReportHandler(ReportHandler reportHandler) {
-		this.reportHandler = reportHandler;
-	}
-
-	public JasperPrint createReport(Map<String, Object> map,ServletContext context) {
-		
-	InputStream inputStream = reportHandler.getJRXml(map, context);
-		
-	return reportHandler.createReport(inputStream,map);
-		
-	}
+	
 
 	@Override
 	public ReportListFilterDTO getFilterList() {
@@ -830,6 +815,13 @@ public class OrganisationManager  implements OrganisationService{
 		reportList.add(report24);
 		reportLis.setReportFilter(reportList);
 		return reportLis;
+	}
+
+	@Override
+	public JasperPrint createReport(Map<String, Object> map,
+			ServletContext contexPath) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
