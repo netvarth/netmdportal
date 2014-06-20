@@ -1,6 +1,9 @@
 package com.nv.youNeverWait.rs.dto;
 
-import com.nv.youNeverWait.analytic.bl.ActionEnum;
+import com.nv.youNeverWait.user.bl.service.ActionEnum;
+
+
+
 
 /**
  *
