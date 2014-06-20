@@ -36,9 +36,9 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/netlims/ui/lab/activateLab")
 							&& !request.getRequestURI().equals(
-									"/youNeverWait/ynw/ui/auth/getErrorCodes")
+									"/youNeverWait/netlims/ui/auth/getErrorCodes")
 							&& !request.getRequestURI().equals(
-									"/youNeverWait/ynw/ui/auth/getEnumsList")
+									"/youNeverWait/netlims/ui/auth/getEnumsList")
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/netlims/ui/lab/aboutNetLims")
 							&& !request.getRequestURI().equals(
