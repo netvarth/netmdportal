@@ -2,7 +2,7 @@
 	
 	var branchId = getSelectedBranchId("#branch");
 	//alert(branchId);
-	var response=getRequestData('/youNeverWait/ws/ui/superAdmin/viewBranchSystemInfo/'+branchId);
+	var response=getRequestData('/youNeverWait/superadmin/ui/superAdmin/viewBranchSystemInfo/'+branchId);
 	//alert(JSON.stringify(response));
 	var brName=response.branchName;
 	$j('#graphHealthmonitorModal h1').text("Health Monitor-"+brName);
