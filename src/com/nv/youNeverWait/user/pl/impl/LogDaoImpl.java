@@ -65,7 +65,7 @@ public class LogDaoImpl extends GenericDaoHibernateImpl implements LogDao {
 					.getAttribute("logEnabled") == null) {
 				SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
 				request.getSession().getServletContext()
-						.setAttribute("logEnabled", superAdmin.getEnableLog());
+						.setAttribute("logEnabled", superAdmin.isEnableLog());
 			}
 			System.out.println(request.getSession().getServletContext()
 					.getAttribute("logEnabled"));
@@ -116,7 +116,7 @@ public class LogDaoImpl extends GenericDaoHibernateImpl implements LogDao {
 				request.getSession()
 						.getServletContext()
 						.setAttribute("syncLogEnabled",
-								superAdmin.getEnableSyncLog());
+								superAdmin.isEnableSyncLog());
 			}
 			System.out.println(request.getSession().getServletContext()
 					.getAttribute("syncLogEnabled"));
