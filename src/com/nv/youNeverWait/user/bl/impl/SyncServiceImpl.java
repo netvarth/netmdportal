@@ -17,6 +17,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.nv.youNeverWait.rs.dto.BillSyncResponseDTO;
+import com.nv.youNeverWait.api.sync.LimsReferralBundle;
+import com.nv.youNeverWait.api.sync.ReferralSyncDTO;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ActionNameEnum;
@@ -43,8 +45,6 @@ import com.nv.youNeverWait.rs.dto.MedicalRecordSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
 import com.nv.youNeverWait.rs.dto.NetMdDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
-import com.nv.youNeverWait.rs.dto.NetmdQuestionAnswerDTO;
-import com.nv.youNeverWait.rs.dto.NetmdQuestionAnswerSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.OrderResultBundle;
 import com.nv.youNeverWait.rs.dto.OrderResultSyncDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
@@ -357,7 +357,6 @@ public class SyncServiceImpl implements SyncService {
 	private NetMdBranchDTO getNetmdBranchDetails(String lastSyncTime,
 			Date currentSyncTime,HeaderDTO header) {
 		NetMdBranchDTO netmdBranch=syncNetmdBranchDetails(lastSyncTime,currentSyncTime,header);
-		// TODO Auto-generated method stub
 		return netmdBranch;
 	}
 
@@ -575,9 +574,6 @@ public class SyncServiceImpl implements SyncService {
 				deleteCaseResponseList.add(caseResponse);
 			}
 		}
-
-		
-		// TODO Auto-generated method stub
 		return deleteCaseResponseList ;
 	}
 
@@ -1707,10 +1703,16 @@ public class SyncServiceImpl implements SyncService {
 		this.netMdService = netMdService;
 	}
 
+	/**
+	 * @return the appointmentService
+	 */
 	public AppointmentService getAppointmentService() {
 		return appointmentService;
 	}
 
+	/**
+	 * @param appointmentService the appointmentService to set
+	 */
 	public void setAppointmentService(AppointmentService appointmentService) {
 		this.appointmentService = appointmentService;
 	}
@@ -1771,10 +1773,16 @@ public class SyncServiceImpl implements SyncService {
 		this.testService = testService;
 	}
 
+	/**
+	 * @return the questionnaireService
+	 */
 	public QuestionnaireService getQuestionnaireService() {
 		return questionnaireService;
 	}
 
+	/**
+	 * @param questionnaireService the questionnaireService to set
+	 */
 	public void setQuestionnaireService(QuestionnaireService questionnaireService) {
 		this.questionnaireService = questionnaireService;
 	}
