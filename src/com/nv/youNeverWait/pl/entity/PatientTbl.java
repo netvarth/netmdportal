@@ -1,18 +1,18 @@
 package com.nv.youNeverWait.pl.entity;
 
-
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
+
 
 /**
  * The persistent class for the patient_tbl database table.
  * 
  */
 @Entity
-@Table(name = "patient_tbl")
+@Table(name="patient_tbl")
+@NamedQuery(name="PatientTbl.findAll", query="SELECT p FROM PatientTbl p")
 public class PatientTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -81,264 +81,165 @@ public class PatientTbl implements Serializable {
 
 	@Column(length = 45)
 	private String weight;
+	//bi-directional many-to-one association to NetlimsPatientTbl
+	@OneToMany(mappedBy="patientTbl")
+	private List<NetlimsPatientTbl> netlimsPatientTbls;
 
-	// bi-directional many-to-one association to CaseTbl
-	@OneToMany(mappedBy = "patientTbl")
-	private Set<CaseTbl> caseTbls;
-
-	// bi-directional many-to-one association to MedicalRecordTbl
-	@OneToMany(mappedBy = "patientTbl")
-	private Set<MedicalRecordTbl> medicalRecordTbls;
-
-	// bi-directional many-to-one association to PatientAppointmentTbl
-	@OneToMany(mappedBy = "patientTbl")
-	private Set<PatientAppointmentTbl> patientAppointmentTbls;
-
-	// bi-directional many-to-one association to PatientMedicalHistoryTbl
-	@OneToMany(mappedBy = "patientTbl")
-	private Set<PatientMedicalHistoryTbl> patientMedicalHistoryTbls;
-
-	// bi-directional many-to-one association to NetmdPassphraseTbl
-	@ManyToOne
-	@JoinColumn(name = "netmd_passphrase_id")
-	private NetmdPassphraseTbl netmdPassphraseTbl;
-
-	// bi-directional many-to-one association to NetmdLoginTbl
-	@ManyToOne
-	@JoinColumn(name = "login_id")
-	private NetmdLoginTbl netmdLoginTbl;
-
-	// bi-directional many-to-one association to NetmdBranchTbl
-	@ManyToOne
-	@JoinColumn(name = "netmd_branch_id", nullable = false)
-	private NetmdBranchTbl netmdBranchTbl;
-
-	// bi-directional many-to-one association to ResultTbl
-	@OneToMany(mappedBy = "patientTbl")
-	private Set<ResultTbl> resultTbls;
-
+	/**
+	 * 
+	 */
 	public PatientTbl() {
 	}
 
-	public int getId() {
-		return this.id;
+	/**
+	 * @param netlimsPatientTbl
+	 * @return NetlimsPatientTbl
+	 */
+	public NetlimsPatientTbl addNetlimsPatientTbl(NetlimsPatientTbl netlimsPatientTbl) {
+		getNetlimsPatientTbls().add(netlimsPatientTbl);
+		netlimsPatientTbl.setPatientTbl(this);
+
+		return netlimsPatientTbl;
 	}
 
+	/**
+	 * @param netlimsPatientTbl
+	 * @return NetlimsPatientTbl
+	 */
+	public NetlimsPatientTbl removeNetlimsPatientTbl(NetlimsPatientTbl netlimsPatientTbl) {
+		getNetlimsPatientTbls().remove(netlimsPatientTbl);
+		netlimsPatientTbl.setPatientTbl(null);
+
+		return netlimsPatientTbl;
+	}
+
+
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+
+
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+
+
+	/**
+	 * @return the address
+	 */
 	public String getAddress() {
-		return this.address;
+		return address;
 	}
 
+
+
+	/**
+	 * @param address the address to set
+	 */
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
+
+
+	/**
+	 * @return the age
+	 */
 	public int getAge() {
-		return this.age;
+		return age;
 	}
 
+
+
+	/**
+	 * @param age the age to set
+	 */
 	public void setAge(int age) {
 		this.age = age;
 	}
 
+
+
+	/**
+	 * @return the ailment
+	 */
 	public String getAilment() {
-		return this.ailment;
+		return ailment;
 	}
 
+
+
+	/**
+	 * @param ailment the ailment to set
+	 */
 	public void setAilment(String ailment) {
 		this.ailment = ailment;
 	}
 
+
+
+	/**
+	 * @return the allergies
+	 */
 	public String getAllergies() {
-		return this.allergies;
+		return allergies;
 	}
 
+
+
+	/**
+	 * @param allergies the allergies to set
+	 */
 	public void setAllergies(String allergies) {
 		this.allergies = allergies;
 	}
 
+
+
+	/**
+	 * @return the bloodGroup
+	 */
 	public String getBloodGroup() {
-		return this.bloodGroup;
+		return bloodGroup;
 	}
 
+
+
+	/**
+	 * @param bloodGroup the bloodGroup to set
+	 */
 	public void setBloodGroup(String bloodGroup) {
 		this.bloodGroup = bloodGroup;
 	}
 
+
+
+	/**
+	 * @return the chronicDisease
+	 */
 	public String getChronicDisease() {
-		return this.chronicDisease;
+		return chronicDisease;
 	}
 
+
+
+	/**
+	 * @param chronicDisease the chronicDisease to set
+	 */
 	public void setChronicDisease(String chronicDisease) {
 		this.chronicDisease = chronicDisease;
 	}
 
-	
 
-	public String getDiagnosis() {
-		return this.diagnosis;
-	}
-
-	public void setDiagnosis(String diagnosis) {
-		this.diagnosis = diagnosis;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getEmergencyNo() {
-		return this.emergencyNo;
-	}
-
-	public void setEmergencyNo(String emergencyNo) {
-		this.emergencyNo = emergencyNo;
-	}
-
-	public String getFamilyHistory() {
-		return this.familyHistory;
-	}
-
-	public void setFamilyHistory(String familyHistory) {
-		this.familyHistory = familyHistory;
-	}
-
-	public String getFirstName() {
-		return this.firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getGender() {
-		return this.gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public String getHeight() {
-		return this.height;
-	}
-
-	public void setHeight(String height) {
-		this.height = height;
-	}
-
-	public String getLastName() {
-		return this.lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getMobile() {
-		return this.mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
-	public String getPhone() {
-		return this.phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getWeight() {
-		return this.weight;
-	}
-
-	public void setWeight(String weight) {
-		this.weight = weight;
-	}
-
-	public Set<CaseTbl> getCaseTbls() {
-		return this.caseTbls;
-	}
-
-	public void setCaseTbls(Set<CaseTbl> caseTbls) {
-		this.caseTbls = caseTbls;
-	}
-
-	public Set<MedicalRecordTbl> getMedicalRecordTbls() {
-		return this.medicalRecordTbls;
-	}
-
-	public void setMedicalRecordTbls(Set<MedicalRecordTbl> medicalRecordTbls) {
-		this.medicalRecordTbls = medicalRecordTbls;
-	}
-
-	public Set<PatientAppointmentTbl> getPatientAppointmentTbls() {
-		return this.patientAppointmentTbls;
-	}
-
-	public void setPatientAppointmentTbls(
-			Set<PatientAppointmentTbl> patientAppointmentTbls) {
-		this.patientAppointmentTbls = patientAppointmentTbls;
-	}
-
-	public Set<PatientMedicalHistoryTbl> getPatientMedicalHistoryTbls() {
-		return this.patientMedicalHistoryTbls;
-	}
-
-	public void setPatientMedicalHistoryTbls(
-			Set<PatientMedicalHistoryTbl> patientMedicalHistoryTbls) {
-		this.patientMedicalHistoryTbls = patientMedicalHistoryTbls;
-	}
-
-	public NetmdPassphraseTbl getNetmdPassphraseTbl() {
-		return this.netmdPassphraseTbl;
-	}
-
-	public void setNetmdPassphraseTbl(NetmdPassphraseTbl netmdPassphraseTbl) {
-		this.netmdPassphraseTbl = netmdPassphraseTbl;
-	}
-
-	public NetmdLoginTbl getNetmdLoginTbl() {
-		return this.netmdLoginTbl;
-	}
-
-	public void setNetmdLoginTbl(NetmdLoginTbl netmdLoginTbl) {
-		this.netmdLoginTbl = netmdLoginTbl;
-	}
-
-	public NetmdBranchTbl getNetmdBranchTbl() {
-		return this.netmdBranchTbl;
-	}
-
-	public void setNetmdBranchTbl(NetmdBranchTbl netmdBranchTbl) {
-		this.netmdBranchTbl = netmdBranchTbl;
-	}
-
-	public Set<ResultTbl> getResultTbls() {
-		return this.resultTbls;
-	}
-
-	public void setResultTbls(Set<ResultTbl> resultTbls) {
-		this.resultTbls = resultTbls;
-	}
 
 	/**
 	 * @return the createDateTime
@@ -347,12 +248,214 @@ public class PatientTbl implements Serializable {
 		return createDateTime;
 	}
 
+
+
 	/**
 	 * @param createDateTime the createDateTime to set
 	 */
 	public void setCreateDateTime(Date createDateTime) {
 		this.createDateTime = createDateTime;
 	}
+
+
+
+	/**
+	 * @return the diagnosis
+	 */
+	public String getDiagnosis() {
+		return diagnosis;
+	}
+
+
+
+	/**
+	 * @param diagnosis the diagnosis to set
+	 */
+	public void setDiagnosis(String diagnosis) {
+		this.diagnosis = diagnosis;
+	}
+
+
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+	/**
+	 * @return the emergencyNo
+	 */
+	public String getEmergencyNo() {
+		return emergencyNo;
+	}
+
+
+
+	/**
+	 * @param emergencyNo the emergencyNo to set
+	 */
+	public void setEmergencyNo(String emergencyNo) {
+		this.emergencyNo = emergencyNo;
+	}
+
+
+
+	/**
+	 * @return the familyHistory
+	 */
+	public String getFamilyHistory() {
+		return familyHistory;
+	}
+
+
+
+	/**
+	 * @param familyHistory the familyHistory to set
+	 */
+	public void setFamilyHistory(String familyHistory) {
+		this.familyHistory = familyHistory;
+	}
+
+
+
+	/**
+	 * @return the firstName
+	 */
+	public String getFirstName() {
+		return firstName;
+	}
+
+
+
+	/**
+	 * @param firstName the firstName to set
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+
+
+	/**
+	 * @return the gender
+	 */
+	public String getGender() {
+		return gender;
+	}
+
+
+
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+
+
+	/**
+	 * @return the height
+	 */
+	public String getHeight() {
+		return height;
+	}
+
+
+
+	/**
+	 * @param height the height to set
+	 */
+	public void setHeight(String height) {
+		this.height = height;
+	}
+
+
+
+	/**
+	 * @return the lastName
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+
+
+
+	/**
+	 * @param lastName the lastName to set
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+
+	/**
+	 * @return the mobile
+	 */
+	public String getMobile() {
+		return mobile;
+	}
+
+
+
+	/**
+	 * @param mobile the mobile to set
+	 */
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+
+
+	/**
+	 * @return the phone
+	 */
+	public String getPhone() {
+		return phone;
+	}
+
+
+
+	/**
+	 * @param phone the phone to set
+	 */
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+
+
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
 
 	/**
 	 * @return the updateDateTime
@@ -361,11 +464,49 @@ public class PatientTbl implements Serializable {
 		return updateDateTime;
 	}
 
+
+
 	/**
 	 * @param updateDateTime the updateDateTime to set
 	 */
 	public void setUpdateDateTime(Date updateDateTime) {
 		this.updateDateTime = updateDateTime;
+	}
+
+
+
+	/**
+	 * @return the weight
+	 */
+	public String getWeight() {
+		return weight;
+	}
+
+
+
+	/**
+	 * @param weight the weight to set
+	 */
+	public void setWeight(String weight) {
+		this.weight = weight;
+	}
+
+
+
+	/**
+	 * @return the netlimsPatientTbls
+	 */
+	public List<NetlimsPatientTbl> getNetlimsPatientTbls() {
+		return netlimsPatientTbls;
+	}
+
+
+
+	/**
+	 * @param netlimsPatientTbls the netlimsPatientTbls to set
+	 */
+	public void setNetlimsPatientTbls(List<NetlimsPatientTbl> netlimsPatientTbls) {
+		this.netlimsPatientTbls = netlimsPatientTbls;
 	}
 
 }
