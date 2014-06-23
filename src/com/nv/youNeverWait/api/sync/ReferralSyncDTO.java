@@ -3,6 +3,7 @@ package com.nv.youNeverWait.api.sync;
 import com.nv.youNeverWait.user.bl.service.ActionEnum;
 
 public class ReferralSyncDTO {
+	
 	private ReferralInfo referralInfo;
 	private Integer globalId;
 	private ActionEnum actionName;
