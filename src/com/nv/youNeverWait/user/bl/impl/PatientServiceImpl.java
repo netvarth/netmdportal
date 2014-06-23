@@ -3,28 +3,19 @@
  */
 package com.nv.youNeverWait.user.bl.impl;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.TypedQuery;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
-import com.nv.framework.sendmsg.SendMsgCallbackEnum;
-import com.nv.framework.sendmsg.email.SendMailMsgObj;
-import com.nv.framework.util.text.StringEncoder;
 import com.nv.security.youNeverWait.MailSendAdapter;
 import com.nv.youNeverWait.common.Constants;
-import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
-import com.nv.youNeverWait.pl.entity.PatientTbl;
+import com.nv.youNeverWait.pl.entity.NetmdPatientTbl;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.rs.dto.Appointment;
 import com.nv.youNeverWait.rs.dto.AppointmentListResponseDTO;
@@ -35,7 +26,6 @@ import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
-import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PastAppointmentListResponseDTO;
@@ -46,7 +36,6 @@ import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalPatientResponseDTO;
-import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.user.bl.service.AppointmentService;
 import com.nv.youNeverWait.user.bl.service.DoctorService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
@@ -95,7 +84,7 @@ public class PatientServiceImpl implements PatientService {
 
 		if (patient.getEmail() != null && !patient.getEmail().isEmpty()){
 			// send login details and password creation link to the user
-			List<PatientTbl>   patients = patientDao.listOfPatientsOnLogin(patient.getEmail());
+			List<NetmdPatientTbl>   patients = patientDao.listOfPatientsOnLogin(patient.getEmail());
 			
 			mailSendAdapter.sendEmailForPatientCreation(patient.getFirstName(),
 					patient.getEmail(), Constants.PATIENT_REGISTRATION,
@@ -119,7 +108,7 @@ public class PatientServiceImpl implements PatientService {
 			if(!flag){
 				String branchName = patientDao.getBranch(header.getBranchId());
 				// send login details and password creation link to the user
-				List<PatientTbl>   patients = patientDao.listOfPatientsOnLogin(patient.getEmail());
+				List<NetmdPatientTbl>   patients = patientDao.listOfPatientsOnLogin(patient.getEmail());
 				
 				mailSendAdapter.sendEmailForPatientCreation(patient.getFirstName(),patient.getEmail(), Constants.PATIENT_REGISTRATION,
 						patient.getEmail(), branchName,patients.size());
@@ -180,7 +169,7 @@ public class PatientServiceImpl implements PatientService {
 	 */
 	@Override
 	public PatientListResponseDTO patientListOnLogin(String patientEmailId) {
-		List<PatientTbl> patientList = patientDao
+		List<NetmdPatientTbl> patientList = patientDao
 				.listOfPatientsOnLogin(patientEmailId);
 		// set patient_tbl values to the PatientDetail
 		PatientListResponseDTO patientResponse = getPatientList(patientList);
@@ -194,14 +183,14 @@ public class PatientServiceImpl implements PatientService {
 	 * @param patientList
 	 * @return response
 	 */
-	private PatientListResponseDTO getPatientList(List<PatientTbl> patientList) {
+	private PatientListResponseDTO getPatientList(List<NetmdPatientTbl> patientList) {
 
 		PatientListResponseDTO response = new PatientListResponseDTO();
 		if (patientList == null) {
 			return response;
 		}
 		List<PatientDetail> patientDetailsList = new ArrayList<PatientDetail>();
-		for (PatientTbl patientTbl : patientList) {
+		for (NetmdPatientTbl patientTbl : patientList) {
 			patientDetailsList.add(new PatientDetail(patientTbl));
 		}
 		response.setPatientList(patientDetailsList);
