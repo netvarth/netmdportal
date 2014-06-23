@@ -2,7 +2,6 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.List;
 
 
@@ -32,6 +31,10 @@ public class OrganisationLoginTbl implements Serializable {
 	//bi-directional many-to-one association to OrganisationTbl
 	@OneToMany(mappedBy="organisationLoginTbl")
 	private List<OrganisationTbl> organisationTbls;
+
+	//bi-directional many-to-one association to OrganisationUserTbl
+	@OneToMany(mappedBy="organisationLoginTbl")
+	private List<OrganisationUserTbl> organisationUserTbls;
 
 	public OrganisationLoginTbl() {
 	}
@@ -88,6 +91,28 @@ public class OrganisationLoginTbl implements Serializable {
 		organisationTbl.setOrganisationLoginTbl(null);
 
 		return organisationTbl;
+	}
+
+	public List<OrganisationUserTbl> getOrganisationUserTbls() {
+		return this.organisationUserTbls;
+	}
+
+	public void setOrganisationUserTbls(List<OrganisationUserTbl> organisationUserTbls) {
+		this.organisationUserTbls = organisationUserTbls;
+	}
+
+	public OrganisationUserTbl addOrganisationUserTbl(OrganisationUserTbl organisationUserTbl) {
+		getOrganisationUserTbls().add(organisationUserTbl);
+		organisationUserTbl.setOrganisationLoginTbl(this);
+
+		return organisationUserTbl;
+	}
+
+	public OrganisationUserTbl removeOrganisationUserTbl(OrganisationUserTbl organisationUserTbl) {
+		getOrganisationUserTbls().remove(organisationUserTbl);
+		organisationUserTbl.setOrganisationLoginTbl(null);
+
+		return organisationUserTbl;
 	}
 
 }
