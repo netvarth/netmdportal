@@ -9,8 +9,10 @@ package com.nv.youNeverWait.security.pl.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nv.framework.util.text.StringEncoder;
@@ -18,20 +20,20 @@ import com.nv.youNeverWait.rs.dto.Error;
 import com.nv.youNeverWait.rs.dto.ErrorCodeListResponseDTO;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LabTbl;
 import com.nv.youNeverWait.pl.entity.LabUserTbl;
 import com.nv.youNeverWait.pl.entity.LabLoginTbl;
 import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
+import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
+import com.nv.youNeverWait.pl.entity.NetmdPatientTbl;
 import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.NetrxLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetrxTbl;
 import com.nv.youNeverWait.pl.entity.NetrxUserTbl;
-import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
@@ -45,8 +47,16 @@ import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.security.pl.dao.AuthenticationDao;
 
 
+/**
+ * @author Asha Chandran
+ *
+ */
 public class AuthenticationDaoImpl extends GenericDaoHibernateImpl implements
 AuthenticationDao {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@PersistenceContext()
 	private EntityManager em;
 
@@ -290,7 +300,7 @@ AuthenticationDao {
 		NetmdUserTypeEnum userType = NetmdUserTypeEnum.getEnum(netMdLogin
 				.getUserType());
 		if (netMdLogin.getUserType().equals(NetmdUserTypeEnum.Doctor.getDisplayName())) {
-			DoctorTbl doctor = getDoctorByLogin(netMdLogin.getId());
+			NetmdDoctorTbl doctor = getDoctorByLogin(netMdLogin.getId());
 			if (doctor != null) {
 				UserDetails user = new UserDetails();
 				user.setId(doctor.getId());
@@ -344,7 +354,7 @@ AuthenticationDao {
 		NetmdUserTypeEnum userType = NetmdUserTypeEnum.getEnum(netRxLogin
 				.getUserType());
 		if (netRxLogin.getUserType().equals(NetmdUserTypeEnum.Doctor.getDisplayName())) {
-			DoctorTbl doctor = getDoctorByLogin(netRxLogin.getId());
+			NetmdDoctorTbl doctor = getDoctorByLogin(netRxLogin.getId());
 			if (doctor != null) {
 				UserDetails user = new UserDetails();
 				user.setId(doctor.getId());
@@ -387,9 +397,9 @@ AuthenticationDao {
 	public UserDetails getPatient(String userName) {
 
 		UserDetails user = new UserDetails();
-		List<PatientTbl> patientList = getPatientByLogin(userName);
+		List<NetmdPatientTbl> patientList = getPatientByLogin(userName);
 		if(!patientList.isEmpty()){
-			PatientTbl patient = patientList.get(0);
+			NetmdPatientTbl patient = patientList.get(0);
 			user.setId(patient.getId());
 			user.setNetmdId(patient.getNetmdBranchTbl().getId());
 			user.setUserType(patient.getNetmdLoginTbl().getUserType());
@@ -433,26 +443,26 @@ AuthenticationDao {
 	 * Get patient details
 	 * 
 	 * @param userName
-	 * @return PatientTbl
+	 * @return NetmdPatientTbl
 	 */
-	private List<PatientTbl> getPatientByLogin(String userName) {
+	private List<NetmdPatientTbl> getPatientByLogin(String userName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_PATIENT_BY_USERNAME);
 		query.setParameter("param1", userName);
-		return executeQuery(PatientTbl.class, query);
+		return executeQuery(NetmdPatientTbl.class, query);
 	}
 
 	/**
 	 * Get doctor details
 	 * 
 	 * @param loginId
-	 * @return DoctorTbl
+	 * @return NetmdDoctorTbl
 	 */
-	private DoctorTbl getDoctorByLogin(int loginId) {
+	private NetmdDoctorTbl getDoctorByLogin(int loginId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_DOCTOR_BY_LOGIN_ID);
 		query.setParameter("param1", loginId);
-		return executeUniqueQuery(DoctorTbl.class, query);
+		return executeUniqueQuery(NetmdDoctorTbl.class, query);
 	}
 
 	/**
@@ -627,14 +637,24 @@ AuthenticationDao {
 		return (NetmdLoginTbl) executeUniqueQuery(NetmdLoginTbl.class, query);
 	}
 
+	/**
+	 * @return em
+	 */
 	public EntityManager getEm() {
 		return em;
 	}
 
+	/**
+	 * @param em
+	 */
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
 
+	/**
+	 * @param userName
+	 * @return NetmdLoginTbl
+	 */
 	public NetmdLoginTbl getLoginByUserName(String userName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_LOGIN_BY_USERNAME);
@@ -642,6 +662,11 @@ AuthenticationDao {
 		return executeUniqueQuery(NetmdLoginTbl.class, query);
 	}
 
+	/**
+	 * @param userName
+	 * @param firstName
+	 * @return List<NetmdLoginTbl> 
+	 */
 	public List<NetmdLoginTbl> getLoginByUserName(String userName,
 			String firstName) {
 		javax.persistence.Query query = em
