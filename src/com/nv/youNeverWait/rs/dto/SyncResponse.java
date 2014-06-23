@@ -10,22 +10,20 @@ import com.nv.youNeverWait.user.bl.service.ActionEnum;
  */
 public class SyncResponse {
      
-	private Integer localId;
+	private String localId;
 	private Integer globalId;
 	private String statusCode;
 	private ActionEnum actionName;
-	/**
-	 * @return the localId
-	 */
-	public Integer getLocalId() {
+	
+	
+	public String getLocalId() {
 		return localId;
 	}
-	/**
-	 * @param localId the localId to set
-	 */
-	public void setLocalId(Integer localId) {
+	
+	public void setLocalId(String localId) {
 		this.localId = localId;
 	}
+	
 	/**
 	 * @return the globalId
 	 */
