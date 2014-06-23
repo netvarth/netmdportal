@@ -16,33 +16,57 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.pl.entity.NetlimsOrderTbl;
+import com.nv.youNeverWait.pl.entity.NetlimsPatientTbl;
+import com.nv.youNeverWait.pl.entity.NetlimsResultTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.OrderResultTbl;
+import com.nv.youNeverWait.pl.entity.PatientResultTbl;
+import com.nv.youNeverWait.pl.entity.PatientTbl;
+import com.nv.youNeverWait.pl.entity.ReferralResultTbl;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.OrderResultSyncDTO;
 import com.nv.youNeverWait.rs.dto.OrderTestResult;
 import com.nv.youNeverWait.rs.dto.OrderTestResultList;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
 import com.nv.youNeverWait.security.pl.Query;
+import com.nv.youNeverWait.user.pl.dao.PatientDao;
 import com.nv.youNeverWait.user.pl.dao.ResultDao;
 
 /**
  * 
  */
 public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8123597707204203443L;
+	private PatientDao patientDao;
+	/**
+	 * @return the patientDao
+	 */
+	public PatientDao getPatientDao() {
+		return patientDao;
+	}
+
+	/**
+	 * @param patientDao the patientDao to set
+	 */
+	public void setPatientDao(PatientDao patientDao) {
+		this.patientDao = patientDao;
+	}
 
 	@PersistenceContext()
 	private EntityManager em;
@@ -108,14 +132,14 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 
 		List<OrderResultTbl> orderResultTblList = getResults(
 				header.getBranchId(), syncTime, currentSyncTime);
-		
+
 		String uid = "";
 		String uidC = "";
 		OrderTestResult	orderResult=null;
 		for (OrderResultTbl orderTestResult : orderResultTblList) {
 			uidC = orderTestResult.getOrderBranchTbl().getOrderUid();
 			if (uid != uidC) {
-				
+
 				if (orderResult !=null){
 					System.out.println(orderResult.getTestResultList().size());
 					orderTestResultList.add(orderResult);
@@ -123,23 +147,23 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 				orderResult = new OrderTestResult();
 				orderResult.setOrderUid(orderTestResult.getOrderBranchTbl().getOrderUid());
 				orderResult.addToMap(new String(orderTestResult.getTestUid()), new String(orderTestResult.getResult()));
-							
+
 
 			} else {
-			
+
 				orderResult.addToMap(new String(orderTestResult.getTestUid()), new String(orderTestResult.getResult()));
 			}
 			uid = uidC;
-		orderTestResult.setSent(true);  
-		update(orderTestResult);
+			orderTestResult.setSent(true);  
+			update(orderTestResult);
 		}
 		if (orderResult !=null){
 			System.out.println(orderResult.getTestResultList().size());
 			orderTestResultList.add(orderResult);
-		
+
 		}
-		
-		
+
+
 		response.setOrderTestResultList(orderTestResultList);
 		response.setSuccess(true);
 		return response;
@@ -177,10 +201,11 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 
 	/**
 	 * Get result records of patient
-	 * 
-	 * @param id
+	 * @param netmdId 
 	 * @param netmdBranchId
-	 * @return
+	 * @param lastSyncTime 
+	 * @param currentSyncTime 
+	 * @return List<ResultTbl> return results 
 	 */
 	public List<ResultTbl> getResultsByNetMdBranchIdAndNetmdId(int netmdId,
 			int netmdBranchId, Date lastSyncTime, Date currentSyncTime) {
@@ -210,6 +235,10 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 		return executeUniqueQuery(NetmdPassphraseTbl.class, query);
 	}
 
+	/**
+	 * @param patientId
+	 * @return List<ResultTbl> list of results of mentioned patient id
+	 */
 	public List<ResultTbl> getByPatientId(String patientId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_RESULT_BY_PATIENTID);
@@ -230,6 +259,92 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 	 */
 	public void setEm(EntityManager em) {
 		this.em = em;
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public int processOrderResult(OrderResultSyncDTO orderResult, int branchId) {
+		NetlimsOrderTbl orderTbl =null;
+		if(orderResult.getGlobalId()!=0){
+			orderTbl = getById(NetlimsOrderTbl.class, orderResult.getGlobalId());
+			if(orderTbl.getOrderId()!=orderResult.getOrder().getUid()){
+				throw new ServiceException(null);
+			}
+		} else
+			orderTbl = getByOrderIdandSourceBranchId(orderResult.getOrder().getUid(),branchId);
+		if(orderTbl==null)
+			orderTbl = new NetlimsOrderTbl();
+		orderTbl.setOrderId(orderResult.getOrder().getUid());
+		orderTbl.setCreatedDate(orderResult.getOrder().getOrderDate());
+		orderTbl.setOrderStatus(orderResult.getOrder().getOrderStatus());
+
+		PatientTbl patientTbl =new PatientTbl();
+		patientTbl.setId(patientDao.getPatient(orderResult.getOrder().getPatient(), branchId));
+
+		List<PatientResultTbl> patientResultTbls = getPatientResult(orderTbl.getId(), patientTbl.getId());
+		
+		if(patientResultTbls.isEmpty()){
+			PatientResultTbl patientResultTbl = new PatientResultTbl();
+			patientResultTbl.setNetlimsOrderTbl(orderTbl);
+			
+			
+			NetlimsPatientTbl netlimsPatientTbl = new NetlimsPatientTbl();
+			
+			patientResultTbl.setNetlimsPatientTbl(netlimsPatientTbl);	
+		}
+//		orderTbl.setPatientResultTbl(patientResultTbl);
+
+/*		ReferralResultTbl referralResultTbl = getReferralResult(orderTbl.getId());
+		if(orderResult.getOrder().getReferralGlobalId()!=0){
+			DoctorTbl doctorTbl = getById(DoctorTbl.class, orderResult.getOrder().getReferralGlobalId());
+			if(referralResultTbl==null)
+				referralResultTbl=new ReferralResultTbl();
+			referralResultTbl.setDoctorTbl(doctorTbl);
+			referralResultTbl.setNetlimsOrderTbl(orderTbl);
+			orderTbl.setReferralResultTbl(referralResultTbl);
+		} else
+			if(referralResultTbl!=null)
+				delete(referralResultTbl);
+		saveOrUpdate(NetlimsOrderTbl.class,orderTbl);
+
+		for(OrderTestResultDTO orderTestResult: orderResult.getTestResult()){
+			NetlimsResultTbl resultTbl= getByOrderId_testUid(orderTbl.getId(), orderTestResult.getUid());
+			if(resultTbl==null)
+				resultTbl = new NetlimsResultTbl();
+			resultTbl.setNetlimsOrderTbl(orderTbl);
+			resultTbl.setResult(orderTestResult.getResult());
+			resultTbl.setTestUid(orderTestResult.getUid());
+			saveOrUpdate(NetlimsResultTbl.class, resultTbl);
+		}*/
+		return orderTbl.getId();
+	}
+
+	private ReferralResultTbl getReferralResult(int orderId) {
+		javax.persistence.Query query= em.createQuery(Query.GET_REFERRAL_RESULTBY_ORDERID);
+		query.setParameter("param1",orderId );
+		return executeUniqueQuery(ReferralResultTbl.class, query);
+	}
+
+	private NetlimsResultTbl getByOrderId_testUid(int orderId, String testUid) {
+		javax.persistence.Query query= em.createQuery(Query.GET_RESULTBY_ORDERID_TESTUID);
+		query.setParameter("param1",orderId );
+		query.setParameter("param2", testUid);
+		return executeUniqueQuery(NetlimsResultTbl.class, query);
+	}
+
+	private List<PatientResultTbl> getPatientResult(int orderId, int patientId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_PATIENT_RESULT_TBL);
+		query.setParameter("param1",patientId);
+		query.setParameter("param2",orderId);
+		return executeQuery(PatientResultTbl.class, query);
+	}
+
+	private NetlimsOrderTbl getByOrderIdandSourceBranchId(String uid,
+			Integer source_branch_id) {
+		javax.persistence.Query query = em.createQuery(Query.GET_NETLIMSORDER_BY_ORDERID_BRANCHID);
+		query.setParameter("param1", uid);
+		query.setParameter("param2",source_branch_id);
+		return executeUniqueQuery(NetlimsOrderTbl.class, query);
 	}
 
 }
