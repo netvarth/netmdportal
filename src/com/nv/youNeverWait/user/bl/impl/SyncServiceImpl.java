@@ -1800,7 +1800,36 @@ public class SyncServiceImpl implements SyncService {
 		return responses;
 	}
 
-	
+	@Override
+	public List<SyncResponse> processReferral(LimsReferralBundle bundle) {
+		List<SyncResponse> responses = new ArrayList<SyncResponse>();
+		for (ReferralSyncDTO referral : bundle.getReferrals()) {
+
+			SyncResponse response = new SyncResponse();
+			try {
+
+				response.setLocalId(referral.getReferralInfo().getUid());
+				if (referral.getReferralInfo().getAddress().getEmail() != null) {
+					int referral_GlobalId = doctorService
+							.processReferral(referral);
+					response.setGlobalId(referral_GlobalId);
+					response.setStatusCode("200");
+				} else {
+					response.setGlobalId(null);
+					response.setStatusCode("200");
+
+				}
+
+			} catch (Exception e) {
+				log.error(e);
+				response.setStatusCode("500");
+			}
+			responses.add(response);
+		}
+
+		return responses;
+	}
+
 
 
 }
