@@ -1,6 +1,7 @@
 package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 import java.util.Date;
@@ -17,7 +18,7 @@ import java.util.List;
 @NamedQuery(name="OrganisationTbl.findAll", query="SELECT o FROM OrganisationTbl o")
 public class OrganisationTbl extends HealthCareOrganisationTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_date_time")
 	private Date createDateTime;
@@ -43,8 +44,6 @@ public class OrganisationTbl extends HealthCareOrganisationTbl implements Serial
 	@Column(name="head_office_phone")
 	private String headOfficePhone;
 
-	//private String name;
-
 	@Column(name="owner_address")
 	private String ownerAddress;
 
@@ -63,13 +62,11 @@ public class OrganisationTbl extends HealthCareOrganisationTbl implements Serial
 	@Column(name="owner_phone")
 	private String ownerPhone;
 
-	//private String status;
-
 	@Column(name="sync_freq_type")
 	private String syncFreqType;
 
 	@Column(name="sync_time")
-	private Integer syncTime;
+	private int syncTime;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="update_date_time")
@@ -79,15 +76,19 @@ public class OrganisationTbl extends HealthCareOrganisationTbl implements Serial
 	@OneToMany(mappedBy="organisationTbl")
 	private List<OrganisationNetmdTbl> organisationNetmdTbls;
 
+	//bi-directional many-to-one association to OrganisationLoginTbl
+	@ManyToOne
+	@JoinColumn(name="login_id")
+	private OrganisationLoginTbl organisationLoginTbl;
+
 	//bi-directional one-to-one association to HealthCareOrganisationTbl
 	@OneToOne
 	@JoinColumn(name="id")
 	private HealthCareOrganisationTbl healthCareOrganisationTbl;
 
-	//bi-directional many-to-one association to OrganisationLoginTbl
-	@ManyToOne
-	@JoinColumn(name="login_id")
-	private OrganisationLoginTbl organisationLoginTbl;
+	//bi-directional many-to-one association to OrganisationUserTbl
+	@OneToMany(mappedBy="organisationTbl")
+	private List<OrganisationUserTbl> organisationUserTbls;
 
 	//bi-directional many-to-one association to QuestionnaireTbl
 	@OneToMany(mappedBy="organisationTbl")
@@ -95,14 +96,6 @@ public class OrganisationTbl extends HealthCareOrganisationTbl implements Serial
 
 	public OrganisationTbl() {
 	}
-
-//	public int getId() {
-//		return this.id;
-//	}
-//
-//	public void setId(int id) {
-//		this.id = id;
-//	}
 
 	public Date getCreateDateTime() {
 		return this.createDateTime;
@@ -120,13 +113,6 @@ public class OrganisationTbl extends HealthCareOrganisationTbl implements Serial
 		this.departmentType = departmentType;
 	}
 
-	public Boolean getEnableSync() {
-		return this.enableSync;
-	}
-
-	public void setEnableSync(Boolean enableSync) {
-		this.enableSync = enableSync;
-	}
 
 	public String getHeadOfficeAddress() {
 		return this.headOfficeAddress;
@@ -167,14 +153,6 @@ public class OrganisationTbl extends HealthCareOrganisationTbl implements Serial
 	public void setHeadOfficePhone(String headOfficePhone) {
 		this.headOfficePhone = headOfficePhone;
 	}
-
-//	public String getName() {
-//		return this.name;
-//	}
-//
-//	public void setName(String name) {
-//		this.name = name;
-//	}
 
 	public String getOwnerAddress() {
 		return this.ownerAddress;
@@ -224,14 +202,6 @@ public class OrganisationTbl extends HealthCareOrganisationTbl implements Serial
 		this.ownerPhone = ownerPhone;
 	}
 
-//	public String getStatus() {
-//		return this.status;
-//	}
-//
-//	public void setStatus(String status) {
-//		this.status = status;
-//	}
-
 	public String getSyncFreqType() {
 		return this.syncFreqType;
 	}
@@ -240,7 +210,13 @@ public class OrganisationTbl extends HealthCareOrganisationTbl implements Serial
 		this.syncFreqType = syncFreqType;
 	}
 
-	
+	public int getSyncTime() {
+		return this.syncTime;
+	}
+
+	public void setSyncTime(int syncTime) {
+		this.syncTime = syncTime;
+	}
 
 	public Date getUpdateDateTime() {
 		return this.updateDateTime;
@@ -272,14 +248,6 @@ public class OrganisationTbl extends HealthCareOrganisationTbl implements Serial
 		return organisationNetmdTbl;
 	}
 
-	public HealthCareOrganisationTbl getHealthCareOrganisationTbl() {
-		return this.healthCareOrganisationTbl;
-	}
-
-	public void setHealthCareOrganisationTbl(HealthCareOrganisationTbl healthCareOrganisationTbl) {
-		this.healthCareOrganisationTbl = healthCareOrganisationTbl;
-	}
-
 	public OrganisationLoginTbl getOrganisationLoginTbl() {
 		return this.organisationLoginTbl;
 	}
@@ -288,22 +256,42 @@ public class OrganisationTbl extends HealthCareOrganisationTbl implements Serial
 		this.organisationLoginTbl = organisationLoginTbl;
 	}
 
+	public HealthCareOrganisationTbl getHealthCareOrganisationTbl() {
+		return this.healthCareOrganisationTbl;
+	}
+
+	public void setHealthCareOrganisationTbl(HealthCareOrganisationTbl healthCareOrganisationTbl) {
+		this.healthCareOrganisationTbl = healthCareOrganisationTbl;
+	}
+
+	public List<OrganisationUserTbl> getOrganisationUserTbls() {
+		return this.organisationUserTbls;
+	}
+
+	public void setOrganisationUserTbls(List<OrganisationUserTbl> organisationUserTbls) {
+		this.organisationUserTbls = organisationUserTbls;
+	}
+
+	public OrganisationUserTbl addOrganisationUserTbl(OrganisationUserTbl organisationUserTbl) {
+		getOrganisationUserTbls().add(organisationUserTbl);
+		organisationUserTbl.setOrganisationTbl(this);
+
+		return organisationUserTbl;
+	}
+
+	public OrganisationUserTbl removeOrganisationUserTbl(OrganisationUserTbl organisationUserTbl) {
+		getOrganisationUserTbls().remove(organisationUserTbl);
+		organisationUserTbl.setOrganisationTbl(null);
+
+		return organisationUserTbl;
+	}
+
 	public List<QuestionnaireTbl> getQuestionnaireTbls() {
 		return this.questionnaireTbls;
 	}
 
-	
-
 	public void setQuestionnaireTbls(List<QuestionnaireTbl> questionnaireTbls) {
 		this.questionnaireTbls = questionnaireTbls;
-	}
-
-	public Integer getSyncTime() {
-		return syncTime;
-	}
-
-	public void setSyncTime(Integer syncTime) {
-		this.syncTime = syncTime;
 	}
 
 	public QuestionnaireTbl addQuestionnaireTbl(QuestionnaireTbl questionnaireTbl) {
@@ -319,5 +307,21 @@ public class OrganisationTbl extends HealthCareOrganisationTbl implements Serial
 
 		return questionnaireTbl;
 	}
+
+	/**
+	 * @return the enableSync
+	 */
+	public Boolean getEnableSync() {
+		return enableSync;
+	}
+
+	/**
+	 * @param enableSync the enableSync to set
+	 */
+	public void setEnableSync(Boolean enableSync) {
+		this.enableSync = enableSync;
+	}
+
+	
 
 }
