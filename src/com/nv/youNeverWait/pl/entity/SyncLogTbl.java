@@ -19,7 +19,6 @@ public class SyncLogTbl implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int id;
 
-
 	@Column(name="application_name", nullable=false, length=45)
 	private String applicationName;
 
@@ -46,8 +45,6 @@ public class SyncLogTbl implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	
 
 	public String getApplicationName() {
 		return this.applicationName;
