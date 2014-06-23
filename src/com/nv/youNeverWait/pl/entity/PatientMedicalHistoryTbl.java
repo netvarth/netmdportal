@@ -41,81 +41,133 @@ public class PatientMedicalHistoryTbl implements Serializable {
 	//bi-directional many-to-one association to PatientTbl
     @ManyToOne
 	@JoinColumn(name="patient_id", nullable=false)
-	private PatientTbl patientTbl;
+    private NetmdPatientTbl netmdPatientTbl;
 
-    public PatientMedicalHistoryTbl() {
-    }
-
+	/**
+	 * @return the id
+	 */
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the diagonisedAge
+	 */
 	public String getDiagonisedAge() {
-		return this.diagonisedAge;
+		return diagonisedAge;
 	}
 
+	/**
+	 * @param diagonisedAge the diagonisedAge to set
+	 */
 	public void setDiagonisedAge(String diagonisedAge) {
 		this.diagonisedAge = diagonisedAge;
 	}
 
+	/**
+	 * @return the isCured
+	 */
 	public byte getIsCured() {
-		return this.isCured;
+		return isCured;
 	}
 
+	/**
+	 * @param isCured the isCured to set
+	 */
 	public void setIsCured(byte isCured) {
 		this.isCured = isCured;
 	}
 
+	/**
+	 * @return the medicalIssue
+	 */
 	public String getMedicalIssue() {
-		return this.medicalIssue;
+		return medicalIssue;
 	}
 
+	/**
+	 * @param medicalIssue the medicalIssue to set
+	 */
 	public void setMedicalIssue(String medicalIssue) {
 		this.medicalIssue = medicalIssue;
 	}
 
+	/**
+	 * @return the medication
+	 */
 	public String getMedication() {
-		return this.medication;
+		return medication;
 	}
 
+	/**
+	 * @param medication the medication to set
+	 */
 	public void setMedication(String medication) {
 		this.medication = medication;
 	}
 
+	/**
+	 * @return the surgery
+	 */
 	public String getSurgery() {
-		return this.surgery;
+		return surgery;
 	}
 
+	/**
+	 * @param surgery the surgery to set
+	 */
 	public void setSurgery(String surgery) {
 		this.surgery = surgery;
 	}
 
+	/**
+	 * @return the tenure
+	 */
 	public String getTenure() {
-		return this.tenure;
+		return tenure;
 	}
 
+	/**
+	 * @param tenure the tenure to set
+	 */
 	public void setTenure(String tenure) {
 		this.tenure = tenure;
 	}
 
+	/**
+	 * @return the treatment
+	 */
 	public String getTreatment() {
-		return this.treatment;
+		return treatment;
 	}
 
+	/**
+	 * @param treatment the treatment to set
+	 */
 	public void setTreatment(String treatment) {
 		this.treatment = treatment;
 	}
 
-	public PatientTbl getPatientTbl() {
-		return this.patientTbl;
+	/**
+	 * @return the netmdPatientTbl
+	 */
+	public NetmdPatientTbl getNetmdPatientTbl() {
+		return netmdPatientTbl;
 	}
 
-	public void setPatientTbl(PatientTbl patientTbl) {
-		this.patientTbl = patientTbl;
+	/**
+	 * @param netmdPatientTbl the netmdPatientTbl to set
+	 */
+	public void setNetmdPatientTbl(NetmdPatientTbl netmdPatientTbl) {
+		this.netmdPatientTbl = netmdPatientTbl;
 	}
-	
+
+   
 }
