@@ -58,105 +58,181 @@ public class NetmdBillTbl implements Serializable {
 	//bi-directional many-to-one association to PatientTbl
 	@ManyToOne
 	@JoinColumn(name="patient_id", nullable=false)
-	private PatientTbl patientTbl;
+	private NetmdPatientTbl netmdPatientTbl;
 
+	/**
+	 * 
+	 */
 	public NetmdBillTbl() {
 	}
 
+	/**
+	 * @return the id
+	 */
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the amountPaid
+	 */
 	public float getAmountPaid() {
-		return this.amountPaid;
+		return amountPaid;
 	}
 
+	/**
+	 * @param amountPaid the amountPaid to set
+	 */
 	public void setAmountPaid(float amountPaid) {
 		this.amountPaid = amountPaid;
 	}
 
+	/**
+	 * @return the billAmount
+	 */
 	public float getBillAmount() {
-		return this.billAmount;
+		return billAmount;
 	}
 
+	/**
+	 * @param billAmount the billAmount to set
+	 */
 	public void setBillAmount(float billAmount) {
 		this.billAmount = billAmount;
 	}
 
+	/**
+	 * @return the createdDateTime
+	 */
 	public Date getCreatedDateTime() {
-		return this.createdDateTime;
+		return createdDateTime;
 	}
 
+	/**
+	 * @param createdDateTime the createdDateTime to set
+	 */
 	public void setCreatedDateTime(Date createdDateTime) {
 		this.createdDateTime = createdDateTime;
 	}
 
+	/**
+	 * @return the orderDate
+	 */
 	public Date getOrderDate() {
-		return this.orderDate;
+		return orderDate;
 	}
 
+	/**
+	 * @param orderDate the orderDate to set
+	 */
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
 
+	/**
+	 * @return the patientName
+	 */
 	public String getPatientName() {
-		return this.patientName;
+		return patientName;
 	}
 
+	/**
+	 * @param patientName the patientName to set
+	 */
 	public void setPatientName(String patientName) {
 		this.patientName = patientName;
 	}
 
+	/**
+	 * @return the payStatus
+	 */
 	public String getPayStatus() {
-		return this.payStatus;
+		return payStatus;
 	}
 
+	/**
+	 * @param payStatus the payStatus to set
+	 */
 	public void setPayStatus(String payStatus) {
 		this.payStatus = payStatus;
 	}
 
+	/**
+	 * @return the uid
+	 */
 	public String getUid() {
-		return this.uid;
+		return uid;
 	}
 
+	/**
+	 * @param uid the uid to set
+	 */
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
 
+	/**
+	 * @return the updatedDateTime
+	 */
 	public Date getUpdatedDateTime() {
-		return this.updatedDateTime;
+		return updatedDateTime;
 	}
 
+	/**
+	 * @param updatedDateTime the updatedDateTime to set
+	 */
 	public void setUpdatedDateTime(Date updatedDateTime) {
 		this.updatedDateTime = updatedDateTime;
 	}
 
+	/**
+	 * @return the netmdBranchTbl
+	 */
 	public NetmdBranchTbl getNetmdBranchTbl() {
-		return this.netmdBranchTbl;
+		return netmdBranchTbl;
 	}
 
+	/**
+	 * @param netmdBranchTbl the netmdBranchTbl to set
+	 */
 	public void setNetmdBranchTbl(NetmdBranchTbl netmdBranchTbl) {
 		this.netmdBranchTbl = netmdBranchTbl;
 	}
 
+	/**
+	 * @return the netmdTbl
+	 */
 	public NetmdTbl getNetmdTbl() {
-		return this.netmdTbl;
+		return netmdTbl;
 	}
 
+	/**
+	 * @param netmdTbl the netmdTbl to set
+	 */
 	public void setNetmdTbl(NetmdTbl netmdTbl) {
 		this.netmdTbl = netmdTbl;
 	}
 
-	public PatientTbl getPatientTbl() {
-		return this.patientTbl;
+	/**
+	 * @return the netmdPatientTbl
+	 */
+	public NetmdPatientTbl getNetmdPatientTbl() {
+		return netmdPatientTbl;
 	}
 
-	public void setPatientTbl(PatientTbl patientTbl) {
-		this.patientTbl = patientTbl;
+	/**
+	 * @param netmdPatientTbl the netmdPatientTbl to set
+	 */
+	public void setNetmdPatientTbl(NetmdPatientTbl netmdPatientTbl) {
+		this.netmdPatientTbl = netmdPatientTbl;
 	}
+
 
 }
