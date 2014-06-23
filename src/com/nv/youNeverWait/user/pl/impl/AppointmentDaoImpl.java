@@ -6,18 +6,22 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.springframework.transaction.annotation.Transactional;
+
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.DoctorScheduleTbl;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
+import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
-import com.nv.youNeverWait.pl.entity.PatientTbl;
+import com.nv.youNeverWait.pl.entity.NetmdPatientTbl;
 import com.nv.youNeverWait.pl.entity.ScheduleStatusEnum;
 import com.nv.youNeverWait.pl.entity.StatusEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
@@ -78,14 +82,14 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 		for (PatientAppointmentTbl appointmentTbl : appointmentList) {
 			AppointmentDTO appointmentDto = new AppointmentDTO(
 					appointmentTbl.getId(), appointmentTbl.getId(),
-					appointmentTbl.getPatientTbl().getId(), appointmentTbl
-							.getDoctorTbl().getId(), appointmentTbl
+					appointmentTbl.getNetmdPatientTbl().getId(), appointmentTbl
+							.getNetmdDoctorTbl().getId(), appointmentTbl
 							.getDoctorScheduleTbl().getId(),
 					appointmentTbl.getAppointmentDate(),
 					appointmentTbl.getStartingTime(),
 					appointmentTbl.getCreateDateTime(),
 					appointmentTbl.getUpdateDateTime(), appointmentTbl
-							.getPatientTbl().getFirstName(),
+							.getNetmdPatientTbl().getFirstName(),
 					appointmentTbl.getAppointmentStatus(),
 					appointmentTbl.getStatus());
 			createdAppointments.add(appointmentDto);
@@ -138,14 +142,14 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 		for (PatientAppointmentTbl appointmentTbl : appointmentList) {
 			AppointmentDTO appointmentDto = new AppointmentDTO(
 					appointmentTbl.getId(), appointmentTbl.getId(),
-					appointmentTbl.getPatientTbl().getId(), appointmentTbl
-							.getDoctorTbl().getId(), appointmentTbl
+					appointmentTbl.getNetmdPatientTbl().getId(), appointmentTbl
+							.getNetmdDoctorTbl().getId(), appointmentTbl
 							.getDoctorScheduleTbl().getId(),
 					appointmentTbl.getAppointmentDate(),
 					appointmentTbl.getStartingTime(),
 					appointmentTbl.getCreateDateTime(),
 					appointmentTbl.getUpdateDateTime(), appointmentTbl
-							.getPatientTbl().getFirstName(),
+							.getNetmdPatientTbl().getFirstName(),
 					appointmentTbl.getAppointmentStatus(),
 					appointmentTbl.getStatus());
 			createdAppointments.add(appointmentDto);
@@ -330,7 +334,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 		String firstName=patientName.substring(0,patientName.indexOf(' '));
 		String lastName=patientName.substring(patientName.indexOf(' ')+1).trim();
 		String email=appointment.getAppointmentDetails().getEmailId();
-		PatientTbl patientTbl = (PatientTbl) getByPatientNameAndBranchId(firstName,lastName,email,appointment.getHeader().getBranchId());
+		NetmdPatientTbl patientTbl = (NetmdPatientTbl) getByPatientNameAndBranchId(firstName,lastName,email,appointment.getHeader().getBranchId());
 		if (patientTbl == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.PatientNotFound);
@@ -340,8 +344,8 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		appointmentTbl.setPatientTbl(patientTbl);
-		DoctorTbl doctorTbl = (DoctorTbl) getById(DoctorTbl.class, appointment
+		appointmentTbl.setNetmdPatientTbl(patientTbl);
+		NetmdDoctorTbl doctorTbl = (NetmdDoctorTbl) getById(NetmdDoctorTbl.class, appointment
 				.getAppointmentDetails().getDoctorId());
 		if (doctorTbl == null) {
 			ServiceException se = new ServiceException(
@@ -352,7 +356,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		appointmentTbl.setDoctorTbl(doctorTbl);
+		appointmentTbl.setNetmdDoctorTbl(doctorTbl);
 		DoctorScheduleTbl ScheduleTbl = (DoctorScheduleTbl) getById(
 				DoctorScheduleTbl.class, appointment.getAppointmentDetails()
 						.getScheduleId());
@@ -474,7 +478,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 
 	}
 
-	private PatientTbl getByPatientNameAndBranchId(String firstName,
+	private NetmdPatientTbl getByPatientNameAndBranchId(String firstName,
 			String lastName, String email,int branchId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_BY_PATIENT_NAME_AND_BRANCH_ID);
@@ -482,7 +486,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 		query.setParameter("param2", lastName);
 		query.setParameter("param3", email);
 		query.setParameter("param4", branchId);
-		return executeUniqueQuery(PatientTbl.class, query);
+		return executeUniqueQuery(NetmdPatientTbl.class, query);
 	}
 
 	/**
@@ -572,7 +576,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 				throw se;
 			}
 		}
-		PatientTbl patientTbl = (PatientTbl) getById(PatientTbl.class,
+		NetmdPatientTbl patientTbl = (NetmdPatientTbl) getById(NetmdPatientTbl.class,
 				appointment.getAppointmentDetails().getPatientId());
 		if (patientTbl == null) {
 			ServiceException se = new ServiceException(
@@ -583,7 +587,7 @@ public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		patientAppointmentTbl.setPatientTbl(patientTbl);
+		patientAppointmentTbl.setNetmdPatientTbl(patientTbl);
 		try {
 			patientAppointmentTbl.setAppointmentDate(df.parse(appointment
 					.getAppointmentDetails().getStartDate()));
