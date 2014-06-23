@@ -15,9 +15,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.springframework.transaction.annotation.Transactional;
+
 import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
@@ -37,13 +40,14 @@ import com.nv.youNeverWait.pl.entity.LabUserBranchTbl;
 import com.nv.youNeverWait.pl.entity.LabUserTbl;
 import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
+import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.OrderAmountTbl;
 import com.nv.youNeverWait.pl.entity.OrderBranchTbl;
 import com.nv.youNeverWait.pl.entity.OrderResultTbl;
 import com.nv.youNeverWait.pl.entity.OrderTbl;
 import com.nv.youNeverWait.pl.entity.OrderTransferTbl;
-import com.nv.youNeverWait.pl.entity.PatientTbl;
+import com.nv.youNeverWait.pl.entity.NetmdPatientTbl;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.pl.entity.SuperAdminTbl;
 import com.nv.youNeverWait.pl.entity.SyncFreqTypeEnum;
@@ -571,7 +575,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labTbl.setCreateDateTime(createdTime);
 		labTbl.setUpdateDateTime(createdTime);
 
-		if (superAdmin.getEnableSync() == false) {
+		if (superAdmin.isEnableSync() == false) {
 			labTbl.setEnableSync(false);
 		} else {
 			labTbl.setEnableSync(true);
@@ -616,7 +620,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labBranch.setEmail(branch.getEmail());
 		// labBranch.setBranchCode(branch.getBranchCode());
 		labBranch.setLabTbl(lab);
-		if (lab.getEnableSync() == false) {
+		if (lab.isEnableSync() == false) {
 			labBranch.setEnableSync(false);
 		} else {
 			labBranch.setEnableSync(true);
@@ -1113,7 +1117,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			throw se;
 		}
 		/* getting all doctor records having given email id */
-		List<DoctorTbl> doctorTbl = (List<DoctorTbl>) getDoctorByEmail(resultTranfer
+		List<NetmdDoctorTbl> doctorTbl = (List<NetmdDoctorTbl>) getDoctorByEmail(resultTranfer
 				.getDoctorEmail().trim());
 
 		if (doctorTbl.isEmpty()) {
@@ -1128,10 +1132,10 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		int count = 0;
 		boolean flag = false;
 		ResultTbl patientResults = null;
-		for (DoctorTbl doctr : doctorTbl) {
+		for (NetmdDoctorTbl doctr : doctorTbl) {
 			count++;
 			/* Getting patient record by phone */
-			PatientTbl patientByPhone = getPatientByPhone(resultTranfer
+			NetmdPatientTbl patientByPhone = getPatientByPhone(resultTranfer
 					.getPatient().getFirstName().toUpperCase().trim(), doctr
 					.getNetmdBranchTbl().getId(), resultTranfer.getPatient()
 					.getPhone());
@@ -1140,7 +1144,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 				 * Getting patient record by mobile when there is no patient
 				 * record by phone
 				 */
-				PatientTbl patientByMobile = getPatientByMobile(resultTranfer
+				NetmdPatientTbl patientByMobile = getPatientByMobile(resultTranfer
 						.getPatient().getFirstName().toUpperCase().trim(),
 						doctr.getNetmdBranchTbl().getId(), resultTranfer
 								.getPatient().getMobile());
@@ -1149,7 +1153,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 					 * Getting patient record by Email when there is no patient
 					 * record by mobile
 					 */
-					PatientTbl patientByEmail = getPatientByEmail(resultTranfer
+					NetmdPatientTbl patientByEmail = getPatientByEmail(resultTranfer
 							.getPatient().getFirstName().toUpperCase().trim(),
 							doctr.getNetmdBranchTbl().getId(), resultTranfer
 									.getPatient().getEmail());
@@ -1175,7 +1179,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 								resultTranfer.getSourceLabId(),
 								resultTranfer.getSourceLabBranchId());
 						if (patientResults == null)
-							result.setPatientTbl(patientByEmail);
+							result.setNetmdPatientTbl(patientByEmail);
 					}
 				} else {
 					/* Checking the result tbl record already exists */
@@ -1187,7 +1191,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 							resultTranfer.getSourceLabId(),
 							resultTranfer.getSourceLabBranchId());
 					if (patientResults == null)
-						result.setPatientTbl(patientByMobile);
+						result.setNetmdPatientTbl(patientByMobile);
 				}
 			} else {
 				/* Checking the result tbl record already exists */
@@ -1198,7 +1202,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 						resultTranfer.getSourceLabBranchId());
 
 				if (patientResults == null)
-					result.setPatientTbl(patientByPhone);
+					result.setNetmdPatientTbl(patientByPhone);
 			}
 			if (patientResults != null) {
 				patientResults.setResult(resultTranfer.getResult());
@@ -2018,7 +2022,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		if (lab != null) {
 			sync.setSyncFreqType(lab.getSyncFreqType());
 			sync.setSyncTime(lab.getSyncTime());
-			sync.setEnableSync(lab.getEnableSync());
+			sync.setEnableSync(lab.isEnableSync());
 			sync.setSuccess(true);
 		} else {
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidLab);
@@ -2043,7 +2047,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		if (labBranch != null) {
 			sync.setSyncFreqType(labBranch.getSyncFreqType());
 			sync.setSyncTime(labBranch.getSyncTime());
-			sync.setEnableSync(labBranch.getEnableSync());
+			sync.setEnableSync(labBranch.isEnableSync());
 			sync.setSuccess(true);
 		} else {
 			ServiceException se = new ServiceException(
@@ -2071,7 +2075,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		LabTbl lab = getById(LabTbl.class, sync.getLabId());
 		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
 		if (lab != null) {
-			if (superAdmin.getEnableSync() == false) {
+			if (superAdmin.isEnableSync() == false) {
 				lab.setEnableSync(false);
 			} else {
 				lab.setEnableSync(sync.isEnableSync());
@@ -2079,7 +2083,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			lab.setUpdateDateTime(newDate);
 			update(lab);
 			/**** Setting values when the sync is enabled ****/
-			if (lab.getEnableSync() == true) {
+			if (lab.isEnableSync() == true) {
 
 				/****** Checking sync values with global sync time *****/
 				checkSync(superAdmin.getSyncFreqType(), sync.getSyncFreqType(),
@@ -2095,7 +2099,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 					response.setMsg(Constants.MESSAGE);
 				/****** Setting all branches of the lab as disabled *******/
 				for (LabBranchTbl labBranch : lab.getLabBranchTbls()) {
-					labBranch.setEnableSync(lab.getEnableSync());
+					labBranch.setEnableSync(lab.isEnableSync());
 					labBranch.setUpdateDateTime(newDate);
 					update(labBranch);
 
@@ -2129,11 +2133,11 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		LabBranchTbl labBranch = getById(LabBranchTbl.class,
 				sync.getLabBranchId());
 		if (labBranch != null) {
-			if (labBranch.getLabTbl().getEnableSync() == false) {
+			if (labBranch.getLabTbl().isEnableSync() == false) {
 				labBranch.setEnableSync(false);
 			} else {
 				SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
-				if (superAdmin.getEnableSync() == false) {
+				if (superAdmin.isEnableSync() == false) {
 					labBranch.setEnableSync(false);
 				} else {
 					labBranch.setEnableSync(sync.isEnableSync());
@@ -2141,7 +2145,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			}
 			labBranch.setUpdateDateTime(newDate);
 			update(labBranch);
-			if (labBranch.getEnableSync() == true) {
+			if (labBranch.isEnableSync() == true) {
 				/**
 				 * Checking whether branch sync time is greater than lab sync
 				 * time
@@ -2258,7 +2262,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		orderTestResult.setLabBranchTbl(labBranchTbl);
 		orderTestResult.setLabTbl(labTbl);
 		orderTestResult.setOwnerLabBranchTbl(orderBrnchTbl.getLabBranchTbl());
-		orderTestResult.setCreated_dateTime(currentDateTime);
+		orderTestResult.setCreatedDateTime(currentDateTime);
 		orderTestResult.setUpdatedDateTime(currentDateTime);
 		save(orderTestResult);
 		
@@ -2373,11 +2377,11 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	 * @param eMail
 	 * @return DoctorTbl
 	 */
-	public List<DoctorTbl> getDoctorByEmail(String eMail) {
+	public List<NetmdDoctorTbl> getDoctorByEmail(String eMail) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_DOCTOR_BY_EMAIL);
 		query.setParameter("param1", eMail);
-		return executeQuery(DoctorTbl.class, query);
+		return executeQuery(NetmdDoctorTbl.class, query);
 	}
 
 	/**
@@ -2411,14 +2415,14 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	 * @param phone
 	 * @return PatientTbl
 	 */
-	public PatientTbl getPatientByPhone(String patientName, int netmdBranchId,
+	public NetmdPatientTbl getPatientByPhone(String patientName, int netmdBranchId,
 			String phone) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_PATIENT_BY_PHONE);
 		query.setParameter("param1", patientName);
 		query.setParameter("param2", netmdBranchId);
 		query.setParameter("param3", phone);
-		return executeUniqueQuery(PatientTbl.class, query);
+		return executeUniqueQuery(NetmdPatientTbl.class, query);
 	}
 
 	/**
@@ -2428,14 +2432,14 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	 * @param mobile
 	 * @return PatientTbl
 	 */
-	public PatientTbl getPatientByMobile(String patientName, int netmdBranchId,
+	public NetmdPatientTbl getPatientByMobile(String patientName, int netmdBranchId,
 			String mobile) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_PATIENT_BY_MOBILE);
 		query.setParameter("param1", patientName);
 		query.setParameter("param2", netmdBranchId);
 		query.setParameter("param3", mobile);
-		return executeUniqueQuery(PatientTbl.class, query);
+		return executeUniqueQuery(NetmdPatientTbl.class, query);
 	}
 
 	/**
@@ -2445,14 +2449,14 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 	 * @param email
 	 * @return PatientTbl
 	 */
-	public PatientTbl getPatientByEmail(String patientName, int netmdBranchId,
+	public NetmdPatientTbl getPatientByEmail(String patientName, int netmdBranchId,
 			String email) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_PATIENT_BY_MAILID);
 		query.setParameter("param1", patientName);
 		query.setParameter("param2", netmdBranchId);
 		query.setParameter("param3", email);
-		return executeUniqueQuery(PatientTbl.class, query);
+		return executeUniqueQuery(NetmdPatientTbl.class, query);
 	}
 
 	/**
