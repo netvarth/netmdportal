@@ -20,6 +20,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nv.framework.util.text.StringEncoder;
+import com.nv.youNeverWait.api.sync.ReferralSyncDTO;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.DoctorAchievementTbl;
@@ -52,8 +53,16 @@ import com.nv.youNeverWait.rs.dto.RetrievalDoctorResponseDTO;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.DoctorDao;
 
+/**
+ * @author Asha Chandran
+ *
+ */
 public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9091226584701181853L;
 	@PersistenceContext()
 	private EntityManager em;
 
@@ -232,7 +241,6 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 					oldDateInMillis = df.parse(olddate).getTime(); // getting
 																	// minutes
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				String seconds = "5";
@@ -245,7 +253,6 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 					newUpdatedTime = df.parse(newDateAdds);
 					newDoctor.setUpdateDateTime(newUpdatedTime);
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else {
@@ -1054,6 +1061,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	 * Method to retrieve netmd login of a user
 	 * 
 	 * @param userName
+	 * @param userType 
 	 * @return NetmdLoginTbl
 	 */
 	public NetmdLoginTbl getLoginByUserNameAndUserType(String userName,
