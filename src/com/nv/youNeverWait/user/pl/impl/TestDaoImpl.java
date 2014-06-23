@@ -293,10 +293,10 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 			response.setMinTimeRequired(testTbl.getMinTimeRequired());
 			response.setNormalRange(testTbl.getNormalRange());
 			response.setRemarks(testTbl.getRemarks());
-			response.setUploadStatus(testTbl.getUploadStatus());
-			response.setSpecimenentryStatus(testTbl.getSpecimenentryStatus());
-			response.setMachineEntryStatus(testTbl.getMachineentryStatus());
-			response.setActive(testTbl.getActive());
+			response.setUploadStatus(testTbl.isUploadStatus());
+			response.setSpecimenentryStatus(testTbl.isSpecimenentryStatus());
+			response.setMachineEntryStatus(testTbl.isMachineentryStatus());
+			response.setActive(testTbl.isActive());
 			response.setResult(testTbl.getResult());
 			
 			// get specimen details of the test
@@ -371,7 +371,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 			newTests.setGenericName(testTbl.getGenericName());
 			newTests.setMinTimeRequired(testTbl.getMinTimeRequired());
 			newTests.setInformaticValue(testTbl.getInformaticValues());
-			newTests.setMachineEntryStatus(testTbl.getMachineentryStatus());
+			newTests.setMachineEntryStatus(testTbl.isMachineentryStatus());
 			try {
 				newTests.setResult(testTbl.getResult());
 			} catch (JsonGenerationException e) {
@@ -385,9 +385,9 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 				e.printStackTrace();
 			}
 			newTests.setRemarks(testTbl.getRemarks());
-			newTests.setUploadStatus(testTbl.getUploadStatus());
+			newTests.setUploadStatus(testTbl.isUploadStatus());
 			newTests.setNormalRange(testTbl.getNormalRange());
-			newTests.setSpecimenEntryStatus(testTbl.getSpecimenentryStatus());
+			newTests.setSpecimenEntryStatus(testTbl.isSpecimenentryStatus());
 			testList.add(newTests);
 		}
 
