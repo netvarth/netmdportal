@@ -176,7 +176,7 @@ SuperAdminDao {
 		
 			if(request!=null)
 				request.getSession().getServletContext()
-				.setAttribute("logEnabled", superAdmin.getEnableLog());
+				.setAttribute("logEnabled", superAdmin.isEnableLog());
 		}
 		ResponseDTO response = new ResponseDTO();
 		response.setSuccess(true);
@@ -198,7 +198,7 @@ SuperAdminDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response.setStatus(superAdmin.getEnableLog());
+		response.setStatus(superAdmin.isEnableLog());
 		response.setSuccess(true);
 		return response;
 	}
@@ -216,7 +216,7 @@ SuperAdminDao {
 		
 			if(request!=null)
 				request.getSession().getServletContext()
-				.setAttribute("syncLogEnabled", superAdmin.getEnableLog());
+				.setAttribute("syncLogEnabled", superAdmin.isEnableLog());
 		}
 		ResponseDTO response = new ResponseDTO();
 		response.setSuccess(true);
@@ -236,7 +236,7 @@ SuperAdminDao {
 			update(superAdmin);
 		}
 		/******Setting sync values when sync is enabled*******/
-		if(superAdmin.getEnableSync()==true){
+		if(superAdmin.isEnableSync()==true){
 			superAdmin.setSyncFreqType(sync.getSyncFreqType());
 			superAdmin.setSyncTime(sync.getSyncTime());
 			update(superAdmin);
@@ -257,7 +257,7 @@ SuperAdminDao {
 		if (superAdmin != null) {
 			sync.setSyncFreqType(superAdmin.getSyncFreqType());
 			sync.setSyncTime(superAdmin.getSyncTime());
-			sync.setEnableSync(superAdmin.getEnableSync());
+			sync.setEnableSync(superAdmin.isEnableSync());
 			sync.setSuccess(true);
 		}
 		return sync;
@@ -279,7 +279,7 @@ SuperAdminDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response.setStatus(superAdmin.getEnableSyncLog());
+		response.setStatus(superAdmin.isEnableSyncLog());
 		response.setSuccess(true);
 		return response;
 	}
