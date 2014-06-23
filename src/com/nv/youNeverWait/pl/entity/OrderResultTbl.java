@@ -2,7 +2,6 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.Date;
 
 
@@ -12,24 +11,29 @@ import java.util.Date;
  */
 @Entity
 @Table(name="order_result_tbl")
+@NamedQuery(name="OrderResultTbl.findAll", query="SELECT o FROM OrderResultTbl o")
 public class OrderResultTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
 	private int id;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="`created_date_time`", nullable=false)
-	private Date created_dateTime;
+	@Column(name="created_date_time")
+	private Date createdDateTime;
 
 	@Lob
-	@Column(nullable=false)
 	private String result;
 
+	@Column(name="sent")
+	private boolean sent;
+
+	@Column(name="test_uid", length=45)
+	private String testUid;
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="updated_date_time", nullable=false)
+	@Column(name="updated_date_time")
 	private Date updatedDateTime;
 
 	//bi-directional many-to-one association to OrderBranchTbl
@@ -37,27 +41,21 @@ public class OrderResultTbl implements Serializable {
 	@JoinColumn(name="order_id", nullable=false)
 	private OrderBranchTbl orderBranchTbl;
 
+	//bi-directional many-to-one association to LabTbl
+	@ManyToOne
+	@JoinColumn(name="source_lab_id", nullable=false)
+	private LabTbl labTbl;
+
 	//bi-directional many-to-one association to LabBranchTbl
-		@ManyToOne
-		@JoinColumn(name="source_lab_branch_id", nullable=false)
-		private LabBranchTbl labBranchTbl;
+	@ManyToOne
+	@JoinColumn(name="source_lab_branch_id", nullable=false)
+	private LabBranchTbl labBranchTbl;
 
-		//bi-directional many-to-one association to LabTbl
-		@ManyToOne
-		@JoinColumn(name="source_lab_id", nullable=false)
-		private LabTbl labTbl;
+	//bi-directional many-to-one association to LabBranchTbl
+	@ManyToOne
+	@JoinColumn(name="owner_branch_id", nullable=false)
+	private LabBranchTbl ownerLabBranchTbl;
 
-		//bi-directional many-to-one association to LabBranchTbl
-		@ManyToOne
-		@JoinColumn(name="owner_branch_id", nullable=false)
-		private LabBranchTbl ownerLabBranchTbl;
-
-		@Column(name="test_uid", length=45)
-		private String testUid;
-
-		@Column(name="sent")
-		private boolean sent;
-		
 	public OrderResultTbl() {
 	}
 
@@ -69,12 +67,12 @@ public class OrderResultTbl implements Serializable {
 		this.id = id;
 	}
 
-	public Date getCreated_dateTime() {
-		return this.created_dateTime;
+	public Date getCreatedDateTime() {
+		return this.createdDateTime;
 	}
 
-	public void setCreated_dateTime(Date created_dateTime) {
-		this.created_dateTime = created_dateTime;
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
 	}
 
 	public String getResult() {
@@ -83,6 +81,15 @@ public class OrderResultTbl implements Serializable {
 
 	public void setResult(String result) {
 		this.result = result;
+	}
+
+	
+	public String getTestUid() {
+		return this.testUid;
+	}
+
+	public void setTestUid(String testUid) {
+		this.testUid = testUid;
 	}
 
 	public Date getUpdatedDateTime() {
@@ -101,47 +108,56 @@ public class OrderResultTbl implements Serializable {
 		this.orderBranchTbl = orderBranchTbl;
 	}
 
-	public String getTestUid() {
-		return testUid;
-	}
-
-	public void setTestUid(String testUid) {
-		this.testUid = testUid;
-	}
-
-	public LabBranchTbl getLabBranchTbl() {
-		return labBranchTbl;
-	}
-
-	public void setLabBranchTbl(LabBranchTbl labBranchTbl) {
-		this.labBranchTbl = labBranchTbl;
-	}
-
 	public LabTbl getLabTbl() {
-		return labTbl;
+		return this.labTbl;
 	}
 
 	public void setLabTbl(LabTbl labTbl) {
 		this.labTbl = labTbl;
 	}
 
+
+	/**
+	 * @return the ownerLabBranchTbl
+	 */
 	public LabBranchTbl getOwnerLabBranchTbl() {
 		return ownerLabBranchTbl;
 	}
 
+	/**
+	 * @param ownerLabBranchTbl the ownerLabBranchTbl to set
+	 */
 	public void setOwnerLabBranchTbl(LabBranchTbl ownerLabBranchTbl) {
 		this.ownerLabBranchTbl = ownerLabBranchTbl;
 	}
 
+	/**
+	 * @return the labBranchTbl
+	 */
+	public LabBranchTbl getLabBranchTbl() {
+		return labBranchTbl;
+	}
+
+	/**
+	 * @param labBranchTbl the labBranchTbl to set
+	 */
+	public void setLabBranchTbl(LabBranchTbl labBranchTbl) {
+		this.labBranchTbl = labBranchTbl;
+	}
+
+	/**
+	 * @return the sent
+	 */
 	public boolean isSent() {
 		return sent;
 	}
 
+	/**
+	 * @param sent the sent to set
+	 */
 	public void setSent(boolean sent) {
 		this.sent = sent;
 	}
-
-	
 
 	
 
