@@ -52,6 +52,10 @@ import com.nv.youNeverWait.user.pl.dao.NetRxDao;
  * 
  */
 public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6251101671090236235L;
 	@PersistenceContext()
 	private EntityManager em;
 
@@ -734,7 +738,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		netRxBranch.setMobile(branch.getMobile());
 		netRxBranch.setEmail(branch.getEmail());
 		netRxBranch.setNetrxTbl(netRx);
-		if(netRx.isEnableSync()==false){
+		if(netRx.getEnableSync()==false){
 			netRxBranch.setEnableSync(false);
 		}
 		else{
@@ -919,7 +923,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 			netrx.setUpdateDateTime(newDate);
 			update(netrx);
 			/**** Setting values when the sync is enabled ****/
-			if (netrx.isEnableSync() == true) {
+			if (netrx.getEnableSync() == true) {
 
 				/****** Checking sync values with global sync time *****/
 				checkSync(superAdmin.getSyncFreqType(), sync.getSyncFreqType(),
@@ -934,7 +938,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 					response.setMsg(Constants.MESSAGE);
 				/****** Setting all branches of the lab as disabled *******/
 				for (NetrxBranchTbl netrxBranch : netrx.getNetrxBranchTbls()) {
-					netrxBranch.setEnableSync(netrx.isEnableSync());
+					netrxBranch.setEnableSync(netrx.getEnableSync());
 					netrxBranch.setUpdateDateTime(newDate);
 					update(netrxBranch);
 					
@@ -964,7 +968,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		NetrxBranchTbl netrxBranch = getById(NetrxBranchTbl.class,
 				sync.getNetrxBranchId());
 		if (netrxBranch != null) {
-			if (netrxBranch.getNetrxTbl().isEnableSync() == false) {
+			if (netrxBranch.getNetrxTbl().getEnableSync() == false) {
 				netrxBranch.setEnableSync(false);
 			} else {
 				SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
@@ -976,7 +980,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 			}
 			netrxBranch.setUpdateDateTime(newDate);
 			update(netrxBranch);
-			if (netrxBranch.isEnableSync()==true) {
+			if (netrxBranch.getEnableSync()==true) {
 				/**
 				 * Checking whether branch sync time is greater than netrx sync
 				 * time
@@ -1068,7 +1072,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		if (netrxBranch != null) {
 			sync.setSyncFreqType(netrxBranch.getSyncFreqType());
 			sync.setSyncTime(netrxBranch.getSyncTime());
-			sync.setEnableSync(netrxBranch.isEnableSync());
+			sync.setEnableSync(netrxBranch.getEnableSync());
 			sync.setSuccess(true);
 		} else {
 			ServiceException se = new ServiceException(
@@ -1092,7 +1096,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		if (netrx != null) {
 			sync.setSyncFreqType(netrx.getSyncFreqType());
 			sync.setSyncTime(netrx.getSyncTime());
-			sync.setEnableSync(netrx.isEnableSync());
+			sync.setEnableSync(netrx.getEnableSync());
 			sync.setSuccess(true);
 		} else {
 			ServiceException se = new ServiceException(
@@ -1187,6 +1191,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 	/**
 	 * get MacPassPhrase By Branch
 	 * @param branchId
+	 * @param passPhrase 
 	 * @return LabPassphraseTbl
 	 */
 	public NetrxPassphraseTbl getMacPassPhraseByBranch(int branchId,
@@ -1199,9 +1204,8 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 	}
 	/**
 	 * Method to get new netmd branches list
-	 * 
-	 * @param syncTime
-	 * @return
+	 * @param netRxId 
+	 * @return List<NetrxBranchTbl>
 	 */
 	public List<NetrxBranchTbl> getNetRxBranches(int netRxId) {
 		javax.persistence.Query query = em

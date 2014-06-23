@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.nv.youNeverWait.api.sync.LimsReferralBundle;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.CommonSyncResponse;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
@@ -72,6 +73,10 @@ public class SyncResource {
 		syncResponse.setResponses(response);
 		return syncResponse;
 	}
+	/**
+	 * @param bundle
+	 * @return CommonSyncResponse
+	 */
 	public CommonSyncResponse processReferral(LimsReferralBundle bundle){
 		
 		List<SyncResponse> response=service.processReferral(bundle);

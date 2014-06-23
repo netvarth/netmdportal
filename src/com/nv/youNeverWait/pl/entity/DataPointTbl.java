@@ -34,65 +34,17 @@ public class DataPointTbl implements Serializable {
 	@OneToMany(mappedBy="dataPointTbl")
 	private List<AnswerStatTbl> answerStatTbls;
 
+	/**
+	 * 
+	 */
 	public DataPointTbl() {
 	}
 
-	public int getId() {
-		return this.id;
-	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getClusterXml() {
-		return this.clusterXml;
-	}
-
-	public void setClusterXml(String clusterXml) {
-		this.clusterXml = clusterXml;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public int getOrder() {
-		return this.order;
-	}
-
-	public void setOrder(int order) {
-		this.order = order;
-	}
-
-	public int getQuestionnaire() {
-		return this.questionnaire;
-	}
-
-	public void setQuestionnaire(int questionnaire) {
-		this.questionnaire = questionnaire;
-	}
-
-	public String getUid() {
-		return this.uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
-
-	public List<AnswerStatTbl> getAnswerStatTbls() {
-		return this.answerStatTbls;
-	}
-
-	public void setAnswerStatTbls(List<AnswerStatTbl> answerStatTbls) {
-		this.answerStatTbls = answerStatTbls;
-	}
-
+	/**
+	 * @param answerStatTbl
+	 * @return AnswerStatTbl
+	 */
 	public AnswerStatTbl addAnswerStatTbl(AnswerStatTbl answerStatTbl) {
 		getAnswerStatTbls().add(answerStatTbl);
 		answerStatTbl.setDataPointTbl(this);
@@ -100,11 +52,140 @@ public class DataPointTbl implements Serializable {
 		return answerStatTbl;
 	}
 
+	/**
+	 * @param answerStatTbl
+	 * @return AnswerStatTbl
+	 */
 	public AnswerStatTbl removeAnswerStatTbl(AnswerStatTbl answerStatTbl) {
 		getAnswerStatTbls().remove(answerStatTbl);
 		answerStatTbl.setDataPointTbl(null);
 
 		return answerStatTbl;
+	}
+
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
+	/**
+	 * @return the clusterXml
+	 */
+	public String getClusterXml() {
+		return clusterXml;
+	}
+
+
+
+	/**
+	 * @param clusterXml the clusterXml to set
+	 */
+	public void setClusterXml(String clusterXml) {
+		this.clusterXml = clusterXml;
+	}
+
+
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+	/**
+	 * @return the order
+	 */
+	public int getOrder() {
+		return order;
+	}
+
+
+
+	/**
+	 * @param order the order to set
+	 */
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+
+
+	/**
+	 * @return the questionnaire
+	 */
+	public int getQuestionnaire() {
+		return questionnaire;
+	}
+
+
+
+	/**
+	 * @param questionnaire the questionnaire to set
+	 */
+	public void setQuestionnaire(int questionnaire) {
+		this.questionnaire = questionnaire;
+	}
+
+
+
+	/**
+	 * @return the uid
+	 */
+	public String getUid() {
+		return uid;
+	}
+
+
+
+	/**
+	 * @param uid the uid to set
+	 */
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+
+
+	/**
+	 * @return the answerStatTbls
+	 */
+	public List<AnswerStatTbl> getAnswerStatTbls() {
+		return answerStatTbls;
+	}
+
+
+
+	/**
+	 * @param answerStatTbls the answerStatTbls to set
+	 */
+	public void setAnswerStatTbls(List<AnswerStatTbl> answerStatTbls) {
+		this.answerStatTbls = answerStatTbls;
 	}
 
 }

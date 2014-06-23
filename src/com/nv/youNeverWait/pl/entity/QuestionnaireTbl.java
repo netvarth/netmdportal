@@ -11,6 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="questionnaire_tbl")
+@NamedQuery(name="QuestionnaireTbl.findAll", query="SELECT q FROM QuestionnaireTbl q")
 public class QuestionnaireTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -18,9 +19,11 @@ public class QuestionnaireTbl implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
+	@Lob
 	@Column(name="data_points")
 	private String dataPoints;
 
+	@Lob
 	private String questionnaire;
 
 	private String uid;
@@ -28,10 +31,6 @@ public class QuestionnaireTbl implements Serializable {
 	//bi-directional many-to-one association to AnswerSetTbl
 	@OneToMany(mappedBy="questionnaireTbl")
 	private List<AnswerSetTbl> answerSetTbls;
-
-	//bi-directional many-to-one association to DataPointTbl
-	@OneToMany(mappedBy="questionnaireTbl")
-	private List<DataPointTbl> dataPointTbls;
 
 	//bi-directional many-to-one association to QuestionTbl
 	@OneToMany(mappedBy="questionnaireTbl")
@@ -47,49 +46,17 @@ public class QuestionnaireTbl implements Serializable {
 	@JoinColumn(name="organisation_id")
 	private OrganisationTbl organisationTbl;
 
+	/**
+	 * 
+	 */
 	public QuestionnaireTbl() {
 	}
 
-	public int getId() {
-		return this.id;
-	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getDataPoints() {
-		return this.dataPoints;
-	}
-
-	public void setDataPoints(String dataPoints) {
-		this.dataPoints = dataPoints;
-	}
-
-	public String getQuestionnaire() {
-		return this.questionnaire;
-	}
-
-	public void setQuestionnaire(String questionnaire) {
-		this.questionnaire = questionnaire;
-	}
-
-	public String getUid() {
-		return this.uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
-
-	public List<AnswerSetTbl> getAnswerSetTbls() {
-		return this.answerSetTbls;
-	}
-
-	public void setAnswerSetTbls(List<AnswerSetTbl> answerSetTbls) {
-		this.answerSetTbls = answerSetTbls;
-	}
-
+	/**
+	 * @param answerSetTbl
+	 * @return AnswerSetTbl
+	 */
 	public AnswerSetTbl addAnswerSetTbl(AnswerSetTbl answerSetTbl) {
 		getAnswerSetTbls().add(answerSetTbl);
 		answerSetTbl.setQuestionnaireTbl(this);
@@ -97,6 +64,10 @@ public class QuestionnaireTbl implements Serializable {
 		return answerSetTbl;
 	}
 
+	/**
+	 * @param answerSetTbl
+	 * @return AnswerSetTbl
+	 */
 	public AnswerSetTbl removeAnswerSetTbl(AnswerSetTbl answerSetTbl) {
 		getAnswerSetTbls().remove(answerSetTbl);
 		answerSetTbl.setQuestionnaireTbl(null);
@@ -104,36 +75,10 @@ public class QuestionnaireTbl implements Serializable {
 		return answerSetTbl;
 	}
 
-	public List<DataPointTbl> getDataPointTbls() {
-		return this.dataPointTbls;
-	}
-
-	public void setDataPointTbls(List<DataPointTbl> dataPointTbls) {
-		this.dataPointTbls = dataPointTbls;
-	}
-
-	public DataPointTbl addDataPointTbl(DataPointTbl dataPointTbl) {
-		getDataPointTbls().add(dataPointTbl);
-		dataPointTbl.setQuestionnaireTbl(this);
-
-		return dataPointTbl;
-	}
-
-	public DataPointTbl removeDataPointTbl(DataPointTbl dataPointTbl) {
-		getDataPointTbls().remove(dataPointTbl);
-		dataPointTbl.setQuestionnaireTbl(null);
-
-		return dataPointTbl;
-	}
-
-	public List<QuestionTbl> getQuestionTbls() {
-		return this.questionTbls;
-	}
-
-	public void setQuestionTbls(List<QuestionTbl> questionTbls) {
-		this.questionTbls = questionTbls;
-	}
-
+	/**
+	 * @param questionTbl
+	 * @return QuestionTbl
+	 */
 	public QuestionTbl addQuestionTbl(QuestionTbl questionTbl) {
 		getQuestionTbls().add(questionTbl);
 		questionTbl.setQuestionnaireTbl(this);
@@ -141,6 +86,10 @@ public class QuestionnaireTbl implements Serializable {
 		return questionTbl;
 	}
 
+	/**
+	 * @param questionTbl
+	 * @return QuestionTbl
+	 */
 	public QuestionTbl removeQuestionTbl(QuestionTbl questionTbl) {
 		getQuestionTbls().remove(questionTbl);
 		questionTbl.setQuestionnaireTbl(null);
@@ -148,18 +97,130 @@ public class QuestionnaireTbl implements Serializable {
 		return questionTbl;
 	}
 
-	public DepartmentTbl getDepartmentTbl() {
-		return this.departmentTbl;
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
 	}
 
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	/**
+	 * @return the dataPoints
+	 */
+	public String getDataPoints() {
+		return dataPoints;
+	}
+
+
+	/**
+	 * @param dataPoints the dataPoints to set
+	 */
+	public void setDataPoints(String dataPoints) {
+		this.dataPoints = dataPoints;
+	}
+
+
+	/**
+	 * @return the questionnaire
+	 */
+	public String getQuestionnaire() {
+		return questionnaire;
+	}
+
+
+	/**
+	 * @param questionnaire the questionnaire to set
+	 */
+	public void setQuestionnaire(String questionnaire) {
+		this.questionnaire = questionnaire;
+	}
+
+
+	/**
+	 * @return the uid
+	 */
+	public String getUid() {
+		return uid;
+	}
+
+
+	/**
+	 * @param uid the uid to set
+	 */
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+
+	/**
+	 * @return the answerSetTbls
+	 */
+	public List<AnswerSetTbl> getAnswerSetTbls() {
+		return answerSetTbls;
+	}
+
+
+	/**
+	 * @param answerSetTbls the answerSetTbls to set
+	 */
+	public void setAnswerSetTbls(List<AnswerSetTbl> answerSetTbls) {
+		this.answerSetTbls = answerSetTbls;
+	}
+
+
+	/**
+	 * @return the questionTbls
+	 */
+	public List<QuestionTbl> getQuestionTbls() {
+		return questionTbls;
+	}
+
+
+	/**
+	 * @param questionTbls the questionTbls to set
+	 */
+	public void setQuestionTbls(List<QuestionTbl> questionTbls) {
+		this.questionTbls = questionTbls;
+	}
+
+
+	/**
+	 * @return the departmentTbl
+	 */
+	public DepartmentTbl getDepartmentTbl() {
+		return departmentTbl;
+	}
+
+
+	/**
+	 * @param departmentTbl the departmentTbl to set
+	 */
 	public void setDepartmentTbl(DepartmentTbl departmentTbl) {
 		this.departmentTbl = departmentTbl;
 	}
 
+
+	/**
+	 * @return the organisationTbl
+	 */
 	public OrganisationTbl getOrganisationTbl() {
-		return this.organisationTbl;
+		return organisationTbl;
 	}
 
+
+	/**
+	 * @param organisationTbl the organisationTbl to set
+	 */
 	public void setOrganisationTbl(OrganisationTbl organisationTbl) {
 		this.organisationTbl = organisationTbl;
 	}
