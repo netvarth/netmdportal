@@ -175,7 +175,7 @@ public class ScheduleDetail {
 		DateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
 		DateFormat df = new SimpleDateFormat(Constants.TIMEWITHFORMAT);
 		this.scheduleGlobalId=schedule.getId();
-		this.doctorGlobalId = schedule.getDoctorTbl().getId();
+		this.doctorGlobalId = schedule.getNetmdDoctorTbl().getId();
 		if(schedule.getDate()!=null)
 			this.startDate = sdf.format(schedule.getDate());
 		if(schedule.getStartingTime()!=null)
