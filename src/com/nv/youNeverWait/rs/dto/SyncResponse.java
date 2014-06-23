@@ -1,8 +1,6 @@
 package com.nv.youNeverWait.rs.dto;
 
-import com.nv.youNeverWait.user.bl.service.ActionEnum;
-
-
+import com.nv.youNeverWait.pl.entity.ActionEnum;
 
 /**
  * @author Mani E.V
@@ -15,15 +13,18 @@ public class SyncResponse {
 	private String statusCode;
 	private ActionEnum actionName;
 	
-	
+	/**
+	 * @return the localId
+	 */
 	public String getLocalId() {
 		return localId;
 	}
-	
+	/**
+	 * @param localId the localId to set
+	 */
 	public void setLocalId(String localId) {
 		this.localId = localId;
 	}
-	
 	/**
 	 * @return the globalId
 	 */
