@@ -17,49 +17,58 @@ public class NetmdDoctorTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(unique = true, nullable = false)
 	private int id;
 
+	@Column(length = 145)
 	private String address;
 
 	@Column(name="consultation_interval")
 	private int consultationInterval;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_date_time")
+	@Column(name = "create_date_time", nullable = false)
 	private Date createDateTime;
 
-	@Column(name="date_of_birth")
+	@Column(name = "date_of_birth", length = 45)
 	private String dateOfBirth;
 
+	@Column(length = 145)
 	private String designation;
 
+	@Column(nullable = false, length = 45)
 	private String email;
 
-	@Column(name="first_name")
+	@Column(name = "first_name", length = 45)
 	private String firstName;
-
+	
+	@Column(length = 45)
 	private String gender;
 
-	@Column(name="last_name")
+	@Column(name = "last_name", length = 45)
 	private String lastName;
 
+	@Column(length = 15)
 	private String mobile;
 
+	@Column(length = 15)
 	private String phone;
 
+	@Column(length = 145)
 	private String specialization;
-
+	
+	@Column(length = 45, nullable = false)
 	private String status;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_date_time")
+	@Column(name = "update_date_time", nullable = false)
 	private Date updateDateTime;
 
-	@Column(name="work_history")
+	@Column(name = "work_history", length = 145)
 	private String workHistory;
 
-	@Column(name="working_places")
+	@Column(name = "working_places", length = 145)
 	private String workingPlaces;
 
 	//bi-directional many-to-one association to DoctorAchievementTbl
