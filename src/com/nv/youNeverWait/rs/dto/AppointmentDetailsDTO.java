@@ -46,13 +46,13 @@ public class AppointmentDetailsDTO {
 		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
 		SimpleDateFormat sdf2 = new SimpleDateFormat(Constants.DATE_FORMAT_WITH_TIME);
 		this.id = patientAppointmentTblObj.getId();
-		this.patientId = patientAppointmentTblObj.getPatientTbl().getId();
-		this.doctorId = patientAppointmentTblObj.getDoctorTbl().getId();
+		this.patientId = patientAppointmentTblObj.getNetmdPatientTbl().getId();
+		this.doctorId = patientAppointmentTblObj.getNetmdDoctorTbl().getId();
 		this.scheduleId = patientAppointmentTblObj.getDoctorScheduleTbl().getId();
 		this.startDate = sdf.format(patientAppointmentTblObj.getAppointmentDate());
 		this.startTime = sdf2.format(patientAppointmentTblObj.getStartingTime());
-		this.patientName = patientAppointmentTblObj.getPatientTbl().getFirstName()+" "+patientAppointmentTblObj.getPatientTbl().getLastName();
-		this.emailId=patientAppointmentTblObj.getPatientTbl().getEmail();
+		this.patientName = patientAppointmentTblObj.getNetmdPatientTbl().getFirstName()+" "+patientAppointmentTblObj.getNetmdPatientTbl().getLastName();
+		this.emailId=patientAppointmentTblObj.getNetmdPatientTbl().getEmail();
 	}
 	public int getGlobalId() {
 		return globalId;
