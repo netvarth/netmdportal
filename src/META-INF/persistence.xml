@@ -85,6 +85,16 @@
 		<class>com.nv.youNeverWait.pl.entity.NetmdQuestionnaireTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.UploadInstallerTbl</class>
 		
+		<class>com.nv.youNeverWait.pl.entity.FacilityResultTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.FacilityTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetlimsOrderTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetlimsResultTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetlimsReferralTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.PatientResultTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.ReferralResultTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetlimsPatientTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdPatientTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdDoctorTbl</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 		</properties>
