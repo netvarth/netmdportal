@@ -14,4 +14,5 @@ public class LimsReferralBundle {
 	public void setReferrals(List<ReferralSyncDTO> referrals) {
 		this.referrals = referrals;
 	}
+	
 }
