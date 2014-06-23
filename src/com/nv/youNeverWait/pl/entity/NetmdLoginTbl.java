@@ -2,7 +2,7 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -11,6 +11,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name="netmd_login_tbl")
+@NamedQuery(name="NetmdLoginTbl.findAll", query="SELECT n FROM NetmdLoginTbl n")
 public class NetmdLoginTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,24 +29,24 @@ public class NetmdLoginTbl implements Serializable {
 	@Column(name="user_type", nullable=false, length=45)
 	private String userType;
 
-	//bi-directional many-to-one association to DoctorTbl
+	//bi-directional many-to-one association to NetmdDoctorTbl
 	@OneToMany(mappedBy="netmdLoginTbl")
-	private Set<DoctorTbl> doctorTbls;
+	private List<NetmdDoctorTbl> netmdDoctorTbls;
+
+	//bi-directional many-to-one association to NetmdPatientTbl
+	@OneToMany(mappedBy="netmdLoginTbl")
+	private List<NetmdPatientTbl> netmdPatientTbls;
 
 	//bi-directional many-to-one association to NetmdTbl
 	@OneToMany(mappedBy="netmdLoginTbl")
-	private Set<NetmdTbl> netmdTbls;
+	private List<NetmdTbl> netmdTbls;
 
 	//bi-directional many-to-one association to NetmdUserTbl
 	@OneToMany(mappedBy="netmdLoginTbl")
-	private Set<NetmdUserTbl> netmdUserTbls;
+	private List<NetmdUserTbl> netmdUserTbls;
 
-	//bi-directional many-to-one association to PatientTbl
-	@OneToMany(mappedBy="netmdLoginTbl")
-	private Set<PatientTbl> patientTbls;
-
-    public NetmdLoginTbl() {
-    }
+	public NetmdLoginTbl() {
+	}
 
 	public int getId() {
 		return this.id;
@@ -79,36 +80,92 @@ public class NetmdLoginTbl implements Serializable {
 		this.userType = userType;
 	}
 
-	public Set<DoctorTbl> getDoctorTbls() {
-		return this.doctorTbls;
+	public List<NetmdDoctorTbl> getNetmdDoctorTbls() {
+		return this.netmdDoctorTbls;
 	}
 
-	public void setDoctorTbls(Set<DoctorTbl> doctorTbls) {
-		this.doctorTbls = doctorTbls;
+	public void setNetmdDoctorTbls(List<NetmdDoctorTbl> netmdDoctorTbls) {
+		this.netmdDoctorTbls = netmdDoctorTbls;
 	}
-	
-	public Set<NetmdTbl> getNetmdTbls() {
+
+	public NetmdDoctorTbl addNetmdDoctorTbl(NetmdDoctorTbl netmdDoctorTbl) {
+		getNetmdDoctorTbls().add(netmdDoctorTbl);
+		netmdDoctorTbl.setNetmdLoginTbl(this);
+
+		return netmdDoctorTbl;
+	}
+
+	public NetmdDoctorTbl removeNetmdDoctorTbl(NetmdDoctorTbl netmdDoctorTbl) {
+		getNetmdDoctorTbls().remove(netmdDoctorTbl);
+		netmdDoctorTbl.setNetmdLoginTbl(null);
+
+		return netmdDoctorTbl;
+	}
+
+	public List<NetmdPatientTbl> getNetmdPatientTbls() {
+		return this.netmdPatientTbls;
+	}
+
+	public void setNetmdPatientTbls(List<NetmdPatientTbl> netmdPatientTbls) {
+		this.netmdPatientTbls = netmdPatientTbls;
+	}
+
+	public NetmdPatientTbl addNetmdPatientTbl(NetmdPatientTbl netmdPatientTbl) {
+		getNetmdPatientTbls().add(netmdPatientTbl);
+		netmdPatientTbl.setNetmdLoginTbl(this);
+
+		return netmdPatientTbl;
+	}
+
+	public NetmdPatientTbl removeNetmdPatientTbl(NetmdPatientTbl netmdPatientTbl) {
+		getNetmdPatientTbls().remove(netmdPatientTbl);
+		netmdPatientTbl.setNetmdLoginTbl(null);
+
+		return netmdPatientTbl;
+	}
+
+	public List<NetmdTbl> getNetmdTbls() {
 		return this.netmdTbls;
 	}
 
-	public void setNetmdTbls(Set<NetmdTbl> netmdTbls) {
+	public void setNetmdTbls(List<NetmdTbl> netmdTbls) {
 		this.netmdTbls = netmdTbls;
 	}
-	
-	public Set<NetmdUserTbl> getNetmdUserTbls() {
+
+	public NetmdTbl addNetmdTbl(NetmdTbl netmdTbl) {
+		getNetmdTbls().add(netmdTbl);
+		netmdTbl.setNetmdLoginTbl(this);
+
+		return netmdTbl;
+	}
+
+	public NetmdTbl removeNetmdTbl(NetmdTbl netmdTbl) {
+		getNetmdTbls().remove(netmdTbl);
+		netmdTbl.setNetmdLoginTbl(null);
+
+		return netmdTbl;
+	}
+
+	public List<NetmdUserTbl> getNetmdUserTbls() {
 		return this.netmdUserTbls;
 	}
 
-	public void setNetmdUserTbls(Set<NetmdUserTbl> netmdUserTbls) {
+	public void setNetmdUserTbls(List<NetmdUserTbl> netmdUserTbls) {
 		this.netmdUserTbls = netmdUserTbls;
 	}
-	
-	public Set<PatientTbl> getPatientTbls() {
-		return this.patientTbls;
+
+	public NetmdUserTbl addNetmdUserTbl(NetmdUserTbl netmdUserTbl) {
+		getNetmdUserTbls().add(netmdUserTbl);
+		netmdUserTbl.setNetmdLoginTbl(this);
+
+		return netmdUserTbl;
 	}
 
-	public void setPatientTbls(Set<PatientTbl> patientTbls) {
-		this.patientTbls = patientTbls;
+	public NetmdUserTbl removeNetmdUserTbl(NetmdUserTbl netmdUserTbl) {
+		getNetmdUserTbls().remove(netmdUserTbl);
+		netmdUserTbl.setNetmdLoginTbl(null);
+
+		return netmdUserTbl;
 	}
-	
+
 }
