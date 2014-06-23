@@ -3,14 +3,16 @@ package com.nv.youNeverWait.pl.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
+
 
 /**
  * The persistent class for the doctor_tbl database table.
  * 
  */
 @Entity
-@Table(name = "doctor_tbl")
+@Table(name="doctor_tbl")
+@NamedQuery(name="DoctorTbl.findAll", query="SELECT d FROM DoctorTbl d")
 public class DoctorTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,7 +24,7 @@ public class DoctorTbl implements Serializable {
 	@Column(length = 145)
 	private String address;
 
-	@Column(name = "consultation_interval")
+	@Column(name="consultation_interval")
 	private int consultationInterval;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -47,6 +49,9 @@ public class DoctorTbl implements Serializable {
 	@Column(name = "last_name", length = 45)
 	private String lastName;
 
+	@Column(name="login_id")
+	private int loginId;
+
 	@Column(length = 15)
 	private String mobile;
 
@@ -60,62 +65,18 @@ public class DoctorTbl implements Serializable {
 	private String status;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_date_time", nullable = false)
+	@Column(name="update_date_time")
 	private Date updateDateTime;
 
-	@Column(name = "work_history", length = 145)
+	@Column(name="work_history")
 	private String workHistory;
 
-	@Column(name = "working_places", length = 145)
+	@Column(name="working_places")
 	private String workingPlaces;
 
-	// bi-directional many-to-one association to DoctorAchievementTbl
-	@OneToMany(mappedBy = "doctorTbl")
-	private Set<DoctorAchievementTbl> doctorAchievementTbls;
-
-	// bi-directional many-to-one association to
-	// DoctorEducationalQualificationTbl
-	@OneToMany(mappedBy = "doctorTbl")
-	private Set<DoctorEducationalQualificationTbl> doctorEducationalQualificationTbls;
-
-	// bi-directional many-to-one association to DoctorExpertiseTbl
-	@OneToMany(mappedBy = "doctorTbl")
-	private Set<DoctorExpertiseTbl> doctorExpertiseTbls;
-
-	// bi-directional many-to-one association to DoctorMembershipTbl
-	@OneToMany(mappedBy = "doctorTbl")
-	private Set<DoctorMembershipTbl> doctorMembershipTbls;
-
-	// bi-directional many-to-one association to DoctorPracticeExperienceTbl
-	@OneToMany(mappedBy = "doctorTbl")
-	private Set<DoctorPracticeExperienceTbl> doctorPracticeExperienceTbls;
-
-	// bi-directional many-to-one association to DoctorScheduleTbl
-	@OneToMany(mappedBy = "doctorTbl")
-	private Set<DoctorScheduleTbl> doctorScheduleTbls;
-
-	// bi-directional many-to-one association to NetmdPassphraseTbl
-	@ManyToOne
-	@JoinColumn(name = "netmd_passphrase_id")
-	private NetmdPassphraseTbl netmdPassphraseTbl;
-
-	// bi-directional many-to-one association to NetmdLoginTbl
-	@ManyToOne
-	@JoinColumn(name = "login_id", nullable = false)
-	private NetmdLoginTbl netmdLoginTbl;
-
-	// bi-directional many-to-one association to NetmdBranchTbl
-	@ManyToOne
-	@JoinColumn(name = "netmd_branch_id", nullable = false)
-	private NetmdBranchTbl netmdBranchTbl;
-
-	// bi-directional many-to-one association to MedicalRecordTbl
-	@OneToMany(mappedBy = "doctorTbl")
-	private Set<MedicalRecordTbl> medicalRecordTbls;
-
-	// bi-directional many-to-one association to PatientAppointmentTbl
-	@OneToMany(mappedBy = "doctorTbl")
-	private Set<PatientAppointmentTbl> patientAppointmentTbls;
+	//bi-directional many-to-one association to NetlimsReferralTbl
+	@OneToMany(mappedBy="doctorTbl")
+	private List<NetlimsReferralTbl> netlimsReferralTbls;
 
 	public DoctorTbl() {
 	}
@@ -200,6 +161,14 @@ public class DoctorTbl implements Serializable {
 		this.lastName = lastName;
 	}
 
+	public int getLoginId() {
+		return this.loginId;
+	}
+
+	public void setLoginId(int loginId) {
+		this.loginId = loginId;
+	}
+
 	public String getMobile() {
 		return this.mobile;
 	}
@@ -216,18 +185,10 @@ public class DoctorTbl implements Serializable {
 		this.phone = phone;
 	}
 
-	
-
-	/**
-	 * @return the specialization
-	 */
 	public String getSpecialization() {
-		return specialization;
+		return this.specialization;
 	}
 
-	/**
-	 * @param specialization the specialization to set
-	 */
 	public void setSpecialization(String specialization) {
 		this.specialization = specialization;
 	}
@@ -264,98 +225,26 @@ public class DoctorTbl implements Serializable {
 		this.workingPlaces = workingPlaces;
 	}
 
-	public Set<DoctorAchievementTbl> getDoctorAchievementTbls() {
-		return this.doctorAchievementTbls;
+	public List<NetlimsReferralTbl> getNetlimsReferralTbls() {
+		return this.netlimsReferralTbls;
 	}
 
-	public void setDoctorAchievementTbls(
-			Set<DoctorAchievementTbl> doctorAchievementTbls) {
-		this.doctorAchievementTbls = doctorAchievementTbls;
+	public void setNetlimsReferralTbls(List<NetlimsReferralTbl> netlimsReferralTbls) {
+		this.netlimsReferralTbls = netlimsReferralTbls;
 	}
 
-	public Set<DoctorEducationalQualificationTbl> getDoctorEducationalQualificationTbls() {
-		return this.doctorEducationalQualificationTbls;
+	public NetlimsReferralTbl addNetlimsReferralTbl(NetlimsReferralTbl netlimsReferralTbl) {
+		getNetlimsReferralTbls().add(netlimsReferralTbl);
+		netlimsReferralTbl.setDoctorTbl(this);
+
+		return netlimsReferralTbl;
 	}
 
-	public void setDoctorEducationalQualificationTbls(
-			Set<DoctorEducationalQualificationTbl> doctorEducationalQualificationTbls) {
-		this.doctorEducationalQualificationTbls = doctorEducationalQualificationTbls;
-	}
+	public NetlimsReferralTbl removeNetlimsReferralTbl(NetlimsReferralTbl netlimsReferralTbl) {
+		getNetlimsReferralTbls().remove(netlimsReferralTbl);
+		netlimsReferralTbl.setDoctorTbl(null);
 
-	public Set<DoctorExpertiseTbl> getDoctorExpertiseTbls() {
-		return this.doctorExpertiseTbls;
-	}
-
-	public void setDoctorExpertiseTbls(
-			Set<DoctorExpertiseTbl> doctorExpertiseTbls) {
-		this.doctorExpertiseTbls = doctorExpertiseTbls;
-	}
-
-	public Set<DoctorMembershipTbl> getDoctorMembershipTbls() {
-		return this.doctorMembershipTbls;
-	}
-
-	public void setDoctorMembershipTbls(
-			Set<DoctorMembershipTbl> doctorMembershipTbls) {
-		this.doctorMembershipTbls = doctorMembershipTbls;
-	}
-
-	public Set<DoctorPracticeExperienceTbl> getDoctorPracticeExperienceTbls() {
-		return this.doctorPracticeExperienceTbls;
-	}
-
-	public void setDoctorPracticeExperienceTbls(
-			Set<DoctorPracticeExperienceTbl> doctorPracticeExperienceTbls) {
-		this.doctorPracticeExperienceTbls = doctorPracticeExperienceTbls;
-	}
-
-	public Set<DoctorScheduleTbl> getDoctorScheduleTbls() {
-		return this.doctorScheduleTbls;
-	}
-
-	public void setDoctorScheduleTbls(Set<DoctorScheduleTbl> doctorScheduleTbls) {
-		this.doctorScheduleTbls = doctorScheduleTbls;
-	}
-
-	public NetmdPassphraseTbl getNetmdPassphraseTbl() {
-		return this.netmdPassphraseTbl;
-	}
-
-	public void setNetmdPassphraseTbl(NetmdPassphraseTbl netmdPassphraseTbl) {
-		this.netmdPassphraseTbl = netmdPassphraseTbl;
-	}
-
-	public NetmdLoginTbl getNetmdLoginTbl() {
-		return this.netmdLoginTbl;
-	}
-
-	public void setNetmdLoginTbl(NetmdLoginTbl netmdLoginTbl) {
-		this.netmdLoginTbl = netmdLoginTbl;
-	}
-
-	public NetmdBranchTbl getNetmdBranchTbl() {
-		return this.netmdBranchTbl;
-	}
-
-	public void setNetmdBranchTbl(NetmdBranchTbl netmdBranchTbl) {
-		this.netmdBranchTbl = netmdBranchTbl;
-	}
-
-	public Set<MedicalRecordTbl> getMedicalRecordTbls() {
-		return this.medicalRecordTbls;
-	}
-
-	public void setMedicalRecordTbls(Set<MedicalRecordTbl> medicalRecordTbls) {
-		this.medicalRecordTbls = medicalRecordTbls;
-	}
-
-	public Set<PatientAppointmentTbl> getPatientAppointmentTbls() {
-		return this.patientAppointmentTbls;
-	}
-
-	public void setPatientAppointmentTbls(
-			Set<PatientAppointmentTbl> patientAppointmentTbls) {
-		this.patientAppointmentTbls = patientAppointmentTbls;
+		return netlimsReferralTbl;
 	}
 
 }
