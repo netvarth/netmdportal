@@ -29,13 +29,13 @@ public class AppointmentsDTO {
 		this.date = df.format(patientAppointment.getAppointmentDate());
 		this.startingTime = dft.format(patientAppointment.getStartingTime());
 		this.appointmentStatus = patientAppointment.getAppointmentStatus();
-		this.doctorFirstName = patientAppointment.getDoctorTbl().getFirstName();
-		this.doctorLastName = patientAppointment.getDoctorTbl().getLastName();
-		this.doctorphone = patientAppointment.getDoctorTbl().getPhone();
-		this.doctormobile = patientAppointment.getDoctorTbl().getMobile();
-		this.doctoraddress = patientAppointment.getDoctorTbl().getAddress();
-		this.doctorSpecialisation = patientAppointment.getDoctorTbl().getSpecialization();
-		this.doctorDesignation = patientAppointment.getDoctorTbl().getDesignation();
+		this.doctorFirstName = patientAppointment.getNetmdDoctorTbl().getFirstName();
+		this.doctorLastName = patientAppointment.getNetmdDoctorTbl().getLastName();
+		this.doctorphone = patientAppointment.getNetmdDoctorTbl().getPhone();
+		this.doctormobile = patientAppointment.getNetmdDoctorTbl().getMobile();
+		this.doctoraddress = patientAppointment.getNetmdDoctorTbl().getAddress();
+		this.doctorSpecialisation = patientAppointment.getNetmdDoctorTbl().getSpecialization();
+		this.doctorDesignation = patientAppointment.getNetmdDoctorTbl().getDesignation();
 	}
 	/**
 	 * @return the id
