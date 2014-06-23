@@ -1,6 +1,7 @@
 package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -24,33 +25,54 @@ public class DoctorAchievementTbl implements Serializable {
 	//bi-directional many-to-one association to DoctorTbl
     @ManyToOne
 	@JoinColumn(name="doctor_id", nullable=false)
-	private DoctorTbl doctorTbl;
+    private NetmdDoctorTbl netmdDoctorTbl;
 
+    /**
+     * 
+     */
     public DoctorAchievementTbl() {
     }
 
+	/**
+	 * @return the id
+	 */
 	public int getId() {
 		return this.id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the achievement
+	 */
 	public String getAchievement() {
 		return this.achievement;
 	}
 
+	/**
+	 * @param achievement the achievement to set
+	 */
 	public void setAchievement(String achievement) {
 		this.achievement = achievement;
 	}
 
-	public DoctorTbl getDoctorTbl() {
-		return this.doctorTbl;
+	/**
+	 * @return the netmdDoctorTbl
+	 */
+	public NetmdDoctorTbl getNetmdDoctorTbl() {
+		return netmdDoctorTbl;
 	}
 
-	public void setDoctorTbl(DoctorTbl doctorTbl) {
-		this.doctorTbl = doctorTbl;
+	/**
+	 * @param netmdDoctorTbl the netmdDoctorTbl to set
+	 */
+	public void setNetmdDoctorTbl(NetmdDoctorTbl netmdDoctorTbl) {
+		this.netmdDoctorTbl = netmdDoctorTbl;
 	}
 	
 }
