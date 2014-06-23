@@ -1,6 +1,6 @@
 package com.nv.youNeverWait.rs.dto;
 
-import com.nv.youNeverWait.pl.entity.DoctorTbl;
+import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
 
 public class DoctorDetailsForPatient {
 	private int id;
@@ -13,7 +13,7 @@ public class DoctorDetailsForPatient {
 	private String designation;
 	private String specialisation;
 	
-	public DoctorDetailsForPatient(DoctorTbl doctorTbl) {
+	public DoctorDetailsForPatient(NetmdDoctorTbl doctorTbl) {
 		super();
 		this.id = doctorTbl.getId();
 		this.firstName = doctorTbl.getFirstName();
