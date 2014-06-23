@@ -55,6 +55,7 @@ public class Query {
 	public static final String GET_DOCTORS_BY_NETMD_BRANCH = "from DoctorTbl as doctor where doctor.netmdBranchTbl.id=:param1";
 	public static final String RETRIEVE__UPDATED_DOCTORS = "from DoctorTbl as doctor where  doctor.updateDateTime>:param1 and doctor.netmdPassphraseTbl.id=:param2 and doctor.netmdBranchTbl.id=:param3 and doctor.updateDateTime<=:param4 order by updateDateTime";
 	public static final String RETRIEVE_DOCTORS_FOR_PRIMARY = "from DoctorTbl as doctor where  doctor.updateDateTime>=:param1 and doctor.netmdPassphraseTbl.id=:param2 and doctor.netmdBranchTbl.id=:param3 and doctor.updateDateTime<:param4 order by updateDateTime";
+	public static final String GET_REFERRAL_BY_EMAILID = "from DoctorTbl as doctor where doctor.email =:param1";
 	
 	/* DoctorPracticeExperienceTbl */
 	public static final String GET_EXPERIENCE_BY_DOCTORID = "from DoctorPracticeExperienceTbl as experience where experience.doctorTbl.id= :param1";
