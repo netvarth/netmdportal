@@ -23,6 +23,7 @@ import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
 import com.nv.framework.sendmsg.email.SendMailMsgObj;
 import com.nv.framework.util.text.StringEncoder;
+import com.nv.youNeverWait.api.sync.ReferralSyncDTO;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
@@ -40,6 +41,10 @@ import com.nv.youNeverWait.user.bl.validation.DoctorValidator;
 import com.nv.youNeverWait.user.pl.dao.DoctorDao;
 import com.nv.youNeverWait.user.pl.impl.DoctorDaoImpl;
 
+/**
+ * @author Asha Chandran 
+ *
+ */
 public class DoctorServiceImpl implements DoctorService {
 
 	private DoctorDao doctorDao;
@@ -134,7 +139,6 @@ public class DoctorServiceImpl implements DoctorService {
 	 * @param subject
 	 * @param doctor 
 	 * @param netmdBranch
-	 * @return
 	 */
 	private void sendEmailToDoctor(String subject, DoctorDetail doctor, String netmdBranch) {
 		String msgBody = "";
@@ -263,10 +267,16 @@ public class DoctorServiceImpl implements DoctorService {
 		return response;
 	}
 
+	/**
+	 * @return doctorDaoImpl
+	 */
 	public DoctorDaoImpl getDoctorDaoImpl() {
 		return doctorDaoImpl;
 	}
 
+	/**
+	 * @param doctorDaoImpl
+	 */
 	public void setDoctorDaoImpl(DoctorDaoImpl doctorDaoImpl) {
 		this.doctorDaoImpl = doctorDaoImpl;
 	}
