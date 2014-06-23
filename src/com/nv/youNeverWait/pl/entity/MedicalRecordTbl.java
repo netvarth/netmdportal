@@ -37,12 +37,12 @@ public class MedicalRecordTbl implements Serializable {
 	//bi-directional many-to-one association to DoctorTbl
     @ManyToOne
 	@JoinColumn(name="doctor_id", nullable=false)
-	private DoctorTbl doctorTbl;
+    private NetmdDoctorTbl netmdDoctorTbl;
 
 	//bi-directional many-to-one association to PatientTbl
     @ManyToOne
 	@JoinColumn(name="patient_id", nullable=false)
-	private PatientTbl patientTbl;
+    private NetmdPatientTbl netmdPatientTbl;
 
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -71,68 +71,120 @@ public class MedicalRecordTbl implements Serializable {
 		this.status = status;
 	}
 
+	/**
+	 * 
+	 */
 	public MedicalRecordTbl() {
     }
 
+	/**
+	 * @return the id
+	 */
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the medicalRecord
+	 */
 	public String getMedicalRecord() {
-		return this.medicalRecord;
+		return medicalRecord;
 	}
 
+	/**
+	 * @param medicalRecord the medicalRecord to set
+	 */
 	public void setMedicalRecord(String medicalRecord) {
 		this.medicalRecord = medicalRecord;
 	}
 
+	/**
+	 * @return the type
+	 */
 	public String getType() {
-		return this.type;
+		return type;
 	}
 
+	/**
+	 * @param type the type to set
+	 */
 	public void setType(String type) {
 		this.type = type;
 	}
 
+	/**
+	 * @return the caseTbl
+	 */
 	public CaseTbl getCaseTbl() {
-		return this.caseTbl;
+		return caseTbl;
 	}
 
+	/**
+	 * @param caseTbl the caseTbl to set
+	 */
 	public void setCaseTbl(CaseTbl caseTbl) {
 		this.caseTbl = caseTbl;
 	}
-	
-	public DoctorTbl getDoctorTbl() {
-		return this.doctorTbl;
+
+	/**
+	 * @return the netmdDoctorTbl
+	 */
+	public NetmdDoctorTbl getNetmdDoctorTbl() {
+		return netmdDoctorTbl;
 	}
 
-	public void setDoctorTbl(DoctorTbl doctorTbl) {
-		this.doctorTbl = doctorTbl;
-	}
-	
-	public PatientTbl getPatientTbl() {
-		return this.patientTbl;
+	/**
+	 * @param netmdDoctorTbl the netmdDoctorTbl to set
+	 */
+	public void setNetmdDoctorTbl(NetmdDoctorTbl netmdDoctorTbl) {
+		this.netmdDoctorTbl = netmdDoctorTbl;
 	}
 
-	public void setPatientTbl(PatientTbl patientTbl) {
-		this.patientTbl = patientTbl;
+	/**
+	 * @return the netmdPatientTbl
+	 */
+	public NetmdPatientTbl getNetmdPatientTbl() {
+		return netmdPatientTbl;
 	}
+
+	/**
+	 * @param netmdPatientTbl the netmdPatientTbl to set
+	 */
+	public void setNetmdPatientTbl(NetmdPatientTbl netmdPatientTbl) {
+		this.netmdPatientTbl = netmdPatientTbl;
+	}
+
+	/**
+	 * @return the updateDateTime
+	 */
 	public Date getUpdateDateTime() {
-		return this.updateDateTime;
+		return updateDateTime;
 	}
 
+	/**
+	 * @param updateDateTime the updateDateTime to set
+	 */
 	public void setUpdateDateTime(Date updateDateTime) {
 		this.updateDateTime = updateDateTime;
 	}
-	
+
+	/**
+	 * @return the createdDateTime
+	 */
 	public Date getCreatedDateTime() {
-		return this.createdDateTime;
+		return createdDateTime;
 	}
 
+	/**
+	 * @param createdDateTime the createdDateTime to set
+	 */
 	public void setCreatedDateTime(Date createdDateTime) {
 		this.createdDateTime = createdDateTime;
 	}
