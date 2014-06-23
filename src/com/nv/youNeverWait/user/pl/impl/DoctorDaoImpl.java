@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
 import com.nv.framework.util.text.StringEncoder;
+import com.nv.youNeverWait.api.sync.ReferralSyncDTO;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.DoctorAchievementTbl;
@@ -1253,6 +1254,30 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	 */
 	public void setEm(EntityManager em) {
 		this.em = em;
+	}
+
+	@Override
+	public int processReferral(ReferralSyncDTO referral) {
+
+		DoctorTbl doctorTbl=getReferral(referral.getReferralInfo().getAddress().getEmail());
+		if(doctorTbl==null)
+			doctorTbl=new DoctorTbl();
+		doctorTbl.setEmail(referral.getReferralInfo().getAddress().getEmail());
+		//nofax,primary n secon addr,city,state,pin
+		doctorTbl.setPhone(referral.getReferralInfo().getAddress().getPhone());
+		doctorTbl.setMobile(referral.getReferralInfo().getAddress().getMobile());
+		//no uid,name,actionname
+	
+		update(doctorTbl);
+		return doctorTbl.getId();
+	}
+
+
+
+private DoctorTbl getReferral(String email) {
+		javax.persistence.Query query=em.createQuery(Query.GET_REFERRAL_BY_EMAILID);
+		query.setParameter("param1", email);
+		return executeUniqueQuery(DoctorTbl.class, query);
 	}
 
 }
