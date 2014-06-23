@@ -8,12 +8,12 @@ public enum NetMDBranchPropertyEnum implements Property, EnumDisplay{
 	mobileNumber("mobileNumber","mobile","com.nv.youNeverWait.pl.entity.NetmdBranchTbl","",""),
 	phone("phone","phone","com.nv.youNeverWait.pl.entity.NetmdBranchTbl","",""),
 	address("address","address","com.nv.youNeverWait.pl.entity.NetmdBranchTbl","",""),
-	patientId("patientId","id","com.nv.youNeverWait.pl.entity.PatientTbl","patientTbls",""),
-	patientFirstName("patientFirstName","firstName","com.nv.youNeverWait.pl.entity.PatientTbl","patientTbls",""),
-	patientEmail("patientEmail","email","com.nv.youNeverWait.pl.entity.PatientTbl","patientTbls",""),
+	patientId("patientId","id","com.nv.youNeverWait.pl.entity.NetmdPatientTbl","netmdPatientTbls",""),
+	patientFirstName("patientFirstName","firstName","com.nv.youNeverWait.pl.entity.NetmdPatientTbl","netmdPatientTbls",""),
+	patientEmail("patientEmail","email","com.nv.youNeverWait.pl.entity.NetmdPatientTbl","netmdPatientTbls",""),
 	netMdId("netMdId","id","com.nv.youNeverWait.pl.entity.NetmdTbl","netmdTbl",""),
 	userId("userId","id","com.nv.youNeverWait.pl.entity.NetmdUserTbl","netmdUserTbls",""),
-	doctorId("doctorId","id","com.nv.youNeverWait.pl.entity.DoctorTbl","doctorTbls",""),
+	doctorId("doctorId","id","com.nv.youNeverWait.pl.entity.NetmdDoctorTbl","netmdDoctorTbls",""),
 	
 	;
 	String displayName;
