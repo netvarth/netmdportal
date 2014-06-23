@@ -13,6 +13,8 @@ package com.nv.youNeverWait.rs.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nv.youNeverWait.pl.entity.ActionEnum;
+
 /**
  *
  *
@@ -21,6 +23,7 @@ import java.util.List;
 public class OrderResultSyncDTO {
 	private OrderSyncDTO order;
 	private Integer globalId;
+	private ActionEnum actionName;
 	List<OrderTestResultDTO> testResult=new ArrayList<OrderTestResultDTO>();
 	
 	/**
@@ -58,5 +61,17 @@ public class OrderResultSyncDTO {
 	 */
 	public void setTestResult(List<OrderTestResultDTO> testResult) {
 		this.testResult = testResult;
+	}
+	/**
+	 * @return the actionName
+	 */
+	public ActionEnum getActionName() {
+		return actionName;
+	}
+	/**
+	 * @param actionName the actionName to set
+	 */
+	public void setActionName(ActionEnum actionName) {
+		this.actionName = actionName;
 	}
 }
