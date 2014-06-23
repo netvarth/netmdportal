@@ -1,28 +1,28 @@
 package com.nv.portal.rs.netlims;
 
 import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.nv.youNeverWait.api.sync.LimsReferralBundle;
 import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.rs.dto.CommonSyncResponse;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
+import com.nv.youNeverWait.rs.dto.OrderResultBundle;
 import com.nv.youNeverWait.rs.dto.Parameter;
-import com.nv.youNeverWait.rs.dto.SyncDTO;
 import com.nv.youNeverWait.rs.dto.SyncResponse;
-import com.nv.youNeverWait.rs.dto.SyncResponseDTO;
 import com.nv.youNeverWait.user.bl.service.LogService;
 import com.nv.youNeverWait.user.bl.service.SyncService;
 
+/**
+ * @author Mani E.V
+ *
+ */
 @Controller
 @RequestMapping("ui/sync/")
 
@@ -62,8 +62,17 @@ public class SyncResource {
 		return response;
 	}
 	
-	
-public CommonSyncResponse processReferral(LimsReferralBundle bundle){
+	/**
+	 * @param bundle 
+	 * @return CommonSyncResponse
+	 */
+	public CommonSyncResponse processOrderResult(OrderResultBundle bundle){
+		List<SyncResponse> response =service.processOrderResult(bundle);
+		CommonSyncResponse syncResponse = new CommonSyncResponse();
+		syncResponse.setResponses(response);
+		return syncResponse;
+	}
+	public CommonSyncResponse processReferral(LimsReferralBundle bundle){
 		
 		List<SyncResponse> response=service.processReferral(bundle);
 		CommonSyncResponse responses=new CommonSyncResponse();
@@ -71,7 +80,6 @@ public CommonSyncResponse processReferral(LimsReferralBundle bundle){
 		return responses;
 		
 	}
-
 	/**
 	 * @return the service
 	 */
@@ -85,5 +93,21 @@ public CommonSyncResponse processReferral(LimsReferralBundle bundle){
 	 */
 	public void setService(SyncService service) {
 		this.service = service;
+	}
+
+	/**
+	 * @return the logService
+	 */
+	public LogService getLogService() {
+		return logService;
+	}
+
+
+
+	/**
+	 * @param logService the logService to set
+	 */
+	public void setLogService(LogService logService) {
+		this.logService = logService;
 	}
 }
