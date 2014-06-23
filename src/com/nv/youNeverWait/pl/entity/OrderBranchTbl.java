@@ -3,7 +3,7 @@ package com.nv.youNeverWait.pl.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -12,6 +12,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name="order_branch_tbl")
+@NamedQuery(name="OrderBranchTbl.findAll", query="SELECT o FROM OrderBranchTbl o")
 public class OrderBranchTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -35,19 +36,23 @@ public class OrderBranchTbl implements Serializable {
 	@Column(name="updated_date_time", nullable=false)
 	private Date updatedDateTime;
 
-	//bi-directional many-to-one association to LabBranchTbl
-	@ManyToOne
-	@JoinColumn(name="source_branch_id", nullable=false)
-	private LabBranchTbl labBranchTbl;
-
 	//bi-directional many-to-one association to LabTbl
 	@ManyToOne
-	@JoinColumn(name="source_lab_id", nullable=false)
+	@JoinColumn(name="source_lab_id")
 	private LabTbl labTbl;
+
+	//bi-directional many-to-one association to LabBranchTbl
+	@ManyToOne
+	@JoinColumn(name="source_branch_id")
+	private LabBranchTbl labBranchTbl;
+
+	//bi-directional many-to-one association to OrderResultTbl
+	@OneToMany(mappedBy="orderBranchTbl")
+	private List<OrderResultTbl> orderResultTbls;
 
 	//bi-directional many-to-one association to OrderTransferTbl
 	@OneToMany(mappedBy="orderBranchTbl")
-	private Set<OrderTransferTbl> orderTransferTbls;
+	private List<OrderTransferTbl> orderTransferTbls;
 
 	public OrderBranchTbl() {
 	}
@@ -92,14 +97,6 @@ public class OrderBranchTbl implements Serializable {
 		this.updatedDateTime = updatedDateTime;
 	}
 
-	public LabBranchTbl getLabBranchTbl() {
-		return this.labBranchTbl;
-	}
-
-	public void setLabBranchTbl(LabBranchTbl labBranchTbl) {
-		this.labBranchTbl = labBranchTbl;
-	}
-
 	public LabTbl getLabTbl() {
 		return this.labTbl;
 	}
@@ -108,11 +105,41 @@ public class OrderBranchTbl implements Serializable {
 		this.labTbl = labTbl;
 	}
 
-	public Set<OrderTransferTbl> getOrderTransferTbls() {
+	public LabBranchTbl getLabBranchTbl() {
+		return this.labBranchTbl;
+	}
+
+	public void setLabBranchTbl(LabBranchTbl labBranchTbl) {
+		this.labBranchTbl = labBranchTbl;
+	}
+
+	public List<OrderResultTbl> getOrderResultTbls() {
+		return this.orderResultTbls;
+	}
+
+	public void setOrderResultTbls(List<OrderResultTbl> orderResultTbls) {
+		this.orderResultTbls = orderResultTbls;
+	}
+
+	public OrderResultTbl addOrderResultTbl(OrderResultTbl orderResultTbl) {
+		getOrderResultTbls().add(orderResultTbl);
+		orderResultTbl.setOrderBranchTbl(this);
+
+		return orderResultTbl;
+	}
+
+	public OrderResultTbl removeOrderResultTbl(OrderResultTbl orderResultTbl) {
+		getOrderResultTbls().remove(orderResultTbl);
+		orderResultTbl.setOrderBranchTbl(null);
+
+		return orderResultTbl;
+	}
+
+	public List<OrderTransferTbl> getOrderTransferTbls() {
 		return this.orderTransferTbls;
 	}
 
-	public void setOrderTransferTbls(Set<OrderTransferTbl> orderTransferTbls) {
+	public void setOrderTransferTbls(List<OrderTransferTbl> orderTransferTbls) {
 		this.orderTransferTbls = orderTransferTbls;
 	}
 
