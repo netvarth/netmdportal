@@ -12,12 +12,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.nv.youNeverWait.rs.dto.BillSyncResponseDTO;
-import com.nv.youNeverWait.api.sync.LimsReferralBundle;
-import com.nv.youNeverWait.api.sync.ReferralSyncDTO;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ActionNameEnum;
@@ -46,6 +45,8 @@ import com.nv.youNeverWait.rs.dto.NetMdDTO;
 import com.nv.youNeverWait.rs.dto.NetMdUserDetail;
 import com.nv.youNeverWait.rs.dto.NetmdQuestionAnswerDTO;
 import com.nv.youNeverWait.rs.dto.NetmdQuestionAnswerSyncResponseDTO;
+import com.nv.youNeverWait.rs.dto.OrderResultBundle;
+import com.nv.youNeverWait.rs.dto.OrderResultSyncDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientResponse;
@@ -1781,30 +1782,21 @@ public class SyncServiceImpl implements SyncService {
 
 
 	@Override
-	public List<SyncResponse> processReferral(LimsReferralBundle bundle) {
-		List<SyncResponse> responses=new ArrayList<SyncResponse>();
-		for(ReferralSyncDTO referral:bundle.getReferrals()){
-	
-		SyncResponse response=new SyncResponse();	
-		try{
-		response.setLocalId(referral.getReferralInfo().getUid());
-		if(referral.getReferralInfo().getAddress().getEmail()!=null){
-		int referral_GlobalId=doctorService.processReferral(referral);
-		response.setGlobalId(referral_GlobalId);
-		response.setStatusCode("200");
+	public List<SyncResponse> processOrderResult(OrderResultBundle bundle) {
+		List<SyncResponse> responses = new ArrayList<SyncResponse>();
+		for(OrderResultSyncDTO orderResult : bundle.getOrderResults()){
+			SyncResponse response = new SyncResponse();
+			try{
+				response.setLocalId(orderResult.getOrder().getUid());
+				int globalId = resultService.processOrderResult(orderResult, bundle.getSource_branch_id());
+				response.setGlobalId(globalId);
+				response.setStatusCode("200");
+			} catch(Exception e){
+				log.error(e);
+				response.setStatusCode("500");
+			}
+			responses.add(response);
 		}
-		else{
-			response.setGlobalId(null);	
-			response.setStatusCode("200");
-			
-		}
-		}catch(Exception e){
-			log.error(e);
-			response.setStatusCode("500");	
-		}
-		responses.add(response);
-		}
-		
 		return responses;
 	}
 
