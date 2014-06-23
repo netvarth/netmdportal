@@ -32,49 +32,86 @@ public class DoctorEducationalQualificationTbl implements Serializable {
 	//bi-directional many-to-one association to DoctorTbl
     @ManyToOne
 	@JoinColumn(name="doctor_id", nullable=false)
-	private DoctorTbl doctorTbl;
+    private NetmdDoctorTbl netmdDoctorTbl;
 
-    public DoctorEducationalQualificationTbl() {
-    }
-
+	/**
+	 * @return the id
+	 */
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the educationalDegree
+	 */
 	public String getEducationalDegree() {
-		return this.educationalDegree;
+		return educationalDegree;
 	}
 
+	/**
+	 * @param educationalDegree the educationalDegree to set
+	 */
 	public void setEducationalDegree(String educationalDegree) {
 		this.educationalDegree = educationalDegree;
 	}
 
+	/**
+	 * @return the institution
+	 */
 	public String getInstitution() {
-		return this.institution;
+		return institution;
 	}
 
+	/**
+	 * @param institution the institution to set
+	 */
 	public void setInstitution(String institution) {
 		this.institution = institution;
 	}
 
+	/**
+	 * @return the passedOutDate
+	 */
 	public Date getPassedOutDate() {
-		return this.passedOutDate;
+		return passedOutDate;
 	}
 
+	/**
+	 * @param passedOutDate the passedOutDate to set
+	 */
 	public void setPassedOutDate(Date passedOutDate) {
 		this.passedOutDate = passedOutDate;
 	}
 
-	public DoctorTbl getDoctorTbl() {
-		return this.doctorTbl;
+	/**
+	 * @return the netmdDoctorTbl
+	 */
+	public NetmdDoctorTbl getNetmdDoctorTbl() {
+		return netmdDoctorTbl;
 	}
 
-	public void setDoctorTbl(DoctorTbl doctorTbl) {
-		this.doctorTbl = doctorTbl;
+	/**
+	 * @param netmdDoctorTbl the netmdDoctorTbl to set
+	 */
+	public void setNetmdDoctorTbl(NetmdDoctorTbl netmdDoctorTbl) {
+		this.netmdDoctorTbl = netmdDoctorTbl;
 	}
+
+	/**
+	 * 
+	 */
+	public DoctorEducationalQualificationTbl() {
+		super();
+	}
+
+
+	
 	
 }
