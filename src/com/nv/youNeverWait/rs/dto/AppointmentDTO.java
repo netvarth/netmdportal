@@ -84,14 +84,14 @@ public class AppointmentDTO {
 		SimpleDateFormat df2 = new SimpleDateFormat(Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		
 		this.globalId = appointmnets.getId();
-		this.patientId = appointmnets.getPatientTbl().getId();
-		this.doctorId = appointmnets.getDoctorTbl().getId();
+		this.patientId = appointmnets.getNetmdPatientTbl().getId();
+		this.doctorId = appointmnets.getNetmdDoctorTbl().getId();
 		this.scheduleId = appointmnets.getDoctorScheduleTbl().getId();
 		this.startDate = df.format(appointmnets.getAppointmentDate());
 		this.startTime = df1.format(appointmnets.getStartingTime());
 		this.createdDateTime = df2.format(appointmnets.getCreateDateTime());
 		this.updatedDateTime = df2.format(appointmnets.getUpdateDateTime());
-		this.patientName = appointmnets.getPatientTbl().getFirstName();
+		this.patientName = appointmnets.getNetmdPatientTbl().getFirstName();
 		this.appointmentStatus = appointmnets.getAppointmentStatus();
 		this.status = appointmnets.getStatus();
 	}
