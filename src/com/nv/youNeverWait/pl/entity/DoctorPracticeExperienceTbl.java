@@ -36,57 +36,98 @@ public class DoctorPracticeExperienceTbl implements Serializable {
 	//bi-directional many-to-one association to DoctorTbl
     @ManyToOne
 	@JoinColumn(name="doctor_id", nullable=false)
-	private DoctorTbl doctorTbl;
+    private NetmdDoctorTbl netmdDoctorTbl;
 
+    /**
+     * 
+     */
     public DoctorPracticeExperienceTbl() {
     }
 
+	/**
+	 * @return the id
+	 */
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the designation
+	 */
 	public String getDesignation() {
-		return this.designation;
+		return designation;
 	}
 
+	/**
+	 * @param designation the designation to set
+	 */
 	public void setDesignation(String designation) {
 		this.designation = designation;
 	}
 
+	/**
+	 * @return the fromDate
+	 */
 	public Date getFromDate() {
-		return this.fromDate;
+		return fromDate;
 	}
 
+	/**
+	 * @param fromDate the fromDate to set
+	 */
 	public void setFromDate(Date fromDate) {
 		this.fromDate = fromDate;
 	}
 
+	/**
+	 * @return the toDate
+	 */
 	public Date getToDate() {
-		return this.toDate;
+		return toDate;
 	}
 
+	/**
+	 * @param toDate the toDate to set
+	 */
 	public void setToDate(Date toDate) {
 		this.toDate = toDate;
 	}
 
+	/**
+	 * @return the workedAt
+	 */
 	public String getWorkedAt() {
-		return this.workedAt;
+		return workedAt;
 	}
 
+	/**
+	 * @param workedAt the workedAt to set
+	 */
 	public void setWorkedAt(String workedAt) {
 		this.workedAt = workedAt;
 	}
 
-	public DoctorTbl getDoctorTbl() {
-		return this.doctorTbl;
+	/**
+	 * @return the netmdDoctorTbl
+	 */
+	public NetmdDoctorTbl getNetmdDoctorTbl() {
+		return netmdDoctorTbl;
 	}
 
-	public void setDoctorTbl(DoctorTbl doctorTbl) {
-		this.doctorTbl = doctorTbl;
+	/**
+	 * @param netmdDoctorTbl the netmdDoctorTbl to set
+	 */
+	public void setNetmdDoctorTbl(NetmdDoctorTbl netmdDoctorTbl) {
+		this.netmdDoctorTbl = netmdDoctorTbl;
 	}
+
+
 	
 }
