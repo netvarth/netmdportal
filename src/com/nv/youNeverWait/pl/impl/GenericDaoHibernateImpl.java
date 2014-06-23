@@ -3,16 +3,21 @@
  */
 package com.nv.youNeverWait.pl.impl;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.nv.framework.sendmsg.PendingMsgPojoTbl;
 import com.nv.framework.sendmsg.common.SendMsgBaseDAO;
 import com.nv.youNeverWait.exception.ServiceException;
@@ -57,7 +62,39 @@ public class GenericDaoHibernateImpl implements GenericDao, SendMsgBaseDAO {
 		}
 
 	}
-
+	public <T> boolean saveOrUpdate(Class<T> className, T object) {
+		 try {
+			Method m = className.getMethod("getId", null);
+			int uid = (Integer) m.invoke(object);
+			T table =getById(className, uid);
+			
+			if (table==null)
+				save(object);
+			else
+				update(object);
+			
+		} catch (SecurityException e) {
+			e.printStackTrace();
+			throw new ServiceException(ErrorCodeEnum.InvalidDateFormat);
+			
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+			throw new ServiceException(ErrorCodeEnum.InvalidDateFormat);
+			
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			throw new ServiceException(ErrorCodeEnum.InvalidDateFormat);
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			throw new ServiceException(ErrorCodeEnum.InvalidDateFormat);
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+			throw new ServiceException(ErrorCodeEnum.InvalidDateFormat);
+			
+		}
+		
+		return false;
+		}
 	@Transactional(readOnly = false)
 	public void delete(Object obj) {
 		try {
