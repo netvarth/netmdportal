@@ -116,7 +116,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		Date createdTime = new Date();
 		netRxTbl.setCreateDateTime(createdTime);
 		netRxTbl.setUpdateDateTime(createdTime);
-		if (superAdmin.getEnableSync() == false) {
+		if (superAdmin.isEnableSync() == false) {
 			netRxTbl.setEnableSync(false);
 		} else {
 			netRxTbl.setEnableSync(true);
@@ -734,7 +734,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		netRxBranch.setMobile(branch.getMobile());
 		netRxBranch.setEmail(branch.getEmail());
 		netRxBranch.setNetrxTbl(netRx);
-		if(netRx.getEnableSync()==false){
+		if(netRx.isEnableSync()==false){
 			netRxBranch.setEnableSync(false);
 		}
 		else{
@@ -912,14 +912,14 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		NetrxTbl netrx = getById(NetrxTbl.class, sync.getNetrxId());
 		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
 		if (netrx != null) {
-			if (superAdmin.getEnableSync() == false) {
+			if (superAdmin.isEnableSync() == false) {
 				netrx.setEnableSync(false);
 			} else
 				netrx.setEnableSync(sync.isEnableSync());
 			netrx.setUpdateDateTime(newDate);
 			update(netrx);
 			/**** Setting values when the sync is enabled ****/
-			if (netrx.getEnableSync() == true) {
+			if (netrx.isEnableSync() == true) {
 
 				/****** Checking sync values with global sync time *****/
 				checkSync(superAdmin.getSyncFreqType(), sync.getSyncFreqType(),
@@ -934,7 +934,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 					response.setMsg(Constants.MESSAGE);
 				/****** Setting all branches of the lab as disabled *******/
 				for (NetrxBranchTbl netrxBranch : netrx.getNetrxBranchTbls()) {
-					netrxBranch.setEnableSync(netrx.getEnableSync());
+					netrxBranch.setEnableSync(netrx.isEnableSync());
 					netrxBranch.setUpdateDateTime(newDate);
 					update(netrxBranch);
 					
@@ -964,11 +964,11 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		NetrxBranchTbl netrxBranch = getById(NetrxBranchTbl.class,
 				sync.getNetrxBranchId());
 		if (netrxBranch != null) {
-			if (netrxBranch.getNetrxTbl().getEnableSync() == false) {
+			if (netrxBranch.getNetrxTbl().isEnableSync() == false) {
 				netrxBranch.setEnableSync(false);
 			} else {
 				SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
-				if (superAdmin.getEnableSync() == false) {
+				if (superAdmin.isEnableSync() == false) {
 					netrxBranch.setEnableSync(false);
 				} else {
 					netrxBranch.setEnableSync(sync.isEnableSync());
@@ -976,7 +976,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 			}
 			netrxBranch.setUpdateDateTime(newDate);
 			update(netrxBranch);
-			if (netrxBranch.getEnableSync()==true) {
+			if (netrxBranch.isEnableSync()==true) {
 				/**
 				 * Checking whether branch sync time is greater than netrx sync
 				 * time
@@ -1068,7 +1068,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		if (netrxBranch != null) {
 			sync.setSyncFreqType(netrxBranch.getSyncFreqType());
 			sync.setSyncTime(netrxBranch.getSyncTime());
-			sync.setEnableSync(netrxBranch.getEnableSync());
+			sync.setEnableSync(netrxBranch.isEnableSync());
 			sync.setSuccess(true);
 		} else {
 			ServiceException se = new ServiceException(
@@ -1092,7 +1092,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		if (netrx != null) {
 			sync.setSyncFreqType(netrx.getSyncFreqType());
 			sync.setSyncTime(netrx.getSyncTime());
-			sync.setEnableSync(netrx.getEnableSync());
+			sync.setEnableSync(netrx.isEnableSync());
 			sync.setSuccess(true);
 		} else {
 			ServiceException se = new ServiceException(
