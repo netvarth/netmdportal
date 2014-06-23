@@ -33,6 +33,9 @@ public class UploadInstallerTbl implements Serializable {
 	@Column(name="war_file_path",length=500)
 	private String warFilePath;
 
+	/**
+	 * 
+	 */
 	public UploadInstallerTbl() {
 	}
 
