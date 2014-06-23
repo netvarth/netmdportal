@@ -16,6 +16,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.nv.youNeverWait.rs.dto.BillSyncResponseDTO;
+import com.nv.youNeverWait.api.sync.LimsReferralBundle;
+import com.nv.youNeverWait.api.sync.ReferralSyncDTO;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ActionNameEnum;
@@ -61,6 +63,7 @@ import com.nv.youNeverWait.rs.dto.ScheduleDetail;
 import com.nv.youNeverWait.rs.dto.ScheduleResponse;
 import com.nv.youNeverWait.rs.dto.ScheduleResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncDTO;
+import com.nv.youNeverWait.rs.dto.SyncResponse;
 import com.nv.youNeverWait.rs.dto.SyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveTestResponse;
 import com.nv.youNeverWait.rs.dto.UserResponse;
@@ -1773,6 +1776,36 @@ public class SyncServiceImpl implements SyncService {
 
 	public void setQuestionnaireService(QuestionnaireService questionnaireService) {
 		this.questionnaireService = questionnaireService;
+	}
+
+
+
+	@Override
+	public List<SyncResponse> processReferral(LimsReferralBundle bundle) {
+		List<SyncResponse> responses=new ArrayList<SyncResponse>();
+		for(ReferralSyncDTO referral:bundle.getReferrals()){
+	
+		SyncResponse response=new SyncResponse();	
+		try{
+		response.setLocalId(referral.getReferralInfo().getUid());
+		if(referral.getReferralInfo().getAddress().getEmail()!=null){
+		int referral_GlobalId=doctorService.processReferral(referral);
+		response.setGlobalId(referral_GlobalId);
+		response.setStatusCode("200");
+		}
+		else{
+			response.setGlobalId(null);	
+			response.setStatusCode("200");
+			
+		}
+		}catch(Exception e){
+			log.error(e);
+			response.setStatusCode("500");	
+		}
+		responses.add(response);
+		}
+		
+		return responses;
 	}
 
 	
