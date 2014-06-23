@@ -6,7 +6,7 @@
  */
 package com.nv.youNeverWait.rs.dto;
 
-import com.nv.youNeverWait.pl.entity.DoctorTbl;
+import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
 
 /**
  * @author Luciya Jos
@@ -80,12 +80,13 @@ public class DoctorLoginDTO {
 		this.success = success;
 	}
 	/**
+	 * @param doc 
 	 * @param password
 	 * @param doctorGlobalId
 	 */
-	public DoctorLoginDTO(DoctorTbl doc) {
+	public DoctorLoginDTO(NetmdDoctorTbl doc) {
 	
-		this.password = doc.getNetmdLoginTbl().getPassword();
+		//this.password = doc.getNetmdLoginTbl().getPassword();
 		this.doctorGlobalId = doc.getId();
 		this.email=doc.getEmail();
 		this.success=true;
