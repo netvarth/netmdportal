@@ -12,7 +12,8 @@ import java.util.List;
  */
 @Entity
 @Table(name="netmd_branch_tbl")
-@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")	
+@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+@NamedQuery(name="NetmdBranchTbl.findAll", query="SELECT n FROM NetmdBranchTbl n")
 public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -37,10 +38,6 @@ public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Seriali
 	@OneToMany(mappedBy="netmdBranchTbl")
 	private List<DoctorScheduleTbl> doctorScheduleTbls;
 
-	//bi-directional many-to-one association to DoctorTbl
-	@OneToMany(mappedBy="netmdBranchTbl")
-	private List<DoctorTbl> doctorTbls;
-
 	//bi-directional many-to-one association to NetmdAnswerTbl
 	@OneToMany(mappedBy="netmdBranchTbl")
 	private List<NetmdAnswerTbl> netmdAnswerTbls;
@@ -63,9 +60,17 @@ public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Seriali
 	@JoinColumn(name="netmd_id")
 	private NetmdTbl netmdTbl;
 
+	//bi-directional many-to-one association to NetmdDoctorTbl
+	@OneToMany(mappedBy="netmdBranchTbl")
+	private List<NetmdDoctorTbl> netmdDoctorTbls;
+
 	//bi-directional many-to-one association to NetmdPassphraseTbl
 	@OneToMany(mappedBy="netmdBranchTbl")
 	private List<NetmdPassphraseTbl> netmdPassphraseTbls;
+
+	//bi-directional many-to-one association to NetmdPatientTbl
+	@OneToMany(mappedBy="netmdBranchTbl")
+	private List<NetmdPatientTbl> netmdPatientTbls;
 
 	//bi-directional many-to-one association to NetmdUserTbl
 	@OneToMany(mappedBy="netmdBranchTbl")
@@ -79,26 +84,11 @@ public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Seriali
 	@OneToMany(mappedBy="netmdBranchTbl")
 	private List<PatientAppointmentTbl> patientAppointmentTbls;
 
-	//bi-directional many-to-one association to PatientTbl
-	@OneToMany(mappedBy="netmdBranchTbl")
-	private List<PatientTbl> patientTbls;
-
 	//bi-directional many-to-one association to ResultTbl
 	@OneToMany(mappedBy="netmdBranchTbl")
 	private List<ResultTbl> resultTbls;
 
 	public NetmdBranchTbl() {
-	}
-
-
-	
-	public boolean isEnableSync() {
-		return enableSync;
-	}
-
-
-	public void setEnableSync(boolean enableSync) {
-		this.enableSync = enableSync;
 	}
 
 	public Date getCreateDateTime() {
@@ -108,8 +98,6 @@ public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Seriali
 	public void setCreateDateTime(Date createDateTime) {
 		this.createDateTime = createDateTime;
 	}
-
-
 
 	public String getSyncFreqType() {
 		return this.syncFreqType;
@@ -155,28 +143,6 @@ public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Seriali
 		doctorScheduleTbl.setNetmdBranchTbl(null);
 
 		return doctorScheduleTbl;
-	}
-
-	public List<DoctorTbl> getDoctorTbls() {
-		return this.doctorTbls;
-	}
-
-	public void setDoctorTbls(List<DoctorTbl> doctorTbls) {
-		this.doctorTbls = doctorTbls;
-	}
-
-	public DoctorTbl addDoctorTbl(DoctorTbl doctorTbl) {
-		getDoctorTbls().add(doctorTbl);
-		doctorTbl.setNetmdBranchTbl(this);
-
-		return doctorTbl;
-	}
-
-	public DoctorTbl removeDoctorTbl(DoctorTbl doctorTbl) {
-		getDoctorTbls().remove(doctorTbl);
-		doctorTbl.setNetmdBranchTbl(null);
-
-		return doctorTbl;
 	}
 
 	public List<NetmdAnswerTbl> getNetmdAnswerTbls() {
@@ -261,6 +227,28 @@ public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Seriali
 		this.netmdTbl = netmdTbl;
 	}
 
+	public List<NetmdDoctorTbl> getNetmdDoctorTbls() {
+		return this.netmdDoctorTbls;
+	}
+
+	public void setNetmdDoctorTbls(List<NetmdDoctorTbl> netmdDoctorTbls) {
+		this.netmdDoctorTbls = netmdDoctorTbls;
+	}
+
+	public NetmdDoctorTbl addNetmdDoctorTbl(NetmdDoctorTbl netmdDoctorTbl) {
+		getNetmdDoctorTbls().add(netmdDoctorTbl);
+		netmdDoctorTbl.setNetmdBranchTbl(this);
+
+		return netmdDoctorTbl;
+	}
+
+	public NetmdDoctorTbl removeNetmdDoctorTbl(NetmdDoctorTbl netmdDoctorTbl) {
+		getNetmdDoctorTbls().remove(netmdDoctorTbl);
+		netmdDoctorTbl.setNetmdBranchTbl(null);
+
+		return netmdDoctorTbl;
+	}
+
 	public List<NetmdPassphraseTbl> getNetmdPassphraseTbls() {
 		return this.netmdPassphraseTbls;
 	}
@@ -281,6 +269,28 @@ public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Seriali
 		netmdPassphraseTbl.setNetmdBranchTbl(null);
 
 		return netmdPassphraseTbl;
+	}
+
+	public List<NetmdPatientTbl> getNetmdPatientTbls() {
+		return this.netmdPatientTbls;
+	}
+
+	public void setNetmdPatientTbls(List<NetmdPatientTbl> netmdPatientTbls) {
+		this.netmdPatientTbls = netmdPatientTbls;
+	}
+
+	public NetmdPatientTbl addNetmdPatientTbl(NetmdPatientTbl netmdPatientTbl) {
+		getNetmdPatientTbls().add(netmdPatientTbl);
+		netmdPatientTbl.setNetmdBranchTbl(this);
+
+		return netmdPatientTbl;
+	}
+
+	public NetmdPatientTbl removeNetmdPatientTbl(NetmdPatientTbl netmdPatientTbl) {
+		getNetmdPatientTbls().remove(netmdPatientTbl);
+		netmdPatientTbl.setNetmdBranchTbl(null);
+
+		return netmdPatientTbl;
 	}
 
 	public List<NetmdUserTbl> getNetmdUserTbls() {
@@ -349,28 +359,6 @@ public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Seriali
 		return patientAppointmentTbl;
 	}
 
-	public List<PatientTbl> getPatientTbls() {
-		return this.patientTbls;
-	}
-
-	public void setPatientTbls(List<PatientTbl> patientTbls) {
-		this.patientTbls = patientTbls;
-	}
-
-	public PatientTbl addPatientTbl(PatientTbl patientTbl) {
-		getPatientTbls().add(patientTbl);
-		patientTbl.setNetmdBranchTbl(this);
-
-		return patientTbl;
-	}
-
-	public PatientTbl removePatientTbl(PatientTbl patientTbl) {
-		getPatientTbls().remove(patientTbl);
-		patientTbl.setNetmdBranchTbl(null);
-
-		return patientTbl;
-	}
-
 	public List<ResultTbl> getResultTbls() {
 		return this.resultTbls;
 	}
@@ -391,6 +379,20 @@ public class NetmdBranchTbl extends HealthCareOrganisationTbl implements Seriali
 		resultTbl.setNetmdBranchTbl(null);
 
 		return resultTbl;
+	}
+
+	/**
+	 * @return the enableSync
+	 */
+	public boolean isEnableSync() {
+		return enableSync;
+	}
+
+	/**
+	 * @param enableSync the enableSync to set
+	 */
+	public void setEnableSync(boolean enableSync) {
+		this.enableSync = enableSync;
 	}
 
 }
