@@ -99,6 +99,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			update(order);
 			orderList.add(orderDetails);
 		}
+		
 		orderDetail.setOrders(orderList);
 		orderDetail.setLastOrderSyncTime(sdf.format(currentSyncTime));
 		orderDetail.setSuccess(true);
