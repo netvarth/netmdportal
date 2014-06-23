@@ -13,15 +13,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.DoctorScheduleTbl;
-import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
+import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.OccuranceTypeEnum;
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
@@ -156,7 +157,7 @@ public class ScheduleDaoImpl extends GenericDaoHibernateImpl implements
 		}
 
 		/* Checking doctor details */
-		DoctorTbl doctor = getById(DoctorTbl.class,
+		NetmdDoctorTbl doctor = getById(NetmdDoctorTbl.class,
 				scheduleDetail.getDoctorGlobalId());
 		if (doctor == null) {
 
@@ -173,7 +174,7 @@ public class ScheduleDaoImpl extends GenericDaoHibernateImpl implements
 				.getEnum(scheduleDetail.getScheduleStatus());
 		doctorSchedule.setScheduleStatus(scheduleStatus.getDisplayName());
 
-		doctorSchedule.setDoctorTbl(doctor);
+		doctorSchedule.setNetmdDoctorTbl(doctor);
 
 		Date startTime = null;
 		Date endTime = null;
@@ -369,13 +370,13 @@ public class ScheduleDaoImpl extends GenericDaoHibernateImpl implements
 		scheduleDetail.setScheduleStatus(doctorSchedule.getScheduleStatus());
 		scheduleDetail.setStatus(doctorSchedule.getStatus());
 
-		DoctorTbl doctorTbl = getById(DoctorTbl.class, doctorSchedule
-				.getDoctorTbl().getId());
+		NetmdDoctorTbl doctorTbl = getById(NetmdDoctorTbl.class, doctorSchedule
+				.getNetmdDoctorTbl().getId());
 		if (doctorTbl == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.DoctorNotFound);
 			se.addParam(new Parameter(Constants.ID, Integer
-					.toString(doctorSchedule.getDoctorTbl().getId())));
+					.toString(doctorSchedule.getNetmdDoctorTbl().getId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
@@ -537,9 +538,9 @@ public class ScheduleDaoImpl extends GenericDaoHibernateImpl implements
 
 				List<AppointmentDetailsDTO> tempAppointmentDetailsDTOList = new ArrayList<AppointmentDetailsDTO>();
 				viewScheduleDTO.setId(doctorScheduleTbl.getId());
-				if (doctorScheduleTbl.getDoctorTbl() != null)
+				if (doctorScheduleTbl.getNetmdDoctorTbl() != null)
 					viewScheduleDTO.setDoctorId(doctorScheduleTbl
-							.getDoctorTbl().getId());
+							.getNetmdDoctorTbl().getId());
 				if (doctorScheduleTbl.getSeriesTbl() != null) {
 					viewScheduleDTO.setSeriesId(doctorScheduleTbl
 							.getSeriesTbl().getId());
