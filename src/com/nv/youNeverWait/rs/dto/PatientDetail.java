@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nv.youNeverWait.common.Constants;
-import com.nv.youNeverWait.pl.entity.PatientTbl;
+import com.nv.youNeverWait.pl.entity.NetmdPatientTbl;
 
 /**
  * @author Luciya Jose
@@ -48,7 +48,7 @@ public class PatientDetail {
 	private ErrorDTO error;
 	private List<PatientMedicalHistoryDTO> medicalHistory=new ArrayList<PatientMedicalHistoryDTO>();
 	
-	public PatientDetail(PatientTbl patientTbl) {
+	public PatientDetail(NetmdPatientTbl patientTbl) {
 		super();
 		DateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		this.id = patientTbl.getId();
