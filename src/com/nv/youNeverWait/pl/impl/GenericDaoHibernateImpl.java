@@ -63,24 +63,24 @@ public class GenericDaoHibernateImpl implements GenericDao, SendMsgBaseDAO {
 
 	}
 	public <T> boolean saveOrUpdate(Class<T> className, T object) {
-		 try {
+		try {
 			Method m = className.getMethod("getId", null);
 			int uid = (Integer) m.invoke(object);
 			T table =getById(className, uid);
-			
+
 			if (table==null)
 				save(object);
 			else
 				update(object);
-			
+
 		} catch (SecurityException e) {
 			e.printStackTrace();
 			throw new ServiceException(ErrorCodeEnum.InvalidDateFormat);
-			
+
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
 			throw new ServiceException(ErrorCodeEnum.InvalidDateFormat);
-			
+
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			throw new ServiceException(ErrorCodeEnum.InvalidDateFormat);
@@ -90,11 +90,9 @@ public class GenericDaoHibernateImpl implements GenericDao, SendMsgBaseDAO {
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 			throw new ServiceException(ErrorCodeEnum.InvalidDateFormat);
-			
 		}
-		
 		return false;
-		}
+	}
 	@Transactional(readOnly = false)
 	public void delete(Object obj) {
 		try {
