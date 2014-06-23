@@ -11,6 +11,7 @@ package com.nv.youNeverWait.user.bl.service;
 import java.util.Date;
 import java.util.List;
 
+import com.nv.youNeverWait.api.sync.ReferralSyncDTO;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.DoctorLoginDTO;
 import com.nv.youNeverWait.rs.dto.DoctorViewResponseDTO;
@@ -32,4 +33,5 @@ public interface DoctorService {
 	public ResponseDTO resetPassword(LoginDTO login);
 	public RetrievalDoctorResponseDTO retrieveDoctorList(String lastSyncTime,String passPhrase, int netmdBranchId, Date currentSyncTime);
 	public List<DoctorLoginDTO> DoctorPasswordList(String lastSyncTime,String passPhrase, int netmdBranchId, Date currentSyncTime);
+	public int processReferral(ReferralSyncDTO referral);
 }
