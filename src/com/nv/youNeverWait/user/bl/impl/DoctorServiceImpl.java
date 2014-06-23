@@ -15,16 +15,17 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
 import com.nv.framework.sendmsg.email.SendMailMsgObj;
 import com.nv.framework.util.text.StringEncoder;
-import com.nv.youNeverWait.api.sync.ReferralSyncDTO;
 import com.nv.youNeverWait.common.Constants;
-import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
+import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.DoctorDetailsForPatient;
 import com.nv.youNeverWait.rs.dto.DoctorListResponseDTO;
@@ -207,7 +208,7 @@ public class DoctorServiceImpl implements DoctorService {
 	@Override
 	public DoctorListResponseDTO listDoctors(String clinicId) {
 
-		List<DoctorTbl> doctorsList = doctorDao.listDoctors(clinicId);
+		List<NetmdDoctorTbl> doctorsList = doctorDao.listDoctors(clinicId);
 		DoctorListResponseDTO response = getDoctorList(doctorsList);
 		response.setError(null);
 		response.setSuccess(true);
@@ -220,13 +221,13 @@ public class DoctorServiceImpl implements DoctorService {
 	 * @param labs
 	 * @return DoctorListResponseDTO
 	 */
-	private DoctorListResponseDTO getDoctorList(List<DoctorTbl> doctors) {
+	private DoctorListResponseDTO getDoctorList(List<NetmdDoctorTbl> doctors) {
 		DoctorListResponseDTO response = new DoctorListResponseDTO();
 		if (doctors == null) {
 			return response;
 		}
 		List<DoctorDetailsForPatient> doctorDetails = new ArrayList<DoctorDetailsForPatient>();
-		for (DoctorTbl doctorTbl : doctors) {
+		for (NetmdDoctorTbl doctorTbl : doctors) {
 			doctorDetails.add(new DoctorDetailsForPatient(doctorTbl));
 		}
 		response.setDoctor(doctorDetails);
