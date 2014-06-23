@@ -49,12 +49,12 @@ public class PatientAppointmentTbl implements Serializable {
 	// bi-directional many-to-one association to PatientTbl
 	@ManyToOne
 	@JoinColumn(name = "patient_id", nullable=false)
-	private PatientTbl patientTbl;
+	private NetmdPatientTbl netmdPatientTbl;
 
 	// bi-directional many-to-one association to DoctorTbl
 	@ManyToOne
 	@JoinColumn(name = "doctor_id", nullable=false)
-	private DoctorTbl doctorTbl;
+	private NetmdDoctorTbl netmdDoctorTbl;
 
 	// bi-directional many-to-one association to DoctorScheduleTbl
 	@ManyToOne
@@ -77,15 +77,13 @@ public class PatientAppointmentTbl implements Serializable {
 	@Column(name="appointmnet_level",nullable=false)
 	private boolean appointmnetLevel;
 	
+	/**
+	 * 
+	 */
 	public PatientAppointmentTbl() {
 	}
 
-	public int getId() {
-		return this.id;
-	}
-
 	
-
 	/**
 	 * @return the appointmnetLevel
 	 */
@@ -100,33 +98,6 @@ public class PatientAppointmentTbl implements Serializable {
 		this.appointmnetLevel = appointmnetLevel;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getAppointmentStatus() {
-		return this.appointmentStatus;
-	}
-
-	public void setAppointmentStatus(String appointmentStatus) {
-		this.appointmentStatus = appointmentStatus;
-	}
-
-	public Date getCreateDateTime() {
-		return this.createDateTime;
-	}
-
-	public void setCreateDateTime(Date createDateTime) {
-		this.createDateTime = createDateTime;
-	}
-	public Date getUpdateDateTime() {
-		return this.updateDateTime;
-	}
-
-	public void setUpdateDateTime(Date updateDateTime) {
-		this.updateDateTime = updateDateTime;
-	}
-	
 	
 	/**
 	 * @return the appointmentTime
@@ -156,60 +127,161 @@ public class PatientAppointmentTbl implements Serializable {
 		this.appointmentDate = appointmentDate;
 	}
 
+	/**
+	 * @return the startingTime
+	 */
 	public Date getStartingTime() {
-		return this.startingTime;
+		return startingTime;
 	}
 
+	/**
+	 * @param startingTime the startingTime to set
+	 */
 	public void setStartingTime(Date startingTime) {
 		this.startingTime = startingTime;
 	}
 
+	/**
+	 * @return the status
+	 */
 	public String getStatus() {
-		return this.status;
+		return status;
 	}
 
+	/**
+	 * @param status the status to set
+	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
+	/**
+	 * @return the netmdPassphraseTbl
+	 */
 	public NetmdPassphraseTbl getNetmdPassphraseTbl() {
-		return this.netmdPassphraseTbl;
+		return netmdPassphraseTbl;
 	}
 
+	/**
+	 * @param netmdPassphraseTbl the netmdPassphraseTbl to set
+	 */
 	public void setNetmdPassphraseTbl(NetmdPassphraseTbl netmdPassphraseTbl) {
 		this.netmdPassphraseTbl = netmdPassphraseTbl;
 	}
 
-	public PatientTbl getPatientTbl() {
-		return this.patientTbl;
+	/**
+	 * @return the netmdPatientTbl
+	 */
+	public NetmdPatientTbl getNetmdPatientTbl() {
+		return netmdPatientTbl;
 	}
 
-	public void setPatientTbl(PatientTbl patientTbl) {
-		this.patientTbl = patientTbl;
+	/**
+	 * @param netmdPatientTbl the netmdPatientTbl to set
+	 */
+	public void setNetmdPatientTbl(NetmdPatientTbl netmdPatientTbl) {
+		this.netmdPatientTbl = netmdPatientTbl;
 	}
 
-	public DoctorTbl getDoctorTbl() {
-		return this.doctorTbl;
+	/**
+	 * @return the netmdDoctorTbl
+	 */
+	public NetmdDoctorTbl getNetmdDoctorTbl() {
+		return netmdDoctorTbl;
 	}
 
-	public void setDoctorTbl(DoctorTbl doctorTbl) {
-		this.doctorTbl = doctorTbl;
+	/**
+	 * @param netmdDoctorTbl the netmdDoctorTbl to set
+	 */
+	public void setNetmdDoctorTbl(NetmdDoctorTbl netmdDoctorTbl) {
+		this.netmdDoctorTbl = netmdDoctorTbl;
 	}
 
+	/**
+	 * @return the doctorScheduleTbl
+	 */
 	public DoctorScheduleTbl getDoctorScheduleTbl() {
-		return this.doctorScheduleTbl;
+		return doctorScheduleTbl;
 	}
 
+	/**
+	 * @param doctorScheduleTbl the doctorScheduleTbl to set
+	 */
 	public void setDoctorScheduleTbl(DoctorScheduleTbl doctorScheduleTbl) {
 		this.doctorScheduleTbl = doctorScheduleTbl;
 	}
 
+	/**
+	 * @return the netmdBranchTbl
+	 */
 	public NetmdBranchTbl getNetmdBranchTbl() {
-		return this.netmdBranchTbl;
+		return netmdBranchTbl;
 	}
 
+	/**
+	 * @param netmdBranchTbl the netmdBranchTbl to set
+	 */
 	public void setNetmdBranchTbl(NetmdBranchTbl netmdBranchTbl) {
 		this.netmdBranchTbl = netmdBranchTbl;
 	}
+
+	/**
+	 * @return the appointmentStatus
+	 */
+	public String getAppointmentStatus() {
+		return appointmentStatus;
+	}
+
+	/**
+	 * @param appointmentStatus the appointmentStatus to set
+	 */
+	public void setAppointmentStatus(String appointmentStatus) {
+		this.appointmentStatus = appointmentStatus;
+	}
+
+	/**
+	 * @return the createDateTime
+	 */
+	public Date getCreateDateTime() {
+		return createDateTime;
+	}
+
+	/**
+	 * @param createDateTime the createDateTime to set
+	 */
+	public void setCreateDateTime(Date createDateTime) {
+		this.createDateTime = createDateTime;
+	}
+
+	/**
+	 * @return the updateDateTime
+	 */
+	public Date getUpdateDateTime() {
+		return updateDateTime;
+	}
+
+	/**
+	 * @param updateDateTime the updateDateTime to set
+	 */
+	public void setUpdateDateTime(Date updateDateTime) {
+		this.updateDateTime = updateDateTime;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+
 
 }
