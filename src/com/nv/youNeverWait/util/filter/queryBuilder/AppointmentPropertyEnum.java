@@ -20,7 +20,7 @@ import com.nv.youNeverWait.util.filter.core.Property;
  */
 public enum AppointmentPropertyEnum implements Property, EnumDisplay {
 	id("id", "id", "com.nv.youNeverWait.pl.entity.PatientAppointmentTbl", "", ""), 
-	patientId("patientId", "id", "com.nv.youNeverWait.pl.entity.PatientTbl","patientTbl", ""),
+	patientId("patientId", "id", "com.nv.youNeverWait.pl.entity.NetmdPatientTbl","netmdPatientTbl", ""),
 	appointmentTime("appointmentTime","appointmentTime", "com.nv.youNeverWait.pl.entity.PatientAppointmentTbl","", "");
 	String displayName;
 	String fieldName;
