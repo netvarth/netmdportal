@@ -19,7 +19,7 @@ public class TestTbl implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
 	private int id;
-
+	
 	@Column(nullable=false, length=45)
 	private String abbreviation;
 
@@ -97,14 +97,6 @@ public class TestTbl implements Serializable {
 		this.abbreviation = abbreviation;
 	}
 
-	public boolean getActive() {
-		return this.active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
 	public Date getCreatedDateTime() {
 		return this.createdDateTime;
 	}
@@ -127,14 +119,6 @@ public class TestTbl implements Serializable {
 
 	public void setInformaticValues(String informaticValues) {
 		this.informaticValues = informaticValues;
-	}
-
-	public boolean getMachineentryStatus() {
-		return this.machineentryStatus;
-	}
-
-	public void setMachineentryStatus(boolean machineentryStatus) {
-		this.machineentryStatus = machineentryStatus;
 	}
 
 	public String getMinTimeRequired() {
@@ -185,14 +169,6 @@ public class TestTbl implements Serializable {
 		this.schedule = schedule;
 	}
 
-	public boolean getSpecimenentryStatus() {
-		return this.specimenentryStatus;
-	}
-
-	public void setSpecimenentryStatus(boolean specimenentryStatus) {
-		this.specimenentryStatus = specimenentryStatus;
-	}
-
 	public String getTestName() {
 		return this.testName;
 	}
@@ -216,15 +192,6 @@ public class TestTbl implements Serializable {
 	public void setUpdatedDateTime(Date updatedDateTime) {
 		this.updatedDateTime = updatedDateTime;
 	}
-
-	public boolean getUploadStatus() {
-		return this.uploadStatus;
-	}
-
-	public void setUploadStatus(boolean uploadStatus) {
-		this.uploadStatus = uploadStatus;
-	}
-
 	public List<TestSpecimenTbl> getTestSpecimenTbls() {
 		return this.testSpecimenTbls;
 	}
@@ -245,6 +212,62 @@ public class TestTbl implements Serializable {
 		testSpecimenTbl.setTestTbl(null);
 
 		return testSpecimenTbl;
+	}
+
+	/**
+	 * @return the active
+	 */
+	public boolean isActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	/**
+	 * @return the specimenentryStatus
+	 */
+	public boolean isSpecimenentryStatus() {
+		return specimenentryStatus;
+	}
+
+	/**
+	 * @param specimenentryStatus the specimenentryStatus to set
+	 */
+	public void setSpecimenentryStatus(boolean specimenentryStatus) {
+		this.specimenentryStatus = specimenentryStatus;
+	}
+
+	/**
+	 * @param uploadStatus the uploadStatus to set
+	 */
+	public void setUploadStatus(boolean uploadStatus) {
+		this.uploadStatus = uploadStatus;
+	}
+
+	/**
+	 * @return the machineentryStatus
+	 */
+	public boolean isMachineentryStatus() {
+		return machineentryStatus;
+	}
+
+	/**
+	 * @param machineentryStatus the machineentryStatus to set
+	 */
+	public void setMachineentryStatus(boolean machineentryStatus) {
+		this.machineentryStatus = machineentryStatus;
+	}
+
+	/**
+	 * @return the uploadStatus
+	 */
+	public boolean isUploadStatus() {
+		return uploadStatus;
 	}
 
 }
