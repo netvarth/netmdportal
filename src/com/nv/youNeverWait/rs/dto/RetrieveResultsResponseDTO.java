@@ -147,7 +147,7 @@ public class RetrieveResultsResponseDTO {
 		DateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		this.resultGlobalId = result.getId();
 		this.result = result.getResult();
-		this.patientId = result.getPatientTbl().getId();
+		this.patientId = result.getNetmdPatientTbl().getId();
 		this.orderUid=result.getOrderId();
 		this.orderDate= df.format(result.getOrderDate());
 		this.labName=result.getLabTbl().getName();
