@@ -119,7 +119,7 @@ public class OrganisationDaoImpl extends GenericDaoHibernateImpl implements
 		Date createdTime = new Date();
 		organisationTbl.setCreateDateTime(createdTime);
 		organisationTbl.setUpdateDateTime(createdTime);
-		if (superAdmin.getEnableSync() == false) {
+		if (superAdmin.isEnableSync() == false) {
 			organisationTbl.setEnableSync(false);
 		} else {
 			organisationTbl.setEnableSync(true);
