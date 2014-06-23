@@ -21,15 +21,15 @@ public class TestSpecimenTbl implements Serializable {
 	@Column(nullable=false)
 	private float quantity;
 
-	//bi-directional many-to-one association to SpecimenTbl
-	@ManyToOne
-	@JoinColumn(name="specimen_uid", nullable=false,referencedColumnName="uid")
-	private SpecimenTbl specimenTbl;
-
 	//bi-directional many-to-one association to TestTbl
 	@ManyToOne
 	@JoinColumn(name="test_uid", nullable=false,referencedColumnName="uid")
 	private TestTbl testTbl;
+
+	//bi-directional many-to-one association to SpecimenTbl
+	@ManyToOne
+	@JoinColumn(name="specimen_uid", nullable=false,referencedColumnName="uid")
+	private SpecimenTbl specimenTbl;
 
 	public TestSpecimenTbl() {
 	}
@@ -50,20 +50,20 @@ public class TestSpecimenTbl implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public SpecimenTbl getSpecimenTbl() {
-		return this.specimenTbl;
-	}
-
-	public void setSpecimenTbl(SpecimenTbl specimenTbl) {
-		this.specimenTbl = specimenTbl;
-	}
-
 	public TestTbl getTestTbl() {
 		return this.testTbl;
 	}
 
 	public void setTestTbl(TestTbl testTbl) {
 		this.testTbl = testTbl;
+	}
+
+	public SpecimenTbl getSpecimenTbl() {
+		return this.specimenTbl;
+	}
+
+	public void setSpecimenTbl(SpecimenTbl specimenTbl) {
+		this.specimenTbl = specimenTbl;
 	}
 
 }
