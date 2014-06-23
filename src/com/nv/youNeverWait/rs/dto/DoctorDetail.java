@@ -18,7 +18,7 @@ import com.nv.youNeverWait.pl.entity.DoctorEducationalQualificationTbl;
 import com.nv.youNeverWait.pl.entity.DoctorExpertiseTbl;
 import com.nv.youNeverWait.pl.entity.DoctorMembershipTbl;
 import com.nv.youNeverWait.pl.entity.DoctorPracticeExperienceTbl;
-import com.nv.youNeverWait.pl.entity.DoctorTbl;
+import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
 
 /**
  * 
@@ -435,7 +435,7 @@ public class DoctorDetail {
 	 * @param login
 	 */
 
-	public DoctorDetail(DoctorTbl doctorTbl) {
+	public DoctorDetail(NetmdDoctorTbl doctorTbl) {
 		super();
 		DateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
 		DateFormat sdf = new SimpleDateFormat(Constants.YEAR);
