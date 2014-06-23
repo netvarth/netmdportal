@@ -10,6 +10,7 @@ package com.nv.youNeverWait.user.pl.dao;
 import java.util.Date;
 import java.util.List;
 
+import com.nv.youNeverWait.api.sync.ReferralSyncDTO;
 import com.nv.youNeverWait.pl.dao.GenericDao;
 import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
