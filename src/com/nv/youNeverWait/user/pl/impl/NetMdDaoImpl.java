@@ -13,10 +13,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
+
 import com.nv.framework.util.text.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
@@ -27,6 +30,7 @@ import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBillTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBranchSystemInfoTbl;
+import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdHealthMonitorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
@@ -37,7 +41,7 @@ import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.OrganisationNetmdTbl;
 import com.nv.youNeverWait.pl.entity.OrganisationTbl;
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
-import com.nv.youNeverWait.pl.entity.PatientTbl;
+import com.nv.youNeverWait.pl.entity.NetmdPatientTbl;
 import com.nv.youNeverWait.pl.entity.StatusEnum;
 import com.nv.youNeverWait.pl.entity.SuperAdminTbl;
 import com.nv.youNeverWait.pl.entity.SyncFreqTypeEnum;
@@ -145,7 +149,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		Date createdTime = new Date();
 		netMdTbl.setCreateDateTime(createdTime);
 		netMdTbl.setUpdateDateTime(createdTime);
-		if (superAdmin.getEnableSync() == false) {
+		if (superAdmin.isEnableSync() == false) {
 			netMdTbl.setEnableSync(false);
 		} else {
 			netMdTbl.setEnableSync(true);
@@ -324,7 +328,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netMdBranch.setMobile(branch.getMobile());
 		netMdBranch.setEmail(branch.getEmail());
 		netMdBranch.setNetmdTbl(netMd);
-		if (netMd.getEnableSync() == false) {
+		if (netMd.isEnableSync() == false) {
 			netMdBranch.setEnableSync(false);
 		} else {
 			netMdBranch.setEnableSync(true);
@@ -453,7 +457,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netmd.setStatus(StatusEnum.InActive.getDisplayName());
 		for (NetmdBranchTbl netMdBranchTbl : netmd.getNetmdBranchTbls()) {
 
-			for (PatientTbl patientTbl : netMdBranchTbl.getPatientTbls()) {
+			for (NetmdPatientTbl patientTbl : netMdBranchTbl.getNetmdPatientTbls()) {
 				patientTbl.setStatus(StatusEnum.InActive.getDisplayName());
 				update(patientTbl);
 			}
@@ -467,7 +471,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 						.getDisplayName());
 				update(patientAppointmentTbl);
 			}
-			for (DoctorTbl doctorTbl : netMdBranchTbl.getDoctorTbls()) {
+			for (NetmdDoctorTbl doctorTbl : netMdBranchTbl.getNetmdDoctorTbls()) {
 				doctorTbl.setStatus(StatusEnum.InActive.getDisplayName());
 				update(doctorTbl);
 			}
@@ -654,7 +658,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		}
 		netmdBranch.setStatus(StatusEnum.InActive.getDisplayName());
 
-		for (PatientTbl patientTbl : netmdBranch.getPatientTbls()) {
+		for (NetmdPatientTbl patientTbl : netmdBranch.getNetmdPatientTbls()) {
 			patientTbl.setStatus(StatusEnum.InActive.getDisplayName());
 			update(patientTbl);
 		}
@@ -668,7 +672,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 					.getDisplayName());
 			update(patientAppointmentTbl);
 		}
-		for (DoctorTbl doctorTbl : netmdBranch.getDoctorTbls()) {
+		for (NetmdDoctorTbl doctorTbl : netmdBranch.getNetmdDoctorTbls()) {
 			doctorTbl.setStatus(StatusEnum.InActive.getDisplayName());
 			update(doctorTbl);
 		}
@@ -748,10 +752,10 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				List<DoctorDetail> retrievedDoctors = new ArrayList<DoctorDetail>();
 
 				/* Getting doctors list from doctor tbl */
-				List<DoctorTbl> DoctorsList = getDoctors(firstSyncTime,
+				List<NetmdDoctorTbl> DoctorsList = getDoctors(firstSyncTime,
 						netmdpassPhrase.getId(), netmdpassPhrase
 								.getNetmdBranchTbl().getId(), currentSyncTime);
-				for (DoctorTbl doctor : DoctorsList) {
+				for (NetmdDoctorTbl doctor : DoctorsList) {
 
 					retrievedDoctors.add(new DoctorDetail(doctor));
 				}
@@ -762,10 +766,10 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				List<PatientDetail> retrievedPatients = new ArrayList<PatientDetail>();
 
 				/* Getting patients list from patient tbl */
-				List<PatientTbl> patients = getPatients(firstSyncTime,
+				List<NetmdPatientTbl> patients = getPatients(firstSyncTime,
 						netmdpassPhrase.getId(), netmdpassPhrase
 								.getNetmdBranchTbl().getId(), currentSyncTime);
-				for (PatientTbl patientObj : patients) {
+				for (NetmdPatientTbl patientObj : patients) {
 					PatientDetail patientDetail = new PatientDetail(patientObj);
 					retrievedPatients.add(patientDetail);
 				}
@@ -1386,7 +1390,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				throw se;
 			}
 		}
-		PatientTbl existingPatient = getById(PatientTbl.class,
+		NetmdPatientTbl existingPatient = getById(NetmdPatientTbl.class,
 				Integer.parseInt(newBill.getPatientGlobalId()));
 		if (existingPatient == null) {
 			ServiceException se = new ServiceException(
@@ -1408,7 +1412,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			e.printStackTrace();
 		}
 		newBillTbl.setPatientName(newBill.getPatientName());
-		newBillTbl.setPatientTbl(existingPatient);
+		newBillTbl.setNetmdPatientTbl(existingPatient);
 		newBillTbl.setPayStatus(newBill.getPayStatus());
 		newBillTbl.setUid(newBill.getUid());
 		newBillTbl.setNetmdTbl(passPhrase.getNetmdBranchTbl().getNetmdTbl());
@@ -1463,7 +1467,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			// set error
 		}
 
-		PatientTbl existingPatient = getById(PatientTbl.class,
+		NetmdPatientTbl existingPatient = getById(NetmdPatientTbl.class,
 				Integer.parseInt(updatedBill.getPatientGlobalId()));
 		if (existingPatient == null) {
 			ServiceException se = new ServiceException(
@@ -1484,7 +1488,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			e.printStackTrace();
 		}
 		netMdBill.setPatientName(updatedBill.getPatientName());
-		netMdBill.setPatientTbl(existingPatient);
+		netMdBill.setNetmdPatientTbl(existingPatient);
 		netMdBill.setPayStatus(updatedBill.getPayStatus());
 		netMdBill.setUid(updatedBill.getUid());
 		netMdBill.setNetmdTbl(passPhrase.getNetmdBranchTbl().getNetmdTbl());
@@ -1514,14 +1518,14 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		NetmdTbl netmd = getById(NetmdTbl.class, sync.getNetmdId());
 		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
 		if (netmd != null) {
-			if (superAdmin.getEnableSync() == false) {
+			if (superAdmin.isEnableSync() == false) {
 				netmd.setEnableSync(false);
 			} else
 				netmd.setEnableSync(sync.isEnableSync());
 			netmd.setUpdateDateTime(newDate);
 			update(netmd);
 			/**** Setting values when the sync is enabled ****/
-			if (netmd.getEnableSync() == true) {
+			if (netmd.isEnableSync() == true) {
 
 				/****** Checking sync values with global sync time *****/
 				checkSync(superAdmin.getSyncFreqType(), sync.getSyncFreqType(),
@@ -1536,7 +1540,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 					response.setMsg(Constants.MESSAGE);
 				/****** Setting all branches of the lab as disabled *******/
 				for (NetmdBranchTbl netmdBranch : netmd.getNetmdBranchTbls()) {
-					netmdBranch.setEnableSync(netmd.getEnableSync());
+					netmdBranch.setEnableSync(netmd.isEnableSync());
 					netmdBranch.setUpdateDateTime(newDate);
 					update(netmdBranch);
 
@@ -1570,11 +1574,11 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		NetmdBranchTbl netmdBranch = getById(NetmdBranchTbl.class,
 				sync.getNetmdBranchId());
 		if (netmdBranch != null) {
-			if (netmdBranch.getNetmdTbl().getEnableSync() == false) {
+			if (netmdBranch.getNetmdTbl().isEnableSync() == false) {
 				netmdBranch.setEnableSync(false);
 			} else {
 				SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
-				if (superAdmin.getEnableSync() == false) {
+				if (superAdmin.isEnableSync() == false) {
 					netmdBranch.setEnableSync(false);
 				} else {
 					netmdBranch.setEnableSync(sync.isEnableSync());
@@ -1677,7 +1681,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		if (netmd != null) {
 			sync.setSyncFreqType(netmd.getSyncFreqType());
 			sync.setSyncTime(netmd.getSyncTime());
-			sync.setEnableSync(netmd.getEnableSync());
+			sync.setEnableSync(netmd.isEnableSync());
 			sync.setSuccess(true);
 		} else {
 			ServiceException se = new ServiceException(
@@ -2188,7 +2192,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	 * @param currentSyncTime
 	 * @return
 	 */
-	private List<PatientTbl> getPatients(Date firstSyncTime, int passPhraseId,
+	private List<NetmdPatientTbl> getPatients(Date firstSyncTime, int passPhraseId,
 			int netMdBranchId, Date currentSyncTime) {
 		javax.persistence.Query query = em
 				.createQuery(Query.RETRIEVE_PATIENTS_FOR_PRIMARY);
@@ -2196,7 +2200,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		query.setParameter("param2", passPhraseId);
 		query.setParameter("param3", netMdBranchId);
 		query.setParameter("param4", currentSyncTime);
-		return executeQuery(PatientTbl.class, query);
+		return executeQuery(NetmdPatientTbl.class, query);
 	}
 
 	/**
@@ -2206,7 +2210,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	 * @param currentSyncTime
 	 * @return
 	 */
-	private List<DoctorTbl> getDoctors(Date firstSyncTime, int passPhraseId,
+	private List<NetmdDoctorTbl> getDoctors(Date firstSyncTime, int passPhraseId,
 			int netmdBranchId, Date currentSyncTime) {
 
 		javax.persistence.Query query = em
@@ -2215,7 +2219,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		query.setParameter("param2", passPhraseId);
 		query.setParameter("param3", netmdBranchId);
 		query.setParameter("param4", currentSyncTime);
-		return executeQuery(DoctorTbl.class, query);
+		return executeQuery(NetmdDoctorTbl.class, query);
 	}
 
 	/**
