@@ -10,6 +10,7 @@ package com.nv.youNeverWait.user.pl.dao;
 import java.util.Date;
 import java.util.List;
 
+import com.nv.youNeverWait.api.sync.ReferralSyncDTO;
 import com.nv.youNeverWait.pl.dao.GenericDao;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
@@ -34,5 +35,5 @@ public interface DoctorDao  extends GenericDao{
 	public RetrievalDoctorResponseDTO retrieveDoctorList(String lastSyncTime,String passPhrase, int netmdBranchId, Date currentSyncTime);
 	public List<DoctorLoginDTO> DoctorPasswordList(String lastSyncTime,String passPhrase, int netmdBranchId, Date currentSyncTime);
 	public NetmdLoginTbl DoctorLoginDetails(String email, String userType);
-
+	public int processReferral(ReferralSyncDTO referral);
 }
