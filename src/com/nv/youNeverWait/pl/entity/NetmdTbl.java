@@ -2,9 +2,8 @@ package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -21,9 +20,12 @@ public class NetmdTbl implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int id;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal( TemporalType.TIMESTAMP)
 	@Column(name="create_date_time", nullable=false)
 	private Date createDateTime;
+
+	@Column(name="enable_sync", nullable=false)
+	private boolean enableSync;
 
 	@Column(name="head_office_address", length=145)
 	private String headOfficeAddress;
@@ -40,11 +42,11 @@ public class NetmdTbl implements Serializable {
 	@Column(name="head_office_phone", length=45)
 	private String headOfficePhone;
 
-	@Column(length=45)
-	private String name;
-	
 	@Lob
 	private String logo;
+
+	@Column(length=45)
+	private String name;
 
 	@Column(name="owner_address", length=145)
 	private String ownerAddress;
@@ -67,34 +69,35 @@ public class NetmdTbl implements Serializable {
 	@Column(nullable=false, length=45)
 	private String status;
 
-    @Temporal( TemporalType.TIMESTAMP)
-	@Column(name="update_date_time", nullable=false)
-	private Date updateDateTime;
-
-	//bi-directional many-to-one association to NetmdBranchTbl
-	@OneToMany(mappedBy="netmdTbl")
-	private Set<NetmdBranchTbl> netmdBranchTbls;
-
-	//bi-directional many-to-one association to NetmdLoginTbl
-    @ManyToOne
-	@JoinColumn(name="login_id")
-	private NetmdLoginTbl netmdLoginTbl;
-
-	//bi-directional many-to-one association to ResultTbl
-	@OneToMany(mappedBy="netmdTbl")
-	private Set<ResultTbl> resultTbls;
-
-	@Column(name="enable_sync", nullable=false)
-	private boolean enableSync;
-
 	@Column(name="sync_freq_type", length=45)
 	private String syncFreqType;
 
 	@Column(name="sync_time")
 	private int syncTime;
-	
-    public NetmdTbl() {
-    }
+
+	@Temporal( TemporalType.TIMESTAMP)
+	@Column(name="update_date_time", nullable=false)
+	private Date updateDateTime;
+
+	//bi-directional many-to-one association to NetmdBillTbl
+	@OneToMany(mappedBy="netmdTbl")
+	private List<NetmdBillTbl> netmdBillTbls;
+
+	//bi-directional many-to-one association to NetmdBranchTbl
+	@OneToMany(mappedBy="netmdTbl")
+	private List<NetmdBranchTbl> netmdBranchTbls;
+
+	//bi-directional many-to-one association to NetmdLoginTbl
+	@ManyToOne
+	@JoinColumn(name="login_id")
+	private NetmdLoginTbl netmdLoginTbl;
+
+	//bi-directional many-to-one association to ResultTbl
+	@OneToMany(mappedBy="netmdTbl")
+	private List<ResultTbl> resultTbls;
+
+	public NetmdTbl() {
+	}
 
 	public int getId() {
 		return this.id;
@@ -111,6 +114,7 @@ public class NetmdTbl implements Serializable {
 	public void setCreateDateTime(Date createDateTime) {
 		this.createDateTime = createDateTime;
 	}
+
 
 	public String getHeadOfficeAddress() {
 		return this.headOfficeAddress;
@@ -152,20 +156,20 @@ public class NetmdTbl implements Serializable {
 		this.headOfficePhone = headOfficePhone;
 	}
 
+	public String getLogo() {
+		return this.logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
 	public String getName() {
 		return this.name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getLogo() {
-		return logo;
-	}
-
-	public void setLogo(String logo) {
-		this.logo = logo;
 	}
 
 	public String getOwnerAddress() {
@@ -224,44 +228,6 @@ public class NetmdTbl implements Serializable {
 		this.status = status;
 	}
 
-	public Date getUpdateDateTime() {
-		return this.updateDateTime;
-	}
-
-	public void setUpdateDateTime(Date updateDateTime) {
-		this.updateDateTime = updateDateTime;
-	}
-
-	public Set<NetmdBranchTbl> getNetmdBranchTbls() {
-		return this.netmdBranchTbls;
-	}
-
-	public void setNetmdBranchTbls(Set<NetmdBranchTbl> netmdBranchTbls) {
-		this.netmdBranchTbls = netmdBranchTbls;
-	}
-	
-	public NetmdLoginTbl getNetmdLoginTbl() {
-		return this.netmdLoginTbl;
-	}
-
-	public void setNetmdLoginTbl(NetmdLoginTbl netmdLoginTbl) {
-		this.netmdLoginTbl = netmdLoginTbl;
-	}
-	
-	public Set<ResultTbl> getResultTbls() {
-		return this.resultTbls;
-	}
-
-	public void setResultTbls(Set<ResultTbl> resultTbls) {
-		this.resultTbls = resultTbls;
-	}
-	public boolean getEnableSync() {
-		return this.enableSync;
-	}
-
-	public void setEnableSync(boolean enableSync) {
-		this.enableSync = enableSync;
-	}
 	public String getSyncFreqType() {
 		return this.syncFreqType;
 	}
@@ -276,6 +242,102 @@ public class NetmdTbl implements Serializable {
 
 	public void setSyncTime(int syncTime) {
 		this.syncTime = syncTime;
+	}
+
+	public Date getUpdateDateTime() {
+		return this.updateDateTime;
+	}
+
+	public void setUpdateDateTime(Date updateDateTime) {
+		this.updateDateTime = updateDateTime;
+	}
+
+	public List<NetmdBillTbl> getNetmdBillTbls() {
+		return this.netmdBillTbls;
+	}
+
+	public void setNetmdBillTbls(List<NetmdBillTbl> netmdBillTbls) {
+		this.netmdBillTbls = netmdBillTbls;
+	}
+
+	public NetmdBillTbl addNetmdBillTbl(NetmdBillTbl netmdBillTbl) {
+		getNetmdBillTbls().add(netmdBillTbl);
+		netmdBillTbl.setNetmdTbl(this);
+
+		return netmdBillTbl;
+	}
+
+	public NetmdBillTbl removeNetmdBillTbl(NetmdBillTbl netmdBillTbl) {
+		getNetmdBillTbls().remove(netmdBillTbl);
+		netmdBillTbl.setNetmdTbl(null);
+
+		return netmdBillTbl;
+	}
+
+	public List<NetmdBranchTbl> getNetmdBranchTbls() {
+		return this.netmdBranchTbls;
+	}
+
+	public void setNetmdBranchTbls(List<NetmdBranchTbl> netmdBranchTbls) {
+		this.netmdBranchTbls = netmdBranchTbls;
+	}
+
+	public NetmdBranchTbl addNetmdBranchTbl(NetmdBranchTbl netmdBranchTbl) {
+		getNetmdBranchTbls().add(netmdBranchTbl);
+		netmdBranchTbl.setNetmdTbl(this);
+
+		return netmdBranchTbl;
+	}
+
+	public NetmdBranchTbl removeNetmdBranchTbl(NetmdBranchTbl netmdBranchTbl) {
+		getNetmdBranchTbls().remove(netmdBranchTbl);
+		netmdBranchTbl.setNetmdTbl(null);
+
+		return netmdBranchTbl;
+	}
+
+	public NetmdLoginTbl getNetmdLoginTbl() {
+		return this.netmdLoginTbl;
+	}
+
+	public void setNetmdLoginTbl(NetmdLoginTbl netmdLoginTbl) {
+		this.netmdLoginTbl = netmdLoginTbl;
+	}
+
+	public List<ResultTbl> getResultTbls() {
+		return this.resultTbls;
+	}
+
+	public void setResultTbls(List<ResultTbl> resultTbls) {
+		this.resultTbls = resultTbls;
+	}
+
+	public ResultTbl addResultTbl(ResultTbl resultTbl) {
+		getResultTbls().add(resultTbl);
+		resultTbl.setNetmdTbl(this);
+
+		return resultTbl;
+	}
+
+	public ResultTbl removeResultTbl(ResultTbl resultTbl) {
+		getResultTbls().remove(resultTbl);
+		resultTbl.setNetmdTbl(null);
+
+		return resultTbl;
+	}
+
+	/**
+	 * @return the enableSync
+	 */
+	public boolean isEnableSync() {
+		return enableSync;
+	}
+
+	/**
+	 * @param enableSync the enableSync to set
+	 */
+	public void setEnableSync(boolean enableSync) {
+		this.enableSync = enableSync;
 	}
 
 }
