@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
-import com.nv.youNeverWait.rs.dto.OrderDetails;
+import com.nv.youNeverWait.rs.dto.OrderResultSyncDTO;
 import com.nv.youNeverWait.rs.dto.OrderTestResultList;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
@@ -88,6 +88,11 @@ public class ResultServiceImpl implements ResultService{
 	 */
 	public void setResultValidator(ResultValidator resultValidator) {
 		this.resultValidator = resultValidator;
+	}
+	@Override
+	public int processOrderResult(OrderResultSyncDTO orderResult,
+			Integer source_branch_id) {
+		return resultDao.processOrderResult(orderResult, source_branch_id);
 	}
 	
 
