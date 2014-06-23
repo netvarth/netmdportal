@@ -24,33 +24,56 @@ public class DoctorExpertiseTbl implements Serializable {
 	//bi-directional many-to-one association to DoctorTbl
     @ManyToOne
 	@JoinColumn(name="doctor_id", nullable=false)
-	private DoctorTbl doctorTbl;
+    private NetmdDoctorTbl netmdDoctorTbl;
 
+    /**
+     * 
+     */
     public DoctorExpertiseTbl() {
     }
 
+	/**
+	 * @return the id
+	 */
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the expertise
+	 */
 	public String getExpertise() {
-		return this.expertise;
+		return expertise;
 	}
 
+	/**
+	 * @param expertise the expertise to set
+	 */
 	public void setExpertise(String expertise) {
 		this.expertise = expertise;
 	}
 
-	public DoctorTbl getDoctorTbl() {
-		return this.doctorTbl;
+	/**
+	 * @return the netmdDoctorTbl
+	 */
+	public NetmdDoctorTbl getNetmdDoctorTbl() {
+		return netmdDoctorTbl;
 	}
 
-	public void setDoctorTbl(DoctorTbl doctorTbl) {
-		this.doctorTbl = doctorTbl;
+	/**
+	 * @param netmdDoctorTbl the netmdDoctorTbl to set
+	 */
+	public void setNetmdDoctorTbl(NetmdDoctorTbl netmdDoctorTbl) {
+		this.netmdDoctorTbl = netmdDoctorTbl;
 	}
+
+
 	
 }
