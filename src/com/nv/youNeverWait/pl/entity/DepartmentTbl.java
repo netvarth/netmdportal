@@ -28,8 +28,8 @@ public class DepartmentTbl implements Serializable {
 	private String uid;
 
 	//bi-directional many-to-one association to CaseTbl
-	//@OneToMany(mappedBy="departmentTbl")
-	//private List<CaseTbl> caseTbls;
+	@OneToMany(mappedBy="departmentTbl")
+	private List<CaseTbl> caseTbls;
 
 	//bi-directional many-to-one association to QuestionnaireTbl
 	@OneToMany(mappedBy="departmentTbl")
@@ -78,27 +78,27 @@ public class DepartmentTbl implements Serializable {
 		this.uid = uid;
 	}
 
-//	public List<CaseTbl> getCaseTbls() {
-//		return this.caseTbls;
-//	}
+	public List<CaseTbl> getCaseTbls() {
+		return this.caseTbls;
+	}
 
-//	public void setCaseTbls(List<CaseTbl> caseTbls) {
-//		this.caseTbls = caseTbls;
-//	}
+	public void setCaseTbls(List<CaseTbl> caseTbls) {
+		this.caseTbls = caseTbls;
+	}
 
-//	public CaseTbl addCaseTbl(CaseTbl caseTbl) {
-//		getCaseTbls().add(caseTbl);
-//		caseTbl.setDepartmentTbl(this);
+	public CaseTbl addCaseTbl(CaseTbl caseTbl) {
+		getCaseTbls().add(caseTbl);
+		caseTbl.setDepartmentTbl(this);
 
-//		return caseTbl;
-//	}
+		return caseTbl;
+	}
 
-//	public CaseTbl removeCaseTbl(CaseTbl caseTbl) {
-//		getCaseTbls().remove(caseTbl);
-//		caseTbl.setDepartmentTbl(null);
+	public CaseTbl removeCaseTbl(CaseTbl caseTbl) {
+		getCaseTbls().remove(caseTbl);
+		caseTbl.setDepartmentTbl(null);
 
-//		return caseTbl;
-//	}
+		return caseTbl;
+	}
 
 	public List<QuestionnaireTbl> getQuestionnaireTbls() {
 		return this.questionnaireTbls;
