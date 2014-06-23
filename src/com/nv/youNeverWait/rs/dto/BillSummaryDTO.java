@@ -79,7 +79,7 @@ public BillSummaryDTO(NetmdBillTbl netmdBillTbl) {
 	this.uid = netmdBillTbl.getUid();
 	this.payStatus = netmdBillTbl.getPayStatus();
 	this.patientName = netmdBillTbl.getPatientName();
-	this.patientGlobalId = Integer.toString(netmdBillTbl.getPatientTbl().getId());
+	this.patientGlobalId = Integer.toString(netmdBillTbl.getNetmdPatientTbl().getId());
 	this.billAmount = netmdBillTbl.getBillAmount();
 	this.amountPaid = netmdBillTbl.getAmountPaid();
 	this.amountDue = netmdBillTbl.getBillAmount()- netmdBillTbl.getAmountPaid();
