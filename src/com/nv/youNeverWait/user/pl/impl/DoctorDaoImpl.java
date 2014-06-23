@@ -13,11 +13,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.springframework.transaction.annotation.Transactional;
+
 import com.nv.framework.util.text.StringEncoder;
-import com.nv.youNeverWait.api.sync.ReferralSyncDTO;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.DoctorAchievementTbl;
@@ -28,6 +30,7 @@ import com.nv.youNeverWait.pl.entity.DoctorPracticeExperienceTbl;
 import com.nv.youNeverWait.pl.entity.DoctorScheduleTbl;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
@@ -128,7 +131,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 		ResponseDTO response = new ResponseDTO();
 		DateFormat df = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
-		DoctorTbl newDoctor = new DoctorTbl();
+		NetmdDoctorTbl newDoctor = new NetmdDoctorTbl();
 
 		// Validate header details
 		if (header.getMacId() != null && header.getPassPhrase() != null
@@ -350,7 +353,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 				}
 			}
 		}
-		DoctorTbl doctorTbl = (DoctorTbl) getById(DoctorTbl.class,
+		NetmdDoctorTbl doctorTbl = (NetmdDoctorTbl) getById(NetmdDoctorTbl.class,
 				doctor.getGlobalId());
 		if (doctorTbl == null) {
 			ServiceException se = new ServiceException(
@@ -540,7 +543,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 
 		DoctorViewResponseDTO response = new DoctorViewResponseDTO();
 		DateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT_WITHOUT_TIME);
-		DoctorTbl doctorTbl = (DoctorTbl) getById(DoctorTbl.class, id);
+		NetmdDoctorTbl doctorTbl = (NetmdDoctorTbl) getById(NetmdDoctorTbl.class, id);
 		if (doctorTbl == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.DoctorNotFound);
@@ -662,11 +665,11 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	/**
 	 * Method to create doctor educational qualifications
 	 * 
-	 * @param doctor
+	 * @param newDoctor
 	 * @param doctorQualificationDTO
 	 * @return ResponseDTO
 	 */
-	private ResponseDTO createDoctorQualification(DoctorTbl doctor,
+	private ResponseDTO createDoctorQualification(NetmdDoctorTbl newDoctor,
 			DoctorQualificationDTO doctorQualificationDTO) {
 
 		ResponseDTO response = new ResponseDTO();
@@ -690,7 +693,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 				throw se;
 			}
 		}
-		qualificationTbl.setDoctorTbl(doctor);
+		qualificationTbl.setNetmdDoctorTbl(newDoctor);
 		save(qualificationTbl);
 		response.setId(qualificationTbl.getId());
 		return response;
@@ -699,17 +702,17 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	/**
 	 * Method to save doctor achievements
 	 * 
-	 * @param doctor
+	 * @param doctorTbl
 	 * @param doctorAchievement
 	 * @return ResponseDTO
 	 */
-	private ResponseDTO createDoctorAchievements(DoctorTbl doctor,
+	private ResponseDTO createDoctorAchievements(NetmdDoctorTbl doctorTbl,
 			DoctorAchievementDTO doctorAchievement) {
 
 		ResponseDTO response = new ResponseDTO();
 		DoctorAchievementTbl achievementTbl = new DoctorAchievementTbl();
 		achievementTbl.setAchievement(doctorAchievement.getAchievement());
-		achievementTbl.setDoctorTbl(doctor);
+		achievementTbl.setNetmdDoctorTbl(doctorTbl);
 		save(achievementTbl);
 		response.setId(achievementTbl.getId());
 		return response;
@@ -718,11 +721,11 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	/**
 	 * Method to save doctor experiences
 	 * 
-	 * @param doctor
+	 * @param newDoctor
 	 * @param doctorExperience
 	 * @return ResponseDTO
 	 */
-	private ResponseDTO createDoctorExperience(DoctorTbl doctor,
+	private ResponseDTO createDoctorExperience(NetmdDoctorTbl newDoctor,
 			DoctorExperienceDTO doctorExperience) {
 
 		ResponseDTO response = new ResponseDTO();
@@ -762,7 +765,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 			}
 
 		}
-		doctorPracticeExperience.setDoctorTbl(doctor);
+		doctorPracticeExperience.setNetmdDoctorTbl(newDoctor);
 		save(doctorPracticeExperience);
 		response.setId(doctorPracticeExperience.getId());
 		return response;
@@ -771,17 +774,17 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	/**
 	 * Method to save doctor expertises
 	 * 
-	 * @param doctor
+	 * @param newDoctor
 	 * @param doctorExpertise
 	 * @return ResponseDTO
 	 */
-	private ResponseDTO createDoctorExpertise(DoctorTbl doctor,
+	private ResponseDTO createDoctorExpertise(NetmdDoctorTbl newDoctor,
 			DoctorExpertiseDTO doctorExpertise) {
 
 		ResponseDTO response = new ResponseDTO();
 		DoctorExpertiseTbl doctorExpert = new DoctorExpertiseTbl();
 		doctorExpert.setExpertise(doctorExpertise.getExpertise());
-		doctorExpert.setDoctorTbl(doctor);
+		doctorExpert.setNetmdDoctorTbl(newDoctor);
 		save(doctorExpert);
 		response.setId(doctorExpert.getId());
 		return response;
@@ -790,17 +793,17 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	/**
 	 * Method to save doctor memberships
 	 * 
-	 * @param doctor
+	 * @param newDoctor
 	 * @param doctorMembership
 	 * @return ResponseDTO
 	 */
-	private ResponseDTO createDoctorMembership(DoctorTbl doctor,
+	private ResponseDTO createDoctorMembership(NetmdDoctorTbl newDoctor,
 			DoctorMembershipDTO doctorMembership) {
 
 		ResponseDTO response = new ResponseDTO();
 		DoctorMembershipTbl doctorMembershp = new DoctorMembershipTbl();
 		doctorMembershp.setMembership(doctorMembership.getMembership());
-		doctorMembershp.setDoctorTbl(doctor);
+		doctorMembershp.setNetmdDoctorTbl(newDoctor);
 		save(doctorMembershp);
 		response.setId(doctorMembershp.getId());
 		return response;
@@ -863,9 +866,9 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 			throw se;
 		}
 		/* Getting doctors list */
-		List<DoctorTbl> DoctorsList = getDoctorsWithNewPasswords(lastSyncTime,
+		List<NetmdDoctorTbl> DoctorsList = getDoctorsWithNewPasswords(lastSyncTime,
 				netmdPassphraseId, netmdBranchId, currentSyncTime);
-		for (DoctorTbl doctor : DoctorsList) {
+		for (NetmdDoctorTbl doctor : DoctorsList) {
 
 			response.add(new DoctorLoginDTO(doctor));
 		}
@@ -910,9 +913,9 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 		}
 
 		/* Getting doctors list */
-		List<DoctorTbl> DoctorsList = getDoctors(lastSyncTime,
+		List<NetmdDoctorTbl> DoctorsList = getDoctors(lastSyncTime,
 				netmdPassphraseId, netmdBranchId, currentSyncTime);
-		for (DoctorTbl doctor : DoctorsList) {
+		for (NetmdDoctorTbl doctor : DoctorsList) {
 
 			retrieveDoctorsList.add(new DoctorDetail(doctor));
 		}
@@ -930,14 +933,14 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	 * @param netmdBranchId
 	 * @return DoctorTbl
 	 */
-	private List<DoctorTbl> getDoctors(Date lastSyncTime,
+	private List<NetmdDoctorTbl> getDoctors(Date lastSyncTime,
 			int netmdPassphraseId, int netmdBranchId, Date currentSyncTime) {
 		javax.persistence.Query query = em.createQuery(Query.RETRIEVE_DOCTORS);
 		query.setParameter("param1", lastSyncTime);
 		query.setParameter("param2", netmdPassphraseId);
 		query.setParameter("param3", netmdBranchId);
 		query.setParameter("param4", currentSyncTime);
-		return executeQuery(DoctorTbl.class, query);
+		return executeQuery(NetmdDoctorTbl.class, query);
 
 	}
 
@@ -949,7 +952,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	 * @param netmdBranchId
 	 * @return DoctorTbl
 	 */
-	private List<DoctorTbl> getDoctorsWithNewPasswords(Date lastSyncTime,
+	private List<NetmdDoctorTbl> getDoctorsWithNewPasswords(Date lastSyncTime,
 			int netmdPassphraseId, int netmdBranchId, Date currentSyncTime) {
 		javax.persistence.Query query = em
 				.createQuery(Query.RETRIEVE__UPDATED_DOCTORS);
@@ -957,7 +960,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 		query.setParameter("param2", netmdPassphraseId);
 		query.setParameter("param3", netmdBranchId);
 		query.setParameter("param4", currentSyncTime);
-		return executeQuery(DoctorTbl.class, query);
+		return executeQuery(NetmdDoctorTbl.class, query);
 
 	}
 
@@ -1110,11 +1113,11 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	 * @param clinicId
 	 * @return DoctorTbl
 	 */
-	public List<DoctorTbl> listDoctors(String clinicId) {
+	public List<NetmdDoctorTbl> listDoctors(String clinicId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_DOCTORS_BY_CLINIC);
 		query.setParameter("param1", Integer.parseInt(clinicId));
-		return executeQuery(DoctorTbl.class, query);
+		return executeQuery(NetmdDoctorTbl.class, query);
 	}
 
 	/**
