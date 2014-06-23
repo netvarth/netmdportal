@@ -11,6 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="netmd_passphrase_tbl")
+@NamedQuery(name="NetmdPassphraseTbl.findAll", query="SELECT n FROM NetmdPassphraseTbl n")
 public class NetmdPassphraseTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -31,13 +32,13 @@ public class NetmdPassphraseTbl implements Serializable {
 	@OneToMany(mappedBy="netmdPassphraseTbl")
 	private List<DoctorScheduleTbl> doctorScheduleTbls;
 
-	//bi-directional many-to-one association to DoctorTbl
-	@OneToMany(mappedBy="netmdPassphraseTbl")
-	private List<DoctorTbl> doctorTbls;
-
 	//bi-directional many-to-one association to NetmdBranchSystemInfoTbl
 	@OneToMany(mappedBy="netmdPassphraseTbl")
 	private List<NetmdBranchSystemInfoTbl> netmdBranchSystemInfoTbls;
+
+	//bi-directional many-to-one association to NetmdDoctorTbl
+	@OneToMany(mappedBy="netmdPassphraseTbl")
+	private List<NetmdDoctorTbl> netmdDoctorTbls;
 
 	//bi-directional many-to-one association to NetmdHealthMonitorTbl
 	@OneToMany(mappedBy="netmdPassphraseTbl")
@@ -48,6 +49,10 @@ public class NetmdPassphraseTbl implements Serializable {
 	@JoinColumn(name="netmd_branch_id")
 	private NetmdBranchTbl netmdBranchTbl;
 
+	//bi-directional many-to-one association to NetmdPatientTbl
+	@OneToMany(mappedBy="netmdPassphraseTbl")
+	private List<NetmdPatientTbl> netmdPatientTbls;
+
 	//bi-directional many-to-one association to NetmdUserTbl
 	@OneToMany(mappedBy="netmdPassphraseTbl")
 	private List<NetmdUserTbl> netmdUserTbls;
@@ -55,10 +60,6 @@ public class NetmdPassphraseTbl implements Serializable {
 	//bi-directional many-to-one association to PatientAppointmentTbl
 	@OneToMany(mappedBy="netmdPassphraseTbl")
 	private List<PatientAppointmentTbl> patientAppointmentTbls;
-
-	//bi-directional many-to-one association to PatientTbl
-	@OneToMany(mappedBy="netmdPassphraseTbl")
-	private List<PatientTbl> patientTbls;
 
 	//bi-directional many-to-one association to SeriesTbl
 	@OneToMany(mappedBy="netmdPassphraseTbl")
@@ -91,20 +92,6 @@ public class NetmdPassphraseTbl implements Serializable {
 		this.passPhrase = passPhrase;
 	}
 
-	/**
-	 * @return the primaryDevice
-	 */
-	public boolean isPrimaryDevice() {
-		return primaryDevice;
-	}
-
-	/**
-	 * @param primaryDevice the primaryDevice to set
-	 */
-	public void setPrimaryDevice(boolean primaryDevice) {
-		this.primaryDevice = primaryDevice;
-	}
-
 	public List<DoctorScheduleTbl> getDoctorScheduleTbls() {
 		return this.doctorScheduleTbls;
 	}
@@ -127,28 +114,6 @@ public class NetmdPassphraseTbl implements Serializable {
 		return doctorScheduleTbl;
 	}
 
-	public List<DoctorTbl> getDoctorTbls() {
-		return this.doctorTbls;
-	}
-
-	public void setDoctorTbls(List<DoctorTbl> doctorTbls) {
-		this.doctorTbls = doctorTbls;
-	}
-
-	public DoctorTbl addDoctorTbl(DoctorTbl doctorTbl) {
-		getDoctorTbls().add(doctorTbl);
-		doctorTbl.setNetmdPassphraseTbl(this);
-
-		return doctorTbl;
-	}
-
-	public DoctorTbl removeDoctorTbl(DoctorTbl doctorTbl) {
-		getDoctorTbls().remove(doctorTbl);
-		doctorTbl.setNetmdPassphraseTbl(null);
-
-		return doctorTbl;
-	}
-
 	public List<NetmdBranchSystemInfoTbl> getNetmdBranchSystemInfoTbls() {
 		return this.netmdBranchSystemInfoTbls;
 	}
@@ -169,6 +134,28 @@ public class NetmdPassphraseTbl implements Serializable {
 		netmdBranchSystemInfoTbl.setNetmdPassphraseTbl(null);
 
 		return netmdBranchSystemInfoTbl;
+	}
+
+	public List<NetmdDoctorTbl> getNetmdDoctorTbls() {
+		return this.netmdDoctorTbls;
+	}
+
+	public void setNetmdDoctorTbls(List<NetmdDoctorTbl> netmdDoctorTbls) {
+		this.netmdDoctorTbls = netmdDoctorTbls;
+	}
+
+	public NetmdDoctorTbl addNetmdDoctorTbl(NetmdDoctorTbl netmdDoctorTbl) {
+		getNetmdDoctorTbls().add(netmdDoctorTbl);
+		netmdDoctorTbl.setNetmdPassphraseTbl(this);
+
+		return netmdDoctorTbl;
+	}
+
+	public NetmdDoctorTbl removeNetmdDoctorTbl(NetmdDoctorTbl netmdDoctorTbl) {
+		getNetmdDoctorTbls().remove(netmdDoctorTbl);
+		netmdDoctorTbl.setNetmdPassphraseTbl(null);
+
+		return netmdDoctorTbl;
 	}
 
 	public List<NetmdHealthMonitorTbl> getNetmdHealthMonitorTbls() {
@@ -199,6 +186,28 @@ public class NetmdPassphraseTbl implements Serializable {
 
 	public void setNetmdBranchTbl(NetmdBranchTbl netmdBranchTbl) {
 		this.netmdBranchTbl = netmdBranchTbl;
+	}
+
+	public List<NetmdPatientTbl> getNetmdPatientTbls() {
+		return this.netmdPatientTbls;
+	}
+
+	public void setNetmdPatientTbls(List<NetmdPatientTbl> netmdPatientTbls) {
+		this.netmdPatientTbls = netmdPatientTbls;
+	}
+
+	public NetmdPatientTbl addNetmdPatientTbl(NetmdPatientTbl netmdPatientTbl) {
+		getNetmdPatientTbls().add(netmdPatientTbl);
+		netmdPatientTbl.setNetmdPassphraseTbl(this);
+
+		return netmdPatientTbl;
+	}
+
+	public NetmdPatientTbl removeNetmdPatientTbl(NetmdPatientTbl netmdPatientTbl) {
+		getNetmdPatientTbls().remove(netmdPatientTbl);
+		netmdPatientTbl.setNetmdPassphraseTbl(null);
+
+		return netmdPatientTbl;
 	}
 
 	public List<NetmdUserTbl> getNetmdUserTbls() {
@@ -245,28 +254,6 @@ public class NetmdPassphraseTbl implements Serializable {
 		return patientAppointmentTbl;
 	}
 
-	public List<PatientTbl> getPatientTbls() {
-		return this.patientTbls;
-	}
-
-	public void setPatientTbls(List<PatientTbl> patientTbls) {
-		this.patientTbls = patientTbls;
-	}
-
-	public PatientTbl addPatientTbl(PatientTbl patientTbl) {
-		getPatientTbls().add(patientTbl);
-		patientTbl.setNetmdPassphraseTbl(this);
-
-		return patientTbl;
-	}
-
-	public PatientTbl removePatientTbl(PatientTbl patientTbl) {
-		getPatientTbls().remove(patientTbl);
-		patientTbl.setNetmdPassphraseTbl(null);
-
-		return patientTbl;
-	}
-
 	public List<SeriesTbl> getSeriesTbls() {
 		return this.seriesTbls;
 	}
@@ -287,6 +274,20 @@ public class NetmdPassphraseTbl implements Serializable {
 		seriesTbl.setNetmdPassphraseTbl(null);
 
 		return seriesTbl;
+	}
+
+	/**
+	 * @return the primaryDevice
+	 */
+	public boolean isPrimaryDevice() {
+		return primaryDevice;
+	}
+
+	/**
+	 * @param primaryDevice the primaryDevice to set
+	 */
+	public void setPrimaryDevice(boolean primaryDevice) {
+		this.primaryDevice = primaryDevice;
 	}
 
 }
