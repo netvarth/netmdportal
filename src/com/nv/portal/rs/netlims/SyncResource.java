@@ -1,7 +1,6 @@
 package com.nv.portal.rs.netlims;
 
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,13 +8,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.nv.youNeverWait.api.sync.LimsReferralBundle;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
+import com.nv.youNeverWait.rs.dto.CommonSyncResponse;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.SyncDTO;
+import com.nv.youNeverWait.rs.dto.SyncResponse;
 import com.nv.youNeverWait.rs.dto.SyncResponseDTO;
 import com.nv.youNeverWait.user.bl.service.LogService;
 import com.nv.youNeverWait.user.bl.service.SyncService;
@@ -60,6 +63,14 @@ public class SyncResource {
 	}
 	
 	
+public CommonSyncResponse processReferral(LimsReferralBundle bundle){
+		
+		List<SyncResponse> response=service.processReferral(bundle);
+		CommonSyncResponse responses=new CommonSyncResponse();
+		responses.setResponses(response);
+		return responses;
+		
+	}
 
 	/**
 	 * @return the service
