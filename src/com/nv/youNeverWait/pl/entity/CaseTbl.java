@@ -12,7 +12,6 @@ import java.util.List;
  */
 @Entity
 @Table(name="case_tbl")
-
 public class CaseTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -56,15 +55,15 @@ public class CaseTbl implements Serializable {
 
 	private float weight;
 
+	//bi-directional many-to-one association to NetmdPatientTbl
+	@ManyToOne
+	@JoinColumn(name="patient_id")
+	private NetmdPatientTbl netmdPatientTbl;
+
 	//bi-directional many-to-one association to DepartmentTbl
 	@ManyToOne
 	@JoinColumn(name="department_id")
 	private DepartmentTbl departmentTbl;
-
-	//bi-directional many-to-one association to PatientTbl
-	@ManyToOne
-	@JoinColumn(name="patient_id")
-	private PatientTbl patientTbl;
 
 	//bi-directional many-to-one association to MedicalRecordTbl
 	@OneToMany(mappedBy="caseTbl")
@@ -185,20 +184,20 @@ public class CaseTbl implements Serializable {
 		this.weight = weight;
 	}
 
+	public NetmdPatientTbl getNetmdPatientTbl() {
+		return this.netmdPatientTbl;
+	}
+
+	public void setNetmdPatientTbl(NetmdPatientTbl netmdPatientTbl) {
+		this.netmdPatientTbl = netmdPatientTbl;
+	}
+
 	public DepartmentTbl getDepartmentTbl() {
 		return this.departmentTbl;
 	}
 
 	public void setDepartmentTbl(DepartmentTbl departmentTbl) {
 		this.departmentTbl = departmentTbl;
-	}
-
-	public PatientTbl getPatientTbl() {
-		return this.patientTbl;
-	}
-
-	public void setPatientTbl(PatientTbl patientTbl) {
-		this.patientTbl = patientTbl;
 	}
 
 	public List<MedicalRecordTbl> getMedicalRecordTbls() {
