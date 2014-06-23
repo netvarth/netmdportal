@@ -149,7 +149,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		Date createdTime = new Date();
 		netMdTbl.setCreateDateTime(createdTime);
 		netMdTbl.setUpdateDateTime(createdTime);
-		if (superAdmin.isEnableSync() == false) {
+		if (superAdmin.getEnableSync() == false) {
 			netMdTbl.setEnableSync(false);
 		} else {
 			netMdTbl.setEnableSync(true);
@@ -1518,7 +1518,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		NetmdTbl netmd = getById(NetmdTbl.class, sync.getNetmdId());
 		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
 		if (netmd != null) {
-			if (superAdmin.isEnableSync() == false) {
+			if (superAdmin.getEnableSync() == false) {
 				netmd.setEnableSync(false);
 			} else
 				netmd.setEnableSync(sync.isEnableSync());
@@ -1578,7 +1578,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				netmdBranch.setEnableSync(false);
 			} else {
 				SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
-				if (superAdmin.isEnableSync() == false) {
+				if (superAdmin.getEnableSync() == false) {
 					netmdBranch.setEnableSync(false);
 				} else {
 					netmdBranch.setEnableSync(sync.isEnableSync());

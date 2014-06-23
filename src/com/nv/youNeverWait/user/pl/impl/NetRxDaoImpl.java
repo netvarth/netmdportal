@@ -116,7 +116,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		Date createdTime = new Date();
 		netRxTbl.setCreateDateTime(createdTime);
 		netRxTbl.setUpdateDateTime(createdTime);
-		if (superAdmin.isEnableSync() == false) {
+		if (superAdmin.getEnableSync() == false) {
 			netRxTbl.setEnableSync(false);
 		} else {
 			netRxTbl.setEnableSync(true);
@@ -912,7 +912,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 		NetrxTbl netrx = getById(NetrxTbl.class, sync.getNetrxId());
 		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
 		if (netrx != null) {
-			if (superAdmin.isEnableSync() == false) {
+			if (superAdmin.getEnableSync() == false) {
 				netrx.setEnableSync(false);
 			} else
 				netrx.setEnableSync(sync.isEnableSync());
@@ -968,7 +968,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 				netrxBranch.setEnableSync(false);
 			} else {
 				SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
-				if (superAdmin.isEnableSync() == false) {
+				if (superAdmin.getEnableSync() == false) {
 					netrxBranch.setEnableSync(false);
 				} else {
 					netrxBranch.setEnableSync(sync.isEnableSync());

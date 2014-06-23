@@ -575,7 +575,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		labTbl.setCreateDateTime(createdTime);
 		labTbl.setUpdateDateTime(createdTime);
 
-		if (superAdmin.isEnableSync() == false) {
+		if (superAdmin.getEnableSync() == false) {
 			labTbl.setEnableSync(false);
 		} else {
 			labTbl.setEnableSync(true);
@@ -2075,7 +2075,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		LabTbl lab = getById(LabTbl.class, sync.getLabId());
 		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
 		if (lab != null) {
-			if (superAdmin.isEnableSync() == false) {
+			if (superAdmin.getEnableSync() == false) {
 				lab.setEnableSync(false);
 			} else {
 				lab.setEnableSync(sync.isEnableSync());
@@ -2137,7 +2137,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 				labBranch.setEnableSync(false);
 			} else {
 				SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
-				if (superAdmin.isEnableSync() == false) {
+				if (superAdmin.getEnableSync() == false) {
 					labBranch.setEnableSync(false);
 				} else {
 					labBranch.setEnableSync(sync.isEnableSync());

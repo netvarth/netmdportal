@@ -100,7 +100,7 @@ NetposTbl netPosTb1=new NetposTbl();
 		Date createdTime = new Date();
 		netPosTb1.setCreateDateTime(createdTime);
 		netPosTb1.setUpdateDateTime(createdTime);
-		if (superAdmin.isEnableSync() == false) {
+		if (superAdmin.getEnableSync() == false) {
 		netPosTb1.setEnableSync(false);
 		} else {
 	netPosTb1.setEnableSync(true);

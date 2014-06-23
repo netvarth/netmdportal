@@ -35,8 +35,16 @@ import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.SuperAdminDao;
 
+/**
+ * @author Linu Paul
+ *
+ */
 public class SuperAdminDaoImpl extends GenericDaoHibernateImpl implements
 SuperAdminDao {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8354458767102853508L;
 	@PersistenceContext()
 	private EntityManager em;
 
@@ -176,7 +184,7 @@ SuperAdminDao {
 		
 			if(request!=null)
 				request.getSession().getServletContext()
-				.setAttribute("logEnabled", superAdmin.isEnableLog());
+				.setAttribute("logEnabled", superAdmin.getEnableLog());
 		}
 		ResponseDTO response = new ResponseDTO();
 		response.setSuccess(true);
@@ -198,7 +206,7 @@ SuperAdminDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response.setStatus(superAdmin.isEnableLog());
+		response.setStatus(superAdmin.getEnableLog());
 		response.setSuccess(true);
 		return response;
 	}
@@ -216,7 +224,7 @@ SuperAdminDao {
 		
 			if(request!=null)
 				request.getSession().getServletContext()
-				.setAttribute("syncLogEnabled", superAdmin.isEnableLog());
+				.setAttribute("syncLogEnabled", superAdmin.getEnableLog());
 		}
 		ResponseDTO response = new ResponseDTO();
 		response.setSuccess(true);
@@ -236,7 +244,7 @@ SuperAdminDao {
 			update(superAdmin);
 		}
 		/******Setting sync values when sync is enabled*******/
-		if(superAdmin.isEnableSync()==true){
+		if(superAdmin.getEnableSync()==true){
 			superAdmin.setSyncFreqType(sync.getSyncFreqType());
 			superAdmin.setSyncTime(sync.getSyncTime());
 			update(superAdmin);
@@ -257,7 +265,7 @@ SuperAdminDao {
 		if (superAdmin != null) {
 			sync.setSyncFreqType(superAdmin.getSyncFreqType());
 			sync.setSyncTime(superAdmin.getSyncTime());
-			sync.setEnableSync(superAdmin.isEnableSync());
+			sync.setEnableSync(superAdmin.getEnableSync());
 			sync.setSuccess(true);
 		}
 		return sync;
@@ -279,7 +287,7 @@ SuperAdminDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		response.setStatus(superAdmin.isEnableSyncLog());
+		response.setStatus(superAdmin.getEnableSyncLog());
 		response.setSuccess(true);
 		return response;
 	}
@@ -323,10 +331,16 @@ SuperAdminDao {
 		return executeUniqueQuery(SuperAdminTbl.class, query);
 	}
 
+	/**
+	 * @return the em
+	 */
 	public EntityManager getEm() {
 		return em;
 	}
 
+	/**
+	 * @param em the em to set
+	 */
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
