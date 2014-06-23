@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.OrderResultSyncDTO;
 import com.nv.youNeverWait.rs.dto.OrderTestResultList;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
@@ -25,11 +26,36 @@ import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
  * 
  */
 public interface ResultDao {
+	/**
+	 * @param patientId
+	 * @return ResultListResponseDTO resultList Response
+	 */
 	public ResultListResponseDTO listResult(String patientId);
 
+	/**
+	 * @param lastSyncTime
+	 * @param passPhrase
+	 * @param netMdBranchId
+	 * @param currentSyncTime
+	 * @return  List<RetrieveResultsResponseDTO>
+	 */
 	public List<RetrieveResultsResponseDTO> getPatientResults(String lastSyncTime, String passPhrase, int netMdBranchId,Date currentSyncTime);
 
+	/**
+	 * @param header
+	 * @param lastSyncTime
+	 * @param currentSyncTime
+	 * @return OrderTestResultList
+	 */
 	public OrderTestResultList retrieveResults(HeaderDTO header, String lastSyncTime,
 			Date currentSyncTime);
+
+	/**
+	 * @param orderResult
+	 * @param patientId
+	 * @param branchId 
+	 * @return globalid
+	 */
+	public int processOrderResult(OrderResultSyncDTO orderResult, int branchId);
 	
 }
