@@ -19,11 +19,11 @@ import java.util.Date;
  */
 public class OrderSyncDTO {
 	private String uid;
-	private PatientDTO patient;
+	private Patient patient;
 	private int referralGlobalId;
 	private int agentGlobalId;
 	private int facilityGlobalId;
-	private String paymentStatus;
+	private String orderStatus;
 	private Date orderDate;
 	/**
 	 * @return the uid
@@ -40,13 +40,13 @@ public class OrderSyncDTO {
 	/**
 	 * @return the patient
 	 */
-	public PatientDTO getPatient() {
+	public Patient getPatient() {
 		return patient;
 	}
 	/**
 	 * @param patient the patient to set
 	 */
-	public void setPatient(PatientDTO patient) {
+	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
 	/**
@@ -98,16 +98,16 @@ public class OrderSyncDTO {
 		this.orderDate = date;
 	}
 	/**
-	 * @return the paymentStatus
+	 * @return the orderStatus
 	 */
-	public String getPaymentStatus() {
-		return paymentStatus;
+	public String getOrderStatus() {
+		return orderStatus;
 	}
 	/**
-	 * @param paymentStatus the paymentStatus to set
+	 * @param orderStatus the orderStatus to set
 	 */
-	public void setPaymentStatus(String paymentStatus) {
-		this.paymentStatus = paymentStatus;
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 	
 }
