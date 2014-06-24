@@ -1060,7 +1060,8 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 	 * @return NetmdPassphraseTbl
 	 */
 	@Override
-	public int getPatient(Patient patient, int branchId) {
+	@Transactional(readOnly=false)
+	public int getNetlimsPatient(Patient patient, int branchId) {
 		PatientTbl patientTbl = getPatientByEmailId(patient.getAddress().getEmail());
 		if(patientTbl==null){
 			patientTbl=new PatientTbl();
@@ -1074,20 +1075,28 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		patientTbl.setMobile(patient.getAddress().getMobile());
 		patientTbl.setPhone(patient.getAddress().getPhone());
 		patientTbl.setUpdateDateTime(new Date());
-		
-		NetlimsPatientTbl netlimsPatientTbl = new NetlimsPatientTbl();
-		netlimsPatientTbl.setPatientTbl(patientTbl);
-		LabBranchTbl labBranchTbl = new LabBranchTbl();
-		labBranchTbl.setId(branchId);
-		netlimsPatientTbl.setLabBranchTbl(labBranchTbl);
-		
-		
 		saveOrUpdate(PatientTbl.class,patientTbl);
+		
+		NetlimsPatientTbl netlimsPatientTbl = getByPatientId_BranchId(patientTbl.getId(), branchId);
+		
+		if(netlimsPatientTbl==null){
+			netlimsPatientTbl = new NetlimsPatientTbl();
+			netlimsPatientTbl.setLabBranchTbl(getById(LabBranchTbl.class, branchId));
+			netlimsPatientTbl.setPatientTbl(patientTbl);
+			save(netlimsPatientTbl);
+		}
 		return netlimsPatientTbl.getId();
 	}
 
-	private NetmdPatientTbl getByPatientEmail(String email) {
-		javax.persistence.Query query = em.createQuery(Query.GET_PATIENT_BY_EMAIL);
+	private NetlimsPatientTbl getByPatientId_BranchId(int patientId, int branchId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_NETLIMS_PATIENT_BY_PATIENTID_BRANCHID);
+		query.setParameter("param1", patientId);
+		query.setParameter("param2", branchId);
+		return executeUniqueQuery(NetlimsPatientTbl.class, query);
+	}
+
+	private NetmdPatientTbl getNetlimsPatientEmailBy(String email) {
+		javax.persistence.Query query = em.createQuery(Query.GET_NETLIMS_PATIENT_BY_EMAIL);
 		query.setParameter("param1", email);
 		return executeUniqueQuery(NetmdPatientTbl.class, query);
 	}
