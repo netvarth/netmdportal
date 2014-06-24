@@ -16,19 +16,16 @@ package com.nv.youNeverWait.rs.dto;
  * @author Mani E.V
  */
 public class FacilityInfo {
-	private int uid;
+	private String uid;
 	private String name;
 	private Address address;
-	/**
-	 * @return the uid
-	 */
-	public int getUid() {
+	
+	
+	public String getUid() {
 		return uid;
 	}
-	/**
-	 * @param uid the uid to set
-	 */
-	public void setUid(int uid) {
+	
+	public void setUid(String uid) {
 		this.uid = uid;
 	}
 	/**
