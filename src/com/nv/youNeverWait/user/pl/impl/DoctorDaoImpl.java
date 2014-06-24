@@ -1279,7 +1279,8 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 		doctorTbl.setMobile(referral.getReferralInfo().getAddress().getMobile());
 		//no uid,name,actionname
 	
-		update(doctorTbl);
+		saveOrUpdate(DoctorTbl.class, doctorTbl);
+		//update(doctorTbl);
 		return doctorTbl.getId();
 	}
 
