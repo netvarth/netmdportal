@@ -86,7 +86,7 @@
 		<class>com.nv.youNeverWait.pl.entity.UploadInstallerTbl</class>
 		
 		<class>com.nv.youNeverWait.pl.entity.FacilityResultTbl</class>
-		<class>com.nv.youNeverWait.pl.entity.FacilityTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.LabFacilityTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetlimsOrderTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetlimsResultTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetlimsReferralTbl</class>
