@@ -10,7 +10,6 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="facility_result_tbl")
-@NamedQuery(name="FacilityResultTbl.findAll", query="SELECT f FROM FacilityResultTbl f")
 public class FacilityResultTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -21,36 +20,57 @@ public class FacilityResultTbl implements Serializable {
 	//bi-directional many-to-one association to FacilityTbl
 	@ManyToOne
 	@JoinColumn(name="facility_id")
-	private FacilityTbl facilityTbl;
+	private LabFacilityTbl labFacilityTbl;
 
 	//bi-directional many-to-one association to NetlimsOrderTbl
 	@ManyToOne
 	@JoinColumn(name="portal_order_id")
 	private NetlimsOrderTbl netlimsOrderTbl;
 
+	/**
+	 * 
+	 */
 	public FacilityResultTbl() {
 	}
 
+	/**
+	 * @return the id
+	 */
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public FacilityTbl getFacilityTbl() {
-		return this.facilityTbl;
+	/**
+	 * @return the labFacilityTbl
+	 */
+	public LabFacilityTbl getLabFacilityTbl() {
+		return labFacilityTbl;
 	}
 
-	public void setFacilityTbl(FacilityTbl facilityTbl) {
-		this.facilityTbl = facilityTbl;
+	/**
+	 * @param labFacilityTbl the labFacilityTbl to set
+	 */
+	public void setLabFacilityTbl(LabFacilityTbl labFacilityTbl) {
+		this.labFacilityTbl = labFacilityTbl;
 	}
 
+	/**
+	 * @return the netlimsOrderTbl
+	 */
 	public NetlimsOrderTbl getNetlimsOrderTbl() {
-		return this.netlimsOrderTbl;
+		return netlimsOrderTbl;
 	}
 
+	/**
+	 * @param netlimsOrderTbl the netlimsOrderTbl to set
+	 */
 	public void setNetlimsOrderTbl(NetlimsOrderTbl netlimsOrderTbl) {
 		this.netlimsOrderTbl = netlimsOrderTbl;
 	}

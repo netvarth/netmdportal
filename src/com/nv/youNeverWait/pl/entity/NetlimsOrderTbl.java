@@ -1,7 +1,9 @@
 package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -34,8 +36,10 @@ public class NetlimsOrderTbl implements Serializable {
 	@Column(name="order_status")
 	private String orderStatus;
 
-	@Column(name="source_branch_id")
-	private int sourceBranchId;
+	//bi-directional many-to-one association to LabBranchTbl
+	@ManyToOne
+	@JoinColumn(name="source_branch_id", nullable=false)
+	private LabBranchTbl labBranchTbl;
 
 	//bi-directional many-to-one association to FacilityResultTbl
 	@OneToMany(mappedBy="netlimsOrderTbl")
@@ -54,62 +58,6 @@ public class NetlimsOrderTbl implements Serializable {
 	private List<ReferralResultTbl> referralResultTbls;
 
 	public NetlimsOrderTbl() {
-	}
-
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Date getCreatedDate() {
-		return this.createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Date getLastSyncDate() {
-		return this.lastSyncDate;
-	}
-
-	public void setLastSyncDate(Date lastSyncDate) {
-		this.lastSyncDate = lastSyncDate;
-	}
-
-	public String getOrderId() {
-		return this.orderId;
-	}
-
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
-	}
-
-	public String getOrderStatus() {
-		return this.orderStatus;
-	}
-
-	public void setOrderStatus(String orderStatus) {
-		this.orderStatus = orderStatus;
-	}
-
-	public int getSourceBranchId() {
-		return this.sourceBranchId;
-	}
-
-	public void setSourceBranchId(int sourceBranchId) {
-		this.sourceBranchId = sourceBranchId;
-	}
-
-	public List<FacilityResultTbl> getFacilityResultTbls() {
-		return this.facilityResultTbls;
-	}
-
-	public void setFacilityResultTbls(List<FacilityResultTbl> facilityResultTbls) {
-		this.facilityResultTbls = facilityResultTbls;
 	}
 
 	public FacilityResultTbl addFacilityResultTbl(FacilityResultTbl facilityResultTbl) {
@@ -190,6 +138,126 @@ public class NetlimsOrderTbl implements Serializable {
 		referralResultTbl.setNetlimsOrderTbl(null);
 
 		return referralResultTbl;
+	}
+
+
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
+	/**
+	 * @return the createdDate
+	 */
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+
+
+	/**
+	 * @param createdDate the createdDate to set
+	 */
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+
+
+	/**
+	 * @return the lastSyncDate
+	 */
+	public Date getLastSyncDate() {
+		return lastSyncDate;
+	}
+
+
+
+	/**
+	 * @param lastSyncDate the lastSyncDate to set
+	 */
+	public void setLastSyncDate(Date lastSyncDate) {
+		this.lastSyncDate = lastSyncDate;
+	}
+
+
+
+	/**
+	 * @return the orderId
+	 */
+	public String getOrderId() {
+		return orderId;
+	}
+
+
+
+	/**
+	 * @param orderId the orderId to set
+	 */
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+
+
+
+	/**
+	 * @return the orderStatus
+	 */
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+
+
+
+	/**
+	 * @param orderStatus the orderStatus to set
+	 */
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	/**
+	 * @return the facilityResultTbls
+	 */
+	public List<FacilityResultTbl> getFacilityResultTbls() {
+		return facilityResultTbls;
+	}
+
+
+
+	/**
+	 * @param facilityResultTbls the facilityResultTbls to set
+	 */
+	public void setFacilityResultTbls(List<FacilityResultTbl> facilityResultTbls) {
+		this.facilityResultTbls = facilityResultTbls;
+	}
+
+	/**
+	 * @return the labBranchTbl
+	 */
+	public LabBranchTbl getLabBranchTbl() {
+		return labBranchTbl;
+	}
+
+	/**
+	 * @param labBranchTbl the labBranchTbl to set
+	 */
+	public void setLabBranchTbl(LabBranchTbl labBranchTbl) {
+		this.labBranchTbl = labBranchTbl;
 	}
 
 }

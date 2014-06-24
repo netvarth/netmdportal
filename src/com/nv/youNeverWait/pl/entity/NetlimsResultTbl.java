@@ -29,37 +29,64 @@ public class NetlimsResultTbl implements Serializable {
 	@JoinColumn(name="portal_order_id")
 	private NetlimsOrderTbl netlimsOrderTbl;
 
+	/**
+	 * 
+	 */
 	public NetlimsResultTbl() {
 	}
 
+	/**
+	 * @return the id
+	 */
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the result
+	 */
 	public String getResult() {
-		return this.result;
+		return result;
 	}
 
+	/**
+	 * @param result the result to set
+	 */
 	public void setResult(String result) {
 		this.result = result;
 	}
 
+	/**
+	 * @return the testUid
+	 */
 	public String getTestUid() {
-		return this.testUid;
+		return testUid;
 	}
 
+	/**
+	 * @param testUid the testUid to set
+	 */
 	public void setTestUid(String testUid) {
 		this.testUid = testUid;
 	}
 
+	/**
+	 * @return the netlimsOrderTbl
+	 */
 	public NetlimsOrderTbl getNetlimsOrderTbl() {
-		return this.netlimsOrderTbl;
+		return netlimsOrderTbl;
 	}
 
+	/**
+	 * @param netlimsOrderTbl the netlimsOrderTbl to set
+	 */
 	public void setNetlimsOrderTbl(NetlimsOrderTbl netlimsOrderTbl) {
 		this.netlimsOrderTbl = netlimsOrderTbl;
 	}
