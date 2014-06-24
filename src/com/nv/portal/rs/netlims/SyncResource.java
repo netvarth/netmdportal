@@ -67,6 +67,8 @@ public class SyncResource {
 	 * @param bundle 
 	 * @return CommonSyncResponse
 	 */
+	@RequestMapping(value="syncOrderResult", method=RequestMethod.POST)
+	@ResponseBody
 	public CommonSyncResponse processOrderResult(OrderResultBundle bundle){
 		List<SyncResponse> response =service.processOrderResult(bundle);
 		CommonSyncResponse syncResponse = new CommonSyncResponse();
