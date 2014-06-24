@@ -68,19 +68,23 @@ public class SyncResource {
 	 * @param bundle 
 	 * @return CommonSyncResponse
 	 */
-	@RequestMapping(value="syncOrderResult", method=RequestMethod.POST)
+	@RequestMapping(value = "syncOrderResult", method = RequestMethod.POST)
 	@ResponseBody
-	public CommonSyncResponse processOrderResult(OrderResultBundle bundle){
+	public CommonSyncResponse processOrderResult(@RequestBody OrderResultBundle bundle){
 		List<SyncResponse> response =service.processOrderResult(bundle);
 		CommonSyncResponse syncResponse = new CommonSyncResponse();
 		syncResponse.setResponses(response);
 		return syncResponse;
 	}
+
+	
 	/**
 	 * @param bundle
 	 * @return CommonSyncResponse
 	 */
-	public CommonSyncResponse processReferral(LimsReferralBundle bundle){
+	@RequestMapping(value="syncReferral", method=RequestMethod.POST)
+	@ResponseBody
+	public CommonSyncResponse processReferral(@RequestBody LimsReferralBundle bundle){
 		
 		List<SyncResponse> response=service.processReferral(bundle);
 		CommonSyncResponse responses=new CommonSyncResponse();
@@ -88,7 +92,12 @@ public class SyncResource {
 		return responses;
 		
 	}
-	
+	/**
+	 * @param bundle
+	 * @return CommonSyncResponse
+	 */
+	@RequestMapping(value="syncFacility", method=RequestMethod.POST)
+	@ResponseBody
 	public CommonSyncResponse processFacility(LimsFacilityBundle bundle){
 		
 		List<SyncResponse> response=service.processFacility(bundle);
