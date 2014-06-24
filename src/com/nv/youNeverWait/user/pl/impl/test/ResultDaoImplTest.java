@@ -1,7 +1,8 @@
+package com.nv.youNeverWait.user.pl.impl.test;
+
 /**
  * 
  */
-package com.nv.youNeverWait.user.pl.impl.test;
 
 import java.util.Date;
 
@@ -48,7 +49,7 @@ public class ResultDaoImplTest {
 		order.setOrderStatus("ResultReady");
 		orderResult.setOrder(order);
 		orderResult.setGlobalId(0);
-		Integer branchId=325;
+		Integer branchId=213;
 		resultDao.processOrderResult(orderResult, branchId);
 	}
 }
