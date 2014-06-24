@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+/**
+ * @author Luciya Jos
+ *
+ */
 public class SessionInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
@@ -57,6 +61,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 									"/youNeverWait/netlims/ui/lab/orderTransfer")
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/netlims/ui/lab/resultTransfer")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/netlims/ui/sync/syncOrderResult")
 							&& !request.getRequestURI().equals
 							("/youNeverWait/netlims/ui/lab/mailResult")) {
 						request.getRequestDispatcher("/netlims/auth/")
