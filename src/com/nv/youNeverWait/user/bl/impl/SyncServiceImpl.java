@@ -34,12 +34,14 @@ import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.DoctorLoginDTO;
 import com.nv.youNeverWait.rs.dto.DoctorResponse;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
+import com.nv.youNeverWait.rs.dto.FacilitySyncDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.HeaderResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
+import com.nv.youNeverWait.rs.dto.LimsFacilityBundle;
 import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.MedicalRecordSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
@@ -70,6 +72,7 @@ import com.nv.youNeverWait.rs.dto.RetrieveTestResponse;
 import com.nv.youNeverWait.rs.dto.UserResponse;
 import com.nv.youNeverWait.user.bl.service.AppointmentService;
 import com.nv.youNeverWait.user.bl.service.DoctorService;
+import com.nv.youNeverWait.user.bl.service.FacilityService;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
 import com.nv.youNeverWait.user.bl.service.PatientService;
@@ -99,6 +102,8 @@ public class SyncServiceImpl implements SyncService {
 	private SpecimenService specimenService;
 	private TestService testService;
 	private QuestionnaireService questionnaireService;
+	
+	private FacilityService facilityService;
 	
 	private static final Log log = LogFactory.getLog(SyncServiceImpl.class);
 
@@ -1835,6 +1840,37 @@ public class SyncServiceImpl implements SyncService {
 			responses.add(response);
 		}
 
+		return responses;
+	}
+
+
+
+	@Override
+	public List<SyncResponse> processFacility(LimsFacilityBundle bundle) {
+		
+		List<SyncResponse> responses = new ArrayList<SyncResponse>();
+		for(FacilitySyncDTO facility:bundle.getFacilities()){
+			SyncResponse response = new SyncResponse();
+			
+			try{
+				
+				response.setLocalId(facility.getFacility().getUid());
+				if(facility.getFacility().getAddress().getEmail()!=null){
+					int facility_GlobalId=facilityService.processFacility(facility);
+					response.setGlobalId(facility_GlobalId);
+					response.setStatusCode("200");
+				}
+				else{
+					response.setGlobalId(null);
+					response.setStatusCode("200");
+				}
+			}catch (Exception e){
+				log.error(e);
+				response.setStatusCode("500");
+			}
+			responses.add(response);
+		}
+		
 		return responses;
 	}
 
