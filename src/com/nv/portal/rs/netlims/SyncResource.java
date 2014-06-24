@@ -14,6 +14,7 @@ import com.nv.youNeverWait.rs.dto.CommonSyncResponse;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
+import com.nv.youNeverWait.rs.dto.LimsFacilityBundle;
 import com.nv.youNeverWait.rs.dto.OrderResultBundle;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.SyncResponse;
@@ -86,6 +87,14 @@ public class SyncResource {
 		responses.setResponses(response);
 		return responses;
 		
+	}
+	
+	public CommonSyncResponse processFacility(LimsFacilityBundle bundle){
+		
+		List<SyncResponse> response=service.processFacility(bundle);
+		CommonSyncResponse responses=new CommonSyncResponse();
+		responses.setResponses(response);
+		return responses;
 	}
 	/**
 	 * @return the service
