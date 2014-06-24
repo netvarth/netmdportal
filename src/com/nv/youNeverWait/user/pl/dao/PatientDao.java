@@ -45,7 +45,7 @@ public interface PatientDao {
 	public ResponseDTO updateMedicalRecord(MedicalRecordDTO updatedMedicalRecord, HeaderDTO header);
 	public ResponseDTO deleteMedicalRecord(MedicalRecordDTO deleteMedicalRecord, HeaderDTO header);
 	
-	public int getPatient(Patient patient,int branchId);
+	public int getNetlimsPatient(Patient patient,int branchId);
 	
 	
 	
