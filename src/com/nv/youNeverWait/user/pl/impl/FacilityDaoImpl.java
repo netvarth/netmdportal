@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
-import com.nv.youNeverWait.pl.entity.FacilityTbl;
+import com.nv.youNeverWait.pl.entity.LabFacilityTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.FacilitySyncDTO;
 import com.nv.youNeverWait.security.pl.Query;
@@ -29,9 +29,9 @@ public class FacilityDaoImpl extends GenericDaoHibernateImpl implements Facility
 	@Override
 	public int processFacility(FacilitySyncDTO facility) {
 		
-		FacilityTbl facilityTbl=getFacility(facility.getFacility().getAddress().getEmail());
+		LabFacilityTbl facilityTbl=getFacility(facility.getFacility().getAddress().getEmail());
 		if(facilityTbl==null)
-			facilityTbl=new FacilityTbl();
+			facilityTbl=new LabFacilityTbl();
 		facilityTbl.setEmail(facility.getFacility().getAddress().getEmail());
 		facilityTbl.setCity(facility.getFacility().getAddress().getCity());
 		facilityTbl.setMobile(facility.getFacility().getAddress().getMobile());
@@ -41,14 +41,14 @@ public class FacilityDaoImpl extends GenericDaoHibernateImpl implements Facility
 		facilityTbl.setName(facility.getFacility().getName());
 		//facilityTbl.setId(facility.getFacility().getUid());
 		
-		saveOrUpdate(FacilityTbl.class, facilityTbl);
+		saveOrUpdate(LabFacilityTbl.class, facilityTbl);
 		
 		return facilityTbl.getId();
 	}
 
-	private FacilityTbl getFacility(String email){
+	private LabFacilityTbl getFacility(String email){
 		javax.persistence.Query query=em.createQuery(Query.GET_FACILITY_BY_EMAILID);
 		query.setParameter("param1", email);
-		return executeUniqueQuery(FacilityTbl.class, query);
+		return executeUniqueQuery(LabFacilityTbl.class, query);
 	}
 }
