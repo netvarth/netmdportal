@@ -374,7 +374,11 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	</bean>
 
 	<bean id="result.dao" class="com.nv.youNeverWait.user.pl.impl.ResultDaoImpl"
-		parent="generic.dao"></bean>
+		parent="generic.dao">
+	    <property name="patientDao">
+			<ref bean="patient.dao" />
+		</property>
+	</bean>
 
 	<bean id="result.validator" class="com.nv.youNeverWait.user.bl.validation.ResultValidator"></bean>
 
