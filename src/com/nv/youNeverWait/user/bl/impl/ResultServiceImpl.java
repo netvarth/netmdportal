@@ -14,6 +14,8 @@ package com.nv.youNeverWait.user.bl.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.OrderResultSyncDTO;
 import com.nv.youNeverWait.rs.dto.OrderTestResultList;
@@ -31,7 +33,7 @@ import com.nv.youNeverWait.user.pl.dao.ResultDao;
 public class ResultServiceImpl implements ResultService{
 	private ResultDao resultDao;
 	private ResultValidator resultValidator;
-	
+
 	/**
 	 *list of patient result result
 	 * @param id
@@ -43,14 +45,14 @@ public class ResultServiceImpl implements ResultService{
 		return response;
 
 	}
-/**
- * Method performed for getting the results of patient
- * @param lastSyncTime
- * @param passPhrase
- * @param netmdBranchId
- * @param currentSyncTime
- * @return RetrieveResultsResponseDTO
- */
+	/**
+	 * Method performed for getting the results of patient
+	 * @param lastSyncTime
+	 * @param passPhrase
+	 * @param netmdBranchId
+	 * @param currentSyncTime
+	 * @return RetrieveResultsResponseDTO
+	 */
 	@Override
 	public List<RetrieveResultsResponseDTO> getPatientResults(
 			String lastSyncTime, String passPhrase, int netMdBranchId,
@@ -64,7 +66,7 @@ public class ResultServiceImpl implements ResultService{
 		OrderTestResultList testResults=resultDao.retrieveResults(header,lastSyncTime,currentSyncTime);
 		return testResults;
 	}
-	
+
 	/**
 	 * @return the resultDao
 	 */
@@ -92,9 +94,11 @@ public class ResultServiceImpl implements ResultService{
 	@Override
 	public int processOrderResult(OrderResultSyncDTO orderResult,
 			Integer source_branch_id) {
+		if(orderResult.getOrder().getPatient().getAddress().getEmail()==null)	
+			throw new ServiceException(ErrorCodeEnum.EmailNull);
 		return resultDao.processOrderResult(orderResult, source_branch_id);
 	}
-	
+
 
 
 
