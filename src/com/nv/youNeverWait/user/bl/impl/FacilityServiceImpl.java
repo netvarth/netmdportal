@@ -14,6 +14,7 @@ public class FacilityServiceImpl implements FacilityService{
 	public int processFacility(FacilitySyncDTO facility) {
 		
 		return facilityDao.processFacility(facility);
+		
 	}
 
 	@Override
