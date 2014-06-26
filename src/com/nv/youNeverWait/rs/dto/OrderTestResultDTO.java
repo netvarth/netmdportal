@@ -19,7 +19,7 @@ public class OrderTestResultDTO {
 	private String uid;
 	private String testName;
 	private String department;
-	private String result;
+	private Object result;
 
 	/**
 	 * @return the uid
@@ -33,21 +33,7 @@ public class OrderTestResultDTO {
 	 */
 	public void setUid(String uid) {
 		this.uid = uid;
-	}
-
-	/**
-	 * @return the result
-	 */
-	public String getResult() {
-		return result;
-	}
-
-	/**
-	 * @param result the result to set
-	 */
-	public void setResult(String result) {
-		this.result = result;
-	}
+	}	
 
 	/**
 	 * @return the testName
@@ -76,4 +62,21 @@ public class OrderTestResultDTO {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
+
+	/**
+	 * @return the result
+	 */
+	public Object getResult() {
+		return result;
+	}
+
+	/**
+	 * @param result the result to set
+	 */
+	public void setResult(Object result) {
+		this.result = result;
+	}
+
+	
+
 }

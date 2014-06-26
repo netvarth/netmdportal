@@ -6,6 +6,10 @@
 package com.nv.youNeverWait.rs.dto;
 
 
+/**
+ * @author Asha Chandran
+ *
+ */
 public class ResultTransferDTO {
 	private HeaderDTO header;
 	private int sourceLabId;
