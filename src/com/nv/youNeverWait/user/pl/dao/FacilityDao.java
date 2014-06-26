@@ -11,6 +11,18 @@ import com.nv.youNeverWait.rs.dto.FacilitySyncDTO;
  */
 public interface FacilityDao {
 
-	public int processFacility(FacilitySyncDTO facility);
+	/**
+	 * @param facility
+	 * @return globalId
+	 */
+	public int processFacility(FacilitySyncDTO facility, int branchId);
+
+	/**
+	 * @param facility
+	 * @param branchId 
+	 * @return  facilityId
+	 */
+	public int create(FacilitySyncDTO facility, int branchId);
+
 	
 }

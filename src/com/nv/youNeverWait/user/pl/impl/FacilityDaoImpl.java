@@ -6,7 +6,6 @@ package com.nv.youNeverWait.user.pl.impl;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.LabFacilityTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.FacilitySyncDTO;
@@ -25,9 +24,12 @@ public class FacilityDaoImpl extends GenericDaoHibernateImpl implements Facility
 	private static final long serialVersionUID = 1L;
 	@PersistenceContext()
 	private EntityManager em;
+	private FacilityDao facilityDao;
 
 	@Override
-	public int processFacility(FacilitySyncDTO facility) {
+	public int processFacility(FacilitySyncDTO facility, int branchId) {
+		
+		int facilityId = facilityDao.create(facility, branchId);
 		
 		LabFacilityTbl facilityTbl=getFacility(facility.getFacility().getAddress().getEmail());
 		if(facilityTbl==null)
@@ -50,5 +52,25 @@ public class FacilityDaoImpl extends GenericDaoHibernateImpl implements Facility
 		javax.persistence.Query query=em.createQuery(Query.GET_FACILITY_BY_EMAILID);
 		query.setParameter("param1", email);
 		return executeUniqueQuery(LabFacilityTbl.class, query);
+	}
+
+	@Override
+	public int create(FacilitySyncDTO facility, int branchId) {
+		
+		return 0;
+	}
+
+	/**
+	 * @return the facilityDao
+	 */
+	public FacilityDao getFacilityDao() {
+		return facilityDao;
+	}
+
+	/**
+	 * @param facilityDao the facilityDao to set
+	 */
+	public void setFacilityDao(FacilityDao facilityDao) {
+		this.facilityDao = facilityDao;
 	}
 }

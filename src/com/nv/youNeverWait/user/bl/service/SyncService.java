@@ -45,7 +45,10 @@ public interface SyncService {
 	 * @return List<SyncResponse>
 	 */
 	public List<SyncResponse> processReferral(LimsReferralBundle bundle);
-	
+	/**
+	 * @param bundle
+	 * @return List<SyncResponse>
+	 */
 	public List<SyncResponse> processFacility(LimsFacilityBundle bundle);
 
 }

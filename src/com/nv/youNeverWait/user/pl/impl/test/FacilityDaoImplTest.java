@@ -45,7 +45,7 @@ public class FacilityDaoImplTest {
 		facilitySyncDTO.setFacility(facilityInfo);
 		facilitySyncDTO.setActionName(ActionEnum.UPDATE);
 		facilitySyncDTO.setGlobalId(567);
-		facilityDao.processFacility(facilitySyncDTO);
+		//facilityDao.processFacility(facilitySyncDTO);
 		
 	}
 	
