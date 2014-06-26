@@ -48,6 +48,10 @@ import com.nv.youNeverWait.user.pl.dao.OrderDao;
  */
 public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8100493616831291262L;
 	@PersistenceContext()
 	private EntityManager em;
 	private LabDao labDao;
