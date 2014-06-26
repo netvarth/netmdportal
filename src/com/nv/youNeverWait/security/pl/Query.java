@@ -333,14 +333,14 @@ public class Query {
 	public static final String GET_NETMD_BILL_DETAILS ="select sum(bill.billAmount) as billAmt,sum(bill.amountPaid) as amtPaid from NetmdBillTbl  as bill where bill.netmdBranchTbl.id=:param1 and bill.orderDate>=:param2 and bill.orderDate<=:param3";
 	
 	/*netlims_order_tbl*/
-	public static final String GET_NETLIMSORDER_BY_ORDERID_BRANCHID = "from NetlimsOrderTbl as order where order.orderId=:param1 and order.sourceBranchId=:param2";
+	public static final String GET_NETLIMSORDER_BY_ORDERID_BRANCHID = "from NetlimsOrderTbl as order where order.orderId=:param1 and order.labBranchTbl.id=:param2";
 	public static final String GET_PATIENT_RESULT_TBL = "from PatientResultTbl as result where result.netlimsPatientTbl.id=:param1 and result.netlimsOrderTbl.id=:param2";
 	public static final String GET_RESULTBY_ORDERID_TESTUID = "from NetlimsResultTbl as result where result.netlimsOrderTbl.id=:param1 and result.testUid=:param2";
 	public static final String GET_REFERRAL_RESULTBY_ORDERID = "from ReferralResultTbl as ref where ref.netlimsOrderTbl.id=:param1";
 	
 	/*DoctorTbl*/
 	public static final String GET_REFERRAL_BY_EMAILID = "from DoctorTbl as doctor where doctor.email =:param1";
-	public static final String GET_NETLIMS_PATIENT_BY_EMAIL = null;
+	public static final String GET_NETLIMS_PATIENT_BY_EMAIL = "from PatientTbl as patient where TRIM(patient.email) = :param1";
 	public static final String GET_NETLIMSRESULT_BY_ORDERID_TESTID = "from NetlimsResultTbl as result where result.netlimsOrderTbl.id=:param1 and result.testUid=:param2";
 	public static final String GET_ORDERFACILITY_BY_ORDERID = "from FacilityResultTbl as result where result.netlimsOrderTbl.id=:param1";
 	public static final String GET_NETLIMS_PATIENT_BY_PATIENTID_BRANCHID = "from NetlimsPatientTbl as patient where patient.patientTbl.id=:param1 and patient.labBranchTbl.id=:param2";
