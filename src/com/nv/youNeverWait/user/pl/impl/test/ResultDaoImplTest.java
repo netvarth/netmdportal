@@ -45,9 +45,9 @@ public class ResultDaoImplTest {
 		OrderSyncDTO order = new OrderSyncDTO();
 		order.setPatient(patient);
 		order.setUid("14JV1");
-		order.setOrderDate(new Date());
+//		order.setOrderDate(new Date());
 		order.setOrderStatus("ResultReady");
-		orderResult.setOrder(order);
+	//	orderResult.setOrder(order);
 		orderResult.setGlobalId(0);
 		Integer branchId=213;
 		resultDao.processOrderResult(orderResult, branchId);
