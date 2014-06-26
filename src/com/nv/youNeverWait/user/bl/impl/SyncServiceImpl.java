@@ -15,8 +15,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import com.nv.youNeverWait.rs.dto.BillSyncResponseDTO;
 import com.nv.youNeverWait.api.sync.LimsReferralBundle;
 import com.nv.youNeverWait.api.sync.ReferralSyncDTO;
@@ -101,7 +99,7 @@ public class SyncServiceImpl implements SyncService {
 	private TestService testService;
 	private QuestionnaireService questionnaireService;
 	
-	private FacilityService facilityService;
+	//private FacilityService facilityService;
 	
 	private static final Log log = LogFactory.getLog(SyncServiceImpl.class);
 
@@ -1843,34 +1841,34 @@ public class SyncServiceImpl implements SyncService {
 
 
 
-	@Override
-	public List<SyncResponse> processFacility(LimsFacilityBundle bundle) {
-		
-		List<SyncResponse> responses = new ArrayList<SyncResponse>();
-		for(FacilitySyncDTO facility:bundle.getFacilities()){
-			SyncResponse response = new SyncResponse();
-			
-			try{
-				
-				response.setLocalId(facility.getFacility().getUid());
-				if(facility.getFacility().getAddress().getEmail()!=null){
-					int facility_GlobalId=facilityService.processFacility(facility);
-					response.setGlobalId(facility_GlobalId);
-					response.setStatusCode("200");
-				}
-				else{
-					response.setGlobalId(null);
-					response.setStatusCode("200");
-				}
-			}catch (Exception e){
-				log.error(e);
-				response.setStatusCode("500");
-			}
-			responses.add(response);
-		}
-		
-		return responses;
-	}
+//	@Override
+//	public List<SyncResponse> processFacility(LimsFacilityBundle bundle) {
+//		
+//		List<SyncResponse> responses = new ArrayList<SyncResponse>();
+//		for(FacilitySyncDTO facility:bundle.getFacilities()){
+//			SyncResponse response = new SyncResponse();
+//			
+//			try{
+//				
+//				response.setLocalId(facility.getFacility().getUid());
+//				if(facility.getFacility().getAddress().getEmail()!=null){
+//					int facility_GlobalId=facilityService.processFacility(facility);
+//					response.setGlobalId(facility_GlobalId);
+//					response.setStatusCode("200");
+//				}
+//				else{
+//					response.setGlobalId(null);
+//					response.setStatusCode("200");
+//				}
+//			}catch (Exception e){
+//				log.error(e);
+//				response.setStatusCode("500");
+//			}
+//			responses.add(response);
+//		}
+//		
+//		return responses;
+//	}
 
 
 
