@@ -101,9 +101,9 @@ public class SyncResource extends ServiceExceptionHandler {
 	@ResponseBody
 	public CommonSyncResponse processFacility(@RequestBody LimsFacilityBundle bundle){
 		
-//		List<SyncResponse> response=service.processFacility(bundle);
+		List<SyncResponse> response=service.processFacility(bundle);
 		CommonSyncResponse responses=new CommonSyncResponse();
-//		responses.setResponses(response);
+		responses.setResponses(response);
 		return responses;
 	}
 	/**
