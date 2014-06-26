@@ -1062,7 +1062,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 	@Override
 	@Transactional(readOnly=false)
 	public int getNetlimsPatient(Patient patient, int branchId) {
-		PatientTbl patientTbl = getPatientByEmailId(patient.getAddress().getEmail());
+		PatientTbl patientTbl = getNetlimsPatientEmailBy(patient.getAddress().getEmail());
 		if(patientTbl==null){
 			patientTbl=new PatientTbl();
 			patientTbl.setCreateDateTime(new Date());
@@ -1095,15 +1095,15 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		return executeUniqueQuery(NetlimsPatientTbl.class, query);
 	}
 
-	private NetmdPatientTbl getNetlimsPatientEmailBy(String email) {
+	private PatientTbl getNetlimsPatientEmailBy(String email) {
 		javax.persistence.Query query = em.createQuery(Query.GET_NETLIMS_PATIENT_BY_EMAIL);
 		query.setParameter("param1", email);
-		return executeUniqueQuery(NetmdPatientTbl.class, query);
+		return executeUniqueQuery(PatientTbl.class, query);
 	}
 	
-	private PatientTbl getPatientByEmailId(String email) {
+	private NetmdPatientTbl getPatientByEmailId(String email) {
 		javax.persistence.Query query = em.createQuery(Query.GET_PATIENT_BY_EMAIL);
 		query.setParameter("param1", email);
-		return executeUniqueQuery(PatientTbl.class, query);
+		return executeUniqueQuery(NetmdPatientTbl.class, query);
 	}
 }
