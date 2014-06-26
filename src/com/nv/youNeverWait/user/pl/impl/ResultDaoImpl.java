@@ -21,6 +21,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nv.youNeverWait.common.Constants;
@@ -36,7 +37,6 @@ import com.nv.youNeverWait.pl.entity.NetlimsResultTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.OrderResultTbl;
 import com.nv.youNeverWait.pl.entity.PatientResultTbl;
-import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.ReferralResultTbl;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
@@ -282,24 +282,25 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 		 * else update action
 		 */
 		NetlimsOrderTbl netlimsOrderTbl =null;
-		if(orderResult.getGlobalId()==0) {
+		if(orderResult.getGlobalId()!=0) 
 			netlimsOrderTbl = getById(NetlimsOrderTbl.class, orderResult.getGlobalId());
-		} else {
-			netlimsOrderTbl = getBy_orderuid_branchid(orderResult.getOrder().getUid(), branchId);
-		}
 		/* Save NetlimsOrderTbl
 		 * if there is an record having orderuid and branchId then set then return with a status success with no action
 		 * else perform the save action
 		 */
-
+		if(netlimsOrderTbl==null) {
+			netlimsOrderTbl = getBy_orderuid_branchid(orderResult.getOrder().getUid(), branchId);
+			if(netlimsOrderTbl!=null)
+				return 0;
+		}
 		netlimsOrderTbl = saveOrUpdateNetlimsOrder(netlimsOrderTbl, orderResult, branchId);
-		saveOrUpdateNetlimsOrderTests(netlimsOrderTbl, orderResult, branchId);//Save Results
 		saveOrUpdateOrderPatient(netlimsOrderTbl, orderResult.getOrder().getPatient(), branchId);
+		saveOrUpdateNetlimsOrderTests(netlimsOrderTbl, orderResult, branchId);//Save Results
 		saveOrUpdateOrderReferral(netlimsOrderTbl, orderResult.getOrder().getReferralGlobalId());
 		saveOrUpdateOrderFacility(netlimsOrderTbl, orderResult.getOrder().getFacilityGlobalId());
 		return netlimsOrderTbl.getId();
 	}
-
+	@Transactional(readOnly = false)
 	private void saveOrUpdateOrderFacility(NetlimsOrderTbl netlimsOrderTbl,
 			int facilityId) {
 		FacilityResultTbl facilityResultTbl = getFacilityResult(netlimsOrderTbl.getId());
@@ -315,7 +316,7 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 				delete(facilityResultTbl);
 
 	}
-
+	@Transactional(readOnly = false)
 	private void saveOrUpdateOrderReferral(NetlimsOrderTbl netlimsOrderTbl,
 			int referralId) {
 		ReferralResultTbl referralResultTbl = getReferralResult(netlimsOrderTbl.getId());
@@ -330,7 +331,7 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 			if(referralResultTbl!=null)
 				delete(referralResultTbl);
 	}
-
+	@Transactional(readOnly = false)
 	private void saveOrUpdateOrderPatient(NetlimsOrderTbl netlimsOrderTbl,
 			Patient patient, int branchId) {
 		int netlimsPatientId = patientDao.getNetlimsPatient(patient, branchId);
@@ -347,7 +348,7 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 		query.setParameter("param1",orderId);
 		return executeUniqueQuery(FacilityResultTbl.class, query);
 	}
-
+	@Transactional(readOnly = false)
 	private void saveOrUpdateNetlimsOrderTests(NetlimsOrderTbl netlimsOrderTbl,
 			OrderResultSyncDTO orderResult, int branchId) {
 		for(OrderTestResultDTO orderTestResult: orderResult.getTestResult()){
@@ -355,7 +356,14 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 			if(resultTbl==null)
 				resultTbl = new NetlimsResultTbl();
 			resultTbl.setNetlimsOrderTbl(netlimsOrderTbl);
-			resultTbl.setResult(orderTestResult.getResult());
+			ObjectMapper maper = new ObjectMapper();
+			String result = null;
+			try {
+				result = maper.writeValueAsString(orderTestResult.getResult());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
+			resultTbl.setResult(result);
 			resultTbl.setTestUid(orderTestResult.getUid());
 			saveOrUpdate(NetlimsResultTbl.class, resultTbl);
 		}
