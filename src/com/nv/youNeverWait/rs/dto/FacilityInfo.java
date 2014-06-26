@@ -21,13 +21,7 @@ public class FacilityInfo {
 	private Address address;
 	
 	
-	public String getUid() {
-		return uid;
-	}
 	
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
 	/**
 	 * @return the name
 	 */
@@ -57,6 +51,18 @@ public class FacilityInfo {
 	 */
 	public FacilityInfo() {
 		super();
+	}
+	/**
+	 * @return the uid
+	 */
+	public String getUid() {
+		return uid;
+	}
+	/**
+	 * @param uid the uid to set
+	 */
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 	
 }
