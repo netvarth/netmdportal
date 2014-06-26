@@ -7,4 +7,5 @@ public interface FacilityService {
 
 	public SyncResponse createFacility(FacilitySyncDTO facility);
 	public int processFacility(FacilitySyncDTO facility);
+	
 }
