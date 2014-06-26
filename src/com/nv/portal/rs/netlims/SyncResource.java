@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nv.youNeverWait.api.sync.LimsReferralBundle;
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.exception.ServiceExceptionHandler;
 import com.nv.youNeverWait.rs.dto.CommonSyncResponse;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
@@ -28,7 +29,7 @@ import com.nv.youNeverWait.user.bl.service.SyncService;
 @Controller
 @RequestMapping("ui/sync/")
 
-public class SyncResource {
+public class SyncResource extends ServiceExceptionHandler {
 
 	private SyncService service;
 	private LogService logService;
@@ -98,11 +99,11 @@ public class SyncResource {
 	 */
 	@RequestMapping(value="syncFacility", method=RequestMethod.POST)
 	@ResponseBody
-	public CommonSyncResponse processFacility(LimsFacilityBundle bundle){
+	public CommonSyncResponse processFacility(@RequestBody LimsFacilityBundle bundle){
 		
-		List<SyncResponse> response=service.processFacility(bundle);
+//		List<SyncResponse> response=service.processFacility(bundle);
 		CommonSyncResponse responses=new CommonSyncResponse();
-		responses.setResponses(response);
+//		responses.setResponses(response);
 		return responses;
 	}
 	/**
