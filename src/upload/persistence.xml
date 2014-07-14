@@ -4,10 +4,13 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="youNeverWaitPU">
 	   <class>com.nv.youNeverWait.pl.entity.AnswerTbl</class>
+	    <class>com.nv.youNeverWait.pl.entity.AnswerStatTbl</class>
+	     <class>com.nv.youNeverWait.pl.entity.AnswerSetTbl</class>
 		
 		<class>com.nv.youNeverWait.pl.entity.CaseTbl</class>
 		
-		<class>com.nv.youNeverWait.pl.entity.DepartmentQuestionnaireTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.QuestionnaireTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.DataPointTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.DepartmentTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.DoctorAchievementTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.DoctorEducationalQualificationTbl</class>
@@ -16,15 +19,16 @@
 		<class>com.nv.youNeverWait.pl.entity.DoctorPracticeExperienceTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.DoctorScheduleTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.DoctorTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.HealthCareOrganisationTbl</class>
+		
 		
 		<class>com.nv.youNeverWait.pl.entity.LabBranchSystemInfoTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.LabBranchTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.LabHealthMonitorTbl</class>
-		<class>com.nv.youNeverWait.pl.entity.LabLoginTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.LabPassphraseTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.LabTbl</class>
-		<class>com.nv.youNeverWait.pl.entity.LabUserBranchTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.LabUserTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.UserTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.LogTbl</class>
 		
 		<class>com.nv.youNeverWait.pl.entity.MedicalRecordTbl</class>
@@ -34,7 +38,7 @@
 		<class>com.nv.youNeverWait.pl.entity.NetmdBranchSystemInfoTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdBranchTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdHealthMonitorTbl</class>
-		<class>com.nv.youNeverWait.pl.entity.NetmdLoginTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.LoginTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdUserTbl</class>
@@ -78,7 +82,18 @@
 		<class>com.nv.youNeverWait.pl.entity.NetmdAnswerTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdQuestionTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdQuestionnaireTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.UploadInstallerTbl</class>
 		
+		<class>com.nv.youNeverWait.pl.entity.FacilityResultTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.LabFacilityTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetlimsOrderTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetlimsResultTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetlimsReferralTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.PatientResultTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.ReferralResultTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetlimsPatientTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdPatientTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.NetmdDoctorTbl</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 		</properties>
