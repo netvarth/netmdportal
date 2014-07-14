@@ -280,7 +280,7 @@ public class PatientValidator extends FilterValidator{
 			se.isDisplayErrMsg();
 			throw se;
 		}
-		ActionNameEnum action=ActionNameEnum.getEnum(updatedPatientCase.getActionName());
+		//ActionNameEnum action=ActionNameEnum.getEnum(updatedPatientCase.getActionName());
 		
 	}
 	public void validateDeleteCase(CaseDTO deleteCaseList) {
