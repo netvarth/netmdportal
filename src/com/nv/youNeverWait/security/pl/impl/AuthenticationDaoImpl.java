@@ -21,12 +21,12 @@ import com.nv.youNeverWait.rs.dto.ErrorCodeListResponseDTO;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.pl.entity.LabFacilityTbl;
 import com.nv.youNeverWait.pl.entity.LabTbl;
 import com.nv.youNeverWait.pl.entity.LabUserTbl;
-import com.nv.youNeverWait.pl.entity.LabLoginTbl;
 import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
+import com.nv.youNeverWait.pl.entity.LoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
-import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPatientTbl;
 import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
@@ -94,7 +94,7 @@ AuthenticationDao {
 				.getPassword());
 		String decryptedUserName = StringEncoder.decryptWithStaticKey(passwords
 				.getUsername());
-		NetmdLoginTbl loginTbl = (NetmdLoginTbl) getLoginByUserName(decryptedUserName);
+		LoginTbl loginTbl = (LoginTbl) getLoginByUserName(decryptedUserName);
 		if (loginTbl == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidUser);
@@ -120,9 +120,16 @@ AuthenticationDao {
 	public LoginResponseDTO netlimsLogin(LoginDTO loginDTO) {
 
 		LoginResponseDTO login = new LoginResponseDTO();
-		LabLoginTbl loginDetails = getUserByUserNameAndPassword(
-				loginDTO.getPassword(), loginDTO.getUserName());
-		if(loginDetails==null){
+		LoginTbl loginInfo = null;
+		LoginTbl loginDetails = null;
+		System.out.println(loginDTO.getPassword());
+		if(loginDTO.getUserType().equals(NetmdUserTypeEnum.Facility.getDisplayName()))
+			loginInfo = getByUserNamePasswordAndType(
+					loginDTO.getPassword(), loginDTO.getUserName(), loginDTO.getUserType());
+		else
+			loginDetails = getUserByUserNameAndPassword(
+					loginDTO.getPassword(), loginDTO.getUserName());
+		if(loginDetails==null && loginInfo==null){
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.UserNull);
 			se.setDisplayErrMsg(true);
@@ -131,6 +138,16 @@ AuthenticationDao {
 		login.setSuccess(true);
 		return login;
 
+	}
+
+	private LoginTbl getByUserNamePasswordAndType(String password,
+			String userName, String userType) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_USER_BY_NAME_PASSWORD_TYPE);
+		query.setParameter("param1", userName);
+		query.setParameter("param2", password);
+		query.setParameter("param3", userType);
+		return executeUniqueQuery(LoginTbl.class, query);
 	}
 
 	/**
@@ -144,7 +161,7 @@ AuthenticationDao {
 	public LoginResponseDTO netmdLogin(LoginDTO loginDTO) {
 
 		LoginResponseDTO login = new LoginResponseDTO();
-		NetmdLoginTbl loginDetails = (NetmdLoginTbl) getNetMdUserByUserNameAndPassword(
+		LoginTbl loginDetails = (LoginTbl) getNetMdUserByUserNameAndPassword(
 				loginDTO.getPassword(), loginDTO.getUserName());
 		if(loginDetails==null){
 			ServiceException se = new ServiceException(
@@ -189,7 +206,7 @@ AuthenticationDao {
 	public LoginResponseDTO patientLogin(LoginDTO loginDTO) {
 
 		LoginResponseDTO login = new LoginResponseDTO();
-		NetmdLoginTbl loginDetails = getPatientByUserNameAndPassword(
+		LoginTbl loginDetails = getPatientByUserNameAndPassword(
 				loginDTO.getPassword(), loginDTO.getUserName());
 		if(loginDetails==null){
 			ServiceException se = new ServiceException(
@@ -215,7 +232,7 @@ AuthenticationDao {
 		String newPassword = StringEncoder.encryptWithKey(login.getPassword());
 		String decrypedUserName = StringEncoder.decryptWithStaticKey(login
 				.getUserName());
-		NetmdLoginTbl userLogin = getNetMdUserByName(decrypedUserName);
+		LoginTbl userLogin = getNetMdUserByName(decrypedUserName);
 		if (userLogin == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidUserName);
@@ -241,7 +258,7 @@ AuthenticationDao {
 	@Transactional
 	public UserDetails getNetlimsUser(String userName) {
 
-		LabLoginTbl netlimsLogin = (LabLoginTbl) getNetlimsLoginByUserName(userName);
+		LoginTbl netlimsLogin = (LoginTbl) getNetlimsLoginByUserName(userName);
 		if (netlimsLogin == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.LoginNotExists);
@@ -263,15 +280,12 @@ AuthenticationDao {
 				return user;
 			}
 		} else {
-			LabUserTbl labUser = (LabUserTbl) getNetlimsUserByLogin(netlimsLogin
-					.getId());
+			LabUserTbl labUser = getNetlimsUserByLogin(netlimsLogin.getId());
 			if (labUser != null) {
 				UserDetails user = new UserDetails();
 				user.setId(labUser.getId());
-				user.setName(labUser.getFirstName());
-				for (LabTbl lab:labUser.getLabLoginTbl().getLabTbls()){
-					user.setLabId(lab.getId());
-				}
+				user.setName(labUser.getUserTbl().getFirstName());
+				user.setLabId(labUser.getLabBranchTbl().getLabTbl().getId());
 				user.setUserType(userType.getDisplayName());
 				return user;
 			}
@@ -288,7 +302,7 @@ AuthenticationDao {
 	@Override
 	@Transactional
 	public UserDetails getNetmdUser(String userName) {
-		NetmdLoginTbl netMdLogin = (NetmdLoginTbl) getNetMdLoginByUserName(userName
+		LoginTbl netMdLogin = (LoginTbl) getNetMdLoginByUserName(userName
 				.trim());
 		if (netMdLogin == null) {
 			ServiceException se = new ServiceException(
@@ -402,7 +416,7 @@ AuthenticationDao {
 			NetmdPatientTbl patient = patientList.get(0);
 			user.setId(patient.getId());
 			user.setNetmdId(patient.getNetmdBranchTbl().getId());
-			user.setUserType(patient.getNetmdLoginTbl().getUserType());
+			user.setUserType(patient.getLoginTbl().getUserType());
 			user.setName(userName);
 		}
 		return user;
@@ -416,7 +430,7 @@ AuthenticationDao {
 		ResponseDTO response = new ResponseDTO();
 		String encPassword = StringEncoder.encryptWithKey(passwords
 				.getOldPassword().trim());
-		NetmdLoginTbl login = (NetmdLoginTbl) getLoginByUserName(passwords
+		LoginTbl login = (LoginTbl) getLoginByUserName(passwords
 				.getUsername());
 		if (login == null) {
 			ServiceException se = new ServiceException(
@@ -492,7 +506,7 @@ AuthenticationDao {
 	 * Get Lab user details
 	 * 
 	 * @param loginId
-	 * @return LabUserTbl
+	 * @return UserTbl
 	 */
 	private LabUserTbl getNetlimsUserByLogin(int loginId) {
 		javax.persistence.Query query = em.createQuery(Query.GET_NETLIMS_USER);
@@ -544,13 +558,13 @@ AuthenticationDao {
 	 * @param userName
 	 * @return LabLoginTbl
 	 */
-	private LabLoginTbl getUserByUserNameAndPassword(String password,
+	private LoginTbl getUserByUserNameAndPassword(String password,
 			String userName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_NETLIMS_USER_BY_PASSWORD);
 		query.setParameter("param1", password);
 		query.setParameter("param2", userName);
-		return executeUniqueQuery(LabLoginTbl.class, query);
+		return executeUniqueQuery(LoginTbl.class, query);
 	}
 
 	/**
@@ -559,30 +573,30 @@ AuthenticationDao {
 	 * @param userName
 	 * @return LabLoginTbl
 	 */
-	private LabLoginTbl getNetlimsLoginByUserName(String userName) {
+	private LoginTbl getNetlimsLoginByUserName(String userName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_NETLIMS_LOGIN_BY_USERNAME);
 		query.setParameter("param1", userName);
-		return executeUniqueQuery(LabLoginTbl.class, query);
+		return executeUniqueQuery(LoginTbl.class, query);
 	}
 
 	/**
 	 * Get Netmd user login details
 	 * 
-	 * @param userName
-	 * @return NetmdLoginTbl
+	 * @param LoginTbl
+	 * @return LoginTbl
 	 */
-	private NetmdLoginTbl getNetMdLoginByUserName(String userName) {
+	private LoginTbl getNetMdLoginByUserName(String userName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_LOGIN_BY_OWNER_USERNAME);
 		query.setParameter("param1", userName);
-		return executeUniqueQuery(NetmdLoginTbl.class, query);
+		return executeUniqueQuery(LoginTbl.class, query);
 	}
 	/**
 	 * Get Netrx user login details
 	 * 
 	 * @param userName
-	 * @return NetmdLoginTbl
+	 * @return LoginTbl
 	 */
 	private NetrxLoginTbl getNetRxLoginByUserName(String userName) {
 		javax.persistence.Query query = em
@@ -596,15 +610,15 @@ AuthenticationDao {
 	 * 
 	 * @param password
 	 * @param userName
-	 * @return NetmdLoginTbl
+	 * @return LoginTbl
 	 */
-	private NetmdLoginTbl getNetMdUserByUserNameAndPassword(String password,
+	private LoginTbl getNetMdUserByUserNameAndPassword(String password,
 			String userName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_NETMD_USER_BY_USERNAME_PASSWORD);
 		query.setParameter("param1", password);
 		query.setParameter("param2", userName);
-		return (NetmdLoginTbl) executeUniqueQuery(NetmdLoginTbl.class, query);
+		return (LoginTbl) executeUniqueQuery(LoginTbl.class, query);
 	}
 	/**
 	 * Get Netrx user login details
@@ -626,15 +640,15 @@ AuthenticationDao {
 	 * 
 	 * @param password
 	 * @param userName
-	 * @return NetmdLoginTbl
+	 * @return LoginTbl
 	 */
-	private NetmdLoginTbl getPatientByUserNameAndPassword(String password,
+	private LoginTbl getPatientByUserNameAndPassword(String password,
 			String userName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_PATIENT_FOR_PATIENTLOGIN);
 		query.setParameter("param1", password);
 		query.setParameter("param2", userName);
-		return (NetmdLoginTbl) executeUniqueQuery(NetmdLoginTbl.class, query);
+		return (LoginTbl) executeUniqueQuery(LoginTbl.class, query);
 	}
 
 	/**
@@ -653,27 +667,27 @@ AuthenticationDao {
 
 	/**
 	 * @param userName
-	 * @return NetmdLoginTbl
+	 * @return LoginTbl
 	 */
-	public NetmdLoginTbl getLoginByUserName(String userName) {
+	public LoginTbl getLoginByUserName(String userName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_LOGIN_BY_USERNAME);
 		query.setParameter("param1", userName);
-		return executeUniqueQuery(NetmdLoginTbl.class, query);
+		return executeUniqueQuery(LoginTbl.class, query);
 	}
 
 	/**
 	 * @param userName
 	 * @param firstName
-	 * @return List<NetmdLoginTbl> 
+	 * @return List<LoginTbl> 
 	 */
-	public List<NetmdLoginTbl> getLoginByUserName(String userName,
+	public List<LoginTbl> getLoginByUserName(String userName,
 			String firstName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_LOGIN_BY_USERNAME_FIRSTNAME);
 		query.setParameter("param1", userName);
 		query.setParameter("param2", firstName);
-		return executeQuery(NetmdLoginTbl.class, query);
+		return executeQuery(LoginTbl.class, query);
 	}
 
 
@@ -690,7 +704,7 @@ AuthenticationDao {
 	public UserCredentials getUserCredentials(LoginDTO login) {
 
 		UserCredentials user = new UserCredentials();
-		NetmdLoginTbl userLogin = getNetMdUserByName(login.getUserName().trim());
+		LoginTbl userLogin = getNetMdUserByName(login.getUserName().trim());
 		if (userLogin == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidUserName);
@@ -708,13 +722,58 @@ AuthenticationDao {
 	/**
 	 * 
 	 * @param userName
-	 * @return NetmdLoginTbl
+	 * @return LoginTbl
 	 */
-	public NetmdLoginTbl getNetMdUserByName(String userName) {
+	public LoginTbl getNetMdUserByName(String userName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_NETMD_LOGIN_PATIENT_BY_USERNAME);
 		query.setParameter("param1", userName);
-		return executeUniqueQuery(NetmdLoginTbl.class, query);
+		return executeUniqueQuery(LoginTbl.class, query);
+	}
+
+	/**
+	 * 
+	 * @param userName
+	 * @param userType 
+	 * @return LoginTbl
+	 */
+	public LoginTbl getUserByNameAndType(String userName, String userType) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_LOGIN_BY_USERNAME_USERTYPE);
+		query.setParameter("param1", userName);
+		query.setParameter("param2", userType);
+		return executeUniqueQuery(LoginTbl.class, query);
+	}
+
+
+	@Override
+	public UserDetails getNetlimsFacilityUser(String userName, String userType) {
+		LoginTbl loginTbl = (LoginTbl) getUserByNameAndType(userName.trim(), userType.trim());
+		if (loginTbl == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.LoginNotExists);
+			se.addParam(new Parameter(Constants.NAME, userName));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		LabFacilityTbl facility = geFacilityByLogin(loginTbl.getId());
+		if (facility != null) {
+			UserDetails user = new UserDetails();
+			user.setId(facility.getId());
+			user.setLabId(facility.getLabBranchTbl().getLabTbl().getId());
+			user.setOrganisationId(facility.getLabBranchTbl().getId());
+			user.setName(facility.getName());
+			user.setUserType(userType);
+			return user;
+		}
+		return null;
+	}
+
+	private LabFacilityTbl geFacilityByLogin(int loginId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_FACILITY_BY_LOGINID);
+		query.setParameter("param1", loginId);
+		return executeUniqueQuery(LabFacilityTbl.class, query);
 	}
 
 }
