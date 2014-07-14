@@ -42,6 +42,7 @@ import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.LimsFacilityBundle;
+import com.nv.youNeverWait.rs.dto.LimsUserBundle;
 import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.MedicalRecordSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchDTO;
@@ -69,6 +70,7 @@ import com.nv.youNeverWait.rs.dto.SyncDTO;
 import com.nv.youNeverWait.rs.dto.SyncResponse;
 import com.nv.youNeverWait.rs.dto.SyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveTestResponse;
+import com.nv.youNeverWait.rs.dto.SyncUser;
 import com.nv.youNeverWait.rs.dto.UserResponse;
 import com.nv.youNeverWait.user.bl.service.AppointmentService;
 import com.nv.youNeverWait.user.bl.service.DoctorService;
@@ -1848,7 +1850,7 @@ public class SyncServiceImpl implements SyncService {
 		for(FacilitySyncDTO facility:bundle.getFacilities()){
 			SyncResponse response = new SyncResponse();
 			try{
-				response.setLocalId(facility.getFacility().getUid());
+				response.setLocalId(Integer.toString(facility.getFacility().getUid()));
 				if(facility.getFacility().getAddress().getEmail()!=null){
 					int facility_GlobalId=facilityService.processFacility(facility, bundle.getSource_branch_id());
 					response.setGlobalId(facility_GlobalId);
@@ -1859,6 +1861,54 @@ public class SyncServiceImpl implements SyncService {
 					response.setStatusCode("200");
 				}
 			}catch (Exception e){
+				e.printStackTrace();
+				log.error(e);
+				response.setStatusCode("500");
+			}
+			responses.add(response);
+		}
+
+		return responses;
+	}
+
+
+
+	/**
+	 * @return the facilityService
+	 */
+	public FacilityService getFacilityService() {
+		return facilityService;
+	}
+
+
+
+	/**
+	 * @param facilityService the facilityService to set
+	 */
+	public void setFacilityService(FacilityService facilityService) {
+		this.facilityService = facilityService;
+	}
+
+
+
+	@Override
+	public List<SyncResponse> processUser(LimsUserBundle bundle) {
+		List<SyncResponse> responses = new ArrayList<SyncResponse>();
+		for(SyncUser user:bundle.getUsers()){
+			SyncResponse response = new SyncResponse();
+			try{
+				response.setLocalId(Integer.toString(user.getUser().getUid()));
+				if(user.getUser().getName()!=null){
+					int user_GlobalId=labService.processUser(user, bundle.getSource_branch_id());
+					response.setGlobalId(user_GlobalId);
+					response.setStatusCode("200");
+				}
+				else{
+					response.setGlobalId(null);
+					response.setStatusCode("200");
+				}
+			}catch (Exception e){
+				e.printStackTrace();
 				log.error(e);
 				response.setStatusCode("500");
 			}

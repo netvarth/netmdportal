@@ -11,14 +11,19 @@
 package com.nv.youNeverWait.user.bl.impl;
 
 import java.util.Date;
+import java.util.List;
 
+import com.nv.security.youNeverWait.User;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.ListResponse;
+import com.nv.youNeverWait.rs.dto.Order;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
+import com.nv.youNeverWait.rs.dto.OrderTestResultDTO;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
-import com.nv.youNeverWait.rs.dto.OrderTransferResponse;
 import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
@@ -125,6 +130,21 @@ public class OrderManager implements OrderService {
 	 */
 	public void setOrderDao(OrderDao orderDao) {
 		this.orderDao = orderDao;
+	}
+
+	@Override
+	public ListResponse getByFilter(FilterDTO filterDTO, User user) {
+		return orderDao.getByFilter(filterDTO, user);
+	}
+
+	@Override
+	public List<OrderTestResultDTO> getTests(int orderId) {
+		return orderDao.getTests(orderId);
+	}
+
+	@Override
+	public Order getByOrderId(int orderId) {
+		return orderDao.getByOrderId(orderId);
 	}
 
 }
