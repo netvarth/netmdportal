@@ -33,10 +33,10 @@ public interface AuthenticationService {
 	public ErrorCodeListResponseDTO getErrorCodes();
 	public LoginResponseDTO netrxLogin(LoginDTO login);
 	public UserDetails getNetrxUser(String userName);
-	
 	public ResponseDTO changePassword(PasswordDTO passwords);
 	public ResponseDTO createPassword(CreatePasswordDTO passwords);
 	ResponseDTO resetPassword(LoginDTO login);
 	ResponseDTO forgotPassword(LoginDTO login);
+	UserDetails getFacilityUserInfo(String userName, String userType);
 	
 }

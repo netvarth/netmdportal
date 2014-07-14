@@ -21,7 +21,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 import javax.imageio.ImageIO;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -128,6 +130,7 @@ public class AuthenticationServiceimpl implements AuthenticationService {
 		}
 		String userName = login.getUserName().trim();
 		login.setUserName(userName);
+		System.out.println(login.getPassword());
 		String encPassword = StringEncoder.encryptWithKey(login.getPassword().trim());
 		login.setPassword(encPassword);
 		response = authenticationDao.netlimsLogin(login);
@@ -516,8 +519,24 @@ public class AuthenticationServiceimpl implements AuthenticationService {
 		this.enumList = enumList;
 	}
 
+	/**
+	 * @param mailSendAdapter
+	 */
 	public void setMailSendAdapter(MailSendAdapter mailSendAdapter) {
 		this.mailSendAdapter = mailSendAdapter;
+	}
+
+	@Override
+	public UserDetails getFacilityUserInfo(String userName, String userType) {
+		UserDetails user = null;
+		if (userName == null || userName.equals("")) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.UserNameNull);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		user = authenticationDao.getNetlimsFacilityUser(userName, userType);
+		return user;
 	}
 
 	

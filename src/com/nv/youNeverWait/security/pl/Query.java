@@ -32,12 +32,12 @@ public class Query {
 	
 	
 	/* NetmdUserTbl */
-	public static final String GET_USER = "from NetmdUserTbl as user where user.netmdLoginTbl.id= :param1";
+	public static final String GET_USER = "from NetmdUserTbl as user where user.loginTbl.id= :param1";
 	public static final String GET_USER_BY_NAME = "from NetmdUserTbl as user where TRIM(UPPER(user.name))= :param1";
 	public static final String GET_NETMD_BY_EMAIL = "from NetmdUserTbl as netmduser where  TRIM(netmduser.email)=:param1";
 	public static final String GET_NETMD_BY_EMAIL_AND_BRANCH = "from NetmdUserTbl as netmduser where  TRIM(netmduser.email)=:param1 and  netmduser.netmdBranchTbl.id=:param2";
 	public static final String GET_NETMD_USRS_BY_NETMD_BRANCH = "from NetmdUserTbl as netmduser where netmduser.netmdBranchTbl.id=:param1";
-	public static final String GET_NETMD_USER = "from NetmdUserTbl as netmduser where netmduser.netmdLoginTbl.id= :param1";
+	public static final String GET_NETMD_USER = "from NetmdUserTbl as netmduser where netmduser.loginTbl.id= :param1";
 	public static final String RETRIEVE_NETMD_USERS = "from NetmdUserTbl as netmduser where  netmduser.updateDateTime>:param1 and netmduser.netmdPassphraseTbl.id!=:param2 and netmduser.netmdBranchTbl.id=:param3 and netmduser.updateDateTime <:param4 order by updateDateTime";
 
 	/* DoctorNetmdTbl */
@@ -46,11 +46,11 @@ public class Query {
 	/* NetmdDoctorTbl */
 	public static final String GET_DOCTOR_BY_EMAIL = "from NetmdDoctorTbl as doctor where doctor.email =:param1";
 	public static final String GET_DOCTOR_BY_GLOBALID = "from NetmdDoctorTbl as doctor where doctor.globalId =:param1";
-	public static final String GET_DOCTOR_BY_LOGIN = "from NetmdDoctorTbl as doctor where doctor.netmdLoginTbl.userName=:param1";
+	public static final String GET_DOCTOR_BY_LOGIN = "from NetmdDoctorTbl as doctor where doctor.loginTbl.userName=:param1";
 	public static final String GET_DOCTORS_BY_CLINIC = "from NetmdDoctorTbl as doctor where doctor.netmdBranchTbl.id=:param1 and doctor.status='active'";
-	public static final String GET_DOCTOR_BY_LOGIN_ID = "from NetmdDoctorTbl as doctor where doctor.netmdLoginTbl.id=:param1";
+	public static final String GET_DOCTOR_BY_LOGIN_ID = "from NetmdDoctorTbl as doctor where doctor.loginTbl.id=:param1";
 	public static final String GET_EXISTING_DOCTOR = "from NetmdDoctorTbl as doctor where doctor.email =:param1 and doctor.netmdBranchTbl.id =:param2";
-	public static final String GET_DOCTOR_WITH_LOGIN = "from NetmdDoctorTbl as doctor where doctor.netmdLoginTbl.id =:param1 and doctor.netmdBranchTbl.id =:param2 and doctor.status='active'";
+	public static final String GET_DOCTOR_WITH_LOGIN = "from NetmdDoctorTbl as doctor where doctor.loginTbl.id =:param1 and doctor.netmdBranchTbl.id =:param2 and doctor.status='active'";
 	public static final String RETRIEVE_DOCTORS = "from NetmdDoctorTbl as doctor where  doctor.updateDateTime>:param1 and doctor.netmdPassphraseTbl.id!=:param2 and doctor.netmdBranchTbl.id=:param3 and doctor.updateDateTime<:param4 order by updateDateTime";
 	public static final String GET_DOCTORS_BY_NETMD_BRANCH = "from NetmdDoctorTbl as doctor where doctor.netmdBranchTbl.id=:param1";
 	public static final String RETRIEVE__UPDATED_DOCTORS = "from NetmdDoctorTbl as doctor where  doctor.updateDateTime>:param1 and doctor.netmdPassphraseTbl.id=:param2 and doctor.netmdBranchTbl.id=:param3 and doctor.updateDateTime<=:param4 order by updateDateTime";
@@ -84,34 +84,35 @@ public class Query {
 	
 	/* PatientTbl */
 	public static final String RETRIEVE_PATIENTS = "from NetmdPatientTbl as patient where patient.updateDateTime>=:param1 and patient.updateDateTime<:param2 and patient.netmdBranchTbl.id=:param3 and patient.netmdPassphraseTbl.id!=:param4";
-	public static final String GET_PATIENT_LIST_BY_EMAILID = "from NetmdPatientTbl as patient left join fetch patient.netmdLoginTbl where TRIM(patient.netmdLoginTbl.userName) = :param1 group by patient.firstName";
+	public static final String GET_PATIENT_LIST_BY_EMAILID = "from NetmdPatientTbl as patient left join fetch patient.loginTbl where TRIM(patient.loginTbl.userName) = :param1 group by patient.firstName";
 	public static final String GET_PATIENT_LIST_BY_EMAIL = "from NetmdPatientTbl as patient where TRIM(patient.email) = :param1";
 	public static final String GET_PATIENT_BY_NAME = "from NetmdPatientTbl as patient where TRIM(UPPER(patient.firstName)) = :param1 and patient.phone=:param2";
 	public static final String GET_PATIENT_BY_EMAIL = "from NetmdPatientTbl as patient where TRIM(patient.email) = :param1";
 	public static final String GET_PATIENT_BY_EMAIL_FIRSTNAME = "from NetmdPatientTbl as patient where TRIM(patient.email) = :param1 and TRIM(patient.firstName) =:param2";
-	public static final String GET_PATIENT_BY_EMAIL_FIRSTNAME_BRANCH = "from NetmdPatientTbl as patient where TRIM(patient.email) = :param1 and TRIM(patient.firstName) =:param2 and patient.netmdBranchTbl.id=:param3 and patient.netmdLoginTbl.userType='patient'";
-	public static final String GET_PATIENT_BY_USERNAME = "from NetmdPatientTbl as patient left join fetch patient.netmdLoginTbl where patient.netmdLoginTbl.userName =:param1";
+	public static final String GET_PATIENT_BY_EMAIL_FIRSTNAME_BRANCH = "from NetmdPatientTbl as patient where TRIM(patient.email) = :param1 and TRIM(patient.firstName) =:param2 and patient.netmdBranchTbl.id=:param3 and patient.loginTbl.userType='patient'";
+	public static final String GET_PATIENT_BY_USERNAME = "from NetmdPatientTbl as patient left join fetch patient.loginTbl where patient.loginTbl.userName =:param1";
 	public static final String GET_PATIENT = "from NetmdPatientTbl as patient where TRIM(UPPER(patient.firstName)) = :param1";
 	public static final String GET_PATIENT_BY_PHONE = "from NetmdPatientTbl as patient where TRIM(UPPER(patient.firstName))= :param1 and patient.netmdBranchTbl.id= :param2 and patient.phone= :param3";
 	public static final String GET_PATIENT_BY_MOBILE = "from NetmdPatientTbl as patient where TRIM(UPPER(patient.firstName))= :param1 and patient.netmdBranchTbl.id= :param2 and patient.mobile= :param3";
 	public static final String GET_PATIENT_BY_MAILID = "from NetmdPatientTbl as patient where TRIM(UPPER(patient.firstName))= :param1 and patient.netmdBranchTbl.id= :param2 and patient.email= :param3";
 	public static final String GET_NETMD_PATIENTS_BY_NETMD_BRANCH = "from NetmdPatientTbl as patient where patient.netmdBranchTbl.id=:param1";
-	public static final String GET_PATIENT_WITH_LOGIN = "from NetmdPatientTbl as patient where patient.netmdLoginTbl.id =:param1 and patient.netmdBranchTbl.id =:param2 and patient.firstName=:param3 and patient.netmdLoginTbl.userType='patient'";
+	public static final String GET_PATIENT_WITH_LOGIN = "from NetmdPatientTbl as patient where patient.loginTbl.id =:param1 and patient.netmdBranchTbl.id =:param2 and patient.firstName=:param3 and patient.loginTbl.userType='patient'";
 	public static String RETRIEVE_PATIENTS_FOR_PRIMARY="from NetmdPatientTbl as patient where patient.updateDateTime>=:param1 and patient.updateDateTime<:param4 and patient.netmdBranchTbl.id=:param3 and patient.netmdPassphraseTbl.id=:param2";
 	public static final String GET_BY_PATIENT_NAME_AND_BRANCH_ID = "from NetmdPatientTbl as patient where UPPER(patient.firstName)=:param1 and UPPER(patient.lastName)=:param2 and patient.email=:param3 and patient.netmdBranchTbl.id=:param4";
-	/* NetmdLoginTbl */
-	public static final String GET_PATIENT_BY_USERNAME_PASSWORD = "from NetmdLoginTbl as login left join fetch NetmdUserTbl where login.password =:param1 and login.userName =:param2";
-	public static final String GET_NETMD_USER_BY_PASSWORD = "from NetmdLoginTbl as login where login.password =:param1 and login.userName =:param2";
-	public static final String GET_LOGIN_BY_PASSWORD = "from NetmdLoginTbl as login where login.password =:param1";
-	public static final String GET_NETMD_USER_BY_USERNAME_PASSWORD = "from NetmdLoginTbl as login  where login.password =:param1 and login.userName =:param2";
-	public static final String GET_NETMD_LOGIN_BY_USERNAME = "from NetmdLoginTbl as login where TRIM(login.userName)=:param1";
-	public static final String GET_NETMD_LOGIN_PATIENT_BY_USERNAME = "from NetmdLoginTbl as login where TRIM(login.userName)=:param1 and login.userType='patient'";
-	public static final String GET_LOGIN = "from NetmdLoginTbl as login where login.password = :param1 and login.loginId=:param2 ";
-	public static final String GET_LOGIN_BY_USERNAME = "from NetmdLoginTbl as login where login.userName=:param1 and login.userType='patient'";
-	public static final String GET_LOGIN_BY_OWNER_USERNAME = "from NetmdLoginTbl as login where login.userName=:param1 and login.userType='owner'";
-	public static final String GET_LOGIN_BY_USERNAME_FIRSTNAME = "from NetmdLoginTbl as login left join fetch login.netmdPatientTbls as patient where login.userName=:param1 and patient.firstName=:param2";
-	public static final String GET_PATIENT_FOR_PATIENTLOGIN = "from NetmdLoginTbl as login where login.password =:param1 and login.userName =:param2 and login.userType='patient' ";
-	public static final String GET_NETMD_LOGIN_BY_USERNAME_USERTYPE = "from NetmdLoginTbl as login where login.userName=:param1 and login.userType=:param2";
+	/* LoginTbl */
+	public static final String GET_PATIENT_BY_USERNAME_PASSWORD = "from LoginTbl as login left join fetch NetmdUserTbl where login.password =:param1 and login.userName =:param2";
+	public static final String GET_NETMD_USER_BY_PASSWORD = "from LoginTbl as login where login.password =:param1 and login.userName =:param2";
+	public static final String GET_LOGIN_BY_PASSWORD = "from LoginTbl as login where login.password =:param1";
+	public static final String GET_NETMD_USER_BY_USERNAME_PASSWORD = "from LoginTbl as login  where login.password =:param1 and login.userName =:param2";
+	public static final String GET_NETMD_LOGIN_BY_USERNAME = "from LoginTbl as login where TRIM(login.userName)=:param1";
+	public static final String GET_NETMD_LOGIN_PATIENT_BY_USERNAME = "from LoginTbl as login where TRIM(login.userName)=:param1 and login.userType='patient'";
+	public static final String GET_LOGIN = "from LoginTbl as login where login.password = :param1 and login.loginId=:param2 ";
+	public static final String GET_LOGIN_BY_USERNAME = "from LoginTbl as login where login.userName=:param1 and login.userType='patient'";
+	public static final String GET_LOGIN_BY_OWNER_USERNAME = "from LoginTbl as login where login.userName=:param1 and login.userType='owner'";
+	public static final String GET_LOGIN_BY_USERNAME_FIRSTNAME = "from LoginTbl as login left join fetch login.netmdPatientTbls as patient where login.userName=:param1 and patient.firstName=:param2";
+	public static final String GET_PATIENT_FOR_PATIENTLOGIN = "from LoginTbl as login where login.password =:param1 and login.userName =:param2 and login.userType='patient' ";
+	public static final String GET_NETMD_LOGIN_BY_USERNAME_USERTYPE = "from LoginTbl as login where login.userName=:param1 and login.userType=:param2";
+	public static final String GET_USER_BY_NAME_PASSWORD_TYPE = "from LoginTbl as login where login.userName =:param1 and login.password =:param2 and login.userType=:param3";
 	
 	/* NetmdBranchTbl */
 	public static final String GET_NETMD_BRANCH = "from NetmdBranchTbl as branch where branch.id=:param1 and branch.netmdTbl.id=:param2";
@@ -144,7 +145,7 @@ public class Query {
 	public static final String GET_MAC_AND_PASSPHRASE_BY_NETMD_BRANCH = "from NetmdPassphraseTbl as passPhrase where passPhrase.netmdBranchTbl.id=:param1";
 	public static final String GET_NEW_NETMD = "from NetmdTbl as netmd where netmd.createDateTime>:param1 and netmd.createDateTime<:param2 order by createDateTime";
 	public static final String GET_UPDATE_NETMD = "from NetmdTbl as netmd where  netmd.createDateTime < netmd.updateDateTime and netmd.updateDateTime>:param1 and netmd.updateDateTime<:param2 order by updateDateTime";
-	public static final String GET_NETMD_BY_LOGIN_ID = "from NetmdTbl as netmd where  netmd.netmdLoginTbl.id=:param1";
+	public static final String GET_NETMD_BY_LOGIN_ID = "from NetmdTbl as netmd where  netmd.loginTbl.id=:param1";
 	public static final String GET_NETMD = "from NetmdTbl as netmd" ;
 	public static final String GET_UPDATE_NETMD_DETAILS = "from NetmdTbl as netmd where  netmd.createDateTime < netmd.updateDateTime and netmd.updateDateTime>:param1 and netmd.updateDateTime<:param2 and netmd.id=:param3";
 	/* SeriesTbl */
@@ -161,22 +162,22 @@ public class Query {
 	public static final String GET_BILL_BY_DATE ="from NetmdBillTbl as bill where bill.orderDate>=:param1 and bill.orderDate<=:param2 and bill.netmdTbl.id=:param3 and bill.netmdBranchTbl.id=:param4  order by orderDate";
 	/*** NETLIMS ***/
 
+	/* UserTbl */
+	public static final String GET_NETLIMS_USER = "from LabUserTbl as user where user.loginTbl.id= :param1";
+	public static final String GET_NETLIMS_USER_BY_EMAIL = "from UserTbl as user where user.email= :param1";
+	public static final String GET_NEW_USERS = "from UserTbl as labUser where  labUser.id=:param1 and labUser.createDateTime>:param2 and labUser.createDateTime<:param3 order by createDateTime";
+	public static final String GET_UPDATED_USERS = "from UserTbl as labUser where labUser.id=:param1 and labUser.createDateTime < labUser.updateDateTime and labUser.updateDateTime>:param2 and labUser.updateDateTime<:param3 order by updateDateTime";
+	public static final String GET_OWN_USER = "from UserTbl as labUser where  labUser.id=:param1 and labUser.updateDateTime>:param2 order by updateDateTime";
+
 	/* LabUserTbl */
-	public static final String GET_NETLIMS_USER = "from LabUserTbl as user where user.labLoginTbl.id= :param1";
-	public static final String GET_NETLIMS_USER_BY_EMAIL = "from LabUserTbl as user where user.email= :param1";
-	public static final String GET_NEW_USERS = "from LabUserTbl as labUser where  labUser.id=:param1 and labUser.createDateTime>:param2 and labUser.createDateTime<:param3 order by createDateTime";
-	public static final String GET_UPDATED_USERS = "from LabUserTbl as labUser where labUser.id=:param1 and labUser.createDateTime < labUser.updateDateTime and labUser.updateDateTime>:param2 and labUser.updateDateTime<:param3 order by updateDateTime";
-	public static final String GET_OWN_USER = "from LabUserTbl as labUser where  labUser.id=:param1 and labUser.updateDateTime>:param2 order by updateDateTime";
+	public static final String GET_USER_BY_BRANCH = "from LabUserTbl as userBranch where userBranch.userTbl.id= :param1 and userBranch.labBranchTbl.id= :param2";
+	public static final String GET_BRANCH_BY_USER = "from LabUserTbl as userBranch where userBranch.userTbl.id= :param1";
+	public static final String GET_USERS_IN_BRANCH = "from LabUserTbl as userBranch where userBranch.labBranchTbl.id= :param1";
+	public static final String GET_ADMINS_IN_BRANCH = "from LabUserTbl as userBranch where userBranch.labBranchTbl.id= :param1 and userBranch.labBranchTbl.userType:=param2";
 
-	/* LabUserBranchTbl */
-	public static final String GET_USER_BY_BRANCH = "from LabUserBranchTbl as userBranch where userBranch.labUserTbl.id= :param1 and userBranch.labBranchTbl.id= :param2";
-	public static final String GET_BRANCH_BY_USER = "from LabUserBranchTbl as userBranch where userBranch.labUserTbl.id= :param1";
-	public static final String GET_USERS_IN_BRANCH = "from LabUserBranchTbl as userBranch where userBranch.labBranchTbl.id= :param1";
-	public static final String GET_ADMINS_IN_BRANCH = "from LabUserBranchTbl as userBranch where userBranch.labBranchTbl.id= :param1 and userBranch.labBranchTbl.userType:=param2";
-
-	/* LabLoginTbl */
-	public static final String GET_NETLIMS_USER_BY_PASSWORD = "from LabLoginTbl as login where login.password =:param1 and login.userName =:param2";
-	public static final String GET_NETLIMS_LOGIN_BY_USERNAME = "from LabLoginTbl as login where TRIM(login.userName)=:param1";
+	/* LoginTbl */
+	public static final String GET_NETLIMS_USER_BY_PASSWORD = "from LoginTbl as login where login.password =:param1 and login.userName =:param2";
+	public static final String GET_NETLIMS_LOGIN_BY_USERNAME = "from LoginTbl as login where TRIM(login.userName)=:param1";
 
 	/* SuperAdminTbl */
 	public static final String GET_USER_BY_PASSWORD = "from SuperAdminTbl as login where login.password =:param1 and login.userName =:param2";
@@ -198,14 +199,14 @@ public class Query {
 
 	/* LabTbl */
 	public static final String GET_LAB_BY_NAME = "from LabTbl as lab where  REPLACE(TRIM(UPPER(lab.name)),' ','')=:param1";
-	public static final String GET_NETLIMS_OWNER = "from LabTbl as lab where  lab.labLoginTbl.id=:param1";
+	public static final String GET_NETLIMS_OWNER = "from LabTbl as lab where  lab.loginTbl.id=:param1";
 	public static final String GET_NEW_BRANCHES = "from LabBranchTbl as branch where  branch.labTbl.id!=:param1 and branch.createDateTime>:param2 and branch.createDateTime<:param3 order by createDateTime";
 	public static final String GET_UPDATED_BRANCHES = "from LabBranchTbl as branch where  branch.labTbl.id!=:param1 and branch.createDateTime< branch.updateDateTime and branch.updateDateTime>:param2 and branch.updateDateTime<:param3 order by updateDateTime";
 	public static final String GET_OWN_BRANCHES = "from LabBranchTbl as branch where  branch.labTbl.id=:param1 and branch.updateDateTime>:param2 and branch.updateDateTime<:param3 order by updateDateTime";
 	public static final String GET_NEW_LABS = "from LabTbl as lab where  lab.id!=:param1 and lab.createDateTime>:param2 and lab.createDateTime<:param3 order by createDateTime";
 	public static final String GET_UPDATED_LABS = "from LabTbl as lab where lab.id!=:param1 and lab.createDateTime < lab.updateDateTime and lab.updateDateTime>:param2 and lab.updateDateTime<:param3 order by updateDateTime";
 	public static final String GET_OWN_LAB = "from LabTbl as lab where  lab.id=:param1 and lab.updateDateTime>:param2 and lab.updateDateTime<:param3 order by updateDateTime";
-	public static final String GET_LAB_BY_LOGIN_ID = "from LabTbl as lab where  lab.labLoginTbl.id=:param1";
+	public static final String GET_LAB_BY_LOGIN_ID = "from LabTbl as lab where  lab.loginTbl.id=:param1";
 	public static final String GET_LAB_DETAILS_BY_TIME = "from LabTbl as lab where lab.id=:param1 and lab.updateDateTime >=:param2 and lab.updateDateTime<:param3";
 	
 	/* ResultTbl */
@@ -344,8 +345,11 @@ public class Query {
 	public static final String GET_NETLIMSRESULT_BY_ORDERID_TESTID = "from NetlimsResultTbl as result where result.netlimsOrderTbl.id=:param1 and result.testUid=:param2";
 	public static final String GET_ORDERFACILITY_BY_ORDERID = "from FacilityResultTbl as result where result.netlimsOrderTbl.id=:param1";
 	public static final String GET_NETLIMS_PATIENT_BY_PATIENTID_BRANCHID = "from NetlimsPatientTbl as patient where patient.patientTbl.id=:param1 and patient.labBranchTbl.id=:param2";
-	
+	public static final String GET_NETLIMSRESULTS_BY_ORDERID = "from NetlimsResultTbl as result where result.netlimsOrderTbl.id=:param1";
 	/*FacilityTbl*/
-	public static final String GET_FACILITY_BY_EMAILID ="from FacilityTbl as facility where facility.email =:param1";
+	public static final String GET_FACILITY_BY_EMAILID ="from LabFacilityTbl as facility where facility.email =:param1";
+	public static final String GET_FACILITY_BY_UID_BRANCHID = "from LabFacilityTbl as facility where facility.uid=:param1 and facility.labBranchTbl.id=:param2";
+	public static final String GET_FACILITY_BY_LOGINID = "from LabFacilityTbl as facility where facility.loginTbl.id=:param1";
+	public static final String GET_USER_BY_REFERRALID = "from LabUserTbl as user where user.refUid=:param1 and user.labBranchTbl.id=:param2";
 
 }
