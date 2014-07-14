@@ -17,7 +17,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="context">
 			<value>youNeverWait</value>
 		</property>
-		  <property name="commonDao">
+		<property name="commonDao">
 			<ref bean="generic.dao" />
 		</property>
 		<property name="companyType">
@@ -153,9 +153,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="validator">
 			<ref bean="authentication.validator" />
 		</property>
-		
+
 		<property name="mailSendAdapter">
-		    <ref bean="mail.send.adapter"/>
+			<ref bean="mail.send.adapter" />
 		</property>
 		<property name="enumList">
 			<list>
@@ -210,6 +210,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 				</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.TransferredResultPropertyEnum
 				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.NetlimsFacilityOrderPropertyEnum
+				</value>
 			</list>
 		</property>
 	</bean>
@@ -234,9 +236,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="email.worker.thread" />
 		</property>
 	</bean>
-	
-	
-<bean id="doctor.validator" class="com.nv.youNeverWait.user.bl.validation.DoctorValidator"></bean>
+
+
+	<bean id="doctor.validator" class="com.nv.youNeverWait.user.bl.validation.DoctorValidator"></bean>
 
 	<bean id="sync.service" class="com.nv.youNeverWait.user.bl.impl.SyncServiceImpl">
 		<property name="syncDao">
@@ -275,6 +277,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="questionnaireService">
 			<ref bean="questionnaire.service" />
 		</property>
+		<property name="facilityService">
+			<ref bean="facility.service" />
+		</property>
 	</bean>
 
 	<bean id="sync.validator" class="com.nv.youNeverWait.user.bl.validation.SyncValidator"></bean>
@@ -305,15 +310,15 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="schedule.service" />
 		</property>
 		<property name="mailSendAdapter">
-		    <ref bean="mail.send.adapter"/>
+			<ref bean="mail.send.adapter" />
 		</property>
 		<property name="questionnaireService">
 			<ref bean="questionnaire.service" />
 		</property>
 	</bean>
-	
-	<bean id="mail.send.adapter" class ="com.nv.security.youNeverWait.MailSendAdapter">
-	    <property name="ynwServerIpAddress">
+
+	<bean id="mail.send.adapter" class="com.nv.security.youNeverWait.MailSendAdapter">
+		<property name="ynwServerIpAddress">
 			<value>${ynw.server.ip.address}</value>
 		</property>
 		<property name="mailFrom">
@@ -375,7 +380,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 
 	<bean id="result.dao" class="com.nv.youNeverWait.user.pl.impl.ResultDaoImpl"
 		parent="generic.dao">
-	    <property name="patientDao">
+		<property name="patientDao">
 			<ref bean="patient.dao" />
 		</property>
 	</bean>
@@ -514,7 +519,20 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<value>${netlims.server.ip.address}</value>
 		</property>
 	</bean>
-
+	<bean id="facility.service" class="com.nv.youNeverWait.user.bl.impl.FacilityServiceImpl">
+		<property name="facilityDao">
+			<ref bean="facility.dao" />
+		</property>
+		<property name="netlimsServerIpAddress">
+			<value>${netlims.server.ip.address}</value>
+		</property>
+		<property name="mailFrom">
+			<value>${mailFrom}</value>
+		</property>
+		<property name="mailThread">
+			<ref bean="email.worker.thread" />
+		</property>
+	</bean>
 	<bean id="lab.service" class="com.nv.youNeverWait.user.bl.impl.LabServiceImpl">
 		<property name="labDao">
 			<ref bean="lab.dao" />
@@ -607,6 +625,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 					value="com.nv.youNeverWait.util.filter.queryBuilder.TransferredResultQueryBuilder" />
 				<entry key="installer"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.InstallerQueryBuilder" />
+				<entry key="netlimsorders"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.NetlimsFacilityOrderQueryBuilder" />
 			</map>
 		</property>
 
@@ -649,6 +669,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		parent="generic.dao">
 	</bean>
 	<bean id="log.dao" class="com.nv.youNeverWait.user.pl.impl.LogDaoImpl"
+		parent="generic.dao" />
+	<bean id="facility.dao" class="com.nv.youNeverWait.user.pl.impl.FacilityDaoImpl"
 		parent="generic.dao" />
 	<bean id="log.service" class="com.nv.youNeverWait.user.bl.impl.LogServiceImpl">
 		<property name="logDao">
@@ -750,6 +772,12 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="labDao">
 			<ref bean="lab.dao" />
 		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
 	</bean>
 	<bean id="health.service" class="com.nv.youNeverWait.user.bl.impl.HealthMonitorManager">
 		<property name="hMonitorDao">
@@ -785,14 +813,14 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="mailThread">
 			<ref bean="email.worker.thread" />
 		</property>
-	
+
 	</bean>
-	
 
 
 
 
-	
+
+
 	<bean id="report.dao" class="com.nv.youNeverWait.user.pl.impl.ReportDaoImpl"
 		parent="generic.dao">
 		<property name="serverPath">
@@ -824,20 +852,20 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 
 	<bean id="questionnaire.dao" class="com.nv.youNeverWait.user.pl.impl.QuestionnaireDaoImpl">
 	</bean>
-	
+
 	<bean id="installer.dao" class="com.nv.youNeverWait.user.pl.impl.InstallerDaoImpl">
 
-		</bean>
-		
-		<bean id="installer.service" class="com.nv.youNeverWait.user.bl.impl.InstallerServiceImpl">
+	</bean>
+
+	<bean id="installer.service" class="com.nv.youNeverWait.user.bl.impl.InstallerServiceImpl">
 		<property name="installerDao">
 			<ref bean="installer.dao" />
 		</property>
 		<property name="applicationVersionPath">
 			<value>${appVersion.path}</value>
 		</property>
-		
-			<property name="queryBuilderFactory">
+
+		<property name="queryBuilderFactory">
 			<ref bean="queryBuilder.Factory" />
 		</property>
 		<property name="filterFactory">
@@ -847,8 +875,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="installer.validator" />
 		</property>
 	</bean>
-	
-		<bean id="installer.validator"
+
+	<bean id="installer.validator"
 		class="com.nv.youNeverWait.user.bl.validation.InstallerValidator"></bean>
 </beans>		
 		
