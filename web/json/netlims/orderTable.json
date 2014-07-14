@@ -1,0 +1,26 @@
+{
+    "data": [
+        {
+            "id": "orderListTableCont",
+            "elements": [
+				{
+                    "type": "table",
+                    "content": {
+                        "name" : "orders",
+						"idProperty" : "orders",
+						"className" :"stdtable stdtablecb",
+						"style":"border-spacing:0;border-collapse:collapse; border:0;",
+						"colHeaders" : [
+							{ "className" : "head0","name" : "Id","style":"width:6%"},
+							{ "className" : "head1","name" : "Status","style":"width:8%"},
+							{ "className" : "head0","name" : "Patient","style":"width:15%"},
+							{ "className" : "head1","name" : "Created On","style":"width:9%"},
+							{ "className" : "head0","name" : "Collected At","style":"width:12%"},
+							{ "className" : "head1","name" : "Reference","style":"width:15%"}
+						]
+                    }
+                }
+            ]
+        }
+    ]
+}

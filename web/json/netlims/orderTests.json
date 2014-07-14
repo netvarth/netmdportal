@@ -1,0 +1,58 @@
+{
+    "name": "viewTest",
+    "id": "viewTest",
+    "content": [
+        {
+            "className": "sep-div-view",
+            "id": "testSection",
+            "style": "width:100%",
+            "data": [
+                {
+                    "className": "five_sixth",
+                    "elements": [
+                        {
+                            "type": "table",
+                            "content": {
+                                "name": "testTable",
+                                "idProperty": "testTable",
+                                "className": "stdtable",
+                                "style": "border-spacing:0;border-collapse:collapse; border:0;",
+                                "colHeaders": [
+                                    {
+                                        "className": "head0",
+                                        "name": "Test ID",
+                                        "style": "width:25%;"
+                                    },
+									{
+                                        "className": "head0",
+                                        "name": "Test Name",
+                                        "style": "width:50%;"
+                                    },
+                                    {
+                                        "className": "head1",
+                                        "style": "width:5%;",
+                                        "name": "<input type='checkbox' id='printTestSelectAll'/>"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },{
+					"className":"five_sixth",
+					"id":"resultPrintFormDiv",
+                    "data":[{
+                        "className": "five_sixth",
+                        "elements":[{
+                            "type": "button",
+                            "content": {
+                                "buttons":[{"name":"btnPrint","id":"btnPrint","title":"Print","type": "button",
+                                    "className": "stdbtn btn_black","style": "opacity:1;margin-top:5px"}
+								]
+                            }
+                        }]
+                    }]
+				}
+            ]
+        }
+    ]
+}
