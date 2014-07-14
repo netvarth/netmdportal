@@ -87,10 +87,10 @@ public class NetmdTbl implements Serializable {
 	@OneToMany(mappedBy="netmdTbl")
 	private List<NetmdBranchTbl> netmdBranchTbls;
 
-	//bi-directional many-to-one association to NetmdLoginTbl
+	//bi-directional many-to-one association to LoginTbl
 	@ManyToOne
 	@JoinColumn(name="login_id")
-	private NetmdLoginTbl netmdLoginTbl;
+	private LoginTbl loginTbl;
 
 	//bi-directional many-to-one association to ResultTbl
 	@OneToMany(mappedBy="netmdTbl")
@@ -296,12 +296,12 @@ public class NetmdTbl implements Serializable {
 		return netmdBranchTbl;
 	}
 
-	public NetmdLoginTbl getNetmdLoginTbl() {
-		return this.netmdLoginTbl;
+	public LoginTbl getLoginTbl() {
+		return this.loginTbl;
 	}
 
-	public void setNetmdLoginTbl(NetmdLoginTbl netmdLoginTbl) {
-		this.netmdLoginTbl = netmdLoginTbl;
+	public void setLoginTbl(LoginTbl loginTbl) {
+		this.loginTbl = loginTbl;
 	}
 
 	public List<ResultTbl> getResultTbls() {

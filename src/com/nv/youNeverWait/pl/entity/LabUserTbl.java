@@ -1,9 +1,8 @@
 package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Set;
 
 
 /**
@@ -20,141 +19,115 @@ public class LabUserTbl implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int id;
 
-	@Column(length=145)
-	private String address;
+	@Column(name="ref_uid")
+	private int refUid;
+	
+	//bi-directional many-to-one association to LoginTbl
+	@ManyToOne
+	@JoinColumn(name="login_id")
+	private LoginTbl loginTbl;
+	
+	//bi-directional many-to-one association to LabBranchTbl
+	@ManyToOne
+	@JoinColumn(name="lab_branch_id", nullable=false)
+	private LabBranchTbl labBranchTbl;
 
-    @Temporal( TemporalType.TIMESTAMP)
-	@Column(name="create_date_time", nullable=false)
-	private Date createDateTime;
+	//bi-directional many-to-one association to UserTbl
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private UserTbl userTbl;
 
 	@Column(nullable=false, length=45)
-	private String email;
+	private String status;
 
-	@Column(name="first_name", nullable=false, length=45)
-	private String firstName;
-
-	@Column(name="last_name", length=45)
-	private String lastName;
-
-	@Column(length=45)
-	private String mobile;
-
-	@Column(length=45)
-	private String phone;
-
-    @Temporal( TemporalType.TIMESTAMP)
-	@Column(name="update_date_time", nullable=false)
-	private Date updateDateTime;
-
-	@Column(name="user_type", nullable=false, length=45)
-	private String userType;
-
-	//bi-directional many-to-one association to LabUserBranchTbl
-	@OneToMany(mappedBy="labUserTbl")
-	private Set<LabUserBranchTbl> labUserBranchTbls;
-
-	//bi-directional many-to-one association to LabLoginTbl
-    @ManyToOne
-	@JoinColumn(name="login_id", nullable=false)
-	private LabLoginTbl labLoginTbl;
-
-    public LabUserTbl() {
-    }
-
-	public int getId() {
-		return this.id;
+	/**
+	 * 
+	 */
+	public LabUserTbl() {
 	}
 
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getAddress() {
-		return this.address;
+	/**
+	 * @return the labBranchTbl
+	 */
+	public LabBranchTbl getLabBranchTbl() {
+		return labBranchTbl;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	/**
+	 * @param labBranchTbl the labBranchTbl to set
+	 */
+	public void setLabBranchTbl(LabBranchTbl labBranchTbl) {
+		this.labBranchTbl = labBranchTbl;
 	}
 
-	public Date getCreateDateTime() {
-		return this.createDateTime;
+	/**
+	 * @return the userTbl
+	 */
+	public UserTbl getUserTbl() {
+		return userTbl;
 	}
 
-	public void setCreateDateTime(Date createDateTime) {
-		this.createDateTime = createDateTime;
+	/**
+	 * @param userTbl the userTbl to set
+	 */
+	public void setUserTbl(UserTbl userTbl) {
+		this.userTbl = userTbl;
 	}
 
-	public String getEmail() {
-		return this.email;
+	/**
+	 * @return the refUid
+	 */
+	public int getRefUid() {
+		return refUid;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	/**
+	 * @param refUid the refUid to set
+	 */
+	public void setRefUid(int refUid) {
+		this.refUid = refUid;
 	}
 
-	public String getFirstName() {
-		return this.firstName;
+	/**
+	 * @return the loginTbl
+	 */
+	public LoginTbl getLoginTbl() {
+		return loginTbl;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	/**
+	 * @param loginTbl the loginTbl to set
+	 */
+	public void setLoginTbl(LoginTbl loginTbl) {
+		this.loginTbl = loginTbl;
 	}
 
-	public String getLastName() {
-		return this.lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getMobile() {
-		return this.mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
-	public String getPhone() {
-		return this.phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public Date getUpdateDateTime() {
-		return this.updateDateTime;
-	}
-
-	public void setUpdateDateTime(Date updateDateTime) {
-		this.updateDateTime = updateDateTime;
-	}
-
-	public String getUserType() {
-		return this.userType;
-	}
-
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
-
-	public Set<LabUserBranchTbl> getLabUserBranchTbls() {
-		return this.labUserBranchTbls;
-	}
-
-	public void setLabUserBranchTbls(Set<LabUserBranchTbl> labUserBranchTbls) {
-		this.labUserBranchTbls = labUserBranchTbls;
-	}
-	
-	public LabLoginTbl getLabLoginTbl() {
-		return this.labLoginTbl;
-	}
-
-	public void setLabLoginTbl(LabLoginTbl labLoginTbl) {
-		this.labLoginTbl = labLoginTbl;
-	}
-	
 }

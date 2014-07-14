@@ -1,7 +1,9 @@
 package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class LabTbl implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int id;
 
-	
+
 
 	@Column(name="head_office_address", length=145)
 	private String headOfficeAddress;
@@ -58,20 +60,20 @@ public class LabTbl implements Serializable {
 
 	@Column(name="owner_phone", length=45)
 	private String ownerPhone;
-	
+
 	@Lob
 	@Column(name="order_type_code", nullable=false)
 	private String orderTypeCode;
-	
+
 	@Column(name="enable_sync", nullable=false)
 	private boolean enableSync;
-	
+
 	@Column(name="sync_freq_type", length=45)
 	private String syncFreqType;
-	
+
 	@Column(name="sync_time")
 	private int syncTime;
-	
+
 	@Column(name="auth_to_sent_result")
 	private boolean authToSentResult;
 
@@ -80,20 +82,20 @@ public class LabTbl implements Serializable {
 	private Date createDateTime;
 
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal( TemporalType.TIMESTAMP)
 	@Column(name="update_date_time", nullable=false)
 	private Date updateDateTime;
-    
-    @Column(nullable=false, length=45)
+
+	@Column(nullable=false, length=45)
 	private String status;
 	//bi-directional many-to-one association to LabBranchTbl
 	@OneToMany(mappedBy="labTbl")
 	private List<LabBranchTbl> labBranchTbls;
 
-	//bi-directional many-to-one association to LabLoginTbl
+	//bi-directional many-to-one association to LoginTbl
 	@ManyToOne
 	@JoinColumn(name="login_id")
-	private LabLoginTbl labLoginTbl;
+	private LoginTbl loginTbl;
 
 	//bi-directional many-to-one association to OrderAmountTbl
 	@OneToMany(mappedBy="labTbl")
@@ -142,7 +144,7 @@ public class LabTbl implements Serializable {
 		this.createDateTime = createDateTime;
 	}
 
-	
+
 	public String getHeadOfficeAddress() {
 		return this.headOfficeAddress;
 	}
@@ -301,14 +303,6 @@ public class LabTbl implements Serializable {
 		return labBranchTbl;
 	}
 
-	public LabLoginTbl getLabLoginTbl() {
-		return this.labLoginTbl;
-	}
-
-	public void setLabLoginTbl(LabLoginTbl labLoginTbl) {
-		this.labLoginTbl = labLoginTbl;
-	}
-
 	public List<OrderAmountTbl> getOrderAmountTbls() {
 		return this.orderAmountTbls;
 	}
@@ -375,7 +369,7 @@ public class LabTbl implements Serializable {
 		return orderResultTbl;
 	}
 
-	
+
 
 	public List<OrderTransferTbl> getOrderTransferTbls() {
 		return this.orderTransferTbls;
@@ -475,6 +469,20 @@ public class LabTbl implements Serializable {
 	 */
 	public void setDestinationLabTbls(List<OrderTbl> destinationLabTbls) {
 		this.destinationLabTbls = destinationLabTbls;
+	}
+
+	/**
+	 * @return the loginTbl
+	 */
+	public LoginTbl getLoginTbl() {
+		return loginTbl;
+	}
+
+	/**
+	 * @param loginTbl the loginTbl to set
+	 */
+	public void setLoginTbl(LoginTbl loginTbl) {
+		this.loginTbl = loginTbl;
 	}
 
 }

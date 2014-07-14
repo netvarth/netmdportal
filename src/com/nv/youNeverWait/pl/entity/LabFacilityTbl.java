@@ -31,9 +31,6 @@ public class LabFacilityTbl implements Serializable {
 
 	private String email;
 
-	@Column(name="login_id")
-	private String loginId;
-
 	private String mobile;
 
 	private String name;
@@ -43,6 +40,9 @@ public class LabFacilityTbl implements Serializable {
 	private String pin;
 
 	private String state;
+	
+	@Column(name="uid", nullable=false)
+	private int uid;
 
 	//bi-directional many-to-one association to FacilityResultTbl
 	@OneToMany(mappedBy="labFacilityTbl")
@@ -53,6 +53,11 @@ public class LabFacilityTbl implements Serializable {
 	@JoinColumn(name="branch_id", nullable=false)
 	private LabBranchTbl labBranchTbl;
 
+	//bi-directional many-to-one association to LoginTbl
+	@ManyToOne
+	@JoinColumn(name="login_id")
+	private LoginTbl loginTbl;
+	
 	/**
 	 * 
 	 */
@@ -160,22 +165,6 @@ public class LabFacilityTbl implements Serializable {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-
-	/**
-	 * @return the loginId
-	 */
-	public String getLoginId() {
-		return loginId;
-	}
-
-
-	/**
-	 * @param loginId the loginId to set
-	 */
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
 	}
 
 
@@ -288,6 +277,38 @@ public class LabFacilityTbl implements Serializable {
 	 */
 	public void setLabBranchTbl(LabBranchTbl labBranchTbl) {
 		this.labBranchTbl = labBranchTbl;
+	}
+
+
+	/**
+	 * @return the loginTbl
+	 */
+	public LoginTbl getLoginTbl() {
+		return loginTbl;
+	}
+
+
+	/**
+	 * @param loginTbl the loginTbl to set
+	 */
+	public void setLoginTbl(LoginTbl loginTbl) {
+		this.loginTbl = loginTbl;
+	}
+
+
+	/**
+	 * @return the uid
+	 */
+	public int getUid() {
+		return uid;
+	}
+
+
+	/**
+	 * @param uid the uid to set
+	 */
+	public void setUid(int uid) {
+		this.uid = uid;
 	}
 
 }

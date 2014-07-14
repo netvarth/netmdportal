@@ -10,7 +10,6 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="netlims_result_tbl")
-@NamedQuery(name="NetlimsResultTbl.findAll", query="SELECT n FROM NetlimsResultTbl n")
 public class NetlimsResultTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -23,6 +22,12 @@ public class NetlimsResultTbl implements Serializable {
 
 	@Column(name="test_uid")
 	private String testUid;
+	
+	@Column(name="test_name")
+	private String testName;
+	
+	@Column(name="specimen")
+	private String specimen;
 
 	//bi-directional many-to-one association to NetlimsOrderTbl
 	@ManyToOne
@@ -89,6 +94,34 @@ public class NetlimsResultTbl implements Serializable {
 	 */
 	public void setNetlimsOrderTbl(NetlimsOrderTbl netlimsOrderTbl) {
 		this.netlimsOrderTbl = netlimsOrderTbl;
+	}
+
+	/**
+	 * @return the testName
+	 */
+	public String getTestName() {
+		return testName;
+	}
+
+	/**
+	 * @param testName the testName to set
+	 */
+	public void setTestName(String testName) {
+		this.testName = testName;
+	}
+
+	/**
+	 * @return the specimen
+	 */
+	public String getSpecimen() {
+		return specimen;
+	}
+
+	/**
+	 * @param specimen the specimen to set
+	 */
+	public void setSpecimen(String specimen) {
+		this.specimen = specimen;
 	}
 
 }

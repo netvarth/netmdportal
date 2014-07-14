@@ -53,9 +53,9 @@ public class LabBranchTbl extends HealthCareOrganisationTbl implements Serializa
 	@OneToMany(mappedBy="labBranchTbl")
 	private List<LabPassphraseTbl> labPassphraseTbls;
 
-	//bi-directional many-to-one association to LabUserBranchTbl
+	//bi-directional many-to-one association to LabUserTbl
 	@OneToMany(mappedBy="labBranchTbl")
-	private List<LabUserBranchTbl> labUserBranchTbls;
+	private List<LabUserTbl> labUserTbls;
 
 	//bi-directional many-to-one association to NetlimsPatientTbl
 	@OneToMany(mappedBy="labBranchTbl")
@@ -177,25 +177,25 @@ public class LabBranchTbl extends HealthCareOrganisationTbl implements Serializa
 	}
 
 	/**
-	 * @param labUserBranchTbl
-	 * @return LabUserBranchTbl
+	 * @param labUserTbl
+	 * @return LabUserTbl
 	 */
-	public LabUserBranchTbl addLabUserBranchTbl(LabUserBranchTbl labUserBranchTbl) {
-		getLabUserBranchTbls().add(labUserBranchTbl);
-		labUserBranchTbl.setLabBranchTbl(this);
+	public LabUserTbl addLabUserTbl(LabUserTbl labUserTbl) {
+		getLabUserTbls().add(labUserTbl);
+		labUserTbl.setLabBranchTbl(this);
 
-		return labUserBranchTbl;
+		return labUserTbl;
 	}
 
 	/**
-	 * @param labUserBranchTbl
-	 * @return LabUserBranchTbl
+	 * @param labUserTbl
+	 * @return LabUserTbl
 	 */
-	public LabUserBranchTbl removeLabUserBranchTbl(LabUserBranchTbl labUserBranchTbl) {
-		getLabUserBranchTbls().remove(labUserBranchTbl);
-		labUserBranchTbl.setLabBranchTbl(null);
+	public LabUserTbl removeLabUserTbl(LabUserTbl labUserTbl) {
+		getLabUserTbls().remove(labUserTbl);
+		labUserTbl.setLabBranchTbl(null);
 
-		return labUserBranchTbl;
+		return labUserTbl;
 	}
 
 	/**
@@ -534,15 +534,15 @@ public class LabBranchTbl extends HealthCareOrganisationTbl implements Serializa
 	/**
 	 * @return the labUserBranchTbls
 	 */
-	public List<LabUserBranchTbl> getLabUserBranchTbls() {
-		return labUserBranchTbls;
+	public List<LabUserTbl> getLabUserTbls() {
+		return labUserTbls;
 	}
 
 	/**
-	 * @param labUserBranchTbls the labUserBranchTbls to set
+	 * @param labUserTbls the labUserTbls to set
 	 */
-	public void setLabUserBranchTbls(List<LabUserBranchTbl> labUserBranchTbls) {
-		this.labUserBranchTbls = labUserBranchTbls;
+	public void setLabUserTbls(List<LabUserTbl> labUserTbls) {
+		this.labUserTbls = labUserTbls;
 	}
 
 	/**

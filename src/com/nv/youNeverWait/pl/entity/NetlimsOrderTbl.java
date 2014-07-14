@@ -14,7 +14,6 @@ import java.util.List;
  */
 @Entity
 @Table(name="netlims_order_tbl")
-@NamedQuery(name="NetlimsOrderTbl.findAll", query="SELECT n FROM NetlimsOrderTbl n")
 public class NetlimsOrderTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -36,6 +35,9 @@ public class NetlimsOrderTbl implements Serializable {
 	@Column(name="order_status")
 	private String orderStatus;
 
+	@Lob()
+	@Column(name="order_header")
+	private String orderHeader;
 	//bi-directional many-to-one association to LabBranchTbl
 	@ManyToOne
 	@JoinColumn(name="source_branch_id", nullable=false)
@@ -57,9 +59,16 @@ public class NetlimsOrderTbl implements Serializable {
 	@OneToMany(mappedBy="netlimsOrderTbl")
 	private List<ReferralResultTbl> referralResultTbls;
 
+	/**
+	 * 
+	 */
 	public NetlimsOrderTbl() {
 	}
 
+	/**
+	 * @param facilityResultTbl
+	 * @return facilityResultTbl
+	 */
 	public FacilityResultTbl addFacilityResultTbl(FacilityResultTbl facilityResultTbl) {
 		getFacilityResultTbls().add(facilityResultTbl);
 		facilityResultTbl.setNetlimsOrderTbl(this);
@@ -67,6 +76,10 @@ public class NetlimsOrderTbl implements Serializable {
 		return facilityResultTbl;
 	}
 
+	/**
+	 * @param facilityResultTbl
+	 * @return facilityResultTbl
+	 */
 	public FacilityResultTbl removeFacilityResultTbl(FacilityResultTbl facilityResultTbl) {
 		getFacilityResultTbls().remove(facilityResultTbl);
 		facilityResultTbl.setNetlimsOrderTbl(null);
@@ -74,14 +87,24 @@ public class NetlimsOrderTbl implements Serializable {
 		return facilityResultTbl;
 	}
 
+	/**
+	 * @return netlimsResultTbls
+	 */
 	public List<NetlimsResultTbl> getNetlimsResultTbls() {
 		return this.netlimsResultTbls;
 	}
 
+	/**
+	 * @param netlimsResultTbls
+	 */
 	public void setNetlimsResultTbls(List<NetlimsResultTbl> netlimsResultTbls) {
 		this.netlimsResultTbls = netlimsResultTbls;
 	}
 
+	/**
+	 * @param netlimsResultTbl
+	 * @return NetlimsResultTbl
+	 */
 	public NetlimsResultTbl addNetlimsResultTbl(NetlimsResultTbl netlimsResultTbl) {
 		getNetlimsResultTbls().add(netlimsResultTbl);
 		netlimsResultTbl.setNetlimsOrderTbl(this);
@@ -89,6 +112,10 @@ public class NetlimsOrderTbl implements Serializable {
 		return netlimsResultTbl;
 	}
 
+	/**
+	 * @param netlimsResultTbl
+	 * @return NetlimsResultTbl
+	 */
 	public NetlimsResultTbl removeNetlimsResultTbl(NetlimsResultTbl netlimsResultTbl) {
 		getNetlimsResultTbls().remove(netlimsResultTbl);
 		netlimsResultTbl.setNetlimsOrderTbl(null);
@@ -96,14 +123,24 @@ public class NetlimsOrderTbl implements Serializable {
 		return netlimsResultTbl;
 	}
 
+	/**
+	 * @return patientResultTbls
+	 */
 	public List<PatientResultTbl> getPatientResultTbls() {
 		return this.patientResultTbls;
 	}
 
+	/**
+	 * @param patientResultTbls
+	 */
 	public void setPatientResultTbls(List<PatientResultTbl> patientResultTbls) {
 		this.patientResultTbls = patientResultTbls;
 	}
 
+	/**
+	 * @param patientResultTbl
+	 * @return PatientResultTbl
+	 */
 	public PatientResultTbl addPatientResultTbl(PatientResultTbl patientResultTbl) {
 		getPatientResultTbls().add(patientResultTbl);
 		patientResultTbl.setNetlimsOrderTbl(this);
@@ -111,6 +148,10 @@ public class NetlimsOrderTbl implements Serializable {
 		return patientResultTbl;
 	}
 
+	/**
+	 * @param patientResultTbl
+	 * @return patientResultTbl
+	 */
 	public PatientResultTbl removePatientResultTbl(PatientResultTbl patientResultTbl) {
 		getPatientResultTbls().remove(patientResultTbl);
 		patientResultTbl.setNetlimsOrderTbl(null);
@@ -118,14 +159,24 @@ public class NetlimsOrderTbl implements Serializable {
 		return patientResultTbl;
 	}
 
+	/**
+	 * @return referralResultTbls
+	 */
 	public List<ReferralResultTbl> getReferralResultTbls() {
 		return this.referralResultTbls;
 	}
 
+	/**
+	 * @param referralResultTbls
+	 */
 	public void setReferralResultTbls(List<ReferralResultTbl> referralResultTbls) {
 		this.referralResultTbls = referralResultTbls;
 	}
 
+	/**
+	 * @param referralResultTbl
+	 * @return referralResultTbl
+	 */
 	public ReferralResultTbl addReferralResultTbl(ReferralResultTbl referralResultTbl) {
 		getReferralResultTbls().add(referralResultTbl);
 		referralResultTbl.setNetlimsOrderTbl(this);
@@ -133,6 +184,10 @@ public class NetlimsOrderTbl implements Serializable {
 		return referralResultTbl;
 	}
 
+	/**
+	 * @param referralResultTbl
+	 * @return referralResultTbl
+	 */
 	public ReferralResultTbl removeReferralResultTbl(ReferralResultTbl referralResultTbl) {
 		getReferralResultTbls().remove(referralResultTbl);
 		referralResultTbl.setNetlimsOrderTbl(null);
@@ -258,6 +313,20 @@ public class NetlimsOrderTbl implements Serializable {
 	 */
 	public void setLabBranchTbl(LabBranchTbl labBranchTbl) {
 		this.labBranchTbl = labBranchTbl;
+	}
+
+	/**
+	 * @return the orderHeader
+	 */
+	public String getOrderHeader() {
+		return orderHeader;
+	}
+
+	/**
+	 * @param orderHeader the orderHeader to set
+	 */
+	public void setOrderHeader(String orderHeader) {
+		this.orderHeader = orderHeader;
 	}
 
 }

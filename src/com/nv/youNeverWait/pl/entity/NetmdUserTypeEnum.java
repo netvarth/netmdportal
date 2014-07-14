@@ -11,7 +11,7 @@ import com.nv.youNeverWait.user.bl.impl.EnumDisplay;
  *
  */
 public enum NetmdUserTypeEnum implements EnumDisplay{
-	Admin("admin"),Owner("owner"),Doctor("doctor"),Staff("staff"),Nurse("nurse"),Patient("patient");
+	Admin("admin"),Owner("owner"),Doctor("doctor"),Staff("staff"),Nurse("nurse"),Patient("patient"),Facility("facility");
 
 	private String displayName;
 
@@ -36,6 +36,10 @@ public enum NetmdUserTypeEnum implements EnumDisplay{
 		this.displayName = displayName;
 	}
 
+	/**
+	 * @param value
+	 * @return NetmdUserTypeEnum
+	 */
 	public static NetmdUserTypeEnum getEnum(String value) {
 		if(value == null){
 			ServiceException se = new ServiceException(ErrorCodeEnum.InvalidUserType);
