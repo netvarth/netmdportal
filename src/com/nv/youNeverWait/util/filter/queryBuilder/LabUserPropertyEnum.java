@@ -14,14 +14,14 @@ import com.nv.youNeverWait.util.filter.core.Property;
 
 public enum LabUserPropertyEnum implements Property, EnumDisplay{
 
-	id("id","id","com.nv.youNeverWait.pl.entity.LabUserTbl","",""),
+	id("id","id","com.nv.youNeverWait.pl.entity.UserTbl","",""),
 	branchId("branchId","id","com.nv.youNeverWait.pl.entity.LabBranchTbl","labUserBranchTbls","labBranchTbl"),
-	name("name","name","com.nv.youNeverWait.pl.entity.LabUserTbl","",""),
-	email("email","email","com.nv.youNeverWait.pl.entity.LabUserTbl","",""),
-	phone("phone","phone","com.nv.youNeverWait.pl.entity.LabUserTbl","",""),
-	mobile("mobile","mobile","com.nv.youNeverWait.pl.entity.LabUserTbl","",""),
-	address("address","address","com.nv.youNeverWait.pl.entity.LabUserTbl","",""),
-	userType("userType","userType","com.nv.youNeverWait.pl.entity.LabUserTbl","","");
+	name("name","name","com.nv.youNeverWait.pl.entity.UserTbl","",""),
+	email("email","email","com.nv.youNeverWait.pl.entity.UserTbl","",""),
+	phone("phone","phone","com.nv.youNeverWait.pl.entity.UserTbl","",""),
+	mobile("mobile","mobile","com.nv.youNeverWait.pl.entity.UserTbl","",""),
+	address("address","address","com.nv.youNeverWait.pl.entity.UserTbl","",""),
+	userType("userType","userType","com.nv.youNeverWait.pl.entity.UserTbl","","");
 	
 	String displayName;
 	String fieldName;

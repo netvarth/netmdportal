@@ -1,46 +1,23 @@
 /**
- * NetRxQueryBuilder.java
  * 
- * @Author Asha Chandran
- *
- * May 13, 2013
  */
 package com.nv.youNeverWait.util.filter.queryBuilder;
 
 import com.nv.youNeverWait.pl.dao.FilterDao;
-import com.nv.youNeverWait.pl.entity.NetrxTbl;
+import com.nv.youNeverWait.pl.entity.NetlimsOrderTbl;
 import com.nv.youNeverWait.util.filter.core.Criteria;
 import com.nv.youNeverWait.util.filter.core.Filter;
 
 /**
- * @author Asha Chandran
+ * @author Mani E.V
  *
  */
-public class NetRxQueryBuilder extends RootQueryBuilder<NetrxTbl>{
+public class NetlimsFacilityOrderQueryBuilder extends RootQueryBuilder<NetlimsOrderTbl> {
 
-	/**
-	 * 
-	 */
-	public NetRxQueryBuilder(){
-	}
-
-	/**
-	 * Initialize criteria query, root and criteriaBuilder
-	 */
-	@Override 
-	public void init(FilterDao dao) {
-		super.init(dao, NetrxTbl.class);
-	}
-
-	/**
-	 * Add filter to query builder then generate predicates,
-	 * which are needed to build query for specified filter
-	 * @param filter
-	 */
 	@Override
 	public void addFilter(Filter filter) {
-		String referenceName = NetRxPropertyEnum.valueOf(filter.getName()).getReferenceName();
-		String pathReferenceName =NetRxPropertyEnum.valueOf(filter.getName()).getPathReferenceName();
+		String referenceName = NetlimsFacilityOrderPropertyEnum.valueOf(filter.getName()).getReferenceName();
+		String pathReferenceName =NetlimsFacilityOrderPropertyEnum.valueOf(filter.getName()).getPathReferenceName();
 
 		if(referenceName!=null && !referenceName.equals("")){
 			if(referenceMap.get(referenceName)==null){
@@ -52,7 +29,7 @@ public class NetRxQueryBuilder extends RootQueryBuilder<NetrxTbl>{
 				pathReferenceMap.put(pathReferenceName, referenceMap.get(referenceName).get(pathReferenceName));
 			}
 		}
-		Criteria criteria = filter.getPredicate(this, NetRxPropertyEnum.valueOf(filter.getName()));
+		Criteria criteria = filter.getPredicate(this, NetlimsFacilityOrderPropertyEnum.valueOf(filter.getName()));
 		if(criteria.getPredicate()!=null){
 			predicates.add(criteria.getPredicate());
 		}
@@ -60,8 +37,11 @@ public class NetRxQueryBuilder extends RootQueryBuilder<NetrxTbl>{
 		if(criteria.getExpression()!=null){
 			expressions.add(criteria.getExpression());
 		}
-		
 	}
 
+	@Override
+	public void init(FilterDao filterDao) {
+		super.init(filterDao, NetlimsOrderTbl.class);
+	}
 
 }

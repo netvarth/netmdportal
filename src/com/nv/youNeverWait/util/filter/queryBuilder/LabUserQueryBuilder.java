@@ -10,11 +10,11 @@ package com.nv.youNeverWait.util.filter.queryBuilder;
 import com.nv.youNeverWait.pl.dao.FilterDao;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
 import com.nv.youNeverWait.pl.entity.LabTbl;
-import com.nv.youNeverWait.pl.entity.LabUserTbl;
+import com.nv.youNeverWait.pl.entity.UserTbl;
 import com.nv.youNeverWait.util.filter.core.Criteria;
 import com.nv.youNeverWait.util.filter.core.Filter;
 
-public class LabUserQueryBuilder extends RootQueryBuilder<LabUserTbl>{
+public class LabUserQueryBuilder extends RootQueryBuilder<UserTbl>{
 
 	public LabUserQueryBuilder(){
 	}
@@ -24,7 +24,7 @@ public class LabUserQueryBuilder extends RootQueryBuilder<LabUserTbl>{
 	 */
 	@Override 
 	public void init(FilterDao dao) {
-		super.init(dao, LabUserTbl.class);
+		super.init(dao, UserTbl.class);
 	}
 
 	/**

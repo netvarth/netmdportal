@@ -19,7 +19,7 @@ import com.nv.youNeverWait.util.filter.core.Property;
  * @author Luciya Jose
  */
 public enum OrderPropertyEnum  implements EnumDisplay,Property{
-orderDate("orderDate","orderDate","com.nv.youNeverWait.pl.entity.OrderAmountTbl","",""),
+	orderDate("orderDate","orderDate","com.nv.youNeverWait.pl.entity.OrderAmountTbl","",""),
 	labId("labId","id","com.nv.youNeverWait.pl.entity.LabTbl","labTbl",""),
 	labBranchId("labBranchId","id","com.nv.youNeverWait.pl.entity.LabBranchTbl","labBranchTbl","")
 	;

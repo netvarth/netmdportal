@@ -20,7 +20,7 @@ public enum LabPropertyEnum implements Property, EnumDisplay{
 	ownerName("ownerName","ownerName","com.nv.youNeverWait.pl.entity.LabTbl","",""),
 	ownerEmail("ownerEmail","ownerEmail","com.nv.youNeverWait.pl.entity.LabTbl","",""),
 	branchName("branchName","name","com.nv.youNeverWait.pl.entity.LabBranchTbl","labBranchTbls",""),
-	userId("userId","id","com.nv.youNeverWait.pl.entity.LabUserTbl","labUserBranchTbls","labUserTbl")
+	userId("userId","id","com.nv.youNeverWait.pl.entity.UserTbl","labUserBranchTbls","userTbl")
 	;
 	
 	String displayName;

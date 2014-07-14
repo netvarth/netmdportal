@@ -21,7 +21,7 @@ public enum BranchPropertyEnum implements Property, EnumDisplay{
 	address("address","address","com.nv.youNeverWait.pl.entity.LabBranchTbl","",""),
 	phone("phone","phone","com.nv.youNeverWait.pl.entity.LabBranchTbl","",""),
 	mobile("mobile","mobile","com.nv.youNeverWait.pl.entity.LabBranchTbl","",""),
-	userId("userId","id","com.nv.youNeverWait.pl.entity.LabUserTbl","labUserBranchTbls","labUserTbl")
+	userId("userId","id","com.nv.youNeverWait.pl.entity.UserTbl","labUserBranchTbls","userTbl")
 	;
 	
 	String displayName;
