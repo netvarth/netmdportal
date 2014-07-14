@@ -40,7 +40,7 @@ public class FacilityDaoImplTest {
 		FacilityInfo facilityInfo=new FacilityInfo();
 		facilityInfo.setAddress(address);
 		facilityInfo.setName("Krishna Labs");
-		facilityInfo.setUid("678");
+		//facilityInfo.setUid("678");
 		FacilitySyncDTO facilitySyncDTO=new FacilitySyncDTO();
 		facilitySyncDTO.setFacility(facilityInfo);
 		facilitySyncDTO.setActionName(ActionEnum.UPDATE);
