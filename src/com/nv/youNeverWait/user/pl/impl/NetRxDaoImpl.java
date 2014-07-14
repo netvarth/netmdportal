@@ -1217,7 +1217,7 @@ public class NetRxDaoImpl extends GenericDaoHibernateImpl implements NetRxDao {
 	/**
 	 * Get NetRx User By Name
 	 * @param userName
-	 * @return NetmdLoginTbl
+	 * @return LoginTbl
 	 */
 	public NetrxLoginTbl getNetRxUserByName(String userName) {
 		javax.persistence.Query query = em

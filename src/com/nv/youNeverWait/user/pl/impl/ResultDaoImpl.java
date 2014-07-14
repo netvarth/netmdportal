@@ -334,13 +334,15 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 	@Transactional(readOnly = false)
 	private void saveOrUpdateOrderPatient(NetlimsOrderTbl netlimsOrderTbl,
 			Patient patient, int branchId) {
-		int netlimsPatientId = patientDao.getNetlimsPatient(patient, branchId);
-		NetlimsPatientTbl netlimsPatientTbl = new NetlimsPatientTbl();
-		netlimsPatientTbl.setId(netlimsPatientId);
-		PatientResultTbl patientResult = new PatientResultTbl();
-		patientResult.setNetlimsOrderTbl(netlimsOrderTbl);
-		patientResult.setNetlimsPatientTbl(netlimsPatientTbl);
-		save(patientResult);
+		if(patient.getAddress().getEmail()!=null && patient.getAddress().getEmail()!=""){
+			int netlimsPatientId = patientDao.getNetlimsPatient(patient, branchId);
+			NetlimsPatientTbl netlimsPatientTbl = new NetlimsPatientTbl();
+			netlimsPatientTbl.setId(netlimsPatientId);
+			PatientResultTbl patientResult = new PatientResultTbl();
+			patientResult.setNetlimsOrderTbl(netlimsOrderTbl);
+			patientResult.setNetlimsPatientTbl(netlimsPatientTbl);
+			save(patientResult);
+		}
 	}
 
 	private FacilityResultTbl getFacilityResult(int orderId) {
@@ -364,6 +366,7 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 				e.printStackTrace();
 			}	
 			resultTbl.setResult(result);
+			resultTbl.setTestName(orderTestResult.getTestName());
 			resultTbl.setTestUid(orderTestResult.getUid());
 			saveOrUpdate(NetlimsResultTbl.class, resultTbl);
 		}
@@ -375,7 +378,7 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 		query.setParameter("param2",testUid);
 		return executeUniqueQuery(NetlimsResultTbl.class, query);
 	}
-
+	@Transactional(readOnly=false)
 	private NetlimsOrderTbl saveOrUpdateNetlimsOrder(NetlimsOrderTbl netlimsOrderTbl, OrderResultSyncDTO orderResult, int branchId ) {
 		if(netlimsOrderTbl == null)
 			netlimsOrderTbl = new NetlimsOrderTbl();
@@ -384,6 +387,7 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 		netlimsOrderTbl.setOrderStatus(orderResult.getOrder().getOrderStatus());
 		netlimsOrderTbl.setLabBranchTbl(getById(LabBranchTbl.class, branchId));
 		netlimsOrderTbl.setCreatedDate(new Date());
+		netlimsOrderTbl.setOrderHeader(orderResult.getOrder().getOrderHeader());
 		saveOrUpdate(NetlimsOrderTbl.class, netlimsOrderTbl);	
 		return netlimsOrderTbl;
 	}

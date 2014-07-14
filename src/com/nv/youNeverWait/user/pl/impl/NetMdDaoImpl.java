@@ -28,13 +28,13 @@ import com.nv.youNeverWait.pl.entity.DoctorScheduleTbl;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
+import com.nv.youNeverWait.pl.entity.LoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBillTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBranchSystemInfoTbl;
 import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdHealthMonitorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
-import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
@@ -98,7 +98,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	public ResponseDTO create(NetMdDTO netMd) {
 		ResponseDTO response = new ResponseDTO();
 		SuperAdminTbl superAdmin = getById(SuperAdminTbl.class, 1);
-		NetmdLoginTbl loginTbl = getLoginByUserName(netMd.getUserName());
+		LoginTbl loginTbl = getLoginByUserName(netMd.getUserName());
 		if (loginTbl != null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.NetMdAccountAlreadyExists);
@@ -106,7 +106,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			throw se;
 		}
 		// save login details
-		NetmdLoginTbl login = new NetmdLoginTbl();
+		LoginTbl login = new LoginTbl();
 		login.setUserName(netMd.getUserName());
 		login.setUserType(NetmdUserTypeEnum.Owner.getDisplayName());
 		String password = StringEncoder.encryptWithKey(netMd.getPassword()
@@ -138,7 +138,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netMdTbl.setOwnerAddress(netMd.getOwnerAddress());
 		netMdTbl.setOwnerMobile(netMd.getOwnerMobile());
 		netMdTbl.setOwnerPhone(netMd.getOwnerPhone());
-		netMdTbl.setNetmdLoginTbl(login);
+		netMdTbl.setLoginTbl(login);
 		netMdTbl.setHeadOfficeAddress(netMd.getHeadOfficeAddress());
 		netMdTbl.setHeadOfficeEmail(netMd.getHeadOfficeEmail());
 		netMdTbl.setHeadOfficeMobile(netMd.getHeadOfficeMobile());
@@ -517,9 +517,9 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netMd.setHeadOfficeMobile(netmdTbl.getHeadOfficeMobile());
 		netMd.setHeadOfficePhone(netmdTbl.getHeadOfficePhone());
 		netMd.setHeadOfficeName(netmdTbl.getHeadOfficeName());
-		netMd.setUserName(netmdTbl.getNetmdLoginTbl().getUserName());
-		netMd.setPassword(netmdTbl.getNetmdLoginTbl().getPassword());
-		netMd.setUserType(netmdTbl.getNetmdLoginTbl().getUserType());
+		netMd.setUserName(netmdTbl.getLoginTbl().getUserName());
+		netMd.setPassword(netmdTbl.getLoginTbl().getPassword());
+		netMd.setUserType(netmdTbl.getLoginTbl().getUserType());
 		netMd.setLogo(netmdTbl.getLogo());
 		NetMdViewResponseDTO response = new NetMdViewResponseDTO();
 		response.setNetMd(netMd);
@@ -852,9 +852,9 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netMd.setHeadOfficeName(netMdTbl.getHeadOfficeName());
 		netMd.setHeadOfficePhone(netMdTbl.getHeadOfficePhone());
 		netMd.setLogo(netMdTbl.getLogo());
-		netMd.setPassword(netMdTbl.getNetmdLoginTbl().getPassword());
-		netMd.setUserName(netMdTbl.getNetmdLoginTbl().getUserName());
-		netMd.setUserType(netMdTbl.getNetmdLoginTbl().getUserType());
+		netMd.setPassword(netMdTbl.getLoginTbl().getPassword());
+		netMd.setUserName(netMdTbl.getLoginTbl().getUserName());
+		netMd.setUserType(netMdTbl.getLoginTbl().getUserType());
 		response.setNetmd(netMd);
 
 		List<NetmdUserTbl> users = getNetMdUsersByBranchId(netMdBranch.getId());
@@ -868,11 +868,11 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			user.setLastName(netmdUserTbl.getLastName());
 			user.setMobile(netmdUserTbl.getMobile());
 			user.setNetMdBranchId(netmdUserTbl.getNetmdBranchTbl().getId());
-			user.setPassword(netmdUserTbl.getNetmdLoginTbl().getPassword());
+			user.setPassword(netmdUserTbl.getLoginTbl().getPassword());
 			user.setPhone(netmdUserTbl.getPhone());
 			user.setStatus(netmdUserTbl.getStatus());
-			user.setUserType(netmdUserTbl.getNetmdLoginTbl().getUserType());
-			user.setUserName(netmdUserTbl.getNetmdLoginTbl().getUserName());
+			user.setUserType(netmdUserTbl.getLoginTbl().getUserType());
+			user.setUserName(netmdUserTbl.getLoginTbl().getUserName());
 			userList.add(user);
 		}
 		response.setUser(userList);
@@ -968,7 +968,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			throw se;
 		}
 
-		NetmdLoginTbl loginTbl = getLoginByUserName(netMdUser.getUserName());
+		LoginTbl loginTbl = getLoginByUserName(netMdUser.getUserName());
 		if (loginTbl != null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.NetMdUserAccountAlreadyExists);
@@ -978,7 +978,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		}
 
 		// save user login details to NetMdLoginTbl
-		NetmdLoginTbl login = new NetmdLoginTbl();
+		LoginTbl login = new LoginTbl();
 		login.setUserName(netMdUser.getUserName());
 		String password = new StringEncoder().encryptWithKey(netMdUser
 				.getPassword().trim());
@@ -994,7 +994,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		user.setFirstName(netMdUser.getFirstName());
 		user.setLastName(netMdUser.getLastName());
 		user.setNetmdBranchTbl(branch);
-		user.setNetmdLoginTbl(login);
+		user.setLoginTbl(login);
 		user.setPhone(netMdUser.getPhone());
 		user.setStatus(StatusEnum.Active.getDisplayName());
 		user.setUpdateDateTime(date);
@@ -1044,8 +1044,8 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		user.setUserType(netMdUser.getUserType());
 		user.setUpdateDateTime(new Date());
 		update(user);
-		NetmdLoginTbl login = getById(NetmdLoginTbl.class, user
-				.getNetmdLoginTbl().getId());
+		LoginTbl login = getById(LoginTbl.class, user
+				.getLoginTbl().getId());
 		login.setUserType(netMdUser.getUserType());
 		update(login);
 
@@ -1083,9 +1083,9 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		userDetail.setNetMdId(user.getNetmdBranchTbl().getNetmdTbl().getId());
 		userDetail.setPhone(user.getPhone());
 		userDetail.setStatus(user.getStatus());
-		if (user.getNetmdLoginTbl() != null) {
-			userDetail.setUserName(user.getNetmdLoginTbl().getUserName());
-			userDetail.setUserType(user.getNetmdLoginTbl().getUserType());
+		if (user.getLoginTbl() != null) {
+			userDetail.setUserName(user.getLoginTbl().getUserName());
+			userDetail.setUserType(user.getLoginTbl().getUserType());
 		}
 		response.setUser(userDetail);
 		response.setSuccess(true);
@@ -1103,7 +1103,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	public UserCredentials getUserCredentials(LoginDTO login) {
 
 		UserCredentials user = new UserCredentials();
-		NetmdLoginTbl userLogin = getNetMdUserByName(login.getUserName().trim());
+		LoginTbl userLogin = getNetMdUserByName(login.getUserName().trim());
 		if (userLogin == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidUserName);
@@ -1203,7 +1203,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		ResponseDTO response = new ResponseDTO();
 		String encOldPassword = StringEncoder.encryptWithKey(passwords
 				.getOldPassword().trim());
-		NetmdLoginTbl login = getNetMdUserByName(passwords.getUsername());
+		LoginTbl login = getNetMdUserByName(passwords.getUsername());
 		if (login == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.UserNotExists);
@@ -1238,7 +1238,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		String newPassword = StringEncoder.encryptWithKey(login.getPassword());
 		String decrypedUserName = StringEncoder.decryptWithStaticKey(login
 				.getUserName());
-		NetmdLoginTbl userLogin = getNetMdUserByName(decrypedUserName);
+		LoginTbl userLogin = getNetMdUserByName(decrypedUserName);
 		if (userLogin == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidUserName);
@@ -1408,7 +1408,6 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		try {
 			newBillTbl.setOrderDate(sdf.parse(newBill.getOrderDate()));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		newBillTbl.setPatientName(newBill.getPatientName());
@@ -1484,7 +1483,6 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		try {
 			netMdBill.setOrderDate(sdf.parse(updatedBill.getOrderDate()));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		netMdBill.setPatientName(updatedBill.getPatientName());
@@ -1924,13 +1922,13 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	/**
 	 * 
 	 * @param userName
-	 * @return NetmdLoginTbl
+	 * @return LoginTbl
 	 */
-	public NetmdLoginTbl getNetMdUserByName(String userName) {
+	public LoginTbl getNetMdUserByName(String userName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_NETMD_LOGIN_BY_USERNAME);
 		query.setParameter("param1", userName);
-		return executeUniqueQuery(NetmdLoginTbl.class, query);
+		return executeUniqueQuery(LoginTbl.class, query);
 	}
 
 	/**
@@ -2090,16 +2088,16 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	}
 
 	/**
-	 * Retrieve NetmdLoginTbl record by giving userName
+	 * Retrieve LoginTbl record by giving userName
 	 * 
 	 * @param userName
-	 * @return NetmdLoginTbl
+	 * @return LoginTbl
 	 */
-	private NetmdLoginTbl getLoginByUserName(String userName) {
+	private LoginTbl getLoginByUserName(String userName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_LOGIN_BY_OWNER_USERNAME);
 		query.setParameter("param1", userName);
-		return executeUniqueQuery(NetmdLoginTbl.class, query);
+		return executeUniqueQuery(LoginTbl.class, query);
 	}
 
 	/**
@@ -2446,7 +2444,6 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			frmDate = sdf.parse(fromDate);
 			tDate=sdf.parse(toDate);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

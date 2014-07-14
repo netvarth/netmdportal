@@ -10,6 +10,7 @@
  */
 package com.nv.youNeverWait.user.pl.impl;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,20 +20,29 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nv.security.youNeverWait.User;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
 import com.nv.youNeverWait.pl.entity.LabTbl;
+import com.nv.youNeverWait.pl.entity.NetlimsOrderTbl;
+import com.nv.youNeverWait.pl.entity.NetlimsResultTbl;
 import com.nv.youNeverWait.pl.entity.OrderBranchTbl;
 import com.nv.youNeverWait.pl.entity.OrderTransferTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
+import com.nv.youNeverWait.rs.dto.ExpressionDTO;
+import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.ListResponse;
+import com.nv.youNeverWait.rs.dto.Order;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
+import com.nv.youNeverWait.rs.dto.OrderTestResultDTO;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
@@ -40,6 +50,10 @@ import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.LabDao;
 import com.nv.youNeverWait.user.pl.dao.OrderDao;
+import com.nv.youNeverWait.util.filter.core.Filter;
+import com.nv.youNeverWait.util.filter.core.FilterFactory;
+import com.nv.youNeverWait.util.filter.core.QueryBuilder;
+import com.nv.youNeverWait.util.filter.core.QueryBuilderFactory;
 
 /**
  * 
@@ -55,6 +69,8 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 	@PersistenceContext()
 	private EntityManager em;
 	private LabDao labDao;
+	private QueryBuilderFactory queryBuilderFactory;
+	private FilterFactory filterFactory;
 
 	/*
 	 * (non-Javadoc)
@@ -103,7 +119,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			update(order);
 			orderList.add(orderDetails);
 		}
-		
+
 		orderDetail.setOrders(orderList);
 		orderDetail.setLastOrderSyncTime(sdf.format(currentSyncTime));
 		orderDetail.setSuccess(true);
@@ -164,11 +180,11 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 					destinationBranch, orderTranfer.getDestinationLabId());
 
 			if (destinationLabBranch == null) {
-				 ServiceException se = new ServiceException(
-				 ErrorCodeEnum.InvalidDestinationLabBranch);
-				
-				 se.setDisplayErrMsg(true);
-				 throw se;
+				ServiceException se = new ServiceException(
+						ErrorCodeEnum.InvalidDestinationLabBranch);
+
+				se.setDisplayErrMsg(true);
+				throw se;
 
 			}
 			OrderTransferTbl orderTransferTbl = new OrderTransferTbl();
@@ -295,6 +311,113 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 	 */
 	public void setEm(EntityManager em) {
 		this.em = em;
+	}
+
+	@Override
+	public ListResponse getByFilter(FilterDTO filterParam, User user) {
+		ExpressionDTO branchExp = new ExpressionDTO();
+		branchExp.setName("branchId");
+		branchExp.setOperator("eq");
+		branchExp.setValue(Integer.toString(user.getOrganisationId()));
+	
+		ListResponse response = new ListResponse();
+		//get queryBuilder for test from builder factory
+		QueryBuilder queryBuilder = queryBuilderFactory.getQueryBuilder(Constants.NETLIMS_ORDERS);
+		Filter brchFilter = filterFactory.getFilter(branchExp);
+		queryBuilder.addFilter(brchFilter);
+		for (ExpressionDTO exp : filterParam.getExp()) {
+			//get filter from filter factory by setting expression name and value to filter
+			Filter filter = filterFactory.getFilter(exp);
+			queryBuilder.addFilter(filter);
+		}
+		//build query
+		TypedQuery<NetlimsOrderTbl> q =   queryBuilder.buildQuery(filterParam.isAsc(),
+				filterParam.getFrom(),filterParam.getCount()); 
+		Long count = queryBuilder.getCount();
+		List<Order> orders = new ArrayList<Order>();
+		DateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT);
+		for(NetlimsOrderTbl orderTbl: queryBuilder.executeQuery(q)){
+			Order order = new Order();
+			order.setId(orderTbl.getId());
+			order.setUid(orderTbl.getOrderId());
+			order.setCreatedOn(df.format(orderTbl.getCreatedDate()));
+			order.setOrderStatus(orderTbl.getOrderStatus());
+			order.setBranchId(Integer.toString(orderTbl.getLabBranchTbl().getId()));
+			order.setHeaderData(orderTbl.getOrderHeader());
+			//order.setHeader(orderTbl.get)
+			orders.add(order);
+		}
+		response.setList(orders);
+		response.setCount(count);
+		return response;
+	}
+
+	/**
+	 * @return the queryBuilderFactory
+	 */
+	public QueryBuilderFactory getQueryBuilderFactory() {
+		return queryBuilderFactory;
+	}
+
+	/**
+	 * @param queryBuilderFactory the queryBuilderFactory to set
+	 */
+	public void setQueryBuilderFactory(QueryBuilderFactory queryBuilderFactory) {
+		this.queryBuilderFactory = queryBuilderFactory;
+	}
+
+	/**
+	 * @return the filterFactory
+	 */
+	public FilterFactory getFilterFactory() {
+		return filterFactory;
+	}
+
+	/**
+	 * @param filterFactory the filterFactory to set
+	 */
+	public void setFilterFactory(FilterFactory filterFactory) {
+		this.filterFactory = filterFactory;
+	}
+
+	/**
+	 * @return the labDao
+	 */
+	public LabDao getLabDao() {
+		return labDao;
+	}
+
+	@Override
+	public List<OrderTestResultDTO> getTests(int orderId) {
+		List<OrderTestResultDTO> orderTests = new ArrayList<>();
+		List<NetlimsResultTbl> testResults = getResultsByOrderIdandBranchId(orderId);
+		for(NetlimsResultTbl netlimsResultTbl: testResults){
+			OrderTestResultDTO orderTest = new OrderTestResultDTO();
+			orderTest.setTestName(netlimsResultTbl.getTestName());
+			orderTest.setUid(netlimsResultTbl.getTestUid());
+			orderTest.setResult(netlimsResultTbl.getResult());
+			orderTests.add(orderTest);
+		}
+		return orderTests;
+	}
+
+	private List<NetlimsResultTbl> getResultsByOrderIdandBranchId(
+			int orderId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_NETLIMSRESULTS_BY_ORDERID);
+		query.setParameter("param1", orderId);
+		return executeQuery(NetlimsResultTbl.class, query);
+	}
+
+	@Override
+	public Order getByOrderId(int orderId) {
+		Order order = new Order();
+		NetlimsOrderTbl  netlimsOrderTbl = getById(NetlimsOrderTbl.class, orderId);
+		order.setBranchId(Integer.toString(netlimsOrderTbl.getLabBranchTbl().getId()));
+		//order.setCreatedOn(netlimsOrderTbl.getCreatedDate());
+		order.setId(netlimsOrderTbl.getId());
+		order.setOrderStatus(netlimsOrderTbl.getOrderStatus());
+		order.setHeaderData(netlimsOrderTbl.getOrderHeader());
+		return order;
 	}
 
 }

@@ -23,11 +23,11 @@ import com.nv.youNeverWait.pl.entity.CaseTbl;
 import com.nv.youNeverWait.pl.entity.DepartmentTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
+import com.nv.youNeverWait.pl.entity.LoginTbl;
 import com.nv.youNeverWait.pl.entity.MedicalRecordTbl;
 import com.nv.youNeverWait.pl.entity.NetlimsPatientTbl;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
-import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.NetmdTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTbl;
@@ -130,13 +130,13 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 	/**
 	 * 
 	 * @param userName
-	 * @return NetmdLoginTbl
+	 * @return LoginTbl
 	 */
-	public NetmdLoginTbl getNetMdUserByName(String userName) {
+	public LoginTbl getNetMdUserByName(String userName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_NETMD_LOGIN_PATIENT_BY_USERNAME);
 		query.setParameter("param1", userName);
-		return executeUniqueQuery(NetmdLoginTbl.class, query);
+		return executeUniqueQuery(LoginTbl.class, query);
 	}
 
 	/**
@@ -229,9 +229,9 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 			throw se;
 		}
 		NetmdPatientTbl newPatient = new NetmdPatientTbl();
-		NetmdLoginTbl loginTbl = new NetmdLoginTbl();
+		LoginTbl loginTbl = new LoginTbl();
 		if (patient.getEmail() != null && !patient.getEmail().isEmpty()) {
-			NetmdLoginTbl loginObj = getLoginByUserName(patient.getEmail());
+			LoginTbl loginObj = getLoginByUserName(patient.getEmail());
 			if (loginObj != null) {// if the userid exists in Netmdlogintbl,
 									// take it
 									// and set it to patient and save patient
@@ -246,7 +246,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 					throw se;
 				} else {// else if he doesn't exists. set login obj to the new
 						// patient.
-					newPatient.setNetmdLoginTbl(loginObj);
+					newPatient.setLoginTbl(loginObj);
 				}
 			} else {
 				loginTbl.setUserName(patient.getEmail());
@@ -257,7 +257,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 																			// patient
 				//
 				save(loginTbl);
-				newPatient.setNetmdLoginTbl(loginTbl);
+				newPatient.setLoginTbl(loginTbl);
 			}
 		}
 
@@ -369,16 +369,16 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 			throw se;
 		}
 		if (patient.getEmail() != null && !patient.getEmail().isEmpty()) {
-			NetmdLoginTbl patientLogin = getLoginByUserName(patient.getEmail());
+			LoginTbl patientLogin = getLoginByUserName(patient.getEmail());
 			if(patientLogin==null){
-				NetmdLoginTbl login= new NetmdLoginTbl();
+				LoginTbl login= new LoginTbl();
 				login.setUserName(patient.getEmail().trim());
 				login.setUserType(UserTypeEnum.Patient.getDisplayName());
 				save(login);
-				patientTbl.setNetmdLoginTbl(login);
+				patientTbl.setLoginTbl(login);
 			}
 			else{
-			patientTbl.setNetmdLoginTbl(patientLogin);
+			patientTbl.setLoginTbl(patientLogin);
 			}
 
 		}
@@ -434,9 +434,9 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		}
 
 		LoginDTO login = new LoginDTO();
-		login.setUserName(patientTbl.getNetmdLoginTbl().getUserName());
-		login.setPassword(patientTbl.getNetmdLoginTbl().getPassword());
-		login.setUserType(patientTbl.getNetmdLoginTbl().getUserType());
+		login.setUserName(patientTbl.getLoginTbl().getUserName());
+		login.setPassword(patientTbl.getLoginTbl().getPassword());
+		login.setUserType(patientTbl.getLoginTbl().getUserType());
 		response.setLogin(login);
 		response.setFirstName(patientTbl.getFirstName());
 		response.setLastName(patientTbl.getLastName());
@@ -828,14 +828,14 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 	/**
 	 * @param password
 	 * @param loginId
-	 * @return NetmdLoginTbl
+	 * @return LoginTbl
 	 */
-	public NetmdLoginTbl getUser(String password, String loginId) {
+	public LoginTbl getUser(String password, String loginId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_PATIENT_BY_EMAIL);
 		query.setParameter("param1", password);
 		query.setParameter("param2", loginId);
-		return executeUniqueQuery(NetmdLoginTbl.class, query);
+		return executeUniqueQuery(LoginTbl.class, query);
 	}
 
 	@Override
@@ -1031,27 +1031,27 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 	}
 	/**
 	 * @param userName
-	 * @return NetmdLoginTbl
+	 * @return LoginTbl
 	 */
-	public NetmdLoginTbl getLoginByUserName(String userName) {
+	public LoginTbl getLoginByUserName(String userName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_LOGIN_BY_USERNAME);
 		query.setParameter("param1", userName);
-		return executeUniqueQuery(NetmdLoginTbl.class, query);
+		return executeUniqueQuery(LoginTbl.class, query);
 	}
 
 	/**
 	 * @param userName
 	 * @param firstName
-	 * @return List<NetmdLoginTbl>
+	 * @return List<LoginTbl>
 	 */
-	public List<NetmdLoginTbl> getLoginByUserName(String userName,
+	public List<LoginTbl> getLoginByUserName(String userName,
 			String firstName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_LOGIN_BY_USERNAME_FIRSTNAME);
 		query.setParameter("param1", userName);
 		query.setParameter("param2", firstName);
-		return executeQuery(NetmdLoginTbl.class, query);
+		return executeQuery(LoginTbl.class, query);
 	}
 
 	/**

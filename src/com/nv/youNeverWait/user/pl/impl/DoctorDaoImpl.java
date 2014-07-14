@@ -31,9 +31,9 @@ import com.nv.youNeverWait.pl.entity.DoctorPracticeExperienceTbl;
 import com.nv.youNeverWait.pl.entity.DoctorScheduleTbl;
 import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.pl.entity.LoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
-import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.StatusEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
@@ -98,7 +98,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 		String decrypedUserName = StringEncoder.decryptWithStaticKey(login
 				.getUserName());
 		/* Checking userName and password existing or not */
-		NetmdLoginTbl netmdLogin = getLoginByUserNameAndUserType(
+		LoginTbl netmdLogin = getLoginByUserNameAndUserType(
 				decrypedUserName, NetmdUserTypeEnum.Doctor.getDisplayName());
 
 		if (netmdLogin == null) {
@@ -168,7 +168,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 		}
 
 		/* Checking userName and password existing or not */
-		NetmdLoginTbl existingUser = (NetmdLoginTbl) getLoginByUserNameAndUserType(
+		LoginTbl existingUser = (LoginTbl) getLoginByUserNameAndUserType(
 				doctor.getEmail().trim(),
 				NetmdUserTypeEnum.Doctor.getDisplayName());
 		if (existingUser != null) {
@@ -181,15 +181,15 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 				se.setDisplayErrMsg(true);
 				throw se;
 			}
-			newDoctor.setNetmdLoginTbl(existingUser);
+			newDoctor.setLoginTbl(existingUser);
 
 		} else {
 
-			NetmdLoginTbl loginTbl = new NetmdLoginTbl();
+			LoginTbl loginTbl = new LoginTbl();
 			loginTbl.setUserName(doctor.getEmail());
 			loginTbl.setUserType(NetmdUserTypeEnum.Doctor.getDisplayName());
 			save(loginTbl);
-			newDoctor.setNetmdLoginTbl(loginTbl);
+			newDoctor.setLoginTbl(loginTbl);
 		}
 
 		/* Checking doctor duplication */
@@ -650,8 +650,8 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 			}
 			doctor.setMembership(doctorMemberships);
 		}
-		NetmdLoginTbl doctorLogin = getById(NetmdLoginTbl.class, doctorTbl
-				.getNetmdLoginTbl().getId());
+		LoginTbl doctorLogin = getById(LoginTbl.class, doctorTbl
+				.getLoginTbl().getId());
 		if (doctorLogin == null) {
 
 			ServiceException se = new ServiceException(
@@ -823,7 +823,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	@Transactional
 	public boolean isDoctorLoginExists(String email, String userType) {
 		boolean flag = true;
-		NetmdLoginTbl doctorLogin = getLoginByUserNameAndUserType(email.trim(),
+		LoginTbl doctorLogin = getLoginByUserNameAndUserType(email.trim(),
 				userType);
 		if (doctorLogin != null) {
 			flag = false;
@@ -836,9 +836,9 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	 */
 	@Override
 	@Transactional
-	public NetmdLoginTbl DoctorLoginDetails(String email, String userType) {
+	public LoginTbl DoctorLoginDetails(String email, String userType) {
 
-		NetmdLoginTbl doctorLogin = getLoginByUserNameAndUserType(email.trim(),
+		LoginTbl doctorLogin = getLoginByUserNameAndUserType(email.trim(),
 				userType);
 		return doctorLogin;
 	}
@@ -1062,28 +1062,28 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	 * 
 	 * @param userName
 	 * @param userType 
-	 * @return NetmdLoginTbl
+	 * @return LoginTbl
 	 */
-	public NetmdLoginTbl getLoginByUserNameAndUserType(String userName,
+	public LoginTbl getLoginByUserNameAndUserType(String userName,
 			String userType) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_NETMD_LOGIN_BY_USERNAME_USERTYPE);
 		query.setParameter("param1", userName);
 		query.setParameter("param2", userType);
-		return executeUniqueQuery(NetmdLoginTbl.class, query);
+		return executeUniqueQuery(LoginTbl.class, query);
 	}
 
 	/**
 	 * Method to retrieve netmd login of a user
 	 * 
 	 * @param userName
-	 * @return NetmdLoginTbl
+	 * @return LoginTbl
 	 */
-	public List<NetmdLoginTbl> getLoginByUserName(String userName) {
+	public List<LoginTbl> getLoginByUserName(String userName) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_NETMD_LOGIN_BY_USERNAME);
 		query.setParameter("param1", userName);
-		return executeQuery(NetmdLoginTbl.class, query);
+		return executeQuery(LoginTbl.class, query);
 	}
 
 	/**
