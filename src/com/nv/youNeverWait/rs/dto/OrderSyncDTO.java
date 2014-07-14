@@ -25,6 +25,7 @@ public class OrderSyncDTO {
 	private int facilityGlobalId;
 	private String orderStatus;
 	private Date orderDate;
+	private String orderHeader;
 	/**
 	 * @return the uid
 	 */
@@ -108,6 +109,18 @@ public class OrderSyncDTO {
 	 */
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
+	}
+	/**
+	 * @return the orderHeader
+	 */
+	public String getOrderHeader() {
+		return orderHeader;
+	}
+	/**
+	 * @param orderHeader the orderHeader to set
+	 */
+	public void setOrderHeader(String orderHeader) {
+		this.orderHeader = orderHeader;
 	}
 	
 }

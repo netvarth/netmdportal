@@ -77,6 +77,4 @@ public class OrderTestResultDTO {
 		this.result = result;
 	}
 
-	
-
 }

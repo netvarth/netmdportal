@@ -248,9 +248,9 @@ public class NetMdUserDetail {
 		this.phone = userTbl.getPhone();
 		this.mobile = userTbl.getMobile();
 		this.address = userTbl.getAddress();
-		this.userType = userTbl.getNetmdLoginTbl().getUserType();
-		this.userName = userTbl.getNetmdLoginTbl().getUserName();
-		this.password = userTbl.getNetmdLoginTbl().getPassword();
+		this.userType = userTbl.getLoginTbl().getUserType();
+		this.userName = userTbl.getLoginTbl().getUserName();
+		this.password = userTbl.getLoginTbl().getPassword();
 		this.status = userTbl.getStatus();
 		this.createDateTime = userTbl.getCreateDateTime().toString();
 		this.updateDateTime = userTbl.getUpdateDateTime().toString();

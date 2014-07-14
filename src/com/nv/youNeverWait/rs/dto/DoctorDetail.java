@@ -525,15 +525,19 @@ public class DoctorDetail {
 		this.achievement = doctorAchievements;
 		
 		LoginDTO login = new LoginDTO();
-		if (doctorTbl.getNetmdLoginTbl() != null) {
-			login.setUserName(doctorTbl.getNetmdLoginTbl().getUserName());
-			login.setUserType(doctorTbl.getNetmdLoginTbl().getUserType());
-			login.setPassword(doctorTbl.getNetmdLoginTbl().getPassword());
+		if (doctorTbl.getLoginTbl() != null) {
+			login.setUserName(doctorTbl.getLoginTbl().getUserName());
+			login.setUserType(doctorTbl.getLoginTbl().getUserType());
+			login.setPassword(doctorTbl.getLoginTbl().getPassword());
 		}
 		this.login = login;
 
 	}
 
+	/**
+	 * @param a
+	 * @param b
+	 */
 	public DoctorDetail(String a, int b) {
 
 	}

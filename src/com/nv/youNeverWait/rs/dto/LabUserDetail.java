@@ -3,7 +3,7 @@
  */
 package com.nv.youNeverWait.rs.dto;
 
-import com.nv.youNeverWait.pl.entity.LabUserTbl;
+import com.nv.youNeverWait.pl.entity.UserTbl;
 
 /**
  * @author Luciya Jose
@@ -21,7 +21,7 @@ public class LabUserDetail {
 	
 	
 	
-	public LabUserDetail(LabUserTbl labUserTbl) {
+	public LabUserDetail(UserTbl labUserTbl) {
 		this.globalId = labUserTbl.getId();
 		this.firstName = labUserTbl.getFirstName();
 		this.lastName = labUserTbl.getLastName();
