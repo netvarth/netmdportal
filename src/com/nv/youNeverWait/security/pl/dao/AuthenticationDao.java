@@ -31,6 +31,7 @@ public interface AuthenticationDao extends GenericDao {
 	public ResponseDTO createPassword(CreatePasswordDTO passwords);
 	ResponseDTO resetPassword(LoginDTO login);
 	UserCredentials getUserCredentials(LoginDTO login);
+	UserDetails getNetlimsFacilityUser(String userName, String userType);
 	
 	
 }

@@ -12,8 +12,8 @@ import java.util.List;
 
 import com.nv.youNeverWait.api.sync.ReferralSyncDTO;
 import com.nv.youNeverWait.pl.dao.GenericDao;
+import com.nv.youNeverWait.pl.entity.LoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
-import com.nv.youNeverWait.pl.entity.NetmdLoginTbl;
 import com.nv.youNeverWait.rs.dto.DoctorDetail;
 import com.nv.youNeverWait.rs.dto.DoctorLoginDTO;
 import com.nv.youNeverWait.rs.dto.DoctorViewResponseDTO;
@@ -34,6 +34,6 @@ public interface DoctorDao  extends GenericDao{
 	public ResponseDTO resetPassword(LoginDTO login);
 	public RetrievalDoctorResponseDTO retrieveDoctorList(String lastSyncTime,String passPhrase, int netmdBranchId, Date currentSyncTime);
 	public List<DoctorLoginDTO> DoctorPasswordList(String lastSyncTime,String passPhrase, int netmdBranchId, Date currentSyncTime);
-	public NetmdLoginTbl DoctorLoginDetails(String email, String userType);
+	public LoginTbl DoctorLoginDetails(String email, String userType);
 	public int processReferral(ReferralSyncDTO referral);
 }

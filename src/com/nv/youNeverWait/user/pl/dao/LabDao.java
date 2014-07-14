@@ -35,8 +35,10 @@ import com.nv.youNeverWait.rs.dto.RetrieveLabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncUser;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
+import com.nv.youNeverWait.rs.dto.UserInfo;
 import com.nv.youNeverWait.user.pl.impl.BranchOwnerDetails;
 
 public interface LabDao {
@@ -84,5 +86,8 @@ public interface LabDao {
 	public SyncFreqDTO getBranchSyncDetails(int branchId);
 	public ResponseDTO saveResult(LabResultHeaderDTO labResultHeader);
 	public List<OrderTransferTbl> getDestinationBranches(int id);
+	public int updateBranchUser(SyncUser user, Integer source_branch_id);
+	public int createBranchUser(SyncUser user, Integer source_branch_id);
+	public UserInfo getUserByReferredUid(int referredUid, int branchId);
 
 }

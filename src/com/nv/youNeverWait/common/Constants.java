@@ -49,6 +49,7 @@ public class Constants {
 	public static final String PASSPHRASE="passPhrase";
 	public static final String PATIENT_REGISTRATION = "Patient Registration";
 	public static final String DOCTOR_REGISTER ="Doctor Registration";
+	public static final String FACILITY_REGISTER="Facility Registration";
 	public static final String DATE ="date";
 	public static final String RESULT = "result";
 	public static final String DOCTOR_CREDENTIALS = "Doctor Credentials";
@@ -61,6 +62,7 @@ public class Constants {
 	public static final String TRANSFERRED_ORDER = "transferredOrders";
 	public static final String TRANSFERRED_RESULTS = "transferredResults";
 	public static final String INSTALLER = "installer";
+	public static final String NETLIMS_ORDERS = "netlimsorders";
 	
 		
 	/* Log */
