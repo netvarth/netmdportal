@@ -74,7 +74,8 @@ $j(document).ready(function() {
 			
 					var  username=$j('#userNameNetlims').val();
 					var password=$j('#passwordNetlims').val();
-					var loginData='{'+'"userName"'+':"'+username+'"'+','+'"password"'+':"' + password +'"'+'}';
+					var userType=$j('#userTypeNetlims').val();
+					var loginData='{'+'"userName"'+':"'+username+'"'+','+'"password"'+':"' + password +'","userType"'+':"' + userType +'"'+'}';
 					$j.ajax({
 						type: "POST",
 						url: serverPath + "/youNeverWait/netlims/auth/netlimsLogin",

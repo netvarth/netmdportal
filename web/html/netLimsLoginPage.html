@@ -1,18 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">	
 		<title>Netlims</title>
 		<link href="/youNeverWait/css/reset1.css" rel="stylesheet" type="text/css">
 		<link href="/youNeverWait/css/inner-pages.css" type="text/css" rel="stylesheet">
-		
-		
 	</head>
 	<body>
 		<div id="wrapper">
-			<div id="login-header">
-				<img src="/youNeverWait/images/logo-n.png">
-			</div>
+			<div id="login-header"><img src="/youNeverWait/images/logo-n.png"></div>
 			<div id="content-area">
 				<div id="content-area-cntr">
 					<div id="main-contents">
@@ -22,8 +17,7 @@
 							<div id="main-cnts-header-right"></div>
 						</div>
 						<div id="main-cnts-listing">
-							<div id="main-cnts-listing-bg">
-								
+							<div id="main-cnts-listing-bg">	
 								<img src="/youNeverWait/images/icon/speci.png">
 								<h1>Specimen tracking </h1>
 								<p>Quick and efficient automated system which generates barcode labels, create orders, create invoices and track the samples and order status. </p><br>
@@ -47,40 +41,38 @@
 						</div>
 					</div>
 					<div id="login-area">
-					<div id="sign-up-button">
+						<div id="sign-up-button">
 							<div id="sign-up-button-head">
 								<div id="sign-up-button-head-left"></div>
 								<div id="sign-up-button-head-cnt">
 									<h1>Netlims Login</h1>
 								</div>
 								<div id="sign-up-button-head-right"></div>
-							</div>
-							
+							</div>	
 						</div>	
 						<div id="login-box">
 							<div id="login-box-top">
 								<form id="NV" name="NV"  method="post" >
-								<table class="wwFormTable">
-									</table><table width="85%" border="0" cellspacing="0" cellpadding="0" style="margin:0 auto;">									
-									<tbody><tr>
-										<td class="table-txt-syle1" height="25"><span class="star-style">* </span>Username:</td>
-										<td align="right"></td>
-									</tr>
-									<tr>
-										<td colspan="2" height="25"><input type="text" tabindex="1" name="userName" id="userNameNetlims"  class="text"></td>
-									</tr>
-									<tr>
-										<td height="20" width="50%"></td>
-										
-									</tr>	
-									<tr>
+									<table class="wwFormTable"></table>
+									<table width="85%" border="0" cellspacing="0" cellpadding="0" style="margin:0 auto;">
+										<tbody><tr>
+										<td class="table-txt-syle1" height="25" style="width:25%">Login as :</td>
+										<td height="25" class="table-txt-syle1">
+											<select name="userType" id="userTypeNetlims" style="width:100%;">
+												<option value="Corporate">Corporate</option>
+												<option value="facility">Facility</option>
+											</select>
+										</td>
+									</tr><tr><td height="20" width="50%"></td></tr><tr>
+											<td class="table-txt-syle1" height="25"><span class="star-style">* </span>Username:</td>
+											<td align="right"></td>
+										</tr><tr>
+											<td colspan="2" height="25"><input type="text" tabindex="1" name="userName" id="userNameNetlims"  class="text"></td>
+									</tr><tr><td height="20" width="50%"></td></tr><tr>
 										<td class="table-txt-syle1" height="25"><span class="star-style">* </span>Password :</td>
-										
-									</tr>
-									<tr>
+									</tr><tr>
 										<td colspan="2" height="25"><input type="password" tabindex="2" name="password" id="passwordNetlims"  class="password"></td>
-									</tr>
-									<tr>
+									</tr><tr><td height="20" width="50%"></td></tr><tr>
 										<td colspan="2" height="25" valign="middle">
 											<div id="loginError" class="errorMessage"></div>
 										</td>
