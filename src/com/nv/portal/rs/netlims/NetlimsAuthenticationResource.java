@@ -2,7 +2,9 @@ package com.nv.portal.rs.netlims;
 
 import java.util.Date;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
+import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.CaptchaResponseDTO;
 import com.nv.youNeverWait.rs.dto.CaptchaVerificationDTO;
 import com.nv.youNeverWait.rs.dto.CaptchaVerificationResponseDTO;
@@ -32,6 +35,10 @@ import com.nv.youNeverWait.security.bl.service.AuthenticationService;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.LogService;
 
+/**
+ * @author Sruthy
+ *
+ */
 @Controller
 @RequestMapping("auth")
 
@@ -41,7 +48,7 @@ public class NetlimsAuthenticationResource {
 	private AuthenticationService authenticationService;
 	private LogService logService;
 	private LabService labService;
-	
+
 	/**
 	 * To show login page for netlims
 	 * 
@@ -52,13 +59,18 @@ public class NetlimsAuthenticationResource {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
-		if(request.getSession().getAttribute("user")==null)
+		User user = (User) request.getSession().getAttribute("user");
+		if(user==null)
 			return "netLimsLoginPage";
-		else
-			return "netlimsIndex";
+		else {
+			if(user.getUserType().equals(NetmdUserTypeEnum.Facility.getDisplayName()))
+				return "netlimsFacilityIndex";
+		}
+		return "netlimsIndex";
 	}
 	/**
 	 * Method performed for NetLims login
+	 * @param login 
 	 * 
 	 * @param LoginDTO
 	 * @return LoginResponseDTO
@@ -74,17 +86,24 @@ public class NetlimsAuthenticationResource {
 				ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 						.currentRequestAttributes();
 				HttpServletRequest req = t.getRequest();
+				UserDetails userDetail =null;
+				if(!login.getUserType().equals(NetmdUserTypeEnum.Facility.getDisplayName()))
+					userDetail = authenticationService.getNetlimsUser(login.getUserName());
+				else
+					userDetail = authenticationService.getFacilityUserInfo(login.getUserName(), login.getUserType());
+			
 				
-				UserDetails userDetail = authenticationService
-						.getNetlimsUser(login.getUserName());
 				if (userDetail != null) {
 					user.setLoginTime(new Date());
 					user.setName(userDetail.getName());
 					user.setUserName(login.getUserName().trim());
 					user.setId(userDetail.getId());
+					user.setOrganisationId(userDetail.getOrganisationId());
 					user.setLabId(userDetail.getLabId());
 					user.setUserType(userDetail.getUserType());
 				}
+				
+				
 				req.getSession().setAttribute(Constants.USER, user);
 			}
 		} catch (ServiceException e) {
@@ -107,6 +126,20 @@ public class NetlimsAuthenticationResource {
 		return response;
 	}
 
+	/**
+	 * @return true if success
+	 * 
+	 */
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	@ResponseBody
+	public boolean logout(){
+		
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest req = t.getRequest();
+		req.getSession().setAttribute(Constants.USER, null);
+		return true;
+	}
 	/**
 	 * To reset password of lab user/owner
 	 * 
@@ -208,7 +241,7 @@ public class NetlimsAuthenticationResource {
 
 		return response;
 	}
-	
+
 	/**
 	 * Get current user in the session
 	 * 
@@ -251,6 +284,7 @@ public class NetlimsAuthenticationResource {
 
 	/**
 	 * Method which verify captcha
+	 * @param captcha 
 	 * 
 	 * @return CaptchaResponseDTO
 	 */
@@ -331,10 +365,16 @@ public class NetlimsAuthenticationResource {
 	public void setLogService(LogService logService) {
 		this.logService = logService;
 	}
-	
+
+	/**
+	 * @return labService
+	 */
 	public LabService getLabService() {
 		return labService;
 	}
+	/**
+	 * @param labService
+	 */
 	public void setLabService(LabService labService) {
 		this.labService = labService;
 	}

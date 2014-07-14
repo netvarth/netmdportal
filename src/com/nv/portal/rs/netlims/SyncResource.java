@@ -16,6 +16,7 @@ import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.LimsFacilityBundle;
+import com.nv.youNeverWait.rs.dto.LimsUserBundle;
 import com.nv.youNeverWait.rs.dto.OrderResultBundle;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.SyncResponse;
@@ -102,6 +103,19 @@ public class SyncResource extends ServiceExceptionHandler {
 	public CommonSyncResponse processFacility(@RequestBody LimsFacilityBundle bundle){
 		
 		List<SyncResponse> response=service.processFacility(bundle);
+		CommonSyncResponse responses=new CommonSyncResponse();
+		responses.setResponses(response);
+		return responses;
+	}
+	
+	/**
+	 * @param bundle
+	 * @return CommonSyncResponse
+	 */
+	@RequestMapping(value="syncUser", method = RequestMethod.POST)
+	@ResponseBody
+	public CommonSyncResponse processUser(@RequestBody LimsUserBundle bundle){
+		List<SyncResponse> response=service.processUser(bundle);
 		CommonSyncResponse responses=new CommonSyncResponse();
 		responses.setResponses(response);
 		return responses;

@@ -34,19 +34,11 @@ import com.nv.youNeverWait.user.bl.service.ResultService;
 public class ResultResource {
 	private ResultService resultService;
 
-	public ResultService getResultService() {
-		return resultService;
-	}
-
-	public void setResultService(ResultService resultService) {
-		this.resultService = resultService;
-	}
 
 	
 	/**
 	 * list of patient result result
-	 * 
-	 * @param id
+	 * @param patientId 
 	 * @return ResultListResponseDTO
 	 */
 	@RequestMapping(value = "list/{patientId}", method = RequestMethod.GET)
@@ -65,5 +57,23 @@ public class ResultResource {
 			response.setSuccess(false);
 		}
 		return response;
+	}
+
+
+
+	/**
+	 * @return the resultService
+	 */
+	public ResultService getResultService() {
+		return resultService;
+	}
+
+
+
+	/**
+	 * @param resultService the resultService to set
+	 */
+	public void setResultService(ResultService resultService) {
+		this.resultService = resultService;
 	}
 }

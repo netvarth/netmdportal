@@ -9,7 +9,9 @@ package com.nv.portal.rs.netlims;
 
 import java.util.Date;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,14 +39,12 @@ import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabOrderHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabResultHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
-import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.MailTransferInfo;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.Parameter;
-import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferResponseDTO;
@@ -54,9 +54,14 @@ import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.TransferredDetails;
 import com.nv.youNeverWait.rs.dto.TransferredResultDetails;
+import com.nv.youNeverWait.rs.dto.UserInfo;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.LogService;
 
+/**
+ * @author Asha Chandran
+ *
+ */
 @Controller
 @RequestMapping("ui/lab/")
 public class LabResource {
@@ -286,6 +291,29 @@ public class LabResource {
 	}
 
 	/**
+	 * @param referredId 
+	 * @return UserInfo
+	 */
+	@RequestMapping(value="/user/{referredId}", method=RequestMethod.GET)
+	@ResponseBody
+	public UserInfo getUserByReferredUid(@PathVariable int referredId){
+		UserInfo userInfo=null;
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = t.getRequest();
+		User userObj = (User) request.getSession().getAttribute("user");
+		if (userObj != null) {
+			userInfo = labService.getUserByReferredUid(referredId, userObj.getOrganisationId());
+			logService.saveUserDetails(request.getRemoteAddr(),
+					userObj.getName(), userObj.getUserType(),
+					userObj.getLoginTime(), null,
+					ApplicationNameEnum.NetLims.getDisplayName(),
+					Constants.USER_VIEW);
+		}
+		return userInfo;
+	}
+	
+	/**
 	 * View lab user details
 	 * 
 	 * @param globalId
@@ -399,8 +427,7 @@ public class LabResource {
 	/**
 	 * To clear mac Id for the purpose of uninstalling netlims application from
 	 * device
-	 * 
-	 * @param LabBranchDTO
+	 * @param branch 
 	 * @return ResponseDTO
 	 */
 	@RequestMapping(value = "clearMacId", method = RequestMethod.POST)
@@ -707,8 +734,7 @@ public class LabResource {
 
 	/**
 	 * Transfer result from one lab branch to other
-	 * 
-	 * @param ResultTransferDTO
+	 * @param resultTranferDto 
 	 * @return ResultTransferResponseDTO
 	 */
 	@RequestMapping(value = "transferResult", method = RequestMethod.POST)
@@ -734,8 +760,7 @@ public class LabResource {
 
 	/**
 	 * List all recorde of Report Tbl for given From and To date
-	 * 
-	 * @param report
+	 * @param filterDTO 
 	 * @return ReportResponseDTO
 	 */
 	@RequestMapping(value = "orderList", method = RequestMethod.POST)
@@ -760,6 +785,7 @@ public class LabResource {
 
 	/**
 	 * Method performed for system health monitor
+	 * @param systemHealthDetails 
 	 * 
 	 * @return HealthMonitorResponse
 	 */
@@ -812,7 +838,7 @@ public class LabResource {
 	/**
 	 * Method performed for gettting all orders for a Netlims branch
 	 * @param orderHeader
-	 * @return
+	 * @return OrderDetails
 	 */
 	@RequestMapping(value = "retrieveBranchOrders", method = RequestMethod.POST)
 	@ResponseBody
@@ -912,8 +938,8 @@ public class LabResource {
 	
 	/**
 	 * Method performed for saving all results from a lab 
-	 * @param orderHeader
-	 * @return
+	 * @param labResultHeader 
+	 * @return ResponseDTO
 	 */
 	@RequestMapping(value = "resultTransfer", method = RequestMethod.POST)
 	@ResponseBody
@@ -937,8 +963,7 @@ public class LabResource {
 	
 	/**
 	 * Retrieve all transferred orders
-	 * 
-	 * @param report
+	 * @param filterDTO 
 	 * @return ReportResponseDTO
 	 */
 	@RequestMapping(value = "getTransferredOrders", method = RequestMethod.POST)
@@ -962,8 +987,7 @@ public class LabResource {
 	}
 	/**
 	 * Retrieve all transferred orders
-	 * 
-	 * @param report
+	 * @param filterDTO 
 	 * @return ReportResponseDTO
 	 */
 	@RequestMapping(value = "getTransferredResults", method = RequestMethod.POST)
@@ -988,9 +1012,8 @@ public class LabResource {
 	
 	/**
 	 * Mailing details 
-	 * 
-	 * @param report
-	 * @return ReportResponseDTO
+	 * @param mailResult 
+	 * @return ResponseDTO
 	 */
 	@RequestMapping(value = "mailResult", method = RequestMethod.POST)
 	@ResponseBody
