@@ -25,11 +25,10 @@
 		<class>com.nv.youNeverWait.pl.entity.LabBranchSystemInfoTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.LabBranchTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.LabHealthMonitorTbl</class>
-		<class>com.nv.youNeverWait.pl.entity.LabLoginTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.LabPassphraseTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.LabTbl</class>
-		<class>com.nv.youNeverWait.pl.entity.LabUserBranchTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.LabUserTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.UserTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.LogTbl</class>
 		
 		<class>com.nv.youNeverWait.pl.entity.MedicalRecordTbl</class>
@@ -39,7 +38,7 @@
 		<class>com.nv.youNeverWait.pl.entity.NetmdBranchSystemInfoTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdBranchTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdHealthMonitorTbl</class>
-		<class>com.nv.youNeverWait.pl.entity.NetmdLoginTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.LoginTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdUserTbl</class>
