@@ -1,7 +1,6 @@
 package com.nv.youNeverWait.user.bl.service;
 
 import com.nv.youNeverWait.rs.dto.FacilitySyncDTO;
-import com.nv.youNeverWait.rs.dto.SyncResponse;
 
 /**
  * @author Mani E.V

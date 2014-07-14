@@ -43,10 +43,12 @@ import com.nv.youNeverWait.rs.dto.RetrieveNetmdListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveUserListResponseDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 import com.nv.youNeverWait.rs.dto.SyncFreqResponseDTO;
+import com.nv.youNeverWait.rs.dto.SyncUser;
 import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.TransferredDetails;
 import com.nv.youNeverWait.rs.dto.TransferredResultDetails;
+import com.nv.youNeverWait.rs.dto.UserInfo;
 
 
 
@@ -104,5 +106,7 @@ public interface LabService {
 	public TransferredDetails getTransferredOrders(FilterDTO filterDTO);
 	public TransferredResultDetails getTransferredResults(FilterDTO filterDTO);
 	public ResponseDTO sendMail(MailTransferInfo mailResult);
+	public int processUser(SyncUser user, Integer source_branch_id);
+	public UserInfo getUserByReferredUid(int referredUid, int branchId);
 	
 }
