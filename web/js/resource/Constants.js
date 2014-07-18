@@ -87,7 +87,7 @@ function Constants() {
 	this.CHANGEPASSWORDNETMDURL="/youNeverWait/netmd/auth/changePassword";
 	this.SHOWBILLLISTMODAL="ShowBillModal";
 	this.BRANCHNETMDBILLLISTJSON="/youNeverWait/json/BranchAccBillList.json";
-	this.GETBILLLISTURL="/youNeverWait/ws/ui/netMd/billList";
+	this.GETBILLLISTURL="/youNeverWait/netmd/ui/netMd/billList";
 	this.NETMDACCSYNCMODAL="netMdAccSycSetModal";
 	this.NETMDACCSYNCJSON="/youNeverWait/json/new/netmdAccBranchsetSync.json";
 	this.SYNCDATANETMDACCURL="/youNeverWait/netmd/ui/netMd/getBranchSyncDetails/";
