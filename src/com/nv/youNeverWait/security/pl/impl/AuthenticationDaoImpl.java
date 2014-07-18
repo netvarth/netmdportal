@@ -128,7 +128,7 @@ AuthenticationDao {
 					loginDTO.getPassword(), loginDTO.getUserName(), loginDTO.getUserType());
 		else
 			loginDetails = getUserByUserNameAndPassword(
-					loginDTO.getPassword(), loginDTO.getUserName());
+					loginDTO.getPassword(), loginDTO.getUserName(),loginDTO.getUserType());
 		if(loginDetails==null && loginInfo==null){
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.UserNull);
@@ -162,7 +162,7 @@ AuthenticationDao {
 
 		LoginResponseDTO login = new LoginResponseDTO();
 		LoginTbl loginDetails = (LoginTbl) getNetMdUserByUserNameAndPassword(
-				loginDTO.getPassword(), loginDTO.getUserName());
+				loginDTO.getPassword(), loginDTO.getUserName(),loginDTO.getUserType());
 		if(loginDetails==null){
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.UserNull);
@@ -559,11 +559,13 @@ AuthenticationDao {
 	 * @return LabLoginTbl
 	 */
 	private LoginTbl getUserByUserNameAndPassword(String password,
-			String userName) {
+			String userName,String userType) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_NETLIMS_USER_BY_PASSWORD);
 		query.setParameter("param1", password);
 		query.setParameter("param2", userName);
+		query.setParameter("param2", userType);
+		
 		return executeUniqueQuery(LoginTbl.class, query);
 	}
 
@@ -613,11 +615,12 @@ AuthenticationDao {
 	 * @return LoginTbl
 	 */
 	private LoginTbl getNetMdUserByUserNameAndPassword(String password,
-			String userName) {
+			String userName,String userType) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_NETMD_USER_BY_USERNAME_PASSWORD);
 		query.setParameter("param1", password);
 		query.setParameter("param2", userName);
+		query.setParameter("param3",userType);
 		return (LoginTbl) executeUniqueQuery(LoginTbl.class, query);
 	}
 	/**
