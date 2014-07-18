@@ -47,7 +47,8 @@ $j(document).ready(function() {
 			
 					var  username=$j('#userNameNetmd').val();
 					var password=$j('#passwordNetmd').val();
-					var loginData='{'+'"userName"'+':"'+username+'"'+','+'"password"'+':"' + password +'"'+'}';
+					var usertype="owner";
+					var loginData='{'+'"userName"'+':"'+username+'"'+','+'"userType"'+':"'+usertype+'"'+','+'"password"'+':"' + password +'"'+'}';
 					$j.ajax({
 						type: "POST",
 						url: serverPath + "/youNeverWait/netmd/auth/netmdLogin",
