@@ -103,7 +103,7 @@ public class Query {
 	public static final String GET_PATIENT_BY_USERNAME_PASSWORD = "from LoginTbl as login left join fetch NetmdUserTbl where login.password =:param1 and login.userName =:param2";
 	public static final String GET_NETMD_USER_BY_PASSWORD = "from LoginTbl as login where login.password =:param1 and login.userName =:param2";
 	public static final String GET_LOGIN_BY_PASSWORD = "from LoginTbl as login where login.password =:param1";
-	public static final String GET_NETMD_USER_BY_USERNAME_PASSWORD = "from LoginTbl as login  where login.password =:param1 and login.userName =:param2";
+	public static final String GET_NETMD_USER_BY_USERNAME_PASSWORD = "from LoginTbl as login  where login.password =:param1 and login.userName =:param2 and login.userType=:param3";
 	public static final String GET_NETMD_LOGIN_BY_USERNAME = "from LoginTbl as login where TRIM(login.userName)=:param1";
 	public static final String GET_NETMD_LOGIN_PATIENT_BY_USERNAME = "from LoginTbl as login where TRIM(login.userName)=:param1 and login.userType='patient'";
 	public static final String GET_LOGIN = "from LoginTbl as login where login.password = :param1 and login.loginId=:param2 ";
