@@ -4,6 +4,7 @@
 package com.nv.youNeverWait.util.filter.queryBuilder;
 
 import com.nv.youNeverWait.pl.dao.FilterDao;
+import com.nv.youNeverWait.pl.entity.FacilityResultTbl;
 import com.nv.youNeverWait.pl.entity.NetlimsOrderTbl;
 import com.nv.youNeverWait.util.filter.core.Criteria;
 import com.nv.youNeverWait.util.filter.core.Filter;
@@ -12,7 +13,7 @@ import com.nv.youNeverWait.util.filter.core.Filter;
  * @author Mani E.V
  *
  */
-public class NetlimsFacilityOrderQueryBuilder extends RootQueryBuilder<NetlimsOrderTbl> {
+public class NetlimsFacilityOrderQueryBuilder extends RootQueryBuilder<FacilityResultTbl> {
 
 	@Override
 	public void addFilter(Filter filter) {
@@ -41,7 +42,7 @@ public class NetlimsFacilityOrderQueryBuilder extends RootQueryBuilder<NetlimsOr
 
 	@Override
 	public void init(FilterDao filterDao) {
-		super.init(filterDao, NetlimsOrderTbl.class);
+		super.init(filterDao, FacilityResultTbl.class);
 	}
 
 }
