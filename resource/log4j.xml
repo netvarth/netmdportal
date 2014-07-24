@@ -107,6 +107,7 @@
     <category name="com.nv" additivity="false">
         <priority value="WARN"/>
         <appender-ref ref="FILE"/>
+         <appender-ref ref="CONSOLE"/>
     </category>
 
     <category name="com.nv.framework" additivity="false">
@@ -117,6 +118,7 @@
     <category name="com.nv.youNeverWait" additivity="false">
         <priority value="WARN"/>
         <appender-ref ref="FILE"/>
+         <appender-ref ref="CONSOLE"/>
     </category>
     
         
