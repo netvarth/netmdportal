@@ -362,6 +362,7 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 			String result = null;
 			try {
 				result = maper.writeValueAsString(orderTestResult.getResult());
+				result = result.replaceAll("microsymbol", "\u00b5");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}	

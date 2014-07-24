@@ -29,8 +29,11 @@ import com.nv.security.youNeverWait.User;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.pl.entity.FacilityResultTbl;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
+import com.nv.youNeverWait.pl.entity.LabFacilityTbl;
 import com.nv.youNeverWait.pl.entity.LabTbl;
+import com.nv.youNeverWait.pl.entity.LoginTbl;
 import com.nv.youNeverWait.pl.entity.NetlimsOrderTbl;
 import com.nv.youNeverWait.pl.entity.NetlimsResultTbl;
 import com.nv.youNeverWait.pl.entity.OrderBranchTbl;
@@ -315,15 +318,27 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 
 	@Override
 	public ListResponse getByFilter(FilterDTO filterParam, User user) {
-		ExpressionDTO branchExp = new ExpressionDTO();
-		branchExp.setName("branchId");
-		branchExp.setOperator("eq");
-		branchExp.setValue(Integer.toString(user.getOrganisationId()));
-	
+		LoginTbl loginTbl = getUserByNameAndType(user.getUserName(), user.getUserType());
+//		ExpressionDTO branchExp = new ExpressionDTO();
+//		branchExp.setName("branchId");
+//		branchExp.setOperator("eq");
+//		branchExp.setValue(Integer.toString(user.getOrganisationId()));
+		
+		ExpressionDTO loginExp = new ExpressionDTO();
+		loginExp.setName("loginId");
+		loginExp.setOperator("eq");
+		loginExp.setValue(Integer.toString(loginTbl.getId()));
+
+//		LabFacilityTbl labFacilitytbl = getFacilityByEmailId(user.getUserName());
+//		ExpressionDTO expr = new ExpressionDTO();
+//		expr.setName("loginId");
+//		expr.setOperator("eq");
+//		expr.setValue(Integer.toString(labFacilitytbl.getId()));
+		
 		ListResponse response = new ListResponse();
 		//get queryBuilder for test from builder factory
 		QueryBuilder queryBuilder = queryBuilderFactory.getQueryBuilder(Constants.NETLIMS_ORDERS);
-		Filter brchFilter = filterFactory.getFilter(branchExp);
+		Filter brchFilter = filterFactory.getFilter(loginExp);
 		queryBuilder.addFilter(brchFilter);
 		for (ExpressionDTO exp : filterParam.getExp()) {
 			//get filter from filter factory by setting expression name and value to filter
@@ -331,25 +346,45 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			queryBuilder.addFilter(filter);
 		}
 		//build query
-		TypedQuery<NetlimsOrderTbl> q =   queryBuilder.buildQuery(filterParam.isAsc(),
+		TypedQuery<FacilityResultTbl> q =   queryBuilder.buildQuery(filterParam.isAsc(),
 				filterParam.getFrom(),filterParam.getCount()); 
 		Long count = queryBuilder.getCount();
 		List<Order> orders = new ArrayList<Order>();
 		DateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT);
-		for(NetlimsOrderTbl orderTbl: queryBuilder.executeQuery(q)){
+		for(FacilityResultTbl orderTbl: queryBuilder.executeQuery(q)){
 			Order order = new Order();
-			order.setId(orderTbl.getId());
-			order.setUid(orderTbl.getOrderId());
-			order.setCreatedOn(df.format(orderTbl.getCreatedDate()));
-			order.setOrderStatus(orderTbl.getOrderStatus());
-			order.setBranchId(Integer.toString(orderTbl.getLabBranchTbl().getId()));
-			order.setHeaderData(orderTbl.getOrderHeader());
+			order.setId(orderTbl.getNetlimsOrderTbl().getId());
+			order.setUid(orderTbl.getNetlimsOrderTbl().getOrderId());
+			order.setCreatedOn(df.format(orderTbl.getNetlimsOrderTbl().getCreatedDate()));
+			order.setOrderStatus(orderTbl.getNetlimsOrderTbl().getOrderStatus());
+			order.setBranchId(Integer.toString(orderTbl.getNetlimsOrderTbl().getLabBranchTbl().getId()));
+			order.setHeaderData(orderTbl.getNetlimsOrderTbl().getOrderHeader());
 			//order.setHeader(orderTbl.get)
 			orders.add(order);
 		}
 		response.setList(orders);
 		response.setCount(count);
 		return response;
+	}
+
+	private LabFacilityTbl getFacilityByEmailId(String email) {
+		javax.persistence.Query query = em.createQuery(Query.GET_FACILITY_BY_EMAILID);
+		query.setParameter("param1", email);
+		return executeUniqueQuery(LabFacilityTbl.class, query);
+	}
+
+	/**
+	 * 
+	 * @param userName
+	 * @param userType 
+	 * @return LoginTbl
+	 */
+	public LoginTbl getUserByNameAndType(String userName, String userType) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_LOGIN_BY_USERNAME_USERTYPE);
+		query.setParameter("param1", userName);
+		query.setParameter("param2", userType);
+		return executeUniqueQuery(LoginTbl.class, query);
 	}
 
 	/**
