@@ -6,13 +6,18 @@ commonMethodInvoker = new CommonMethodInvoker();
 var methodInvoker = new MethodInvoker();
 var query = new Query();
 $(function() {
+	$('.filter-main').hide();
+	$('#filter').click(function () {
+        $('.filter-main').toggle(500);
+		$('#filterWorkBench').hide();
+	});
 	var user = new User();
 	user.setInfo();
 	user.bindEvents();
 	dpi_y = document.getElementById('testdiv').offsetHeight;
 	methodInvoker.setDPI(dpi_y);
 	order = new Order();
-	order.list();
+	order.init();
 	
 });
 String.prototype.startsWith = function(s) {
@@ -253,6 +258,11 @@ function Constants() {
 	this.MODEPRINT = "print";
 	this.SELECTEDROWCOLOR = "background-color:#DCDCDC;"
 	this.USERURL = "/youNeverWait/netlims/ui/lab/user/";
+	this.HOME = "home";
+	this.HOMEPAGETOOLBAR = "/youNeverWait/json/netlims/homePageBar.json";
+	this.ORDER = "order";
+	this.ORDERFILTERKEY = "";
+	this.ORDERLISTURL = "/youNeverWait/json/netlims/orderFilter.json";
 }
 function VerifierDTO() {
 	this.setUserId =function(userId) {
@@ -1217,7 +1227,7 @@ Error.prototype.getErrorMessage = function() {
 }
 function OrderServiceImpl () {
 	this.setTableValues = function(tableObj, orderResult) {
-	alert(JSON.stringify(orderResult));
+	//alert(JSON.stringify(orderResult));
 		$(tableObj).dataTable().fnClearTable();
 		if(orderResult.list) {
 			if(orderResult.list.length>0) {			
@@ -1227,7 +1237,7 @@ function OrderServiceImpl () {
 					var paymentStatus=order.orderStatus
 					if(order.headerData!=null) {
 						var header = $.parseJSON(order.headerData).header;
-					var rowData=$(tableObj).dataTable().fnAddData([order.uid, paymentStatus, header.patientName, createdOn,header.collectedAt,header.referral]);
+					var rowData=$(tableObj).dataTable().fnAddData([order.uid, header.patientName, header.age, createdOn,header.collectedAt,header.referral]);
 					var row=$(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 					$(row).children("td:nth-child(9)").attr("class","column-2");
 					$(row).attr('id',order.id);
@@ -1259,11 +1269,20 @@ function Order() {
 	this.chkSelectTestClassName = "printTestSelection";
 	this.chkSelectTest=  ".printTestSelection";
 	this.chkSelectAllTest="#printTestSelectAll";
+	this.pageTitle = $('#pageTitle');
 	this.exp = new ExpressionListDTO();
 	this.orderService= new OrderServiceImpl();
 	this.orderTableNavigator = new DataTableNavigator(this.pgTableName,this.listUrl,this.pgTableContainer,this.orderService,this.exp);
+	this.ftbToolBar = "#order-filter-toolbar";
+	this.filterActionButton = this.ftbToolBar + ' #btnGo';
+	this.filter = '#filter';
+	this.filterBench=$('#filterWorkBench');
+	this.ftbContainer=$('#filterToolBar-Container');
 	this.setOrder = function(orderId){
 		this.order = this.orderService.getOrder(orderId);
+	}
+	this.getOrderTableNavigator=function(){
+		return this.orderTableNavigator;
 	}
 	this.getOrder = function() {
 		return this.order;
@@ -1271,14 +1290,24 @@ function Order() {
 	this.getTestList = function() {
 		return this.testList;
 	}
+	this.setPageTitle = function(value) {
+		this.pageTitle.empty().html(value);
+	}
 	this.setTestList = function(testList) {
 		this.testList=testList;
 	}
 	this.list = function() {
+		this.orderTableNavigator.list();
+		this.listEvents();
+		this.setPageTitle("Orders");
+	}
+	this.init = function() {
+		var ftbProcessor = new FilterToolBarProcessor();
+		ftbProcessor.create(constants.ORDER,constants.ORDERFILTERKEY,constants.ORDERLISTURL);
 		dataTableProcessor.create(this.pgTableName,"/youNeverWait/json/netlims/orderTable.json");//Create Table for Listing Order
 		dataTableProcessor.setCustomTable(this.pgTableName);
-		this.orderTableNavigator.list();
-		this.listvents();
+		$('#pageToolBar-Container').empty().html();
+		this.list();
 	}
 	this.view = function(orderId) {
 		this.setOrder(orderId);
@@ -1287,6 +1316,8 @@ function Order() {
 		this.setTestList(tests);
 		pageHandler.create(constants.VIEWORDERPAGEURL);
 		commonMethodInvoker.setViewTable(this.testTable);
+		var ptbProcessor = new PageToolBarProcessor();
+		ptbProcessor.create(constants.HOME, constants.HOMEPAGETOOLBAR);
 		this.setTests(tests);
 		this.viewEvents();
 	}
@@ -1299,6 +1330,7 @@ function Order() {
 		return resultList;
 	}
 	this.setTests = function(tests) {
+		self=this;
 		var checkbox = '<input type="checkbox" class="' + this.chkSelectTestClassName + '"/>';
 		$(tests).each(function(){
 			var testTable=$(self.testTable).dataTable().fnAddData([this.uid, this.testName,checkbox]);
@@ -1337,15 +1369,52 @@ function Order() {
 		});
 		return result;
 	}
-	this.listvents = function() {
+	this.listEvents = function() {
 		var self=this;
 		$(this.pgTableRowClass).die('click').live('click',function(){
 		   var rowId= $(this).parent().attr('id');
 		  self.view(rowId);
+		  self.setPageTitle("Order : " + $(this).text());
+		});
+		/*Page Tool Bar Events ends here*/
+		/*Filter Tool Bar Events starts here*/
+		$(self.ftbToolBar + " a:not(:selected)").die('click').live('click',function() {
+			var curObjName = $(this).attr('name');
+			$(this).attr('selected','selected');
+			$(this).addClass('button_filter');
+			$('#lst'+curObjName).show();
+			$('#txt'+curObjName).show();
+			$('#txt'+curObjName).focus();
+		})
+		$(self.ftbToolBar + " a[selected]").die('click').live('click',function() {
+			var curObjName = $(this).attr('name');
+			$(this).removeAttr('selected');
+			$(this).removeClass('button_filter');
+			$('#lst'+curObjName).hide();
+			$('#txt'+curObjName).hide();
+			$(self.filterActionButton).trigger('click');
+		})
+		$(self.filterActionButton).die('click').click(function(){
+			var expList=new ExpressionListDTO();
+			$(self.ftbToolBar + " a[selected]").each(function(){
+				var selName=$(this).attr('name');
+				var selTextValue=$("#txt"+ selName).val();
+				var selOperator = $("#lst"+ selName).val();
+				var expr = new ExpressionDTO(selName,selTextValue,selOperator);
+				expList.add(expr);
+			});
+			var tableNavigator =self.getOrderTableNavigator();
+			tableNavigator.setExp(expList);
+			self.list();
+		});
+		$(self.ftbToolBar + ' input[type="text"]').die('keypress').live("keypress",function(e){
+			if(e.keyCode==13)
+				$(self.filterActionButton).trigger('click');
 		});
 	}
 	this.viewEvents = function() {
 		var self=this;
+		$(self.filter).hide();
 		var order = self.getOrder();
 		self.setOrderHeader_Setting(order.headerData);
 		$(self.chkSelectAllTest).die('click').live('click',function(e) {
@@ -1381,6 +1450,9 @@ function Order() {
 				$(this).children('td').children(self.chkSelectTest).removeAttr('checked');
 				$(self.chkSelectAllTest).removeAttr('checked');
 			}
+		});
+		$('#homePTBContainer #btn_home_ptb_id').die('click').live('click',function() {
+			self.init();	
 		});
 		$("#btnPrint").die('click').live('click',function(e) {		
 			var printStatus=true;
@@ -6955,4 +7027,125 @@ function ResultPrintHandler() {
 		return;
 	}
 	
+}
+function PageToolBarProcessor() {
+	this.create = function(category, url) {
+		ajaxProcessor.setUrl(url);
+		var ptbdata =ajaxProcessor.get();
+		var ptbContainer = $('<div id="' + category + 'PTBContainer"/>');
+		var ptb = new PageToolBar(ptbdata);
+		$(ptbContainer).append(ptb.result);
+		$('#pageToolBar-Container').empty().html(ptbContainer);
+		return ('"#' + category + 'PTBContainer"');
+	}
+}
+function PageToolBar(jsondata) {
+	var toolBar=$("<div></div>");
+	if(jsondata!=null)
+	{	
+		$(jsondata.buttons).each(function(index,button) {	
+			var headTag = $('<h2/>');
+			var aTag = $('<a href="#" rel="tooltip" />');
+			aTag.attr('class','btn btn3 btn_'+button.name);
+			aTag.attr('title',button.title);
+			aTag.attr('id','btn_'+button.name+'_ptb_id');
+			if(button.datarevealid){
+				aTag.attr('data-reveal-id',button.datarevealid);
+				aTag.attr('data-animation','fade');
+			}
+			headTag.append(aTag);
+			toolBar.append(headTag);
+		});
+	}
+	this.result = toolBar.html();
+}
+function FilterToolBarProcessor() {
+
+	this.create = function(parent, category, url) {
+		ajaxProcessor.setUrl(url);
+		var response =ajaxProcessor.get();
+		var ftbdata=response.buttons;
+		/*$(response.enumListDTO).each(function (index, enumList) {
+			if(category==enumList.key) {
+				ftbdata = enumList.enumValues;
+				return false;
+			}
+		});*/
+		var ftb = this.generate(ftbdata);
+		var filterCont=$('<div id="' + parent + '-filter-cont"/>');
+		var filterTB = $('<div id="' + parent + '-filter-toolbar" class="box-content"/>');
+		filterTB.append(ftb); 
+		filterCont.append(filterTB);
+		var filterWB = $('<div id="' + parent + '-filter-wb" style="display:none;padding:0 0 0 0px"/>');
+		var filterWBInner = $('<div id="' + parent + '-filter-wb-inner" style="float:left; width:40%"/>');
+		filterWB.append(filterWBInner);
+		var filterSubBtn = $('<input type="button" value="Go", id="' + parent + 'btnfltrSubmit"/>');
+		filterWB.append(filterSubBtn);
+		filterCont.append(filterWB);
+		$('#filterToolBar-Container').empty().html(filterCont);
+		$('#filter').show();
+		$('#filterWorkBench').hide();	
+	}	
+	this.generate = function(filterList) {
+		var self = this;
+		var toolBar=$('<div/>');
+		if(filterList!=null)
+		{	
+			/* Creation of ToolBar */	
+			$(filterList).each(function(index,button) {
+				var toolbutton= $('<a href="#" class="anchorbutton remMarginRight genMarginLeft' + '" name="'+ button.displayName +'" id="btn_'+ button.displayName +'_filter_id"><span>'+ button.parameterName +'</span></a>');
+				toolBar.append(toolbutton);
+				type=button.type;
+				if(type!=null){
+					toolBar.append(self.setFilterOperators(button,type));}
+				var inputTag=$('<input type="text">');
+				inputTag.attr('id','txt'+button.displayName);
+				inputTag.addClass('genTextHeight');
+				inputTag.attr('style','display:none');
+				toolBar.append(inputTag);
+			});
+		}
+		var inputTag=$('<input type="button" value=" Go " class="genMarginLeft genTextHeight stdbtn btn_black">');
+		inputTag.attr('id','btnGo');
+		toolBar.append(inputTag);	
+		return toolBar.html();
+	}
+	this.setFilterOperators=function(button,type) {
+		var selectTag=$('<select/>');
+		selectTag.attr('id','lst'+ button.displayName);
+		selectTag.addClass('genTextHeight');
+		selectTag.addClass('genTextwidth');
+		selectTag.attr('style','display:none');
+		var option = $('<option value="eq">eq</option>');
+		selectTag.append(option);
+		var option = $('<option value="neq">neq</option>');
+		selectTag.append(option);
+		if(type=='number'){
+			var option = $('<option value="gt">gt</option>');
+			selectTag.append(option);
+			var option = $('<option value="lt">lt</option>');
+			selectTag.append(option);
+			var option = $('<option value="ge">ge</option>');
+			selectTag.append(option);
+			var option = $('<option value="le">le</option>');
+			selectTag.append(option);
+		}else if(type=='text'){
+			var option = $('<option value="like">like</option>');
+			selectTag.append(option);
+		}
+		return selectTag;
+	}
+	this.createFromHtml=function(parent, htmlData) {
+		var filterCont=$('<div id="' + parent + '-filter-cont"/>');
+		var filterTB = $('<div id="' + parent + '-filter-toolbar" class="box-content"/>');
+		filterTB.append(htmlData); 
+		filterCont.append(filterTB);
+		var filterWB = $('<div id="' + parent + '-filter-wb" style="display:none;padding:0 0 0 0px"/>');
+		var filterWBInner = $('<div id="' + parent + '-filter-wb-inner" style="float:left; width:40%"/>');
+		filterWB.append(filterWBInner);
+		filterCont.append(filterWB);
+		$('#filterToolBar-Container').empty().html(filterCont);
+		$('#filter').show();
+		$('#filterWorkBench').hide();	
+	}
 }
