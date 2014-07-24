@@ -8,6 +8,7 @@ import java.net.URL;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
@@ -86,6 +87,7 @@ public class FacilityServiceImpl implements FacilityService {
 		return fullMsgBody;
 	}
 	@Override
+	@Transactional(readOnly=false)
 	public int create(FacilitySyncDTO facility, Integer branchId) {
 		
 		facilityDao.validateFacility(facility);
