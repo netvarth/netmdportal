@@ -26,11 +26,11 @@
 									{
                                         "className": "head0",
                                         "name": "Test Name",
-                                        "style": "width:50%;"
+                                        "style": "width:54%;"
                                     },
                                     {
                                         "className": "head1",
-                                        "style": "width:5%;",
+                                        "style": "width:1%;",
                                         "name": "<input type='checkbox' id='printTestSelectAll'/>"
                                     }
                                 ]

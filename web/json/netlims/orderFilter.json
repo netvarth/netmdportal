@@ -1,0 +1,14 @@
+{	
+		"buttons":	[
+		{
+			"displayName" 	: 	"orderId",
+			"type"	:	"text",
+			"parameterName"	:	"Order Id"
+		},
+		{
+			"displayName" 	: 	"name",
+			"type"	:	"text",
+			"parameterName"	:	"Name"
+		}
+	]
+}
