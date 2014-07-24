@@ -41,6 +41,7 @@ a.btn_health {background:url(../images/icon/ptb/health.png) no-repeat;}
 a.btn_newbranch {background:url(../images/icon/ptb/branch.png) no-repeat;}
 a.btn_userlogcontrol{background:url(../images/icon/ptb/userlog.png) no-repeat;}
 a.btn_brannchlist {background:url(../images/icon/ptb/list.png) no-repeat;}
+a.btn_home{background:url(../images/icon/ptb/home.png) no-repeat;}
 
 .stdbtn { 
 	font-weight: bold; padding: 7px 10px; border: 1px solid #ccc; background: #eee url(../images/buttons.png) repeat-x top left; color: #333; 

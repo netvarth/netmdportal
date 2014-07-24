@@ -1343,3 +1343,23 @@ color:blue;
 text-align:center;
 
 }
+#filterContentDiv .genTextHeight {
+	height:33px;
+}
+
+#filterContentDiv .genTextwidth {
+	width:50px;
+}
+#filterToolBar-Container .genTextHeight {
+	height:33px;
+}
+#filterToolBar-Container .genTextwidth {
+	width:50px
+}
+.remMarginRight {
+	margin-right:0px;
+}
+
+.genMarginLeft {
+	margin-left:10px;
+}
