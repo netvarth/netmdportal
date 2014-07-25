@@ -424,7 +424,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 
 	@Override
 	public List<OrderTestResultDTO> getTests(int orderId) {
-		List<OrderTestResultDTO> orderTests = new ArrayList<>();
+		List<OrderTestResultDTO> orderTests = new ArrayList<OrderTestResultDTO>();
 		List<NetlimsResultTbl> testResults = getResultsByOrderIdandBranchId(orderId);
 		for(NetlimsResultTbl netlimsResultTbl: testResults){
 			OrderTestResultDTO orderTest = new OrderTestResultDTO();
