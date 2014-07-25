@@ -564,8 +564,6 @@ AuthenticationDao {
 				.createQuery(Query.GET_NETLIMS_USER_BY_PASSWORD);
 		query.setParameter("param1", password);
 		query.setParameter("param2", userName);
-		query.setParameter("param2", userType);
-		
 		return executeUniqueQuery(LoginTbl.class, query);
 	}
 
