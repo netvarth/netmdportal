@@ -1116,43 +1116,153 @@ color:green;
 #testPrintDetailsTableDiscount {width:90%;float:middle;font-family:"Times New Roman", Times, serif;}
 #testPrintDetailsTable  th:first-child{padding:0 0 0 25px; font-weight:normal;}
 #testPrintDetailsTable  th:last-child{padding:0 25px 0 0px;font-weight:normal;}
-#testPrintDetailsTableDiscount {	line-height:15px;}
 #testPrintDetailsTableDiscount  th:first-child{padding:0 0 0 25px;font-weight:normal; }
 #testPrintDetailsTableDiscount  th:last-child{padding:0 25px 0 0px;font-weight:normal; }
 #testPrintDetailsTable  td:first-child{padding:0 0 0 25px;font-weight:normal; }
 #testPrintDetailsTable td:last-child{padding:0 25px 0 0px;font-weight:normal; }
-#testPrintDetailsTable  td {font-size:15px;}
-#printDiv {font-family:"Times New Roman", Times, serif; font-size:15px;letter-spacing:1px}
+#testPrintDetailsTable  td {font-size:12px;}
+.newOrderPrintTable {font-size:12px;line-height:10px;}
+#printDiv {
+	font-family:arial;
+	/*font-size:12px;*/
+	letter-spacing:1px}
 #printDiv .box-content p {line-height:15px;margin-bottom:5px;}
 #printDiv .box-content  p span{margin:0 0 10px;font-weight:normal; }
 #printDiv .box-content  p span:first-child{margin:0 0 10px;}
-#printReportHeader .five_sixth {margin-bottom:6px;font-size:15px;}
-#printDiv .printHeader {font-family:"Times New Roman", Times, serif; font-size:15px;} 
-.remarks {padding-left:5%;}
-.remarks p span{font-weight:bold;}
+.printReportHeader .five_sixth {margin-bottom:6px;font-size:15px;}
+#printDiv .printHeader {font-family:arial; font-size:15px;} 
+.groupResultTable h3 {font-family:arial;} 
+/*.remarks { margin:auto; margin-top:2px; width:85%;font-size:16px;}
+.remarks p { margin-top:2px;margin-bottom:5px;*/
+/*font-size:16px; */
+font-weight:normal;}
 .printresultTable {
+	border:1px solid #000;
+	margin:auto;
+	border-spacing:15px;
+	border-collapse:collapse;
+	line-height:21px;
+	/*font-size:15px;*/
+}
+
+.printresultTable thead tr th {border:1px solid #000; line-height:25px;}
+.printresultTable tbody tr td{border:1px solid #000;line-height:25px;}
+.printresultTable table tbody tr td{border:none;}
+.printresultTable  td{padding:0 0 0 10px;}
+.printresultTable  input.micro{width: 10%;}
+.printresultTable .resultTitle{ font-weight:bold; font-size:17px;}
+
+.topAlign {vertical-align:top;}
+table .noBorder {border:none;}
+table .noBorder tbody tr td{border:none;}
+
+.box-content  input::-webkit-input-placeholder, .box-content  input::-moz-placeholder {
+  color: #bbb;
+}
+
+#cultureresultTable{
+	border:1px solid #000;
+	width:95%;
+	margin:auto;
+	border-spacing:15px;
+	border-collapse:collapse;
+	line-height:15px;
+	font-size:90%;
+}
+#cultureresultTable thead tr th {border:1px solid #000;}
+#cultureresultTable tbody tr td{border:1px solid #000;line-height:19px;}
+#cultureresultTable  table tbody tr td{border:1px solid #000;}
+#cultureresultTable  td{padding:none;margin:none;}
+.cultureTable_Head thead tr th {border:0px solid #000;font-size:17px;}
+.cultureTable_Head tbody tr td{border:0px solid #000;}
+
+#realTable{
 	border:1px solid #000;
 	width:90%;
 	margin:auto;
 	border-spacing:15px;
 	border-collapse:collapse;
 	line-height:21px;
+	font-size:90%;
 }
-.printresultTable thead tr th {border:1px solid #000;}
-.printresultTable tbody tr td{border:1px solid #000;}
-.printresultTable table tbody tr td{border:none;}
-.printresultTable  td{padding:0 0 0 10px;}
-.box-content  input::-webkit-input-placeholder, .box-content  input::-moz-placeholder {
-  color: #bbb;
+
+#realTable thead tr th {border:1px solid #000;font-size:13px;}
+#realTable tbody tr td{border:1px solid #000;}
+#realTable  table tbody tr td{border:1px solid #000;}
+#realTable  td{padding:none;margin:none;}
+#realTable input.medium { width: 35%;}
+#realTable input.part { width: 75%;}
+#realTable input.large { width: 100%;}
+#realTable input.small{  width: 25%;}
+#realTable input.tiny{  width: 15%;}
+
+
+#SpHgtTable{
+	border:1px solid #000;
+	width:100%;
+	margin:auto;
+	border-spacing:15px;
+	border-collapse:collapse;
+	line-height:30px;
 }
+
+#SpHgtTable thead tr th {border:1px solid #000;}
+#SpHgtTable tbody tr td{border:1px solid #000;}
+#SpHgtTable  table tbody tr td{border:1px solid #000;}
+#SpHgtTable  table tbody tr td{font-size:16px;}
+#SpHgtTable  td{padding:none;margin:none;}
+#SpHgtTable input.medium { width: 40%;}
+#SpHgtTable td.microscopy {font-weight:bold;font-size:20px;}
+#SpHgtTable input.part { width: 75%;}
+#SpHgtTable input.large { width: 100%;}
+#SpHgtTable input.mystyle{ width:100%;height:28px;font-size:15px;}
+#SpHgtTable input[type="text"].newBox{
+background:none;
+border:none;
+}
+input.large { width: 75%;}
+
+#StoneTable input.medium { width: 40%;}
+#StoneTable input.part { width: 75%;}
+#SemenTable{
+	border:1px solid #000;
+	width:90%;
+	margin:auto;
+	border-spacing:15px;
+	border-collapse:collapse;
+}
+
+#SemenTable thead tr th {border:1px solid #000;}
+#SemenTable tbody tr td{border:1px ;}
+#SemenTable  tbody tr {border:1px;}
+#SemenTable  td{padding:none;margin:none;}
+#SemenTable input.medium { width:30%;}
+#SemenTable input.tiny { width:10%;}
+#SemenTable span {padding-right:5px;}
+#SemenTable label {padding-right:3px;}
+#SpHgtTable #NoBorderTable{
+	border:none;
+	width:90%;
+	margin:auto;
+	border-spacing:15px;
+	border-collapse:collapse;
+	line-height:30px;
+	width:100%;
+	font-weight:normal;
+}
+
+#SpHgtTable #NoBorderTable thead tr th {border:none;}
+#SpHgtTable #NoBorderTable tbody tr td{border:none;font-weight:italic}
+#SpHgtTable #NoBorderTable  tbody tr {border:none;}
+#SpHgtTable #NoBorderTable  td{padding:none;margin:none;}
+#SpHgtTable #NoBorderTable input.medium { width:30%;}
 
 .rowselected {background-color:#DCDCDC;}
 .titleClass {
-	font-size:15px;
+	font-size:17px;
 	font-weight:bold;
 	text-align:center;
-	line-height:25px;
-	text-decoration: underline; 
+	line-height:30px;
 }
 
 .newTextStyle { 
@@ -1161,7 +1271,7 @@ color:green;
 }
 .colEditable {border:1px solid #ccc;}
 .box-content p>label[name="lblValue"]{
-line-height:30px;
+line-height:27px;
 }
 .error-main {width:100%;padding:15px 20px 0 20px;}
 
@@ -1363,3 +1473,18 @@ text-align:center;
 .genMarginLeft {
 	margin-left:10px;
 }
+ 
+ .one_first_column {width:18%}
+ .one_second_column{width:6%}
+ .one_third_column{width:74%}
+ #foodAllergy {font-size:12px}
+ #foodAllergy .one_first_column{font-size:11px}
+ 
+ .foodallergy_onethird_border {border:1px solid}
+ .column_height{line-height:15mm}
+ .normal_height{line-height:7mm}
+ .nomargin{margin:0px}
+ .printresultTable textarea{width:98%}
+ .border-line-right {border-right:1px solid;}
+ .border-line-bottom {border-bottom:1px solid}
+ .capital{text-transform: capitalize;}
