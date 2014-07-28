@@ -68,8 +68,8 @@ $.fn.serializeObject = function()
 	return o;
 };
 function Query() {
-	this.viewUser = function(uid) {
-		ajaxProcessor.setUrl(constants.USERURL + uid);
+	this.viewUser = function(uid,branchId) {
+		ajaxProcessor.setUrl(constants.USERURL + uid + "/" + branchId);
 		return ajaxProcessor.get();
 	}
 }
@@ -1227,7 +1227,6 @@ Error.prototype.getErrorMessage = function() {
 }
 function OrderServiceImpl () {
 	this.setTableValues = function(tableObj, orderResult) {
-	//alert(JSON.stringify(orderResult));
 		$(tableObj).dataTable().fnClearTable();
 		if(orderResult.list) {
 			if(orderResult.list.length>0) {			
@@ -1235,12 +1234,25 @@ function OrderServiceImpl () {
 					var patient=order.patient;
 					var createdOn=order.createdOn;
 					var paymentStatus=order.orderStatus
+					var branchId = order.branchId;
 					if(order.headerData!=null) {
 						var header = $.parseJSON(order.headerData).header;
-					var rowData=$(tableObj).dataTable().fnAddData([order.uid, header.patientName, header.age, createdOn,header.collectedAt,header.referral]);
+						var ageheader = header.age.split("-");
+						var age="";
+						var age_year = "";
+						var age_month = "";
+						var age_day = "";
+						if(ageheader[0]!="" && ageheader[0]!=undefined)
+							age_year = ageheader[0] + "Y";
+						if(ageheader[1]!="" && ageheader[1]!=undefined)
+							age_month = ageheader[1] + "M";
+						if(ageheader[2]!="" && ageheader[2]!=undefined)
+							age_day = ageheader[2] + "D";
+						age = age_year + age_month + age_day;
+					var rowData=$(tableObj).dataTable().fnAddData([order.uid, header.patientName, age, createdOn,header.collectedAt,header.referral]);
 					var row=$(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 					$(row).children("td:nth-child(9)").attr("class","column-2");
-					$(row).attr('id',order.id);
+					$(row).attr('id',order.id + "_" + branchId );
 					$(row).children("td:nth-child(1)").attr("class","orderIdCol Ustyle");
 					}
 				});
@@ -1281,6 +1293,12 @@ function Order() {
 	this.setOrder = function(orderId){
 		this.order = this.orderService.getOrder(orderId);
 	}
+	this.getBranchId =function() {
+		return this.branchId;
+	}
+	this.setBranchId = function(branchId) {
+		this.branchId = branchId;
+	}
 	this.getOrderTableNavigator=function(){
 		return this.orderTableNavigator;
 	}
@@ -1309,8 +1327,12 @@ function Order() {
 		$('#pageToolBar-Container').empty().html();
 		this.list();
 	}
-	this.view = function(orderId) {
+	this.view = function(order_Branch_Id) {
+		orderbranchId = order_Branch_Id.split('_');
+		orderId = orderbranchId[0];
+		branchId = orderbranchId[1];
 		this.setOrder(orderId);
+		this.setBranchId(branchId);
 		ajaxProcessor.setUrl("/youNeverWait/netlims/ui/order/getTests/"+orderId);
 		var tests = ajaxProcessor.get();
 		this.setTestList(tests);
@@ -1835,7 +1857,7 @@ function ResultDataGenerator() {
 				if(result.specimenUid)
 					tstId = testId + "_" + result.specimenUid;
 			//	var testPkgStatus = isTestPackage(testId);			
-				var resultVar=result;							
+				var resultVar=result;					
 				if(resultVar.testLayout=="General" || resultVar.testLayout=="GeneralOne" || resultVar.testLayout=="DC" || resultVar.testLayout=='GTT' || resultVar.testLayout=='Urine' || resultVar.testLayout=='LipidLayout' || resultVar.testLayout=='PT' || resultVar.testLayout==constants.LAYOUTGENERALMED
 					|| resultVar.testLayout=="WidalLayoutMed" || resultVar.testLayout=="UrineLayoutMed" || resultVar.testLayout=="LipidLayoutMed" || resultVar.testLayout=="DCLayoutMed") {
 					if(resultVar.layoutHeight)
@@ -1845,7 +1867,7 @@ function ResultDataGenerator() {
 					var specimens="";
 						//var specimens = resultSpecimenProcessor.getSpecimenList('{"testResult":[' + resultArray + ']}',orderHeader.header.uid);
 						var verifiedUserIds = verifiedUserProvider.getVerifiedUsers('{"testResult":' + JSON.stringify(resultArray) + '}',"");
-						resultSet.push('{"specimens":"' + specimens + '","testResult":[' + resultArray + '],"verifiedUsers":'+JSON.stringify(verifiedUserIds) + ',"reportDate":"' + curReportDate + '","reportTime":"'+ curReportTime + '"}');
+						resultSet.push('{"specimens":"' + specimens + '","testResult":' + JSON.stringify(resultArray) + ',"verifiedUsers":'+JSON.stringify(verifiedUserIds) + ',"reportDate":"' + curReportDate + '","reportTime":"'+ curReportTime + '"}');
 						resultArray=[];
 						resultHeight=resultVar.layoutHeight+25;
 					}	
@@ -1863,7 +1885,7 @@ function ResultDataGenerator() {
 				var verifiedUserIds = verifiedUserProvider.getVerifiedUsers('{"testResult":' + JSON.stringify(testResult) + '}',"");
 				resultSet.push('{"testResult":' + JSON.stringify(testResult) + ',"verifiedUsers":['+verifiedUserIds + '],"reportDate":"' + curReportDate + '","reportTime":"'+ curReportTime + '"}');
 			});
-			var resultHeader = orderInfo.getOrderHeader();
+			var resultHeader = orderReference.getOrderHeader();
 			resultToPrint = '{"resultHeader":' + JSON.stringify(resultHeader) + ',"resultList":[' + resultSet + ']}';
 			resultPrintArray.push(resultToPrint);
 		});
@@ -1912,13 +1934,13 @@ function VerifiedUserProvider() {
 		return testpkgTitleDiv;
 	}
 }	
-ResultDataGenerator.prototype.generatePrintJson = function(orderInfo,selectedTestArray, testResult,reportDate,reportTime) {
+ResultDataGenerator.prototype.generatePrintJson = function(orderReference,selectedTestArray, testResult,reportDate,reportTime) {
 	var self=this;
 	var curReportDate = reportDate;
 	var curReportTime = reportTime;
 	var resultHeight=0;//for calculating the height of tests to include in one page
 	var verifiedUserProvider = new VerifiedUserProvider(); //For getting verified users
-	//var resultSpecimenProcessor = new ResultSpecimenProcessor(); //specimen process handler	
+	var resultSpecimenProcessor = new ResultSpecimenProcessor(); //specimen process handler	
 	var resultArray = []; //storing tests info
 	var resultTestPackageArray=[]; //For storing tests which should be in separate pages and testpackages
 	var resultSet =[]; //
@@ -1950,8 +1972,8 @@ ResultDataGenerator.prototype.generatePrintJson = function(orderInfo,selectedTes
 				resultHeight+=resultVar.layoutHeight;	
 			var heightmm = commonMethodInvoker.getmmFromPixel(resultHeight,methodInvoker.getDPI());		
 			if(heightmm>totalHeight) {
-				var specimens="";
-				//var specimens = resultSpecimenProcessor.getSpecimenList('{"testResult":[' + resultArray + ']}',"");
+				//var specimens="";
+				var specimens = resultSpecimenProcessor.getSpecimenList('{"testResult":' + JSON.stringify(resultArray)  + '}',"");
 				var verifiedUserIds = verifiedUserProvider.getVerifiedUsers('{"testResult":' + JSON.stringify(resultArray) + '}',"");
 				resultSet.push('{"specimens":"' + specimens + '","testResult":' + JSON.stringify(resultArray) + ',"verifiedUsers":'+JSON.stringify(verifiedUserIds) + ',"reportDate":"' + curReportDate + '","reportTime":"'+ curReportTime + '"}');
 				resultArray=[];
@@ -1966,15 +1988,17 @@ ResultDataGenerator.prototype.generatePrintJson = function(orderInfo,selectedTes
 	});
 	if(resultArray.length>0){
 		var specimens="";
-		//var specimens = resultSpecimenProcessor.getSpecimenList('{"testResult":[' + resultArray + ']}',orderInfo.header.uid);
+		var specimens = resultSpecimenProcessor.getSpecimenList('{"testResult":' + JSON.stringify(resultArray) + '}',"");
 		var verifiedUserIds = verifiedUserProvider.getVerifiedUsers('{"testResult":' + JSON.stringify(resultArray) + '}',"");
 		resultSet.push('{"specimens":"' + specimens + '","testResult":' + JSON.stringify(resultArray) + ',"verifiedUsers":'+JSON.stringify(verifiedUserIds) + ',"reportDate":"' + curReportDate + '","reportTime":"'+ curReportTime + '"}');
 	}	
 	$(resultTestPackageArray).each(function (index, testResult) {
+		var specimens="";
+		var specimens = resultSpecimenProcessor.getSpecimenList('{"testResult":' + JSON.stringify(testResult) + '}',"");
 		var verifiedUserIds = verifiedUserProvider.getVerifiedUsers('{"testResult":' + JSON.stringify(testResult) + '}',"");
-		resultSet.push('{"testResult":[' + testResult + '],"verifiedUsers":'+JSON.stringify(verifiedUserIds) + ',"reportDate":"' + curReportDate + '","reportTime":"'+ curReportTime + '"}');
+		resultSet.push('{"specimens":"' + specimens + '","testResult":[' + JSON.stringify(testResult) + '],"verifiedUsers":'+JSON.stringify(verifiedUserIds) + ',"reportDate":"' + curReportDate + '","reportTime":"'+ curReportTime + '"}');
 	});
-	var resultHeader = orderInfo.getOrderHeader();
+	var resultHeader = orderReference.getOrderHeader();
 	resultToPrint = '{"resultHeader":' + JSON.stringify(resultHeader) + ',"resultList":[' + resultSet + ']}';
 	return resultToPrint;
 }
@@ -5435,7 +5459,7 @@ function ResultPreviewProcessor(orderReference) {
 		});	
 		return reportRoot;
 	}	
-	this.getResult = function(honorific,result,combinedResult,orderId,order,printStatus) {	
+	this.getResult = function(honorific,result,combinedResult,orderId,order,printStatus) {
 		var orderUI = this.getOrderUI();
 		var ReportPageRoot = $('<div class="pageRoot" />');	
 		if(printStatus!=true){
@@ -6146,7 +6170,7 @@ function ResultFooterProcessor(orderUI) {
 			tdTag = $('<td style="vertical-align:top"/>');
 			var noOfUsers = result.verifiedUsers.length; 
 			$(result.verifiedUsers).each(function(index, user) {	
-				var userInfo=query.viewUser(user.userId);
+				var userInfo=query.viewUser(user.userId, orderUI.getBranchId());
 				if(noOfUsers==2) {
 					if(index==0){
 						divTag = $('<div style="width:46%;float:left;margin-left:2%" />');
@@ -7147,5 +7171,19 @@ function FilterToolBarProcessor() {
 		$('#filterToolBar-Container').empty().html(filterCont);
 		$('#filter').show();
 		$('#filterWorkBench').hide();	
+	}
+}
+function ResultSpecimenProcessor() {
+	this.getSpecimenList = function(result,orderId) {
+		result = $.parseJSON(result);
+		var specimenArray = [];
+		$(result.testResult).each(function (index,testInfo) {
+			$(testInfo.specimen).each(function(index1, specimen){
+				if(!commonMethodInvoker.isIndexExists(specimenArray,specimen))
+					specimenArray.push(specimen);
+				return false;
+			});	
+		});
+		return specimenArray;
 	}
 }
