@@ -761,8 +761,8 @@ AuthenticationDao {
 		if (facility != null) {
 			UserDetails user = new UserDetails();
 			user.setId(facility.getId());
-			user.setLabId(facility.getLabBranchTbl().getLabTbl().getId());
-			user.setOrganisationId(facility.getLabBranchTbl().getId());
+			//user.setLabId(facility.getLabBranchTbl().getLabTbl().getId());
+			//user.setOrganisationId(facility.getLabBranchTbl().getId());
 			user.setName(facility.getName());
 			user.setUserType(userType);
 			return user;
