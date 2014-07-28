@@ -48,11 +48,6 @@ public class LabFacilityTbl implements Serializable {
 	@OneToMany(mappedBy="labFacilityTbl")
 	private List<FacilityResultTbl> facilityResultTbls;
 
-	//bi-directional many-to-one association to LabBranchTbl
-	@ManyToOne
-	@JoinColumn(name="branch_id", nullable=false)
-	private LabBranchTbl labBranchTbl;
-
 	//bi-directional many-to-one association to LoginTbl
 	@ManyToOne
 	@JoinColumn(name="login_id")
@@ -262,23 +257,6 @@ public class LabFacilityTbl implements Serializable {
 	public void setFacilityResultTbls(List<FacilityResultTbl> facilityResultTbls) {
 		this.facilityResultTbls = facilityResultTbls;
 	}
-
-
-	/**
-	 * @return the labBranchTbl
-	 */
-	public LabBranchTbl getLabBranchTbl() {
-		return labBranchTbl;
-	}
-
-
-	/**
-	 * @param labBranchTbl the labBranchTbl to set
-	 */
-	public void setLabBranchTbl(LabBranchTbl labBranchTbl) {
-		this.labBranchTbl = labBranchTbl;
-	}
-
 
 	/**
 	 * @return the loginTbl

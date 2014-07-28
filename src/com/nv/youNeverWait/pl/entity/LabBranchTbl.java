@@ -97,9 +97,6 @@ public class LabBranchTbl extends HealthCareOrganisationTbl implements Serializa
 	@OneToMany(mappedBy="labBranchTbl")
 	private List<ResultTbl> resultTbls;
 
-	@OneToMany(mappedBy="labBranchTbl")
-	private List<LabFacilityTbl> labFacilityTbls;
-
 	//bi-directional many-to-one association to NetlimsOrderTbl
 	@OneToMany(mappedBy="labBranchTbl")
 	private List<NetlimsOrderTbl> netlimsOrderTbls;
@@ -655,20 +652,6 @@ public class LabBranchTbl extends HealthCareOrganisationTbl implements Serializa
 	 */
 	public void setResultTbls(List<ResultTbl> resultTbls) {
 		this.resultTbls = resultTbls;
-	}
-
-	/**
-	 * @return the labFacilityTbls
-	 */
-	public List<LabFacilityTbl> getLabFacilityTbls() {
-		return labFacilityTbls;
-	}
-
-	/**
-	 * @param labFacilityTbls the labFacilityTbls to set
-	 */
-	public void setLabFacilityTbls(List<LabFacilityTbl> labFacilityTbls) {
-		this.labFacilityTbls = labFacilityTbls;
 	}
 
 	/**

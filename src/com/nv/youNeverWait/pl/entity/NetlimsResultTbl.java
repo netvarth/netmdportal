@@ -29,6 +29,23 @@ public class NetlimsResultTbl implements Serializable {
 	@Column(name="specimen")
 	private String specimen;
 
+	@Column(name="item_id")
+	private int itemId;
+	
+	/**
+	 * @return the itemId
+	 */
+	public int getItemId() {
+		return itemId;
+	}
+
+	/**
+	 * @param itemId the itemId to set
+	 */
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+
 	//bi-directional many-to-one association to NetlimsOrderTbl
 	@ManyToOne
 	@JoinColumn(name="portal_order_id")
