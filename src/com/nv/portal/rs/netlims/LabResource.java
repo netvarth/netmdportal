@@ -294,16 +294,16 @@ public class LabResource {
 	 * @param referredId 
 	 * @return UserInfo
 	 */
-	@RequestMapping(value="/user/{referredId}", method=RequestMethod.GET)
+	@RequestMapping(value="/user/{referredId}/{branchId}", method=RequestMethod.GET)
 	@ResponseBody
-	public UserInfo getUserByReferredUid(@PathVariable int referredId){
+	public UserInfo getUserByReferredUid(@PathVariable int referredId, @PathVariable int branchId){
 		UserInfo userInfo=null;
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
 		User userObj = (User) request.getSession().getAttribute("user");
 		if (userObj != null) {
-			userInfo = labService.getUserByReferredUid(referredId, userObj.getOrganisationId());
+			userInfo = labService.getUserByReferredUid(referredId, branchId);
 			logService.saveUserDetails(request.getRemoteAddr(),
 					userObj.getName(), userObj.getUserType(),
 					userObj.getLoginTime(), null,
