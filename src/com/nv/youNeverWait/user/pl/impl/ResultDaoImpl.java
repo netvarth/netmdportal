@@ -369,6 +369,7 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 			resultTbl.setResult(result);
 			resultTbl.setTestName(orderTestResult.getTestName());
 			resultTbl.setTestUid(orderTestResult.getUid());
+			resultTbl.setItemId(orderTestResult.getItemId());
 			saveOrUpdate(NetlimsResultTbl.class, resultTbl);
 		}
 	}

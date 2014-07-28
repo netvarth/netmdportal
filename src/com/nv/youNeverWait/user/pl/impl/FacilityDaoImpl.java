@@ -59,7 +59,6 @@ public class FacilityDaoImpl extends GenericDaoHibernateImpl implements Facility
 		labFacilityTbl.setPin(facility.getFacility().getAddress().getPin());
 		labFacilityTbl.setState(facility.getFacility().getAddress().getState());
 		labFacilityTbl.setName(facility.getFacility().getName());
-		labFacilityTbl.setLabBranchTbl(getById(LabBranchTbl.class, branchId));
 		labFacilityTbl.setCreateDateTime(new Date());
 		save(labFacilityTbl);
 		return labFacilityTbl.getId();
@@ -84,7 +83,6 @@ public class FacilityDaoImpl extends GenericDaoHibernateImpl implements Facility
 		labFacilityTbl.setPin(facility.getFacility().getAddress().getPin());
 		labFacilityTbl.setState(facility.getFacility().getAddress().getState());
 		labFacilityTbl.setName(facility.getFacility().getName());
-		labFacilityTbl.setLabBranchTbl(getById(LabBranchTbl.class, branchId));
 		update(labFacilityTbl);		
 		return labFacilityTbl.getId();
 	}
@@ -120,13 +118,11 @@ public class FacilityDaoImpl extends GenericDaoHibernateImpl implements Facility
 	}
 
 	@Override
-	public void validateFacility(FacilitySyncDTO facility) {
+	public int validateFacility(FacilitySyncDTO facility) {
 		LabFacilityTbl labFacilityTbl = getByEmailId(facility.getFacility().getAddress().getEmail());
 		if(labFacilityTbl!=null){
-			ServiceException se = new ServiceException(ErrorCodeEnum.NetRxUserAlreadyExists);
-			se.addParam(new Parameter(Constants.EMAIL, facility.getFacility().getAddress().getEmail()));
-			se.setDisplayErrMsg(true);
-			throw se;
-		}	
+			return labFacilityTbl.getId();
+		}
+		return 0;	
 	}
 }
