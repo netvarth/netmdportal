@@ -41,8 +41,9 @@ public interface FacilityDao {
 
 	/**
 	 * @param facility
+	 * @return 
 	 */
-	public void validateFacility(FacilitySyncDTO facility);
+	public int validateFacility(FacilitySyncDTO facility);
 
 	
 }
