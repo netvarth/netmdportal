@@ -342,10 +342,10 @@ public class Query {
 	/*DoctorTbl*/
 	public static final String GET_REFERRAL_BY_EMAILID = "from DoctorTbl as doctor where doctor.email =:param1";
 	public static final String GET_NETLIMS_PATIENT_BY_EMAIL = "from PatientTbl as patient where TRIM(patient.email) = :param1";
-	public static final String GET_NETLIMSRESULT_BY_ORDERID_TESTID = "from NetlimsResultTbl as result where result.netlimsOrderTbl.id=:param1 and result.testUid=:param2";
+	public static final String GET_NETLIMSRESULT_BY_ORDERID_TESTID = "from NetlimsResultTbl as result where result.netlimsOrderTbl.id=:param1 and result.testUid=:param2 order by result.itemId";
 	public static final String GET_ORDERFACILITY_BY_ORDERID = "from FacilityResultTbl as result where result.netlimsOrderTbl.id=:param1";
 	public static final String GET_NETLIMS_PATIENT_BY_PATIENTID_BRANCHID = "from NetlimsPatientTbl as patient where patient.patientTbl.id=:param1 and patient.labBranchTbl.id=:param2";
-	public static final String GET_NETLIMSRESULTS_BY_ORDERID = "from NetlimsResultTbl as result where result.netlimsOrderTbl.id=:param1";
+	public static final String GET_NETLIMSRESULTS_BY_ORDERID = "from NetlimsResultTbl as result where result.netlimsOrderTbl.id=:param1 order by result.itemId";
 	/*FacilityTbl*/
 	public static final String GET_FACILITY_BY_EMAILID ="from LabFacilityTbl as facility where facility.email =:param1";
 	public static final String GET_FACILITY_BY_UID_BRANCHID = "from LabFacilityTbl as facility where facility.uid=:param1 and facility.labBranchTbl.id=:param2";
