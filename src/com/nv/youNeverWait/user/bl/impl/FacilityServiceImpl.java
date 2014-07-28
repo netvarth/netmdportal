@@ -90,9 +90,10 @@ public class FacilityServiceImpl implements FacilityService {
 	@Transactional(readOnly=false)
 	public int create(FacilitySyncDTO facility, Integer branchId) {
 		
-		facilityDao.validateFacility(facility);
-		
-		int facilityId =  facilityDao.create(facility, branchId);	
+		int facilityId = facilityDao.validateFacility(facility);
+		if(facilityId!=0)
+			return facilityId;
+		facilityId =  facilityDao.create(facility, branchId);	
 		LoginDTO login = new LoginDTO();
 		String password = StringUtil.getRandomPassword();
 		login.setUserName(facility.getFacility().getAddress().getEmail());
