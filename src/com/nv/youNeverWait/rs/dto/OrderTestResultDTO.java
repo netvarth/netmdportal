@@ -20,6 +20,21 @@ public class OrderTestResultDTO {
 	private String testName;
 	private String department;
 	private Object result;
+	private int itemId;
+
+	/**
+	 * @return the itemId
+	 */
+	public int getItemId() {
+		return itemId;
+	}
+
+	/**
+	 * @param itemId the itemId to set
+	 */
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
 
 	/**
 	 * @return the uid
