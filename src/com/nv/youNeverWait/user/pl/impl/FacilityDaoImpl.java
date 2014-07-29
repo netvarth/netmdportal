@@ -10,9 +10,6 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nv.youNeverWait.common.Constants;
-import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
 import com.nv.youNeverWait.pl.entity.LabFacilityTbl;
 import com.nv.youNeverWait.pl.entity.LoginTbl;
@@ -20,7 +17,6 @@ import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.FacilitySyncDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
-import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.FacilityDao;
 
@@ -37,20 +33,10 @@ public class FacilityDaoImpl extends GenericDaoHibernateImpl implements Facility
 	@PersistenceContext()
 	private EntityManager em;
 
-	private LabFacilityTbl getBy_uid_branchId(int uid, int branchId) {
-		javax.persistence.Query query=em.createQuery(Query.GET_FACILITY_BY_UID_BRANCHID);
-		query.setParameter("param1", uid);
-		query.setParameter("param2", branchId);
-		return executeUniqueQuery(LabFacilityTbl.class, query);
-	}
-
 	@Override
 	@Transactional(readOnly=false)
 	public int create(FacilitySyncDTO facility, int branchId) {
-		LabFacilityTbl labFacilityTbl = getBy_uid_branchId(facility.getFacility().getUid(), branchId);
-		if(labFacilityTbl!=null)
-			return labFacilityTbl.getId();
-		labFacilityTbl = new LabFacilityTbl();
+		LabFacilityTbl labFacilityTbl = new LabFacilityTbl();
 		labFacilityTbl.setUid(facility.getFacility().getUid());
 		labFacilityTbl.setEmail(facility.getFacility().getAddress().getEmail());
 		labFacilityTbl.setCity(facility.getFacility().getAddress().getCity());
