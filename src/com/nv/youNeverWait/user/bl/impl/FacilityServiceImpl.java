@@ -88,8 +88,7 @@ public class FacilityServiceImpl implements FacilityService {
 	}
 	@Override
 	@Transactional(readOnly=false)
-	public int create(FacilitySyncDTO facility, Integer branchId) {
-		
+	public int create(FacilitySyncDTO facility, Integer branchId) {	
 		int facilityId = facilityDao.validateFacility(facility);
 		if(facilityId!=0)
 			return facilityId;
