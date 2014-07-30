@@ -17,6 +17,7 @@ public class Order {
 	private Patient patient;
 	private String referralName;
 	private String headerData;
+	private String branchName;
 	/**
 	 * @return the uid
 	 */
@@ -113,5 +114,16 @@ public class Order {
 	public void setHeaderData(String headerData) {
 		this.headerData = headerData;
 	}
-	
+	/**
+	 * @return the branchName
+	 */
+	public String getBranchName() {
+		return branchName;
+	}
+	/**
+	 * @param branchName the branchName to set
+	 */
+	public void setBranchName(String branchName) {
+		this.branchName = branchName;
+	}
 }
