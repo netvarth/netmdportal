@@ -16,7 +16,8 @@
 							{ "className" : "head0","name" : "Age","style":"width:15%"},
 							{ "className" : "head1","name" : "Created On","style":"width:9%"},
 							{ "className" : "head0","name" : "Collected At","style":"width:12%"},
-							{ "className" : "head1","name" : "Reference","style":"width:15%"}
+							{ "className" : "head1","name" : "Reference","style":"width:15%"},
+							{ "className" : "head0","name" : "Branch Name","style":"width:15%"}
 						]
                     }
                 }
