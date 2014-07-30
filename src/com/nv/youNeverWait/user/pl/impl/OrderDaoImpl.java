@@ -358,6 +358,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			order.setCreatedOn(df.format(orderTbl.getNetlimsOrderTbl().getCreatedDate()));
 			order.setOrderStatus(orderTbl.getNetlimsOrderTbl().getOrderStatus());
 			order.setBranchId(Integer.toString(orderTbl.getNetlimsOrderTbl().getLabBranchTbl().getId()));
+			order.setBranchName(orderTbl.getNetlimsOrderTbl().getLabBranchTbl().getName());
 			order.setHeaderData(orderTbl.getNetlimsOrderTbl().getOrderHeader());
 			//order.setHeader(orderTbl.get)
 			orders.add(order);
