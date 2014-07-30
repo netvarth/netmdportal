@@ -1249,7 +1249,7 @@ function OrderServiceImpl () {
 						if(ageheader[2]!="" && ageheader[2]!=undefined)
 							age_day = ageheader[2] + "D";
 						age = age_year + age_month + age_day;
-					var rowData=$(tableObj).dataTable().fnAddData([order.uid, header.patientName, age, createdOn,header.collectedAt,header.referral]);
+					var rowData=$(tableObj).dataTable().fnAddData([order.uid, header.patientName, age, createdOn,header.collectedAt,header.referral, order.branchName]);
 					var row=$(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
 					$(row).children("td:nth-child(9)").attr("class","column-2");
 					$(row).attr('id',order.id + "_" + branchId );
@@ -1316,7 +1316,6 @@ function Order() {
 	}
 	this.list = function() {
 		this.orderTableNavigator.list();
-		this.listEvents();
 		this.setPageTitle("Orders");
 	}
 	this.init = function() {
@@ -1326,6 +1325,7 @@ function Order() {
 		dataTableProcessor.setCustomTable(this.pgTableName);
 		$('#pageToolBar-Container').empty().html();
 		this.list();
+		this.listEvents();
 	}
 	this.view = function(order_Branch_Id) {
 		orderbranchId = order_Branch_Id.split('_');
@@ -1421,7 +1421,9 @@ function Order() {
 			$(self.ftbToolBar + " a[selected]").each(function(){
 				var selName=$(this).attr('name');
 				var selTextValue=$("#txt"+ selName).val();
-				var selOperator = $("#lst"+ selName).val();
+				var selOperator = 'like';
+				if(selName=='referralName')
+					selTextValue = 'Dr. ' + selTextValue;
 				var expr = new ExpressionDTO(selName,selTextValue,selOperator);
 				expList.add(expr);
 			});
@@ -7120,8 +7122,8 @@ function FilterToolBarProcessor() {
 				var toolbutton= $('<a href="#" class="anchorbutton remMarginRight genMarginLeft' + '" name="'+ button.displayName +'" id="btn_'+ button.displayName +'_filter_id"><span>'+ button.parameterName +'</span></a>');
 				toolBar.append(toolbutton);
 				type=button.type;
-				if(type!=null){
-					toolBar.append(self.setFilterOperators(button,type));}
+				/*if(type!=null){
+					toolBar.append(self.setFilterOperators(button,type));}*/
 				var inputTag=$('<input type="text">');
 				inputTag.attr('id','txt'+button.displayName);
 				inputTag.addClass('genTextHeight');
