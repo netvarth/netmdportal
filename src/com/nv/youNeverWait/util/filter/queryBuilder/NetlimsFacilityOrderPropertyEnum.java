@@ -18,7 +18,8 @@ public enum NetlimsFacilityOrderPropertyEnum implements EnumDisplay, Property {
 	/**
 	 * 
 	 */
-	branchId("branchId", "id", "com.nv.youNeverWait.pl.entity.LabBranchTbl","id", ""),
+	branchId("branchId", "id", "com.nv.youNeverWait.pl.entity.LabBranchTbl","netlimsOrderTbl", "labBranchTbl"),
+	branchName("branchName", "name","com.nv.youNeverWait.pl.entity.LabBranchTbl","netlimsOrderTbl", "labBranchTbl"),
 	/**
 	 * 
 	 */
@@ -31,7 +32,9 @@ public enum NetlimsFacilityOrderPropertyEnum implements EnumDisplay, Property {
 	
 	facilityId("facilityId","id","com.nv.youNeverWait.pl.entity.LabFacilityTbl","labFacilityTbl",""),
 	
-	name("name","orderHeader","com.nv.youNeverWait.pl.entity.NetlimsOrderTbl","netlimsOrderTbl","")
+	name("name","orderHeader","com.nv.youNeverWait.pl.entity.NetlimsOrderTbl","netlimsOrderTbl",""),
+	referralName("referralName","orderHeader","com.nv.youNeverWait.pl.entity.NetlimsOrderTbl","netlimsOrderTbl",""),
+	age("age","orderHeader","com.nv.youNeverWait.pl.entity.NetlimsOrderTbl","netlimsOrderTbl","")
 	;
 	String displayName;
 	String fieldName;
