@@ -27,6 +27,7 @@ import com.nv.youNeverWait.user.bl.service.DoctorService;
 @RequestMapping("ui/doctor/")
 public class DoctorResource {
 	private DoctorService service;
+	
 
 	/**
 	 * To reset password of lab user/owner
