@@ -21,7 +21,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 						&& !request.getRequestURI().equals(
 								"/youNeverWait/ynw/auth/patientLogin")
 						&& !request.getRequestURI().equals(
-								"/youNeverWait/ynw/ui/patient/createPassword")
+								"/youNeverWait/ynw/auth/createPassword")
 						&& !request.getRequestURI().equals(
 								"/youNeverWait/ynw/ui/patient/forgotPassword")
 						&& !request.getRequestURI().equals(
