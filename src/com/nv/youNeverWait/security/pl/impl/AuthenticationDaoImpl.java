@@ -90,10 +90,8 @@ AuthenticationDao {
 	public ResponseDTO createPassword(CreatePasswordDTO passwords) {
 
 		ResponseDTO response = new ResponseDTO();
-		String newPassword = StringEncoder.encryptWithKey(passwords
-				.getPassword());
-		String decryptedUserName = StringEncoder.decryptWithStaticKey(passwords
-				.getUsername());
+		String newPassword = StringEncoder.encryptWithKey(passwords.getPassword());
+		String decryptedUserName = StringEncoder.decryptWithStaticKey(passwords.getUsername());
 		LoginTbl loginTbl = (LoginTbl) getLoginByUserName(decryptedUserName);
 		if (loginTbl == null) {
 			ServiceException se = new ServiceException(
