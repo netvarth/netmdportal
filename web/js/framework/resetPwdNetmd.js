@@ -30,7 +30,7 @@ $j(document).ready(function() {
 			var  newPwd=$j('#newPwdNetmd').val();
 			var confirmPwd=$j('#confirmPwdNetmd').val();
 			var loginData='{'+'"password"'+':"'+newPwd+'"'+','+'"userName"'+':"' + name +'"'+'}';
-			var resetResult=postdataToServer("/youNeverWait/ws/ui/netMd/resetPassword", loginData );
+			var resetResult=postdataToServer("/youNeverWait/netmd/ui/netMd/resetPassword", loginData );
 			if(resetResult.success==true)
 			{
 			$j('#newPwdNetmd').val("");

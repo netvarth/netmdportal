@@ -30,7 +30,7 @@ $j(document).ready(function() {
 			var  newPwd=$j('#newPwdYNW').val();
 			var confirmPwd=$j('#confirmPwdYNW').val();
 			var loginData='{'+'"password"'+':"'+newPwd+'"'+','+'"userName"'+':"' + name +'"'+'}';
-			var resetResult=postdataToServer("/youNeverWait/ws/ui/superAdmin/resetPassword", loginData );
+			var resetResult=postdataToServer("/youNeverWait/superadmin/ui/superAdmin/resetPassword", loginData );
 			if(resetResult.success==true)
 			{
 			$j('#newPwdYNW').val("");

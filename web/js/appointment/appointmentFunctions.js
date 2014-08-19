@@ -14,7 +14,7 @@
 		var date=datesplit[1];
 		var netMdBranchid=getNetmdbrId();
 		var Docid=getDoctorId();
-		var response = getRequestData('/youNeverWait/ws/ui/schedule/dayView/'+netMdBranchid+','+Docid+','+date.trim());
+		var response = getRequestData('/youNeverWait/netmd/ui/schedule/dayView/'+netMdBranchid+','+Docid+','+date.trim());
 			//alert(JSON.stringify(response));
 			$j(response.schedule).each(function(index,interval) {
 				var timevw=interval.startTime;
@@ -201,7 +201,7 @@
 			var appointmentJson='{"header"'+":"+headerdetal+",";
 			appointmentJson+='"appointmentDetails"'+":"+patientapp+"}";
 			//alert(appointmentJson);
-			var appointmentResponse=postdataToServer("/youNeverWait/ws/ui/patient/createAppointmentFromPortal",appointmentJson);	
+			var appointmentResponse=postdataToServer("/youNeverWait/ynw/ui/patient/createAppointmentFromPortal",appointmentJson);	
 			//alert(JSON.stringify(appointmentResponse));		
 	    if(appointmentResponse.success==true){
 			$j('.fc-agenda-slots tr th').each(function() {
@@ -238,7 +238,7 @@
 		var appointmentId = getSelectedappointmentId(pgTableName);
 		//alert(appointmentId);
 		if(appointmentId!="") {
-			var response = getRequestData('/youNeverWait/ws/ui/patient/deleteAppointmentFromPortal/'+ appointmentId);
+			var response = getRequestData('/youNeverWait/ynw/ui/patient/deleteAppointmentFromPortal/'+ appointmentId);
 			//alert(JSON.stringify(response));
 			if(response.success==true){
 				var appid=response.id;
@@ -294,7 +294,7 @@
 			var headerdetal=patientAppointment()
 			var appointmentJson='{"header"'+":"+headerdetal+",";
 			appointmentJson+='"appointmentDetails"'+":"+patientapp+"}";
-			var appointmentResponse=postdataToServer("/youNeverWait/ws/ui/patient/updateAppointmentFromPortal",appointmentJson);	
+			var appointmentResponse=postdataToServer("/youNeverWait/ynw/ui/patient/updateAppointmentFromPortal",appointmentJson);	
 			//alert(JSON.stringify(appointmentResponse));				
 	    if(appointmentResponse.success==true){
 			$j('.fc-agenda-slots tr th').each(function() {
@@ -340,7 +340,7 @@
 		var currentDate=date;
 		var netMdBranchid=getNetmdbrId();
 		var Docid=getDoctorId();
-		var response = getRequestData('/youNeverWait/ws/ui/schedule/dayView/'+netMdBranchid+','+Docid+','+currentDate.trim());
+		var response = getRequestData('/youNeverWait/netmd/ui/schedule/dayView/'+netMdBranchid+','+Docid+','+currentDate.trim());
 		//alert(JSON.stringify(response));
 		
 		var timeInterval = "00:30";

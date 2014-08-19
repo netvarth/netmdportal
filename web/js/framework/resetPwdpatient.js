@@ -30,7 +30,7 @@ $j(document).ready(function() {
 			var  newPwd=$j('#newPwdpatient').val();
 			var confirmPwd=$j('#confirmPwdpatient').val();
 			var loginData='{'+'"password"'+':"'+newPwd+'"'+','+'"userName"'+':"' + name +'"'+'}';
-			var resetResult=postdataToServer("/youNeverWait/ws/ui/patient/resetPassword", loginData );
+			var resetResult=postdataToServer("/youNeverWait/ynw/ui/patient/resetPassword", loginData );
 			if(resetResult.success==true)
 			{
 			$j('#newPwdpatient').val("");

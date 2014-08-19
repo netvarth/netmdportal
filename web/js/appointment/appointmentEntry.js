@@ -66,7 +66,7 @@ var yer=monyersplit[1];
 	 CurntMonthlastDate=$j.trim(CurntMonthlastDate);
 	 var CurntMonthfirstDate=yer+'-'+realmonth+'-'+'01';
 	 CurntMonthfirstDate=$j.trim(CurntMonthfirstDate);
-	 var monthlyResponse=getRequestData('/youNeverWait/ws/ui/schedule/monthlyView/'+ branchId +','+ doctorid +','+ CurntMonthfirstDate +','+ CurntMonthlastDate);
+	 var monthlyResponse=getRequestData('/youNeverWait/netmd/ui/schedule/monthlyView/'+ branchId +','+ doctorid +','+ CurntMonthfirstDate +','+ CurntMonthlastDate);
 	
 	if(monthlyResponse.success==true){
 	//alert(JSON.stringify(monthlyResponse.scheduleList));
