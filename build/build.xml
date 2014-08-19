@@ -14,7 +14,6 @@
   <property name="build.compiler" value="javac1.6"/>
   <property name="servlet.jar" location="${nv.app.server.dir}/lib/servlet-api.jar"/>
 	
- 
   <!-- My Libraries -->
   <fileset id="webinf.lib.files" dir="${lib.dir}">
 	<include name="**/*.jar"/>
@@ -61,7 +60,8 @@
   			      <fileset dir="${resource.dir}">    	
   			      	<exclude name="*-servlet.xml"/>
   			      	<exclude name="web.xml"/>
-  			        
+  			        <exclude name="jboss-deployment-structure.xml"/>
+  			      	
   			      	<include name="**/*.*" />
   		  	  	  </fileset>
   	 			  	
@@ -76,8 +76,7 @@
 	
 	<target name="testApplication" depends="compile">
 	 
-		 
-		
+		 	
 	   <junit printsummary="yes" haltonfailure="no">
 		  	      <classpath>
 		  	            <pathelement location="${temp.build.dir}"/>
@@ -106,6 +105,7 @@
  	    <fileset dir="${web.dir}" excludes ="**/WEB-INF/**" />
  		<webinf dir="${resource.dir}">
  		  	    <include name="*-servlet.xml"/>
+ 			    <include name="jboss-deployment-structure.xml"/>
  		</webinf>	
  		<lib dir="${lib.dir}/commons"/>
  		<lib dir="${lib.dir}/jee">
@@ -120,7 +120,7 @@
 	    <classes dir="${temp.build.dir}"/>
     </war>
   </target>
-
+	
 	<!-- Create the  install folder structure -->    
  	
   <!-- Deploy the application by copying it to new folder structure created and the deployment directory of Server -->
