@@ -30,7 +30,8 @@ $j(document).ready(function() {
 			var  newPwd=$j('#newPwdNetlims').val();
 			var confirmPwd=$j('#confirmPwdNetlims').val();
 			var loginData='{'+'"password"'+':"'+newPwd+'"'+','+'"username"'+':"' + name +'"'+','+'"confirmPassword"'+':"' + confirmPwd +'"'+'}';
-			var resetResult=postdataToServer("/youNeverWait/ynw/ui/patient/createPassword", loginData );
+			alert(loginData);
+			var resetResult=postdataToServer("/youNeverWait/ynw/auth/createPassword", loginData );
 			if(resetResult.success==true)
 			{
 			$j('#newPwdNetlims').val("");
