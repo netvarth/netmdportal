@@ -86,7 +86,7 @@ public class DoctorLoginDTO {
 	 */
 	public DoctorLoginDTO(NetmdDoctorTbl doc) {
 	
-		//this.password = doc.getNetmdLoginTbl().getPassword();
+		this.password = doc.getLoginTbl().getPassword();
 		this.doctorGlobalId = doc.getId();
 		this.email=doc.getEmail();
 		this.success=true;
