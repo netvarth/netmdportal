@@ -58,6 +58,9 @@ public class LoginTbl implements Serializable {
 	@OneToMany(mappedBy="loginTbl")
 	private List<LabUserTbl> labUserTbls;
 
+	//bi-directional many-to-one association to PatientTbl
+	@OneToMany(mappedBy="loginTbl")
+	private List<PatientTbl> patientTbls;
 	/**
 	 * 
 	 */
@@ -341,5 +344,25 @@ public class LoginTbl implements Serializable {
 	public void setLabUserTbls(List<LabUserTbl> labUserTbls) {
 		this.labUserTbls = labUserTbls;
 	}
+	public List<PatientTbl> getPatientTbls() {
+		return this.patientTbls;
+	}
 
+	public void setPatientTbls(List<PatientTbl> patientTbls) {
+		this.patientTbls = patientTbls;
+	}
+
+	public PatientTbl addPatientTbl(PatientTbl patientTbl) {
+		getPatientTbls().add(patientTbl);
+		patientTbl.setLoginTbl(this);
+
+		return patientTbl;
+	}
+
+	public PatientTbl removePatientTbl(PatientTbl patientTbl) {
+		getPatientTbls().remove(patientTbl);
+		patientTbl.setLoginTbl(null);
+
+		return patientTbl;
+	}
 }
