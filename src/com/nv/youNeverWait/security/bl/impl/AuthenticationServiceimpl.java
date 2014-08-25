@@ -283,10 +283,8 @@ public class AuthenticationServiceimpl implements AuthenticationService {
 	 */
 	@Override
 	public ResponseDTO changePassword(PasswordDTO passwords) {
-
 		validator.validatePasswords(passwords);
-		ResponseDTO response = authenticationDao.changePassword(passwords);
-		return response;
+		return authenticationDao.changePassword(passwords);
 	}
 
 
