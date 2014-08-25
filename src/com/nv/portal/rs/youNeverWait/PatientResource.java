@@ -7,7 +7,6 @@
  */
 package com.nv.portal.rs.youNeverWait;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,25 +28,19 @@ import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.Appointment;
 import com.nv.youNeverWait.rs.dto.AppointmentListResponseDTO;
 import com.nv.youNeverWait.rs.dto.AppointmentResponse;
-import com.nv.youNeverWait.rs.dto.CreatePasswordDTO;
 import com.nv.youNeverWait.rs.dto.DoctorListResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
-import com.nv.youNeverWait.rs.dto.LoginDTO;
-import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
-import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.PastAppointmentListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PatientDTO;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientListResponseDTO;
-import com.nv.youNeverWait.rs.dto.PatientLoginDTO;
 import com.nv.youNeverWait.rs.dto.PatientOrderDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
-import com.nv.youNeverWait.rs.dto.UserDetails;
 import com.nv.youNeverWait.user.bl.service.LogService;
 import com.nv.youNeverWait.user.bl.service.PatientService;
 
@@ -173,13 +166,12 @@ public class PatientResource {
 	 * @return
 	 */
 	
-	@RequestMapping(value = "listPatientsForLogin", method = RequestMethod.POST)
+	@RequestMapping(value = "list/{email}/", method = RequestMethod.GET)
 	@ResponseBody
-	public PatientListResponseDTO listPatientsForLogin(@RequestBody PatientLoginDTO patient) {
+	public PatientListResponseDTO listPatientsForLogin(@PathVariable String email) {
 		PatientListResponseDTO response = new PatientListResponseDTO();
 		try {
-			response = service.patientListOnLogin(patient.getEmail());
-			
+			response = service.patientListOnLogin(email);	
 		} catch (ServiceException e) {
 
 			List<Parameter> parameters = e.getParamList();
@@ -363,7 +355,7 @@ public class PatientResource {
 	 * @param patientId
 	 * @return
 	 */
-	@RequestMapping(value = "listOfAppointments/{patientId}", method = RequestMethod.GET)
+	@RequestMapping(value = "appointments/{patientId}", method = RequestMethod.GET)
 	@ResponseBody
 	public AppointmentListResponseDTO listOfAppointments(
 			@PathVariable String patientId) {
