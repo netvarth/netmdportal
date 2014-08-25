@@ -1,0 +1,22 @@
+{
+    "data": [
+        {
+            "id": "pastAppointmentsTableCont",
+            "elements": [
+				{
+                    "type": "table",
+                    "content": {
+                        "name" : "pastAppointments",
+						"idProperty" : "pastAppointments",
+						"className" :"stdtable stdtablecb",
+						"style":"border-spacing:0;border-collapse:collapse; border:0;",
+						"colHeaders" : [
+							{ "className" : "head0","name" : "Doctor Name","style":"width:60%"},
+							{ "className" : "head1","name" : "Time Slot","style":"width:40%"}
+						]
+                    }
+                }
+            ]
+        }
+    ]
+}
