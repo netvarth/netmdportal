@@ -62,7 +62,14 @@ public class OrderResource extends ServiceExceptionHandler{
 		User user=(User) req.getSession().getAttribute("user");	
 		return orderService.getByFilter(filterDTO,user);
 	}
-
+	@RequestMapping(value = "/patient/getByFilter", method = RequestMethod.POST)
+	@ResponseBody
+	public ListResponse getByPatient(@RequestBody FilterDTO filterDTO)throws ServiceException, RuntimeException{
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		HttpServletRequest req = t.getRequest();
+		User user=(User) req.getSession().getAttribute("user");	
+		return orderService.getByPatientFilter(filterDTO,user);
+	}
 	/**
 	 * @param orderId
 	 * @return Order
