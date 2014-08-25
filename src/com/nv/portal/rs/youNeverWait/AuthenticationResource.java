@@ -9,7 +9,9 @@ package com.nv.portal.rs.youNeverWait;
 
 import java.util.Date;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.nv.security.youNeverWait.User;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.exception.ServiceExceptionHandler;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.rs.dto.CaptchaResponseDTO;
 import com.nv.youNeverWait.rs.dto.CaptchaVerificationDTO;
@@ -40,7 +43,7 @@ import com.nv.youNeverWait.user.bl.service.LogService;
 
 @Controller
 @RequestMapping("auth")
-public class AuthenticationResource {
+public class AuthenticationResource extends ServiceExceptionHandler{
 	private AuthenticationService authenticationService;
 	private LogService logService;
 
@@ -140,22 +143,9 @@ public class AuthenticationResource {
 	 */
 	@RequestMapping(value = "changePassword", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseDTO changePassword(@RequestBody PasswordDTO passwords)
+	public ResponseDTO changePassword(@RequestBody PasswordDTO passwords) throws ServiceException, RuntimeException
 	{
-		ResponseDTO response=new ResponseDTO();
-		try{
-			response=authenticationService.changePassword(passwords);
-		}
-		catch (ServiceException e) {
-			List<Parameter> parameters = e.getParamList();
-			ErrorDTO error = new ErrorDTO();
-			error.setErrCode(e.getError().getErrCode());
-			error.setParams(parameters);
-			error.setDisplayErrMsg(e.isDisplayErrMsg());
-			response.setError(error);
-			response.setSuccess(false);
-			return response;
-		}
+		ResponseDTO response= authenticationService.changePassword(passwords);
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = t.getRequest();
@@ -496,28 +486,12 @@ public class AuthenticationResource {
 		}
 		return response;
 	}
-	
 	/**
 	 * Get current user in the session
 	 * 
 	 * @return String
 	 */
-	@RequestMapping(value = "getCurrentUser", method = RequestMethod.GET)
-	@ResponseBody
-	public String getCurrentUser() {
-
-		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder
-				.currentRequestAttributes();
-		HttpServletRequest req = t.getRequest();
-		User user = (User) req.getSession().getAttribute("user");
-		return user.getUserName();
-	}
-	/**
-	 * Get current user in the session
-	 * 
-	 * @return String
-	 */
-	@RequestMapping(value = "getUser", method = RequestMethod.GET)
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	@ResponseBody
 	public User getUser() {
 
