@@ -1,23 +1,14 @@
 {		
 	"buttons":	[
 		{
-			"name" 	: 	"back",
-			"id"    :   "back",
-			"title"	:	"back",
-			"style" :"margin-top: -25px;"
+			"name" 	: 	"home",
+			"id"    :   "home",
+			"title"	:	"Home"
 		},
 		{
 			"name" 	: 	"delete",
 			"title"	:	"Delete",
-			"id"	:	"delete",
-			"style" :"margin: -32px 0px 0px -35px;"
-		},
-		{
-			"name" 	: 	"view",
-			"title"	:	"View",
-			"id"    :	"view",
-			"style" :"margin: -32px 0px 0px -65px;"
+			"id"	:	"delete"
 		}
-		
 	]
 }
