@@ -31,13 +31,13 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.FacilityResultTbl;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
-import com.nv.youNeverWait.pl.entity.LabFacilityTbl;
 import com.nv.youNeverWait.pl.entity.LabTbl;
 import com.nv.youNeverWait.pl.entity.LoginTbl;
 import com.nv.youNeverWait.pl.entity.NetlimsOrderTbl;
 import com.nv.youNeverWait.pl.entity.NetlimsResultTbl;
 import com.nv.youNeverWait.pl.entity.OrderBranchTbl;
 import com.nv.youNeverWait.pl.entity.OrderTransferTbl;
+import com.nv.youNeverWait.pl.entity.PatientResultTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
@@ -368,12 +368,6 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		return response;
 	}
 
-	private LabFacilityTbl getFacilityByEmailId(String email) {
-		javax.persistence.Query query = em.createQuery(Query.GET_FACILITY_BY_EMAILID);
-		query.setParameter("param1", email);
-		return executeUniqueQuery(LabFacilityTbl.class, query);
-	}
-
 	/**
 	 * 
 	 * @param userName
@@ -454,6 +448,39 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		order.setOrderStatus(netlimsOrderTbl.getOrderStatus());
 		order.setHeaderData(netlimsOrderTbl.getOrderHeader());
 		return order;
+	}
+
+	@Override
+	public ListResponse getByPatientFilter(FilterDTO filterParam, User user) {
+		ListResponse response = new ListResponse();
+		//get queryBuilder for test from builder factory
+		QueryBuilder queryBuilder = queryBuilderFactory.getQueryBuilder(Constants.PATIENT_ORDERS);
+		for (ExpressionDTO exp : filterParam.getExp()) {
+			//get filter from filter factory by setting expression name and value to filter
+			Filter filter = filterFactory.getFilter(exp);
+			queryBuilder.addFilter(filter);
+		}
+		//build query
+		TypedQuery<PatientResultTbl> q =   queryBuilder.buildQuery(filterParam.isAsc(),
+				filterParam.getFrom(),filterParam.getCount()); 
+		Long count = queryBuilder.getCount();
+		List<Order> orders = new ArrayList<Order>();
+		DateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT);
+		for(PatientResultTbl orderTbl: queryBuilder.executeQuery(q)){
+			Order order = new Order();
+			order.setId(orderTbl.getNetlimsOrderTbl().getId());
+			order.setUid(orderTbl.getNetlimsOrderTbl().getOrderId());
+			order.setCreatedOn(df.format(orderTbl.getNetlimsOrderTbl().getCreatedDate()));
+			order.setOrderStatus(orderTbl.getNetlimsOrderTbl().getOrderStatus());
+			order.setBranchId(Integer.toString(orderTbl.getNetlimsOrderTbl().getLabBranchTbl().getId()));
+			order.setBranchName(orderTbl.getNetlimsOrderTbl().getLabBranchTbl().getName());
+			order.setHeaderData(orderTbl.getNetlimsOrderTbl().getOrderHeader());
+			//order.setHeader(orderTbl.get)
+			orders.add(order);
+		}
+		response.setList(orders);
+		response.setCount(count);
+		return response;
 	}
 
 }
