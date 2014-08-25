@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nv.security.youNeverWait.MailSendAdapter;
@@ -63,7 +64,7 @@ public class PatientServiceImpl implements PatientService {
 	private MailSendAdapter mailSendAdapter;
 	
 	private QuestionnaireService questionnaireService;
-	private static final Log log = LogFactory.getLog(PatientServiceImpl.class);
+	private static final Logger log = Logger.getLogger(PatientServiceImpl.class);
 
 	public DoctorService getDoctorService() {
 		return doctorService;
@@ -85,10 +86,11 @@ public class PatientServiceImpl implements PatientService {
 		if (patient.getEmail() != null && !patient.getEmail().isEmpty()){
 			// send login details and password creation link to the user
 			List<NetmdPatientTbl>   patients = patientDao.listOfPatientsOnLogin(patient.getEmail());
-			
+			log.info("CreatePatient----Sending Mail to patient..............");
 			mailSendAdapter.sendEmailForPatientCreation(patient.getFirstName(),
 					patient.getEmail(), Constants.PATIENT_REGISTRATION,
 					patient.getEmail(), branchName,patients.size());
+			log.info("CreatePatient----Mail Sent to queue ..........");
 		}	
 		return response;
 	}
@@ -611,12 +613,5 @@ public class PatientServiceImpl implements PatientService {
 
 	public void setMailSendAdapter(MailSendAdapter mailSendAdapter) {
 		this.mailSendAdapter = mailSendAdapter;
-	}
-
-
-
-
-
-
-	
+	}	
 }
