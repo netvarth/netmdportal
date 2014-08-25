@@ -1,0 +1,22 @@
+{
+    "buttons": [
+        {
+            "title": " Appointments",
+            "className": "big-link",
+            "name": "ribbonAppointments",
+            "image": "/youNeverWait/images/appoint.png"
+        },
+		{
+            "title": "Clinics",
+            "className": "big-link",
+            "name": "ribbonClinics",
+            "image": "/youNeverWait/images/clinics.png"
+        },
+		{
+            "title": "Results",
+            "className": "big-link",
+            "name": "ribbonResults",
+            "image": "/youNeverWait/images/result.png"
+        }
+    ]
+}

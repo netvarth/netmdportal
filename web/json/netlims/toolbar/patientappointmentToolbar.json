@@ -1,0 +1,14 @@
+{		
+	"buttons":	[
+		{
+			"name" 	: 	"home",
+			"id"    :   "home",
+			"title"	:	"Home"
+		},
+		{
+			"name" 	: 	"delete",
+			"title"	:	"Delete",
+			"id"	:	"delete"
+		}
+	]
+}
