@@ -55,6 +55,9 @@ public class Constants {
 	public static final String DOCTOR_CREDENTIALS = "Doctor Credentials";
 	public static final String DOCTOR_REMAINDER = "Doctor Password Set";
 	public static final String PAST_APPOINTMENTS = "Past Appointments";
+	public static final String TODAY_APPOINTMENTS="Today's Appointments";
+	public static final String WEEK_APPOINTMENTS = "Week Appointments";
+	public static final String FUTURE_APPOINTMENTS = "Future Appointments";
 	public static final String RESULT_LIST = "Result List";
 	public static final String APPOINTMENTS = "appointments";
 	public static final String SYNC_LOG = "syncLog";
@@ -63,7 +66,7 @@ public class Constants {
 	public static final String TRANSFERRED_RESULTS = "transferredResults";
 	public static final String INSTALLER = "installer";
 	public static final String NETLIMS_ORDERS = "netlimsorders";
-	
+	public static final String PATIENT_ORDERS = "patientorders";
 		
 	/* Log */
 	public static final String STARTUP = "Show login page";
@@ -128,16 +131,6 @@ public class Constants {
 	public static final String NETPOS = "netpos";
 	public static final String HOME = "showing organization home page";
 	public static final String ORGANISATION_USER = "organisationUser";
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }
