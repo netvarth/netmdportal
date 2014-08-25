@@ -212,6 +212,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 				</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.NetlimsFacilityOrderPropertyEnum
 				</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.PatientResultPropertyEnum</value>
 			</list>
 		</property>
 	</bean>
@@ -627,6 +628,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 					value="com.nv.youNeverWait.util.filter.queryBuilder.InstallerQueryBuilder" />
 				<entry key="netlimsorders"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.NetlimsFacilityOrderQueryBuilder" />
+				<entry key="patientorders"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.PatientResultQueryBuilder"/>
 			</map>
 		</property>
 
