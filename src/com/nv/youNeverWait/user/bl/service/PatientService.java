@@ -13,7 +13,6 @@ import com.nv.youNeverWait.rs.dto.CaseDTO;
 import com.nv.youNeverWait.rs.dto.DoctorListResponseDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
-
 import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PastAppointmentListResponseDTO;
@@ -24,7 +23,7 @@ import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrievalPatientResponseDTO;
- 
+
 
 
 
@@ -44,11 +43,9 @@ public interface PatientService {
 	public PastAppointmentListResponseDTO getPastAppointmentList(String patientId);
 	//public AppointmentResponse createAppointment(Appointment appointment);
 	//public AppointmentResponse deleteAppointment(int id);
-	
+
 	//public AppointmentResponse updateAppointment(Appointment appointment);
 	public RetrievalPatientResponseDTO retrievePatientsForNetMd(String lastSyncTime, String passPhrase, int netMdBranchId, Date currentSyncTime);
-	
-	
 	public ResultListResponseDTO getresultList(FilterDTO filter);
 	public ResultDTO patientTestResult(PatientOrderDTO patient);
 	public AppointmentResponse deleteAppointmentFromPortal(int id);
@@ -68,6 +65,4 @@ public interface PatientService {
 	public ResponseDTO createMedicalRecord(MedicalRecordDTO newPatientMedicalRecord, HeaderDTO header);
 	public ResponseDTO updatePatientMedicalRecord(MedicalRecordDTO updatedMedicalRecord, HeaderDTO header);
 	public ResponseDTO deletePatientMedicalRecord(MedicalRecordDTO deleteMedicalRecord, HeaderDTO header);
-	
-
-	}
+}
