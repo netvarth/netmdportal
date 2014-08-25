@@ -10,7 +10,7 @@ $j('#tabs-1').html(adminTB.result);
 	var obj=$j(this);
 		createModal(constants_netlimsOrdertypeJson,'orderTypeModalNetLims');	
 		openModalBox(obj,'orderTypeModalNetLims');
-		var userdata =getRequestData('/youNeverWait/ws/ui/auth/getUser');
+		var userdata =getRequestData('/youNeverWait/ws/ui/auth/user');
 		var userlabId=userdata.labId;
 		var response = getRequestData("/youNeverWait/ws/ui/order/getOrderType/"+userlabId);	
 		var orderFormat=$j.parseJSON(response.orderTypeCodes);
@@ -74,7 +74,7 @@ function submitorderType(){
 	return response;
 }
 function createSubmitOrdertypeJson(){
-	var userdata =getRequestData('/youNeverWait/ws/ui/auth/getUser');
+	var userdata =getRequestData('/youNeverWait/ws/ui/auth/user');
 	var userlabId=userdata.labId;
     var orderTypeDetails = '{"agentorder":"'+$j('#ordertypeFormNetLimsAcc #agentorder').val()  +'",';
 		orderTypeDetails += '"blanketorder":"'+ $j('#ordertypeFormNetLimsAcc #blanketorder').val() +'",';
@@ -94,7 +94,7 @@ function submitChangePasswordInfo(){
 }
 
 function createSubmitJson(){
-	var userdata =getRequestData('/youNeverWait/ws/ui/auth/getUser');
+	var userdata =getRequestData('/youNeverWait/ws/ui/auth/user');
     var changepwdDetails = '{"oldPassword":"'+$j('#changePasswordFormNetLimsAcc #oldpassword').val()  +'",';
 		changepwdDetails += '"username":"'+ userdata.userName +'",';
 		changepwdDetails +='"newPassword":"' + $j('#changePasswordFormNetLimsAcc #newpassword').val() + '"}';
