@@ -84,7 +84,7 @@ public class Query {
 	
 	/* PatientTbl */
 	public static final String RETRIEVE_PATIENTS = "from NetmdPatientTbl as patient where patient.updateDateTime>=:param1 and patient.updateDateTime<:param2 and patient.netmdBranchTbl.id=:param3 and patient.netmdPassphraseTbl.id!=:param4";
-	public static final String GET_PATIENT_LIST_BY_EMAILID = "from NetmdPatientTbl as patient left join fetch patient.loginTbl where TRIM(patient.loginTbl.userName) = :param1 group by patient.firstName";
+	public static final String GET_PATIENT_LIST_BY_EMAILID = "from NetmdPatientTbl as patient where TRIM(patient.loginTbl.userName) = :param1 group by patient.firstName";
 	public static final String GET_PATIENT_LIST_BY_EMAIL = "from NetmdPatientTbl as patient where TRIM(patient.email) = :param1";
 	public static final String GET_PATIENT_BY_NAME = "from NetmdPatientTbl as patient where TRIM(UPPER(patient.firstName)) = :param1 and patient.phone=:param2";
 	public static final String GET_PATIENT_BY_EMAIL = "from NetmdPatientTbl as patient where TRIM(patient.email) = :param1";
