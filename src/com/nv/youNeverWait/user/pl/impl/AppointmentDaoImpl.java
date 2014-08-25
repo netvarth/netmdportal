@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.DoctorScheduleTbl;
-import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
 import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
@@ -35,6 +34,10 @@ import com.nv.youNeverWait.user.pl.dao.AppointmentDao;
 
 public class AppointmentDaoImpl extends GenericDaoHibernateImpl implements
 		AppointmentDao {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6108734487163740000L;
 	@PersistenceContext()
 	private EntityManager em;
 	private DateFormat df = new SimpleDateFormat(
