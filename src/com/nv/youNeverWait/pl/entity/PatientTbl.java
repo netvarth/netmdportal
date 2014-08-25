@@ -1,7 +1,9 @@
 package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -85,6 +87,10 @@ public class PatientTbl implements Serializable {
 	@OneToMany(mappedBy="patientTbl")
 	private List<NetlimsPatientTbl> netlimsPatientTbls;
 
+	//bi-directional many-to-one association to LoginTbl
+	@ManyToOne
+	@JoinColumn(name="login_id")
+	private LoginTbl loginTbl;
 	/**
 	 * 
 	 */
@@ -482,17 +488,13 @@ public class PatientTbl implements Serializable {
 		return weight;
 	}
 
-
-
 	/**
 	 * @param weight the weight to set
 	 */
 	public void setWeight(String weight) {
 		this.weight = weight;
 	}
-
-
-
+	
 	/**
 	 * @return the netlimsPatientTbls
 	 */
@@ -500,13 +502,25 @@ public class PatientTbl implements Serializable {
 		return netlimsPatientTbls;
 	}
 
-
-
 	/**
 	 * @param netlimsPatientTbls the netlimsPatientTbls to set
 	 */
 	public void setNetlimsPatientTbls(List<NetlimsPatientTbl> netlimsPatientTbls) {
 		this.netlimsPatientTbls = netlimsPatientTbls;
+	}
+
+	/**
+	 * @return the loginTbl
+	 */
+	public LoginTbl getLoginTbl() {
+		return loginTbl;
+	}
+
+	/**
+	 * @param loginTbl the loginTbl to set
+	 */
+	public void setLoginTbl(LoginTbl loginTbl) {
+		this.loginTbl = loginTbl;
 	}
 
 }
