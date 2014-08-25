@@ -78,4 +78,6 @@ public interface OrderDao {
 	 */
 	public Order getByOrderId(int orderId);
 
+	public ListResponse getByPatientFilter(FilterDTO filterDTO, User user);
+
 }
