@@ -76,4 +76,6 @@ public interface OrderService {
 	 */
 	public Order getByOrderId(int orderId);
 
+	public ListResponse getByPatientFilter(FilterDTO filterDTO, User user);
+
 }
