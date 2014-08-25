@@ -3,12 +3,12 @@
  */
 package com.nv.youNeverWait.user.bl.impl;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.TypedQuery;
-import org.springframework.transaction.annotation.Transactional;
+
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.pl.entity.PatientAppointmentTbl;
 import com.nv.youNeverWait.rs.dto.Appointment;
@@ -331,36 +331,13 @@ public class AppointmentServiceImpl implements AppointmentService {
 	private PastAppointmentListResponseDTO PastAppointmentList(
 			List<PatientAppointmentTbl> appointments) {
 		PastAppointmentListResponseDTO response = new PastAppointmentListResponseDTO();
-		SimpleDateFormat df = new SimpleDateFormat(Constants.TIMEWITHFORMAT);
 		if (appointments == null) {
 			return response;
 		}
 		List<AppointmentsDTO> appointmentsDTO = new ArrayList<AppointmentsDTO>();
 		for (PatientAppointmentTbl appointmnt : appointments) {
 			appointmentsDTO.add(new AppointmentsDTO(appointmnt));
-//			try {
-//				Date CurrentDateTime = df.parse(df.format(new Date()));
-//				if (appointmnt.getAppointmentDate().before(new Date())) {
-//					appointmentsDTO.add(new AppointmentsDTO(appointmnt));
-//				} else {
-//					if (appointmnt.getDate().equals(new Date())) {
-//						if (appointmnt.getStartingTime()
-//								.before(CurrentDateTime))
-//							appointmentsDTO
-//									.add(new AppointmentsDTO(appointmnt));
-//					}
-//				}
-//			} catch (ParseException e) {
-//				e.printStackTrace();
-//				ServiceException se = new ServiceException(
-//						ErrorCodeEnum.InvalidDateFormat);
-//				se.setDisplayErrMsg(true);
-//				throw se;
-//
-//			}
-
 		}
-		
 		response.setPastAppointments(appointmentsDTO);
 		return response;
 	}
@@ -436,5 +413,4 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public void setFilterFactory(FilterFactory filterFactory) {
 		this.filterFactory = filterFactory;
 	}
-
 }
