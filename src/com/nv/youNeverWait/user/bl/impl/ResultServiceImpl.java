@@ -94,8 +94,8 @@ public class ResultServiceImpl implements ResultService{
 	@Override
 	public int processOrderResult(OrderResultSyncDTO orderResult,
 			Integer source_branch_id) {
-		if(orderResult.getOrder().getPatient().getAddress().getEmail()==null)	
-			throw new ServiceException(ErrorCodeEnum.EmailNull);
+		//if(orderResult.getOrder().getPatient().getAddress().getEmail()==null)	
+		//	throw new ServiceException(ErrorCodeEnum.EmailNull);
 		return resultDao.processOrderResult(orderResult, source_branch_id);
 	}
 
