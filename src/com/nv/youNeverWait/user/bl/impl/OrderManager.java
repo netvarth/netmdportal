@@ -147,4 +147,9 @@ public class OrderManager implements OrderService {
 		return orderDao.getByOrderId(orderId);
 	}
 
+	@Override
+	public ListResponse getByPatientFilter(FilterDTO filterDTO, User user) {
+		return orderDao.getByPatientFilter(filterDTO, user);
+	}
+
 }
