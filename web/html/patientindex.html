@@ -1,81 +1,59 @@
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta charset="utf-8">
-		<title>patient</title>
-		<meta name="description" content="">
-		<meta name="viewport" content="width=device-width">
-		<link href="/youNeverWait/css/ynwstyle.css" type="text/css" rel="stylesheet" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>YouNeverWait</title>
 		<link href="/youNeverWait/css/ui-lightness/jquery-ui-1.8.20.custom.css" type="text/css" rel="stylesheet" />
 		<link href="/youNeverWait/css/fullcalendar.css" type="text/css" rel="stylesheet">
-		<link href="/youNeverWait/css/jquery.timepicker.css"type="text/css" rel="stylesheet">	
-		
-		
-		
+		<link href="/youNeverWait/css/style.css" type="text/css" rel="stylesheet" />
 	</head>
-	<body id="patientBody">
+	<body>
 		<!-- START OF HEADER -->
-		<div class="headerPatient">
-		<div>	<img src="/youNeverWait/images/ynwLogo1.png">
-			</div>
-			<div class="column-three-fourth"style="width:80%;margin: -40px 0px 0px 70px;"><span style="vertical-align: middle;font-size: 11pt;margin-left:-5%;"><b>Patient</b></span>
-  <select id="select" class="select" style="font-size: 10pt;font-weight:bold">
-	</select>  
-	</div>  
-			<div class="headright">
-				<!--<div class="button-profile-2"><a id="btnLogout" href="#"><span class="exit-icon"></span><span class="desc">Logout</span></a></div> -->      			
-			    <div style="float:left; padding:10px; font-weight:bold;" >Welcome <span id="userloged"class="namecolor"></span></div>	
-				
-			    
-
-
-
+		<div class="header">
+			<div class="headimage"><img src="/youNeverWait/images/leftmenu/logo.png" style="margin:5px 0 0 10px;" /></div>
+			<div class="headleft"><div style="padding:10px;"><span style="vertical-align: middle;margin-left:-5%;">Patient :</span> <select id="select" class="select" style="width:60%; font-size:100%"></select></div></div>
+			<div class="headright" style="border:1px #000;">
 				<div class="wrapper-demo" id="dropdownOne">
-					<div id="dd" class="wrapper-dropdown-5" tabindex="2">Settings
+					<div id="dd" class="wrapper-dropdown-5" tabindex="1">Logout
 						<ul class="dropdown" id="dropdownTwo" style="z-index: 1000;">
-							<li id="settings"><a href="#"><i class="icon-user"></i>Change Password</a></li>
-							
+							<li id="btnChangePassword"><a href="#"><i class="icon-user"></i>Change password</a></li>
 							<li id="btnLogout"><a href="#" ><i class="icon-remove" ></i>Log out</a></li>
 						</ul>
 					</div>
-				</div> 
-				<!--<label  ><span>welcome<span class="descset"id="userloged"></span></label>--> 
-				<!--<label ><a id="settings" href="#"><span></span><span class="descset">Settings</span></a></label>--> 
-				<!--<div class="boldtabledoc" style="width:30%"></div> -->  
+				</div>   
+				<div style="float:right; padding:10px;font-size: 12;" >Welcome <span id="useType"></span><span id="userName" class="userNameColor"></span></div>
 			</div>
-			       
 		</div>
 		<!-- END OF HEADER --> 
 		
 		<!-- START OF GLOBAL TOOL BAR -->
-		<!-- <div id="dvLoading" class="dvLoading"></div> -->
-		
-		
+		<div id="dvLoading" class="dvLoading"></div>
+		<div class="global-bar-tab">
+			<div class="controlB">
+				<!--GlobalToolbar will load from json file-->
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="search-bar">
+			<div class="search">
+				<form><input autocomplete="off" id="testinput" placeholder="Search" type="text"></form>   
+			</div>
+		</div>
 		<!-- END OF GLOBAL TOOLBAR -->
 		<!-- START OF MAIN CONTENT -->
 		<div class="mainwrapper">
-		
 			<div class="mainwrapperinner">
-				
-				<div class="maincontentdv">
-					<div class="maincontentinner">
-						<div class="content"style="width: 70%;margin: 0px auto;">
-						
-							<div id="tabs">
-								
-								<div class="error-main" id="errorDivHeader" style="display:none"><div id="errorDivData"></div></div> 
-								<div id="tabs-1" style="border:0px"> 
-								<div>
-								<!-- <ul >
-									<h1 id="pageTitle"></h1>
-									<div id="pageToolBar-Container"></div>
-								</ul> -->
-
-								</div>  
-								</div>                           
-							</div>
+					<div class="content">
+						<div id="tabs">
+							<ul >
+								<li><a href="#tabs-1" style="display:none;"></a></li>
+								<h1 id="pageTitle"></h1>
+								<div id="pageToolBar-Container"></div>
+							</ul>            
+							<div class="error-main" id="errorDivHeader" style="display:none"><div id="errorDivData"></div></div> 
+							<div id="tabs-1"> </div>                           
 						</div>
 					</div>
-				</div>
 			</div>
 		</div>
 		<div id="BeeperBox" class="UIBeeper">
@@ -93,61 +71,17 @@
 				</div>
 			</div>
 		</div>
+		<div id='testdiv' style='height: 1in; left: -100%; position: absolute; top: -100%; width: 1in;'></div>
 	</body>
 	<script type="text/javascript" src="/youNeverWait/js/plugins/jquery-1.7.min.js"></script>
-		<script type="text/javascript" src="/youNeverWait/js/plugins/jquery-ui-1.8.16.custom.min.js"></script>
-		<script type="text/javascript" src="/youNeverWait/js/plugins/colorpicker.js"></script>
-		<script type="text/javascript" src="/youNeverWait/js/plugins/jquery.timepicker.js"></script>
-		<script type="text/javascript" src="/youNeverWait/js/plugins/jquery.dataTables.min.js"></script>
-		<script type="text/javascript" src="/youNeverWait/js/custom/elements.js"></script>
-		<script src="/youNeverWait/js/custom/jquery.reveal.js" type="text/javascript"></script>  
-		<script src="/youNeverWait/js/youneverwait/patientindex.js" type="text/javascript"></script>
-		
-		<script type="text/javascript">
-			$j(document).ready(function() {
-				//$j(window).load(function(){
-				//	$j('#dvLoading').fadeOut(200);
-				//});
-				$j('#filter').hide();
-				$j('.filter-main').hide();
-				$j('#filter').click(function () {
-					$j('.filter-main').toggle(500);
-					$j('#filterWorkBench').hide();
-				});
-				//Select all anchor tag with rel set to tooltip
-				$j('a[rel=tooltip]').mouseover(function(e) {
-					
-					//Grab the title attribute's value and assign it to a variable
-					var tip = $j(this).attr('title');	
-					
-					//Remove the title attribute's to avoid the native tooltip from the browser
-					$j(this).attr('title','800');
-					
-					//Append the tooltip template and its value
-					$j(this).append('<div id="tooltip"><div class="tipHeader"></div><div class="tipBody">' + tip + '</div><div class="tipFooter"></div></div>');		
-							
-					//Show the tooltip with faceIn effect
-					$j('#tooltip').fadeIn('500');
-					$j('#tooltip').fadeTo('10',0.8);
-					
-				}).mousemove(function(e) {
-				
-					//Keep changing the X and Y axis for the tooltip, thus, the tooltip move along with the mouse
-					$j('#tooltip').css('top', e.pageY + -150 );
-					$j('#tooltip').css('left', e.pageX + -250 );
-					
-				}).mouseout(function() {
-				
-					//Put back the title attribute's value
-					$j(this).attr('title',$j('.tipBody').html());
-				
-					//Remove the appended tooltip template
-					$j(this).children('div#tooltip').remove();
-					
-				});
-				
-				 
-				
-			});
-		</script>
-	</html>
+	<script type="text/javascript" src="/youNeverWait/js/plugins/jquery-ui-1.8.16.custom.min.js"></script>
+	<script type="text/javascript" src="/youNeverWait/js/plugins/colorpicker.js"></script>
+	<script type="text/javascript" src="/youNeverWait/js/plugins/jquery.timepicker.js"></script>
+	<script type="text/javascript" src="/youNeverWait/js/plugins/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="/youNeverWait/js/custom/elements.js"></script>
+	<script src="/youNeverWait/js/custom/jquery.reveal.js" type="text/javascript"></script>  
+	<script src="/youNeverWait/js/ynw_general.js" type="text/javascript"></script>
+	<script src="/youNeverWait/js/youneverwait/patientindex.js" type="text/javascript"></script>
+	<script src="/youNeverWait/js/plugins/fullcalendar.min.js" type="text/javascript"></script>	
+	<script src="/youNeverWait/js/plugins/moment.min.js" type="text/javascript"></script>
+</html>
