@@ -37,6 +37,7 @@ import com.nv.youNeverWait.pl.entity.NetlimsResultTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.OrderResultTbl;
 import com.nv.youNeverWait.pl.entity.PatientResultTbl;
+import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.ReferralResultTbl;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
@@ -45,7 +46,6 @@ import com.nv.youNeverWait.rs.dto.OrderResultSyncDTO;
 import com.nv.youNeverWait.rs.dto.OrderTestResult;
 import com.nv.youNeverWait.rs.dto.OrderTestResultDTO;
 import com.nv.youNeverWait.rs.dto.OrderTestResultList;
-import com.nv.youNeverWait.rs.dto.Patient;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
@@ -276,7 +276,7 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 
 	@Override
 	@Transactional(readOnly = false)
-	public int processOrderResult(OrderResultSyncDTO orderResult, int branchId) {
+	public int processOrderResult(OrderResultSyncDTO orderResult, int branchId, int patientId) {
 		/*if Global Id is not equal to zero then order exists in portal
 		 * if zero then save action 
 		 * else update action
@@ -294,7 +294,7 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 				return 0;
 		}
 		netlimsOrderTbl = saveOrUpdateNetlimsOrder(netlimsOrderTbl, orderResult, branchId);
-		saveOrUpdateOrderPatient(netlimsOrderTbl, orderResult.getOrder().getPatient(), branchId);
+		saveOrUpdateOrderPatient(netlimsOrderTbl, branchId, patientId);
 		saveOrUpdateNetlimsOrderTests(netlimsOrderTbl, orderResult, branchId);//Save Results
 		saveOrUpdateOrderReferral(netlimsOrderTbl, orderResult.getOrder().getReferralGlobalId());
 		saveOrUpdateOrderFacility(netlimsOrderTbl, orderResult.getOrder().getFacilityGlobalId());
@@ -333,16 +333,38 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 	}
 	@Transactional(readOnly = false)
 	private void saveOrUpdateOrderPatient(NetlimsOrderTbl netlimsOrderTbl,
-			Patient patient, int branchId) {
-		if(patient.getAddress().getEmail()!=null && patient.getAddress().getEmail()!=""){
-			int netlimsPatientId = patientDao.getNetlimsPatient(patient, branchId);
-			NetlimsPatientTbl netlimsPatientTbl = new NetlimsPatientTbl();
-			netlimsPatientTbl.setId(netlimsPatientId);
-			PatientResultTbl patientResult = new PatientResultTbl();
+			int branchId, int patientId) {
+		if(patientId!=0){
+			
+			NetlimsPatientTbl netlimsPatientTbl = getByPatientId_BranchId(patientId, branchId);
+			if(netlimsPatientTbl==null){
+				netlimsPatientTbl = new NetlimsPatientTbl();
+				netlimsPatientTbl.setPatientTbl(getById(PatientTbl.class, patientId));
+				netlimsPatientTbl.setLabBranchTbl(getById(LabBranchTbl.class, branchId));
+			}
+			saveOrUpdate(NetlimsPatientTbl.class, netlimsPatientTbl);
+			PatientResultTbl patientResult = getByOrderid_PatientId(netlimsOrderTbl.getId(), patientId);
+			if(patientResult==null)
+				patientResult=new PatientResultTbl();
 			patientResult.setNetlimsOrderTbl(netlimsOrderTbl);
 			patientResult.setNetlimsPatientTbl(netlimsPatientTbl);
-			save(patientResult);
+			saveOrUpdate(PatientResultTbl.class,patientResult);
 		}
+	}
+
+	private PatientResultTbl getByOrderid_PatientId(int orderId, int patientId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_PATIENT_RESULT_TBL);
+		query.setParameter("param1",patientId);
+		query.setParameter("param2",orderId);
+		return executeUniqueQuery(PatientResultTbl.class, query);
+	}
+
+	private NetlimsPatientTbl getByPatientId_BranchId(int patientId,
+			int branchId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_NETLIMS_PATIENT_BY_PATIENTID_BRANCHID);
+		query.setParameter("param1",patientId);
+		query.setParameter("param2",branchId);
+		return executeUniqueQuery(NetlimsPatientTbl.class, query);
 	}
 
 	private FacilityResultTbl getFacilityResult(int orderId) {
