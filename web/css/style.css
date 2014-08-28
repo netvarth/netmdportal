@@ -5,6 +5,7 @@
 @import url('reveal.css');
 @import url('tables.css');
 @import url('login.css');
+@import url('panes.css');
 @font-face {
 	font-family: 'Conv_MyriadPro-Regular';
 	src: url('../fonts/MyriadPro-Regular.eot');
