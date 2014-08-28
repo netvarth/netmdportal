@@ -316,6 +316,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="questionnaireService">
 			<ref bean="questionnaire.service" />
 		</property>
+		<property name="ynwServerIpAddress">
+			<value>${ynw.server.ip.address}</value>
+		</property>
 	</bean>
 
 	<bean id="mail.send.adapter" class="com.nv.security.youNeverWait.MailSendAdapter">
@@ -376,6 +379,12 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 		<property name="resultValidator">
 			<ref bean="result.validator" />
+		</property>
+		<property name="patientService">
+			<ref bean="patient.service" />
+		</property>
+		<property name="facilityService">
+			<ref bean="facility.service" />
 		</property>
 	</bean>
 
