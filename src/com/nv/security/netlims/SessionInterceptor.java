@@ -62,13 +62,13 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/netlims/ui/lab/resultTransfer")
 							&& !request.getRequestURI().equals(
-									"/youNeverWait/netlims/ui/sync/syncOrderResult")
+									"/youNeverWait/netlims/ui/sync/order")
 							&& !request.getRequestURI().equals(
-									"/youNeverWait/netlims/ui/sync/syncFacility")
+									"/youNeverWait/netlims/ui/sync/facility")
 							&& !request.getRequestURI().equals(
-									"/youNeverWait/netlims/ui/sync/syncReferral")
+									"/youNeverWait/netlims/ui/sync/referral")
 							&& !request.getRequestURI().equals(
-									"/youNeverWait/netlims/ui/sync/syncUser")
+									"/youNeverWait/netlims/ui/sync/user")
 							&& !request.getRequestURI().equals
 							("/youNeverWait/netlims/ui/lab/mailResult")) {
 						request.getRequestDispatcher("/netlims/auth/")
@@ -77,7 +77,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 
 					}
 				}
-	
 		return true;
 	}
 
