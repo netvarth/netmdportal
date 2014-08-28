@@ -14,13 +14,13 @@ package com.nv.youNeverWait.user.bl.impl;
 import java.util.Date;
 import java.util.List;
 
-import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.OrderResultSyncDTO;
 import com.nv.youNeverWait.rs.dto.OrderTestResultList;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
+import com.nv.youNeverWait.user.bl.service.FacilityService;
+import com.nv.youNeverWait.user.bl.service.PatientService;
 import com.nv.youNeverWait.user.bl.service.ResultService;
 import com.nv.youNeverWait.user.bl.validation.ResultValidator;
 import com.nv.youNeverWait.user.pl.dao.ResultDao;
@@ -33,7 +33,21 @@ import com.nv.youNeverWait.user.pl.dao.ResultDao;
 public class ResultServiceImpl implements ResultService{
 	private ResultDao resultDao;
 	private ResultValidator resultValidator;
+	private PatientService patientService;
+	private FacilityService facilityService;
 
+	/**
+	 * @return the patientService
+	 */
+	public PatientService getPatientService() {
+		return patientService;
+	}
+	/**
+	 * @param patientService the patientService to set
+	 */
+	public void setPatientService(PatientService patientService) {
+		this.patientService = patientService;
+	}
 	/**
 	 *list of patient result result
 	 * @param id
@@ -94,9 +108,24 @@ public class ResultServiceImpl implements ResultService{
 	@Override
 	public int processOrderResult(OrderResultSyncDTO orderResult,
 			Integer source_branch_id) {
-		//if(orderResult.getOrder().getPatient().getAddress().getEmail()==null)	
+		int patientId = 0;
+		String source_branch = facilityService.getFacilityBranchName(source_branch_id);
+		if(orderResult.getOrder().getPatient().getAddress().getEmail()!=null)
+			patientId = patientService.getPatient(orderResult.getOrder().getPatient(),source_branch);
 		//	throw new ServiceException(ErrorCodeEnum.EmailNull);
-		return resultDao.processOrderResult(orderResult, source_branch_id);
+		return resultDao.processOrderResult(orderResult, source_branch_id, patientId);
+	}
+	/**
+	 * @return the facilityService
+	 */
+	public FacilityService getFacilityService() {
+		return facilityService;
+	}
+	/**
+	 * @param facilityService the facilityService to set
+	 */
+	public void setFacilityService(FacilityService facilityService) {
+		this.facilityService = facilityService;
 	}
 
 
