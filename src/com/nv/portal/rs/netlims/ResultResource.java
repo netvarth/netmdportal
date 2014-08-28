@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.exception.ServiceExceptionHandler;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
@@ -31,7 +32,7 @@ import com.nv.youNeverWait.user.bl.service.ResultService;
  */
 @Controller
 @RequestMapping("ui/result/")
-public class ResultResource {
+public class ResultResource extends ServiceExceptionHandler{
 	private ResultService resultService;
 
 
