@@ -404,16 +404,19 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 	}
 	@Transactional(readOnly=false)
 	private NetlimsOrderTbl saveOrUpdateNetlimsOrder(NetlimsOrderTbl netlimsOrderTbl, OrderResultSyncDTO orderResult, int branchId ) {
+		NetlimsOrderTbl orderTbl=null;
 		if(netlimsOrderTbl == null)
-			netlimsOrderTbl = new NetlimsOrderTbl();
-		netlimsOrderTbl.setCreatedDate(orderResult.getOrder().getOrderDate());
-		netlimsOrderTbl.setOrderId(orderResult.getOrder().getUid());
-		netlimsOrderTbl.setOrderStatus(orderResult.getOrder().getOrderStatus());
-		netlimsOrderTbl.setLabBranchTbl(getById(LabBranchTbl.class, branchId));
-		netlimsOrderTbl.setCreatedDate(new Date());
-		netlimsOrderTbl.setOrderHeader(orderResult.getOrder().getOrderHeader());
-		saveOrUpdate(NetlimsOrderTbl.class, netlimsOrderTbl);	
-		return netlimsOrderTbl;
+			orderTbl = new NetlimsOrderTbl();
+		else
+			orderTbl = netlimsOrderTbl;
+		orderTbl.setCreatedDate(orderResult.getOrder().getOrderDate());
+		orderTbl.setOrderId(orderResult.getOrder().getUid());
+		orderTbl.setOrderStatus(orderResult.getOrder().getOrderStatus());
+		orderTbl.setLabBranchTbl(getById(LabBranchTbl.class, branchId));
+		orderTbl.setCreatedDate(new Date());
+		orderTbl.setOrderHeader(orderResult.getOrder().getOrderHeader());
+		saveOrUpdate(NetlimsOrderTbl.class, orderTbl);	
+		return orderTbl;
 	}
 
 	private NetlimsOrderTbl getBy_orderuid_branchid(String uid, int branchId) {
