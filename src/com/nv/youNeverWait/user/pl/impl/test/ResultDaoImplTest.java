@@ -50,6 +50,6 @@ public class ResultDaoImplTest {
 	//	orderResult.setOrder(order);
 		orderResult.setGlobalId(0);
 		Integer branchId=213;
-		resultDao.processOrderResult(orderResult, branchId);
+		resultDao.processOrderResult(orderResult, branchId,1);
 	}
 }
