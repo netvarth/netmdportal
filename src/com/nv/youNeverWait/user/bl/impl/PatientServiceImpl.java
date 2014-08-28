@@ -3,20 +3,29 @@
  */
 package com.nv.youNeverWait.user.bl.impl;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
+import com.nv.framework.sendmsg.SendMsgCallbackEnum;
+import com.nv.framework.sendmsg.email.SendMailMsgObj;
+import com.nv.framework.util.StringUtil;
+import com.nv.framework.util.text.StringEncoder;
 import com.nv.security.youNeverWait.MailSendAdapter;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.pl.entity.NetmdPatientTbl;
+import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.rs.dto.Appointment;
 import com.nv.youNeverWait.rs.dto.AppointmentListResponseDTO;
@@ -27,9 +36,11 @@ import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PastAppointmentListResponseDTO;
+import com.nv.youNeverWait.rs.dto.Patient;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PatientOrderDTO;
@@ -60,12 +71,12 @@ public class PatientServiceImpl implements PatientService {
 	private DoctorService doctorService;
 	private ScheduleService scheduleService;
 	private AppointmentService appointmentService;
-	
 	private MailSendAdapter mailSendAdapter;
-	
+	private String ynwServerIpAddress;
 	private QuestionnaireService questionnaireService;
 	private static final Logger log = Logger.getLogger(PatientServiceImpl.class);
-
+	private String mailFrom;
+	private SendEmailMsgWorkerThread mailThread;
 	public DoctorService getDoctorService() {
 		return doctorService;
 	}
@@ -107,15 +118,15 @@ public class PatientServiceImpl implements PatientService {
 		validator.validateUpdatePatient(patient, header);
 		boolean flag=patientDao.isEmailExists(patient.getGlobalId(),patient.getEmail().trim());
 		ResponseDTO response = patientDao.updatePatient(patient, header);
-			if(!flag){
-				String branchName = patientDao.getBranch(header.getBranchId());
-				// send login details and password creation link to the user
-				List<NetmdPatientTbl>   patients = patientDao.listOfPatientsOnLogin(patient.getEmail());
-				
-				mailSendAdapter.sendEmailForPatientCreation(patient.getFirstName(),patient.getEmail(), Constants.PATIENT_REGISTRATION,
-						patient.getEmail(), branchName,patients.size());
-			}
-		
+		if(!flag){
+			String branchName = patientDao.getBranch(header.getBranchId());
+			// send login details and password creation link to the user
+			List<NetmdPatientTbl>   patients = patientDao.listOfPatientsOnLogin(patient.getEmail());
+
+			mailSendAdapter.sendEmailForPatientCreation(patient.getFirstName(),patient.getEmail(), Constants.PATIENT_REGISTRATION,
+					patient.getEmail(), branchName,patients.size());
+		}
+
 		return response;
 	}
 
@@ -143,7 +154,7 @@ public class PatientServiceImpl implements PatientService {
 		return response;
 	}
 
-		
+
 	/**
 	 * Retrieve patients for the netmd
 	 * 
@@ -208,9 +219,9 @@ public class PatientServiceImpl implements PatientService {
 	 * @param userName
 	 * @param branchName
 	 */
-	
-	
-	
+
+
+
 	/**
 	 * Shows a list of all netmd branches
 	 * 
@@ -446,16 +457,16 @@ public class PatientServiceImpl implements PatientService {
 	public ResponseDTO createCase(CaseDTO newPatientCase, HeaderDTO header) {
 		validator.validateCase(newPatientCase);
 		ResponseDTO respnse= new ResponseDTO();
-		 ResponseDTO response = patientDao.createCase(newPatientCase,header);
-		
-//		String departmentName= patientDao.getDepartmentNameById(newPatientCase.getDepartmentId());
-//		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
-//			QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
-//			 questionAnswer.setCaseId(response.getGlobalId());
-//			 questionAnswer.setDepartmentId(newPatientCase.getDepartmentId());
-//			 questionAnswer.setAnswerDTO(newPatientCase.getQuestionAnswerDTO().getAnswerDTO());
-//			ResponseDTO rsponse=questionnaireService.create(questionAnswer,header);
-//		}
+		ResponseDTO response = patientDao.createCase(newPatientCase,header);
+
+		//		String departmentName= patientDao.getDepartmentNameById(newPatientCase.getDepartmentId());
+		//		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
+		//			QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
+		//			 questionAnswer.setCaseId(response.getGlobalId());
+		//			 questionAnswer.setDepartmentId(newPatientCase.getDepartmentId());
+		//			 questionAnswer.setAnswerDTO(newPatientCase.getQuestionAnswerDTO().getAnswerDTO());
+		//			ResponseDTO rsponse=questionnaireService.create(questionAnswer,header);
+		//		}
 		respnse.setGlobalId(response.getGlobalId());
 		respnse.setId(response.getId());
 		respnse.setSuccess(true);
@@ -469,58 +480,58 @@ public class PatientServiceImpl implements PatientService {
 	public ResponseDTO updateCase(CaseDTO updatedPatientCase, HeaderDTO header) {
 		ResponseDTO respnse = new ResponseDTO();
 		validator.validateUpdatedCase(updatedPatientCase);	 
-		
+
 		ResponseDTO response = patientDao.updateCase(updatedPatientCase, header);
-//		String departmentName= patientDao.getDepartmentNameById(updatedPatientCase.getDepartmentId());
-//		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
-//			 QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
-//			 questionAnswer.setCaseId(response.getGlobalId());
-//			 questionAnswer.setDepartmentId(updatedPatientCase.getDepartmentId());
-//			 questionAnswer.setAnswerDTO(updatedPatientCase.getQuestionAnswerDTO().getAnswerDTO());
-//			 ResponseDTO rsponse=questionnaireService.update(questionAnswer,header);
-//		}
+		//		String departmentName= patientDao.getDepartmentNameById(updatedPatientCase.getDepartmentId());
+		//		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
+		//			 QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
+		//			 questionAnswer.setCaseId(response.getGlobalId());
+		//			 questionAnswer.setDepartmentId(updatedPatientCase.getDepartmentId());
+		//			 questionAnswer.setAnswerDTO(updatedPatientCase.getQuestionAnswerDTO().getAnswerDTO());
+		//			 ResponseDTO rsponse=questionnaireService.update(questionAnswer,header);
+		//		}
 		respnse.setId(response.getId());
 		respnse.setGlobalId(response.getGlobalId());
 		respnse.setSuccess(true);
 		return respnse;
 	}
-	
-	
+
+
 	@Override
 	@Transactional
 	public ResponseDTO deleteCase(CaseDTO deletePatientCase, HeaderDTO header) {
 		ResponseDTO respnse = new ResponseDTO();
 		validator.validateDeleteCase(deletePatientCase);
 		ResponseDTO response = patientDao.deleteCase(deletePatientCase, header);
-//		String departmentName= patientDao.getDepartmentNameById(deletePatientCase.getDepartmentId());
-//		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
-//			 QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
-//			 questionAnswer.setCaseId(response.getGlobalId());
-//			 questionAnswer.setDepartmentId(deletePatientCase.getDepartmentId());
-//			 questionAnswer.setAnswerDTO(deletePatientCase.getQuestionAnswerDTO().getAnswerDTO());
-//			 ResponseDTO rsponse=questionnaireService.delete(response.getId(),header);
-//		}
+		//		String departmentName= patientDao.getDepartmentNameById(deletePatientCase.getDepartmentId());
+		//		if(departmentName.trim().equals(DepartmentTypeEnum.Obstetrics.getDisplayName()) && response.getGlobalId()!=0){
+		//			 QuestionAnswerDTO questionAnswer=new QuestionAnswerDTO();
+		//			 questionAnswer.setCaseId(response.getGlobalId());
+		//			 questionAnswer.setDepartmentId(deletePatientCase.getDepartmentId());
+		//			 questionAnswer.setAnswerDTO(deletePatientCase.getQuestionAnswerDTO().getAnswerDTO());
+		//			 ResponseDTO rsponse=questionnaireService.delete(response.getId(),header);
+		//		}
 		respnse.setId(response.getId());
 		respnse.setGlobalId(response.getGlobalId());
 		respnse.setSuccess(true);
 		return respnse;
 	}
-	
-	
+
+
 	@Override
 	public ResponseDTO createMedicalRecord(MedicalRecordDTO newPatientMedicalRecord, HeaderDTO header) {
 		validator.validateMedicalRecord(newPatientMedicalRecord);
 		ResponseDTO response = patientDao.createMedicalRecord(newPatientMedicalRecord,header);
 		return response;
 	}
-   
+
 	@Override
 	public ResponseDTO updatePatientMedicalRecord(MedicalRecordDTO updatedMedicalRecord, HeaderDTO header) {
 		validator.validateMedicalRecord(updatedMedicalRecord);
 		ResponseDTO response = patientDao.updateMedicalRecord(updatedMedicalRecord,header);
 		return response;
 
-		
+
 	}
 	@Override
 	public ResponseDTO deletePatientMedicalRecord(
@@ -611,7 +622,136 @@ public class PatientServiceImpl implements PatientService {
 		this.questionnaireService = questionnaireService;
 	}
 
+	/**
+	 * @return the mailFrom
+	 */
+	public String getMailFrom() {
+		return mailFrom;
+	}
+
+	/**
+	 * @param mailFrom the mailFrom to set
+	 */
+	public void setMailFrom(String mailFrom) {
+		this.mailFrom = mailFrom;
+	}
+
+	/**
+	 * @return the mailThread
+	 */
+	public SendEmailMsgWorkerThread getMailThread() {
+		return mailThread;
+	}
+
+	/**
+	 * @param mailThread the mailThread to set
+	 */
+	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
+		this.mailThread = mailThread;
+	}
+
 	public void setMailSendAdapter(MailSendAdapter mailSendAdapter) {
 		this.mailSendAdapter = mailSendAdapter;
-	}	
+	}
+
+	
+
+	/**
+	 * @return the ynwServerIpAddress
+	 */
+	public String getYnwServerIpAddress() {
+		return ynwServerIpAddress;
+	}
+
+	/**
+	 * @param ynwServerIpAddress the ynwServerIpAddress to set
+	 */
+	public void setYnwServerIpAddress(String ynwServerIpAddress) {
+		this.ynwServerIpAddress = ynwServerIpAddress;
+	}
+
+	/**
+	 *@author Mani E.V 
+	 *return patient Id
+	 *if patient no exists then create the patient
+	 *return id
+	 */
+	@Override
+	public int getPatient(Patient patient, String source_branch) {
+		int patientId = patientDao.getPatientId(patient);
+		if(patientId==0)
+			patientId = create(patient,source_branch);
+		return patientId;
+	}
+	
+	/**
+	 * author Mani E.V
+	 * @param patient
+	 * @param source_branch
+	 * @return
+	 */
+	@Transactional(readOnly=false)
+	private int create(Patient patient, String source_branch) {
+		LoginDTO login = new LoginDTO();
+		String password = StringUtil.getRandomPassword();
+		login.setUserName(patient.getAddress().getEmail());
+		login.setUserType(NetmdUserTypeEnum.Patient.getDisplayName());
+		login.setPassword(StringEncoder.encryptWithKey(password));
+		login = patientDao.setLoginInfo(login);
+		int patientId = patientDao.create(patient,login);
+		sendEmail(Constants.USER_REGISTRATION, patient,login, source_branch, password);
+		return patientId;
+	}
+
+	/**
+	 * @author Mani E.V
+	 * @param subject
+	 * @param facility
+	 * @param login
+	 * @param branch
+	 * @param password
+	 */
+	private void sendEmail(String subject, Patient patient, LoginDTO login, String branch, String password) {
+
+		String msgBody = "";
+		URL url = null;
+		try {
+			url = new URL("http://" + ynwServerIpAddress
+					+ "/youNeverWait/EmailFormat/NetlimsPatientRegistration.html");
+			msgBody = createDefaultEmailBody(url, patient, login,branch, password);
+
+			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,
+					login.getUserName(), mailFrom, 0, 0, null,
+					SendMsgCallbackEnum.PATIENT_REGISTRATION.getId(), null);
+			mailThread.addSendMsgObj(obj);
+
+		} catch (IOException e) {
+			log.error("Error while sending Email to Patient", e);
+			e.printStackTrace();
+
+		}
+	}
+	private String createDefaultEmailBody(URL url, Patient patient, LoginDTO login, String branchName, String password)
+			throws IOException {
+
+		StringBuffer msgBodyBfr = new StringBuffer();
+		String fullMsgBody = "";
+		java.net.URLConnection openConnection = url.openConnection();
+		InputStream inputStream = openConnection.getInputStream();
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				inputStream));
+		String readLine = "";
+		while ((readLine = in.readLine()) != null) {
+			msgBodyBfr.append(readLine).append("\n");
+		}
+		in.close();
+		fullMsgBody = msgBodyBfr.toString();
+		fullMsgBody = fullMsgBody.replace("{patientName}",patient.getName());
+		fullMsgBody = fullMsgBody.replace("{branchName}", branchName);
+		fullMsgBody = fullMsgBody.replace("{userid}", login.getUserName());
+		fullMsgBody = fullMsgBody.replace("{password}",password);
+		fullMsgBody = fullMsgBody.replace("{serverIpAddress}",
+				ynwServerIpAddress);
+		return fullMsgBody;
+	}
 }
