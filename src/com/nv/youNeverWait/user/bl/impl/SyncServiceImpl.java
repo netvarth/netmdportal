@@ -7,14 +7,15 @@
  */
 package com.nv.youNeverWait.user.bl.impl;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import com.nv.youNeverWait.rs.dto.BillSyncResponseDTO;
 import com.nv.youNeverWait.api.sync.LimsReferralBundle;
@@ -106,7 +107,7 @@ public class SyncServiceImpl implements SyncService {
 	private QuestionnaireService questionnaireService;
 	private FacilityService facilityService;
 
-	private static final Log log = LogFactory.getLog(SyncServiceImpl.class);
+	private static final Logger log = Logger.getLogger(SyncServiceImpl.class);
 
 	/**
 	 * Method which performs synchronization for NetMd
@@ -1806,7 +1807,9 @@ public class SyncServiceImpl implements SyncService {
 				response.setGlobalId(globalId);
 				response.setStatusCode("200");
 			} catch(Exception e){
-				log.error(e);
+				StringWriter stack = new StringWriter();
+				e.printStackTrace(new PrintWriter(stack));
+				log.error(stack.toString());
 				response.setStatusCode("500");
 			}
 			responses.add(response);
@@ -1833,7 +1836,9 @@ public class SyncServiceImpl implements SyncService {
 				}
 
 			} catch (Exception e) {
-				log.error(e);
+				StringWriter stack = new StringWriter();
+				e.printStackTrace(new PrintWriter(stack));
+				log.error(stack.toString());
 				response.setStatusCode("500");
 			}
 			responses.add(response);
@@ -1861,8 +1866,9 @@ public class SyncServiceImpl implements SyncService {
 					response.setStatusCode("200");
 				}
 			}catch (Exception e){
-				e.printStackTrace();
-				log.error(e);
+				StringWriter stack = new StringWriter();
+				e.printStackTrace(new PrintWriter(stack));
+				log.error(stack.toString());
 				response.setStatusCode("500");
 			}
 			responses.add(response);
@@ -1908,13 +1914,13 @@ public class SyncServiceImpl implements SyncService {
 					response.setStatusCode("200");
 				}
 			}catch (Exception e){
-				e.printStackTrace();
-				log.error(e);
+				StringWriter stack = new StringWriter();
+				e.printStackTrace(new PrintWriter(stack));
+				log.error(stack.toString());
 				response.setStatusCode("500");
 			}
 			responses.add(response);
 		}
-
 		return responses;
 	}
 
