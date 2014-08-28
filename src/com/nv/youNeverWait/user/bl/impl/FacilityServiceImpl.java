@@ -158,4 +158,9 @@ public class FacilityServiceImpl implements FacilityService {
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
 	}
+
+	@Override
+	public String getFacilityBranchName(Integer source_branch_id) {
+		return facilityDao.getFacilityBranch(source_branch_id);
+	}
 }
