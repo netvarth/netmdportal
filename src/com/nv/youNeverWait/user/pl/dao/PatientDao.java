@@ -10,6 +10,7 @@ import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPatientTbl;
 import com.nv.youNeverWait.rs.dto.CaseDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.Patient;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
@@ -46,6 +47,15 @@ public interface PatientDao {
 	public ResponseDTO deleteMedicalRecord(MedicalRecordDTO deleteMedicalRecord, HeaderDTO header);
 	
 	public int getNetlimsPatient(Patient patient,int branchId);
+	public int getPatientId(Patient patient);
+	/**
+	 * create a patient using sync data from netlims
+	 * @param patient
+	 * @param login 
+	 * @return patient id
+	 */
+	public int create(Patient patient, LoginDTO login);
+	public LoginDTO setLoginInfo(LoginDTO login);
 	
 	
 	
