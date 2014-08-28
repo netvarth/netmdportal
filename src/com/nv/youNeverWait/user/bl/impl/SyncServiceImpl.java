@@ -1799,9 +1799,11 @@ public class SyncServiceImpl implements SyncService {
 	@Override
 	public List<SyncResponse> processOrderResult(OrderResultBundle bundle) {
 		List<SyncResponse> responses = new ArrayList<SyncResponse>();
+		validator.validateOrderResultBundle(bundle);
 		for(OrderResultSyncDTO orderResult : bundle.getOrderResults()){
 			SyncResponse response = new SyncResponse();
 			try{
+				validator.validateOrderResult(orderResult);
 				response.setLocalId(orderResult.getOrder().getUid());
 				int globalId = resultService.processOrderResult(orderResult, bundle.getSource_branch_id());
 				response.setGlobalId(globalId);
