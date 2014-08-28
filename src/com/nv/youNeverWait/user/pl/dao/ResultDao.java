@@ -54,8 +54,9 @@ public interface ResultDao {
 	 * @param orderResult
 	 * @param patientId
 	 * @param branchId 
+	 * @param patientId 
 	 * @return globalid
 	 */
-	public int processOrderResult(OrderResultSyncDTO orderResult, int branchId);
+	public int processOrderResult(OrderResultSyncDTO orderResult, int branchId, int patientId);
 	
 }
