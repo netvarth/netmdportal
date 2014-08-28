@@ -15,6 +15,8 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.OrderResultBundle;
+import com.nv.youNeverWait.rs.dto.OrderResultSyncDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.SyncFreqDTO;
 
@@ -132,7 +134,7 @@ public class SyncValidator {
 						Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 				try {
 					Date synTime = df.parse(syncTime);
-
+					System.out.println(synTime);
 				} catch (ParseException e) {
 					e.printStackTrace();
 					ServiceException se = new ServiceException(
@@ -140,7 +142,6 @@ public class SyncValidator {
 					se.setDisplayErrMsg(true);
 					throw se;
 				}
-		
 		}
 	}
 
@@ -175,5 +176,17 @@ public class SyncValidator {
 			}
 		}
 		
+	}
+
+	public void validateOrderResultBundle(OrderResultBundle bundle) {
+		if(bundle.getSource_branch_id()==null || bundle.getSource_branch_id()==0)
+			throw new ServiceException(ErrorCodeEnum.BranchCodeNull);
+		if(bundle.getOrderResults().isEmpty())
+				throw new ServiceException(ErrorCodeEnum.EmptyResult);
+	}
+
+	public void validateOrderResult(OrderResultSyncDTO orderResult) {
+		if(orderResult.getOrder().getUid()==null || orderResult.getOrder().getUid()=="")
+			throw new ServiceException(ErrorCodeEnum.OrderUidNull);
 	}
 }
