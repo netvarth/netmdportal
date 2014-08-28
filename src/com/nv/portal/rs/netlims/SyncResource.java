@@ -70,7 +70,7 @@ public class SyncResource extends ServiceExceptionHandler {
 	 * @param bundle 
 	 * @return CommonSyncResponse
 	 */
-	@RequestMapping(value = "syncOrderResult", method = RequestMethod.POST)
+	@RequestMapping(value = "order", method = RequestMethod.POST)
 	@ResponseBody
 	public CommonSyncResponse processOrderResult(@RequestBody OrderResultBundle bundle){
 		List<SyncResponse> response =service.processOrderResult(bundle);
@@ -84,7 +84,7 @@ public class SyncResource extends ServiceExceptionHandler {
 	 * @param bundle
 	 * @return CommonSyncResponse
 	 */
-	@RequestMapping(value="syncReferral", method=RequestMethod.POST)
+	@RequestMapping(value="referral", method=RequestMethod.POST)
 	@ResponseBody
 	public CommonSyncResponse processReferral(@RequestBody LimsReferralBundle bundle){
 		
@@ -98,7 +98,7 @@ public class SyncResource extends ServiceExceptionHandler {
 	 * @param bundle
 	 * @return CommonSyncResponse
 	 */
-	@RequestMapping(value="syncFacility", method=RequestMethod.POST)
+	@RequestMapping(value="facility", method=RequestMethod.POST)
 	@ResponseBody
 	public CommonSyncResponse processFacility(@RequestBody LimsFacilityBundle bundle){
 		
@@ -112,7 +112,7 @@ public class SyncResource extends ServiceExceptionHandler {
 	 * @param bundle
 	 * @return CommonSyncResponse
 	 */
-	@RequestMapping(value="syncUser", method = RequestMethod.POST)
+	@RequestMapping(value="user", method = RequestMethod.POST)
 	@ResponseBody
 	public CommonSyncResponse processUser(@RequestBody LimsUserBundle bundle){
 		List<SyncResponse> response=service.processUser(bundle);
