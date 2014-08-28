@@ -16,6 +16,7 @@ import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.NetMdBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PastAppointmentListResponseDTO;
+import com.nv.youNeverWait.rs.dto.Patient;
 import com.nv.youNeverWait.rs.dto.PatientDetail;
 import com.nv.youNeverWait.rs.dto.PatientListResponseDTO;
 import com.nv.youNeverWait.rs.dto.PatientOrderDTO;
@@ -65,4 +66,5 @@ public interface PatientService {
 	public ResponseDTO createMedicalRecord(MedicalRecordDTO newPatientMedicalRecord, HeaderDTO header);
 	public ResponseDTO updatePatientMedicalRecord(MedicalRecordDTO updatedMedicalRecord, HeaderDTO header);
 	public ResponseDTO deletePatientMedicalRecord(MedicalRecordDTO deleteMedicalRecord, HeaderDTO header);
+	public int getPatient(Patient patient, String source_branch);
 }
