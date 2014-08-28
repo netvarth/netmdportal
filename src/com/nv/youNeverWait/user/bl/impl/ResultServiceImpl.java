@@ -110,8 +110,9 @@ public class ResultServiceImpl implements ResultService{
 			Integer source_branch_id) {
 		int patientId = 0;
 		String source_branch = facilityService.getFacilityBranchName(source_branch_id);
-		if(orderResult.getOrder().getPatient().getAddress().getEmail()!=null)
-			patientId = patientService.getPatient(orderResult.getOrder().getPatient(),source_branch);
+		if(orderResult.getOrder().getPatient()!=null)
+			if(orderResult.getOrder().getPatient().getAddress().getEmail()!=null)
+				patientId = patientService.getPatient(orderResult.getOrder().getPatient(),source_branch);
 		//	throw new ServiceException(ErrorCodeEnum.EmailNull);
 		return resultDao.processOrderResult(orderResult, source_branch_id, patientId);
 	}
