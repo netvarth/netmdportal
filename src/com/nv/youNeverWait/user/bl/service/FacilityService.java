@@ -19,5 +19,6 @@ public interface FacilityService {
 	 * @return facilityId
 	 */
 	public int create(FacilitySyncDTO facility, Integer branchId);
+	public String getFacilityBranchName(Integer source_branch_id);
 	
 }
