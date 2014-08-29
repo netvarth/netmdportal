@@ -14,8 +14,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nv.framework.sendmsg.PendingMsgPojoTbl;
@@ -28,8 +27,8 @@ import com.nv.youNeverWait.pl.entity.PendingMessageTbl;
 public class GenericDaoHibernateImpl implements GenericDao, SendMsgBaseDAO {
 
 	private static final long serialVersionUID = 1L;
-	private static final Log log = LogFactory
-			.getLog(GenericDaoHibernateImpl.class);
+	private static final Logger log = Logger
+			.getLogger(GenericDaoHibernateImpl.class);
 
 	@PersistenceContext()
 	private EntityManager em;
