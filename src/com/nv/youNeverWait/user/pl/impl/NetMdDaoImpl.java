@@ -1413,6 +1413,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		newBillTbl.setPatientName(newBill.getPatientName());
 		newBillTbl.setNetmdPatientTbl(existingPatient);
 		newBillTbl.setPayStatus(newBill.getPayStatus());
+		newBillTbl.setBillStatus(newBill.getBillStatus());
 		newBillTbl.setUid(newBill.getUid());
 		newBillTbl.setNetmdTbl(passPhrase.getNetmdBranchTbl().getNetmdTbl());
 		newBillTbl.setNetmdBranchTbl(passPhrase.getNetmdBranchTbl());
@@ -1488,6 +1489,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netMdBill.setPatientName(updatedBill.getPatientName());
 		netMdBill.setNetmdPatientTbl(existingPatient);
 		netMdBill.setPayStatus(updatedBill.getPayStatus());
+		netMdBill.setBillStatus(updatedBill.getBillStatus());
 		netMdBill.setUid(updatedBill.getUid());
 		netMdBill.setNetmdTbl(passPhrase.getNetmdBranchTbl().getNetmdTbl());
 		netMdBill.setNetmdBranchTbl(passPhrase.getNetmdBranchTbl());
@@ -2448,7 +2450,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		}
 		
 		
-		List<Object[]> billDetails= getBillTotalAmountDetails(branchId,frmDate,tDate);
+		/*List<Object[]> billDetails= getBillTotalAmountDetails(branchId,frmDate,tDate);
 		if(billDetails.isEmpty()|| billDetails.size()==0 ||billDetails.equals(null)){
 			throw new ServiceException(ErrorCodeEnum.BillPaymentsNull);
 		}
@@ -2458,28 +2460,57 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 				double amtPd=(Double) billPayment[1];
 				billResponse.setTotalBillAmt(bllAmt);
 				billResponse.setTotalAmtPaid(amtPd);
-				billResponse.setTotalAmtDue(bllAmt-amtPd);
+				//billResponse.setTotalAmtDue(bllAmt-amtPd);
 		  	}
+		}*/
+		List<NetmdBillTbl>billDetails= getBillTotalAmountDetails(branchId,frmDate,tDate);
+		if(billDetails==null){
+			throw new ServiceException(ErrorCodeEnum.BillPaymentsNull);
 		}
+		double bllAmt=0;
+		double amtPd=0;
+		double totalDue=0; 
+			for(NetmdBillTbl netmdbilltbl:billDetails){
+			
+				bllAmt+=netmdbilltbl.getBillAmount();
+				amtPd+=netmdbilltbl.getAmountPaid();
+				 if(netmdbilltbl.getBillAmount()>netmdbilltbl.getAmountPaid())
+					 totalDue += netmdbilltbl.getBillAmount()-netmdbilltbl.getAmountPaid();
+	
+			}
+			billResponse.setTotalBillAmt(bllAmt);
+			billResponse.setTotalAmtPaid(amtPd);
+			billResponse.setTotalAmtDue(totalDue);
 		
 		return billResponse;
 	}
 
-	private List<Object[]> getBillTotalAmountDetails(int branchId, Date frmDate,
-			Date tDate) {
-		List<Object[]> response=null;
-		try{
-			javax.persistence.Query query = em
-					.createQuery(Query.GET_NETMD_BILL_DETAILS);
-			query.setParameter("param1", branchId);
-			query.setParameter("param2", frmDate);
-			query.setParameter("param3",tDate);
-			response=executeQuery(Object[].class,query);
-		}
-		catch (RuntimeException e) {
-			e.printStackTrace();
-		}
-		return response;
+	private List<NetmdBillTbl> getBillTotalAmountDetails(int branchId,
+			Date frmDate, Date tDate) {
+		javax.persistence.Query query = em
+			.createQuery(Query.GET_NETMD_BILL_DETAILS);
+		query.setParameter("param1", branchId);
+		query.setParameter("param2", frmDate);
+		query.setParameter("param3",tDate);
+		query.setParameter("param4","cancelled");
+		return executeQuery(NetmdBillTbl.class,query);
 	}
+
+//	private List<Object[]> getBillTotalAmountDetails(int branchId, Date frmDate,
+//			Date tDate) {
+//		List<Object[]> response=null;
+//		try{
+//			javax.persistence.Query query = em
+//					.createQuery(Query.GET_NETMD_BILL_DETAILS);
+//			query.setParameter("param1", branchId);
+//			query.setParameter("param2", frmDate);
+//			query.setParameter("param3",tDate);
+//			response=executeQuery(Object[].class,query);
+//		}
+//		catch (RuntimeException e) {
+//			e.printStackTrace();
+//		}
+//		return response;
+//	}
 
 }
