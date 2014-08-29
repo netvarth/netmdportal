@@ -53,5 +53,17 @@ function NetmdBranchValidator() {
 		error.setErrorMsgs(errorMsgs);
 		return error;
 	}
+	
+	this.validateDate  = function(fromDate, toDate,frmDate) {
+			var error = new ErrorDTO();
+			var errorMsgs = []; // for storing the error messages list having field,Message
+			if(fromDate=="" || toDate=="" ){
+				error.setErrorStatus(true);
+				var errorMessage = new ErrorMessageDTO(frmDate,'Please select dates');
+				errorMsgs.push(errorMessage);
+			}
+			error.setErrorMsgs(errorMsgs);
+			return error;
+	}
 
 }

@@ -185,25 +185,30 @@ ViewNetmdBranchUI.prototype.bindEvents = function() {
 		
 		var toValue=$j(self.toDate).val();
 		var toOperator = "le";
-		
-		var exp = new ExpressionListDTO();
-		var expr = new ExpressionDTO(selName,selValue,selOperator);
-		var expr1 = new ExpressionDTO(selBrchName,selBrchValue,selBrchOperator);
-		var expr2 = new ExpressionDTO(date,fromValue,fromOperator);
-		var expr3 = new ExpressionDTO(date,toValue,toOperator);
-		var expr4 =new ExpressionDTO("billStatus","cancelled","neq");
-		exp.add(expr);
-		exp.add(expr1);
-		exp.add(expr2);
-		exp.add(expr3);
-		exp.add(expr4);
-		createModal(constants.BRANCHNETMDBILLLISTJSON,constants.SHOWBILLLISTMODAL);		
-		openModalBox(obj,constants.SHOWBILLLISTMODAL);
-		dataTableProcessor.setCustomTable(self.billListTable);
-		
-		var netmdAccntTableNavigator = self.netmdBillTableNavigator;
-		netmdAccntTableNavigator.setExp(exp);
-		netmdAccntTableNavigator.list("billList");
+
+		var branchValidator = new NetmdBranchValidator();
+		var error  = branchValidator.validateDate(fromValue,toValue,self.fromDate );
+		if(error.errorStatus==false) {
+			var exp = new ExpressionListDTO();
+			var expr = new ExpressionDTO(selName,selValue,selOperator);
+			var expr1 = new ExpressionDTO(selBrchName,selBrchValue,selBrchOperator);
+			var expr2 = new ExpressionDTO(date,fromValue,fromOperator);
+			var expr3 = new ExpressionDTO(date,toValue,toOperator);
+			var expr4 =new ExpressionDTO("billStatus","cancelled","neq");
+			exp.add(expr);
+			exp.add(expr1);
+			exp.add(expr2);
+			exp.add(expr3);
+			exp.add(expr4);
+			createModal(constants.BRANCHNETMDBILLLISTJSON,constants.SHOWBILLLISTMODAL);		
+			openModalBox(obj,constants.SHOWBILLLISTMODAL);
+			dataTableProcessor.setCustomTable(self.billListTable);
+			
+			var netmdAccntTableNavigator = self.netmdBillTableNavigator;
+			netmdAccntTableNavigator.setExp(exp);
+			netmdAccntTableNavigator.list("billList");
+		} else
+			self.createError(error);	
 	}); 
 }
 ViewNetmdBranchUI.prototype.viewNetmdBranchDetails = function(branchId) {
