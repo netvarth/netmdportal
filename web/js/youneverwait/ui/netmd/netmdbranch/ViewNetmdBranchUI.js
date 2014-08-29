@@ -203,7 +203,7 @@ ViewNetmdBranchUI.prototype.bindEvents = function() {
 	});
 	
 	 $j(self.billButton).die('click').live('click',function(){
- 		self=parent;
+		self=parent;
 		self.errorHeader.hide();
 		var obj=$j(this);
 		commonMethodInvoker.removeErrors();
@@ -228,10 +228,12 @@ ViewNetmdBranchUI.prototype.bindEvents = function() {
 		var expr1 = new ExpressionDTO(selBrchName,selBrchValue,selBrchOperator);
 		var expr2 = new ExpressionDTO(date,fromValue,fromOperator);
 		var expr3 = new ExpressionDTO(date,toValue,toOperator);
+		var expr4 =new ExpressionDTO("billStatus","cancelled","neq");
 		exp.add(expr);
 		exp.add(expr1);
 		exp.add(expr2);
 		exp.add(expr3);
+		exp.add(expr4);
 		createModal(constants.BRANCHNETMDBILLLISTJSON,constants.SHOWBILLLISTMODAL);		
 		openModalBox(obj,constants.SHOWBILLLISTMODAL);
 		dataTableProcessor.setCustomTable(self.billListTable);
