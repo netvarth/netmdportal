@@ -84,7 +84,7 @@ public class Query {
 	
 	/* PatientTbl */
 	public static final String RETRIEVE_PATIENTS = "from NetmdPatientTbl as patient where patient.updateDateTime>=:param1 and patient.updateDateTime<:param2 and patient.netmdBranchTbl.id=:param3 and patient.netmdPassphraseTbl.id!=:param4";
-	public static final String GET_PATIENT_LIST_BY_EMAILID = "from NetmdPatientTbl as patient where TRIM(patient.loginTbl.userName) = :param1 group by patient.firstName";
+	public static final String GET_PATIENT_LIST_BY_EMAILID = "from NetmdPatientTbl as patient left join fetch patient.loginTbl where TRIM(patient.loginTbl.userName) = :param1 group by patient.firstName";
 	public static final String GET_PATIENT_LIST_BY_EMAIL = "from NetmdPatientTbl as patient where TRIM(patient.email) = :param1";
 	public static final String GET_PATIENT_BY_NAME = "from NetmdPatientTbl as patient where TRIM(UPPER(patient.firstName)) = :param1 and patient.phone=:param2";
 	public static final String GET_PATIENT_BY_EMAIL = "from NetmdPatientTbl as patient where TRIM(patient.email) = :param1";
@@ -331,7 +331,8 @@ public class Query {
 	/*Netmd_question_tbl*/
 	public static final String GET_NETMD_QUESTION_TBL = "from NetmdQuestionTbl";
 	public static final String GET_BY_QUESTIONNAIRE = "from NetmdAnswerTbl as answer where answer.netmdQuestionnaireTbl.id=:param1";
-	public static final String GET_NETMD_BILL_DETAILS ="select sum(bill.billAmount) as billAmt,sum(bill.amountPaid) as amtPaid from NetmdBillTbl  as bill where bill.netmdBranchTbl.id=:param1 and bill.orderDate>=:param2 and bill.orderDate<=:param3";
+	//public static final String GET_NETMD_BILL_DETAILS ="select sum(bill.billAmount) as billAmt,sum(bill.amountPaid) as amtPaid from NetmdBillTbl  as bill where bill.netmdBranchTbl.id=:param1 and bill.orderDate>=:param2 and bill.orderDate<=:param3";
+	public static final String GET_NETMD_BILL_DETAILS ="from NetmdBillTbl  as bill where bill.netmdBranchTbl.id=:param1 and bill.orderDate>=:param2 and bill.orderDate<=:param3 and bill.billStatus!=:param4";
 	
 	/*netlims_order_tbl*/
 	public static final String GET_NETLIMSORDER_BY_ORDERID_BRANCHID = "from NetlimsOrderTbl as order where order.orderId=:param1 and order.labBranchTbl.id=:param2";
