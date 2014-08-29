@@ -48,6 +48,8 @@ public class PropertyUtil {
 			type1 = Integer.class;
 		}else if(type.getSimpleName().equals("boolean")){
 			type1 = Boolean.class;
+		}else if(type.getSimpleName().equals("String")){
+			type1 = String.class;
 		}
 		ParameterExpression<T> p =(ParameterExpression<T>) criteriaBuilder.parameter(type1,propertyName);
 		return p;
