@@ -24,6 +24,7 @@ public class BillSummaryDTO {
 private int globalId;
 private String uid;
 private String payStatus;
+private String billStatus;
 private String patientName;
 private String patientGlobalId;
 private float billAmount;
@@ -53,13 +54,14 @@ public BillSummaryDTO() {
  * @param success
  * @param error
  */
-public BillSummaryDTO(int globalId, String uid, String payStatus,
+public BillSummaryDTO(int globalId, String uid, String payStatus,String billStatus,
 		String patientName, String patientGlobalId, float billAmount,
 		float amountPaid,float amountDue, String orderDate, boolean success, ErrorDTO error) {
 	super();
 	this.globalId = globalId;
 	this.uid = uid;
 	this.payStatus = payStatus;
+	this.billStatus = billStatus;
 	this.patientName = patientName;
 	this.patientGlobalId = patientGlobalId;
 	this.billAmount = billAmount;
@@ -78,11 +80,16 @@ public BillSummaryDTO(NetmdBillTbl netmdBillTbl) {
 	this.globalId = netmdBillTbl.getId();
 	this.uid = netmdBillTbl.getUid();
 	this.payStatus = netmdBillTbl.getPayStatus();
+	this.billStatus = netmdBillTbl.getBillStatus();
 	this.patientName = netmdBillTbl.getPatientName();
 	this.patientGlobalId = Integer.toString(netmdBillTbl.getNetmdPatientTbl().getId());
 	this.billAmount = netmdBillTbl.getBillAmount();
 	this.amountPaid = netmdBillTbl.getAmountPaid();
-	this.amountDue = netmdBillTbl.getBillAmount()- netmdBillTbl.getAmountPaid();
+	float Due =  netmdBillTbl.getBillAmount()- netmdBillTbl.getAmountPaid();
+	if( Due<=0 )
+		this.amountDue = 0;
+	else
+		this.amountDue = Due;
 	this.orderDate = sdf.format(netmdBillTbl.getOrderDate());
 }
 
@@ -187,6 +194,12 @@ public String getOrderDate() {
  */
 public void setOrderDate(String orderDate) {
 	this.orderDate = orderDate;
+}
+public String getBillStatus() {
+	return billStatus;
+}
+public void setBillStatus(String billStatus) {
+	this.billStatus = billStatus;
 }
 /**
  * @return the success
