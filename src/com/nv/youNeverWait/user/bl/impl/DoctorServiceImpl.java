@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
@@ -53,7 +54,7 @@ public class DoctorServiceImpl implements DoctorService {
 	private String netMdServerIpAddress;
 	private String mailFrom;
 	private SendEmailMsgWorkerThread mailThread;
-	private static final Log log = LogFactory.getLog(DoctorServiceImpl.class);
+	private static final Logger log = Logger.getLogger(DoctorServiceImpl.class);
 
 	/**
 	 * Method to reset password
