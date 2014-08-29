@@ -37,6 +37,9 @@ public class NetmdBillTbl implements Serializable {
 
 	@Column(name="pay_status", nullable=false, length=45)
 	private String payStatus;
+	
+	@Column(name="bill_status", nullable=false, length=45)
+	private String billStatus;
 
 	@Column(nullable=false, length=45)
 	private String uid;
@@ -162,6 +165,14 @@ public class NetmdBillTbl implements Serializable {
 	 */
 	public void setPayStatus(String payStatus) {
 		this.payStatus = payStatus;
+	}
+
+	public String getBillStatus() {
+		return billStatus;
+	}
+
+	public void setBillStatus(String billStatus) {
+		this.billStatus = billStatus;
 	}
 
 	/**
