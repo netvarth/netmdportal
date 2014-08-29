@@ -26,6 +26,7 @@ import javax.mail.internet.MimeMultipart;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import com.nv.framework.util.ClassUtil;
 import com.nv.framework.util.StringUtil;
@@ -41,7 +42,7 @@ public class EmailSender {
 	// streamline/consolidate/refactor, 2) better method signature
 
 	private static final String CLASSNAME = EmailSender.class.getName();
-	private static final Log log = LogFactory.getLog(EmailSender.class);
+	private static final Logger log = Logger.getLogger(EmailSender.class);
 	// constants
 	private static final String DEF_MAIL_HOST = "mail.smtp.host";
 	private static final String DEFAULT_MAIL_HOST = System.getProperty(
