@@ -5,27 +5,61 @@ pageHandler = new PageHandler();
 commonMethodInvoker = new CommonMethodInvoker();
 var methodInvoker = new MethodInvoker();
 var query = new Query();
+errorHandler = new ErrorHandler();
+validator = new Validator();
+var notifier = new Notifier();
 $(function() {
 	$('.filter-main').hide();
 	$('#filter').click(function () {
         $('.filter-main').toggle(500);
 		$('#filterWorkBench').hide();
+		dpi_y = document.getElementById('testdiv').offsetHeight;
+		methodInvoker.setDPI(dpi_y);
 	});
-	var user = new User();
-	user.setInfo();
-	user.bindEvents();
-	dpi_y = document.getElementById('testdiv').offsetHeight;
-	methodInvoker.setDPI(dpi_y);
-	order = new Order();
-	order.init();
-	
+	var facilityHome = new FacilityHome();
+	facilityHome.init();
 });
+
+function FacilityHome () {
+	this.showMyName = function() {
+		return "FacilityHome";
+	}
+	this.setUser=function(user){
+		this.user = user;
+	}
+	this.getUser = function(){
+		return this.user;
+	}
+
+	this.getParent = function() {
+		return this.parent;
+	}
+	this.init = function(){
+		var user = new User();
+		user.setInfo();
+		user.bindEvents();
+		this.setUser(user);
+		order = new Order();
+		order.init();
+		this.bindEvents();
+	}
+	this.bindEvents = function(){
+		var self=this;
+		$("#btnChangePassword").die('click').live("click",function() {
+			pageHandler.generateModalPage(constants.CHANGEPASSWORDPAGEURL,constants.CHANGEPASSWORDMODALNAME);
+			pageHandler.openPageAsModal($(this), constants.CHANGEPASSWORDMODALNAME);	
+			var changePasswordProcessor = new ChangePasswordProcessor(self);
+			changePasswordProcessor.init();
+		});
+	}
+}
 
 function Query() {
 	this.viewUser = function(uid,branchId) {
 		ajaxProcessor.setUrl(constants.USERURL + uid + "/" + branchId);
 		return ajaxProcessor.get();
 	}
+
 }
 function MethodInvoker() {
 	this.setDPI=function(dpi){
@@ -217,6 +251,11 @@ function Constants() {
 	this.ORDER = "order";
 	this.ORDERFILTERKEY = "";
 	this.ORDERLISTURL = "/youNeverWait/json/netlims/orderFilter.json";
+	this.CHANGEPASSWORDPAGEURL='/youNeverWait/json/netlims/changePassword.json';
+	this.CHANGEPASSWORDMODALNAME='changePasswordModal';
+	this.CHANGEPASSWORDURL = '/youNeverWait/netlims/auth/changePassword';
+	this.FIELDREQUIRED = 'Field required';
+	this.PASSWORDNOTMATCH = "Password doesn't match";
 }
 function VerifierDTO() {
 	this.setUserId =function(userId) {
@@ -249,7 +288,10 @@ function User(user) {
 		$('#userName').html(user.name);
 	}
 	this.bindEvents = function() {
-		$("#btnLogoutNetLims").die('click').live("click",function() {
+		$(".headright #dropdownOne #dd").die('click').live("click",function() {
+			$(this).toggleClass('active');
+	    });
+		$("#btnLogout").die('click').live("click",function() {
 			ajaxProcessor.setUrl('/youNeverWait/netlims/auth/logout');
 			var response =ajaxProcessor.get(); 
 			if(response==true)
@@ -580,7 +622,7 @@ function Order() {
 		});
 		$('#btnPrintResult').die('click').live('click',function(e) {
 			e.preventDefault();
-			commonMethodInvoker.removeErrors();
+			errorHandler.removeErrors();
 			var resultPrintObj = self.getResultPrintObj();
 			var buffer=$('<div/>');
 			var pageNos = $('#finalresultModal .pageRoot').length;
@@ -5980,4 +6022,90 @@ function ResultSpecimenProcessor() {
 		});
 		return specimenArray;
 	}
+}
+function ChangePasswordProcessor(facilityProcessor) {
+	this.facilityProcessor = facilityProcessor;
+
+	this.getFacilityProcessor = function() {
+		return this.facilityProcessor;
+	}
+	this.currentPage = '#'+constants.CHANGEPASSWORDMODALNAME;
+	this.oldPassword=this.currentPage + ' ' +'#oldPassword';
+	this.newPassword=this.currentPage + ' '+ '#newPassword';
+	this.confirmPassword=this.currentPage + ' ' + '#confirmPassword';
+	this.errorContainer = this.currentPage + ' ' + '#errorDivHeader';
+	this.errorMessage = this.currentPage + ' ' + '#errorDivData';
+
+	this.init = function() {
+		this.bindEvents();
+		this.removecolors(self.inputFields);
+	}
+	this.removecolors = function(cl) {
+		errorHandler.removeErrorColor(this.oldPassword);
+		errorHandler.removeErrorColor(this.newPassword);
+		errorHandler.removeErrorColor(this.confirmPassword);
+	}
+	this.createError = function(error) {
+		var self=this;
+		$(error.errorMsgs).each(function(index, errormsg) {
+			errorHandler.createError($(errormsg.errorField), errormsg.errorMessage);
+		});
+	}
+	this.bindEvents = function() {
+		var self=this;
+		var facilityHome = this.getFacilityProcessor();
+		user = facilityHome.getUser();
+		$('#'+ constants.CHANGEPASSWORDMODALNAME + ' #btnCancel').die('click').live('click',function(){
+			$('#'+ constants.CHANGEPASSWORDMODALNAME).trigger('reveal:close');
+		});
+		$('#'+ constants.CHANGEPASSWORDMODALNAME + ' #btnSubmit').die('click').live('click',function(){
+			errorHandler.removeErrors();
+			var confirmPassword = $(self.confirmPassword).val();
+			var passwordInfo = new PasswordInfo();
+			passwordInfo.setOldPassword($(self.oldPassword).val());
+			passwordInfo.setUsername(user.name);
+			passwordInfo.setNewPassword($(self.newPassword).val());
+			var error = self.validate(passwordInfo,confirmPassword);
+			if(error.errorStatus==false){
+				if(passwordInfo.getNewPassword()!=confirmPassword){
+					error=new ErrorDTO();
+					var errorMsgs=[];
+					var errorMessage = new ErrorMessageDTO(self.confirmPassword,constants.PASSWORDNOTMATCH);
+					errorMsgs.push(errorMessage);
+					error.setErrorMsgs(errorMsgs);
+					self.createError(error);
+				} else {
+					var response = query.changePassword(passwordInfo);
+					if(!response.errorMessage){						
+						$('#'+ constants.CHANGEPASSWORDMODALNAME + ' input[type=password]').val("");
+						notifier.showTip("Password Changed Successfully");
+					}else 
+						errorHandler.updateTipsNew(response.errorMessage,$(self.errorMessage),$(self.errorContainer));
+				}	
+			} else 
+				self.createError(error);
+		});
+	}
+	this.validate = function(passwordInfo, confirmPassword) {
+		var error = new ErrorDTO();
+		var errorMsgs = [];
+		if(validator.isEmpty(passwordInfo.getNewPassword())) {
+			error.setErrorStatus(true);
+			var errorMessage = new ErrorMessageDTO(this.newPassword,constants.FIELDREQUIRED);
+			errorMsgs.push(errorMessage);
+		}
+		if(validator.isEmpty(confirmPassword)) {
+			error.setErrorStatus(true);
+			var errorMessage = new ErrorMessageDTO(this.confirmPassword,constants.FIELDREQUIRED);
+			errorMsgs.push(errorMessage);
+		} 
+		if(validator.isEmpty(passwordInfo.getOldPassword())) {
+			error.setErrorStatus(true);
+			var errorMessage = new ErrorMessageDTO(this.oldPassword,constants.FIELDREQUIRED);
+			errorMsgs.push(errorMessage);
+		} 
+		error.setErrorMsgs(errorMsgs);
+		return error;
+	}
+
 }
