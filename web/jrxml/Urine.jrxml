@@ -1,0 +1,773 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Urine" pageWidth="549" pageHeight="802" columnWidth="549" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" >
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="Values" >
+		<field name="key" class="java.lang.String">
+			<fieldDescription><![CDATA[key]]></fieldDescription>
+		</field>
+		<field name="id" class="java.lang.String">
+			<fieldDescription><![CDATA[id]]></fieldDescription>
+		</field>
+		<field name="value" class="java.lang.String">
+			<fieldDescription><![CDATA[value]]></fieldDescription>
+		</field>
+		<field name="unit" class="java.lang.String">
+			<fieldDescription><![CDATA[unit]]></fieldDescription>
+		</field>
+		<field name="normal" class="java.lang.String">
+			<fieldDescription><![CDATA[normal]]></fieldDescription>
+		</field>
+		<variable name="observedValue" class="java.lang.String">
+			<variableExpression><![CDATA[$F{value}.concat( $F{unit} )]]></variableExpression>
+		</variable>
+		<variable name="normalValue" class="java.lang.String">
+			<variableExpression><![CDATA[$F{normal}.concat( $F{unit} )]]></variableExpression>
+		</variable>
+	</subDataset>
+	<field name="testName" class="java.lang.String">
+		<fieldDescription><![CDATA[testName]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="262" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="26" />
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="78" width="555" height="26" />
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="156" width="555" height="26" />
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="260" />
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="182" width="555" height="26" />
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="130" width="555" height="26" />
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="26" width="555" height="26" />
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="208" width="555" height="26" />
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="104" width="555" height="26" />
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="78" width="555" height="26" />
+			</rectangle>
+			<frame>
+				<reportElement x="413" y="26" width="142" height="234" />
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<componentElement>
+					<reportElement x="0" y="0" width="142" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="142">
+							<textField>
+								<reportElement x="0" y="0" width="142" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "rbc" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement x="0" y="26" width="142" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="142">
+							<textField>
+								<reportElement x="0" y="0" width="142" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "pus" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement x="0" y="78" width="142" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="142">
+							<textField>
+								<reportElement x="0" y="0" width="142" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "cast" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement x="0" y="52" width="142" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="142">
+							<textField>
+								<reportElement x="0" y="0" width="142" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "epitcell" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement x="0" y="156" width="142" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="142">
+							<textField>
+								<reportElement x="0" y="0" width="142" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "ammor" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement x="0" y="130" width="142" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="142">
+							<textField>
+								<reportElement x="0" y="0" width="142" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "bacteria" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement x="0" y="104" width="142" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="142">
+							<textField>
+								<reportElement x="0" y="0" width="142" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "cryst" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+			</frame>
+			<frame>
+				<reportElement x="136" y="0" width="138" height="260" />
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<componentElement>
+					<reportElement x="0" y="0" width="138" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="138">
+							<textField>
+								<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "colour" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement x="0" y="26" width="138" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="138">
+							<textField>
+								<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "reaction" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement x="2" y="234" width="136" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="136">
+							<textField>
+								<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "porph" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement x="0" y="208" width="136" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="136">
+							<textField>
+								<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "urobi" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement x="0" y="182" width="138" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="138">
+							<textField>
+								<reportElement x="2" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "bilesalt" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement x="0" y="156" width="138" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="138">
+							<textField>
+								<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "bilepig" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement x="0" y="130" width="138" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="138">
+							<textField>
+								<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "acetone" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement x="2" y="104" width="136" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="136">
+							<textField>
+								<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "sugar" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement x="0" y="78" width="138" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="138">
+							<textField>
+								<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "albumin" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				
+				<componentElement>
+					<reportElement x="0" y="52" width="138" height="26" />
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Values" >
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="26" width="138">
+							<textField>
+								<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+									<printWhenExpression><![CDATA[$F{id}.equals( "sgravity" )]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="5"/>
+								<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+								<textFieldExpression><![CDATA[$F{value}.concat( $F{unit} )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+			</frame>
+			<staticText>
+				<reportElement x="274" y="0" width="281" height="26" />
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font  fontName="Arial Black" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MICROSCOPY]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="0" y="0" width="136" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="136">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+							<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "colour" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="26" width="136" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="136">
+						<textField>
+							<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "reaction" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="52" width="136" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="136">
+						<textField>
+							<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "sgravity" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="2" y="78" width="136" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="136">
+						<textField>
+							<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "albumin" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="2" y="104" width="136" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="136">
+						<textField>
+							<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "sugar" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="130" width="136" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="136">
+						<textField>
+							<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "acetone" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="156" width="136" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="136">
+						<textField>
+							<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "bilepig" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="208" width="136" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="136">
+						<textField>
+							<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "urobi" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="234" width="136" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="136">
+						<textField>
+							<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "porph" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="182" width="136" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="136">
+						<textField>
+							<reportElement x="0" y="0" width="136" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "bilesalt" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="274" y="26" width="139" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="139">
+						<textField>
+							<reportElement x="0" y="0" width="139" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "rbc" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="274" y="182" width="139" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="139">
+						<textField>
+							<reportElement x="0" y="0" width="139" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "ammor" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="274" y="78" width="139" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="139">
+						<textField>
+							<reportElement x="0" y="0" width="139" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "epitcell" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="274" y="104" width="139" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="139">
+						<textField>
+							<reportElement x="0" y="0" width="139" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "cast" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="274" y="130" width="139" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="139">
+						<textField>
+							<reportElement x="0" y="0" width="139" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "cryst" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="274" y="156" width="139" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="139">
+						<textField>
+							<reportElement x="0" y="0" width="139" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "bacteria" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="274" y="52" width="139" height="26" />
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" >
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="26" width="139">
+						<textField>
+							<reportElement x="0" y="0" width="139" height="26" isRemoveLineWhenBlank="true" >
+								<printWhenExpression><![CDATA[$F{id}.equals( "pus" )]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="5"/>
+							<textElement verticalAlignment="Middle">
+							<font fontName="Arial Black"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>
