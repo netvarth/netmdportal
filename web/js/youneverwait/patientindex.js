@@ -429,26 +429,6 @@ function PatientProcessor(patientHome) {
 
 	}
 }
-function PasswordInfo() {
-	this.setOldPassword = function(oldPassword) {
-		this.oldPassword = oldPassword;
-	}
-	this.getOldPassword = function(){
-		return this.oldPassword;
-	}
-	this.setUsername = function(name){
-		this.username = name;
-	}
-	this.getUsername = function() {
-		return this.username;
-	}
-	this.getNewPassword = function(){
-		return this.newPassword;
-	}
-	this.setNewPassword = function(newPassword){
-		this.newPassword = newPassword;
-	}
-}
 function FutureAppointmentListProcessor(parent) {
 	this.parent = parent;
 	this.showMyName = function() {
