@@ -111,7 +111,7 @@ public class ResultServiceImpl implements ResultService{
 		int patientId = 0;
 		String source_branch = facilityService.getFacilityBranchName(source_branch_id);
 		if(orderResult.getOrder().getPatient()!=null)
-			if(orderResult.getOrder().getPatient().getAddress().getEmail()!=null)
+			if(orderResult.getOrder().getPatient().getAddress().getEmail()!=null && orderResult.getOrder().getPatient().getAddress().getEmail().trim()!="")
 				patientId = patientService.getPatient(orderResult.getOrder().getPatient(),source_branch);
 		//	throw new ServiceException(ErrorCodeEnum.EmailNull);
 		return resultDao.processOrderResult(orderResult, source_branch_id, patientId);
@@ -128,7 +128,8 @@ public class ResultServiceImpl implements ResultService{
 	public void setFacilityService(FacilityService facilityService) {
 		this.facilityService = facilityService;
 	}
-
+	
+	
 
 
 
