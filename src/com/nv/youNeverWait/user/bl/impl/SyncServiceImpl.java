@@ -991,6 +991,7 @@ public class SyncServiceImpl implements SyncService {
 				response.setGlobalId(response.getGlobalId());
 				response.setActionName(ActionNameEnum.DELETE.getDisplayName());
 				deletedAppointmentResponseList.add(response);
+				
 			}
 
 		}

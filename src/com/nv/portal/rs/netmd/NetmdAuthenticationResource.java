@@ -194,6 +194,7 @@ public class NetmdAuthenticationResource {
 	 * 
 	 * @return String
 	 */
+	
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	@ResponseBody
 	public User getUser() {
@@ -204,6 +205,7 @@ public class NetmdAuthenticationResource {
 		User user = (User) req.getSession().getAttribute("user");
 		return user;
 	}
+	
 	/**
 	 * To reset password of netmd user/owner
 	 * 

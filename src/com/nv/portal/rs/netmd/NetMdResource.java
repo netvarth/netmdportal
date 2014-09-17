@@ -60,6 +60,7 @@ public class NetMdResource {
 	 * Shows Privacy and policy details
 	 * @return pricing html
 	 */
+	
 	@RequestMapping(value = "privacyPolicy", method = RequestMethod.GET)
 	public String privacyPolicy() {
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder

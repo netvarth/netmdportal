@@ -33,9 +33,7 @@ function NetmdAccServiceImpl () {
 				}		 
 	 
 		} 
-		
-		
-		
+				
 		this.setTableValueBranchBillList = function(tableObj, billResult) {
 		$j(tableObj).dataTable().fnClearTable();
 		if(billResult.branchBillList.length>0) {			

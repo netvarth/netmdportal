@@ -41,7 +41,6 @@ public class SyncDTO {
 	private List<MedicalRecordDTO> newMedicalRecordList=new ArrayList<MedicalRecordDTO>();
 	private List<MedicalRecordDTO> updateMedicalRecordList=new ArrayList<MedicalRecordDTO>();
 	private List<MedicalRecordDTO> deleteMedicalRecordList=new ArrayList<MedicalRecordDTO>();
-	
 	//private List<NetmdQuestionAnswerDTO> newNetmdQuestionnaireList=new ArrayList<NetmdQuestionAnswerDTO>();
 	//private List<NetmdQuestionAnswerDTO>updateNetmdQuestionnaireList=new ArrayList<NetmdQuestionAnswerDTO>();
 	

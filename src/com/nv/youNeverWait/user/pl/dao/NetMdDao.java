@@ -80,5 +80,4 @@ public interface NetMdDao {
 	public BranchBillListResponseDTO getBranchBillAmount(String netmdBranchId,
 			String fromDate, String toDate);
 	
-
 }

@@ -92,6 +92,7 @@ function Constants() {
 	this.NETMDACCSYNCJSON="/youNeverWait/json/new/netmdAccBranchsetSync.json";
 	this.SYNCDATANETMDACCURL="/youNeverWait/netmd/ui/netMd/getBranchSyncDetails/";
 	this.SETNETMDACCBRACHSYCURL="/youNeverWait/netmd/ui/netMd/setNetMdBranchSync";
+	
 	/*****************-------------netrxAccount-----------**----*************/
 	this.NETRXACCRIBBONURL="/youNeverWait/json/toolbars/netRxGlobalToolBar.json";
 	this.NETRXACCLEFTPANEURL="/youNeverWait/json/toolbars/netRxLeftPaneToolBar.json";

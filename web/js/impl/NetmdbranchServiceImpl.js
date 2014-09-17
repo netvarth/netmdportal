@@ -44,7 +44,6 @@ function NetmdbranchServiceImpl () {
 	return ajaxProcessor.post(netmdObj);
 }
 NetmdbranchServiceImpl.prototype.updateAccBranchNetmd=function(netmdObj) {
-	//alert(JSON.stringify(netlimsObj));
 	ajaxProcessor.setUrl(constants.UPDATENETMDBRCHURL);
 	return ajaxProcessor.post(netmdObj);
 }

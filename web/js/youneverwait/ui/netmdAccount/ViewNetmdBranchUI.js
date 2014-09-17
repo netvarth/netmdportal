@@ -156,7 +156,7 @@ ViewNetmdBranchUI.prototype.bindEvents = function() {
 			var netmdUIService = self.getNetmdUIService();
 			var netmdResponse = netmdUIService.updateAccBranchNetmd(branchPass);
 			if(netmdResponse.success==true) {
-				showTip(constants.BRANCHUPDATESUCCESS);//For showing the global Tip
+				showTip(constants.BRANCHUPDATESUCCESS);
 				var branchInfo = self.getBranch();
 				self.viewNetmdBranchDetails(branchInfo.branch.globalId);
 				self.readable();

@@ -12,6 +12,7 @@ public class BranchBillListDTO {
 	/**
 	 * @return the fromDate
 	 */
+	
 	public String getFromDate() {
 		return fromDate;
 	}

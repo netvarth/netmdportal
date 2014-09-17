@@ -93,6 +93,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	 * @param netMd
 	 * @return ResponseDTO
 	 */
+	
 	@Transactional(readOnly = false)
 	@Override
 	public ResponseDTO create(NetMdDTO netMd) {

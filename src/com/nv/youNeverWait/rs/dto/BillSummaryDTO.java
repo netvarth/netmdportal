@@ -20,7 +20,7 @@ import com.nv.youNeverWait.pl.entity.NetmdBillTbl;
  *
  * @author Sreeram T G
  */
-public class BillSummaryDTO {
+public class BillSummaryDTO {	
 private int globalId;
 private String uid;
 private String payStatus;
@@ -40,7 +40,7 @@ private float amountDue;
  */
 public BillSummaryDTO() {
 	super();
-	// TODO Auto-generated constructor stub
+
 }
 /**
  * @param globalId

@@ -188,7 +188,6 @@ ViewNetmdBranchUI.prototype.bindEvents = function() {
 		var passPhrase=obj.closest('tr').children('td:nth-child(1)').text();
 		var macid=obj.closest('tr').children('td:nth-child(2)').text();
 		var resultMacJson=self.createMacJson(passPhrase,macid);
-		//alert(resultMacJson);
 		var netmdUIService = self.getNetmdUIService();
 		var response = netmdUIService.changePrimaryNetmdBranch(resultMacJson);	
 			//alert(JSON.stringify(response));

@@ -58,24 +58,28 @@ public class BranchBillListResponseDTO {
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
+	
 	/**
 	 * @return the branchBillList
 	 */
 	public List<BillSummaryDTO> getBranchBillList() {
 		return branchBillList;
 	}
+	
 	/**
 	 * @param branchBillList the branchBillList to set
 	 */
 	public void setBranchBillList(List<BillSummaryDTO> branchBillList) {
 		this.branchBillList = branchBillList;
 	}
+	
 	/**
 	 * @return the count
 	 */
 	public Long getCount() {
 		return count;
 	}
+	
 	/**
 	 * @param count the count to set
 	 */

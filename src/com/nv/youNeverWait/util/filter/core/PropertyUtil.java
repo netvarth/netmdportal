@@ -39,6 +39,7 @@ public class PropertyUtil {
 	 * @return ParameterExpression<T>
 	 *
 	 */
+	
 	public static  <T> ParameterExpression<T> getParameterExpForProperty(CriteriaBuilder criteriaBuilder,
 			String propertyName,Class<?> type){
 		Class<?> type1 = null;

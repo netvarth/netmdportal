@@ -80,6 +80,5 @@ public interface NetMdService {
 	public NetMdBranchListResponseDTO getNetMdBrnchList(int organisationId);
 	public NetMdBranchDTO getUpdateNetmdBranch(String lastSyncTime,
 			Date currentSyncTime,HeaderDTO header);
-	
 
 }

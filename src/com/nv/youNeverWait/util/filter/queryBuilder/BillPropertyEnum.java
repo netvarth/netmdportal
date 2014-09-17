@@ -25,6 +25,7 @@ public enum BillPropertyEnum implements EnumDisplay,Property {
 	billStatus("billStatus","billStatus","com.nv.youNeverWait.pl.entity.NetmdBillTbl","","")
 	
 	;
+	
 	String displayName;
 	String fieldName;
 	String entityName;

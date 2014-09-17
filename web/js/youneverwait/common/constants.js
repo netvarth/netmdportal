@@ -38,7 +38,6 @@ constants_newNetMd="/youNeverWait/js/youneverwait/netmd/new/newNetMd.js";
 constants_newSetsycJson="/youNeverWait/json/new/newsetSync.json";
 constants_newsynctype="/youNeverWait/js/youneverwait/setSync.js";
 
-
 constants_ViewMdEntryPoint="/youNeverWait/js/youneverwait/netmd/view/viewNetMdEntryPoint.js";
 constants_ViewNetMdAction="/youNeverWait/js/youneverwait/netmd/view/viewNetMdActions.js";
 constants_ViewNetMdFunctions="/youNeverWait/js/youneverwait/netmd/view/viewNetMdFunction.js";

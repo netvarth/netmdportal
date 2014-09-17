@@ -89,6 +89,7 @@ public class NetMdServiceImpl implements NetMdService {
 	 * @param syncTime
 	 * @return RetrieveNetmdListResponseDTO
 	 */
+	
 	@Override
 	public RetrieveNetmdListResponseDTO retrieveNetmdList(String syncTime,
 			Date currentTime) {
@@ -1148,6 +1149,7 @@ public class NetMdServiceImpl implements NetMdService {
 		String toDate="";
 		// validate filterDTO to identify invalid expressions and if there is
 		// any,return result with appropriate error code
+		
 		ErrorDTO error = validator.validateBillFilter(filterDTO);
 		if (error != null) {
 			response.setError(error);

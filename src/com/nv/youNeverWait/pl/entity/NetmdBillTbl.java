@@ -8,6 +8,7 @@ import java.util.Date;
  * The persistent class for the netmd_bill_tbl database table.
  * 
  */
+
 @Entity
 @Table(name="netmd_bill_tbl")
 public class NetmdBillTbl implements Serializable {
