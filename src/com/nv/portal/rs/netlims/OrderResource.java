@@ -30,6 +30,7 @@ import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.ListResponse;
 import com.nv.youNeverWait.rs.dto.Order;
+import com.nv.youNeverWait.rs.dto.OrderCountFilterDto;
 import com.nv.youNeverWait.rs.dto.OrderTestResultDTO;
 import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
 import com.nv.youNeverWait.rs.dto.Parameter;
@@ -78,6 +79,21 @@ public class OrderResource extends ServiceExceptionHandler{
 	@ResponseBody
 	public Order getOrder(@PathVariable int orderId){
 		return orderService.getByOrderId(orderId);
+		
+	}
+	
+	/**
+	 * Method to get count of orders transferred from a branch to the portal
+	 */
+	/**
+	 * @param branchId
+	 * @return Order
+	 */
+	@RequestMapping(value = "/count", method = RequestMethod.POST)
+	@ResponseBody
+	public int getOrderCount(@RequestBody OrderCountFilterDto ocf){
+		System.out.println(ocf.getFromDate());
+		return orderService.getOrderCountByBranchId(ocf);
 		
 	}
 
