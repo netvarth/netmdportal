@@ -3,7 +3,6 @@ package com.nv.youNeverWait.pl.entity;
 import java.io.Serializable;
 
 import javax.persistence.*;
-
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +40,10 @@ public class LabFacilityTbl implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="login_id")
 	private LoginTbl loginTbl;
+	
+	//bi-directional many-to-one association to OrderTransferCountTbl
+		@OneToMany(mappedBy="labFacilityTbl")
+		private List<OrderTransferCountTbl> orderTransferCountTbls;
 	/**
 	 * 
 	 */
@@ -207,5 +210,26 @@ public class LabFacilityTbl implements Serializable {
 	 */
 	public void setLoginTbl(LoginTbl loginTbl) {
 		this.loginTbl = loginTbl;
+	}
+	public List<OrderTransferCountTbl> getOrderTransferCountTbls() {
+		return this.orderTransferCountTbls;
+	}
+
+	public void setOrderTransferCountTbls(List<OrderTransferCountTbl> orderTransferCountTbls) {
+		this.orderTransferCountTbls = orderTransferCountTbls;
+	}
+
+	public OrderTransferCountTbl addOrderTransferCountTbl(OrderTransferCountTbl orderTransferCountTbl) {
+		getOrderTransferCountTbls().add(orderTransferCountTbl);
+		orderTransferCountTbl.setLabFacilityTbl(this);
+
+		return orderTransferCountTbl;
+	}
+
+	public OrderTransferCountTbl removeOrderTransferCountTbl(OrderTransferCountTbl orderTransferCountTbl) {
+		getOrderTransferCountTbls().remove(orderTransferCountTbl);
+		orderTransferCountTbl.setLabFacilityTbl(null);
+
+		return orderTransferCountTbl;
 	}
 }

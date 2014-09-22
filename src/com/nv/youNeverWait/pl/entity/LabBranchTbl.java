@@ -101,6 +101,9 @@ public class LabBranchTbl extends HealthCareOrganisationTbl implements Serializa
 	@OneToMany(mappedBy="labBranchTbl")
 	private List<NetlimsOrderTbl> netlimsOrderTbls;
 
+	//bi-directional many-to-one association to OrderTransferCountTbl
+		@OneToMany(mappedBy="labBranchTbl")
+		private List<OrderTransferCountTbl> orderTransferCountTbls;
 	/**
 	 * 
 	 */
@@ -688,4 +691,26 @@ public class LabBranchTbl extends HealthCareOrganisationTbl implements Serializa
 
 		return netlimsOrderTbl;
 	}
+	public List<OrderTransferCountTbl> getOrderTransferCountTbls() {
+		return this.orderTransferCountTbls;
+	}
+
+	public void setOrderTransferCountTbls(List<OrderTransferCountTbl> orderTransferCountTbls) {
+		this.orderTransferCountTbls = orderTransferCountTbls;
+	}
+
+	public OrderTransferCountTbl addOrderTransferCountTbl(OrderTransferCountTbl orderTransferCountTbl) {
+		getOrderTransferCountTbls().add(orderTransferCountTbl);
+		orderTransferCountTbl.setLabBranchTbl(this);
+
+		return orderTransferCountTbl;
+	}
+
+	public OrderTransferCountTbl removeOrderTransferCountTbl(OrderTransferCountTbl orderTransferCountTbl) {
+		getOrderTransferCountTbls().remove(orderTransferCountTbl);
+		orderTransferCountTbl.setLabBranchTbl(null);
+
+		return orderTransferCountTbl;
+	}
+
 }
