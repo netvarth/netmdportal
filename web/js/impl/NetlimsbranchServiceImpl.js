@@ -45,9 +45,13 @@ function NetlimsbranchServiceImpl () {
 	 
 		}  */
 }
- NetlimsbranchServiceImpl.prototype.createBranchNetlims=function (netlimsObj) {
+NetlimsbranchServiceImpl.prototype.createBranchNetlims=function (netlimsObj) {
 	ajaxProcessor.setUrl(constants.CREATENETLIMSBRANCHURL);
 	return ajaxProcessor.post(netlimsObj);
+}
+NetlimsbranchServiceImpl.prototype.findOrderCount=function (param) {
+	ajaxProcessor.setUrl(constants.FINDORDERCOUNTURL);
+	return ajaxProcessor.post(param);
 }
 NetlimsbranchServiceImpl.prototype.updateAccBranchNetlims=function(netlimsObj) {
 	//alert(JSON.stringify(netlimsObj));
