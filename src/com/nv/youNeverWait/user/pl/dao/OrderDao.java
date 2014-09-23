@@ -18,6 +18,7 @@ import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.ListResponse;
 import com.nv.youNeverWait.rs.dto.Order;
+import com.nv.youNeverWait.rs.dto.OrderCountFilterDto;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTestResultDTO;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
@@ -79,5 +80,7 @@ public interface OrderDao {
 	public Order getByOrderId(int orderId);
 
 	public ListResponse getByPatientFilter(FilterDTO filterDTO, User user);
+
+	public int getOrderCountByBranchId(OrderCountFilterDto ofc);
 
 }

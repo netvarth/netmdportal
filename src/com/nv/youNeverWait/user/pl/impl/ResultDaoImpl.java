@@ -36,6 +36,7 @@ import com.nv.youNeverWait.pl.entity.NetlimsReferralTbl;
 import com.nv.youNeverWait.pl.entity.NetlimsResultTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.OrderResultTbl;
+import com.nv.youNeverWait.pl.entity.OrderTransferCountTbl;
 import com.nv.youNeverWait.pl.entity.PatientResultTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.ReferralResultTbl;
@@ -335,7 +336,7 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 	private void saveOrUpdateOrderPatient(NetlimsOrderTbl netlimsOrderTbl,
 			int branchId, int patientId) {
 		if(patientId!=0){
-			
+
 			NetlimsPatientTbl netlimsPatientTbl = getByPatientId_BranchId(patientId, branchId);
 			if(netlimsPatientTbl==null){
 				netlimsPatientTbl = new NetlimsPatientTbl();
@@ -405,6 +406,15 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 	@Transactional(readOnly=false)
 	private NetlimsOrderTbl saveOrUpdateNetlimsOrder(NetlimsOrderTbl netlimsOrderTbl, OrderResultSyncDTO orderResult, int branchId ) {
 		NetlimsOrderTbl orderTbl=null;
+		int orderTransferCount;
+		OrderTransferCountTbl orderTransferCountObj = getOrderCountByBranchId(new Date(),branchId);
+		if(orderTransferCountObj == null){
+			orderTransferCountObj = new OrderTransferCountTbl();
+			orderTransferCount=0;
+			orderTransferCountObj.setDate(new Date());
+			orderTransferCountObj.getLabBranchTbl().setId(branchId);
+		}
+		orderTransferCount = orderTransferCountObj.getOrderCount();
 		if(netlimsOrderTbl == null)
 			orderTbl = new NetlimsOrderTbl();
 		else
@@ -416,6 +426,8 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 		orderTbl.setCreatedDate(new Date());
 		orderTbl.setOrderHeader(orderResult.getOrder().getOrderHeader());
 		saveOrUpdate(NetlimsOrderTbl.class, orderTbl);	
+		orderTransferCountObj.setOrderCount(orderTransferCount);  
+		saveOrUpdate(OrderTransferCountTbl.class,orderTransferCountObj);
 		return orderTbl;
 	}
 
@@ -431,7 +443,13 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 		query.setParameter("param1",orderId );
 		return executeUniqueQuery(ReferralResultTbl.class, query);
 	}
-
+	private OrderTransferCountTbl getOrderCountByBranchId(Date createdDate, int branchId) {
+		Long orderCount;
+		javax.persistence.Query query = em.createQuery(Query.GET_ORDER_COUNT_FOR_SAVE);
+		query.setParameter("param1", branchId);
+		query.setParameter("param2", createdDate);
+		return executeUniqueQuery(OrderTransferCountTbl.class, query);
+	}
 	/**
 	 * @return the doctorDao
 	 */
