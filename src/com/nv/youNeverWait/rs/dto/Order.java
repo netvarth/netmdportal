@@ -3,6 +3,8 @@
  */
 package com.nv.youNeverWait.rs.dto;
 
+import java.util.List;
+
 
 /**
  * @author Mani E.V
@@ -18,6 +20,8 @@ public class Order {
 	private String referralName;
 	private String headerData;
 	private String branchName;
+	
+	private List<OrderTest> tests;
 	/**
 	 * @return the uid
 	 */
@@ -126,4 +130,17 @@ public class Order {
 	public void setBranchName(String branchName) {
 		this.branchName = branchName;
 	}
+	/**
+	 * @return the test
+	 */
+	public List<OrderTest> getTests() {
+		return tests;
+	}
+	/**
+	 * @param test the test to set
+	 */
+	public void setTests(List<OrderTest> tests) {
+		this.tests = tests;
+	}
+	
 }
