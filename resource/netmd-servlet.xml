@@ -28,7 +28,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="messageConverters">
 			<list>
 				<bean
-					class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 					<property name="objectMapper" ref="jacksonObjectMapper" />
 				</bean>
 				<bean
@@ -42,7 +42,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 	</bean>
 
-	<bean class="org.codehaus.jackson.map.ObjectMapper" id="jacksonObjectMapper" />
+	<bean class="com.fasterxml.jackson.databind.ObjectMapper" id="jacksonObjectMapper" />
 
 	<bean id="xmlMarshaller" class="com.nv.framework.ws.NvJaxb2Marshaller">
 		<property name="classesToBeBound">
