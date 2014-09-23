@@ -1525,3 +1525,190 @@ function PasswordInfo() {
 		this.newPassword = newPassword;
 	}
 }
+function LayoutUpdater() {
+	this.generate = function(input) { 
+		var self = this;
+		var layoutJson = new LayoutJson();
+		layoutJson.setResultHeader(input.resultHeader);
+		var layouts = [];
+		var testList = [];
+		$(input.resultList).each(function(index, tests) {
+			$(tests.testResult).each(function(){
+				var test = $(this);
+				var layout = new Layouts_Template();
+				if(test.testLayout=='General'){
+					layouts.setTestLayout(test.testLayout);
+					testList.push(self.generateFromGeneral(test));
+					layouts.setTests(testList);
+				}
+			});
+		});
+		layoutJson.setLayouts(layouts);
+		return layoutJson;
+	}
+	this.generateFromGeneral = function(input) {
+		var test = new Test_Template();
+		var values = new Values_Template();
+
+		test.setTestName(input.testName);
+		test.setTestId(input.testId);
+
+		values.setId(input.testName);
+		values.setKey(input.testName);
+		//values.setUnit(input.testUnit);
+
+		var normal = "";
+		var value = "";
+
+		$(input.analysis).each(function(analysisIndex,analysis) {
+			$(analysis.resultContent).each(function(resultcontentIndex,resultcontent) {
+				$(resultcontent.resultParams).each(function(resultparamIndex,resultparam) {
+					$(resultparam.values).each(function(paramvaluesIndex,paramValues) {
+						if(paramValues.headervalue=='PatientValue' || paramValues.headervalue=='Result'){
+							$(paramValues.values).each(function(paramdataIndex,paramData) {
+								value = paramData.value;
+								values.setUnit(paramData.unit);
+							});	
+						}
+						if(paramValues.headervalue=='NormalRange'){
+							$(paramValues.values).each(function(paramdataIndex,paramData) {
+								normal = paramData.value;
+							});	
+						}
+					});
+				});
+			});
+		});
+		values.setValue(value);
+		values.setNormal(normal);
+
+		test.setValues(values);
+		if(input.departmentName)
+			test.setDepartmentName(input.departmentName);
+		if(input.userId)
+			test.setUserId(input.userId);
+		if(input.userName)
+			test.setUserName(input.userName);
+		if(input.userDesignation)
+			test.setUserDesignation(input.userDesignation);
+		if(input.specimen)
+			test.setSpecimen(input.specimen);
+		return test;
+	}
+}
+function LayoutJson() {
+	this.setResultHeader = function(resultHeader){
+		this.resultHeader = resultHeader;
+	}
+	this.getResultHeader = function(){
+		return this.resultHeader;
+	}
+	this.setLayouts = function(layouts){
+		this.layouts=layouts;
+	}
+	this.getLayouts = function() {
+		return this.layouts;
+	}
+}
+function Layouts_Template() {
+	this.setTestLayout = function(layout) {
+		this.testLayout = layout;
+	}
+	this.getTestLayout = function() {
+		return this.testLayout;
+	}
+	this.setTests = function(tests) {
+		this.tests = tests;
+	}
+	this.getTests =function(){
+		return this.tests;
+	}
+}
+function Values_Template() {
+	this.setId = function(id) {
+		this.id = id;
+	}
+	this.getId = function() {
+		return this.id;
+	}
+	this.setKey = function(key) {
+		this.key = key;
+	}
+	this.getKey = function() {
+		return this.key;
+	}
+	this.setNormal = function(normal) {
+		this.normal = normal;
+	}
+	this.getNormal = function(){
+		return this.normal;
+	}
+	this.setUnit = function(unit) {
+		this.unit = unit;
+	}
+	this.getUnit = function(){
+		return this.unit;
+	}
+	this.setValue = function(value){
+		this.value = value;
+	}
+	this.getValue = function(){
+		return this.value;
+	}
+}
+function Test_Template() {
+	this.setTestName = function(testName){
+		this.testName = testName;
+	}
+	this.getTestName = function(){
+		return this.testName;
+	}
+	this.setTestId = function(testId) {
+		this.testId = testId;
+	}
+	this.getTestId = function(){
+		return this.testId;
+	}
+	this.setValues = function(values) {
+		this.values = values;
+	}
+	this.getValues = function(){
+		return this.values;
+	}
+	this.getDepartmentName = function() {
+		return this.departmentName;
+	}
+	this.setDepartmentName=function(departmentName){
+		this.departmentName = departmentName;
+	}
+	this.getRemarks =function() {
+		return this.remarks;
+	}
+	this.setRemarks =function(remarks){
+		this.remarks = remarks;
+	}
+	this.getUserId = function() {
+		return this.userId;
+	}
+	this.setUserId = function(userId) {
+		this.userId=userId;
+	}
+	this.getUserName = function() {
+		return this.userName;
+	}
+	this.setUserName = function(userName) {
+		this.userName = userName;
+	}
+	this.getUserDesignation = function() {
+		return this.userDesignation;
+	}
+	this.setUserDesignation = function(userDesignation) {
+		this.userDesignation = userDesignation;
+	}
+	this.getSpecimen = function(){
+		return this.specimen;
+	}
+	this.setSpecimen = function(specimen){
+		this.specimen = specimen;
+	}
+}
