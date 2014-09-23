@@ -352,5 +352,9 @@ public class Query {
 	public static final String GET_FACILITY_BY_UID_BRANCHID = "from LabFacilityTbl as facility where facility.uid=:param1 and facility.labBranchTbl.id=:param2";
 	public static final String GET_FACILITY_BY_LOGINID = "from LabFacilityTbl as facility where facility.loginTbl.id=:param1";
 	public static final String GET_USER_BY_REFERRALID = "from LabUserTbl as user where user.refUid=:param1 and user.labBranchTbl.id=:param2";
-
+	/*OrdertransferTbl*/
+	//public static final String GET_ORDER_COUNT ="SELECT SUM(order_count) FROM order_transfer_count_tbl where brach_id =:param1";
+	public static final String GET_ORDER_COUNT ="SELECT SUM(orderCount) as orderCt FROM OrderTransferCountTbl as ordercounttbl where ordercounttbl.labBranchTbl.id =:param1 and ordercounttbl.date>=:param2 and ordercounttbl.date<=:param3";
+	//public static final String GET_ORDER_COUNT ="SELECT SUM(orderCount) as orderCt FROM OrderTransferCountTbl as ordercounttbl where ordercounttbl.labBranchTbl.id =:param1";
+	public static final String GET_ORDER_COUNT_FOR_SAVE="from OrderTransferCountTbl as ordercounttbl where ordercounttbl.labBranchTbl.id =:param1 and ordercounttbl.date =:param2 ";
 }
