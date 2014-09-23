@@ -29,6 +29,10 @@
 		{
 			"name" 	: 	"change",
 			"title"	:	"Sync Set"
+		},
+		{
+			"name" 	: 	"orderCount",
+			"title"	:	"Order count"
 		}
 
 	]
