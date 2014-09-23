@@ -26,12 +26,14 @@ function Constants() {
 	this.NETRXACCPAGE="netrxAcc";
 	this.SELECTONEBRANCH = "Select atleast one branch";
 	this.SELECTONEBRANCHONLY = "Select only one branch";
+	this.FINDORDERCOUNTURL="/youNeverWait/netlims/ui/order/count";
 	
 	/*****************-------------netlimsaccount-----------**----*************/
 	this.NETLIMSACCRIBBONURL="/youNeverWait/json/toolbars/netlimsGlobalToolbar.json";
 	this.NETLIMSACCLEFTPANEURL="/youNeverWait/json/toolbars/netlimsLeftPaneToolbar.json";
 	this.NETLIMSACCBRANCHLISTURL="/youNeverWait/netlims/ui/lab/branchList";
 	this.NEWBRANCHMODAL="netlimsAccBranchModal";
+	this.NEWORDERCOUNTMODAL = "newOrderCountModal";
 	this.NEWNETLIMSACCBRANCHJSON="/youNeverWait/json/new/newBranchNetlimsAcc.json";
 	this.NETLIMSBRANCH="BRANCH";
 	this.NETLIMSACCPAGEBRANCHJSON="/youNeverWait/json/toolbars/netlimsAccBranchPageToolBar.json";
@@ -157,6 +159,7 @@ function Constants() {
 	this.SYNCLOGLISTMSG="SYNC LOG LIST";
 	this.SYNCFUNCTIONSURL="/youNeverWait/js/youneverwait/settings/syncLog/syncLogFunctions.js";
 	/*****-----netlims---*****/
+	this.ORDERCOUNTJSON="/youNeverWait/json/new/orderCount.json";
 	this.NETLIMSBRANCHLISTURL="/youNeverWait/superadmin/ui/superAdmin/labList";
 	this.NETLIMSLIST="NETLIMS LIST";
 	this.NETLIMSPAGEJSON="/youNeverWait/json/toolbars/netlimsPageToolBar.json";
