@@ -94,6 +94,7 @@
 		<class>com.nv.youNeverWait.pl.entity.NetlimsPatientTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdPatientTbl</class>
 		<class>com.nv.youNeverWait.pl.entity.NetmdDoctorTbl</class>
+		<class>com.nv.youNeverWait.pl.entity.OrderTransferCountTbl</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 		</properties>
