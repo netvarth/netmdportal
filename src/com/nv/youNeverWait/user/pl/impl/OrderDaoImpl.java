@@ -10,7 +10,6 @@
  */
 package com.nv.youNeverWait.user.pl.impl;
 
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,6 +46,7 @@ import com.nv.youNeverWait.rs.dto.ListResponse;
 import com.nv.youNeverWait.rs.dto.Order;
 import com.nv.youNeverWait.rs.dto.OrderCountFilterDto;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
+import com.nv.youNeverWait.rs.dto.OrderTest;
 import com.nv.youNeverWait.rs.dto.OrderTestResultDTO;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
@@ -59,7 +59,6 @@ import com.nv.youNeverWait.util.filter.core.Filter;
 import com.nv.youNeverWait.util.filter.core.FilterFactory;
 import com.nv.youNeverWait.util.filter.core.QueryBuilder;
 import com.nv.youNeverWait.util.filter.core.QueryBuilderFactory;
-import com.sun.org.apache.xml.internal.utils.IntVector;
 
 /**
  * 
@@ -322,22 +321,22 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 	@Override
 	public ListResponse getByFilter(FilterDTO filterParam, User user) {
 		LoginTbl loginTbl = getUserByNameAndType(user.getUserName(), user.getUserType());
-		//		ExpressionDTO branchExp = new ExpressionDTO();
-		//		branchExp.setName("branchId");
-		//		branchExp.setOperator("eq");
-		//		branchExp.setValue(Integer.toString(user.getOrganisationId()));
-
+//		ExpressionDTO branchExp = new ExpressionDTO();
+//		branchExp.setName("branchId");
+//		branchExp.setOperator("eq");
+//		branchExp.setValue(Integer.toString(user.getOrganisationId()));
+		
 		ExpressionDTO loginExp = new ExpressionDTO();
 		loginExp.setName("loginId");
 		loginExp.setOperator("eq");
 		loginExp.setValue(Integer.toString(loginTbl.getId()));
 
-		//		LabFacilityTbl labFacilitytbl = getFacilityByEmailId(user.getUserName());
-		//		ExpressionDTO expr = new ExpressionDTO();
-		//		expr.setName("loginId");
-		//		expr.setOperator("eq");
-		//		expr.setValue(Integer.toString(labFacilitytbl.getId()));
-
+//		LabFacilityTbl labFacilitytbl = getFacilityByEmailId(user.getUserName());
+//		ExpressionDTO expr = new ExpressionDTO();
+//		expr.setName("loginId");
+//		expr.setOperator("eq");
+//		expr.setValue(Integer.toString(labFacilitytbl.getId()));
+		
 		ListResponse response = new ListResponse();
 		//get queryBuilder for test from builder factory
 		QueryBuilder queryBuilder = queryBuilderFactory.getQueryBuilder(Constants.NETLIMS_ORDERS);
@@ -450,6 +449,19 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		order.setId(netlimsOrderTbl.getId());
 		order.setOrderStatus(netlimsOrderTbl.getOrderStatus());
 		order.setHeaderData(netlimsOrderTbl.getOrderHeader());
+		
+		List<NetlimsResultTbl> netlimsResults = netlimsOrderTbl.getNetlimsResultTbls();
+		List<OrderTest> tests = new ArrayList<OrderTest>();
+		for(NetlimsResultTbl netlimsResult : netlimsResults) {
+			OrderTest test = new OrderTest();
+			test.setItemId(netlimsResult.getItemId());
+			test.setUid(netlimsResult.getTestUid());
+			test.setTestName(netlimsResult.getTestName());
+			test.setSpecimen(netlimsResult.getSpecimen());
+			test.setResult(netlimsResult.getResult());
+			tests.add(test);
+		}
+		order.setTests(tests);
 		return order;
 	}
 
