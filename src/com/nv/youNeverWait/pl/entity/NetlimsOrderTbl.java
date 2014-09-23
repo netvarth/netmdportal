@@ -48,7 +48,7 @@ public class NetlimsOrderTbl implements Serializable {
 	private List<FacilityResultTbl> facilityResultTbls;
 
 	//bi-directional many-to-one association to NetlimsResultTbl
-	@OneToMany(mappedBy="netlimsOrderTbl")
+	@OneToMany(mappedBy="netlimsOrderTbl", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<NetlimsResultTbl> netlimsResultTbls;
 
 	//bi-directional many-to-one association to PatientResultTbl
