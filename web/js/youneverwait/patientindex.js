@@ -57,6 +57,10 @@ function Constants() {
 	this.CHANGEPASSWORDURL = '/youNeverWait/ynw/auth/changePassword';
 	this.FIELDREQUIRED = 'Field required';
 	this.PASSWORDNOTMATCH = "Password doesn't match";
+	this.SELECTEDROWCOLOR  = 'background:#DCDCDC;';
+	this.GETTESTSURL = "/youNeverWait/netlims/ui/order/getTests/";
+	this.GETORDERURL = "/youNeverWait/netlims/ui/order/";
+	this.SHOWRESULTURL="/youNeverWait/netlims/ui/result/print/";
 }
 function Query() {
 	this.showMyName = function() {
@@ -113,6 +117,18 @@ function Query() {
 	this.changePassword = function(passwordInfo){
 		ajaxProcessor.setUrl(constants.CHANGEPASSWORDURL);
 		return ajaxProcessor.post(passwordInfo);
+	}
+	this.getTests = function(orderId) {
+		ajaxProcessor.setUrl(constants.GETTESTSURL+orderId);
+		return ajaxProcessor.get();
+	}
+	this.getOrder = function(orderId) {
+		ajaxProcessor.setUrl(constants.GETORDERURL+orderId);
+		return ajaxProcessor.get();
+	}
+	this.showResult = function(param) {
+		ajaxProcessor.setUrl(constants.SHOWRESULTURL+ param + "/");
+		return ajaxProcessor.post();
 	}
 }
 function User() {
@@ -622,6 +638,52 @@ function ResultsProcessor(patientHome){
 		expList.add(expr);
 		this.tableNavigator.setExp(expList);
 		this.tableNavigator.list();
+		this.bindEvents();
+	}
+	this.bindEvents = function() {
+		var self=this;
+		$(self.pgTableName + ' tbody tr').die('click').live('click',function(){
+			errorHandler.removeErrors();
+			var objId=$(this).attr('id');
+			if($(this).attr('selected')) {
+				$(this).removeAttr('selected');
+				$(this).removeAttr('style');
+			} else {	
+				$(this).attr('selected','selected');
+				$(this).attr('style',constants.SELECTEDROWCOLOR);
+			}
+			var orderId = objId.split("_")[0];
+			var order = query.getOrder(orderId);
+			var layout = new LayoutJson();
+			var layoutUpdater = new LayoutUpdater();
+
+			layout.setResultHeader($.parseJSON(order.headerData).header);
+			
+			var tests = [];
+			var selectedLayout="";
+			var layoutTemplate = new Layouts_Template();
+
+			$(order.tests).each(function(index,test) {
+				var result = $.parseJSON(test.result);
+				var curTemplate = result.testLayout;
+				if(selectedLayout=="")
+					layoutTemplate.setTestLayout(curTemplate);
+				if(curTemplate=='General'){
+					tests.push(layoutUpdater.generateFromGeneral(result));
+				}
+			});
+			layoutTemplate.setTests(tests)
+			layout.setLayouts(layoutTemplate);
+			var resultString = new ResultString();
+			resultString.setResult(JSON.stringify(layout));
+			var f = $('<form method="post" action="' + constants.SHOWRESULTURL + '" target="_blank"></form>');
+			var inputTag = $('<input type="hidden" name="input" id="input" />');
+			inputTag.attr('value',JSON.stringify(layout));
+			f.html(inputTag);
+			f.appendTo($('body')); // required for submission to work in Firefox
+			f.submit();
+			f.remove();
+		});
 	}
 	this.setTableValues = function(tableObj, orderResult) {
 		$(tableObj).dataTable().fnClearTable();
@@ -655,6 +717,14 @@ function ResultsProcessor(patientHome){
 				});
 			}		
 		}
+	}
+}
+function ResultString() {
+	this.setResult = function(result){
+		this.result=result;
+	}
+	this.getResult = function() {
+		return this.result;
 	}
 }
 function ClinicsProcessor(patientHome) {
