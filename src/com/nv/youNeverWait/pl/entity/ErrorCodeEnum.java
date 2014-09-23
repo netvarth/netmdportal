@@ -287,7 +287,8 @@ public enum ErrorCodeEnum {
 	BillPaymentsNull("4020","No bill payments available"), 
 	InValidMedicalRecordName("4021","MedicalRecordName is empty"),
 	InvalidMedicalRecordId("4022","Invalid medicalRecord id"),
-	InvalidMedicalRecordType("4033","Invalid medicalRecord type");
+	InvalidMedicalRecordType("4033","Invalid medicalRecord type"), 
+	JsonParseError("4034","Invalid Json");
 	
 	
 	private String errCode;
