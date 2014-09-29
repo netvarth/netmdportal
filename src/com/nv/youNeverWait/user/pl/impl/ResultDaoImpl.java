@@ -406,18 +406,27 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 	@Transactional(readOnly=false)
 	private NetlimsOrderTbl saveOrUpdateNetlimsOrder(NetlimsOrderTbl netlimsOrderTbl, OrderResultSyncDTO orderResult, int branchId ) {
 		NetlimsOrderTbl orderTbl=null;
-		int orderTransferCount;
+		int orderTransferCount=0;
 		OrderTransferCountTbl orderTransferCountObj = getOrderCountByBranchId(new Date(),branchId);
 		if(orderTransferCountObj == null){
 			orderTransferCountObj = new OrderTransferCountTbl();
-			orderTransferCount=0;
-			orderTransferCountObj.setDate(new Date());
-			orderTransferCountObj.getLabBranchTbl().setId(branchId);
+			DateFormat sdf = new SimpleDateFormat(
+					Constants.DATE_FORMAT_WITH_NO_TIME);
+			Date dateWithoutTime = null ;
+			try {
+				dateWithoutTime = sdf.parse(sdf.format(new Date()));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			orderTransferCountObj.setDate(dateWithoutTime);
+			LabBranchTbl labBranchTbl = getById(LabBranchTbl.class, branchId);
+			orderTransferCountObj.setLabBranchTbl(labBranchTbl);
 		}
 		orderTransferCount = orderTransferCountObj.getOrderCount();
-		if(netlimsOrderTbl == null)
+		if(netlimsOrderTbl == null){
 			orderTbl = new NetlimsOrderTbl();
-		else
+			orderTransferCount++;
+		}else
 			orderTbl = netlimsOrderTbl;
 		orderTbl.setCreatedDate(orderResult.getOrder().getOrderDate());
 		orderTbl.setOrderId(orderResult.getOrder().getUid());
@@ -444,7 +453,6 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 		return executeUniqueQuery(ReferralResultTbl.class, query);
 	}
 	private OrderTransferCountTbl getOrderCountByBranchId(Date createdDate, int branchId) {
-		Long orderCount;
 		javax.persistence.Query query = em.createQuery(Query.GET_ORDER_COUNT_FOR_SAVE);
 		query.setParameter("param1", branchId);
 		query.setParameter("param2", createdDate);
