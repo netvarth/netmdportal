@@ -17,10 +17,10 @@
 			<fieldDescription><![CDATA[normal]]></fieldDescription>
 		</field>
 		<variable name="value_unit" class="java.lang.String">
-			<variableExpression><![CDATA[$F{value}.concat( $F{unit} )]]></variableExpression>
+			<variableExpression><![CDATA[$F{value}.concat(" ").concat( $F{unit} )]]></variableExpression>
 		</variable>
 		<variable name="normal_unit" class="java.lang.String">
-			<variableExpression><![CDATA[$F{normal}.concat( $F{unit} )]]></variableExpression>
+			<variableExpression><![CDATA[$F{normal}.concat(" ").concat( $F{unit} )]]></variableExpression>
 		</variable>
 	</subDataset>
 	<field name="testName" class="java.lang.String">
