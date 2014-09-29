@@ -2056,3 +2056,15 @@ a.ilink:active { COLOR: #9c9c9c; TEXT-DECORATION: none }
 .ui-tabs-panel{padding:0 0 0 0}
 .ui-tabs-panel .ui-tabs-nav{padding:0px}
 .ui-tabs-panel .ui-widget-content{padding:5px}
+
+.column_symbol {float:left; width:1%}
+.column_very_small {float:left;width:5%}
+.column_small {float:left;width:12%}
+.column_small_medium {float:left;width:14%}
+.column_medium {float:left;width:15%}
+.column_medium_extra {float:left;width:20%}
+.column_large {float:left;width:36%}
+.result_header {font-size:15;}
+.column_extralarge{float:left;width:66%}
+.column_very_extralarge{float:left;width:87%}
+.column_top {padding-top:3%}
