@@ -65,6 +65,8 @@ public class PDFResultView implements View {
 		JasperCompileManager.compileReportToFile(generalDesign, layoutFolder+"\\General.jasper");
 		generalDesign = JRXmlLoader.load(layoutFolder+"\\Urine.jrxml");
 		JasperCompileManager.compileReportToFile(generalDesign, layoutFolder+"\\Urine.jasper");	
+		generalDesign = JRXmlLoader.load(layoutFolder+"\\Widal.jrxml");
+		JasperCompileManager.compileReportToFile(generalDesign, layoutFolder+"\\Widal.jasper");
 		String jsonstr = (String) model.get("inputJson");
 		InputStream is = new ByteArrayInputStream(jsonstr.getBytes());
 		JRDataSource jsource = new JsonDataSource(is);
