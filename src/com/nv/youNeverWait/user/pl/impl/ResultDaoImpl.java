@@ -406,10 +406,19 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 	@Transactional(readOnly=false)
 	private NetlimsOrderTbl saveOrUpdateNetlimsOrder(NetlimsOrderTbl netlimsOrderTbl, OrderResultSyncDTO orderResult, int branchId ) {
 		NetlimsOrderTbl orderTbl=null;
-		int orderTransferCount=0;
-		OrderTransferCountTbl orderTransferCountObj = getOrderCountByBranchId(new Date(),branchId);
+		int orderTransferCount;
+		DateFormat sdf1 = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITH_NO_TIME);
+		Date transferDate = null ;
+		try {
+			transferDate = sdf1.parse(sdf1.format(new Date()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		OrderTransferCountTbl orderTransferCountObj = getOrderCountByBranchId(transferDate,branchId);
 		if(orderTransferCountObj == null){
 			orderTransferCountObj = new OrderTransferCountTbl();
+			orderTransferCount=0;
 			DateFormat sdf = new SimpleDateFormat(
 					Constants.DATE_FORMAT_WITH_NO_TIME);
 			Date dateWithoutTime = null ;
