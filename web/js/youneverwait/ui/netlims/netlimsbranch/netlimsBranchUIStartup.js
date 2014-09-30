@@ -106,7 +106,6 @@ netlimsBranchUIStartup.prototype.init = function(netlimsId,labName) {
 
 
 netlimsBranchUIStartup.prototype.createOrderCountModal = function(obj) {
-	alert("modal");
 	var self = this;
 	commonMethodInvoker.removeErrors();
 	createModal(constants.ORDERCOUNTJSON,constants.NEWORDERCOUNTMODAL);		
@@ -126,15 +125,10 @@ netlimsBranchUIStartup.prototype.bindOrderCountEvents = function(){
 		$j('#' + constants.NEWORDERCOUNTMODAL).trigger('reveal:close');
 	});
 	$j('#'+constants.NEWORDERCOUNTMODAL + ' #btnSearch').die('click').live('click',function() {
-		alert(self.getBranchId());
-		alert("ToDate : " + $j('#'+constants.NEWORDERCOUNTMODAL + ' #fromDate').val());
-
 		var input = new OrderCountInput();
-
 		input.setBranch(self.getBranchId());
 		input.setFromDate($j('#'+constants.NEWORDERCOUNTMODAL + ' #fromDate').val());
 		input.setToDate($j('#'+constants.NEWORDERCOUNTMODAL + ' #toDate').val());
-		alert(JSON.stringify(input));
 		var result = serviceHandler.findOrderCount(input);
 		$j('#'+constants.NEWORDERCOUNTMODAL + ' #orderCount').val(result);
 	});
