@@ -1526,40 +1526,16 @@ function PasswordInfo() {
 	}
 }
 function LayoutUpdater() {
-	this.generate = function(input) { 
-		var self = this;
-		var layoutJson = new LayoutJson();
-		layoutJson.setResultHeader(input.resultHeader);
-		var layouts = [];
-		var testList = [];
-		$(input.resultList).each(function(index, tests) {
-			$(tests.testResult).each(function(){
-				var test = $(this);
-				var layout = new Layouts_Template();
-				if(test.testLayout=='General'){
-					layouts.setTestLayout(test.testLayout);
-					testList.push(self.generateFromGeneral(test));
-					layouts.setTests(testList);
-				}
-			});
-		});
-		layoutJson.setLayouts(layouts);
-		return layoutJson;
-	}
-	this.generateFromGeneral = function(input) {
+	this.generateGeneral = function(input) {
 		var test = new Test_Template();
 		var values = new Values_Template();
-
 		test.setTestName(input.testName);
 		test.setTestId(input.testId);
-
 		values.setId(input.testName);
 		values.setKey(input.testName);
 		//values.setUnit(input.testUnit);
-
 		var normal = "";
 		var value = "";
-
 		$(input.analysis).each(function(analysisIndex,analysis) {
 			$(analysis.resultContent).each(function(resultcontentIndex,resultcontent) {
 				$(resultcontent.resultParams).each(function(resultparamIndex,resultparam) {
@@ -1581,7 +1557,184 @@ function LayoutUpdater() {
 		});
 		values.setValue(value);
 		values.setNormal(normal);
-
+		test.setValues(values);
+		if(input.departmentName)
+			test.setDepartmentName(input.departmentName);
+		if(input.userId)
+			test.setUserId(input.userId);
+		if(input.userName)
+			test.setUserName(input.userName);
+		if(input.userDesignation)
+			test.setUserDesignation(input.userDesignation);
+		if(input.specimen)
+			test.setSpecimen(input.specimen);
+		return test;
+	}
+	this.generateUrine = function(input) {
+		var test = new Test_Template();
+		test.setTestName(input.testName);
+		test.setTestId(input.testId);
+		var valuesList = [];
+		//values.setUnit(input.testUnit);
+		var normal = "";
+		var value = "";
+		$(input.values).each(function(index, key){
+			if(key.testnameval=="Colour"){
+				var values = new Values_Template();
+				values.setId('colour');
+				values.setKey(key.testnameval);
+				values.setValue(key.value1);
+				valuesList.push(values);
+			}
+			if(key.testnameval=="Reaction"){
+				var values = new Values_Template();
+				values.setId('reaction');
+				values.setKey(key.testnameval);
+				values.setValue(key.value1);
+				valuesList.push(values);
+			}
+			if(key.testnameval=="Specific Gravity"){
+				var values = new Values_Template();
+				values.setId('sgravity');
+				values.setKey(key.testnameval);
+				values.setValue(key.value1);
+				valuesList.push(values);	
+			}
+			if(key.testnameval=="Albumin"){
+				var values = new Values_Template();
+				values.setId('albumin');
+				values.setKey(key.testnameval);
+				values.setValue(key.value1);
+				valuesList.push(values);
+			}
+			if(key.testnameval=="Sugar"){
+				var values = new Values_Template();
+				values.setId('sugar');
+				values.setKey(key.testnameval);
+				values.setValue(key.value1);
+				valuesList.push(values);
+			}
+			if(key.testnameval=="Acetone"){
+				var values = new Values_Template();
+				values.setId('acetone');
+				values.setKey(key.testnameval);
+				values.setValue(key.value1);
+				valuesList.push(values);
+			}
+			if(key.testnameval=="Bile Pigments"){
+				var values = new Values_Template();
+				values.setId('bilepig');
+				values.setKey(key.testnameval);
+				values.setValue(key.value1);
+				valuesList.push(values);
+			}
+			if(key.testnameval=="Bile salt"){
+				var values = new Values_Template();
+				values.setId('bilesalt');
+				values.setKey(key.testnameval);
+				values.setValue(key.value1);
+				valuesList.push(values);
+			}
+			if(key.testnameval=="Urobilinogen"){
+				var values = new Values_Template();
+				values.setId('urobi');
+				values.setKey(key.testnameval);
+				values.setValue(key.value1);
+				valuesList.push(values);
+			}
+			if(key.testnameval=="Porphobilinogen"){
+				var values = new Values_Template();
+				values.setId('porph');
+				values.setKey(key.testnameval);
+				values.setValue(key.value1);
+				valuesList.push(values);
+			}
+			if(key.testnameval2=="Red Blood Cells"){
+				var values = new Values_Template();
+				values.setId('rbc');
+				values.setKey(key.testnameval2);
+				values.setValue(key.value2);
+				valuesList.push(values);
+			}
+			if(key.testnameval2=="Pus Cells"){
+				var values = new Values_Template();
+				values.setId('pus');
+				values.setKey(key.testnameval2);
+				values.setValue(key.value2);
+				valuesList.push(values);
+			}
+			if(key.testnameval2=="Epithelial Cells"){
+				var values = new Values_Template();
+				values.setId('epitcell');
+				values.setKey(key.testnameval2);
+				values.setValue(key.value2);
+				valuesList.push(values);
+			}
+			if(key.testnameval2=="Cast"){
+				var values = new Values_Template();
+				values.setId('cast');
+				values.setKey(key.testnameval2);
+				values.setValue(key.value2);
+				valuesList.push(values);
+			}
+			if(key.testnameval2=="Crystals"){
+				var values = new Values_Template();
+				values.setId('cryst');
+				values.setKey(key.testnameval2);
+				values.setValue(key.value2);
+				valuesList.push(values);
+			}
+			if(key.testnameval2=="Bacteria"){
+				var values = new Values_Template();
+				values.setId('bacteria');
+				values.setKey(key.testnameval2);
+				values.setValue(key.value2);
+				valuesList.push(values);
+			}
+			if(key.testnameval2=="Ammor.Urates"){
+				var values = new Values_Template();
+				values.setId('ammor');
+				values.setKey(key.testnameval2);
+				values.setValue(key.value2);
+				valuesList.push(values);
+			}
+		});
+		test.setValues(valuesList);
+		if(input.departmentName)
+			test.setDepartmentName(input.departmentName);
+		if(input.userId)
+			test.setUserId(input.userId);
+		if(input.userName)
+			test.setUserName(input.userName);
+		if(input.userDesignation)
+			test.setUserDesignation(input.userDesignation);
+		if(input.specimen)
+			test.setSpecimen(input.specimen);
+		return test;
+	}
+	this.generateWidal = function(input) {
+		var test = new Test_Template();
+		test.setTestName(input.testName);
+		test.setTestId(input.testId);
+		var normal = "";
+		var values = [];
+		$(input.analysis).each(function(analysisIndex,analysis) {
+			$(analysis.resultContent).each(function(resultcontentIndex,resultcontent) {
+				$(resultcontent.resultParams).each(function(resultparamIndex,resultparam) {
+					$(resultparam.values).each(function(paramvaluesIndex,paramValues) {
+						$(paramValues.values).each(function(paramdataIndex,paramData) {
+							var value = new Values_Template();
+							value.setId("index" + (paramdataIndex+1));
+							value.setKey(paramData.normalRangeAttribute);
+							value.setValue(paramData.value);
+							value.setUnit("");
+							value.setNormal("");
+							values.push(value);
+						});	
+					});
+				});
+			});
+		});
 		test.setValues(values);
 		if(input.departmentName)
 			test.setDepartmentName(input.departmentName);
