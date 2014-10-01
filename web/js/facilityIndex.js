@@ -19,21 +19,11 @@ $(function() {
 	var facilityHome = new FacilityHome();
 	facilityHome.init();
 });
-
 function FacilityHome () {
-	this.showMyName = function() {
-		return "FacilityHome";
-	}
-	this.setUser=function(user){
-		this.user = user;
-	}
-	this.getUser = function(){
-		return this.user;
-	}
-
-	this.getParent = function() {
-		return this.parent;
-	}
+	this.showMyName = function() {return "FacilityHome";}
+	this.setUser=function(user){this.user = user;}
+	this.getUser = function(){return this.user;}
+	this.getParent = function() {return this.parent;}
 	this.init = function(){
 		var user = new User();
 		user.setInfo();
@@ -53,24 +43,16 @@ function FacilityHome () {
 		});
 	}
 }
-
 function Query() {
 	this.viewUser = function(uid,branchId) {
 		ajaxProcessor.setUrl(constants.USERURL + uid + "/" + branchId);
 		return ajaxProcessor.get();
 	}
-
 }
 function MethodInvoker() {
-	this.setDPI=function(dpi){
-		this.dpi = dpi;
-	}
-	this.getDPI = function(){
-		return this.dpi;
-	}
-	this.setSetting= function(setting) {
-		this.setting = setting;
-	}
+	this.setDPI=function(dpi){this.dpi = dpi;}
+	this.getDPI = function(){return this.dpi;}
+	this.setSetting= function(setting) {this.setting = setting;}
 	this.getPageSettingByKey=function(key) {
 		var self=this;
 		var result = null; 
@@ -120,8 +102,7 @@ function MethodInvoker() {
 							var curMinAge = self.getAgeValue(resultAgeLevel.minAge);
 							var curMaxAge = self.getAgeValue(resultAgeLevel.maxAge);
 							if(age=="")
-								return;
-								
+								return;							
 							if(curMinAge<=age && curMaxAge>=age){
 								if(resultAgeLevel.minValue!=null && resultAgeLevel.maxValue!=null){
 									curNormalRange=resultAgeLevel.minValue + " - " + resultAgeLevel.maxValue + " " + testResult.testUnit;
@@ -258,28 +239,12 @@ function Constants() {
 	this.PASSWORDNOTMATCH = "Password doesn't match";
 }
 function VerifierDTO() {
-	this.setUserId =function(userId) {
-		this.userId=userId;
-	}	
-	this.setName = function(name) {
-		this.name = name;
-	}
-	this.setDesignation = function(designation) {
-		this.designation = designation;
-	}
-	
-	this.getUserId = function() {
-		return this.userId;
-	}
-	
-	this.getName = function() {
-		return this.name;
-	}
-	
-	this.getDesignation = function() {
-		return this.designation;
-	}
-	
+	this.setUserId =function(userId) {this.userId=userId;}	
+	this.setName = function(name) {this.name = name;}
+	this.setDesignation = function(designation) {this.designation = designation;}
+	this.getUserId = function() {return this.userId;}
+	this.getName = function() {return this.name;}
+	this.getDesignation = function() {return this.designation;}
 }
 function User(user) {
 	this.setInfo = function() {
@@ -344,7 +309,6 @@ function OrderServiceImpl () {
 		return order;
 	}
 }
-
 function Order() {
 	this.pgTableName="#orders";
 	this.listUrl = "/youNeverWait/netlims/ui/order/facility/getByFilter";
@@ -364,30 +328,14 @@ function Order() {
 	this.filter = '#filter';
 	this.filterBench=$('#filterWorkBench');
 	this.ftbContainer=$('#filterToolBar-Container');
-	this.setOrder = function(orderId){
-		this.order = this.orderService.getOrder(orderId);
-	}
-	this.getBranchId =function() {
-		return this.branchId;
-	}
-	this.setBranchId = function(branchId) {
-		this.branchId = branchId;
-	}
-	this.getOrderTableNavigator=function(){
-		return this.orderTableNavigator;
-	}
-	this.getOrder = function() {
-		return this.order;
-	}
-	this.getTestList = function() {
-		return this.testList;
-	}
-	this.setPageTitle = function(value) {
-		this.pageTitle.empty().html(value);
-	}
-	this.setTestList = function(testList) {
-		this.testList=testList;
-	}
+	this.setOrder = function(orderId){this.order = this.orderService.getOrder(orderId);}
+	this.getBranchId =function() {return this.branchId;}
+	this.setBranchId = function(branchId) {this.branchId = branchId;}
+	this.getOrderTableNavigator=function(){return this.orderTableNavigator;}
+	this.getOrder = function() {return this.order;}
+	this.getTestList = function() {return this.testList;}
+	this.setPageTitle = function(value) {this.pageTitle.empty().html(value);}
+	this.setTestList = function(testList) {	this.testList=testList;}
 	this.list = function() {
 		this.orderTableNavigator.list();
 		this.setPageTitle("Orders");
@@ -435,19 +383,10 @@ function Order() {
 			
 		});
 	}
-	this.getOrderHeader = function() {
-		return this.orderHeader;
-	}
-	this.getSetting = function() {
-		return this.setting;
-	}
-	this.setResultPrintObj=function(resultPrintObj){
-		this.resultPrintObj=resultPrintObj;
-	}
-	this.getResultPrintObj=function(){
-		return this.resultPrintObj;
-	}
-	
+	this.getOrderHeader = function() {return this.orderHeader;}
+	this.getSetting = function() {return this.setting;}
+	this.setResultPrintObj=function(resultPrintObj){this.resultPrintObj=resultPrintObj;}
+	this.getResultPrintObj=function(){return this.resultPrintObj;}
 	this.setOrderHeader_Setting = function(header_setting){
 		this.orderHeader=$.parseJSON(header_setting).header;
 		this.setting=$.parseJSON(header_setting).settings;
@@ -472,8 +411,6 @@ function Order() {
 		  self.view(rowId);
 		  self.setPageTitle("Order : " + $(this).text());
 		});
-		/*Page Tool Bar Events ends here*/
-		/*Filter Tool Bar Events starts here*/
 		$(self.ftbToolBar + " a:not(:selected)").die('click').live('click',function() {
 			var curObjName = $(this).attr('name');
 			$(this).attr('selected','selected');
@@ -538,7 +475,6 @@ function Order() {
 				$(this).removeAttr('style');
 			} else {	
 				$(this).attr('selected','selected');
-				//$(this).attr('style',constants.SELECTEDROWCOLOR);
 			}
 			if(obj.attr('selected')) {
 				$(this).children('td').children(self.chkSelectTest).attr('checked',true);
@@ -565,14 +501,6 @@ function Order() {
 			var response = self.generateSelectedTestList(testArray);
 			if(response.length<=0)
 				return false;
-			//var responseResult = $.parseJSON(response.result);
-			/*var verifiedTestsLength = 0;
-			if(response.testResult!=null)
-				var verifiedTestsLength = response.testResult.length;
-			if(verifiedTestsLength!=0 && testArray.length==0) 
-				return false;
-			if(verifiedTestsLength==0 || testArray.length==0)
-				return false;*/
 			status="";
 			if(status==constants.DELIVERED) {
 				var printResultArray = resultDataGenerator.generatedDeliveredResult(self, testArray, response);
@@ -630,9 +558,6 @@ function Order() {
 			var layoutStatus = methodInvoker.getPageSettingByKey('general_layout');
 			newLayouts=layoutStatus.visible;
 			if(newLayouts==true) {		
-				/*
-					new Changes
-				*/
 				var resultHeight = $(".printresultTable").height() +  $(".remarks").height();
 				var heightmm = commonMethodInvoker.getmmFromPixel(resultHeight, methodInvoker.getDPI()).toFixed();	
 				var contentset =methodInvoker.getPageSettingByKey('content');
@@ -667,7 +592,7 @@ function Order() {
 						buffer.append(page.clone());
 						page.empty();
 						content.empty();
-						var pageDiv = $('<div style="height:2mm;">&nbsp;</div>');
+						//var pageDiv = $('<div style="height:2mm;">&nbsp;</div>');
 						buffer.append(pageDiv);
 					}
 				});
@@ -682,8 +607,8 @@ function Order() {
 					var tbl = $(this);
 					tbl.height("297mm");
 					if(count>1) {
-						var pageDiv = $('<div style="height:2mm;">&nbsp;</div>');
-						buffer.append(pageDiv);
+					//	var pageDiv = $('<div style="height:2mm;">&nbsp;</div>');
+					//	buffer.append(pageDiv);
 					}	
 					buffer.append(tbl.html());
 					count++;
@@ -696,7 +621,6 @@ function Order() {
 		});
 	}
 }
-//Return the selected Order Id from the list table
 Order.prototype.getSelectedOrderId = function () {
 	var self =this;
 	var orderId="";
@@ -762,12 +686,7 @@ function ResultDataGenerator() {
 		finalJson.setResultHeader(resultHeader);	
 		$(testResult).each(function(index, result) {
 			var testDetails = new TestListJsonDTO();
-			//testDetails.setTestName(methodInvoker.getTestNameFromConfig(result.testUid));
 			var specimens=[];
-			/*if(result.specimenUid)
-				//specimens.push(methodInvoker.getSpecimenNameFromConfig(result.specimenUid));
-			else 
-				//specimens = methodInvoker.getSpecimenNamesFromTestConfig(result.testUid);*/
 			testDetails.setSpecimens(specimens);
 			if(result.reportingDate)
 				testDetails.setReportingDate(result.reportingDate);
@@ -783,7 +702,6 @@ function ResultDataGenerator() {
 		finalJson.setTestList(testList);
 		return finalJson;
 	}
-
 	this.generateResultData =function(orderReference ,testArray, testResult) {
 		var self = this;
 		var orderHeader = orderReference.getOrderHeader();
@@ -797,17 +715,6 @@ function ResultDataGenerator() {
 		resultViewResponse.setResult(finaljson);
 		var verifiedTestIdsList = [];
 		var testSpecimenList = [];
-		/*$(testResult).each(function(index, result) {
-			testId = result.testUid;
-			var tstId=testId;
-			if(result.specimenUid)
-				tstId = testId + "_" + result.specimenUid;
-			verifiedTestIdsList.push(tstId);		
-			if(commonMethodInvoker.isIndexExists(testArray, tstId)==false) 
-				return;	
-			var testSpecimenDTO = new TestSpecimenDTO(testId,result.specimenUid);
-			testSpecimenList.push(testSpecimenDTO);	
-		});*/
 		var resultToPrint = this.generatePrintJson(orderReference, testArray, testResult,reportDate,reportTime);
 		resultViewResponse.setPrintResult(resultToPrint);
 		resultViewResponse.setTestList(testSpecimenList);
@@ -853,7 +760,6 @@ function ResultDataGenerator() {
 			pageResult=[];
 		});
 		var verifiedUserProvider = new VerifiedUserProvider(); //For getting verified users
-		//var resultSpecimenProcessor = new ResultSpecimenProcessor(); //specimen process handler	
 		var resultPrintArray = [];
 		var contentset =methodInvoker.getPageSettingByKey('content');
 		var originalHeight = parseInt(contentset.height,10) || 0;
@@ -872,8 +778,7 @@ function ResultDataGenerator() {
 				var testId = result.testUid;
 				var tstId=testId;
 				if(result.specimenUid)
-					tstId = testId + "_" + result.specimenUid;
-			//	var testPkgStatus = isTestPackage(testId);			
+					tstId = testId + "_" + result.specimenUid;		
 				var resultVar=result;					
 				if(resultVar.testLayout=="General" || resultVar.testLayout=="GeneralOne" || resultVar.testLayout=="DC" || resultVar.testLayout=='GTT' || resultVar.testLayout=='Urine' || resultVar.testLayout=='LipidLayout' || resultVar.testLayout=='PT' || resultVar.testLayout==constants.LAYOUTGENERALMED
 					|| resultVar.testLayout=="WidalLayoutMed" || resultVar.testLayout=="UrineLayoutMed" || resultVar.testLayout=="LipidLayoutMed" || resultVar.testLayout=="DCLayoutMed") {
@@ -906,7 +811,6 @@ function ResultDataGenerator() {
 			resultToPrint = '{"resultHeader":' + JSON.stringify(resultHeader) + ',"resultList":[' + resultSet + ']}';
 			resultPrintArray.push(resultToPrint);
 		});
-		
 		return resultPrintArray;
 	}	
 }
@@ -961,24 +865,11 @@ ResultDataGenerator.prototype.generatePrintJson = function(orderReference,select
 	var resultArray = []; //storing tests info
 	var resultTestPackageArray=[]; //For storing tests which should be in separate pages and testpackages
 	var resultSet =[]; //
-
-	/*new changes*/
-	//orderResultResponse.testResult = self.arrangeByDeparment(orderResultResponse);
-
-	/******/
 	var contentset =methodInvoker.getPageSettingByKey('content');
 	var originalHeight = parseInt(contentset.height,10) || 0;
 	var marginHeight = parseInt(contentset.marginTop,10) || 0;
 	var totalHeight = originalHeight-marginHeight;
-	//$(	orderResultResponse.testResult).each(function(index, result) {
 	$(testResult).each(function(index, result) {
-		/*var testId = result.testUid;
-		var tstId=testId;
-		if(result.specimenUid)
-			tstId = testId + "_" + result.specimenUid;
-		if(commonMethodInvoker.isIndexExists(selectedTestArray,tstId)==false)
-			return;
-		var testPkgStatus = isTestPackage(testId);		*/	
 		var resultVar=result;			
 		var layoutStatus = methodInvoker.getPageSettingByKey('general_layout');
 		newLayouts=layoutStatus.visible;
@@ -1020,74 +911,30 @@ ResultDataGenerator.prototype.generatePrintJson = function(orderReference,select
 	return resultToPrint;
 }
 function ResultViewResponseDTO() {
-	this.getOrderUid = function() {
-		return this.orderUid;
-	}
-	this.setOrderUid = function(orderUid) {
-		this.orderUid=orderUid;
-	}
-	this.getResult = function() {
-		return this.result;
-	}
-	this.setResult = function(result) {
-		this.result=result;
-	}
-	this.getPrintResult = function() {
-		return this.printResult;
-	}
-	this.setPrintResult = function(printResult) {
-		this.printResult=printResult;
-	}
-	this.getReportDate = function() {
-		return this.reportDate;
-	}
-	this.setReportDate = function(reportDate) {
-		this.reportDate=reportDate;
-	}
-	this.getReportTime = function() {
-		return this.reportTime;
-	}
-	this.setReportTime = function(reportTime) {
-		this.reportTime=reportTime;
-	}
-	this.isPrinted = function() {
-		return this.printed;
-	}
-	this.setPrinted = function(printed) {
-		this.printed=printed;
-	}
-	this.getTestList= function() {
-		return this.testList;
-	}
-	this.setTestList= function(testList) {
-		this.testList=testList;
-	}
-	this.getError= function() {
-		return this.error;
-	}
-	this.setError= function(error) {
-		this.error=error;
-	}
-	this.getSuccess= function() {
-		return this.success;
-	}
-	this.setSuccess= function(success) {
-		this.success=success;
-	}
+	this.getOrderUid = function() {return this.orderUid;}
+	this.setOrderUid = function(orderUid) {this.orderUid=orderUid;}
+	this.getResult = function() {return this.result;}
+	this.setResult = function(result) {this.result=result;}
+	this.getPrintResult = function() {return this.printResult;}
+	this.setPrintResult = function(printResult) {this.printResult=printResult;}
+	this.getReportDate = function() {return this.reportDate;}
+	this.setReportDate = function(reportDate) {	this.reportDate=reportDate;	}
+	this.getReportTime = function() {return this.reportTime;}
+	this.setReportTime = function(reportTime) {	this.reportTime=reportTime;}
+	this.isPrinted = function() {return this.printed;}
+	this.setPrinted = function(printed) {this.printed=printed;}
+	this.getTestList= function() {return this.testList;}
+	this.setTestList= function(testList) {this.testList=testList;}
+	this.getError= function() {return this.error;}
+	this.setError= function(error) {this.error=error;}
+	this.getSuccess= function() {return this.success;}
+	this.setSuccess= function(success) {this.success=success;}
 }
 function FinalJSONDTO() {
-	this.setResultHeader= function(resultHeader) {
-		this.resultHeader= resultHeader;
-	}
-	this.getResultHeader= function() {
-		return this.resultHeader;
-	}
-	this.setTestList= function(testList) {
-		this.testList= testList;
-	}
-	this.getTestList= function() {
-		return this.testList;
-	}
+	this.setResultHeader= function(resultHeader) {this.resultHeader= resultHeader;}
+	this.getResultHeader= function() {return this.resultHeader;	}
+	this.setTestList= function(testList) {this.testList= testList;}
+	this.getTestList= function() {	return this.testList;}
 }
 function AFBLayout(honorific,result,testId,mode) {
 	this.result =	function(){ 
@@ -1157,7 +1004,6 @@ function AFBLayout(honorific,result,testId,mode) {
 function aminoacidLayout(honorific,result,testId,mode) {
 	this.result =	function(){ 
 		var content = $('<div/>');
-		//div for report title starts here
 		var fstDiv = $('<div align="center" class="resultTitle">'+result.testName+'</div>');
 		content.append(fstDiv);
 	    var table=$('<table id="realTable" style="width:90%"/>');
@@ -1191,7 +1037,6 @@ function aminoacidLayout(honorific,result,testId,mode) {
 		
 		table.append(tbody);
 		content.append(table);
-		//div for footer title starts here
 		var footerDiv = $('<div style="float:left;;margin-left:2%;margin-right:2%; width:100%;"/>');
 		var count = 0;
 		if(result.footer) {
@@ -1217,10 +1062,7 @@ function aminoacidLayout(honorific,result,testId,mode) {
 		content.append(footerDiv);
 		return content;
 		return content;
-		
 		};
-
-
 }
 function anaIfa(honorific,result,testId,mode) {
 	this.result =	function(){ 
@@ -1234,11 +1076,9 @@ function anaIfa(honorific,result,testId,mode) {
 					var contentTag = $('<div class="one_first_column normal_height columnleftalign" />');
 					contentTag.append(paramData.name);
 					container.append(contentTag);
-
 					contentTag = $('<div class="one_second_column normal_height columnleftalign"/>');
 					contentTag.append(' : ');
 					container.append(contentTag);
-					
 					container.append(contentTag);
 					contentTag = $('<div class="one_third_column normal_height columnleftalign"/>');
 					if(paramData.value.trim()=="")
@@ -1335,7 +1175,6 @@ function anaIfa(honorific,result,testId,mode) {
 		content.append(table);
 		return content;
 	};	
-
 }
 function ANALayout(honorific,result,testId,mode) {
 	this.result =	function(){ 
@@ -1413,8 +1252,6 @@ function ANALayout(honorific,result,testId,mode) {
 		  content.append(table);
 		  return content;
 		};
-          
-
 }
 function APPTLayout(honorific,result,testId,mode) {
 	this.result =	function(){ 
@@ -1561,9 +1398,7 @@ function cultureLayout(honorific,result,testId,mode) {
 		var content = $('<tbody class="noBorder"/>');
 		var trRootTag = $('<tr/>');
 		var tdRootTag = $('<td />');
-		//div for report title starts here
-		var headerTable = $('<table width="100%" class="cultureTable_Head">');
-		
+		var headerTable = $('<table width="100%" class="cultureTable_Head">');	
 		var theadParentTag = $('<thead>');
 		var trParentTag = $('<tr/>');
 		var thParentTag = $('<th colspan="4">');
@@ -1571,8 +1406,6 @@ function cultureLayout(honorific,result,testId,mode) {
 		trParentTag.html(thParentTag);
 		theadParentTag.append(trParentTag);
 		headerTable.append(theadParentTag);
-		//div for report title ends here
-		
 		var tbodyParentTag = $('<tbody>');
 		var trParentTag = $('<tr/>');
 		var tdParentTag = $('<td colspan="2">');
@@ -1592,8 +1425,6 @@ function cultureLayout(honorific,result,testId,mode) {
 		}		
 		trParentTag.html(tdParentTag);	
 		tbodyParentTag.append(trParentTag);
-		
-		//Second Row
 		trParentTag = $('<tr/>');
 		tdParentTag = $('<td style="width:50%"/>');
 		spanPTag = $('<span>1). </span>');
@@ -1617,7 +1448,6 @@ function cultureLayout(honorific,result,testId,mode) {
 			   tdParentTag.append(spanPTag);
 		}	
 		trParentTag.append(tdParentTag);	
-		
 		tdParentTag = $('<td style="width:50%"/>');
 		spanPTag = $('<span>2). </span>');
 		tdParentTag.append(spanPTag);
@@ -1642,12 +1472,9 @@ function cultureLayout(honorific,result,testId,mode) {
 		trParentTag.append(tdParentTag);
 		tbodyParentTag.append(trParentTag);
 		headerTable.append(tbodyParentTag);
-		
 		tdRootTag.append(headerTable);
-		
 		var tblDiv = $('<div/>');
 		var resultTable = $('<table id="cultureresultTable" style="float:left; margin-left:40px; width:90%" />');
-		
 		var theadTag = $('<thead/>');
 		var trTag=$('<tr />');	
 		for(i=0;i<2;i++) {
@@ -1659,14 +1486,12 @@ function cultureLayout(honorific,result,testId,mode) {
 		}	
 		theadTag.append(trTag);	
 		resultTable.append(theadTag);
-		
 		var tbodyTag = $('<tbody/>');
-		
 		var length=result.analysis.data.length;
 		var trTag;
 		var tabIndex=0;
-		var tabIndex1=0; //
-		var tabIndex2=0; //
+		var tabIndex1=0; 
+		var tabIndex2=0; 
 		var tabIndex3=0;
 		$(result.analysis.data).each(function(index,data) {
 			if(index%2==0){
@@ -1684,7 +1509,6 @@ function cultureLayout(honorific,result,testId,mode) {
 			tdTag = $('<td style="width:34%"><input type="text"  value="'+data.name+'" id="' + data.idProperty + '_0" tabIndex=' + tabIndex + '></td>');
 			//tdTag.append(data.name);
 			trTag.append(tdTag);
-				
 			tdTag = $('<td style="width:8%;text-align:center;"/>');
 			if(mode=="print") 
 				inputTag = $('<label class="middle">'+data.value1+'</label>');
@@ -1714,7 +1538,6 @@ function cultureLayout(honorific,result,testId,mode) {
 		resultTable.append(tbodyTag);
 		tblDiv.append(resultTable);		
 		tdRootTag.append(tblDiv);			
-		//div for foeter title starts here
 		var footerDiv = $('<div style="float:left;;margin-left:2%;margin-right:2%; width:100%;"/>');
 		var count = 0;
 		if(result.analysis.footer) {
@@ -1738,7 +1561,6 @@ function cultureLayout(honorific,result,testId,mode) {
 			});
 		}		
 		tdRootTag.append(footerDiv);
-		//div for report title ends here
 		trRootTag.append(tdRootTag);
 		content.append(trRootTag);
 		return content;
@@ -1880,7 +1702,6 @@ function DCLayoutMed(honorific,result,testId,mode) {
 function enaProfile(honorific,result,testId,mode) {
 	this.result =	function(){ 
 		var content = $('<div/>');
-		//div for report title starts here
 		var fstDiv = $('<div  align="center" class="resultTitle">'+result.testName+'</div>');
 		content.append(fstDiv);
 		var SecDiv = $('<div class="five_sixth"/>');
@@ -2313,7 +2134,6 @@ function generalLayout(testResult, testId, mode,honorific,order) {
 						var trTag = $('<tr/>');
 						trTagId = testId + '_' + analysisIndex + "_" + resultcontentIndex + "_" + resultparamIndex;
 						trTag.attr('id',trTagId);
-						//Investigation Field
 						var tdTag= $('<td style="width:40%;vertical-align:middle"/>');
 						tdTag.html(testResult.testName);	
 						trTag.append(tdTag);
@@ -2324,7 +2144,6 @@ function generalLayout(testResult, testId, mode,honorific,order) {
 									var tblTag = $('<table width="100%"/>');
 									if(paramData.values) {				
 										$(paramData.values).each(function(paramdataValueIndex,paramDataValues){
-											//inside normal range
 											var newrow = $('<tr/>');
 											if(paramDataValues.normalRangeAttribute) {	
 												var colTag = $('<td style="vertical-align:middle;"  class="middle"/>');
@@ -2335,7 +2154,6 @@ function generalLayout(testResult, testId, mode,honorific,order) {
 												var colTag = $('<td class="middle"/>');
 												var innerTblTag = $('<table width="100%"/>');
 												$(paramDataValues.values).each(function(paramdataValueInnerIndex,paramDataValuesInner){
-													//inside normal range
 													var newrowInner = $('<tr/>');
 													if(paramDataValuesInner.normalRangeAttribute) {	
 														var colTag = $('<td class="middle"/>');
@@ -2555,14 +2373,14 @@ function generalLayoutMed(testResult, testId, mode, honorific, order) {
 function generalOneLayout(testResult,testId,mode,honorific) {
 	this.result =	function(){
 		var resultTBody = $('<tbody/>');
-		resultTBody.attr('name','tbody_'+testId); // set the tbody id to test id		
+		resultTBody.attr('name','tbody_'+testId);		
 		if(honorific!="Animal"){
 			$(testResult.analysis).each(function(analysisIndex,analysis) {
 			$(analysis.resultContent).each(function(resultcontentIndex,resultcontent) {
 			$(resultcontent.resultParams).each(function(resultparamIndex,resultparam) {
-				var trTag = $('<tr />'); // Create the first row
+				var trTag = $('<tr />');
 				trTagId = testId + '_' + analysisIndex + "_" + resultcontentIndex + "_" + resultparamIndex;
-				trTag.attr('id',trTagId); // set id for the row
+				trTag.attr('id',trTagId);
 				tdTag= $('<td style="width:40%;vertical-align:middle" />'); // First column for investigation
 				tdTag.html(testResult.testName);
 				//tdTag.attr('style','font-weight:bold;');
@@ -4198,7 +4016,6 @@ function stoolLayout(honorific,result,testId,mode) {
 }
 function UrineLayout(honorific,result,testId,mode) {
 	this.result =	function(){ 
-		//div for report title starts here
 		var content =$('<div align="center"/>');
 		var titleSection = $('<div align="center" class="resultTitle">'+result.testName + '</div>');
 		content.append(titleSection);			
@@ -4206,7 +4023,7 @@ function UrineLayout(honorific,result,testId,mode) {
 		var tbodyTag=$('<tbody/>');		
 		$(result.values).each(function(index,values){
 			var trTag=$('<tr/>');
-			var tdTag=$('<td style="width:20%">'+values.testnameval+'</td>'); //first Column
+			var tdTag=$('<td style="width:20%">'+values.testnameval+'</td>'); 
 			trTag.append(tdTag);
 			tdTag=$('<td style="width:30%"></td>'); 			
 			if(mode=='print') {
@@ -4416,48 +4233,22 @@ function widal(honorific,result,testId,mode) {
 	};	
 }
 function ResultPrintResponseDTO() {
-}
-ResultPrintResponseDTO.prototype.getOrderUid = function() {
-	return this.orderUid;
-}
-ResultPrintResponseDTO.prototype.setOrderUid = function(orderUid) {
-	this.orderUid=orderUid;
-}
-ResultPrintResponseDTO.prototype.getResult = function() {
-	return this.result;
-}
-ResultPrintResponseDTO.prototype.setResult = function(result) {
-	this.result=result;
-}
-ResultPrintResponseDTO.prototype.getReportDate = function() {
-	return this.reportingDate;
-}
-ResultPrintResponseDTO.prototype.setReportDate = function(reportingDate) {
-	this.reportingDate=reportingDate;
-}
-ResultPrintResponseDTO.prototype.getReportTime = function() {
-	return this.reportingTime;
-}
-ResultPrintResponseDTO.prototype.setReportTime = function(reportingTime) {
-	this.reportingTime=reportingTime;
-}
-ResultPrintResponseDTO.prototype.isPrinted = function() {
-	return this.printed;
-}
-ResultPrintResponseDTO.prototype.setPrinted = function(printed) {
-	this.printed=printed;
-}
-ResultPrintResponseDTO.prototype.getTestList= function() {
-	return this.testList;
-}
-ResultPrintResponseDTO.prototype.setTestList= function(testList) {
-	this.testList=testList;
+	this.getOrderUid = function() {return this.orderUid;}
+	this.setOrderUid = function(orderUid) {this.orderUid=orderUid;}
+	this.getResult = function() {return this.result;}
+	this.setResult = function(result) {this.result=result;}
+	this.getReportDate = function() {return this.reportingDate;}
+	this.setReportDate = function(reportingDate) {this.reportingDate=reportingDate;}
+	this.getReportTime = function() {return this.reportingTime;	}
+	this.setReportTime = function(reportingTime) {this.reportingTime=reportingTime;}
+	this.isPrinted = function() {return this.printed;}
+	this.setPrinted = function(printed) {this.printed=printed;}
+	this.getTestList= function() {return this.testList;	}
+	this.setTestList= function(testList) {this.testList=testList;}
 }
 function ResultPreviewProcessor(orderReference) {
 	this.orderReference = orderReference;
-	this.getOrderUI = function(){
-		return this.orderReference;
-	}
+	this.getOrderUI = function(){return this.orderReference;}
 	//Function creating the Preview of Results
 	this.preview = function( honorific,combinedResult,orderId, order,printStatus) {
 		self = this;
@@ -4962,7 +4753,7 @@ function ResultPreviewProcessor(orderReference) {
 		resultContent.append(parentTable);
 		resultContent.append(remarksDiv);
 		var header = new ResultHeaderProcessor(orderUI);
-		var repHeader = header.create(resultParent,combinedResult,orderId,honorific,printStatus);
+		var repHeader = header.make(resultParent,combinedResult,orderId,honorific,printStatus);
 		wrapper.append(repHeader);
 		var contentset =methodInvoker.getPageSettingByKey('content');
 		var originalHeight = parseInt(contentset.height,10) || 0;
@@ -5068,7 +4859,7 @@ function ResultPreviewProcessor(orderReference) {
 		parentTable.append(tblObj);
 		resultContent.append(parentTable);
 		var header = new ResultHeaderProcessor(orderUI);
-		var repHeader = header.create(resultParent,combinedResult,orderId,honorific,printStatus);
+		var repHeader = header.make(resultParent,combinedResult,orderId,honorific,printStatus);
 		var repHeader = header.generate(resultParent,combinedResult,orderId,honorific);
 		wrapper.append(repHeader);
 		var contentset =methodInvoker.getPageSettingByKey('content');
@@ -5175,9 +4966,10 @@ function ResultFooterProcessor(orderUI) {
 		var self=this;
 		var footer = $('<div class="printReportFooter " />');
 		var headerSetting =methodInvoker.getPageSettingByKey('footer');
+		var headerHeight = methodInvoker.getPageSettingByKey('header').marginTop;
 		var signSetting = methodInvoker.getPageSettingByKey('USIGN');
 		footer.css('width', headerSetting.width+ "mm");
-		footer.css('height',headerSetting.height+ "mm");
+		footer.css('height',(parseInt(headerSetting.height)+parseInt(headerHeight))+ "mm");
 		var linehgt = headerSetting.height/5;
 		if(headerSetting.visible==false) {
 			footer.append('&nbsp;');
@@ -5377,10 +5169,134 @@ function ResultFooterProcessor(orderUI) {
 	}
 }
 function ResultHeaderProcessor(orderUI) {
-	this.orderUI = orderUI;
-	
-	this.getOrderUI = function(){
-		return this.orderUI;
+	this.orderUI = orderUI;	
+	this.getOrderUI = function(){return this.orderUI;}
+	this.make = function(result,combinedResult,orderId,honorific,status){
+		var self=this;
+		var header = $('<div id="resultHeader"/>');
+		header.addClass('result_header');
+
+		var headerSetting =methodInvoker.getPageSettingByKey('header');
+
+		header.css('width', (headerSetting.width - headerSetting.marginLeft)+ "mm");
+		header.css('height', (headerSetting.height-headerSetting.marginTop)+ "mm");
+		header.css('margin-left',headerSetting.marginLeft+ "mm");
+		if(parseInt(headerSetting.fontSize)!=0)
+			header.css('font-size',headerSetting.fontSize + "px")
+		var columnSymbol = $('<div>:</div>');
+		columnSymbol.addClass('column_symbol');
+		var row = $('<div/>');
+		row.addClass('five_sixth');
+		row.addClass('column_top');
+		var nameCaption = $('<div>Name</div>');
+		nameCaption.addClass('column_small');
+		row.append(nameCaption);
+		row.append(columnSymbol.clone());
+		var name = $('<div/>');	
+		name.addClass('column_extralarge');
+		name.empty().html(self.getValue(result, combinedResult, orderId, honorific,"name"));
+		row.append(name);
+		var ageCaption=$('<div>Age</div>');
+		ageCaption.addClass('column_very_small');
+		row.append(ageCaption);
+		row.append(columnSymbol.clone());
+		var age = $('<div/>');	
+		age.addClass('column_medium');
+		age.empty().html(self.getValue(result, combinedResult, orderId, honorific,"age"));
+		row.append(age);
+		header.append(row);
+		row = $('<div/>');
+		row.addClass('five_sixth');
+		row.addClass('column_top');
+		var refNoCaption = $('<div>Ref. No</div>');
+		refNoCaption.addClass('column_small');
+		row.append(refNoCaption);
+		row.append(columnSymbol.clone().clone().clone());
+		var refNo = $('<div/>');	
+		refNo.addClass('column_extralarge');
+		refNo.empty().html(self.getValue(result, combinedResult, orderId, honorific,"orderId"));
+		row.append(refNo);
+		var sexCaption=$('<div>Sex</div>');
+		sexCaption.addClass('column_very_small');
+		row.append(sexCaption);
+		row.append(columnSymbol.clone().clone());
+		var sex = $('<div/>');	
+		sex.addClass('column_medium');
+		sex.empty().html(self.getValue(result, combinedResult, orderId, honorific,"sex"));
+		row.append(sex);
+		header.append(row);
+		var row = $('<div/>');
+		row.addClass('five_sixth');
+		row.addClass('column_top');
+		var refNoCaption = $('<div>Ref. By</div>');
+		refNoCaption.addClass('column_small');
+		row.append(refNoCaption);
+		row.append(columnSymbol.clone());
+		var refBy = $('<div/>');
+		refBy.addClass('column_very_extralarge');
+		refName = self.getValue(result, combinedResult, orderId, honorific,"referredBy");
+		if(refName=="")
+			refName="&nbsp;";
+		refBy.empty().html(refName);
+		row.append(refBy);
+		header.append(row);
+		var row = $('<div/>');
+		row.addClass('five_sixth');
+		row.addClass('column_top');
+		var collectedAtCaption = $('<div>Collected At</div>');
+		collectedAtCaption.addClass('column_small');
+		row.append(collectedAtCaption);
+		row.append(columnSymbol.clone());
+		var collectedAt = $('<div/>');	
+		collectedAt.addClass('column_large');
+		collectedAt.empty().html(self.getValue(result, combinedResult, orderId, honorific,"collectedAt"));
+		row.append(collectedAt);
+		var collectDateCaption=$('<div>Collection Date</div>');
+		collectDateCaption.addClass('column_small_medium');
+		row.append(collectDateCaption);
+		row.append(columnSymbol.clone());
+		var collectDate = $('<div/>');
+		collectDate.addClass('column_medium');
+		collectDate.empty().html(self.getValue(result, combinedResult, orderId, honorific,"collectionDate"));
+		row.append(collectDate);
+		var collectTimeCaption=$('<div>Time</div>');
+		collectTimeCaption.addClass('column_very_small');
+		row.append(collectTimeCaption);
+		row.append(columnSymbol.clone());
+		var collectionTime = $('<div/>');	
+		collectionTime.addClass('column_medium');
+		collectionTime.empty().html(self.getValue(result, combinedResult, orderId, honorific,"collectionTime"));
+		row.append(collectionTime);
+		header.append(row);
+		var row = $('<div/>');
+		row.addClass('five_sixth');
+		row.addClass('column_top');
+		var specimenCaption = $('<div>Specimen</div>');
+		specimenCaption.addClass('column_small');
+		row.append(specimenCaption);
+		row.append(columnSymbol.clone());
+		var specimen = $('<div/>');	
+		specimen.addClass('column_large');
+		specimen.empty().html(self.getValue(result, combinedResult, orderId, honorific,"specimen"));
+		row.append(specimen);
+		var reportDateCaption=$('<div>Reporting Date</div>');
+		reportDateCaption.addClass('column_small_medium');
+		row.append(reportDateCaption);
+		row.append(columnSymbol.clone());
+		var reportDate = $('<div/>');	
+		reportDate.addClass('column_medium');
+		reportDate.empty().html(self.getValue(result, combinedResult, orderId, honorific,"reportingDate"));
+		row.append(reportDate);
+		var reportTimeCaption=$('<div>Time</div>');
+		reportTimeCaption.addClass('column_very_small');
+		row.append(reportTimeCaption);
+		row.append(columnSymbol);
+		var reportTime = $('<div/>');	
+		reportTime.addClass('column_medium');
+		reportTime.empty().html(self.getValue(result, combinedResult, orderId, honorific,"reportingTime"));
+		row.append(reportTime);
+		header.append(row);
+		return header;
 	}
 	this.create = function(result,combinedResult,orderId,honorific,status) {
 		/*Set the Header Properties*/
@@ -5490,17 +5406,15 @@ function ResultHeaderProcessor(orderUI) {
 	this.generateRow = function(result, combinedResult, orderId, honorific, lnc, lnv, mnc, mnv, rnc, rnv){
 		var self=this;
 		var row = $("<tr/>");
-
 		var columnSpan=1;
-
 		if(mnc.label=='' && mnv.label=='blank')
 			columnSpan+=2;
-
 		if(columnSpan!=1){
 			var lnccolumn = $("<td>&nbsp;</td>");
 			self.setStyles(lnccolumn, lnc);
-			if(lnc.visible!=false && lnc.label!="") 
-				lnccolumn.empty().html(lnc.label);
+			//if(lnc.visible!=false && lnc.label!="") 
+			//	lnccolumn.empty().html(lnc.label);
+			lnccolumn.empty().html(lnc.label);
 			row.append(lnccolumn);
 			var lnvcolumn = $("<td colspan='3'/>");
 			self.setStyles(lnvcolumn, lnv);
@@ -5516,7 +5430,7 @@ function ResultHeaderProcessor(orderUI) {
 		} else {
 			var lnccolumn = $("<td>&nbsp;</td>");
 			self.setStyles(lnccolumn, lnc);
-			if(lnc.visible!=false && lnc.label!="") 
+			//if(lnc.visible!=false && lnc.label!="") 
 				lnccolumn.empty().html(lnc.label);
 			row.append(lnccolumn);
 			var lnvcolumn = $("<td>&nbsp;</td>");
@@ -5526,7 +5440,7 @@ function ResultHeaderProcessor(orderUI) {
 			row.append(lnvcolumn);
 			var mnccolumn = $("<td>&nbsp;</td>");
 			self.setStyles(mnccolumn, mnc);
-			if(mnc.visible!=false && mnc.label!="") 
+			//if(mnc.visible!=false && mnc.label!="") 
 				mnccolumn.empty().html(mnc.label);
 			row.append(mnccolumn);
 			var mnvcolumn = $("<td>&nbsp;</td>");
@@ -5537,7 +5451,7 @@ function ResultHeaderProcessor(orderUI) {
 		}
 		var rnccolumn = $("<td>&nbsp;</td>");
 		self.setStyles(rnccolumn, rnc);
-		if(rnc.visible!=false && rnc.label!="") 
+		//if(rnc.visible!=false && rnc.label!="") 
 			rnccolumn.empty().html(rnc.label);
 		row.append(rnccolumn);
 		var rnvcolumn = $("<td>&nbsp;</td>");
@@ -5545,7 +5459,6 @@ function ResultHeaderProcessor(orderUI) {
 		if(rnv.visible!=false && (rnv.label!="blank" || rnv.label!="select" ))
 			rnvcolumn.empty().html(self.getValue(result, combinedResult, orderId, honorific,rnv.label));
 		row.append(rnvcolumn);
-
 		return row;	
 	}
 	this.getValue = function(result, combinedResult, orderId, honorific, key ) {
@@ -5629,8 +5542,7 @@ function ResultHeaderProcessor(orderUI) {
 				}
 			}
 		}
-	}
-	
+	}	
 	this.generate = function(result,combinedResult,orderId,honorific) {
 		var self=this;
 		var headerSetting =methodInvoker.getPageSettingByKey('header');
@@ -5712,7 +5624,7 @@ function ResultHeaderProcessor(orderUI) {
 			lnc.label.trim()!="" || mnc.label.trim()!="" || rnc.label.trim()!=""){
 			row=$('<div class="oneHeader" >&nbsp;</div>');
 			var column = $('<div class="columnleftalign">&nbsp;</div>');
-			column.append(lnc.label);
+			column.append("Name");
 			self.setStyles(column,lnc);
 			curwidth = parseInt(lnc.width),10||0;
 			curcol = column;
@@ -5777,37 +5689,18 @@ function ResultHeaderProcessor(orderUI) {
 	}
 }
 function TestListJsonDTO() {
-	
-}
-TestListJsonDTO.prototype.setTestName= function(testName) {
-	this.testName= testName;
-}
-TestListJsonDTO.prototype.getTestName= function() {
-	return this.testName;
-}
-TestListJsonDTO.prototype.setReportingDate= function(reportingDate) {
-	this.reportingDate= reportingDate;
-}
-TestListJsonDTO.prototype.getReportingDate= function() {
-	return this.reportingDate;
-}
-TestListJsonDTO.prototype.setReportingTime= function(reportingTime) {
-	this.reportingTime= reportingTime;
-}
-TestListJsonDTO.prototype.getReportingTime= function() {
-	return this.reportingTime;
-}
-TestListJsonDTO.prototype.setSpecimens= function(specimens) {
-	this.specimens= specimens;
-}
-TestListJsonDTO.prototype.getSpecimens= function() {
-	return this.specimens;
-}
-TestListJsonDTO.prototype.setResult= function(result) {
-	this.result= result;
-}
-TestListJsonDTO.prototype.getResult= function() {
-	return this.result;
+	this.setTestName= function(testName) {
+		this.testName= testName;
+	}
+	this.getTestName= function() {return this.testName;}
+	this.setReportingDate= function(reportingDate) {this.reportingDate= reportingDate;}
+	this.getReportingDate= function() {	return this.reportingDate;	}
+	this.setReportingTime= function(reportingTime) {this.reportingTime= reportingTime;}
+	this.getReportingTime= function() {	return this.reportingTime;	}
+	this.setSpecimens= function(specimens) {this.specimens= specimens;}
+	this.getSpecimens= function() {	return this.specimens;	}
+	this.setResult= function(result) {	this.result= result;}
+	this.getResult= function() {return this.result;	}	
 }
 function ResultPrintHandler() {
 	this.generateHtmlString = function(result) {
@@ -5835,17 +5728,24 @@ function ResultPrintHandler() {
  		strHtml += ".one_second_column{width:5%}";
  		strHtml += ".one_third_column{width:77%}";
  		strHtml += "#foodAllergy {font-size:12px}";
-		strHtml += ".foodallergy_onethird_border {border:1px solid};";
+		strHtml += ".foodallergy_onethird_border {border:1px solid}";
 		strHtml += "#foodAllergy .one_third_column{font-size:11px}";
-		strHtml += ".smallheight {line-height:15px;}"
-		strHtml += ".column_height {line-height:15mm;}"
+		strHtml += ".smallheight {line-height:15px;}";
+		strHtml += ".column_height {line-height:15mm;}";
 		strHtml += ".normal_height{line-height:7mm}";
-
+		strHtml += ".column_symbol {float:left; width:1%}";
+		strHtml += ".column_very_small {float:left;width:5%}";
+		strHtml += ".column_small {float:left;width:12%}";
+		strHtml += ".column_small_medium {float:left;width:14%}";
+		strHtml += ".column_medium {float:left;width:15%}";
+		strHtml += ".column_medium_extra {float:left;width:20%}";
+		strHtml += ".column_large {float:left;width:36%}";
+		strHtml += ".result_header {font-size:15}";
+		strHtml += ".column_extralarge{float:left;width:66%}";
+		strHtml += ".column_very_extralarge{float:left;width:87%}";
+		strHtml += ".column_top {padding-top:3%}";
 		var generalLayoutset =methodInvoker.getPageSettingByKey('general_layout');
-
-
 		strHtml += ".printresultTable {";
-
 		if(generalLayoutset.border==true) {
 			strHtml += "	border:1px solid #000;";
 			strHtml += "	margin:auto;";
@@ -5860,8 +5760,6 @@ function ResultPrintHandler() {
 			strHtml += ".printresultTable tbody tr td{border:1px solid #000;line-height:25px;}";
 			strHtml += ".printresultTable table tbody tr td{border:none;}";
 		}
-
-
 		strHtml += "input.readonlyStyle {";
 		strHtml += "	background-color:#FAFAFA;";
 		strHtml += "	border-style:none;";
@@ -5882,7 +5780,6 @@ function ResultPrintHandler() {
 		strHtml += "#cultureresultTable tbody tr td{border:1px solid #000; line-height:19px;}";
 		strHtml += "#cultureresultTable  table tbody tr td{border:1px solid #000;}";
 		strHtml += "#cultureresultTable  td{padding:none;margin:none; line-height:19px;}";
-
 		strHtml += ".cultureTable_Head thead tr th {border:0px solid #000; font-size:16px;}";
 		strHtml += ".cultureTable_Head tbody tr td{border:0px solid #000;}";
 
@@ -5996,18 +5893,16 @@ function ResultPrintHandler() {
 		strHtml+='</head><body><div id="printDiv">';
 		strHtml+= result + '</div></body></html>';
 		return strHtml;
-	}
-	
+	}	
 	this.print=function(htmlString) {
 		var WindowObject = window.open('', 'PrintWindow', 'width=1000,height=650,top=50,left=50,toolbars=no,scrollbars=yes,status=no,resizable=yes');
 		var writestat = WindowObject.document.writeln(htmlString);
 		WindowObject.focus();
 		WindowObject.print();
-		//WindowObject.document.close();
-		//WindowObject.close();
+		WindowObject.document.close();
+		WindowObject.close();
 		return;
 	}
-	
 }
 function ResultSpecimenProcessor() {
 	this.getSpecimenList = function(result,orderId) {
@@ -6025,17 +5920,13 @@ function ResultSpecimenProcessor() {
 }
 function ChangePasswordProcessor(facilityProcessor) {
 	this.facilityProcessor = facilityProcessor;
-
-	this.getFacilityProcessor = function() {
-		return this.facilityProcessor;
-	}
+	this.getFacilityProcessor = function() {return this.facilityProcessor;}
 	this.currentPage = '#'+constants.CHANGEPASSWORDMODALNAME;
 	this.oldPassword=this.currentPage + ' ' +'#oldPassword';
 	this.newPassword=this.currentPage + ' '+ '#newPassword';
 	this.confirmPassword=this.currentPage + ' ' + '#confirmPassword';
 	this.errorContainer = this.currentPage + ' ' + '#errorDivHeader';
 	this.errorMessage = this.currentPage + ' ' + '#errorDivData';
-
 	this.init = function() {
 		this.bindEvents();
 		this.removecolors(self.inputFields);
@@ -6107,5 +5998,4 @@ function ChangePasswordProcessor(facilityProcessor) {
 		error.setErrorMsgs(errorMsgs);
 		return error;
 	}
-
 }
