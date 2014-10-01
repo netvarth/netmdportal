@@ -17,9 +17,7 @@ $(function() {
 	patientHome.init();
 });
 function Constants() {
-	this.showMyName = function() {
-		return "Constants";
-	}
+	this.showMyName = function() {return "Constants";}
 	this.DAY = 'Day';
 	this.MONTH='Month';
 	this.WEEK="Week";
@@ -63,9 +61,7 @@ function Constants() {
 	this.SHOWRESULTURL="/youNeverWait/netlims/ui/result/print/";
 }
 function Query() {
-	this.showMyName = function() {
-		return "Query";
-	}
+	this.showMyName = function() {return "Query";}
 	this.getRibbonContent = function(){
 		ajaxProcessor.setUrl(constants.RIBBONJSONURL);
 		return ajaxProcessor.get();
@@ -132,27 +128,17 @@ function Query() {
 	}
 }
 function User() {
-	this.showMyName = function() {
-		return "User";
-	}
-	this.getUser = function(){
-		return this.user;
-	}
-	this.setUser = function(user){
-		this.user = user;
-	}
+	this.showMyName = function() {return "User";}
+	this.getUser = function(){return this.user;}
+	this.setUser = function(user){this.user = user;}
 	this.setInfo = function() {
 		var user = query.getUser();
 		this.setUser(user);
 		this.setName(user.name);
 		$('#userName').html(user.name);
 	}
-	this.getName = function() {
-		return this.name;
-	}
-	this.setName = function(name){
-		this.name = name;
-	}
+	this.getName = function() {	return this.name;}
+	this.setName = function(name){this.name = name;}
 	this.bindEvents = function() {
 		$(".headright #dropdownOne #dd").die('click').live("click",function() {
 			$(this).toggleClass('active');
@@ -162,24 +148,17 @@ function User() {
 			if(response.success==true)
 				location.reload();
 		});
-
 	}
 }
-
 function GlobalToolBarProcessor() {
-	this.showMyName = function() {
-		return "GlobalToolBarProcessor";
-	}
+	this.showMyName = function() {return "GlobalToolBarProcessor";}
 	this.generateRibbonBar=function(globalTbInfo) {
 		var globalTB = new GlobalToolBar(globalTbInfo);
 		$(constants.RIBBONDATACONTROLNAME).html(globalTB.result);	
 	}
 }
-
 function AccordionGenerator() {
-	this.showMyName = function() {
-		return "AccordionGenerator";
-	}
+	this.showMyName = function() {return "AccordionGenerator";}
 	this.load=function(parent, path, accordionPath) {
 		var layoutInfo = query.getAccordionJson(path);
 		var layout = this.generate(layoutInfo);
@@ -188,13 +167,11 @@ function AccordionGenerator() {
 	}
 	this.generate = function(layout, accordionPath) {
 		var layoutStructure = $('<div id=' + accordionPath + '/>');
-
 		$(layout.list).each(function(index, item){
 			var header = $('<h3/>');
 			header.attr('id',item.id + "_header");
 			header.html(item.h3_caption);
 			layoutStructure.append(header);
-
 			var content = $('<div/>');
 			content.html("&nbsp;");
 			content.attr('id',item.id + "_content");
@@ -203,11 +180,8 @@ function AccordionGenerator() {
 		return layoutStructure;
 	}
 }
-
 function TabGenerator() {
-	this.showMyName = function() {
-		return "TabGenerator";
-	}
+	this.showMyName = function() {return "TabGenerator";}
 	this.load=function(parent, path) {
 		var layoutInfo = query.getAccordionJson(path);
 		var layout = this.generate(layoutInfo);
@@ -235,17 +209,10 @@ function TabGenerator() {
 		return layoutStructure;
 	}
 }
-
 function PatientHome () {
-	this.showMyName = function() {
-		return "PatientHome";
-	}
-	this.setUser=function(user){
-		this.user = user;
-	}
-	this.getUser = function(){
-		return this.user;
-	}
+	this.showMyName = function() {return "PatientHome";}
+	this.setUser=function(user){this.user = user;}
+	this.getUser = function(){return this.user;}
 	this.ribbonAppointments = '#ribbonAppointments';
 	this.ribbonResults = '#ribbonResults';
 	this.ribbonClinics = '#ribbonClinics';
@@ -258,27 +225,16 @@ function PatientHome () {
 		patientProcessor.init();
 		var list=patientProcessor.list(user.name);
 		this.setPatientsListToControl(list, constants.PATIENTSELECTCONTROLNAME);
-
 		var ribbonContent = query.getRibbonContent();
 		var ribbonGenerator = new GlobalToolBarProcessor();
 		ribbonGenerator.generateRibbonBar(ribbonContent);
 		this.bindEvents();
-
 		$(this.ribbonAppointments).trigger('click');
-		
 	}
-	this.getPatientId = function() {
-		return $(constants.PATIENTSELECTCONTROLNAME).val().split("_")[0];
-	}
-	this.getPatientEmail = function() {
-		return $(constants.PATIENTSELECTCONTROLNAME).val().split("_")[1];
-	}
-	this.getSelectedPatient = function() {
-		return $(constants.PATIENTSELECTCONTROLNAME + " :selected").text().split(" ")[0];
-	}
-	this.getSelectedPatientName = function() {
-		return $(constants.PATIENTSELECTCONTROLNAME + " :selected").text();
-	}
+	this.getPatientId = function() {return $(constants.PATIENTSELECTCONTROLNAME).val().split("_")[0];}
+	this.getPatientEmail = function() {return $(constants.PATIENTSELECTCONTROLNAME).val().split("_")[1];}
+	this.getSelectedPatient = function() {return $(constants.PATIENTSELECTCONTROLNAME + " :selected").text().split(" ")[0];	}
+	this.getSelectedPatientName = function() {return $(constants.PATIENTSELECTCONTROLNAME + " :selected").text();}
 	this.bindEvents = function() {
 		var self=this;
 		var appointmentListProcessor;
@@ -329,11 +285,7 @@ function PatientHome () {
 }
 function ChangePasswordProcessor(patientProcessor) {
 	this.patientProcessor = patientProcessor;
-
-	this.getPatientProcessor = function() {
-		return this.patientProcessor;
-	}
-
+	this.getPatientProcessor = function() {	return this.patientProcessor;}
 	this.getPatientHome = function() {
 		var patientProcessor = this.getPatientProcessor();
 		return patientProcessor.getParent();
@@ -416,24 +368,13 @@ function ChangePasswordProcessor(patientProcessor) {
 		error.setErrorMsgs(errorMsgs);
 		return error;
 	}
-
 }
-
 function PatientProcessor(patientHome) {
 	this.parent=patientHome;
-	
-	this.getParent = function() {
-		return this.parent;
-	}
-	this.showMyName = function() {
-		return "PatientProcessor";
-	}
-	this.list = function(user_email) {
-		return query.getPatientsByEmail(user_email);
-	}
-	this.init = function(){
-		this.bindEvents();
-	}
+	this.getParent = function() {return this.parent;}
+	this.showMyName = function() {return "PatientProcessor";}
+	this.list = function(user_email) {return query.getPatientsByEmail(user_email);}
+	this.init = function(){	this.bindEvents();}
 	this.bindEvents = function(){
 		var self=this;
 		$("#btnChangePassword").die('click').live("click",function() {
@@ -442,17 +383,12 @@ function PatientProcessor(patientHome) {
 			var changePasswordProcessor = new ChangePasswordProcessor(self);
 			changePasswordProcessor.init();
 		});
-
 	}
 }
 function FutureAppointmentListProcessor(parent) {
 	this.parent = parent;
-	this.showMyName = function() {
-		return "FutureAppointmentListProcessor";
-	}
-	this.getParent = function(){
-		return this.parent;
-	}
+	this.showMyName = function() {return "FutureAppointmentListProcessor";}
+	this.getParent = function(){return this.parent;	}
 	this.init = function() {
 		var parent = this.getParent();
 		var appointments = parent.getAppointments(parent.getPatientId());
@@ -464,12 +400,8 @@ function FutureAppointmentListProcessor(parent) {
 }
 function WeekAppointmentListProcessor(parent) {
 	this.parent = parent;
-	this.showMyName = function() {
-		return "WeekAppointmentListProcessor";
-	}
-	this.getParent = function(){
-		return this.parent;
-	}
+	this.showMyName = function() {return "WeekAppointmentListProcessor";}
+	this.getParent = function(){return this.parent;	}
 	this.init = function() {
 		var parent = this.getParent();
 		var appointments = parent.getAppointments(parent.getPatientId());
@@ -486,14 +418,8 @@ function PastAppointmentListProcessor(parent) {
 	this.listUrl=constants.PATIENTPASTAPPOINTMENTSURL;
 	this.exp = new ExpressionListDTO();
 	this.tableNavigator = new DataTableNavigator(this.pgTableName,this.listUrl,this.pgTableContainer,this,this.exp);
-
-	this.showMyName = function() {
-		return "PastAppointmentListProcessor";
-	}
-
-	this.getParent = function(){
-		return this.parent;
-	}
+	this.showMyName = function() {return "PastAppointmentListProcessor";}
+	this.getParent = function(){return this.parent;	}
 	this.init = function() {
 		var parent = this.getParent();
 		dataTableProcessor.create(this.pgTableName,constants.PASTAPPOINTMENTSTABLEURL, parent.pastContainer);//Create Table for Listing Agent
@@ -504,9 +430,7 @@ function PastAppointmentListProcessor(parent) {
 		this.tableNavigator.setExp(expList);
 		this.tableNavigator.list();
 	}
-	this.getPastAppointments = function(patientId) {
-		return query.getPastAppointments();
-	}
+	this.getPastAppointments = function(patientId) {return query.getPastAppointments();	}
 	this.setTableValues=function(pgTable, appointments, key) {
 		var parent=this.getParent();
 		if(appointments.count==0) {
@@ -529,12 +453,8 @@ function PastAppointmentListProcessor(parent) {
 }
 function TodayAppointmentListProcessor(parent) {
 	this.parent = parent;
-	this.showMyName = function() {
-		return "TodayAppointmentListProcessor";
-	}
-	this.getParent = function(){
-		return this.parent;
-	}
+	this.showMyName = function() {return "TodayAppointmentListProcessor";}
+	this.getParent = function(){return this.parent;}
 	this.init = function() {
 		var parent = this.getParent();
 		var appointments = parent.getAppointments(parent.getPatientId());
@@ -550,31 +470,19 @@ function AppointmentListProcessor(patientHome){
 	this.todaysAppointmentP = new TodayAppointmentListProcessor(this);
 	this.futureAppointmentP = new FutureAppointmentListProcessor(this);
 	this.weekAppointmentP = new WeekAppointmentListProcessor(this);
-
 	this.weekContainer = '#week_content';
 	this.todayContainer = '#today_content';
 	this.pastContainer = '#past_content';
 	this.futureContainer = '#future_content';
-
 	this.weekTab='#week_header';
 	this.futureTab='#week_header';
 	this.pastTab='#week_header';
 	this.todayTab='#today_header';
-	this.showMyName = function() {
-		return "AppointmentListProcessor";
-	}
-	this.getAppointments = function(patientId) {
-		return query.getAppointments_TD_WK_FT(patientId);
-	}
-	this.getPatientId = function() {
-		return $(constants.PATIENTSELECTCONTROLNAME).val().split("_")[0];
-	}
-	this.getUser = function() {
-		return this.user;
-	}
-	this.setUser = function(user) {
-		this.user = user;
-	}
+	this.showMyName = function() {return "AppointmentListProcessor";}
+	this.getAppointments = function(patientId) {return query.getAppointments_TD_WK_FT(patientId);}
+	this.getPatientId = function() {return $(constants.PATIENTSELECTCONTROLNAME).val().split("_")[0];}
+	this.getUser = function() {return this.user;}
+	this.setUser = function(user) {this.user = user;}
 	this.bindEvents=function() {
 		var self=this;
 		$('a[href=' + self.todayContainer + ']').click(function(){
@@ -621,12 +529,8 @@ function ResultsProcessor(patientHome){
 	this.listUrl=constants.PATIENTRESULTSURL;
 	this.exp = new ExpressionListDTO();
 	this.tableNavigator = new DataTableNavigator(this.pgTableName,this.listUrl,this.pgTableContainer,this,this.exp);
-	this.showMyName = function() {
-		return "ResultsProcessor";
-	}
-	this.getParent = function() {
-		return this.parent;
-	}
+	this.showMyName = function() {return "ResultsProcessor";}
+	this.getParent = function() {return this.parent;}
 	this.init = function() {
 		$('#pageToolBar-Container').empty().html('');
 		parent = this.getParent();
@@ -645,37 +549,55 @@ function ResultsProcessor(patientHome){
 		$(self.pgTableName + ' tbody tr').die('click').live('click',function(){
 			errorHandler.removeErrors();
 			var objId=$(this).attr('id');
-			if($(this).attr('selected')) {
-				$(this).removeAttr('selected');
-				$(this).removeAttr('style');
-			} else {	
-				$(this).attr('selected','selected');
-				$(this).attr('style',constants.SELECTEDROWCOLOR);
-			}
 			var orderId = objId.split("_")[0];
 			var order = query.getOrder(orderId);
 			var layout = new LayoutJson();
 			var layoutUpdater = new LayoutUpdater();
-
 			layout.setResultHeader($.parseJSON(order.headerData).header);
-			
 			var tests = [];
-			var selectedLayout="";
-			var layoutTemplate = new Layouts_Template();
-
+			layoutList = [];
+			var layoutTemplate;
 			$(order.tests).each(function(index,test) {
 				var result = $.parseJSON(test.result);
 				var curTemplate = result.testLayout;
-				if(selectedLayout=="")
-					layoutTemplate.setTestLayout(curTemplate);
 				if(curTemplate=='General'){
-					tests.push(layoutUpdater.generateFromGeneral(result));
+					if(tests.length==0){
+						layoutTemplate = new Layouts_Template();
+						layoutTemplate.setTestLayout(curTemplate);
+					}
+					tests.push(layoutUpdater.generateGeneral(result));
+				} else if(curTemplate=='Urine'){
+					if(tests.length>0){
+						layoutTemplate.setTests(tests);
+						layoutList.push(layoutTemplate);
+						tests=[];
+					}
+					layoutTemplate = new Layouts_Template();
+					layoutTemplate.setTestLayout(curTemplate);
+					tests.push(layoutUpdater.generateUrine(result));
+					layoutTemplate.setTests(tests);
+					layoutList.push(layoutTemplate);
+					tests=[];
+				}  else if(curTemplate=='Layout1'){
+					if(tests.length>0){
+						layoutTemplate.setTests(tests);
+						layoutList.push(layoutTemplate);
+						tests=[];
+					}
+					layoutTemplate = new Layouts_Template();
+					layoutTemplate.setTestLayout("Widal");
+					tests.push(layoutUpdater.generateWidal(result));
+					layoutTemplate.setTests(tests);
+					layoutList.push(layoutTemplate);
+					tests=[];
 				}
 			});
-			layoutTemplate.setTests(tests)
-			layout.setLayouts(layoutTemplate);
-			var resultString = new ResultString();
-			resultString.setResult(JSON.stringify(layout));
+			if(tests.length>0){
+				layoutTemplate.setTests(tests);
+				layoutList.push(layoutTemplate);
+				tests=[];
+			}
+			layout.setLayouts(layoutList);
 			var f = $('<form method="post" action="' + constants.SHOWRESULTURL + '" target="_blank"></form>');
 			var inputTag = $('<input type="hidden" name="input" id="input" />');
 			inputTag.attr('value',JSON.stringify(layout));
@@ -720,12 +642,8 @@ function ResultsProcessor(patientHome){
 	}
 }
 function ResultString() {
-	this.setResult = function(result){
-		this.result=result;
-	}
-	this.getResult = function() {
-		return this.result;
-	}
+	this.setResult = function(result){this.result=result;}
+	this.getResult = function() {return this.result;}
 }
 function ClinicsProcessor(patientHome) {
 	this.parent = patientHome;
@@ -738,22 +656,11 @@ function ClinicsProcessor(patientHome) {
 	this.tableNavigator = new DataTableNavigator(this.pgTableName,this.listUrl,this.pgTableContainer,this,this.exp);
 	this.scheduleProcessor = new ScheduleProcessor(this);
 	this.calendar = new Calendar(this);
-
-	this.showMyName = function() {
-		return "ClinicsProcessor";
-	}
-	this.getParent = function() {
-		return this.parent;
-	}
-	this.getPatientHome = function() {
-		return  this.parent;
-	}
-	this.getCalender = function() {
-		return this.calendar;
-	}
-	this.getScheduleProcessor = function() {
-		return this.scheduleProcessor;
-	}
+	this.showMyName = function() {return "ClinicsProcessor";}
+	this.getParent = function() {return this.parent;}
+	this.getPatientHome = function() {return  this.parent;}
+	this.getCalender = function() {return this.calendar;}
+	this.getScheduleProcessor = function() {return this.scheduleProcessor;}
 	this.init = function() {
 		parent = this.getParent();
 		$(constants.PAGETITLE).empty().html("Clinics");
@@ -801,7 +708,6 @@ function ClinicsProcessor(patientHome) {
 			var title = 'Create appointment with ' + doctorName;
 			$(constants.PAGETITLE).html(title);
 			self.generatePageToolBar();
-
 			var calenderObj = $('<div/>');
 			calenderObj.attr('id','calendar');
 			calenderObj.attr('class','fc');
@@ -814,24 +720,12 @@ function ClinicsProcessor(patientHome) {
 			return false;
 		});
 	}
-	this.setDoctorId = function(doctorId) {
-		this.doctorId = doctorId;
-	}
-	this.setParentId = function(parentId) {
-		this.parentId = parentId;
-	}
-	this.getDoctorId = function() {
-		return this.doctorId;
-	}
-	this.getParentId = function() {
-		return this.parentId;
-	}
-	this.getNetmdBranchId = function(parentId) {
-		return parentId.split("_")[0];
-	}
-	this.getNetmdId = function(parentId){
-		return parentId.split("_")[1];
-	}
+	this.setDoctorId = function(doctorId) {this.doctorId = doctorId;}
+	this.setParentId = function(parentId) {this.parentId = parentId;}
+	this.getDoctorId = function() {return this.doctorId;}
+	this.getParentId = function() {return this.parentId;}
+	this.getNetmdBranchId = function(parentId) {return parentId.split("_")[0];}
+	this.getNetmdId = function(parentId){return parentId.split("_")[1];}
 	this.generatePageToolBar = function() {
 		var ptbProcessor = new PageToolBarProcessor();
 		ptbProcessor.create(constants.CLINICS, constants.CLINICSPAGETBURL); 
@@ -925,18 +819,13 @@ function ClinicsProcessor(patientHome) {
 }
 function AppointmentProcessor(parent) {
 	this.parent = parent;
-	this.showMyName = function() {
-		return "AppointmentProcessor";
-	}
-	this.getParent = function() {
-		return this.parent;
-	}
+	this.showMyName = function() {return "AppointmentProcessor";}
+	this.getParent = function() {return this.parent;}
 	this.getPatientHome = function() {
 		var parent = this.getParent();
 		return parent.getPatientHome();
 	}
 	this.init = function() {
-
 	}
 	this.takeAppoitment = function (obj1, date, timeslot1) {
 		pageHandler.generateModalPage(constants.NEWAPPOINTMENTPAGEURL,constants.APPOINTMENTMODALNAME);
@@ -945,7 +834,6 @@ function AppointmentProcessor(parent) {
 		$("#newpatintAppointmentForm #Patientappointmenttime").text(timeslot1);
 		this.bindEvents();
 	}
-
 	this.getAppointmentRequest = function(scheduleId,timeslot1) {
 		var patientHome = this.getPatientHome();
 		var patientId = patientHome.getPatientId();
@@ -979,44 +867,6 @@ function AppointmentProcessor(parent) {
 	}
 	this.bindEvents = function() {
 		var self=this;
-		/*$('#viewpatintAppointmentForm #btnCancel').die('click').live('click',function(){
-			$("#viewpatintAppointmentForm").trigger('reveal:close');
-		});
-		$('#viewpatintAppointmentForm #btnDone').die('click').live('click',function(){
-			
-			var patientapp=createUpdateSubmitJson(scheduleId);
-			var patient="Your Appointment";
-			var headerdetal=patientAppointment()
-			var appointmentJson='{"header"'+":"+headerdetal+",";
-			appointmentJson+='"appointmentDetails"'+":"+patientapp+"}";
-			var appointmentResponse=postdataToServer("/youNeverWait/ws/ui/patient/updateAppointmentFromPortal",appointmentJson);	
-			//alert(JSON.stringify(appointmentResponse));				
-	    if(appointmentResponse.success==true){
-			$('.fc-agenda-slots tr th').each(function() {
-			var timeslotapp=$(this).text();
-			var appId=appointmentResponse.id;
-			var time=appointmentResponse.startTime
-			var realTime=ampmConversion(time);
-			if(timeslotapp==realTime){
-				$(this).nextAll('td:first').children('div').text(patient);
-				$(this).nextAll('td:first').children('div').attr('style','font-size:150%;margin: 10px 0px 0px 300px;');
-				$(this).nextAll('td:first').attr('style','background:#ADDFFF;');
-				$(this).nextAll('td:first').attr('value',appId);
-				$('tr td[selected] div').text("Take Your Appointment");
-				$('tr td[selected]').attr('style','background:#52F3FF;');
-				$('tr td').removeAttr('selected');
-				}
-			});
-			showTip("Appointment updated Successfully");
-			$("#viewpatintAppointmentForm").trigger('reveal:close');
-			 }
-			
-	else {
-			updateTipsNew(getErrorName(appointmentResponse.error),$('#error'));
-		  		   $("#error").delay(1100).fadeOut(1100);
-		}
-		
-		});*/
 		 $('#newpatintAppointmentForm #btnDone').die('click').live("click",function() {	
 		 	var appointment = self.getAppointmentRequest(scheduleId,timeslot1);
 			var patient="Your Appointment";
@@ -1046,109 +896,48 @@ function AppointmentProcessor(parent) {
 	}
 }
 function AppointmentReq() {
-	this.getHeader = function() {
-		return this.header;
-	}
-	this.getAppointmentDetails=function(){
-		return this.appointmentDetails;
-	}
-	this.setHeader=function(header) {
-		this.header = header;
-	}
-	this.setAppointmentDetails=function(appointmentDetails) {
-		this.appointmentDetails=appointmentDetails;
-	}
+	this.getHeader = function() {return this.header;}
+	this.getAppointmentDetails=function(){return this.appointmentDetails;}
+	this.setHeader=function(header) {this.header = header;}
+	this.setAppointmentDetails=function(appointmentDetails) {this.appointmentDetails=appointmentDetails;}
 }
 function AppointmentHeader() {
-	this.getHeadOfficeId = function() {
-		return this.headOfficeId;
-	}
-	this.setHeadOfficeId = function(netmdId) {
-		this.headOfficeId = netmdId;
-	}
-	this.getPassPhrase = function() {
-		return this.passPhrase;
-	}
-	this.setPassPhrase = function(passphrase){
-		this.passPhrase=passphrase;
-	}
-	this.getMacId = function() {
-		return this.macId;
-	}
-	this.setMacId = function(macid){
-		this.macId=macid;
-	}
-	this.getBranchId = function() {
-		return this.branchId;
-	}
-	this.setBranchId = function(branchId) {
-		this.branchId = branchId;
-	}
+	this.getHeadOfficeId = function() {return this.headOfficeId;}
+	this.setHeadOfficeId = function(netmdId) {this.headOfficeId = netmdId;}
+	this.getPassPhrase = function() {return this.passPhrase;}
+	this.setPassPhrase = function(passphrase){this.passPhrase=passphrase;}
+	this.getMacId = function() {return this.macId;}
+	this.setMacId = function(macid){this.macId=macid;}
+	this.getBranchId = function() {return this.branchId;}
+	this.setBranchId = function(branchId) {this.branchId = branchId;}
 }
 function Appointment() {
-	this.setPatientId = function(patientId){
-		this.patientId = patientId;
-	}
-	this.getPatientId = function(){
-		return this.patientId;
-	}
-	this.getDoctorId = function() {
-		return this.doctorId;
-	}
-	this.setDoctorId = function(doctorId) {
-		this.doctorId = doctorId;
-	}
-	this.getScheduleId = function() {
-		return this.scheduleId;
-	}
-	this.setScheduleId = function(scheduleId) {
-		this.scheduleId = scheduleId;
-	}
-	this.getStartTime =function() {
-		return this.startTime;
-	}
-	this.setStartTime = function(startTime) {
-		this.startTime = startTime;
-	}
-	this.getStartDate = function() {
-		return this.startDate;
-	}
-	this.setStartDate = function(startDate) {
-		this.startDate = startDate;
-	}
-	this.getPatientName = function() {
-		return this.patientName;
-	}
-	this.setPatientName = function(name) {
-		this.patientName = name;
-	}
-	this.getEmailId = function() {
-		return this.emailId;
-	}
-	this.setEmailId = function(email) {
-		this.emailId = email;
-	}
+	this.setPatientId = function(patientId){this.patientId = patientId;}
+	this.getPatientId = function(){return this.patientId;}
+	this.getDoctorId = function() {return this.doctorId;}
+	this.setDoctorId = function(doctorId) {this.doctorId = doctorId;}
+	this.getScheduleId = function() {return this.scheduleId;}
+	this.setScheduleId = function(scheduleId) {this.scheduleId = scheduleId;}
+	this.getStartTime =function() {return this.startTime;}
+	this.setStartTime = function(startTime) {this.startTime = startTime;}
+	this.getStartDate = function() {return this.startDate;}
+	this.setStartDate = function(startDate) {this.startDate = startDate;}
+	this.getPatientName = function() {return this.patientName;}
+	this.setPatientName = function(name) {this.patientName = name;}
+	this.getEmailId = function() {return this.emailId;}
+	this.setEmailId = function(email) {this.emailId = email;}
 }
 function ScheduleProcessor(parent) {
 	this.parent = parent;
 	this.appointmentProcessor = new AppointmentProcessor(this);
-
-	this.getAppointmentProcessor = function(){
-		return this.appointmentProcessor;
-	}
-	this.showMyName = function() {
-		return "ScheduleProcessor";
-	}
-	this.getParent = function() {
-		return this.parent;
-	}
+	this.getAppointmentProcessor = function(){return this.appointmentProcessor;}
+	this.showMyName = function() {return "ScheduleProcessor";}
+	this.getParent = function() {return this.parent;}
 	this.getPatientHome = function() {
 		var parent = this.getParent();
 		return parent.getPatientHome();
 	}
-	this.getCalender = function () {
-		return this.parent.getCalender();
-	}
+	this.getCalender = function () {return this.parent.getCalender();}
 	this.monthlyView = function() {
 		var calendar = this.getCalender();
 		var parent = this.getParent();
@@ -1168,7 +957,6 @@ function ScheduleProcessor(parent) {
 		curMonthLastDate=$.trim(curMonthLastDate);
 		var curMonFirstDate=year+'-'+curmonth+'-'+'01';
 		curMonFirstDate=$.trim(curMonFirstDate);
-
 		param = netmdBranchId+','+parent.getDoctorId()+','+curMonFirstDate+","+curMonthLastDate;
 		var response = query.getScheduleMonthView(param);
 		$('.fc-view-month .fc-border-separate tbody tr td').not('.fc-other-month').each(function() {
@@ -1195,15 +983,9 @@ function ScheduleProcessor(parent) {
 			});
 		}	
 	}
-	this.init = function() {
-		this.bindEvents();
-	}
-	this.setCalendarSelectionType = function(type) {
-		this.type=type;
-	}
-	this.getCalendarSelectionType = function() {
-		return this.type;
-	}
+	this.init = function() {this.bindEvents();}
+	this.setCalendarSelectionType = function(type) {this.type=type;}
+	this.getCalendarSelectionType = function() {return this.type;}
 	this.dayView = function(date) {
 		var appointmentProcessor = this.getAppointmentProcessor();
 		var self = this;
@@ -1262,12 +1044,8 @@ function ScheduleProcessor(parent) {
 			});
 		});		
 	}
-	this.getScheduleDate = function(){
-		return this.scheduleDate;
-	}
-	this.setScheduleDate=function(scheduleDate) {
-		this.scheduleDate=scheduleDate;
-	}
+	this.getScheduleDate = function(){return this.scheduleDate;}
+	this.setScheduleDate=function(scheduleDate) {this.scheduleDate=scheduleDate;}
 	this.setTodaysDate = function(){
 		var curDate = new Date();
 		var month = curDate.getMonth()+1;
@@ -1391,9 +1169,6 @@ function ScheduleProcessor(parent) {
 	 	});	
 	 	$('.fc-header-left .fc-button-month ').die('click').live("click",function() {	
 	 		self.setCalendarSelectionType(constants.MONTH);	
-			//$('.fc-border-separate tr td ').removeAttr('style');
-			//$('div.fc-day-content').text("");
-			//$('.fc-border-separate tr td .fc-day-number').nextAll('div.fc-day-content').text("");
 			self.monthlyView();
 		});	
 		$('.fc-view-month .fc-border-separate tbody tr td').die('click').live("click",function() {	
@@ -1415,40 +1190,20 @@ function ScheduleProcessor(parent) {
 	}
 }
 function AccordionListCreator() {
-	this.showMyName = function() {
-		return "AccordionListCreator";
-	}
-	this.setList = function(list) {
-		this.list = list;
-	}
-	this.getList = function(){
-		return this.list;
-	}
+	this.showMyName = function() {return "AccordionListCreator";}
+	this.setList = function(list) {this.list = list;}
+	this.getList = function(){return this.list;}
 }
 function AccordionListContentCreator() {
-	this.showMyName = function() {
-		return "AccordionListContentCreator";
-	}
-	this.setId = function(id) {
-		this.id = id;
-	}
-	this.getId =function() {
-		return this.id;
-	}
-	this.setCaption = function(caption) {
-		this.h3_caption = caption;
-	}
-	this.getCaption = function(){
-		return ths.h3_caption;
-	}
+	this.showMyName = function() {return "AccordionListContentCreator";}
+	this.setId = function(id) {this.id = id;}
+	this.getId =function() {return this.id;}
+	this.setCaption = function(caption) {this.h3_caption = caption;}
+	this.getCaption = function(){return ths.h3_caption;}
 }
 function Calendar() {
-	this.showMyName = function() {
-		return "Calendar";
-	}
-	this.init=function() {
-		this.bindEvents();
-	}
+	this.showMyName = function() {return "Calendar";}
+	this.init=function() {this.bindEvents();}
 	this.getLastDateOfMonth=function(Year,Month){
 		return(new Date((new Date(Year, Month,1))-1));
 	}
@@ -1578,7 +1333,5 @@ function Calendar() {
 			}
 		});
 	}
-	this.init = function() {
-		this.bindEvents();
-	}
+	this.init = function() {this.bindEvents();}
 }
