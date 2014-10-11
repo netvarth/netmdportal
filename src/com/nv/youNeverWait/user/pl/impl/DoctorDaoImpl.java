@@ -490,7 +490,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	public ResponseDTO delete(int globalId) {
 		ResponseDTO response = new ResponseDTO();
 
-		DoctorTbl doctorTbl = (DoctorTbl) getById(DoctorTbl.class, globalId);
+		NetmdDoctorTbl doctorTbl = (NetmdDoctorTbl) getById(NetmdDoctorTbl.class, globalId);
 		if (doctorTbl == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.DoctorNotFound);
