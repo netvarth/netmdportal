@@ -5946,7 +5946,7 @@ function ResultPreviewProcessor(orderReference) {
 		}
 		resultContent.append(parentTable);
 		resultContent.append(remarksDiv);
-		var header = new ResultHeaderProcessor();
+		var header = new ResultHeaderProcessor(orderUI);
 		var repHeader = header.create(resultParent,combinedResult,orderId,honorific,printStatus);
 		wrapper.append(repHeader);
 		var contentset =methodInvoker.getPageSettingByKey('content');
@@ -6052,7 +6052,7 @@ function ResultPreviewProcessor(orderReference) {
 		tblObj.append(remarksDiv);
 		parentTable.append(tblObj);
 		resultContent.append(parentTable);
-		var header = new ResultHeaderProcessor();
+		var header = new ResultHeaderProcessor(orderUI);
 		var repHeader = header.create(resultParent,combinedResult,orderId,honorific,printStatus);
 		var repHeader = header.generate(resultParent,combinedResult,orderId,honorific);
 		wrapper.append(repHeader);
@@ -6361,8 +6361,12 @@ function ResultFooterProcessor(orderUI) {
 		return footer;
 	}
 }
-function ResultHeaderProcessor() {
-
+function ResultHeaderProcessor(orderUI) {
+	this.orderUI = orderUI;
+	
+	this.getOrderUI = function(){
+		return this.orderUI;
+	}
 	this.create = function(result,combinedResult,orderId,honorific,status) {
 		/*Set the Header Properties*/
 		var self=this;
