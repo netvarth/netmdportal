@@ -110,7 +110,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 		netmdLogin.setPassword(newPassword);
 		update(netmdLogin);
 
-		List<DoctorTbl> doctorList = getDoctorByLoginId(netmdLogin.getId());
+		List<NetmdDoctorTbl> doctorList = getDoctorByLoginId(netmdLogin.getId());
 		if (doctorList.isEmpty()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidDoctorLogin);
@@ -119,7 +119,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		for (DoctorTbl doctr : doctorList) {
+		for (NetmdDoctorTbl doctr : doctorList) {
 			doctr.setUpdateDateTime(new Date());
 			update(doctr);
 		}
@@ -173,7 +173,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 				NetmdUserTypeEnum.Doctor.getDisplayName());
 		if (existingUser != null) {
 			/* Checking doctor with same login exists */
-			DoctorTbl DoctorLogin = getExistingDoctorWithLogin(
+			NetmdDoctorTbl DoctorLogin = getExistingDoctorWithLogin(
 					existingUser.getId(), header.getBranchId());
 			if (DoctorLogin != null) {
 				ServiceException se = new ServiceException(
@@ -193,7 +193,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 		}
 
 		/* Checking doctor duplication */
-		List<DoctorTbl> existingDoc = getExistingDoctors(doctor.getEmail(),
+		List<NetmdDoctorTbl> existingDoc = getExistingDoctors(doctor.getEmail(),
 				header.getBranchId());
 		if (existingDoc.size() != 0) {
 			ServiceException se = new ServiceException(
@@ -345,10 +345,10 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 		if (doctor.getEmail() != null && !doctor.getEmail().equals("")) {
 
 			/* Checking doctor duplication */
-			List<DoctorTbl> existingDoctrs = getExistingDoctors(
+			List<NetmdDoctorTbl> existingDoctrs = getExistingDoctors(
 					doctor.getEmail(), header.getBranchId());
 			if (existingDoctrs.size() != 0) {
-				for (DoctorTbl doc : existingDoctrs) {
+				for (NetmdDoctorTbl doc : existingDoctrs) {
 					if (doctor.getGlobalId() != doc.getId()) {
 						ServiceException se = new ServiceException(
 								ErrorCodeEnum.DoctorEmailExists);
@@ -977,11 +977,11 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	 * @param loginId
 	 * @return DoctorTbl
 	 */
-	public List<DoctorTbl> getDoctorByLoginId(int loginId) {
+	public List<NetmdDoctorTbl> getDoctorByLoginId(int loginId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_DOCTOR_BY_LOGIN_ID);
 		query.setParameter("param1", loginId);
-		return executeQuery(DoctorTbl.class, query);
+		return executeQuery(NetmdDoctorTbl.class, query);
 	}
 
 	/**
@@ -1007,11 +1007,11 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	 * @param globalId
 	 * @return DoctorTbl
 	 */
-	public DoctorTbl getDoctorByGlobalId(int globalId) {
+	public NetmdDoctorTbl getDoctorByGlobalId(int globalId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_DOCTOR_BY_GLOBALID);
 		query.setParameter("param1", globalId);
-		return executeUniqueQuery(DoctorTbl.class, query);
+		return executeUniqueQuery(NetmdDoctorTbl.class, query);
 	}
 
 	/**
@@ -1021,12 +1021,12 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	 * @param branchId
 	 * @return DoctorTbl
 	 */
-	public List<DoctorTbl> getExistingDoctors(String email, int branchId) {
+	public List<NetmdDoctorTbl> getExistingDoctors(String email, int branchId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_EXISTING_DOCTOR);
 		query.setParameter("param1", email);
 		query.setParameter("param2", branchId);
-		return executeQuery(DoctorTbl.class, query);
+		return executeQuery(NetmdDoctorTbl.class, query);
 	}
 
 	/**
@@ -1036,12 +1036,12 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	 * @param branchId
 	 * @return DoctorTbl
 	 */
-	public DoctorTbl getExistingDoctorWithLogin(int loginId, int branchId) {
+	public NetmdDoctorTbl getExistingDoctorWithLogin(int loginId, int branchId) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_DOCTOR_WITH_LOGIN);
 		query.setParameter("param1", loginId);
 		query.setParameter("param2", branchId);
-		return executeUniqueQuery(DoctorTbl.class, query);
+		return executeUniqueQuery(NetmdDoctorTbl.class, query);
 	}
 
 	/**
@@ -1050,11 +1050,11 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	 * @param eMail
 	 * @return DoctorTbl
 	 */
-	public DoctorTbl getDoctorByEmail(String eMail) {
+	public NetmdDoctorTbl getDoctorByEmail(String eMail) {
 		javax.persistence.Query query = em
 				.createQuery(Query.GET_DOCTOR_BY_EMAIL);
 		query.setParameter("param1", eMail);
-		return executeUniqueQuery(DoctorTbl.class, query);
+		return executeUniqueQuery(NetmdDoctorTbl.class, query);
 	}
 
 	/**
@@ -1270,26 +1270,26 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 	@Override
 	public int processReferral(ReferralSyncDTO referral) {
 
-		DoctorTbl doctorTbl=getReferral(referral.getReferralInfo().getAddress().getEmail());
+		NetmdDoctorTbl doctorTbl=getReferral(referral.getReferralInfo().getAddress().getEmail());
 		if(doctorTbl==null)
-			doctorTbl=new DoctorTbl();
+			doctorTbl=new NetmdDoctorTbl();
 		doctorTbl.setEmail(referral.getReferralInfo().getAddress().getEmail());
 		//nofax,primary n secon addr,city,state,pin
 		doctorTbl.setPhone(referral.getReferralInfo().getAddress().getPhone());
 		doctorTbl.setMobile(referral.getReferralInfo().getAddress().getMobile());
 		//no uid,name,actionname
 	
-		saveOrUpdate(DoctorTbl.class, doctorTbl);
+		saveOrUpdate(NetmdDoctorTbl.class, doctorTbl);
 		//update(doctorTbl);
 		return doctorTbl.getId();
 	}
 
 
 
-private DoctorTbl getReferral(String email) {
+private NetmdDoctorTbl getReferral(String email) {
 		javax.persistence.Query query=em.createQuery(Query.GET_REFERRAL_BY_EMAILID);
 		query.setParameter("param1", email);
-		return executeUniqueQuery(DoctorTbl.class, query);
+		return executeUniqueQuery(NetmdDoctorTbl.class, query);
 	}
 
 }

@@ -170,9 +170,7 @@ public class DoctorValidator {
 	 */
 	public void validateDoctorQualification(
 			DoctorQualificationDTO doctorQualificaton) {
-		if (doctorQualificaton.getPassedOutDate() == null
-				|| !doctorQualificaton.getPassedOutDate().matches(
-						"\\d{4}")) {
+		if (doctorQualificaton.getPassedOutDate() == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidDateFormat);
 			se.setDisplayErrMsg(true);
