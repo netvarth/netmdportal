@@ -37,7 +37,6 @@ public class FacilityDaoImpl extends GenericDaoHibernateImpl implements Facility
 	@Transactional(readOnly=false)
 	public int create(FacilitySyncDTO facility, int branchId) {
 		LabFacilityTbl labFacilityTbl = new LabFacilityTbl();
-		labFacilityTbl.setUid(facility.getFacility().getUid());
 		labFacilityTbl.setEmail(facility.getFacility().getAddress().getEmail());
 		labFacilityTbl.setCity(facility.getFacility().getAddress().getCity());
 		labFacilityTbl.setMobile(facility.getFacility().getAddress().getMobile());
