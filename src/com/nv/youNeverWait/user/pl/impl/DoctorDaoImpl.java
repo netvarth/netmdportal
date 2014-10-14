@@ -401,6 +401,7 @@ public class DoctorDaoImpl extends GenericDaoHibernateImpl implements DoctorDao 
 					.getConsultationInterval()));
 		}
 		doctorTbl.setUpdateDateTime(new Date());
+		doctorTbl.setStatus(doctor.getStatus());
 		update(doctorTbl);
 
 		// Deleting each table record related to the doctor

@@ -35,6 +35,7 @@ import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.PatientTypeEnum;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPatientTbl;
+import com.nv.youNeverWait.pl.entity.StatusEnum;
 import com.nv.youNeverWait.pl.entity.UserTypeEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.CaseDTO;
@@ -186,6 +187,8 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 	@Transactional(readOnly = false)
 	public ResponseDTO createPatient(PatientDetail patient, HeaderDTO header) {
 		ResponseDTO response = new ResponseDTO();
+		boolean patientStatus = false;
+		NetmdPatientTbl newPatient = null;
 		DateFormat sdf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
 		NetmdPassphraseTbl netmdBranchPassphrase = (NetmdPassphraseTbl) getBranchByPassPhrase(
@@ -218,25 +221,34 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		}
 
 		// check if patient already exists (first name,email and branch)
-		NetmdPatientTbl patientTbl = (NetmdPatientTbl) getPatientByEmail(patient
-				.getEmail().trim(), patient.getFirstName(),
-				patient.getBranchId());
-		if (patientTbl != null) {
+		NetmdPatientTbl patientTbl = (NetmdPatientTbl) getPatientByEmail(patient.getEmail().trim(), patient.getFirstName(),header.getBranchId());
+		if(patientTbl!=null){
+			if(patientTbl.getStatus().equals(StatusEnum.InActive))
+			{
+				patientTbl.setStatus(StatusEnum.Active.toString());
+				patientStatus=true;
+				update(patientTbl);
+
+			}else{
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.PatientExists);
-			se.addParam(new Parameter(Constants.NAME, patient.getFirstName()));
 			se.setDisplayErrMsg(true);
 			throw se;
+			}
 		}
-		NetmdPatientTbl newPatient = new NetmdPatientTbl();
+		
+		if(!patientStatus)
+			newPatient = new NetmdPatientTbl();
+		else
+			newPatient = (NetmdPatientTbl) getPatientByEmail(patient.getEmail().trim(), patient.getFirstName(),header.getBranchId());
+		
 		LoginTbl loginTbl = new LoginTbl();
 		if (patient.getEmail() != null && !patient.getEmail().isEmpty()) {
 			LoginTbl loginObj = getLoginByUserName(patient.getEmail());
 			if (loginObj != null) {// if the userid exists in Netmdlogintbl,
 									// take it
 									// and set it to patient and save patient
-				NetmdPatientTbl patientObj = getPatient(patient.getFirstName(),
-						loginObj.getId(), header.getBranchId());
+				NetmdPatientTbl patientObj = getPatient(patient.getFirstName(),loginObj.getId(), header.getBranchId());
 				if (patientObj != null) {// if the patient exists in the same
 											// branch
 											// throw error
@@ -260,6 +272,9 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 				newPatient.setLoginTbl(loginTbl);
 			}
 		}
+		
+		
+		
 
 		newPatient.setFirstName(patient.getFirstName());
 		newPatient.setLastName(patient.getLastName());
@@ -281,8 +296,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		newPatient.setAllergies(patient.getAllergies());
 		newPatient.setFamilyHistory(patient.getFamilyHistory());
 		newPatient.setEmergencyNo(patient.getEmergencyNo());
-		NetmdBranchTbl netmdbranchTbl = (NetmdBranchTbl) getById(
-				NetmdBranchTbl.class, header.getBranchId());
+		NetmdBranchTbl netmdbranchTbl = (NetmdBranchTbl) getById(NetmdBranchTbl.class, header.getBranchId());
 		if (netmdbranchTbl == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.NobranchExists);
@@ -292,7 +306,11 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 			newPatient.setNetmdBranchTbl(netmdbranchTbl);
 		}
 		newPatient.setNetmdPassphraseTbl(netmdBranchPassphrase);
-		save(newPatient);
+		
+		if(!patientStatus)
+			save(newPatient);
+		else
+			update(newPatient);
 
 		response.setSuccess(true);
 		response.setGlobalId(newPatient.getId());// global id
@@ -402,6 +420,7 @@ public class PatientDaoImpl extends GenericDaoHibernateImpl implements
 		patientTbl.setAllergies(patient.getAllergies());
 		patientTbl.setFamilyHistory(patient.getFamilyHistory());
 		patientTbl.setEmergencyNo(patient.getEmergencyNo());
+		patientTbl.setStatus(patient.getStatus());
 		update(patientTbl);
 
 		response.setSuccess(true);
