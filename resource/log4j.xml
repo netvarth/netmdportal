@@ -12,8 +12,8 @@
     <!-- ========================================= -->
     
     <appender name="RootAppender" class="org.apache.log4j.RollingFileAppender">
-<!--      <param name="File" value="/Logs/youNeverWait/NVLogs/youNeverWait-root.log"/> -->
-        <param name="File" value="/opt/youNeverWait/NVLogs/youNeverWait-root.log"/>
+     <param name="File" value="/NvLogs/youNeverWait/youNeverWait-root.log"/>
+<!--         <param name="File" value="/opt/youNeverWait/NVLogs/youNeverWait-root.log"/> -->
         <param name="MaxFileSize" value="1MB"/>
         <param name="MaxBackupIndex" value="5"/>
         <layout class="org.apache.log4j.PatternLayout">
@@ -27,8 +27,8 @@
     <!-- log messages to file, roll per day         -->
     
     <appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
-<!--         <param name="File" value="/Logs/youNeverWait/youNeverWait.txt"/> -->
-          <param name="File" value="/opt/Logs/NVLogs/pos.log"/>
+        <param name="File" value="/NvLogs/youNeverWait/youNeverWait.log"/>
+<!--           <param name="File" value="/opt/Logs/NVLogs/youNeverWait.log"/> -->
         <param name="Append" value="true"/>
         <param name="Threshold" value="INFO"/>
 
@@ -43,8 +43,8 @@
     <!-- log all server up and down messages to file   -->
     
     <appender name="SERVERFILE" class="org.apache.log4j.RollingFileAppender">
-<!--         <param name="File" value="/Logs/youNeverWait/youNeverWait-server.log"/> -->
-       <param name="File" value="/opt/Logs/NVLogs/pos-server.log"/>
+        <param name="File" value="/NvLogs/youNeverWait/youNeverWait-server.log"/>
+<!--        <param name="File" value="/opt/Logs/NVLogs/youNeverWait-server.log"/> -->
         <param name="MaxFileSize" value="1MB"/>
         <param name="MaxBackupIndex" value="5"/>
         <layout class="org.apache.log4j.PatternLayout">
@@ -53,8 +53,8 @@
     </appender>
     
     <appender name="LOGINFILE" class="org.apache.log4j.DailyRollingFileAppender">
-<!--         <param name="File" value="/Logs/youNeverWait/youNeverWait-login.log"/> -->
-         <param name="File" value="/opt/Logs/NVLogs/pos-login.log"/>
+        <param name="File" value="/NvLogs/youNeverWait/youNeverWait-login.log"/>
+<!--          <param name="File" value="/opt/Logs/NVLogs/youNeverWait-login.log"/> -->
         <param name="Append" value="true"/>
         <param name="Threshold" value="INFO"/>
         <!-- Rollover at midnight each day -->
@@ -104,11 +104,6 @@
 		<appender-ref ref="FILE"/> 
 	</category>
 	
-    <category name="com.nv" additivity="false">
-        <priority value="WARN"/>
-        <appender-ref ref="FILE"/>
-         <appender-ref ref="CONSOLE"/>
-    </category>
 
     <category name="com.nv.framework" additivity="false">
         <priority value="INFO"/>
@@ -116,7 +111,7 @@
     </category>
     
     <category name="com.nv.youNeverWait" additivity="false">
-        <priority value="WARN"/>
+        <priority value="INFO"/>
         <appender-ref ref="FILE"/>
          <appender-ref ref="CONSOLE"/>
     </category>
