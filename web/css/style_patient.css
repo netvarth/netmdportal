@@ -1,0 +1,98 @@
+body{width:100%;background-color:#F0FAFF;margin:0px}
+body, button, input, label, select, td, textarea {
+    font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+    font-size: 12px;
+}
+.inputtext{
+    margin: 0;
+    width: 95%;
+	font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+    font-size: 11px;
+	height:20px;
+}
+#wrapper{height:100%;background-color:#F0FAFF}
+#logo-login-section {background: url("/youNeverWait/images/logo-back.png") repeat scroll 0 0 rgba(0, 0, 0, 0);height:90px;width:100%}
+#logo-section{
+	width:25%;
+	float:left;
+	opacity:transparent;
+	height:85px;
+}
+.login-table {
+	padding:10px 50px 20px;
+	float:right;
+}
+#login-section{
+	width:75%;
+	float:right;
+	height:85px;
+}
+#login-section a{
+	color:white;
+}
+#login-section .nvmagic label {
+    font-weight: normal;
+    padding-left: 1px;
+	color:white;
+}
+#btnLogin{background-color:#147FCF;color:white}
+.search-section {width:100%;height:70px;border:1px solid #c6d6dc;}
+.lab-btn {width:50%;float:left;}
+.city-btn {width:30%;float:left;}
+.search-btn {width:6%;float:left;padding-left:5px}
+.inputsearch {height:30px;width:98%;}
+.search-content{width:50%;float:left;padding:1% 0 0 0 }
+.search-content-left{width:25%;float:left;height:100%}
+.search-button {background: url("/youNeverWait/images/search-icon.jpg") no-repeat scroll 0 0 rgba(0, 0, 0, 0);width:40px;height:34px;}
+#main-cnts-listing-bg {
+    float: left;
+    padding: 10px 0 0;
+    width: 99.9%;
+	background-color:#F0FAFF;
+}
+#main-cnts-listing-bg img {
+    float: left;
+    margin: 0 8px 0 20px;
+}
+
+#main-cnts-listing-bg h1 {
+    color: #000;
+    font: 14px "Trebuchet MS";
+    padding: 5px 0 0;
+}
+
+#main-cnts-listing-bg hr {
+    border-color: #c6d6dc -moz-use-text-color -moz-use-text-color;
+    border-style: solid none none;
+    border-width: 1px 0 0;
+    margin: 12px auto;
+    width: 98%;
+}
+.error{
+	border: 2px solid #d29797;
+	border-top: 1px solid #ae6767;
+	color: #ff0000;
+}
+.errormessage{
+	color: #ffff00;
+}
+
+#footer {
+    border-top: 1px solid #dcdcdc;
+    float: left;
+    height: 64px;
+    margin: 20px 0 0;
+    text-align: center;
+    width: 100%;
+}
+
+#footer h2 {
+    color: #8a8a8a;
+    font: 12px "Trebuchet MS";
+    padding: 15px 0 0;
+}
+#footer h1 {
+    color: #132242;
+    font: 13px "Trebuchet MS";
+    padding: 10px 0 0;
+}
