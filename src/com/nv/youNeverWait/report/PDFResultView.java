@@ -61,12 +61,16 @@ public class PDFResultView implements View {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String layoutFolder = (String) model.get("JRXML_URL")+ "\\";
 		String layoutPath =layoutFolder + "\\ResultLayout.jrxml";
-		JasperDesign generalDesign = JRXmlLoader.load(layoutFolder+"\\General.jrxml");
+		JasperDesign generalDesign = JRXmlLoader.load(layoutFolder+"\\Remarks.jrxml");
+		JasperCompileManager.compileReportToFile(generalDesign, layoutFolder+"\\Remarks.jasper");
+		generalDesign = JRXmlLoader.load(layoutFolder+"\\General.jrxml");
 		JasperCompileManager.compileReportToFile(generalDesign, layoutFolder+"\\General.jasper");
 		generalDesign = JRXmlLoader.load(layoutFolder+"\\Urine.jrxml");
 		JasperCompileManager.compileReportToFile(generalDesign, layoutFolder+"\\Urine.jasper");	
 		generalDesign = JRXmlLoader.load(layoutFolder+"\\Widal.jrxml");
 		JasperCompileManager.compileReportToFile(generalDesign, layoutFolder+"\\Widal.jasper");
+		generalDesign = JRXmlLoader.load(layoutFolder+"\\Semen.jrxml");
+		JasperCompileManager.compileReportToFile(generalDesign, layoutFolder+"\\Semen.jasper");
 		String jsonstr = (String) model.get("inputJson");
 		InputStream is = new ByteArrayInputStream(jsonstr.getBytes());
 		JRDataSource jsource = new JsonDataSource(is);
