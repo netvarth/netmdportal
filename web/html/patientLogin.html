@@ -1,113 +1,55 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		
-		<title>YouNeverWait</title>
-		<link href="/youNeverWait/css/reset1.css" rel="stylesheet" type="text/css">
-		<link href="/youNeverWait/css/inner-pages.css" type="text/css" rel="stylesheet">
-		
-		
-		
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>YouNeverWait-Patient Login</title>
+		<link href="/youNeverWait/css/style_patient.css" type="text/css" rel="stylesheet">
 	</head>
 	<body>
 		<div id="wrapper">
-			<div id="login-header">
-				<img src="/youNeverWait/images/ynwLogo.png" style="margin: 1% 0 0 1%;">
-			</div>
-			<div id="content-area">
-				<div id="content-area-cntr">
-					<div id="main-contents">
-						<div id="main-cnts-header">
-							<div id="main-cnts-header-left"></div>
-							<div id="main-cnts-header-text"><h1>Login to experience fast and easy healthcare solutions </h1></div>
-							<div id="main-cnts-header-right"></div>
-						</div>
-						<div id="main-cnts-listing">
-							<div id="main-cnts-listing-bg">
-								
-								<img src="/youNeverWait/images/icon/icon8.jpg">
-								<h1>Find appointments </h1>
-								<p>Find your future and past appointments with doctors</p><br>
-								<hr>
-								<img src="/youNeverWait/images/icon/icon1.jpg">
-								<h1>Online appointment</h1>
-								<p>Create appointments online</p><br>
-								<hr>
-								<img src="/youNeverWait/images/icon/icon5.jpg">
-								<h1>Online result   </h1>
-								<p>View test results online</p>
-							</div>
-						</div>
-					</div>
-					<div id="login-area">
-					<div id="sign-up-button">
-							<div id="sign-up-button-head">
-								<div id="sign-up-button-head-left"></div>
-								<div id="sign-up-button-head-cnt">
-									<h1>Patient Login</h1>
-								</div>
-								<div id="sign-up-button-head-right"></div>
-							</div>
-							
-						</div>	
-						<div id="login-box">
-							<div id="login-box-top">
-								<form id="NV" name="NV"  method="post" >
-								<table class="wwFormTable">
-									</table><table width="85%" border="0" cellspacing="0" cellpadding="0" style="margin:0 auto;">									
-									<tbody><tr>
-										<td class="table-txt-syle1" height="25"><span class="star-style">* </span>Email:</td>
-										<td align="right"></td>
-									</tr>
-									<tr>
-										<td colspan="2" height="25"><input type="text" tabindex="1" name="userName" id="userName"  class="text"></td>
-									</tr>
-									<tr>
-										<td height="20" width="50%"></td>
-										
-									</tr>	
-									<tr>
-										<td class="table-txt-syle1" height="25"><span class="star-style">* </span>Password :</td>
-										
-									</tr>
-									<tr>
-										<td colspan="2" height="25"><input type="password" tabindex="2" name="password" id="password"  class="password"></td>
-									</tr>
-									<tr>
-										<td colspan="2" height="25" valign="middle">
-											<div id="loginError" class="errorMessage"></div>
-										</td>
-									</tr>
-																										
-									</tbody></table>
-								</form>
-
-
-
-
-							</div>
-							<div id="login-box-bottom">
-								<div id="login-box-bottom-left"></div>
-								<div id="login-box-bottom-cntr">
-									<table width="100%" border="0" cellspacing="0" cellpadding="0">
-										<tbody><tr>
-											<td valign="middle"></td>
-											<td><a href="#" id="forgotpwdpatnt" class="table-txt-syle1"style="float:left;margin-top: 20px;color: white;">Forgot your password?</a><h1><a tabindex="4" href="#" id="btnLogin"></a></h1></td>
-										</tr>
-									</tbody></table>
-								</div>
-								<div id="login-box-bottom-right"></div>
-							</div>
-						</div>
-					</div>
+			<div id="logo-login-section">
+				<div id="logo-section"><img src="/youNeverWait/images/ynwLogo.png" hspace="4" vspace="4" style="margin: 1% 0 0 1%;"></div>
+				<div id="login-section">
+					<form id="loginForm" name="loginForm" >
+						<table class="login-table"><tbody>
+							<tr>
+								<td class="nvmagic"><label for="userName">Email or UserId</label></td>
+								<td class="nvmagic"><label for="password">Password</label></td>
+							</tr><tr>
+								<td><input id="userName" class="inputtext" type="text" tabindex="1" value="" name="userName"></td>
+								<td><input id="password" class="inputtext" type="password" tabindex="2" name="password"></td>
+								<td ><button id="btnLogin" tabindex="3">Log In</button></td>
+							</tr><tr>
+								<td><div id="errorInfo"/></td>
+								<td><a href="#" id="forgotpwdpatnt" tabindex="4">Forgot your password?</a></td>
+							</tr>
+						</tbody></table>
+					</form>
 				</div>
 			</div>
-			
-<div id="footer">
-		<h2><img src="/youNeverWait/images/icon/netvarth-icon.jpg">&copy;2013 Netvarth Technologies Inc. All rights reserved.</h2>
-</div>
+			<div class="search-section">
+				<div class="search-content-left">&nbsp;	</div>
+				<div class="search-content">
+					<form name="search-form" id="search-form">	
+						<div class="lab-btn"><input id="labname" class="inputsearch" type="text" tabindex="5" value="" name="labname" placeholder="Laboratory Name"/></div>
+						<div class="city-btn"><input id="city" class="inputsearch" type="text" tabindex="6" value="" name="city" placeholder="City"/></div>
+						<div class="search-btn"><input name="btnSearch" type="button" class="search-button" tabindex="7"/></div>
+					</form>
+				</div>
+			</div>
+			<div id="main-cnts-listing-bg">
+				<img src="/youNeverWait/images/icon/icon8.jpg"><h1>Find appointments </h1>
+				<p>Find your future and past appointments with doctors</p><br><hr>
+				<img src="/youNeverWait/images/icon/icon1.jpg"><h1>Online appointment</h1>
+				<p>Create appointments online</p><br><hr>
+				<img src="/youNeverWait/images/icon/icon5.jpg"><h1>Online result   </h1>
+				<p>View test results online</p>
+			</div>
 		</div>
-	
-</body>
-		<script type="text/javascript" src="/youNeverWait/js/plugins/jquery-1.7.min.js"></script>
-		<script type="text/javascript" src="/youNeverWait/js/framework/patientlogin.js"></script>
+		<div id="footer">	
+		<h2><img src="/youNeverWait/images/icon/netvarth-icon.jpg">&copy;2014 Netvarth Technologies Inc. All rights reserved.</h2>
+		</div>
+	</body>
+	<script type="text/javascript" src="/youNeverWait/js/plugins/jquery-1.7.min.js"></script>
+	<script type="text/javascript" src="/youNeverWait/js/ynw_general.js"></script>
+	<script type="text/javascript" src="/youNeverWait/js/ynw/patient_login.js"></script>
 </html>
