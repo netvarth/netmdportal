@@ -262,7 +262,7 @@ function Constants() {
 	this.NEWORGACCUSERJSON="/youNeverWait/json/new/newUserOrgAcc.json";
 	this.ORGBRCHGENERAL="orgaccbrach";
 	this.VIEWORGBRCHPAGEURL="/youNeverWait/json/view/viewOrgnznUserDetails.json";
-	this.DEPARTMENTLISTURL="/youNeverWait/ws/ui/auth/getEnumsList/";
+	this.DEPARTMENTLISTURL="/youNeverWait/netmd/auth/getEnumsList/";
 	this.USERTYPEREQUIRED="Usertype Required";
 	this.USERTYPEINVALID="User type invalid";
 	/*********netrx********/
