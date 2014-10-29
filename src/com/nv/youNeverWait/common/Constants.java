@@ -67,6 +67,7 @@ public class Constants {
 	public static final String TRANSFERRED_RESULTS = "transferredResults";
 	public static final String INSTALLER = "installer";
 	public static final String NETLIMS_ORDERS = "netlimsorders";
+	public static final String NETLIMS_FACILITY_ORDERS = "netlimsfacilityorders";
 	public static final String PATIENT_ORDERS = "patientorders";
 		
 	/* Log */
