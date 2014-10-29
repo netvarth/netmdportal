@@ -4,35 +4,27 @@
 		<title>NETLIMS</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width">
-		<link href="/youNeverWait/css/style.css" type="text/css" rel="stylesheet" />
-		<link href="/youNeverWait/css/ui-lightness/jquery-ui-1.8.20.custom.css" type="text/css" rel="stylesheet" />
-				
+		<link href="/youNeverWait/css/ui-lightness/jquery-ui-1.8.20.custom.css" type="text/css" rel="stylesheet" />	
+		<link href="/youNeverWait/css/style.css" type="text/css" rel="stylesheet" />		
 	</head>
 	<body>
 		<!-- START OF HEADER -->
 		<div class="header">
-		
-			<div class="headright">
-				<div class="button-profile-2"><a id="btnLogoutNetLims" href="#"><span class="exit-icon"></span><span class="desc">Logout</span></a></div>      			
-				<div style="float:right; padding:10px; font-weight:bold;" >Welcome <span id="userName"class="namecolor"></span></div>
+			<div class="headimage"><img src="/youNeverWait/images/leftmenu/logo.png" style="margin:5px 0 0 10px;" /></div>
+			<div class="headright" style="border:1px #000;">
+				<div class="wrapper-demo" id="dropdownOne">
+					<div id="dd" class="wrapper-dropdown-5" tabindex="1">Logout
+						<ul class="dropdown" id="dropdownTwo" style="z-index: 1000;">
+							<li id="btnChangePassword"><a href="#"><i class="icon-user"></i>Change password</a></li>
+							<li id="btnLogout"><a href="#" ><i class="icon-remove" ></i>Log out</a></li>
+						</ul>
+					</div>
+				</div>   
+				<div style="float:right; padding:10px;font-size: 12;" >Welcome <span id="useType"></span><span id="userName" class="userNameColor"></span></div>
 			</div>
 		</div>
 		<!-- END OF HEADER --> 
-		
-		<!-- START OF GLOBAL TOOL BAR -->
 		<div id="dvLoading" class="dvLoading"></div>
-		<div class="global-bar-tab">
-			<div class="controlB">
-				<!--GlobalToolbar will load from json file-->
-				<div class="clear"></div>
-			</div>
-		</div>
-		<div class="search-bar">
-			<div class="search">
-				<form><input autocomplete="off" id="testinput" placeholder="Search" type="text"></form>   
-			</div>
-		</div>
-		<!-- END OF GLOBAL TOOLBAR -->
 		<!-- START OF MAIN CONTENT -->
 		<div class="mainwrapper">
 			<div class="mainwrapperinner">
@@ -86,60 +78,54 @@
 		<script type="text/javascript" src="/youNeverWait/js/custom/elements.js"></script>
 		<script type="text/javascript" src="/youNeverWait/js/custom/general.js"></script>
 		<script src="/youNeverWait/js/custom/jquery.reveal.js" type="text/javascript"></script>  
-		<script src="/youNeverWait/js/youneverwait/netlimsIndex.js" type="text/javascript"></script> 
-		<script src="/youNeverWait/js/ClassLoader.js" type="text/javascript"></script>
+		<script src="/youNeverWait/js/ynw_general.js" type="text/javascript"></script> 
+		<script src="/youNeverWait/js/ynw/netlims_lab_index.js" type="text/javascript"></script> 
 		<script type="text/javascript">
-			//$j(document).ready(function() {
-				$j(window).load(function(){
-					$j('#dvLoading').fadeOut(200);
-				});
-				$j('#filter').hide();
-				$j('.filter-main').hide();
-				$j('#filter').click(function () {
-					$j('.filter-main').toggle(500);
-					$j('#filterWorkBench').hide();
+			//$(document).ready(function() {
+				$(window).load(function(){
+					$('#dvLoading').fadeOut(200);
 				});
 				//Select all anchor tag with rel set to tooltip
-				$j('a[rel=tooltip]').mouseover(function(e) {
+				$('a[rel=tooltip]').mouseover(function(e) {
 					
 					//Grab the title attribute's value and assign it to a variable
-					var tip = $j(this).attr('title');	
+					var tip = $(this).attr('title');	
 					
 					//Remove the title attribute's to avoid the native tooltip from the browser
-					$j(this).attr('title','800');
+					$(this).attr('title','800');
 					
 					//Append the tooltip template and its value
-					$j(this).append('<div id="tooltip"><div class="tipHeader"></div><div class="tipBody">' + tip + '</div><div class="tipFooter"></div></div>');		
+					$(this).append('<div id="tooltip"><div class="tipHeader"></div><div class="tipBody">' + tip + '</div><div class="tipFooter"></div></div>');		
 							
 					//Show the tooltip with faceIn effect
-					$j('#tooltip').fadeIn('500');
-					$j('#tooltip').fadeTo('10',0.8);
+					$('#tooltip').fadeIn('500');
+					$('#tooltip').fadeTo('10',0.8);
 					
 				}).mousemove(function(e) {
 				
 					//Keep changing the X and Y axis for the tooltip, thus, the tooltip move along with the mouse
-					$j('#tooltip').css('top', e.pageY + -150 );
-					$j('#tooltip').css('left', e.pageX + -250 );
+					$('#tooltip').css('top', e.pageY + -150 );
+					$('#tooltip').css('left', e.pageX + -250 );
 					
 				}).mouseout(function() {
 				
 					//Put back the title attribute's value
-					$j(this).attr('title',$j('.tipBody').html());
+					$(this).attr('title',$('.tipBody').html());
 				
 					//Remove the appended tooltip template
-					$j(this).children('div#tooltip').remove();
+					$(this).children('div#tooltip').remove();
 					
 				});
-				//$j('.leftmenu li:first').closest('li').attr('class','current');
-				$j('.leftmenu li').live('click',function() {
-					$j('.search-bar').hide();
-					$j('.leftmenu li').removeClass('current');
-					$j(this).closest('li').attr('class','current');
-					$j('.leftmenu li ul').slideUp();	
+				//$('.leftmenu li:first').closest('li').attr('class','current');
+				$('.leftmenu li').live('click',function() {
+					$('.search-bar').hide();
+					$('.leftmenu li').removeClass('current');
+					$(this).closest('li').attr('class','current');
+					$('.leftmenu li ul').slideUp();	
 				});
-				$j('.leftmenu li ul li').live('click',function() {
-					$j('.leftmenu li ul li').removeClass('current1');
-					$j(this).closest('li').attr('class','current1');
+				$('.leftmenu li ul li').live('click',function() {
+					$('.leftmenu li ul li').removeClass('current1');
+					$(this).closest('li').attr('class','current1');
 				});
 			//});
 		</script>
