@@ -17,7 +17,7 @@ $j(document).ready(function(){
 		classLoader.load();
 	var organzaccUI = new orgztnAccClassLoader();
 		organzaccUI.load();
-	ajaxProcessor.setUrl('/youNeverWait/ws/ui/auth/user');
+	ajaxProcessor.setUrl('/youNeverWait/ynw/auth/user');
 	userdata =ajaxProcessor.get();
 	var organzUI = new organztnUIStartup();
 	organzUI.init(userdata);
