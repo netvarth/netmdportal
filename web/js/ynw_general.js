@@ -1,7 +1,5 @@
 function ServerUrlProcessor() {
-	this.setUrl=function(url) {
-		this.url = url;
-	}
+	this.setUrl=function(url) {this.url = url;}
 	this.post = function(param) {
 		var postResponse;
 		$("#dvLoading").show();
@@ -24,6 +22,23 @@ function ServerUrlProcessor() {
 		});	
 		$("#dvLoading").hide();
 		return postResponse;	
+	}
+	this.getHtml = function(){
+		var response;
+		$.ajax({
+			type: 'GET',
+			url: this.url,
+			dataType: 'html',
+			contentType: 'text/html',
+			async: false,
+			success: function (html) {
+				response=html;
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				response = new Error(true, xhr.responseText);	
+			}
+		});
+		return response;
 	}
 	this.get = function() {
 		var postResponse;
@@ -119,7 +134,6 @@ function ServerUrlProcessor() {
 }	
 function DataTableProcessor() {
 	this.create = function(tableName , tableUrl, parent) {
-		//create the table structure for doctor Table
 		ajaxProcessor.setUrl(tableUrl);
 		var tblData = ajaxProcessor.get();
 		var boxDiv = $('<div/>');
@@ -128,7 +142,7 @@ function DataTableProcessor() {
 			boxDiv.append(cont.result);
 		});
 		$(parent).empty().html(boxDiv.html());
-		this.setCustomTable(tableName);
+		//this.setCustomTable(tableName);
 	}
 	this.setCustomTable = function(tableName) {
 		tableObj = jQuery(tableName);
@@ -718,7 +732,6 @@ function PageToolBar(jsondata) {
 	this.result = toolBar.html();
 }
 function FilterToolBarProcessor() {
-
 	this.create = function(parent, category, url) {
 		ajaxProcessor.setUrl(url);
 		var response =ajaxProcessor.get();
@@ -1127,65 +1140,6 @@ function Error(errorStatus, errorMessage) {
 Error.prototype.getErrorMessage = function() {
 	return this.errorMessage;
 }
-$.fn.dataTableExt.oPagination.newPagination = {
-    /*
-     * Function: oPagination.four_button.fnInit
-     * Purpose:  Initalise dom elements required for pagination with a list of the pages
-     * Returns:  -
-     * Inputs:   object:oSettings - dataTables settings object
-     *           node:nPaging - the DIV which contains this pagination control
-     *           function:fnCallbackDraw - draw function which must be called on update
-     */
-    "fnInit": function ( oSettings, nPaging, fnCallbackDraw )
-    {
-        nFirst = document.createElement( 'span' );
-		$(nFirst).attr('id','first');
-        nPrevious = document.createElement( 'span' );
-		$(nPrevious).attr('id','previous');
-		nActive = document.createElement( 'span' );
-		$(nActive).attr('id','active');
-        nNext = document.createElement( 'span' );
-		$(nNext).attr('id','next');
-        nLast = document.createElement( 'span' );   
-		$(nLast).attr('id','last');		
-        nFirst.appendChild( document.createTextNode( oSettings.oLanguage.oPaginate.sFirst ) );
-        nPrevious.appendChild( document.createTextNode( oSettings.oLanguage.oPaginate.sPrevious ) );
-		nActive.appendChild( document.createTextNode("1" ) );
-        nNext.appendChild( document.createTextNode( oSettings.oLanguage.oPaginate.sNext ) );
-        nLast.appendChild( document.createTextNode( oSettings.oLanguage.oPaginate.sLast ) );
-        nFirst.className = "paginate_button first";
-        nPrevious.className = "paginate_button previous";
-        nNext.className="paginate_button next";
-        nLast.className = "paginate_button last";
-        nActive.className = "paginate_active"; 
-        nPaging.appendChild( nFirst );
-        nPaging.appendChild( nPrevious );
-		nPaging.appendChild( nActive );
-        nPaging.appendChild( nNext );
-        nPaging.appendChild( nLast ); 
-        /* Disallow text selection */
-        $(nFirst).bind( 'selectstart', function () { return false; } );
-        $(nPrevious).bind( 'selectstart', function () { return false; } );
-        $(nNext).bind( 'selectstart', function () { return false; } );
-        $(nLast).bind( 'selectstart', function () { return false; } );
-
-    },
-     
-    /*
-     * Function: oPagination.four_button.fnUpdate
-     * Purpose:  Update the list of page buttons shows
-     * Returns:  -
-     * Inputs:   object:oSettings - dataTables settings object
-     *           function:fnCallbackDraw - draw function which must be called on update
-     */
-    "fnUpdate": function ( oSettings, fnCallbackDraw )
-    {
-        if ( !oSettings.aanFeatures.p )
-        {
-            return;
-        }
-    }
-};
 function PageToolBarProcessor() {
 	this.create = function(category, url) {
 		ajaxProcessor.setUrl(url);
@@ -1385,6 +1339,34 @@ function GlobalToolBar(jsondata) {
 		return toolBar;
 	}
 }
+function leftpaneToolBar(buttons) {
+	this.result = function() {
+		var toolBar=$('<ul/>');
+		if(buttons!=null)
+		{
+			$(buttons).each(function(index,button) {	
+				var liTag = $('<li/>');
+				var aTag = $('<a/>');
+				aTag.attr('href','#');
+				if (button.className) {aTag.attr('class',button.className);}
+				if(button.name){ aTag.attr('id',button.name);}
+				if(button.title){
+					var spanTag = $('<span/>');
+					spanTag.html(button.title);
+					aTag.append(spanTag);   
+				}
+				liTag.append(aTag);
+				if(button.buttons) {
+					var sublist;
+					var	sublist =new leftpaneToolBar(button.buttons);
+					liTag.append(sublist.result);
+				}
+				toolBar.append(liTag);
+			});
+		}
+		return toolBar;
+	}
+}
 function Validator() {
 	this.isEmpty = function(value) {
 		if(value.trim().length==0){
@@ -1474,6 +1456,12 @@ function ErrorHandler() {
 		errorDiv.attr('class',"errorHeaderStyle");
 		errorDiv.text(t);		
 	}
+	this.generateErrorFromList=function(error){
+		var self=this;
+		$(error.errorMsgs).each(function(index, errormsg) {
+			self.createError($(errormsg.errorField), errormsg.errorMessage);
+		});
+	}
 	this.createError = function(obj,msg) {
 		var errorDiv=$('<div/>');
 		errorDiv.attr('class',"errorStyle");
@@ -1485,6 +1473,20 @@ function ErrorHandler() {
 		objParent.show();
 		obj.attr('class',"errorHeaderStyle");
 		obj.text(msg);
+	}
+	this.drawBorder_Error=function(obj){
+		obj.addClass("error");
+	}
+	this.addErrorMessage=function(obj,message){
+		$(obj).show();
+		$(obj).addClass("errormessage");
+		$(obj).text(message);
+	}
+	this.removeBorder_Error =function(col,errorInfo){
+		$(col).click(function() {
+			$(errorInfo).hide();
+			$(col).removeClass('error');
+		});
 	}
 	this.removeErrors=function () {
 		$('.errorStyle').remove();
@@ -1506,24 +1508,12 @@ function ErrorMessageDTO(errorField,errorMessage) {
 	this.errorMessage=errorMessage;
 }
 function PasswordInfo() {
-	this.setOldPassword = function(oldPassword) {
-		this.oldPassword = oldPassword;
-	}
-	this.getOldPassword = function(){
-		return this.oldPassword;
-	}
-	this.setUsername = function(name){
-		this.username = name;
-	}
-	this.getUsername = function() {
-		return this.username;
-	}
-	this.getNewPassword = function(){
-		return this.newPassword;
-	}
-	this.setNewPassword = function(newPassword){
-		this.newPassword = newPassword;
-	}
+	this.setOldPassword = function(oldPassword) {this.oldPassword = oldPassword;}
+	this.getOldPassword = function(){return this.oldPassword;}
+	this.setUsername = function(name){this.username = name;}
+	this.getUsername = function() {return this.username;}
+	this.getNewPassword = function(){return this.newPassword;}
+	this.setNewPassword = function(newPassword){this.newPassword = newPassword;	}
 }
 function LayoutUpdater() {
 	this.generateGeneral = function(input) {
@@ -1712,6 +1702,111 @@ function LayoutUpdater() {
 			test.setSpecimen(input.specimen);
 		return test;
 	}
+	this.generateSemen=function(input) {
+		var test = new Test_Template();
+		test.setTestName(input.testName);
+		test.setTestId(input.testId);
+		var normal = "";
+		var values = [];
+		$(input.analysis).each(function(analysisIndex,analysis) {
+			if(analysis.analysisType && analysis.analysisType!=""){
+				var value = new Values_Template();
+				value.setId("head" + (analysisIndex+1));
+				value.setKey(analysis.analysisType);
+				value.setValue("");
+				value.setUnit("");
+				value.setNormal("");
+				values.push(value);
+			}
+			$(analysis.resultContent).each(function(resultcontentIndex,resultcontent) {
+				if(resultcontent.headerLabel) {
+					var value = new Values_Template();
+					value.setId("subHead"+(resultcontentIndex+1));
+					value.setKey(resultcontent.headerLabel);
+					value.setValue("");
+					value.setUnit("");
+					value.setNormal("");
+					values.push(value);
+					$(resultcontent.values).each(function(valueIndex, content){
+						var value = new Values_Template();
+						value.setId(content.id);
+						value.setKey(content.normalRangeAttribute);
+						var contentValue = content.value;
+						if(contentValue.trim()=="")
+							contentValue="--";
+						if(content.value1)
+							contentValue = contentValue + " " + content.value1;
+						value.setValue(contentValue);
+						if(content.unit)
+							value.setUnit(content.unit);
+						else
+							value.setUnit("");
+						if(content.normal)
+							value.setNormal(content.normal);
+						else
+							value.setNormal("");
+						values.push(value);
+					});
+				} else {
+					if(resultcontent.values){
+						$(resultcontent.values).each(function(valueIndex, content){
+							var value = new Values_Template();
+							value.setId(content.id);
+							value.setKey(content.normalRangeAttribute);
+							var contentValue = content.value;
+							if(contentValue.trim()=="")
+								contentValue="--";
+							if(content.value1)
+								contentValue = contentValue + " " + content.value1;
+							value.setValue(contentValue);
+							if(content.unit)
+								value.setUnit(content.unit);
+							else
+								value.setUnit("");
+							if(content.normal)
+								value.setNormal(content.normal);
+							else
+								value.setNormal("");
+							values.push(value);
+						});
+					} else {
+						var value = new Values_Template();
+						value.setId(resultcontent.id);
+						value.setKey(resultcontent.normalRangeAttribute);
+						var contentValue = resultcontent.value;
+						if(contentValue.trim()=="")
+							contentValue="--";
+						if(resultcontent.value1)
+							contentValue = contentValue + " " + resultcontent.value1;
+						value.setValue(contentValue);
+						if(resultcontent.unit)
+							value.setUnit(resultcontent.unit);
+						else
+							value.setUnit("");
+						if(resultcontent.normal)
+							value.setNormal(resultcontent.normal);
+						else
+							value.setNormal("");
+						values.push(value);
+					}
+				}
+			});
+		});
+		test.setValues(values);
+		if(input.departmentName)
+			test.setDepartmentName(input.departmentName);
+		if(input.userId)
+			test.setUserId(input.userId);
+		if(input.userName)
+			test.setUserName(input.userName);
+		if(input.userDesignation)
+			test.setUserDesignation(input.userDesignation);
+		if(input.specimen)
+			test.setSpecimen(input.specimen);
+		if(input.remarks)
+			test.setRemarks(input.remarks);
+		return test;
+	}
 	this.generateWidal = function(input) {
 		var test = new Test_Template();
 		test.setTestName(input.testName);
@@ -1750,118 +1845,183 @@ function LayoutUpdater() {
 	}
 }
 function LayoutJson() {
-	this.setResultHeader = function(resultHeader){
-		this.resultHeader = resultHeader;
-	}
-	this.getResultHeader = function(){
-		return this.resultHeader;
-	}
-	this.setLayouts = function(layouts){
-		this.layouts=layouts;
-	}
-	this.getLayouts = function() {
-		return this.layouts;
-	}
+	this.setResultHeader = function(resultHeader){this.resultHeader = resultHeader;}
+	this.getResultHeader = function(){return this.resultHeader;}
+	this.setLayouts = function(layouts){this.layouts=layouts;}
+	this.getLayouts = function() {return this.layouts;}
+	this.setResultFooter=function(resultFooter){this.resultFooter=resultFooter;}
+	this.getResultFooter = function(){return this.resultFooter;}
 }
 function Layouts_Template() {
-	this.setTestLayout = function(layout) {
-		this.testLayout = layout;
-	}
-	this.getTestLayout = function() {
-		return this.testLayout;
-	}
-	this.setTests = function(tests) {
-		this.tests = tests;
-	}
-	this.getTests =function(){
-		return this.tests;
-	}
+	this.setTestLayout = function(layout) {	this.testLayout = layout;}
+	this.getTestLayout = function() {return this.testLayout;}
+	this.setTests = function(tests) {this.tests = tests;}
+	this.getTests =function(){return this.tests;}
 }
 function Values_Template() {
-	this.setId = function(id) {
-		this.id = id;
-	}
-	this.getId = function() {
-		return this.id;
-	}
-	this.setKey = function(key) {
-		this.key = key;
-	}
-	this.getKey = function() {
-		return this.key;
-	}
-	this.setNormal = function(normal) {
-		this.normal = normal;
-	}
-	this.getNormal = function(){
-		return this.normal;
-	}
-	this.setUnit = function(unit) {
-		this.unit = unit;
-	}
-	this.getUnit = function(){
-		return this.unit;
-	}
-	this.setValue = function(value){
-		this.value = value;
-	}
-	this.getValue = function(){
-		return this.value;
-	}
+	this.setId = function(id) {this.id = id;}
+	this.getId = function() {return this.id;}
+	this.setKey = function(key) {this.key = key;}
+	this.getKey = function() {return this.key;}
+	this.setNormal = function(normal) {this.normal = normal;}
+	this.getNormal = function(){return this.normal;}
+	this.setUnit = function(unit) {this.unit = unit;}
+	this.getUnit = function(){return this.unit;}
+	this.setValue = function(value){this.value = value;}
+	this.getValue = function(){return this.value;}
 }
 function Test_Template() {
-	this.setTestName = function(testName){
-		this.testName = testName;
+	this.setTestName = function(testName){this.testName = testName;}
+	this.getTestName = function(){return this.testName;}
+	this.setTestId = function(testId) {this.testId = testId;}
+	this.getTestId = function(){return this.testId;}
+	this.setValues = function(values) {this.values = values;}
+	this.getValues = function(){return this.values;}
+	this.getDepartmentName = function() {return this.departmentName;}
+	this.setDepartmentName=function(departmentName){this.departmentName = departmentName;}
+	this.getRemarks =function() {return this.remarks;}
+	this.setRemarks =function(remarks){this.remarks = remarks;}
+	this.getUserId = function() {return this.userId;}
+	this.setUserId = function(userId) {this.userId=userId;}
+	this.getUserName = function() {	return this.userName;}
+	this.setUserName = function(userName) {	this.userName = userName;}
+	this.getUserDesignation = function() {return this.userDesignation;}
+	this.setUserDesignation = function(userDesignation) {this.userDesignation = userDesignation;}
+	this.getSpecimen = function(){return this.specimen;	}
+	this.setSpecimen = function(specimen){this.specimen = specimen;}
+}
+function VerifierDTO() {
+	this.setUserId =function(userId) {this.userId=userId;}	
+	this.setName = function(name) {this.name = name;}
+	this.setDesignation = function(designation) {this.designation = designation;}
+	this.getUserId = function() {return this.userId;}
+	this.getName = function() {return this.name;}
+	this.getDesignation = function() {return this.designation;}
+	this.getSignature = function(){return this.signature;}
+	this.setSignature = function(signature){this.signature=signature;}
+	this.setIndex = function(index){this.index = index;}
+	this.getIndex=function(){return this.index;}
+}
+function Login() {
+	this.setUserName=function(userName){this.userName = userName;}
+	this.getUserName = function() {return this.userName;}
+	this.setPassword = function(password) {this.password = password;}
+	this.getPassword =function() {return this.password;}
+	this.setUserType = function(userType){this.userType=userType;}
+	this.getUserType=function(){return this.userType;}
+}
+function CaptchaInfo(){
+	this.setSecretCode = function(secretCode){this.secretCode = secretCode;}
+	this.getSecretCode = function(){return this.secretCode;}
+	this.setVerificationCode = function(verificationCode){this.verificationCode = verificationCode;	}
+	this.getVerificationCode = function(){return this.verificationCode;}
+}
+$.fn.dataTableExt.oPagination.newPagination = {
+    "fnInit": function ( oSettings, nPaging, fnCallbackDraw )
+    {
+        nFirst = document.createElement( 'span' );
+		$(nFirst).attr('id','first');
+        nPrevious = document.createElement( 'span' );
+		$(nPrevious).attr('id','previous');
+		nActive = document.createElement( 'span' );
+		$(nActive).attr('id','active');
+        nNext = document.createElement( 'span' );
+		$(nNext).attr('id','next');
+        nLast = document.createElement( 'span' );   
+		$(nLast).attr('id','last');		
+        nFirst.appendChild( document.createTextNode( oSettings.oLanguage.oPaginate.sFirst ) );
+        nPrevious.appendChild( document.createTextNode( oSettings.oLanguage.oPaginate.sPrevious ) );
+		nActive.appendChild( document.createTextNode("1" ) );
+        nNext.appendChild( document.createTextNode( oSettings.oLanguage.oPaginate.sNext ) );
+        nLast.appendChild( document.createTextNode( oSettings.oLanguage.oPaginate.sLast ) );
+        nFirst.className = "paginate_button first";
+        nPrevious.className = "paginate_button previous";
+        nNext.className="paginate_button next";
+        nLast.className = "paginate_button last";
+        nActive.className = "paginate_active"; 
+        nPaging.appendChild( nFirst );
+        nPaging.appendChild( nPrevious );
+		nPaging.appendChild( nActive );
+        nPaging.appendChild( nNext );
+        nPaging.appendChild( nLast ); 
+        /* Disallow text selection */
+        $(nFirst).bind( 'selectstart', function () { return false; } );
+        $(nPrevious).bind( 'selectstart', function () { return false; } );
+        $(nNext).bind( 'selectstart', function () { return false; } );
+        $(nLast).bind( 'selectstart', function () { return false; } );
+
+    },
+    "fnUpdate": function ( oSettings, fnCallbackDraw )
+    {
+        if ( !oSettings.aanFeatures.p )
+        {
+            return;
+        }
+    }
+};
+function Branch(name) {
+	if(arguments.length>0){
+		this.name=name;
 	}
-	this.getTestName = function(){
-		return this.testName;
-	}
-	this.setTestId = function(testId) {
-		this.testId = testId;
-	}
-	this.getTestId = function(){
-		return this.testId;
-	}
-	this.setValues = function(values) {
-		this.values = values;
-	}
-	this.getValues = function(){
-		return this.values;
-	}
-	this.getDepartmentName = function() {
-		return this.departmentName;
-	}
-	this.setDepartmentName=function(departmentName){
-		this.departmentName = departmentName;
-	}
-	this.getRemarks =function() {
-		return this.remarks;
-	}
-	this.setRemarks =function(remarks){
-		this.remarks = remarks;
-	}
-	this.getUserId = function() {
-		return this.userId;
-	}
-	this.setUserId = function(userId) {
-		this.userId=userId;
-	}
-	this.getUserName = function() {
-		return this.userName;
-	}
-	this.setUserName = function(userName) {
-		this.userName = userName;
-	}
-	this.getUserDesignation = function() {
-		return this.userDesignation;
-	}
-	this.setUserDesignation = function(userDesignation) {
-		this.userDesignation = userDesignation;
-	}
-	this.getSpecimen = function(){
-		return this.specimen;
-	}
-	this.setSpecimen = function(specimen){
-		this.specimen = specimen;
-	}
+	this.setglobalId= function(globalId) {this.globalId=globalId;}
+	this.getglobalId = function() {return this.globalId;}
+	this.setlabId= function(labId) {this.labId=labId;}
+	this.getlabId = function() {return this.labId;}
+	this.setName= function(name) {this.name=name;}
+	this.getName = function() {return this.name;}
+	this.setEmail = function(email) {this.email=email;}
+	this.getEmail = function() {return this.email;}
+	this.setMobile= function(mobile) {this.mobile=mobile;}
+	this.getMobile = function() {return this.mobile;}
+	this.setPhone = function(phone) {this.phone=phone;}
+	this.getPhone = function() {return this.phone;}
+	this.setAddress = function(address) {this.address=address;}
+	this.getAddress = function() {return this.address;}	
+}
+function OrderCountInput() {
+	this.setBranch = function(branch) {this.branch = branch;}
+	this.getBranch = function() {return this.branch;}
+	this.setFromDate = function(fromDate) {this.fromDate = fromDate;}
+	this.getFromDate = function() {return this.fromDate;}
+	this.setToDate = function(toDate) {this.toDate = toDate;}
+	this.getToDate=function() {return this.toDate;}
+}
+function BranchSyncInput(){
+	this.setenableSync = function(enableSync) {this.enableSync=enableSync;}
+	this.getlabId = function() {return this.enableSync;}
+	this.setsyncTime = function(syncTime) {this.syncTime=syncTime;}
+	this.getsyncTime = function() {return this.syncTime;}
+	this.setsyncFreqType = function(syncFreqType) {this.syncFreqType=syncFreqType;}
+	this.getsyncFreqType = function() {return this.syncFreqType;}
+	this.setlabId = function(labId) {this.labId=labId;}
+	this.getlabId = function() {return this.labId;}
+	this.setnetmdId = function(netmdId) {this.netmdId=netmdId;}
+	this.getnetmdId = function() {return this.netmdId;}
+	this.setnetrxId = function(netrxId) {this.netrxId=netrxId;}
+	this.getnetrxId = function() {return this.netrxId;}
+	this.setlabBranchId = function(labBranchId) {this.labBranchId=labBranchId;}
+	this.getlabBranchId = function() {return this.labBranchId;}
+	this.setnetmdBranchId = function(netmdBranchId) {this.netmdBranchId=netmdBranchId;}
+	this.getnetmdBranchId = function() {return this.netmdBranchId;}
+	this.setnetrxBranchId = function(netrxBranchId) {this.netrxBranchId=netrxBranchId;}
+	this.getnetrxBranchId = function() {return this.netrxBranchId;}
+}
+function AdminToolBar(jsondata){this.result=function(){var toolBar=$('<ul class="shortcuts"/>');if(jsondata!=null){$(jsondata.buttons).each(function(index,button){var liTag=$('<li/>');var aTag=$('<a/>');if(button.className)aTag.attr('class',button.className);if(button.name){aTag.attr('name',button.name);aTag.attr('id',button.name)}if(button.title){var spanTag=$('<span/>');spanTag.html(button.title);aTag.append(spanTag)}liTag.append(aTag);toolBar.append(liTag)})}return toolBar}}
+function OrderType() {
+	this.setAgentOrder= function(agentorder) {this.agentorder=agentorder;}
+	this.getAgentOrder = function() {return this.agentorder;}
+	this.setBlanketOrder= function(blanketorder) {this.blanketorder=blanketorder;}
+	this.getBlanketOrder = function() {return this.blanketorder;}
+	this.setWalkinOrder= function(walkinorder) {this.walkinorder=walkinorder;}
+	this.getWalkinOrder = function() {return this.walkinorder;}
+}
+function OrderTypeInput(orderType,userlabId) {
+	if(arguments.length>=1) {
+		this.labId=userlabId;
+		this.orderTypeCodes=JSON.stringify(orderType);
+	}	
+	this.setlabId= function(labId) {this.labId=labId;}
+	this.getlabId = function() {return this.labId;}
+	this.setOrderTypeCodes= function(orderTypeCodes){this.orderTypeCodes=orderTypeCodes;}
+	this.getOrderTypeCodes = function() {return this.orderTypeCodes;}
 }
