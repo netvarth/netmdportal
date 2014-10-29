@@ -18,6 +18,11 @@ $(function() {
 });
 function Constants() {
 	this.showMyName = function() {return "Constants";}
+	this.ORDERPAGETOOLBAR = "/youNeverWait/json/netlims/orderPageBar.json";
+	this.VIEWORDERPAGEURL = "/youNeverWait/json/netlims/orderTests.json";
+	this.ORDER="order";
+	this.HOME = "home";
+	this.HOMEPAGETOOLBAR = "/youNeverWait/json/netlims/homePageBar.json";
 	this.DAY = 'Day';
 	this.MONTH='Month';
 	this.WEEK="Week";
@@ -59,6 +64,9 @@ function Constants() {
 	this.GETTESTSURL = "/youNeverWait/netlims/ui/order/getTests/";
 	this.GETORDERURL = "/youNeverWait/netlims/ui/order/";
 	this.SHOWRESULTURL="/youNeverWait/netlims/ui/result/print/";
+	this.USERURL = "/youNeverWait/netlims/ui/lab/user/";
+	this.SELECTONEORDER = "Select atleast one order";
+	this.SELECTONEORDERONLY = "Select only one order";
 }
 function Query() {
 	this.showMyName = function() {return "Query";}
@@ -73,6 +81,10 @@ function Query() {
 	this.getUser = function() {
 		ajaxProcessor.setUrl(constants.GETUSERURL);
 		return ajaxProcessor.get();	
+	}
+	this.viewUser = function(uid,branchId) {
+		ajaxProcessor.setUrl(constants.USERURL + uid + "/" + branchId);
+		return ajaxProcessor.get();
 	}
 	this.logout = function() {
 		ajaxProcessor.setUrl(constants.USERLOGOUTURL);
@@ -524,13 +536,30 @@ function ResultsProcessor(patientHome){
 	this.parent = patientHome;
 	this.pgTableName='#orders';
 	this.container = '#tabs-1';
+	this.viewTestPage = "#viewTest";
+	this.testTable= this.viewTestPage + " #testTable";
 	this.listUrl = "/youNeverWait/netlims/ui/order/patient/getByFilter";
 	this.pgTableContainer='#orderListTableCont';
 	this.listUrl=constants.PATIENTRESULTSURL;
 	this.exp = new ExpressionListDTO();
+	this.errorHeader= $('#errorDivHeader');
+	this.errorData = $('#errorDivData');
+	this.chkSelectTestClassName = "printTestSelection";
+	this.chkSelectTest=  ".printTestSelection";
+	this.chkSelectAllTest="#printTestSelectAll";
 	this.tableNavigator = new DataTableNavigator(this.pgTableName,this.listUrl,this.pgTableContainer,this,this.exp);
 	this.showMyName = function() {return "ResultsProcessor";}
 	this.getParent = function() {return this.parent;}
+	this.setOrder = function(orderId){this.order = query.getOrder(orderId);}
+	this.getBranchId =function() {return this.branchId;}
+	this.setBranchId = function(branchId) {this.branchId = branchId;}
+	this.getOrderId =function() {return this.orderId;}
+	this.setOrderId = function(orderId) {this.orderId = orderId;}
+	this.getOrder = function() {return this.order;}
+	this.getTestList = function() {return this.testList;}
+	this.setPageTitle = function(value) {this.pageTitle.empty().html(value);}
+	this.setTestList = function(testList) {	this.testList=testList;}
+	this.pageTitle = $('#pageTitle');
 	this.init = function() {
 		$('#pageToolBar-Container').empty().html('');
 		parent = this.getParent();
@@ -542,23 +571,104 @@ function ResultsProcessor(patientHome){
 		expList.add(expr);
 		this.tableNavigator.setExp(expList);
 		this.tableNavigator.list();
+		var ptbProcessor = new PageToolBarProcessor();
+		ptbProcessor.create(constants.ORDER, constants.ORDERPAGETOOLBAR);
 		this.bindEvents();
+	}
+	this.view = function(order_Branch_Id) {
+		orderbranchId = order_Branch_Id.split('_');
+		orderId = orderbranchId[0];
+		branchId = orderbranchId[1];
+		this.setOrderId(orderId);
+		this.setOrder(orderId);
+		this.setBranchId(branchId);
+		var tests = query.getTests(orderId);
+		this.setTestList(tests);
+		pageHandler.create(constants.VIEWORDERPAGEURL);
+		commonMethodInvoker.setViewTable(this.testTable);
+		var ptbProcessor = new PageToolBarProcessor();
+		ptbProcessor.create(constants.HOME, constants.HOMEPAGETOOLBAR);
+		this.setTests(tests);
+		this.viewEvents();
+	}
+	this.setTests = function(tests) {
+		self=this;
+		var checkbox = '<input type="checkbox" class="' + this.chkSelectTestClassName + '"/>';
+		$(tests).each(function(){
+			var testTable=$(self.testTable).dataTable().fnAddData([this.uid, this.testName,checkbox]);
+			var row=$(tableObj).dataTable().fnSettings().aoData[testTable].nTr;
+			$(row).attr('id',this.uid);
+			
+		});
+	}
+	this.getSelectedOrder_BranchId=function() {
+		var self=this;
+		var orderId="";
+		if($(this.pgTableName).dataTable().fnGetData().length>0) {
+			var selOrders = $(self.pgTableName + ' tbody tr[selected]');
+			if(selOrders.length==0){
+				errorHandler.createServerError(self.errorHeader,self.errorData, constants.SELECTONEORDER);
+			} else if(selOrders.length>1) 
+				errorHandler.createServerError(self.errorHeader,self.errorData, constants.SELECTONEORDERONLY);
+			else
+				orderId=selOrders.attr('id');
+		}
+		return orderId;
 	}
 	this.bindEvents = function() {
 		var self=this;
+		$('#orderPTBContainer #btn_view_ptb_id').die('click').live('click',function() {
+			var objId = self.getSelectedOrder_BranchId(self.pgTableName);
+			self.view(objId);
+		});
 		$(self.pgTableName + ' tbody tr').die('click').live('click',function(){
 			errorHandler.removeErrors();
-			var objId=$(this).attr('id');
+			if($(this).attr('selected')) {
+				$(this).removeAttr('selected');
+				$(this).removeAttr('style');
+			} else {	
+				$(this).attr('selected','selected');
+				$(this).attr('style',constants.SELECTEDROWCOLOR);
+			}
+		});
+		$(self.pgTableName + ' .orderIdCol').die('click').live('click',function(){
+			errorHandler.removeErrors();
+			var objId=$(this).closest("tr").attr('id');
 			var orderId = objId.split("_")[0];
-			var order = query.getOrder(orderId);
-			var layout = new LayoutJson();
-			var layoutUpdater = new LayoutUpdater();
-			layout.setResultHeader($.parseJSON(order.headerData).header);
-			var tests = [];
-			layoutList = [];
-			var layoutTemplate;
-			$(order.tests).each(function(index,test) {
+			var branchId = objId.split("_")[1];
+			var testList=[];
+			self.print(testList,orderId,branchId);
+		});
+	}
+	this.print=function(testList, orderId,branchId){
+		var order = query.getOrder(orderId);
+		var layout = new LayoutJson();
+		var layoutUpdater = new LayoutUpdater();
+		var tests = [];
+		layoutList = [];
+		userList = [];
+		userIds=[];
+		var specimens = [];
+		var count=0;
+		var layoutTemplate;
+		var status=false;
+		if(testList.length==0)
+			status=true;
+		$(order.tests).each(function(index,test) {
+			var testuid="";
+			if(status==true){
+				testuid=test.uid;
+				if(!commonMethodInvoker.isIndexExists(testList, testuid))
+					testList.push(testuid);
+			} else 
+				testuid=test.uid;
+			if(commonMethodInvoker.isIndexExists(testList, testuid)){
 				var result = $.parseJSON(test.result);
+				$(result.specimen).each(function(index, specimenName){
+					if(!commonMethodInvoker.isIndexExists(specimens,specimenName)){
+						specimens.push(specimenName);
+					}
+				});
 				var curTemplate = result.testLayout;
 				if(curTemplate=='General'){
 					if(tests.length==0){
@@ -590,22 +700,106 @@ function ResultsProcessor(patientHome){
 					layoutTemplate.setTests(tests);
 					layoutList.push(layoutTemplate);
 					tests=[];
+				} else if(curTemplate=='SemenLayout'){
+					if(tests.length>0){
+						layoutTemplate.setTests(tests);
+						layoutList.push(layoutTemplate);
+						tests=[];
+					}
+					layoutTemplate = new Layouts_Template();
+					layoutTemplate.setTestLayout("Semen");
+					tests.push(layoutUpdater.generateSemen(result));
+					layoutTemplate.setTests(tests);
+					layoutList.push(layoutTemplate);
+					tests=[];
 				}
-			});
-			if(tests.length>0){
-				layoutTemplate.setTests(tests);
-				layoutList.push(layoutTemplate);
-				tests=[];
+				if(result.userId){
+					if(!commonMethodInvoker.isIndexExists(userIds, result.userId)){
+						var user = new VerifierDTO();
+						user.setUserId(result.userId);
+						user.setName(result.userName);
+						user.setDesignation(result.userDesignation);
+						var userInfo=query.viewUser(result.userId, branchId);
+						user.setSignature(userInfo.signature);
+						user.setIndex(++count);
+						userList.push(user);
+						userIds.push(result.userId);
+					}
+				}
 			}
-			layout.setLayouts(layoutList);
-			var f = $('<form method="post" action="' + constants.SHOWRESULTURL + '" target="_blank"></form>');
-			var inputTag = $('<input type="hidden" name="input" id="input" />');
-			inputTag.attr('value',JSON.stringify(layout));
-			f.html(inputTag);
-			f.appendTo($('body')); // required for submission to work in Firefox
-			f.submit();
-			f.remove();
 		});
+		if(tests.length>0){
+			layoutTemplate.setTests(tests);
+			layoutList.push(layoutTemplate);
+			tests=[];
+		}
+		var header = $.parseJSON(order.headerData).header;
+		var specimen = "";
+		$(specimens).each(function(index, specimenName){
+			if(specimen=="")
+				specimen=specimenName;
+			else
+				specimen=specimen+","+specimenName;
+		});
+		header["specimen"]=specimen;
+		layout.setResultHeader(header);
+		layout.setLayouts(layoutList);
+		layout.setResultFooter(userList);
+		var f = $('<form method="post" action="' + constants.SHOWRESULTURL + '" target="_blank"></form>');
+		var inputTag = $('<input type="hidden" name="input" id="input" />');
+		inputTag.attr('value',JSON.stringify(layout));
+		f.html(inputTag);
+		f.appendTo($('body')); // required for submission to work in Firefox
+		f.submit();
+		f.remove();
+	}
+	this.viewEvents = function() {
+		var self=this;
+		var order = self.getOrder();
+		$(self.chkSelectAllTest).die('click').live('click',function(e) {
+			var obj=$(this);
+			if(obj.attr('checked'))
+				$(self.chkSelectTest).each(function(){
+					$(this).closest('tr').attr('selected','selected');
+					$(this).closest('tr').attr('style',constants.SELECTEDROWCOLOR);
+					$(this).attr('checked',true);
+				});
+			else
+				$(self.chkSelectTest).each(function(){
+					$(this).removeAttr('checked');
+					$(this).closest('tr').removeAttr('selected');
+					$(this).closest('tr').removeAttr('style');
+				});
+		});
+		$(self.testTable + ' tbody tr').die('click').live('click',function(){
+			var obj = $(this);
+			var objId=$(this).attr('id');		
+			if($(this).attr('selected')) {
+				$(this).removeAttr('selected');
+				$(this).removeAttr('style');
+			} else {	
+				$(this).attr('selected','selected');
+			}
+			if(obj.attr('selected')) {
+				$(this).children('td').children(self.chkSelectTest).attr('checked',true);
+				if($(self.testTable + " tbody tr td input[class='" + self.chkSelectTestClassName + "']:checked").length == $(self.testTable).dataTable().fnGetData().length)
+					$(self.chkSelectAllTest).attr('checked',true);
+			} else {
+				$(this).children('td').children(self.chkSelectTest).removeAttr('checked');
+				$(self.chkSelectAllTest).removeAttr('checked');
+			}
+		});
+		$('#homePTBContainer #btn_home_ptb_id').die('click').live('click',function() {
+			$('#pageToolBar-Container').empty().html('');
+			self.init();	
+		});
+		$('#btnPrint').die('click').live('click',function(e) {
+			var testArray = []; //To store the selected tests
+			$(self.testTable + ' tbody tr td input[class="printTestSelection"]:checked').each(function(){
+				testArray.push($(this).closest('tr').attr('id'));
+			});
+			self.print(testArray,self.getOrderId(),self.getBranchId());
+		});	
 	}
 	this.setTableValues = function(tableObj, orderResult) {
 		$(tableObj).dataTable().fnClearTable();
@@ -663,6 +857,7 @@ function ClinicsProcessor(patientHome) {
 	this.getScheduleProcessor = function() {return this.scheduleProcessor;}
 	this.init = function() {
 		parent = this.getParent();
+		$('#pageToolBar-Container').empty().html('');
 		$(constants.PAGETITLE).empty().html("Clinics");
 		dataTableProcessor.create(this.pgTableName,constants.CLINICSTABLEURL, this.container);
 		dataTableProcessor.setCustomTable(this.pgTableName);
@@ -737,7 +932,7 @@ function ClinicsProcessor(patientHome) {
 			$(constants.PAGETITLE).html(constants.CLINICS);
 			self.showMyName();
 			self.init();
-			$('#pageToolBar-Container').empty();
+			$('#pageToolBar-Container').empty().html('');
 		});
 		$('#ClinicsPTBContainer #btn_delete_ptb_id').die('click').live('click',function(){
 			var pgTableName=".fc-agenda-slots";
