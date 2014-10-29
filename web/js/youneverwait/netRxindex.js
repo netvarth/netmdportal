@@ -23,7 +23,7 @@ $j(document).ready(function(){
 		globalToolbar.netRxAccinit();
 		$j('#tabs-1').removeClass('ui-widget-content');
 		
-	ajaxProcessor.setUrl('/youNeverWait/ws/ui/auth/user');
+	ajaxProcessor.setUrl('/youNeverWait/ynw/auth/user');
 	userdata =ajaxProcessor.get();
 	var usetType=userdata.userType;
 	var ownerName=userdata.userName;
