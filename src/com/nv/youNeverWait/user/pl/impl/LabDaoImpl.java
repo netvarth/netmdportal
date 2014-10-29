@@ -465,8 +465,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		ResponseDTO response = new ResponseDTO();
 		String encPassword = StringEncoder.encryptWithKey(passwords
 				.getOldPassword().trim());
-		LoginTbl login = (LoginTbl) getLoginByUserName(passwords
-				.getUsername());
+		LoginTbl login = (LoginTbl) getLoginByUserNameAndPassword(passwords
+				.getUsername(), encPassword);
 		if (login == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.UserNotExists);
@@ -485,6 +485,19 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		update(login);
 		response.setSuccess(true);
 		return response;
+	}
+
+	/**
+	 * Mani E.V	
+	 * @param username
+	 * @return
+	 */
+	private LoginTbl getLoginByUserNameAndPassword(String userName, String password) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETLIMS_USER_BY_PASSWORD);
+		query.setParameter("param1", password);
+		query.setParameter("param2",userName);
+		return executeUniqueQuery(LoginTbl.class, query);
 	}
 
 	/**
@@ -1834,7 +1847,6 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 				branchOrdrs.setLastOrderedTime(df.parse(branchOrders
 						.getLastOrderdTime()));
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			branchOrdrs.setTotalOrders(branchOrders.getTotalOrders());
@@ -2359,7 +2371,6 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		try {
 			newDate = df.parse(df.format(new Date()));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return newDate;
