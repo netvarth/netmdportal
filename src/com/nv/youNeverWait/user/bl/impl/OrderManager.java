@@ -150,13 +150,28 @@ public class OrderManager implements OrderService {
 	
 	@Override
 	public int getOrderCountByBranchId(OrderCountFilterDto ocf) {
-		
 		return orderDao.getOrderCountByBranchId(ocf);
 	}
 
 	@Override
 	public ListResponse getByPatientFilter(FilterDTO filterDTO, User user) {
 		return orderDao.getByPatientFilter(filterDTO, user);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.OrderService#getLoginId(com.nv.security.youNeverWait.User)
+	 */
+	@Override
+	public Integer getLoginId(String userName,String userType) {
+		return orderDao.getUserByNameAndType(userName, userType).getId();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.OrderService#getFacilityOrderByFilter(com.nv.youNeverWait.rs.dto.FilterDTO, com.nv.security.youNeverWait.User)
+	 */
+	@Override
+	public ListResponse getFacilityOrderByFilter(FilterDTO filterDTO, User user) {
+		return orderDao.getFacilityOrderByFilter(filterDTO, user);
 	}
 
 }
