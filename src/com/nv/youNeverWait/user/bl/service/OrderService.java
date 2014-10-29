@@ -83,4 +83,19 @@ public interface OrderService {
 
 	public int getOrderCountByBranchId(OrderCountFilterDto ocf);
 
+	/**
+	 * Mani E.V	
+	 * @param user
+	 * @return
+	 */
+	public Integer getLoginId(String userName, String userType);
+
+	/**
+	 * Mani E.V	
+	 * @param filterDTO
+	 * @param user
+	 * @return
+	 */
+	public ListResponse getFacilityOrderByFilter(FilterDTO filterDTO, User user);
+
 }
