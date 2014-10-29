@@ -238,14 +238,6 @@ function Constants() {
 	this.FIELDREQUIRED = 'Field required';
 	this.PASSWORDNOTMATCH = "Password doesn't match";
 }
-function VerifierDTO() {
-	this.setUserId =function(userId) {this.userId=userId;}	
-	this.setName = function(name) {this.name = name;}
-	this.setDesignation = function(designation) {this.designation = designation;}
-	this.getUserId = function() {return this.userId;}
-	this.getName = function() {return this.name;}
-	this.getDesignation = function() {return this.designation;}
-}
 function User(user) {
 	this.setInfo = function() {
 		ajaxProcessor.setUrl('/youNeverWait/netlims/auth/user');
