@@ -34,7 +34,7 @@ function submitChangePasswordInfo(){
 }
 
 function createSubmitJson(){
-	var userdata =getRequestData('/youNeverWait/ws/ui/auth/user');
+	var userdata =getRequestData('/youNeverWait/netmd/auth/user');
     var changepwdDetails = '{"oldPassword":"'+$j('#changePasswordFormNetMdAcc #oldpassword').val()  +'",';
 		changepwdDetails += '"username":"'+ userdata.userName +'",';
 		changepwdDetails +='"newPassword":"' + $j('#changePasswordFormNetMdAcc #newpassword').val() + '"}';
