@@ -319,17 +319,13 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 	}
 
 	@Override
-	public ListResponse getByFilter(FilterDTO filterParam, User user) {
-		LoginTbl loginTbl = getUserByNameAndType(user.getUserName(), user.getUserType());
+	public ListResponse getFacilityOrderByFilter(FilterDTO filterParam, User user) {
 //		ExpressionDTO branchExp = new ExpressionDTO();
 //		branchExp.setName("branchId");
 //		branchExp.setOperator("eq");
 //		branchExp.setValue(Integer.toString(user.getOrganisationId()));
 		
-		ExpressionDTO loginExp = new ExpressionDTO();
-		loginExp.setName("loginId");
-		loginExp.setOperator("eq");
-		loginExp.setValue(Integer.toString(loginTbl.getId()));
+	
 
 //		LabFacilityTbl labFacilitytbl = getFacilityByEmailId(user.getUserName());
 //		ExpressionDTO expr = new ExpressionDTO();
@@ -339,9 +335,9 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		
 		ListResponse response = new ListResponse();
 		//get queryBuilder for test from builder factory
-		QueryBuilder queryBuilder = queryBuilderFactory.getQueryBuilder(Constants.NETLIMS_ORDERS);
-		Filter brchFilter = filterFactory.getFilter(loginExp);
-		queryBuilder.addFilter(brchFilter);
+		QueryBuilder queryBuilder = queryBuilderFactory.getQueryBuilder(Constants.NETLIMS_FACILITY_ORDERS);
+	//	Filter brchFilter = filterFactory.getFilter(loginExp);
+	//	queryBuilder.addFilter(brchFilter);
 		for (ExpressionDTO exp : filterParam.getExp()) {
 			//get filter from filter factory by setting expression name and value to filter
 			Filter filter = filterFactory.getFilter(exp);
@@ -527,6 +523,43 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			order.setBranchId(Integer.toString(orderTbl.getNetlimsOrderTbl().getLabBranchTbl().getId()));
 			order.setBranchName(orderTbl.getNetlimsOrderTbl().getLabBranchTbl().getName());
 			order.setHeaderData(orderTbl.getNetlimsOrderTbl().getOrderHeader());
+			//order.setHeader(orderTbl.get)
+			orders.add(order);
+		}
+		response.setList(orders);
+		response.setCount(count);
+		return response;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.OrderDao#getByFilter(com.nv.youNeverWait.rs.dto.FilterDTO, com.nv.security.youNeverWait.User)
+	 */
+	@Override
+	public ListResponse getByFilter(FilterDTO filterParam, User user) {
+		ListResponse response = new ListResponse();
+		//get queryBuilder for test from builder factory
+		QueryBuilder queryBuilder = queryBuilderFactory.getQueryBuilder(Constants.NETLIMS_ORDERS);
+		for (ExpressionDTO exp : filterParam.getExp()) {
+			//get filter from filter factory by setting expression name and value to filter
+			Filter filter = filterFactory.getFilter(exp);
+			queryBuilder.addFilter(filter);
+		}
+		//build query
+		TypedQuery<NetlimsOrderTbl> q =   queryBuilder.buildQuery(filterParam.isAsc(),
+				filterParam.getFrom(),filterParam.getCount()); 
+		Long count = queryBuilder.getCount();
+		List<Order> orders = new ArrayList<Order>();
+		DateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT);
+		for(NetlimsOrderTbl orderTbl: queryBuilder.executeQuery(q)){
+			Order order = new Order();
+			order.setId(orderTbl.getId());
+			order.setUid(orderTbl.getOrderId());
+			order.setCreatedOn(df.format(orderTbl.getCreatedDate()));
+			order.setOrderStatus(orderTbl.getOrderStatus());
+			System.out.println(orderTbl.getLabBranchTbl().getLabTbl().getId());
+			order.setBranchId(Integer.toString(orderTbl.getLabBranchTbl().getId()));
+			order.setBranchName(orderTbl.getLabBranchTbl().getName());
+			order.setHeaderData(orderTbl.getOrderHeader());
 			//order.setHeader(orderTbl.get)
 			orders.add(order);
 		}
