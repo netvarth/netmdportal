@@ -1460,6 +1460,7 @@ a.btn_email{background:url(../images/icon/ptb/email.png) no-repeat;}
 a.btn_collectioncharge{background:url(../images/icon/ptb/collect.png) no-repeat;}
 a.btn_home{background:url(../images/icon/ptb/home.png) no-repeat;}
 a.btn_setup{background:url(../images/icon/ptb/pagesetting.png) no-repeat;}
+a.btn_orderCount{background:url(../images/icon/ptb/ordercount.png) no-repeat;}
 .stdbtn { 
 	font-weight: bold; padding: 7px 10px; border: 1px solid #ccc; background: #eee url(../images/buttons.png) repeat-x top left; color: #333; 
 	-moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; cursor: pointer; margin:4px 0 0 5px;
