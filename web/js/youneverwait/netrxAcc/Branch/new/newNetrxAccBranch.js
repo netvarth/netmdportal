@@ -1,4 +1,4 @@
-var userdata =getRequestData('/youNeverWait/ws/ui/auth/user');
+var userdata =getRequestData('/youNeverWait/ynw/auth/user');
 netrxId=userdata.netrxId;
 
 
