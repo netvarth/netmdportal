@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.nv.security.youNeverWait.User;
+import com.nv.youNeverWait.pl.entity.LoginTbl;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.ListResponse;
@@ -83,4 +84,13 @@ public interface OrderDao {
 
 	public int getOrderCountByBranchId(OrderCountFilterDto ofc);
 
+	public LoginTbl getUserByNameAndType(String userName, String userType);
+
+	/**
+	 * Mani E.V	
+	 * @param filterDTO
+	 * @param user
+	 * @return
+	 */
+	public ListResponse getFacilityOrderByFilter(FilterDTO filterDTO, User user);
 }
