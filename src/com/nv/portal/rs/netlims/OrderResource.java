@@ -26,7 +26,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.nv.security.youNeverWait.User;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.exception.ServiceExceptionHandler;
+import com.nv.youNeverWait.pl.entity.LoginTbl;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
+import com.nv.youNeverWait.rs.dto.ExpressionDTO;
 import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.ListResponse;
 import com.nv.youNeverWait.rs.dto.Order;
@@ -56,6 +58,20 @@ public class OrderResource extends ServiceExceptionHandler{
 	 * @throws RuntimeException
 	 */
 	@RequestMapping(value = "/facility/getByFilter", method = RequestMethod.POST)
+	@ResponseBody
+	public ListResponse listOrderByFacility(@RequestBody FilterDTO filterDTO)throws ServiceException, RuntimeException{
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		HttpServletRequest req = t.getRequest();
+		User user=(User) req.getSession().getAttribute("user");	
+		ExpressionDTO loginExp = new ExpressionDTO();
+		Integer loginId=orderService.getLoginId(user.getUserName(), user.getUserType());
+		loginExp.setName("loginId");
+		loginExp.setOperator("eq");
+		loginExp.setValue(Integer.toString(loginId));
+		filterDTO.getExp().add(loginExp);
+		return orderService.getFacilityOrderByFilter(filterDTO,user);
+	}
+	@RequestMapping(value = "/getByFilter", method = RequestMethod.POST)
 	@ResponseBody
 	public ListResponse list(@RequestBody FilterDTO filterDTO)throws ServiceException, RuntimeException{
 		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
