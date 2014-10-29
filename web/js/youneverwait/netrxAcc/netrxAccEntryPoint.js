@@ -3,7 +3,7 @@ $j.cachedScript(constant_NetRxAccFunctions_Url).done(function(script, textStatus
 })
 
 $j(document).ready(function() {
-	var userdata =getRequestData('/youNeverWait/ws/ui/auth/user');
+	var userdata =getRequestData('/youNeverWait/ynw/auth/user');
 	//alert(JSON.stringify(userdata));
 	var Name=userdata.name;
 	var username=userdata.userName;
