@@ -1,0 +1,7 @@
+{		
+	"buttons":	[		
+		{"name":"view","title":"View"},	
+		{"name":"change","title":"Sync Set"},
+		{"name":"orderCount","title":"Order count"}
+	]
+}
