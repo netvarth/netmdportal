@@ -1299,4 +1299,12 @@ table.normal tbody td {
 	margin:8px 0 0 9px;
 	float:left;
 	}
+.error{
+	border: 2px solid #d29797;
+	border-top: 1px solid #ae6767;
+	color: #ff0000;
+}
+.errormessage{
+	color: #ff0000;
+}
 
