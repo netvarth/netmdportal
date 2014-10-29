@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ResultLayout" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f7d18c33-e1c2-4e63-955c-fc061d2a4b48">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<subDataset name="Layouts" uuid="392e7dcd-d918-425c-b487-273e4c1d9229">
 		<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 		<field name="testLayout" class="java.lang.String">
 			<fieldDescription><![CDATA[testLayout]]></fieldDescription>
 		</field>
+	</subDataset>
+	<subDataset name="Footer" uuid="f4ef78fb-1f9e-4f8a-87fc-e9a412830847">
+		<field name="userId" class="java.lang.String">
+			<fieldDescription><![CDATA[userId]]></fieldDescription>
+		</field>
+		<field name="name" class="java.lang.String">
+			<fieldDescription><![CDATA[name]]></fieldDescription>
+		</field>
+		<field name="designation" class="java.lang.String">
+			<fieldDescription><![CDATA[designation]]></fieldDescription>
+		</field>
+		<field name="signature" class="java.lang.String">
+			<fieldDescription><![CDATA[signature]]></fieldDescription>
+		</field>
+		<field name="index" class="java.lang.Integer">
+			<fieldDescription><![CDATA[index]]></fieldDescription>
+		</field>
+		<variable name="sign1" class="java.lang.String">
+			<variableExpression><![CDATA[( $F{index}.equals( 1 ) ? ($F{signature}.split( "," )[1]) : "" )]]></variableExpression>
+		</variable>
+		<variable name="sign2" class="java.lang.String">
+			<variableExpression><![CDATA[( $F{index}.equals(2 ) ? ($F{signature}.split( "," )[1]) : "" )]]></variableExpression>
+		</variable>
+		<variable name="sign3" class="java.lang.String">
+			<variableExpression><![CDATA[( $F{index}.equals(3 ) ? ($F{signature}.split( "," )[1]) : "" )]]></variableExpression>
+		</variable>
 	</subDataset>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<field name="resultHeader.patientName" class="java.lang.String">
@@ -16,54 +43,188 @@
 	<field name="resultHeader.orderId" class="java.lang.String">
 		<fieldDescription><![CDATA[resultHeader.orderId]]></fieldDescription>
 	</field>
-	<field name="field3" class="java.lang.String"/>
-	<field name="field4" class="java.lang.String"/>
+	<field name="resultHeader.age" class="java.lang.String">
+		<fieldDescription><![CDATA[resultHeader.age]]></fieldDescription>
+	</field>
+	<field name="resultHeader.gender" class="java.lang.String">
+		<fieldDescription><![CDATA[resultHeader.gender]]></fieldDescription>
+	</field>
+	<field name="resultHeader.referral" class="java.lang.String">
+		<fieldDescription><![CDATA[resultHeader.referral]]></fieldDescription>
+	</field>
+	<field name="resultHeader.collectedAt" class="java.lang.String">
+		<fieldDescription><![CDATA[resultHeader.collectedAt]]></fieldDescription>
+	</field>
+	<field name="resultHeader.specimen" class="java.lang.String">
+		<fieldDescription><![CDATA[resultHeader.specimen]]></fieldDescription>
+	</field>
+	<field name="resultHeader.date" class="java.lang.String">
+		<fieldDescription><![CDATA[resultHeader.date]]></fieldDescription>
+	</field>
+	<field name="resultHeader.time" class="java.lang.String">
+		<fieldDescription><![CDATA[resultHeader.time]]></fieldDescription>
+	</field>
+	<variable name="age_year" class="java.lang.String">
+		<variableExpression><![CDATA[($F{resultHeader.age}.split( "-" ).length>0) ? ($F{resultHeader.age}.split( "-" )[0].concat("Y")) : " "]]></variableExpression>
+		<initialValueExpression><![CDATA[($F{resultHeader.age}.split( "-" ).length>0) ? ($F{resultHeader.age}.split( "-" )[0].concat("Y")) : " "]]></initialValueExpression>
+	</variable>
+	<variable name="age_month" class="java.lang.String">
+		<variableExpression><![CDATA[($F{resultHeader.age}.split( "-" ).length>1) ? ($F{resultHeader.age}.split( "-" )[1].concat("M")) : " "]]></variableExpression>
+		<initialValueExpression><![CDATA[($F{resultHeader.age}.split( "-" ).length>1) ? ($F{resultHeader.age}.split( "-" )[1].concat("M")) : " "]]></initialValueExpression>
+	</variable>
+	<variable name="age_day" class="java.lang.String">
+		<variableExpression><![CDATA[($F{resultHeader.age}.split( "-" ).length>2) ? ($F{resultHeader.age}.split( "-" )[2].concat("D")) : " "]]></variableExpression>
+		<initialValueExpression><![CDATA[($F{resultHeader.age}.split( "-" ).length>2) ? ($F{resultHeader.age}.split( "-" )[2].concat("D")) : " "]]></initialValueExpression>
+	</variable>
+	<variable name="signature1" class="java.lang.String">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="50">
-			<staticText>
-				<reportElement x="0" y="0" width="555" height="38" uuid="b32b1c68-d7a5-488c-a5b8-ddd1a843e182"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font size="24" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Jeeva Laboratories]]></text>
-			</staticText>
-		</band>
-	</title>
 	<pageHeader>
-		<band height="42">
+		<band height="80">
 			<staticText>
-				<reportElement x="0" y="0" width="57" height="20" uuid="c1768c57-63ee-4b08-b5a8-9515e2ad27df"/>
+				<reportElement x="0" y="0" width="62" height="15" uuid="c1768c57-63ee-4b08-b5a8-9515e2ad27df"/>
 				<text><![CDATA[Name]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="67" y="0" width="149" height="20" uuid="ce4a3247-2471-4aee-80fa-5be3e209384a"/>
+				<reportElement x="72" y="0" width="149" height="15" uuid="ce4a3247-2471-4aee-80fa-5be3e209384a"/>
 				<textFieldExpression><![CDATA[$F{resultHeader.patientName}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="20" width="57" height="20" uuid="b172f0f1-14c4-42a6-8467-5964d93ef435"/>
+				<reportElement x="0" y="15" width="62" height="15" uuid="b172f0f1-14c4-42a6-8467-5964d93ef435"/>
 				<text><![CDATA[Order ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="57" y="0" width="10" height="20" uuid="4dd21e54-18e9-47c0-ae2f-56afd53ed87c"/>
+				<reportElement x="62" y="0" width="10" height="15" uuid="4dd21e54-18e9-47c0-ae2f-56afd53ed87c"/>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="57" y="20" width="10" height="20" uuid="b1d88d4e-643d-4ba1-89e6-c0656a13b7cb"/>
+				<reportElement x="62" y="15" width="10" height="15" uuid="b1d88d4e-643d-4ba1-89e6-c0656a13b7cb"/>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="67" y="20" width="113" height="20" uuid="c3aaefaf-6ad3-429f-a9ac-764325721a3b"/>
+				<reportElement x="72" y="15" width="113" height="15" uuid="c3aaefaf-6ad3-429f-a9ac-764325721a3b"/>
 				<textFieldExpression><![CDATA[$F{resultHeader.orderId}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="502" y="0" width="21" height="15" uuid="912320f4-461f-46fc-8a9c-b0698194fb8e"/>
+				<textFieldExpression><![CDATA[$V{age_year}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="452" y="2" width="19" height="15" uuid="f86e3b21-26ed-44ad-8ca9-a0cf46e30fee"/>
+				<text><![CDATA[Age]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="491" y="0" width="10" height="15" uuid="5a1b5b87-1b03-4acd-98fa-a67041878826"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="524" y="0" width="16" height="15" uuid="6ad5d25b-d4a3-4a6a-9cb3-b9af47acd767"/>
+				<textFieldExpression><![CDATA[$V{age_month}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="542" y="0" width="13" height="15" uuid="7503efad-4461-4fa7-9903-8651aade6138"/>
+				<textFieldExpression><![CDATA[$V{age_day}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="503" y="17" width="52" height="15" uuid="49f2171f-e8ef-4d28-a342-22d24276c4f2"/>
+				<textFieldExpression><![CDATA[$F{resultHeader.gender}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="491" y="16" width="10" height="15" uuid="03325103-cf1c-45ef-a066-d60a6daf5675"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="452" y="17" width="39" height="15" uuid="bd48fa7b-80ad-4a7b-9249-07699084fffe"/>
+				<text><![CDATA[Gender]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="72" y="30" width="380" height="15" uuid="cb066a3c-19e9-49c7-a6a7-d60783369edd"/>
+				<textFieldExpression><![CDATA[$F{resultHeader.referral}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="30" width="62" height="15" uuid="8c61c6c9-7df6-42d1-81f7-7f558a1f63bd"/>
+				<text><![CDATA[Ref.By]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="30" width="10" height="15" uuid="be322323-1efa-4301-b78e-64c4c26ba85e"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="72" y="44" width="138" height="15" uuid="1e16a359-ab85-4e87-a69c-3f00fc24426f"/>
+				<textFieldExpression><![CDATA[$F{resultHeader.collectedAt}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="44" width="62" height="15" uuid="10320cb6-cfe2-4a02-86e0-ea45b6c398b6"/>
+				<text><![CDATA[Collected At]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="43" width="10" height="15" uuid="7ed3aeab-b7e7-4967-a71f-bff7c7e004e1"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="44" width="88" height="15" uuid="2c7dbf00-2ae3-47fb-bb95-83ac4c4e2fb3"/>
+				<text><![CDATA[Date of Collection]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="375" y="44" width="60" height="15" uuid="c9772ebe-3088-4194-9748-fcf68a72d906"/>
+				<textFieldExpression><![CDATA[$F{resultHeader.date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="365" y="44" width="10" height="15" uuid="ec0308e6-2978-447b-a3e3-4ed7d775060a"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="491" y="44" width="10" height="15" uuid="91e68614-d73b-48ea-8b6d-05905649c8c0"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="452" y="44" width="39" height="15" uuid="88e0c8db-b82c-4a65-8b20-8f7ce6bf152e"/>
+				<text><![CDATA[Time]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="503" y="44" width="52" height="15" uuid="b0a7cf54-67e5-471e-aa8f-c2f7972fe31c"/>
+				<textFieldExpression><![CDATA[$F{resultHeader.time}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="452" y="59" width="39" height="15" uuid="64b1b58f-781b-43e5-ab55-f0cde264d93e"/>
+				<text><![CDATA[Time]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="491" y="59" width="10" height="15" uuid="4155380d-b86b-4a44-887e-046d0546b9df"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="59" width="88" height="15" uuid="0e7fbb8a-9df4-4ca2-9fac-025db578b47f"/>
+				<text><![CDATA[Reporting Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="59" width="62" height="15" uuid="614aeb21-8fac-44e7-a8e0-4f85ecb796b9"/>
+				<text><![CDATA[Specimen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="59" width="10" height="15" uuid="dbbd0d10-d163-446f-ad95-2b872f2f53f0"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="59" width="10" height="15" uuid="3b24ee50-2e8c-4875-bd2a-841a86af04ff"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="72" y="59" width="185" height="15" uuid="9c2451d9-7348-462d-816f-4fb149fb86a1"/>
+				<textFieldExpression><![CDATA[$F{resultHeader.specimen}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-20" y="76" width="595" height="1" uuid="795f12dc-81d6-48ca-836c-07872612d17c"/>
+			</line>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="68" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<componentElement>
-				<reportElement x="0" y="0" width="555" height="68" uuid="53766c85-cfc7-404a-a283-d6229e2f5080"/>
+				<reportElement x="0" y="0" width="555" height="40" uuid="53766c85-cfc7-404a-a283-d6229e2f5080"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="Layouts" uuid="1774c001-cd51-4736-92e7-e810a643eec1">
 						<datasetParameter name="SUBREPORT_DIR">
@@ -71,9 +232,9 @@
 						</datasetParameter>
 						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("layouts")]]></dataSourceExpression>
 					</datasetRun>
-					<jr:listContents height="68" width="555">
+					<jr:listContents height="40" width="555">
 						<subreport>
-							<reportElement x="0" y="0" width="555" height="68" uuid="b17d9ef7-19c8-4e02-a873-e006d2c9bf5f"/>
+							<reportElement x="0" y="0" width="555" height="39" uuid="b17d9ef7-19c8-4e02-a873-e006d2c9bf5f"/>
 							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("tests")]]></dataSourceExpression>
 							<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "\\" + $F{testLayout} + ".jasper"]]></subreportExpression>
 						</subreport>
@@ -81,5 +242,113 @@
 				</jr:list>
 			</componentElement>
 		</band>
+		<band height="23">
+			<componentElement>
+				<reportElement x="0" y="0" width="555" height="23" uuid="2da0bf1e-570c-4579-bb6e-1eba7134fd4e"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Layouts" uuid="23e2d6fe-0fed-4a06-80ef-b0a00df60f9e">
+						<datasetParameter name="SUBREPORT_DIR">
+							<datasetParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></datasetParameterExpression>
+						</datasetParameter>
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("layouts")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="23" width="555">
+						<subreport>
+							<reportElement x="0" y="0" width="555" height="21" uuid="44d5698a-f29d-4f70-9d22-e779c791b3eb"/>
+							<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("tests")]]></dataSourceExpression>
+							<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "\\" + "remarks.jasper"]]></subreportExpression>
+						</subreport>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
 	</detail>
+	<pageFooter>
+		<band height="82">
+			<componentElement>
+				<reportElement x="0" y="0" width="185" height="54" isRemoveLineWhenBlank="true" uuid="12215a59-7785-4691-b5b8-beef8b749b85"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Footer" uuid="6c655bc9-266f-460a-bad4-b052aacdfd22">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("resultFooter")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="54" width="185">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement x="0" y="23" width="185" height="15" isRemoveLineWhenBlank="true" uuid="d3d9eff4-7d26-4815-b77c-8acd039ffaf2">
+								<printWhenExpression><![CDATA[$F{index}.equals( 1 )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+						</textField>
+						<image scaleImage="FillFrame" isUsingCache="false">
+							<reportElement x="0" y="2" width="117" height="22" isRemoveLineWhenBlank="true" uuid="65f2ebd2-11c5-495d-83f8-063c13b15203">
+								<printWhenExpression><![CDATA[$F{index}.equals( 1 )]]></printWhenExpression>
+							</reportElement>
+							<imageExpression><![CDATA[new java.io.StringBufferInputStream(new org.w3c.tools.codec.Base64Decoder($V{sign1}).processString())]]></imageExpression>
+						</image>
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="38" width="185" height="15" isRemoveLineWhenBlank="true" uuid="cc5c3f30-bd25-452b-9805-31cea79e6913">
+								<printWhenExpression><![CDATA[$F{index}.equals(1)]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[( $F{designation}!="null" ? $F{designation} : "" )]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="370" y="-1" width="185" height="55" uuid="15979288-a775-42a9-a1af-beb816525af7"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Footer" uuid="df0ef5a7-67f0-4ce1-b680-4e4d3eb58683">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("resultFooter")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="55" width="185">
+						<textField>
+							<reportElement x="0" y="25" width="185" height="15" uuid="ee243a8e-f8ab-4eca-8093-607556f861eb">
+								<printWhenExpression><![CDATA[$F{index}.equals(2 )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+						</textField>
+						<image scaleImage="FillFrame" isUsingCache="false">
+							<reportElement x="4" y="3" width="117" height="22" isRemoveLineWhenBlank="true" uuid="d2e9ec18-ea33-4f29-a9f6-ccec32dda758">
+								<printWhenExpression><![CDATA[$F{index}.equals( 2 )]]></printWhenExpression>
+							</reportElement>
+							<imageExpression><![CDATA[new java.io.StringBufferInputStream(new org.w3c.tools.codec.Base64Decoder($V{sign2}).processString())]]></imageExpression>
+						</image>
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="40" width="185" height="15" isRemoveLineWhenBlank="true" uuid="2706818c-c57b-40f3-90a0-751465161e3c">
+								<printWhenExpression><![CDATA[$F{index}.equals(2 )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[( $F{designation}!="null" ? $F{designation} : "" )]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="185" y="2" width="185" height="55" uuid="42f70723-56b2-44ad-adc8-e0108b104bdc"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Footer" uuid="047bc0ca-7c35-42f6-ae05-53c3ec5014b6">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("resultFooter")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="55" width="185">
+						<textField>
+							<reportElement x="0" y="25" width="185" height="15" uuid="2cb5f794-4ded-4dd4-bcbb-1eb797d71127">
+								<printWhenExpression><![CDATA[$F{index}.equals(3 )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+						</textField>
+						<image scaleImage="FillFrame" isUsingCache="false">
+							<reportElement x="4" y="3" width="117" height="22" isRemoveLineWhenBlank="true" uuid="974d41ea-8916-4a32-8e81-fc3b275384f1">
+								<printWhenExpression><![CDATA[$F{index}.equals( 3 )]]></printWhenExpression>
+							</reportElement>
+							<imageExpression><![CDATA[new java.io.StringBufferInputStream(new org.w3c.tools.codec.Base64Decoder($V{sign3}).processString())]]></imageExpression>
+						</image>
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="40" width="185" height="15" isRemoveLineWhenBlank="true" uuid="aaa7673f-3dc9-4a7b-b0c0-39b4e4a54d64">
+								<printWhenExpression><![CDATA[$F{index}.equals(3 )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[( $F{designation}!="null" ? $F{designation} : "" )]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</pageFooter>
 </jasperReport>

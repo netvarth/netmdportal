@@ -1,0 +1,965 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Urine" pageWidth="556" pageHeight="802" columnWidth="556" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2c5cefdf-de76-4589-8209-6861be6f69fd">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.layers" value="##Thu Oct 02 19:35:45 IST 2014\nlayer.1.name=Layer 1\nlayer.1.visible=false\nlayer.1.id=1\nlayer.0.name=Background\nlayer.0.visible=true\nlayer.0.id=0"/>
+	<subDataset name="Values" uuid="6339d4a1-ef28-42d4-a997-6cb8b2b3e70c">
+		<field name="key" class="java.lang.String">
+			<fieldDescription><![CDATA[key]]></fieldDescription>
+		</field>
+		<field name="id" class="java.lang.String">
+			<fieldDescription><![CDATA[id]]></fieldDescription>
+		</field>
+		<field name="value" class="java.lang.String">
+			<fieldDescription><![CDATA[value]]></fieldDescription>
+		</field>
+		<field name="unit" class="java.lang.String">
+			<fieldDescription><![CDATA[unit]]></fieldDescription>
+		</field>
+		<field name="normal" class="java.lang.String">
+			<fieldDescription><![CDATA[normal]]></fieldDescription>
+		</field>
+		<variable name="observedValue" class="java.lang.String">
+			<variableExpression><![CDATA[$F{value}.concat(" ").concat( $F{unit} )]]></variableExpression>
+		</variable>
+		<variable name="normalValue" class="java.lang.String">
+			<variableExpression><![CDATA[$F{normal}.concat( $F{unit} )]]></variableExpression>
+		</variable>
+	</subDataset>
+	<field name="testName" class="java.lang.String">
+		<fieldDescription><![CDATA[testName]]></fieldDescription>
+	</field>
+	<field name="remarks" class="java.lang.String">
+		<fieldDescription><![CDATA[remarks]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="545">
+			<rectangle>
+				<reportElement x="0" y="20" width="556" height="522" uuid="fd8fb78f-8701-4093-9072-646841035b55"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="556" height="20" uuid="044ff342-fd32-477b-8e4e-f72711f46660"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{testName}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="0" y="20" width="556" height="20" uuid="ebd64057-a960-494b-87fc-ebe954fd5f52"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="35846362-1c44-4804-97a1-a36c4422ea51">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="556">
+						<textField>
+							<reportElement x="0" y="0" width="556" height="20" isRemoveLineWhenBlank="true" uuid="1eb38dd3-4df0-49b4-864d-08aaadf74db7">
+								<printWhenExpression><![CDATA[$F{id}.equals( "head1" )]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="40" width="256" height="20" uuid="085b60ff-a773-4d93-86fb-690ef808e9a2"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="52005351-6102-44f2-9b37-7b5885013791">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="55fc29e1-3a40-4c52-aed4-d50d9ebeb644">
+								<printWhenExpression><![CDATA[$F{id}.equals( "volume" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="40" width="283" height="20" uuid="1123e1a8-6567-4d1c-915d-a4af111a1fb6"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="f1106114-7fa3-4989-9c02-3f7c2982b597">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="1198c9c9-59be-4f14-91cb-c1c0abb82b42">
+								<printWhenExpression><![CDATA[$F{id}.equals( "volume" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="60" width="283" height="20" uuid="68789e07-4616-4560-9dfd-b0412832cb93"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="578b862f-924f-45a5-9a48-aa711753d8ba">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="fc6506a6-2e55-45ac-a0f7-8984a0da3988">
+								<printWhenExpression><![CDATA[$F{id}.equals( "ph" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="60" width="256" height="20" uuid="fc2b73e8-8769-4396-873b-7dec037abd8f"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="ab27dfb0-4925-4130-b83c-4dfd512b765d">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="24049ac4-8954-44f9-9cfc-322cb67895bc">
+								<printWhenExpression><![CDATA[$F{id}.equals( "ph" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="80" width="283" height="20" uuid="4003cca7-a7a2-496c-8eb9-338cbf870b59"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="03c84cb3-6b1d-423f-8751-c02885aad5dc">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="439e38a7-fa88-47e6-9cfe-a2790d3c99dc">
+								<printWhenExpression><![CDATA[$F{id}.equals( "colour" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="80" width="256" height="20" uuid="c37e0a50-7e93-4578-8704-d65dd13a0aa0"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="241d1d0e-d48c-4746-892e-3da324549610">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="c5c0f9cf-5000-4dc5-8b70-4ca9fefb0a54">
+								<printWhenExpression><![CDATA[$F{id}.equals( "colour" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="100" width="283" height="20" uuid="a34f9c19-5822-421c-8ef1-c9f529541ca6"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="8a70b7cb-6801-428a-ad70-f3369c437686">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="559d1f60-7bdb-4826-bd42-72305d8215c0">
+								<printWhenExpression><![CDATA[$F{id}.equals( "liquefaction" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="100" width="256" height="20" uuid="a9c3273f-2ec6-4e5b-a7d1-02401d108d6f"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="e6b1dc40-f38e-4154-ab7c-83f691924911">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="e03c64ae-cd0d-4233-bbca-679552c0fee3">
+								<printWhenExpression><![CDATA[$F{id}.equals( "liquefaction" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="120" width="283" height="20" uuid="6741eb18-8309-4099-b044-67a6d5ad7727"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="b27cf3f2-3399-4fbd-970a-4f72f0c4d232">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="b2263578-afd5-4b7a-bb83-2b41cc305c49">
+								<printWhenExpression><![CDATA[$F{id}.equals( "viscosity" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="120" width="256" height="20" uuid="a1486030-6174-41f6-a0be-a8dbbd9d646d"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="a1e02d3e-4ac4-4117-9560-3515cd6fa2de">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="851284b5-8825-4a5f-b3c2-c53a417fe181">
+								<printWhenExpression><![CDATA[$F{id}.equals( "viscosity" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="140" width="556" height="20" uuid="3194d5d4-d970-4da8-bd1d-6d8313ee47ec"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="7553d60c-94ce-4a1d-b326-8bc33c12d1d8">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="556">
+						<textField>
+							<reportElement x="0" y="0" width="556" height="20" isRemoveLineWhenBlank="true" uuid="c3bf8144-4625-4566-b0f8-b3796941bc5a">
+								<printWhenExpression><![CDATA[$F{id}.equals( "head2" )]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="160" width="256" height="20" uuid="b2953ac8-cf87-4d51-b208-a60180008ed7"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="33124556-76fa-4f29-a91d-8e47adf053bd">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="bb3fe3c3-b728-4dc5-9c6d-9f48c03b0613">
+								<printWhenExpression><![CDATA[$F{id}.equals( "occultBldTest")]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="160" width="283" height="20" uuid="d780e830-75b8-4d4a-868d-c3404156368c"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="34ddde44-d383-4aae-9cf4-8840b379349c">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="5c4ed2d3-b143-4564-a81d-2902a284c559">
+								<printWhenExpression><![CDATA[$F{id}.equals( "occultBldTest")]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="180" width="256" height="20" uuid="36f20297-9e7d-485d-bb22-fe8952df760b"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="330d0267-6415-42d8-b445-35f6f22018f9">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="030bf982-a9c7-4a3c-b488-8413ae236e79">
+								<printWhenExpression><![CDATA[$F{id}.equals( "fructose" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="180" width="283" height="20" uuid="40c98c82-40d2-4838-ba88-4b25bedef00d"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="341307e4-3d97-41df-875d-c86a41f1db7f">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="a8523c43-243f-4cc9-97f4-21df11e51fd9">
+								<printWhenExpression><![CDATA[$F{id}.equals( "fructose" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="200" width="556" height="20" uuid="123e2b17-2828-4dee-99a4-5579ddc232af"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="26edaa44-7f9f-4e12-b27d-3f053a5edbf0">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="556">
+						<textField>
+							<reportElement x="0" y="0" width="556" height="20" isRemoveLineWhenBlank="true" uuid="b0cf8267-c68b-4a4d-bd6b-3d61bd251197">
+								<printWhenExpression><![CDATA[$F{id}.equals( "head3" )]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="220" width="256" height="20" uuid="23829413-5d91-47a3-ac48-f18c69ffc1c3"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="50aaed30-bab4-4cf4-84d1-9c200a31e6ef">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="375e6d5a-44a2-469e-8d40-337922685544">
+								<printWhenExpression><![CDATA[$F{id}.equals( "spermList" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="220" width="24" height="20" uuid="24b20814-0086-4f1e-ac32-443634034a07"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="f983aa21-4a77-4930-bd99-8c0efc14b49d">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="24">
+						<textField>
+							<reportElement x="0" y="0" width="24" height="20" isRemoveLineWhenBlank="true" uuid="30a99f35-695c-40aa-b24e-42493d85ab70">
+								<printWhenExpression><![CDATA[$F{id}.equals( "spermValue" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="297" y="220" width="259" height="20" uuid="be2e1ccf-8335-4e5e-a109-f2a93fe95d49"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="a8c60d5e-dd8a-4c4c-bc4c-b66ac4176a28">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="259">
+						<textField>
+							<reportElement x="0" y="0" width="259" height="20" isRemoveLineWhenBlank="true" uuid="c43ea4ea-204c-4e49-82ee-a5daa948b615">
+								<printWhenExpression><![CDATA[$F{id}.equals( "spermUnit" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="240" width="556" height="20" uuid="2cfe6cd0-7a88-496c-a708-fb5eacb21fe1"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="66a3409f-3d8a-4830-ae8b-13ad73af79ad">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="556">
+						<textField>
+							<reportElement x="0" y="0" width="556" height="20" isRemoveLineWhenBlank="true" uuid="60574162-904f-4ea0-9360-45460a53b98b">
+								<printWhenExpression><![CDATA[$F{id}.equals( "head4" )]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="260" width="256" height="20" uuid="2194fe86-7812-4183-a352-7f7b9eebb837"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="1ecacc45-fcea-4dce-ad9f-3d3287320f96">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="55c387cf-1459-4b6c-aaa7-d1c7e1b76ac1">
+								<printWhenExpression><![CDATA[$F{id}.equals( "goodProgress" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="260" width="283" height="20" uuid="cad39e5a-e546-47b3-a925-7bbb09f34170"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="18611926-f9d3-4382-b9a8-6ac7805bfc62">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="3f090234-e6bc-4790-9439-1ef501489a42">
+								<printWhenExpression><![CDATA[$F{id}.equals( "goodProgress" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="280" width="256" height="20" uuid="2bcef678-1ced-4cd5-9780-3099ef511fff"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="67d4ec0e-b140-4690-9c03-2029e9aee807">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="c69c7ce7-df8e-4eba-a19b-661327f6de27">
+								<printWhenExpression><![CDATA[$F{id}.equals( "sluggProgress" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="280" width="283" height="20" uuid="e7e8e2b5-8794-4917-86b6-c9df4486856a"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="e20bee17-f4bd-40c1-ae53-f5e3e2fd2274">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="2c20ce31-0fd5-40d4-8d46-297421305a59">
+								<printWhenExpression><![CDATA[$F{id}.equals( "sluggProgress" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="300" width="256" height="20" uuid="8e4ce520-c2ea-451a-b8bb-420fa318b3ab"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="9a5730ec-2d79-4473-8949-186470d940ac">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="5280da47-760d-43e8-9ee7-d017fc6df444">
+								<printWhenExpression><![CDATA[$F{id}.equals( "nonProgress" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="300" width="283" height="20" uuid="f85e53ca-8e92-4d61-8bc7-53b08ce8d961"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="b3834d25-5218-4664-a29c-194dc91cdcf2">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="2468c16c-8ad9-44ec-99a4-f2108cf42d5e">
+								<printWhenExpression><![CDATA[$F{id}.equals( "nonProgress" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="320" width="256" height="20" uuid="70fba3c5-158d-4e73-bc55-23c1ed6c8d9d"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="06dadbf4-87b5-4507-b337-a412911e9ac3">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="4c099bff-e51c-437f-9509-6f47cad6c18e">
+								<printWhenExpression><![CDATA[$F{id}.equals( "nonMotile" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="320" width="283" height="20" uuid="bde1fcef-164e-476d-923f-ed0e28c4e9aa"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="48f5492e-96d7-4bca-99fa-b21f405d71f7">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="0b8f6941-fed7-4387-9ade-5b0c1b4d2be7">
+								<printWhenExpression><![CDATA[$F{id}.equals( "nonMotile" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="340" width="556" height="20" uuid="ed2eacce-0a5d-4342-bcbd-25cd5a136070"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="655d2ad9-6aea-4eac-875d-e8332107a210">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="556">
+						<textField>
+							<reportElement x="0" y="0" width="556" height="20" isRemoveLineWhenBlank="true" uuid="898ed5aa-7640-444c-bb88-f0891c502ce3">
+								<printWhenExpression><![CDATA[$F{id}.equals( "head5" )]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="22" y="360" width="95" height="20" uuid="57ef63e0-9d1a-4ec3-8ed1-9eb16e670f05"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="d25e713c-ebcb-455c-a37c-0c386b85bd66">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="95">
+						<textField>
+							<reportElement x="0" y="0" width="95" height="20" isRemoveLineWhenBlank="true" uuid="19ed028d-b7ba-4795-a199-b9521f79c8c6">
+								<printWhenExpression><![CDATA[$F{id}.equals( "subHead1" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="127" y="360" width="64" height="20" uuid="452b3c0e-84cf-4995-8aa4-03b76960fc31"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="d2a87c3d-4ab2-46df-bf9f-019306fe57f9">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="64">
+						<textField>
+							<reportElement x="0" y="0" width="63" height="20" isRemoveLineWhenBlank="true" uuid="96bad7a5-4382-4085-9197-8fbf2139a35d">
+								<printWhenExpression><![CDATA[$F{id}.equals( "abnormalHead" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="190" y="360" width="37" height="20" uuid="c558225a-4d32-43f0-8278-2e4fed8e0437"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="7b9fe1ca-1179-4bd1-bd5e-55467e3711f9">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="37">
+						<textField>
+							<reportElement x="1" y="0" width="34" height="20" isRemoveLineWhenBlank="true" uuid="ce987226-2958-4369-90cc-9bb700e9b341">
+								<printWhenExpression><![CDATA[$F{id}.equals( "abnormalHead" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="269" y="360" width="66" height="20" uuid="0730dc20-f276-4116-90f9-b2aa85268471"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="2ea334b7-057c-4f4a-be66-af2d87a2432a">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="66">
+						<textField>
+							<reportElement x="0" y="0" width="65" height="20" isRemoveLineWhenBlank="true" uuid="48536034-d8ac-4687-a99a-a732cf1cfa65">
+								<printWhenExpression><![CDATA[$F{id}.equals( "abnormalNeck" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="335" y="360" width="37" height="20" uuid="3eba4835-a93c-4810-848c-fdaa7ad47b6d"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="12eebf33-a42e-4e22-9d20-4cf65c4255dc">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="37">
+						<textField>
+							<reportElement x="1" y="0" width="34" height="20" isRemoveLineWhenBlank="true" uuid="34437fa6-d54b-46cd-a0aa-3bdcbee9894e">
+								<printWhenExpression><![CDATA[$F{id}.equals( "abnormalNeck" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="413" y="360" width="62" height="20" uuid="449b6f55-c953-4325-8220-bddecaf6bdbb"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="f5bcf918-6f0f-421b-b7a2-7f37ce466a71">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="62">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="a65c6d2a-7a51-443f-be30-497090e7070c">
+								<printWhenExpression><![CDATA[$F{id}.equals( "abnormalTail" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="475" y="360" width="37" height="20" uuid="a7ff19c7-cbeb-4e1f-88d2-0366ab93c084"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="6e163236-359b-4a09-91fe-699d85ef6e17">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="37">
+						<textField>
+							<reportElement x="1" y="0" width="34" height="20" isRemoveLineWhenBlank="true" uuid="7404e006-7c29-4c60-9141-e70dbe53710a">
+								<printWhenExpression><![CDATA[$F{id}.equals( "abnormalTail" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="117" y="380" width="95" height="20" uuid="1b4105eb-cf13-44f0-8f82-4ccab2ee4639"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="b443ea77-03ce-4631-a301-d2fc8924b190">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="95">
+						<textField>
+							<reportElement x="0" y="0" width="95" height="20" isRemoveLineWhenBlank="true" uuid="eec4a0f6-1020-48a8-ab40-de1d18c2fb8f">
+								<printWhenExpression><![CDATA[$F{id}.equals( "totalAbnormal" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="319" y="380" width="95" height="20" uuid="cfc59c95-9ba9-4b9e-8b57-0e2d2d0d1c1b"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="12af6265-6de2-495d-9073-4085cfba5cf9">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="95">
+						<textField>
+							<reportElement x="0" y="0" width="95" height="20" isRemoveLineWhenBlank="true" uuid="ba42d42b-f85a-4601-ae92-7accf6d952fd">
+								<printWhenExpression><![CDATA[$F{id}.equals( "normalForms" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="212" y="380" width="37" height="20" uuid="9d8c5976-16d0-4c2e-ac25-09333c81a3d5"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="0b338212-73ed-4b01-8a17-e97a892ea52b">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="37">
+						<textField>
+							<reportElement x="1" y="0" width="34" height="20" isRemoveLineWhenBlank="true" uuid="e0c94893-191b-4277-a30f-6ae850d38567">
+								<printWhenExpression><![CDATA[$F{id}.equals( "totalAbnormal" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="413" y="380" width="37" height="20" uuid="9ff54a48-1e70-4e3c-b1ef-b1224001c499"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="746f540a-f543-4d2f-9c46-a64b825a3d99">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="37">
+						<textField>
+							<reportElement x="1" y="0" width="34" height="20" isRemoveLineWhenBlank="true" uuid="6ae223f7-2f4a-4720-8b77-645667761dd5">
+								<printWhenExpression><![CDATA[$F{id}.equals( "normalForms" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="400" width="556" height="20" uuid="616625b4-aa53-4228-b7f6-41771d80a2e7"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="10f84e3c-831c-43d0-b0d5-4c740f133755">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="556">
+						<textField>
+							<reportElement x="0" y="0" width="556" height="20" isRemoveLineWhenBlank="true" uuid="3a850803-20eb-4f7c-9bfe-d72bda4eacce">
+								<printWhenExpression><![CDATA[$F{id}.equals( "head6" )]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="420" width="256" height="20" uuid="4c910b6c-6a1c-465e-be20-7ea202d15f16"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="c0464c7c-6ffc-486c-a8b4-61df22510589">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="8ceb6eb4-cab3-49e1-8c0f-4325fb17c3c9">
+								<printWhenExpression><![CDATA[$F{id}.equals( "immatureSperm" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="420" width="283" height="20" uuid="8f7483f1-9892-4721-a88f-b60e611c0179"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="061a62dc-e7d4-46c9-a6d1-8c6707d5648d">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="da38c3e4-d5cd-4fcb-a0f3-2cfe399c7880">
+								<printWhenExpression><![CDATA[$F{id}.equals( "immatureSperm" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="440" width="256" height="20" uuid="ceaa6747-5480-4233-9bb4-738ec04a3c71"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="a8f9200f-d655-4c72-8f03-3d89857ef5a5">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="b5da7bd5-888f-40cc-bc70-626bdb6f72ae">
+								<printWhenExpression><![CDATA[$F{id}.equals( "redBloodCells" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="440" width="283" height="20" uuid="a04453b7-c54a-4f16-997f-5d1696a7c472"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="42ad6f34-5e98-45a5-8b11-4e71579f1bef">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="cbb5cdc4-025b-4109-9857-4a4738d85a1f">
+								<printWhenExpression><![CDATA[$F{id}.equals( "redBloodCells" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="460" width="256" height="20" uuid="288a4d8f-4ebd-4e08-b6e7-5df8c42b42e3"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="33a842df-6073-442b-89ae-40406876a0c2">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="278965f7-5aa7-4223-90c3-9fea5545c28b">
+								<printWhenExpression><![CDATA[$F{id}.equals( "leucocytes" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="460" width="283" height="20" uuid="0e222128-726d-47d8-a68b-6c4a94080a2e"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="43f0deab-cb9a-46fc-abf3-d400db1193c0">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="875e913d-ac4a-48a6-bc7e-f2282a433377">
+								<printWhenExpression><![CDATA[$F{id}.equals( "leucocytes" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="480" width="256" height="20" uuid="6271b11e-db20-439c-ad4b-5ed9ecfee1a3"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="3679bb29-2824-413f-95ed-b19340a8d8fd">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="cdbc1921-e71c-49f7-a7fa-c7a5ad246ebf">
+								<printWhenExpression><![CDATA[$F{id}.equals( "epithelialCells" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="480" width="283" height="20" uuid="78115de4-3f01-4f32-b29b-1bae0bda5f93"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="0dc65bfc-46c6-4a06-9b0f-0927a82eefed">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="07c80f82-276c-47bd-b5f0-bade6f314e2c">
+								<printWhenExpression><![CDATA[$F{id}.equals( "epithelialCells" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="500" width="256" height="20" uuid="9011cb43-7621-47e3-a9cf-49af1c640b16"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="7e7f4669-ea94-4539-939b-40d9ce77e301">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="951dc64f-03c4-4c5c-a49d-37a16ec674d3">
+								<printWhenExpression><![CDATA[$F{id}.equals( "trichVaginalis" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="500" width="283" height="20" uuid="e787b7b6-c887-4b67-8fb6-0410f953c653"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="715122fe-b22e-45e8-8fb8-ed456f7de902">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="fc91f377-5ed6-4fb3-a604-1466caa9c100">
+								<printWhenExpression><![CDATA[$F{id}.equals( "trichVaginalis" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="520" width="256" height="20" uuid="30babf71-124c-4566-be39-ba3fdbbf3038"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="1e3137ae-d3b6-48dc-8ecb-4f84670c859b">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="256">
+						<textField>
+							<reportElement x="62" y="0" width="194" height="20" isRemoveLineWhenBlank="true" uuid="3bfe4cfe-af85-4f28-845f-6ce31a93cc67">
+								<printWhenExpression><![CDATA[$F{id}.equals( "fatGlobules" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="520" width="283" height="20" uuid="e2df7a7a-8f98-499f-a3da-4d6ec50b96cb"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Values" uuid="82aeac9c-b943-4e16-a776-aac4ee1e4a00">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("values")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="283">
+						<textField>
+							<reportElement x="0" y="0" width="283" height="20" isRemoveLineWhenBlank="true" uuid="e52e5a4e-50f6-43be-8139-e9da0b067096">
+								<printWhenExpression><![CDATA[$F{id}.equals( "fatGlobules" )]]></printWhenExpression>
+							</reportElement>
+							<textFieldExpression><![CDATA[$V{observedValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>
