@@ -1,0 +1,29 @@
+{   "title": "Order Type","style": "width:20%;margin:0 40%",
+    "data":[{
+        "name": "orderTypeForm","id": "orderTypeForm",
+        "content":[{
+            "className":"sep-div","style": "display:none","id": "errorDivHeader","data":[{ "className":"five_sixth","id": "errorDivData"}]
+        },{ "className": "sep-div","id": "changetypediv",
+            "data":[{ "className": "five_sixth",
+                "data":[{  "className": "five_sixth",
+                    "elements":[{"name": "agent","id": "agent","type": "text","tabIndex": 1,"className": "small ","title": "Agent Order",
+						"maxlength":"2","style":"width:30%","required": "true"
+                    },{ "name": "blanket","id": "blanket","tabIndex": 2,"type": "text","className": "small ","maxlength":"2","style":"width:30%",
+                        "title": "Blanket Order","required": "true"
+                    },{ "name": "walkin","id": "walkin","tabIndex": 3,"type": "text","maxlength":"2","className": "small","style":"width:30%",
+                        "title": "Walkin Order","required": "true"
+                    }]
+                }]
+            }]
+        },{ "className": "sep-div ",
+            "data":[{  "className": "five_sixth",
+                "elements":[{ "type": "button","content": {
+                    "buttons":[{ "name": "btnSubmit","id": "btnSubmit","title": "Submit","type": "button","className": "stdbtn btn_black",
+                        "style": "opacity:1;"
+                    },{  "name": "btnCancel","id": "btnCancel","title": "Cancel","type": "button","className": "stdbtn","style": "opacity:1;"
+                    }]
+                }}]
+            }]
+        }]
+    }]
+}

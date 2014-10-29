@@ -1,0 +1,24 @@
+{
+    "data": [
+        {
+            "id": "transferredOrderTableCont",
+            "elements": [
+                {
+                    "type": "table",
+                    "content": {
+                        "name" : "orders",
+                        "idProperty" : "orders",
+                        "className" :"stdtable stdtablecb",
+                        "style":"border-spacing:0;border-collapse:collapse; border:0;",
+                        "colHeaders" : [
+                            { "className" : "head0",    "name" : "From Branch", "style":"width:20%"},
+                            { "className" : "head1",    "name" : "To Branch", "style":"width:20%"},
+                            { "className" : "head0",    "name" : "Order Uid", "style":"width:5%"},
+                            { "className" : "head1",    "name" : "Sent To Destination ?", "style":"width:5%"}
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

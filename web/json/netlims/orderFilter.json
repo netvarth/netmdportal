@@ -1,29 +1,11 @@
 {	
-		"buttons":	[
-		{
-			"displayName" 	: 	"orderId",
-			"type"	:	"text",
-			"parameterName"	:	"Order Id"
-		},
-		{
-			"displayName" 	: 	"name",
-			"type"	:	"text",
-			"parameterName"	:	"Name"
-		},
-		{
-			"displayName":"branchName",
-			"type":"text",
-			"parameterName":"Branch Name"
-		},
-		{
-			"displayName":"referralName",
-			"type":"text",
-			"parameterName":"Referral Name"
-		},
-		{
-			"displayName":"age",
-			"type":"text",
-			"parameterName":"Age"
-		}
+	"buttons":[
+		{"displayName":"orderId","type":"text","parameterName":"Order Id"},
+		{"displayName":"name","type":"text","parameterName":"Name"},
+		{"displayName":"branchName","type":"text","parameterName":"Branch Name"},
+		{"displayName":"referralName","type":"text","parameterName":"Referral Name"},
+		{"displayName":"age","type":"text","parameterName":"Age"},
+		{"displayName":"branchId","type":"text","parameterName":"Branch Id"},
+		{"displayName":"facilityName","type":"text","parameterName":"Facility"}
 	]
 }
