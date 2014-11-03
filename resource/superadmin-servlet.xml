@@ -106,6 +106,17 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="specimen.service" />
 		</property>
 	</bean>
+	
+	<bean class="com.nv.portal.rs.corporateusers.OrganisationResource">
+		<property name="organisationService">
+			<ref bean="organisation.service" />
+		</property>
+			<property name="logService">
+			<ref bean="log.service" />
+		</property>
+<!-- 		<property name="view" ref="pdfview" /> -->
+	</bean>
+	
 	<bean id="pdfview" class="com.nv.youNeverWait.report.PDFReportView">
 	  
 	</bean>
