@@ -41,13 +41,16 @@ function Constants(){
 	this.BRANCHESHOME = "Branch";
 	this.BRANCHORDERLISTURL="/youNeverWait/superadmin/ui/superAdmin/orderList";
 	this.BRANCHLISTJSONURL="/youNeverWait/json/netlims/branchList.json";
+	this.FACILITYLISTJSONURL="/youNeverWait/json/netlims/facilityList.json";
 	this.ONLINERESULTSLISTJSONURL="/youNeverWait/json/netlims/orderTable.json";
 	this.BRANCHLISTURL="/youNeverWait/netlims/ui/lab/branchList";
+	this.FACILITYLISTURL="/youNeverWait/netlims/ui/lab/facility/list";
 	this.VIEWBRANCHPAGEURL="/youNeverWait/json/netlims/branch.json";
 	this.GETBRANCHURL="/youNeverWait/netlims/ui/lab/viewBranch/";
 	this.DELETEBRANCHURL="/youNeverWait/netlims/ui/lab/deleteBranch";
 	this.UPDATEBRANCHURL="/youNeverWait/netlims/ui/lab/updateBranch";
 	this.BRANCHLISTPTBJSONURL="/youNeverWait/json/netlims/toolbar/branchListPTB.json";
+	this.FACILITYLISTPTBJSONURL="/youNeverWait/json/netlims/toolbar/facilityListPTB.json";
 	this.BRANCHORDERSJSONURL="/youNeverWait/json/netlims/branchOrders.json";
 	this.BRANCHORDERSLISTJSONURL="/youNeverWait/json/netlims/branchesOrders.json";
 	this.TRANSFERREDORDERSLISTJSONURL="/youNeverWait/json/netlims/transferredOrders.json";
@@ -57,7 +60,10 @@ function Constants(){
 	this.BRANCHORDERSLISTURL="/youNeverWait/netlims/ui/lab/viewBranchOrders/";
 	this.SELECTONEBRANCH = "Select atleast one branch";
 	this.SELECTONEBRANCHONLY = "Select only one branch";
+	this.SELECTONEFACILITY = "Select atleast one facility";
+	this.SELECTONEFACILITYONLY = "Select only one facility";
 	this.FINDORDERCOUNTURL="/youNeverWait/netlims/ui/order/count";
+	this.FINDORDERCOUNTFORFACILITYURL="/youNeverWait/netlims/ui/order/countforFacility";
 	this.GENERALPTBURL="/youNeverWait/json/netlims/toolbar/viewPTB.json";
 	this.BRANCHUPDATESUCCESS = "Branch updated successfully";
 	this.EMAILINVALID = "Enter valid email";
@@ -78,7 +84,6 @@ function Constants(){
 	this.TRANSFEREDRESULTLIST="Transferred Results";
 	this.ORDERCOUNTPAGEURL="/youNeverWait/json/netlims/orderCount.json";
 	this.ORDERCOUNTMODALNAME="orderCountModal";
-	this.FINDORDERCOUNTURL="/youNeverWait/netlims/ui/order/count";
 	this.SYNCSETUPPAGEURL="/youNeverWait/json/netlims/syncSetup.json";
 	this.SYNCSETUPMODALNAME="syncSetupModal";
 	this.SYNCDATAURL="/youNeverWait/netlims/ui/lab/getBranchSyncDetails/";
@@ -123,6 +128,10 @@ function Query(){
 	}
 	this.findOrderCount=function(input){
 		ajaxProcessor.setUrl(constants.FINDORDERCOUNTURL);
+		return ajaxProcessor.post(input);
+	}
+	this.findOrderCountForFacility=function(input){
+		ajaxProcessor.setUrl(constants.FINDORDERCOUNTFORFACILITYURL);
 		return ajaxProcessor.post(input);
 	}
 	this.getSyncData=function(branchId){
@@ -368,6 +377,7 @@ function BranchListUI(){
 	this.viewBranchPTB = "#branchListPTBContainer #btn_view_ptb_id";
 	this.orderCountPTB = "#branchListPTBContainer #btn_ordercount_ptb_id";
 	this.syncSetupPTB = "#branchListPTBContainer #btn_change_ptb_id";
+	this.facilityListPTB = "#branchListPTBContainer #btn_facilityList_ptb_id";
 	this.upButton_branch = "#branchPTBContainer #btn_up_ptb_id";
 	this.downButton_branch = "#branchPTBContainer #btn_down_ptb_id";
 	this.backButton_branch = "#branchPTBContainer #btn_back_ptb_id";
@@ -380,7 +390,9 @@ function BranchListUI(){
 	this.setCurrentBranchList = function(branchList) {this.branchList=branchList};
 	this.getCurrentBranchList = function(){return this.branchList};
 	this.setCurrentBranchId=function(branchId){this.selectedBranchId = branchId};
+	
 	this.getCurrentBranchId=function(){return this.selectedBranchId};
+	
 	this.getCurrentBranch = function(){return this.currentBranch;}
 	this.setCurrentBranch = function(currentBranch){this.currentBranch=currentBranch;}
 	this.branchOrdersView = new BranchOrdersView();
@@ -728,6 +740,15 @@ function BranchListUI(){
 				self.bindOrderCountEvents();	
 			}	
 		});
+		$(self.facilityListPTB).die('click').live('click',function() {
+			errorHandler.removeErrors();
+			var branchId=self.getSelectedbranchId(self.pgTableName);
+			if(branchId!="") {
+				self.setCurrentBranchId(branchId);
+				facilityList = new FacilityList();
+				facilityList.init(branchId);				
+			}	
+		});
 		$(self.syncSetupPTB).die('click').live('click',function() {
 			errorHandler.removeErrors();
 			var branchId=self.getSelectedbranchId(self.pgTableName);
@@ -818,6 +839,109 @@ function BranchListUI(){
 			var result = query.findOrderCount(input);
 			$('#'+constants.ORDERCOUNTMODALNAME + ' #orderCount').val(result);
 		});
+	}
+}
+function FacilityList(){
+	this.orderCountPTB = "#facilityListPTBContainer #btn_ordercount_ptb_id";
+	this.facility = "facility";
+	this.facilityListPTBCaption="facilityList";
+	this.pgTableContainer = "#facilityListTableCont";
+	this.pgTableRowClass=".facilityCol";
+	this.exp = new ExpressionListDTO();
+	this.pgTableName="#facilityList";
+	this.listUrl =constants.FACILITYLISTURL;
+	this.tableNavigator = new DataTableNavigator(this.pgTableName,this.listUrl,this.pgTableContainer,this,this.exp);
+	this.setCurrentFacilityId=function(facilityId){this.selectedFacilityId = facilityId};
+	this.setCurrentFacilityList = function(facilityList) {this.facilityList=facilityList};
+	this.getCurrentFacilityList = function(){return this.facilityList};
+	this.setCurrentBranchId = function(branchId) {this.branchId=branchId};
+	this.getCurrentFacilityId=function(){return this.selectedFacilityId};
+	this.getCurrentBranchId = function(){return this.branchId};
+	this.init=function(branchId){
+		this.setCurrentBranchId(branchId);
+		$(constants.PTBCONTAINER).empty().html('');
+		$(constants.PAGETITLE).empty().html("Facility List");
+		dataTableProcessor.create(this.pgTableName,constants.FACILITYLISTJSONURL,constants.CONTAINER);
+		dataTableProcessor.setCustomTable(this.pgTableName);
+		var expList=new ExpressionListDTO();
+		var expr = new ExpressionDTO("branchId",branchId,"eq");
+		expList.add(expr);
+		this.tableNavigator.setExp(expList);
+		this.tableNavigator.list();
+		var ptbProcessor = new PageToolBarProcessor();
+		ptbProcessor.create(this.facilityListPTBCaption, constants.FACILITYLISTPTBJSONURL);
+		this.bindEvents();
+	}
+	this.setTableValues = function(tableObj, facilityResult) {
+		$(tableObj).dataTable().fnClearTable();
+		this.setCurrentFacilityList(facilityResult);
+		if(facilityResult.list) {
+			if(facilityResult.list.length>0) {			
+				$(facilityResult.list).each(function (index, facility) {
+					var rowData=$(tableObj).dataTable().fnAddData([facility.id,facility.name,facility.phone,facility.address]);
+					var row=$(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+					$(row).attr('id',facility.id);	
+					$(row).children("td:nth-child(1)").attr("class","facilityCol Ustyle");
+				});	
+			}
+		}
+	}
+	this.bindEvents = function(){
+		
+		var self = this;
+		$(self.pgTableName + ' tbody tr').die('click').live('click',function(){		
+			if($(this).attr('selected')) {
+				$(this).removeAttr('selected');
+				$(this).removeAttr('style');
+			} else {	
+				$(this).attr('selected','selected');
+				$(this).attr('style','background:#DCDCDC;');
+			}	
+			errorHandler.removeErrors();
+		});	
+	
+		$(self.orderCountPTB).die('click').live('click',function() {
+			errorHandler.removeErrors();
+			var facilityId=self.getSelectedfacilityId(self.pgTableName);
+			if(facilityId!="") {
+				self.setCurrentFacilityId(facilityId);
+				pageHandler.generateModalPage(constants.ORDERCOUNTPAGEURL,constants.ORDERCOUNTMODALNAME);
+				pageHandler.openPageAsModal($(this), constants.ORDERCOUNTMODALNAME);
+				self.bindOrderCountEvents();	
+			}	
+		});
+		this.bindOrderCountEvents = function(){
+		var self=this;
+		$('#'+constants.ORDERCOUNTMODALNAME + ' #fromDate').datepicker();
+		$('#'+constants.ORDERCOUNTMODALNAME + ' #toDate').datepicker();
+		$('#'+constants.ORDERCOUNTMODALNAME + ' #btnCancel').die('click').live('click',function() {
+			$('#' + constants.ORDERCOUNTMODALNAME).trigger('reveal:close');
+		});
+		$('#'+constants.ORDERCOUNTMODALNAME + ' #btnSearch').die('click').live('click',function() {
+			var input = new OrderCountInput();
+			input.setFacility(self.getCurrentFacilityId());
+			input.setFromDate($('#'+constants.ORDERCOUNTMODALNAME + ' #fromDate').val());
+			input.setToDate($('#'+constants.ORDERCOUNTMODALNAME + ' #toDate').val());
+			
+			var result = query.findOrderCountForFacility(input);
+			
+			$('#'+constants.ORDERCOUNTMODALNAME + ' #orderCount').val(result);
+		});
+	}
+	}
+	this.getSelectedfacilityId = function(){
+		var self =this;
+		var facilityId="";
+		if($(this.pgTableName).dataTable().fnGetData().length>0) {
+			var selfacility = $(self.pgTableName + ' tbody tr[selected]');
+			if(selfacility.length==0){
+				errorHandler.createServerError(self.errorHeader,self.errorData, constants.SELECTONEFACILITY);
+			} else if(selfacility.length>1) 
+				errorHandler.createServerError(self.errorHeader,self.errorData, constants.SELECTONEFACILITYONLY);
+			else
+				facilityId=selfacility.attr('id');
+		}
+		return facilityId;
 	}
 }
 function BranchOrdersView() {
