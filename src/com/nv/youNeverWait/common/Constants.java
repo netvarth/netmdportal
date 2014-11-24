@@ -69,6 +69,7 @@ public class Constants {
 	public static final String NETLIMS_ORDERS = "netlimsorders";
 	public static final String NETLIMS_FACILITY_ORDERS = "netlimsfacilityorders";
 	public static final String PATIENT_ORDERS = "patientorders";
+	public static final String FACILITY = "facility";
 		
 	/* Log */
 	public static final String STARTUP = "Show login page";
@@ -133,6 +134,7 @@ public class Constants {
 	public static final String NETPOS = "netpos";
 	public static final String HOME = "showing organization home page";
 	public static final String ORGANISATION_USER = "organisationUser";
+	
 	
 	
 }
