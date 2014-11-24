@@ -152,6 +152,19 @@ public class OrderManager implements OrderService {
 	public int getOrderCountByBranchId(OrderCountFilterDto ocf) {
 		return orderDao.getOrderCountByBranchId(ocf);
 	}
+	
+	@Override
+	public int getOrderCountFromLab(OrderCountFilterDto ocf) {
+		
+		return orderDao.getOrderCountFromLab(ocf);
+	}
+	
+	@Override
+	public int getOrderCountForFacility(OrderCountFilterDto ocf) {
+		
+		return orderDao.getOrderCountForFacility(ocf);
+	}
+	
 
 	@Override
 	public ListResponse getByPatientFilter(FilterDTO filterDTO, User user) {

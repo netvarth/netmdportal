@@ -33,6 +33,7 @@ import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
 import com.nv.framework.sendmsg.SendMsgCallbackEnum;
 import com.nv.framework.sendmsg.email.SendMailMsgObj;
 import com.nv.framework.util.text.StringEncoder;
+import com.nv.security.youNeverWait.User;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
@@ -42,9 +43,11 @@ import com.nv.youNeverWait.pl.entity.OrderAmountTbl;
 import com.nv.youNeverWait.pl.entity.OrderBranchTbl;
 import com.nv.youNeverWait.pl.entity.OrderResultTbl;
 import com.nv.youNeverWait.pl.entity.OrderTransferTbl;
+import com.nv.youNeverWait.rs.dto.BranchFacilityListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
+import com.nv.youNeverWait.rs.dto.FacilityListResponseDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
@@ -54,6 +57,7 @@ import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabOrderHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabResultHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
+import com.nv.youNeverWait.rs.dto.ListResponse;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchDetail;
@@ -975,7 +979,21 @@ public class LabServiceImpl implements LabService {
 		response.setLab(labDetails);
 		return response;
 	}
+	
+	/**
+	 * Shows a list of facilities
+	 * 
+	 * @param filter
+	 * @return FacilityListResponseDTO
+	 */
 
+/*	@Override
+	public BranchFacilityListResponseDTO listFacility(int branchId) {
+
+		BranchFacilityListResponseDTO response = new BranchFacilityListResponseDTO();
+		response = labDao.listFacility(branchId);
+		return response;
+	}*/
 	/**
 	 * To show all the total orders and its related details of each branch in
 	 * the lab
@@ -1742,5 +1760,11 @@ public class LabServiceImpl implements LabService {
 		if(referredUid!=0)
 			return labDao.getUserByReferredUid(referredUid, branchId);
 		return null;
+	}
+
+	@Override
+	public ListResponse getFacilityByFilter(
+			FilterDTO filterDTO, User user) {
+		return labDao.getFacilityByFilter(filterDTO, user);
 	}
 }
