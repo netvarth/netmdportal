@@ -10,14 +10,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import com.nv.framework.util.text.StringEncoder;
+import com.nv.security.youNeverWait.User;
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.pl.entity.LabBranchTbl;
 import com.nv.youNeverWait.rs.dto.BranchDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
@@ -46,8 +50,31 @@ import com.nv.youNeverWait.user.bl.service.NetMdService;
 public class LabServiceTest {
 	@Autowired
 	private ApplicationContext applicationContext;	
+	@Test
+	public void listfacility(){
+		LabService service =(LabService) applicationContext.getBean("lab.service");
+		try{
+			FilterDTO filter = new FilterDTO();
+			filter.setAsc(true);
+			filter.setCount(10);
+			filter.setFrom(0);
+			ExpressionDTO expr = new ExpressionDTO();
+			expr.setName("branchId");
+			expr.setOperator("eq");
+			expr.setValue("325");
+			List<ExpressionDTO> exp=new ArrayList<ExpressionDTO>();
+			exp.add(expr);
+			filter.setExp(exp);
+			User user=new User();
+			service.getFacilityByFilter(filter, user);
+		}
+		catch(ServiceException e){
 
-
+			System.out.println(e.isDisplayErrMsg());
+			System.out.println(e.getError());
+			System.out.println(e.getParamList());
+		}
+	}
 	@Test
 	public void createUser(){	
 		System.out.println("##########create user################ ");

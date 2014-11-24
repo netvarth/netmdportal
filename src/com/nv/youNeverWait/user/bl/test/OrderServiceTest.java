@@ -24,6 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
+import com.nv.youNeverWait.rs.dto.OrderCountFilterDto;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.OrderTypeDTO;
 import com.nv.youNeverWait.user.bl.service.LabService;
@@ -341,5 +342,29 @@ public class OrderServiceTest {
 			System.out.println(e.getParamList());
 		}
 	}
+	@Test
+	public void getOrderCount(){
+		OrderService service = (OrderService) applicationContext
+				.getBean("order.service");
+		OrderCountFilterDto ocf = new OrderCountFilterDto();
+		ocf.setBranch(340);
+		ocf.setFromDate("02-1-2014");
+		ocf.setToDate("30-4-2014");
+		service.getOrderCountByBranchId(ocf);
+		
+	}
+	@Test
+	public void getOrderCountofLab(){
+		OrderService service = (OrderService) applicationContext
+				.getBean("order.service");
+		OrderCountFilterDto ocf = new OrderCountFilterDto();
+		ocf.setBranch(285);
+		ocf.setFromDate("29-09-2013");
+		ocf.setToDate("30-09-2014");
+		service.getOrderCountFromLab(ocf);
+		
+	}
+	
+	
 
 }
