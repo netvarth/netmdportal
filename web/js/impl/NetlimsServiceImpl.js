@@ -77,4 +77,7 @@ NetlimsServiceImpl.prototype.syncNetlims=function(syncData) {
 	ajaxProcessor.setUrl(constants.SETNETLIMSSYCURL);
 	return ajaxProcessor.post(syncData);
 }
-
+NetlimsServiceImpl.prototype.findOrderCountForLab=function (param) {
+	ajaxProcessor.setUrl(constants.FINDORDERCOUNTFORLABURL);
+	return ajaxProcessor.post(param);
+}

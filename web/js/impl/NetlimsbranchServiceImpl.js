@@ -53,6 +53,7 @@ NetlimsbranchServiceImpl.prototype.findOrderCount=function (param) {
 	ajaxProcessor.setUrl(constants.FINDORDERCOUNTURL);
 	return ajaxProcessor.post(param);
 }
+
 NetlimsbranchServiceImpl.prototype.updateAccBranchNetlims=function(netlimsObj) {
 	//alert(JSON.stringify(netlimsObj));
 	ajaxProcessor.setUrl(constants.UPDATENETLIMSBRCHURL);
