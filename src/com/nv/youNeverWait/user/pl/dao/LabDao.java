@@ -11,10 +11,14 @@ package com.nv.youNeverWait.user.pl.dao;
 import java.util.Date;
 import java.util.List;
 
+import com.nv.security.youNeverWait.User;
 import com.nv.youNeverWait.pl.entity.OrderTransferTbl;
+import com.nv.youNeverWait.rs.dto.BranchFacilityListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
+import com.nv.youNeverWait.rs.dto.FacilityListResponseDTO;
+import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
@@ -24,6 +28,7 @@ import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabResultHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
+import com.nv.youNeverWait.rs.dto.ListResponse;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
@@ -89,5 +94,6 @@ public interface LabDao {
 	public int updateBranchUser(SyncUser user, Integer source_branch_id);
 	public int createBranchUser(SyncUser user, Integer source_branch_id);
 	public UserInfo getUserByReferredUid(int referredUid, int branchId);
+	public ListResponse getFacilityByFilter(FilterDTO filterDTO, User user);
 
 }

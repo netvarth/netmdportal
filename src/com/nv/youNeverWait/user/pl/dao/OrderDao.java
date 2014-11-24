@@ -83,6 +83,8 @@ public interface OrderDao {
 	public ListResponse getByPatientFilter(FilterDTO filterDTO, User user);
 
 	public int getOrderCountByBranchId(OrderCountFilterDto ofc);
+	public int getOrderCountFromLab(OrderCountFilterDto ofc);
+	
 
 	public LoginTbl getUserByNameAndType(String userName, String userType);
 
@@ -93,4 +95,6 @@ public interface OrderDao {
 	 * @return
 	 */
 	public ListResponse getFacilityOrderByFilter(FilterDTO filterDTO, User user);
+
+	public int getOrderCountForFacility(OrderCountFilterDto ocf);
 }
