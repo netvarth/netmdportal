@@ -3,6 +3,7 @@ package com.nv.youNeverWait.pl.entity;
 import java.io.Serializable;
 
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -42,8 +43,12 @@ public class LabFacilityTbl implements Serializable {
 	private LoginTbl loginTbl;
 	
 	//bi-directional many-to-one association to OrderTransferCountTbl
-		@OneToMany(mappedBy="labFacilityTbl")
-		private List<OrderTransferCountTbl> orderTransferCountTbls;
+	@OneToMany(mappedBy="labFacilityTbl")
+	private List<OrderTransferCountTbl> orderTransferCountTbls;
+	//bi-directional many-to-one association to BranchFacilityTbl
+	@OneToMany(mappedBy="labFacilityTbl")
+	private List<BranchFacilityTbl> branchFacilityTbls;
+
 	/**
 	 * 
 	 */
@@ -231,5 +236,26 @@ public class LabFacilityTbl implements Serializable {
 		orderTransferCountTbl.setLabFacilityTbl(null);
 
 		return orderTransferCountTbl;
+	}
+	public List<BranchFacilityTbl> getBranchFacilityTbls() {
+		return this.branchFacilityTbls;
+	}
+
+	public void setBranchFacilityTbls(List<BranchFacilityTbl> branchFacilityTbls) {
+		this.branchFacilityTbls = branchFacilityTbls;
+	}
+
+	public BranchFacilityTbl addBranchFacilityTbl(BranchFacilityTbl branchFacilityTbl) {
+		getBranchFacilityTbls().add(branchFacilityTbl);
+		branchFacilityTbl.setLabFacilityTbl(this);
+
+		return branchFacilityTbl;
+	}
+
+	public BranchFacilityTbl removeBranchFacilityTbl(BranchFacilityTbl branchFacilityTbl) {
+		getBranchFacilityTbls().remove(branchFacilityTbl);
+		branchFacilityTbl.setLabFacilityTbl(null);
+
+		return branchFacilityTbl;
 	}
 }
