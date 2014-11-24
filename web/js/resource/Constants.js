@@ -27,6 +27,7 @@ function Constants() {
 	this.SELECTONEBRANCH = "Select atleast one branch";
 	this.SELECTONEBRANCHONLY = "Select only one branch";
 	this.FINDORDERCOUNTURL="/youNeverWait/netlims/ui/order/count";
+	this.FINDORDERCOUNTFORLABURL="/youNeverWait/netlims/ui/order/countforlab";
 	
 	/*****************-------------netlimsaccount-----------**----*************/
 	this.NETLIMSACCRIBBONURL="/youNeverWait/json/toolbars/netlimsGlobalToolbar.json";
