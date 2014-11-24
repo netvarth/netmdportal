@@ -1979,6 +1979,8 @@ function Branch(name) {
 	this.getAddress = function() {return this.address;}	
 }
 function OrderCountInput() {
+	this.setFacility = function(facility) {this.facility = facility;}
+	this.getFacility = function() {return this.facility;}
 	this.setBranch = function(branch) {this.branch = branch;}
 	this.getBranch = function() {return this.branch;}
 	this.setFromDate = function(fromDate) {this.fromDate = fromDate;}
