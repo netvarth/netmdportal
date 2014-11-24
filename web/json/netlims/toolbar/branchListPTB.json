@@ -2,6 +2,7 @@
 	"buttons":	[		
 		{"name":"view","title":"View"},	
 		{"name":"change","title":"Sync Set"},
-		{"name":"orderCount","title":"Order count"}
+		{"name":"orderCount","title":"Order count"},
+		{"name":"facilityList","title":"Facility List"}
 	]
 }
