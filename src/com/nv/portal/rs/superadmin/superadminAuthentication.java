@@ -146,7 +146,7 @@ ApplicationNameEnum.SuperAdmin.getDisplayName(),
 	 * 
 	 * @return String
 	 */
-	@RequestMapping(value = "getUser", method = RequestMethod.GET)
+	@RequestMapping(value = "user", method = RequestMethod.GET)
 	@ResponseBody
 	public User getUser() {
 
