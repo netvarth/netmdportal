@@ -83,6 +83,10 @@ public interface OrderService {
 
 	public int getOrderCountByBranchId(OrderCountFilterDto ocf);
 
+
+	public int getOrderCountFromLab(OrderCountFilterDto ocf);
+
+
 	/**
 	 * Mani E.V	
 	 * @param user
@@ -97,5 +101,7 @@ public interface OrderService {
 	 * @return
 	 */
 	public ListResponse getFacilityOrderByFilter(FilterDTO filterDTO, User user);
+
+	public int getOrderCountForFacility(OrderCountFilterDto ocf);
 
 }
