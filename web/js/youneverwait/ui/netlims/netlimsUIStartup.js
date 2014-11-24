@@ -5,13 +5,14 @@ function netlimsUIStartup() {
 	this.ptbCreate=$j('#NETLIMSPTBContainer #btn_new_ptb_id');
 	this.ptbView=$j('#NETLIMSPTBContainer #btn_view_ptb_id');
 	this.ptbDelete=$j('#NETLIMSPTBContainer #btn_delete_ptb_id');
+	this.ptbOrderCount=$j('#NETLIMSPTBContainer #btn_orderCount_ptb_id');
 	this.ptbSync=$j('#NETLIMSPTBContainer #btn_change_ptb_id');
 	this.brachlist=$j('#NETLIMSPTBContainer #btn_brannchlist_ptb_id');
 	this.newbranch=$j('#NETLIMSPTBContainer #btn_newbranch_ptb_id');
 	this.errorData = $j('#errorDivData');
 	this.errorHeader = $j('#errorDivHeader');
 	this.netlimsId=userdata.labId;
-	this.pgTableRowClass = this.pgTableName + ' .netlimsIdCol ';
+	this.pgTableRowClass = this.pgTableName + ' .netlimsIdCol ';	
 	this.exp = new ExpressionListDTO();
 	this.netlimsService = new NetlimsServiceImpl();
 	this.listUrl = constants.NETLIMSBRANCHLISTURL;
@@ -88,6 +89,37 @@ netlimsUIStartup.prototype.createNetlimsModal = function(obj) {
 	return newNetlimsUI;
 }
 
+netlimsUIStartup.prototype.createOrderCountModal = function(obj) {
+	var self = this;
+	commonMethodInvoker.removeErrors();
+	createModal(constants.ORDERCOUNTJSON,constants.NEWORDERCOUNTMODAL);		
+	openModalBox(obj,constants.NEWORDERCOUNTMODAL);
+	$j('#'+constants.NEWORDERCOUNTMODAL + ' #orderCount').addClass("newBox");
+	$j('#'+constants.NEWORDERCOUNTMODAL + ' #orderCount').attr("readonly",true);
+	$j('#'+constants.NEWORDERCOUNTMODAL + ' #orderCount').val(0);
+	self.bindOrderCountEvents();
+	return self;
+}
+netlimsUIStartup.prototype.bindOrderCountEvents = function(){
+
+	var self=this;
+	var serviceHandler = self.getNetlimsUIService();
+	$j('#'+constants.NEWORDERCOUNTMODAL + ' #fromDate').datepicker();
+	$j('#'+constants.NEWORDERCOUNTMODAL + ' #toDate').datepicker();
+	$j('#'+constants.NEWORDERCOUNTMODAL + ' #btnCancel').die('click').live('click',function() {
+		$j('#' + constants.NEWORDERCOUNTMODAL).trigger('reveal:close');
+	});
+	$j('#'+constants.NEWORDERCOUNTMODAL + ' #btnSearch').die('click').live('click',function() {
+		var input = new OrderCountInput();
+		input.setBranch(self.getSelectedbranchId(self.pgTableName));
+		input.setFromDate($j('#'+constants.NEWORDERCOUNTMODAL + ' #fromDate').val());
+		input.setToDate($j('#'+constants.NEWORDERCOUNTMODAL + ' #toDate').val());
+		var result = serviceHandler.findOrderCountForLab(input);
+		$j('#'+constants.NEWORDERCOUNTMODAL + ' #orderCount').val(result);
+	});
+	
+}
+
 netlimsUIStartup.prototype.createSyncModal = function(obj,netlimsId) {
 	var self = this;
 	commonMethodInvoker.removeErrors();
@@ -134,7 +166,14 @@ netlimsUIStartup.prototype.bindToolBarEvents = function() {
 			netlimsAccUI.createBranchModal(obj);
 		}	
 	});
-	
+	self.ptbOrderCount.die('click').live('click',function() {
+		removeErrors();
+		var netlimsId=self.getSelectedbranchId(self.pgTableName);
+		if(netlimsId!="") {
+			var obj=$j(this);
+			self.createOrderCountModal(obj,netlimsId);
+		}	
+	});
 	self.ptbDelete.die('click').live('click',function() {
 		removeErrors();
 		var netlimsId=self.getSelectedbranchId(self.pgTableName);
@@ -190,5 +229,24 @@ netlimsUIStartup.prototype.bindEvents = function() {
 	}); 
 }
 
-
+function OrderCountInput() {
+	this.setBranch = function(branch) {
+		this.branch = branch;
+	}
+	this.getBranch = function() {
+		return this.branch;
+	}
+	this.setFromDate = function(fromDate) {
+		this.fromDate = fromDate;
+	}
+	this.getFromDate = function() {
+		return this.fromDate;
+	}
+	this.setToDate = function(toDate) {
+		this.toDate = toDate;
+	}
+	this.getToDate=function() {
+		return this.toDate;
+	}
+}
 
