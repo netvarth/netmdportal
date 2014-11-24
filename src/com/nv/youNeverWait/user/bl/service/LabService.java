@@ -9,9 +9,12 @@ package com.nv.youNeverWait.user.bl.service;
 
 import java.util.Date;
 
+import com.nv.security.youNeverWait.User;
+import com.nv.youNeverWait.rs.dto.BranchFacilityListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
+import com.nv.youNeverWait.rs.dto.FacilityListResponseDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
@@ -21,6 +24,7 @@ import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabOrderHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabResultHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
+import com.nv.youNeverWait.rs.dto.ListResponse;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
@@ -108,5 +112,7 @@ public interface LabService {
 	public ResponseDTO sendMail(MailTransferInfo mailResult);
 	public int processUser(SyncUser user, Integer source_branch_id);
 	public UserInfo getUserByReferredUid(int referredUid, int branchId);
+	public ListResponse getFacilityByFilter(
+			FilterDTO filterDTO, User user);
 	
 }
