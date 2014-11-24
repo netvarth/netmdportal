@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.pl.entity.BranchFacilityTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.FacilityResultTbl;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
@@ -307,6 +308,9 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 		FacilityResultTbl facilityResultTbl = getFacilityResult(netlimsOrderTbl.getId());
 		if(facilityId!=0){
 			LabFacilityTbl labFacilityTbl = getById(LabFacilityTbl.class, facilityId);
+			BranchFacilityTbl branchFacility = new BranchFacilityTbl();
+			branchFacility.setLabFacilityTbl(labFacilityTbl);
+			saveOrUpdate(BranchFacilityTbl.class, branchFacility);
 			if(facilityResultTbl==null)
 				facilityResultTbl=new FacilityResultTbl();
 			facilityResultTbl.setLabFacilityTbl(labFacilityTbl);
@@ -421,6 +425,10 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 			orderTransferCountObj.setDate(transferDate);
 			LabBranchTbl labBranchTbl = getById(LabBranchTbl.class, branchId);
 			orderTransferCountObj.setLabBranchTbl(labBranchTbl);
+			if(orderResult.getOrder().getFacilityGlobalId()!=0){
+			LabFacilityTbl facility = getById(LabFacilityTbl.class, orderResult.getOrder().getFacilityGlobalId());
+			orderTransferCountObj.setLabFacilityTbl(facility);
+			}
 		}
 		orderTransferCount = orderTransferCountObj.getOrderCount();
 		if(netlimsOrderTbl == null){

@@ -461,7 +461,43 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		return order;
 	}
 
+	public int getOrderCountFromLab(OrderCountFilterDto ocf){
+		Long orderCount;
 
+		SimpleDateFormat df = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITHOUT_TIME);
+		Date fromDate;
+		try {
+			fromDate = df.parse(ocf.getFromDate());
+		} catch (ParseException e) {
+			e.printStackTrace();
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDateFormat);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}	
+		Date toDate;
+		try {
+			toDate = df.parse(ocf.getToDate());
+		} catch (ParseException e) {
+			e.printStackTrace();
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDateFormat);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		javax.persistence.Query query = em.createQuery(Query.GET_LAB_ORDER_COUNT);
+		System.out.println(ocf.getBranch().intValue());
+		query.setParameter("param1", ocf.getBranch());
+		query.setParameter("param2", fromDate);
+		query.setParameter("param3", toDate);
+		orderCount = (Long)query.getSingleResult();
+		System.out.println("ordercount--"+orderCount);
+		if(orderCount==null)
+			return 0;
+		return orderCount.intValue();
+	}
+	
 	public int getOrderCountByBranchId(OrderCountFilterDto ocf) {
 		Long orderCount;
 
@@ -488,7 +524,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			throw se;
 		}
 		javax.persistence.Query query = em.createQuery(Query.GET_ORDER_COUNT);
-		query.setParameter("param1", ocf.getBranch().intValue());
+		query.setParameter("param1", ocf.getBranch());
 		query.setParameter("param2", fromDate);
 		query.setParameter("param3", toDate);
 		orderCount = (Long)query.getSingleResult();
@@ -497,7 +533,43 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			return 0;
 		return orderCount.intValue();
 	}
+	
+	public int getOrderCountForFacility(OrderCountFilterDto ocf){
+		Long orderCount;
 
+		SimpleDateFormat df = new SimpleDateFormat(
+				Constants.DATE_FORMAT_WITHOUT_TIME);
+		Date fromDate;
+		try {
+			fromDate = df.parse(ocf.getFromDate());
+		} catch (ParseException e) {
+			e.printStackTrace();
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDateFormat);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}	
+		Date toDate;
+		try {
+			toDate = df.parse(ocf.getToDate());
+		} catch (ParseException e) {
+			e.printStackTrace();
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidDateFormat);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		javax.persistence.Query query = em.createQuery(Query.GET_FACILITY_ORDER_COUNT);
+		query.setParameter("param1", ocf.getFacility());
+		query.setParameter("param2", fromDate);
+		query.setParameter("param3", toDate);
+		orderCount = (Long)query.getSingleResult();
+		System.out.println("ordercount--"+orderCount);
+		if(orderCount==null)
+			return 0;
+		return orderCount.intValue();
+	}
+	
 	@Override
 	public ListResponse getByPatientFilter(FilterDTO filterParam, User user) {
 		ListResponse response = new ListResponse();

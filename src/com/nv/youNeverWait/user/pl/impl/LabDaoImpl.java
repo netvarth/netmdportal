@@ -17,24 +17,29 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nv.framework.util.text.StringEncoder;
+import com.nv.security.youNeverWait.User;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ActionNameEnum;
+import com.nv.youNeverWait.pl.entity.BranchFacilityTbl;
 import com.nv.youNeverWait.pl.entity.BranchStatusEnum;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.FrequencyEnum;
 import com.nv.youNeverWait.pl.entity.LabBranchSystemInfoTbl;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
+import com.nv.youNeverWait.pl.entity.LabFacilityTbl;
 import com.nv.youNeverWait.pl.entity.LabHealthMonitorTbl;
 import com.nv.youNeverWait.pl.entity.LabPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.LabStatusEnum;
 import com.nv.youNeverWait.pl.entity.LabTbl;
 import com.nv.youNeverWait.pl.entity.LabUserTbl;
 import com.nv.youNeverWait.pl.entity.LoginTbl;
+import com.nv.youNeverWait.pl.entity.NetlimsOrderTbl;
 import com.nv.youNeverWait.pl.entity.UserTbl;
 import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
@@ -52,21 +57,29 @@ import com.nv.youNeverWait.pl.entity.SuperAdminTbl;
 import com.nv.youNeverWait.pl.entity.SyncFreqTypeEnum;
 import com.nv.youNeverWait.pl.entity.UserStatusEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
+import com.nv.youNeverWait.rs.dto.BranchFacilityListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
+import com.nv.youNeverWait.rs.dto.ExpressionDTO;
+import com.nv.youNeverWait.rs.dto.FacilityDTO;
+import com.nv.youNeverWait.rs.dto.FacilityInfo;
+import com.nv.youNeverWait.rs.dto.FacilityListResponseDTO;
+import com.nv.youNeverWait.rs.dto.FilterDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchSystemInfoDetails;
 import com.nv.youNeverWait.rs.dto.LabResultHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
+import com.nv.youNeverWait.rs.dto.ListResponse;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabActivationResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabResponseDTO;
+import com.nv.youNeverWait.rs.dto.Order;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
@@ -86,12 +99,46 @@ import com.nv.youNeverWait.rs.dto.UserInfo;
 import com.nv.youNeverWait.rs.dto.UserInfoDetail;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.LabDao;
+import com.nv.youNeverWait.util.filter.core.Filter;
+import com.nv.youNeverWait.util.filter.core.FilterFactory;
+import com.nv.youNeverWait.util.filter.core.QueryBuilder;
+import com.nv.youNeverWait.util.filter.core.QueryBuilderFactory;
 
 /**
  * @author Mani E.V
  *
  */
 public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
+	private QueryBuilderFactory queryBuilderFactory;
+	private FilterFactory filterFactory;
+
+	/**
+	 * @return the queryBuilderFactory
+	 */
+	public QueryBuilderFactory getQueryBuilderFactory() {
+		return queryBuilderFactory;
+	}
+
+	/**
+	 * @param queryBuilderFactory the queryBuilderFactory to set
+	 */
+	public void setQueryBuilderFactory(QueryBuilderFactory queryBuilderFactory) {
+		this.queryBuilderFactory = queryBuilderFactory;
+	}
+
+	/**
+	 * @return the filterFactory
+	 */
+	public FilterFactory getFilterFactory() {
+		return filterFactory;
+	}
+
+	/**
+	 * @param filterFactory the filterFactory to set
+	 */
+	public void setFilterFactory(FilterFactory filterFactory) {
+		this.filterFactory = filterFactory;
+	}
 
 	/**
 	 * 
@@ -337,6 +384,30 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		response.setSuccess(true);
 		return response;
 	}
+	
+	/*@Override
+	@Transactional
+	public BranchFacilityListResponseDTO listFacility(int branchId){
+		BranchFacilityListResponseDTO response = new BranchFacilityListResponseDTO();
+		ArrayList<LabFacilityTbl> labFacilityList = new ArrayList<LabFacilityTbl>();
+		ArrayList<FacilityDTO> facilityList = new ArrayList<FacilityDTO>();
+		javax.persistence.Query query = em.createNativeQuery(Query.GET_FACILITY_LIST);
+		//query.setParameter("param1", 325);
+		labFacilityList = (ArrayList<LabFacilityTbl>) executeQuery(LabFacilityTbl.class, query);	
+		for(Object labFacilityObj:labFacilityList){
+			System.out.println(labFacilityObj.getName());
+		}
+//		for(LabFacilityTbl labFacilityObj:labFacilityList){
+//			System.out.println(labFacilityObj.getName());
+//			FacilityDTO facility = new FacilityDTO();
+//			facility.setName(labFacilityObj.getName());
+//			facility.setAddress(labFacilityObj.getAddress());
+//			facilityList.add(facility);
+//		}
+		response.setLab(facilityList);
+		
+		return response;
+	}*/
 
 	/**
 	 * Method which clears mac Id
@@ -2937,6 +3008,37 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		query.setParameter("param1", referredUid);
 		query.setParameter("param2", branchId);
 		return executeUniqueQuery(LabUserTbl.class, query);
+	}
+
+	@Override
+	public ListResponse getFacilityByFilter(FilterDTO filterParam, User user) {
+		ListResponse response = new ListResponse();
+		//get queryBuilder for test from builder factory
+		QueryBuilder queryBuilder = queryBuilderFactory.getQueryBuilder(Constants.FACILITY);
+		for (ExpressionDTO exp : filterParam.getExp()) {
+			//get filter from filter factory by setting expression name and value to filter
+			Filter filter = filterFactory.getFilter(exp);
+			queryBuilder.addFilter(filter);
+		}
+		//build query
+		TypedQuery<LabFacilityTbl> q =   queryBuilder.buildQuery(filterParam.isAsc(),
+				filterParam.getFrom(),filterParam.getCount()); 
+		Long count = queryBuilder.getCount();
+		List<FacilityDTO> facilities = new ArrayList<FacilityDTO>();
+		DateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT);
+		List<LabFacilityTbl> fac = queryBuilder.executeQuery(q);
+		for(LabFacilityTbl facilityTbl: fac){
+			FacilityDTO facility= new FacilityDTO();
+			facility.setId(facilityTbl.getId());
+			facility.setName(facilityTbl.getName());
+			facility.setPhone(facilityTbl.getPhone());
+			facility.setAddress(facilityTbl.getAddress());
+			
+			facilities.add(facility);
+		}
+		response.setList(facilities);
+		response.setCount(count);
+		return response;
 	}
 
 }
