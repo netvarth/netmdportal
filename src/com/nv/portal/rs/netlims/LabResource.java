@@ -26,7 +26,10 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
+import com.nv.youNeverWait.rs.dto.BranchFacilityListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
+import com.nv.youNeverWait.rs.dto.ExpressionDTO;
+import com.nv.youNeverWait.rs.dto.FacilityListResponseDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
@@ -39,6 +42,7 @@ import com.nv.youNeverWait.rs.dto.LabListResponseDTO;
 import com.nv.youNeverWait.rs.dto.LabOrderHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabResultHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
+import com.nv.youNeverWait.rs.dto.ListResponse;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.MailTransferInfo;
@@ -67,7 +71,18 @@ import com.nv.youNeverWait.user.bl.service.LogService;
 public class LabResource {
 	private LabService labService;
 	private LogService logService;
-
+	
+	/*
+	 * List facility
+	 */
+	@RequestMapping(value = "facility/list", method = RequestMethod.POST)
+	@ResponseBody
+	public ListResponse listFacility(@RequestBody FilterDTO filterDTO)throws ServiceException, RuntimeException{
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		HttpServletRequest req = t.getRequest();
+		User user=(User) req.getSession().getAttribute("user");	
+		return labService.getFacilityByFilter(filterDTO,user);
+	}
 	/**
 	 * Shows NetLims Detail page
 	 * 

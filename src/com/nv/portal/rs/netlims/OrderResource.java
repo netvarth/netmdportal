@@ -108,10 +108,37 @@ public class OrderResource extends ServiceExceptionHandler{
 	@RequestMapping(value = "/count", method = RequestMethod.POST)
 	@ResponseBody
 	public int getOrderCount(@RequestBody OrderCountFilterDto ocf){
-		System.out.println(ocf.getFromDate());
 		return orderService.getOrderCountByBranchId(ocf);
 		
 	}
+	/**
+	 * Method to get count of orders transferred from a lab to the portal
+	 */
+	/**
+	 * @param branchId
+	 * @return Order
+	 */
+	@RequestMapping(value = "/countforlab", method = RequestMethod.POST)
+	@ResponseBody
+	public int getOrderCountFromLab(@RequestBody OrderCountFilterDto ocf){
+		return orderService.getOrderCountFromLab(ocf);
+		
+	}
+	
+	/**
+	 * Method to get count of orders transferred for a facility
+	 */
+	/**
+	 * @param branchId
+	 * @return Order
+	 */
+	@RequestMapping(value = "/countforFacility", method = RequestMethod.POST)
+	@ResponseBody
+	public int getOrderCountForFacility(@RequestBody OrderCountFilterDto ocf){
+		return orderService.getOrderCountForFacility(ocf);
+		
+	}
+
 
 	/**
 	 * Method performed for nomenclature of order types
