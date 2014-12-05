@@ -16,9 +16,7 @@ import java.util.List;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
+import com.nv.youNeverWait.util.filter.core.JsonUtil;
 
 /**
  *
@@ -124,38 +122,13 @@ public class OrderTransfer {
 	}
 	/**
 	 * @param orderDetails the orderDetails to set
-	 * @throws IOException 
-	 * @throws JsonMappingException 
-	 * @throws JsonGenerationException 
 	 */
 	public void setOrderDetails(Object orderDetails) {
-		ObjectMapper maper = new ObjectMapper();
-		String jsonRequest = null;
-		try {
-			jsonRequest = maper.writeValueAsString(orderDetails);
-		} catch (Exception e) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.OrderTransferException);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		this.orderDetails = jsonRequest;
-
+		this.orderDetails = JsonUtil.getString(orderDetails);
 	}
 	
 	public void setTransferOrderDetails(String order) {
-		ObjectMapper maper = new ObjectMapper();
-		Object orderDetails;
-		try {
-			orderDetails = maper.readValue(order, Object.class);
-		} catch (Exception e) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.OrderTransferException);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		this.orderDetails = orderDetails;
-
+		this.orderDetails = JsonUtil.getObject(order);
 	}
 	
 
