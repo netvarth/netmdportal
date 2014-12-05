@@ -26,7 +26,7 @@ public class OrderTbl implements Serializable {
 	@Column(name="local_order_uid", nullable=false, length=45)
 	private String localOrderUid;
 
-	@Column(nullable=false, length=45)
+	@Column(nullable=false)
 	private String result;
 
     @Temporal( TemporalType.TIMESTAMP)
