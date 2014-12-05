@@ -10,13 +10,10 @@
  */
 package com.nv.youNeverWait.rs.dto;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.nv.youNeverWait.util.filter.core.JsonUtil;
 
 /**
  *
@@ -52,11 +49,9 @@ public class SeedDataDTO {
 	/**
 	 * @param result the result to set
 	 */
-	public void setResult(Object result) throws JsonGenerationException, JsonMappingException, IOException {
-		ObjectMapper maper = new ObjectMapper();
-		String jsonRequest = maper.writeValueAsString(result);
-		this.result = jsonRequest;
-		}
+	public void setResult(Object result) {
+		this.result = JsonUtil.getString(result);
+	}
 
 	/**
 	 * @param uid the uid to set
@@ -118,7 +113,7 @@ public class SeedDataDTO {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
+
 	/**
 	 * @return the result
 	 */
@@ -185,6 +180,6 @@ public class SeedDataDTO {
 	public boolean isActive() {
 		return active;
 	}
-	
-			
+
+
 }
