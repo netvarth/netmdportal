@@ -68,7 +68,7 @@ import com.nv.youNeverWait.user.bl.service.LogService;
  */
 @Controller
 @RequestMapping("ui/lab/")
-public class LabResource {
+public class LabResource extends ServiceExceptionHandler{
 	private LabService labService;
 	private LogService logService;
 	
@@ -755,7 +755,7 @@ public class LabResource {
 	@RequestMapping(value = "transferResult", method = RequestMethod.POST)
 	@ResponseBody
 	public ResultTransferResponseDTO transferResult(
-			@RequestBody ResultTransferDTO resultTranferDto) {
+			@RequestBody ResultTransferDTO resultTranferDto) throws RuntimeException {
 		ResultTransferResponseDTO response = new ResultTransferResponseDTO();
 		try {
 			response = labService.transferResult(resultTranferDto);
