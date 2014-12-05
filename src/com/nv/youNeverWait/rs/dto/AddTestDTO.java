@@ -10,10 +10,8 @@
  */
 package com.nv.youNeverWait.rs.dto;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import java.io.IOException;
+import com.nv.youNeverWait.util.filter.core.JsonUtil;
+
 import java.util.List;
 /**
  *
@@ -130,10 +128,8 @@ public class AddTestDTO {
 		return result;
 	}
 
-	public void setResult(Object result) throws JsonGenerationException, JsonMappingException, IOException {
-		ObjectMapper maper = new ObjectMapper();
-		String jsonRequest = maper.writeValueAsString(result);		
-		this.result = jsonRequest;		
+	public void setResult(Object result){	
+		this.result = JsonUtil.getString(result);		
 	}
 
 	public float getStandardRate() {
