@@ -42,9 +42,11 @@ function Constants(){
 	this.BRANCHORDERLISTURL="/youNeverWait/superadmin/ui/superAdmin/orderList";
 	this.BRANCHLISTJSONURL="/youNeverWait/json/netlims/branchList.json";
 	this.FACILITYLISTJSONURL="/youNeverWait/json/netlims/facilityList.json";
+	this.FACILITYORDERLISTJSONURL="/youNeverWait/json/netlims/facilityOrderList.json";
 	this.ONLINERESULTSLISTJSONURL="/youNeverWait/json/netlims/orderTable.json";
 	this.BRANCHLISTURL="/youNeverWait/netlims/ui/lab/branchList";
 	this.FACILITYLISTURL="/youNeverWait/netlims/ui/lab/facility/list";
+	this.FACILITYORDERLISTURL="/youNeverWait/netlims/ui/order/facility/orders/getByFilter";
 	this.VIEWBRANCHPAGEURL="/youNeverWait/json/netlims/branch.json";
 	this.GETBRANCHURL="/youNeverWait/netlims/ui/lab/viewBranch/";
 	this.DELETEBRANCHURL="/youNeverWait/netlims/ui/lab/deleteBranch";
@@ -374,6 +376,7 @@ function BranchListUI(){
 	this.orderButton = this.branchForm + " #btnShowOrders";
 	this.fromDate = this.branchForm + " #fromDate";
 	this.toDate = this.branchForm + " #toDate";
+	this.orderListPTB = "#branchListPTBContainer #btn_orderList_ptb_id";
 	this.viewBranchPTB = "#branchListPTBContainer #btn_view_ptb_id";
 	this.orderCountPTB = "#branchListPTBContainer #btn_ordercount_ptb_id";
 	this.syncSetupPTB = "#branchListPTBContainer #btn_change_ptb_id";
@@ -843,6 +846,7 @@ function BranchListUI(){
 }
 function FacilityList(){
 	this.orderCountPTB = "#facilityListPTBContainer #btn_ordercount_ptb_id";
+	this.orderListPTB = "#facilityListPTBContainer #btn_orderlist_ptb_id";
 	this.facility = "facility";
 	this.facilityListPTBCaption="facilityList";
 	this.pgTableContainer = "#facilityListTableCont";
@@ -908,6 +912,146 @@ function FacilityList(){
 				pageHandler.generateModalPage(constants.ORDERCOUNTPAGEURL,constants.ORDERCOUNTMODALNAME);
 				pageHandler.openPageAsModal($(this), constants.ORDERCOUNTMODALNAME);
 				self.bindOrderCountEvents();	
+			}	
+		});
+		$(self.orderListPTB).die('click').live('click',function() {
+			errorHandler.removeErrors();
+			var facilityId=self.getSelectedfacilityId(self.pgTableName);
+			if(facilityId!="") {
+				self.setCurrentFacilityId(facilityId);
+				orderList = new OrderList();
+				orderList.init(facilityId);
+			}	
+		});
+		this.bindOrderCountEvents = function(){
+		var self=this;
+		$('#'+constants.ORDERCOUNTMODALNAME + ' #fromDate').datepicker();
+		$('#'+constants.ORDERCOUNTMODALNAME + ' #toDate').datepicker();
+		$('#'+constants.ORDERCOUNTMODALNAME + ' #btnCancel').die('click').live('click',function() {
+			$('#' + constants.ORDERCOUNTMODALNAME).trigger('reveal:close');
+		});
+		$('#'+constants.ORDERCOUNTMODALNAME + ' #btnSearch').die('click').live('click',function() {
+			var input = new OrderCountInput();
+			input.setFacility(self.getCurrentFacilityId());
+			input.setFromDate($('#'+constants.ORDERCOUNTMODALNAME + ' #fromDate').val());
+			input.setToDate($('#'+constants.ORDERCOUNTMODALNAME + ' #toDate').val());
+			
+			var result = query.findOrderCountForFacility(input);
+			
+			$('#'+constants.ORDERCOUNTMODALNAME + ' #orderCount').val(result);
+		});
+	}
+	}
+	this.getSelectedfacilityId = function(){
+		var self =this;
+		var facilityId="";
+		if($(this.pgTableName).dataTable().fnGetData().length>0) {
+			var selfacility = $(self.pgTableName + ' tbody tr[selected]');
+			if(selfacility.length==0){
+				errorHandler.createServerError(self.errorHeader,self.errorData, constants.SELECTONEFACILITY);
+			} else if(selfacility.length>1) 
+				errorHandler.createServerError(self.errorHeader,self.errorData, constants.SELECTONEFACILITYONLY);
+			else
+				facilityId=selfacility.attr('id');
+		}
+		return facilityId;
+	}
+}
+function OrderList(){
+	this.orderCountPTB = "#facilityListPTBContainer #btn_ordercount_ptb_id";
+	this.pgTableContainer = "#orderListTableCont";
+	this.pgTableName=this.pgTableContainer + " #orders";
+	this.facility = "facility";
+	this.facilityListPTBCaption="facilityList";
+	this.pgTableRowClass=".facilityCol";
+	this.exp = new ExpressionListDTO();
+	this.listUrl =constants.FACILITYORDERLISTURL;
+	this.tableNavigator = new DataTableNavigator(this.pgTableName,this.listUrl,this.pgTableContainer,this,this.exp);
+	this.setCurrentFacilityId=function(facilityId){this.selectedFacilityId = facilityId};
+	this.setCurrentFacilityList = function(facilityList) {this.facilityList=facilityList};
+	this.getCurrentFacilityList = function(){return this.facilityList};
+	this.setCurrentBranchId = function(branchId) {this.branchId=branchId};
+	this.getCurrentFacilityId=function(){return this.selectedFacilityId};
+	this.getCurrentBranchId = function(){return this.branchId};
+	this.init=function(facilityId){
+		this.setCurrentFacilityId(facilityId);
+		$(constants.PTBCONTAINER).empty().html('');
+		$(constants.PAGETITLE).empty().html("Order List");
+		dataTableProcessor.create(this.pgTableName,constants.ONLINERESULTSLISTJSONURL,constants.CONTAINER);
+		dataTableProcessor.setCustomTable(this.pgTableName);
+		var expList=new ExpressionListDTO();
+		var expr = new ExpressionDTO("facilityId",facilityId,"eq");
+		expList.add(expr);
+		this.tableNavigator.setExp(expList);
+		this.tableNavigator.list();
+	//	var ptbProcessor = new PageToolBarProcessor();
+	//	ptbProcessor.create(this.facilityListPTBCaption, constants.FACILITYLISTPTBJSONURL);
+	//	this.bindEvents();
+	}
+	this.setTableValues = function(tableObj, orderResult) {
+		$(tableObj).dataTable().fnClearTable();
+		if(orderResult.list) {
+			if(orderResult.list.length>0) {			
+				$(orderResult.list).each(function(index, order) {
+					var patient=order.patient;
+					var createdOn=order.createdOn;
+					var paymentStatus=order.orderStatus
+					var branchId = order.branchId;
+					if(order.headerData!=null && order.headerData!="") {
+						var header = $.parseJSON(order.headerData).header;
+						var ageheader = header.age.split("-");
+						var age="";
+						var age_year = "";
+						var age_month = "";
+						var age_day = "";
+						if(ageheader[0]!="" && ageheader[0]!=undefined)
+							age_year = ageheader[0] + "Y";
+						if(ageheader[1]!="" && ageheader[1]!=undefined)
+							age_month = ageheader[1] + "M";
+						if(ageheader[2]!="" && ageheader[2]!=undefined)
+							age_day = ageheader[2] + "D";
+						age = age_year + age_month + age_day;
+					var rowData=$(tableObj).dataTable().fnAddData([order.uid, header.patientName, age, createdOn,header.collectedAt,header.referral, order.branchName]);
+					var row=$(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+					$(row).children("td:nth-child(9)").attr("class","column-2");
+					$(row).attr('id',order.id + "_" + branchId );
+					$(row).children("td:nth-child(1)").attr("class","orderIdCol Ustyle");
+					}
+				});
+			}		
+		}
+	}		
+	this.bindEvents = function(){
+		
+		var self = this;
+		$(self.pgTableName + ' tbody tr').die('click').live('click',function(){		
+			if($(this).attr('selected')) {
+				$(this).removeAttr('selected');
+				$(this).removeAttr('style');
+			} else {	
+				$(this).attr('selected','selected');
+				$(this).attr('style','background:#DCDCDC;');
+			}	
+			errorHandler.removeErrors();
+		});	
+	
+		$(self.orderCountPTB).die('click').live('click',function() {
+			errorHandler.removeErrors();
+			var facilityId=self.getSelectedfacilityId(self.pgTableName);
+			if(facilityId!="") {
+				self.setCurrentFacilityId(facilityId);
+				pageHandler.generateModalPage(constants.ORDERCOUNTPAGEURL,constants.ORDERCOUNTMODALNAME);
+				pageHandler.openPageAsModal($(this), constants.ORDERCOUNTMODALNAME);
+				self.bindOrderCountEvents();	
+			}	
+		});
+		$(self.orderListPTB).die('click').live('click',function() {
+			errorHandler.removeErrors();
+			var facilityId=self.getSelectedfacilityId(self.pgTableName);
+			if(facilityId!="") {
+				self.setCurrentFacilityId(facilityId);
+				orderList = new OrderList();
+				orderList.init(facilityId);
 			}	
 		});
 		this.bindOrderCountEvents = function(){
