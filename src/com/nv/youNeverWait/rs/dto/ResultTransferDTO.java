@@ -5,6 +5,8 @@
  */
 package com.nv.youNeverWait.rs.dto;
 
+import com.nv.youNeverWait.util.filter.core.JsonUtil;
+
 
 /**
  * @author Asha Chandran
@@ -14,10 +16,11 @@ public class ResultTransferDTO {
 	private HeaderDTO header;
 	private int sourceLabId;
 	private int destinationLabId;
-	private int sourceBranchId;
+	private int sourceLabBranchId;
 	private int destinationBranchId;
 	private String result;
 	private String orderUid;
+	private String testUId;
 	
 	
 	/**
@@ -45,18 +48,6 @@ public class ResultTransferDTO {
 		this.destinationLabId = destinationLabId;
 	}
 	/**
-	 * @return the sourceBranchId
-	 */
-	public int getSourceBranchId() {
-		return sourceBranchId;
-	}
-	/**
-	 * @param sourceBranchId the sourceBranchId to set
-	 */
-	public void setSourceBranchId(int sourceBranchId) {
-		this.sourceBranchId = sourceBranchId;
-	}
-	/**
 	 * @return the destinationBranchId
 	 */
 	public int getDestinationBranchId() {
@@ -77,8 +68,8 @@ public class ResultTransferDTO {
 	/**
 	 * @param result the result to set
 	 */
-	public void setResult(String result) {
-		this.result = result;
+	public void setResult(Object result) {
+		this.result = JsonUtil.getString(result);
 	}
 	/**
 	 * @return the orderUid
@@ -103,6 +94,30 @@ public class ResultTransferDTO {
 	 */
 	public void setHeader(HeaderDTO header) {
 		this.header = header;
+	}
+	/**
+	 * @return the sourceLabBranchId
+	 */
+	public int getSourceLabBranchId() {
+		return sourceLabBranchId;
+	}
+	/**
+	 * @param sourceLabBranchId the sourceLabBranchId to set
+	 */
+	public void setSourceLabBranchId(int sourceLabBranchId) {
+		this.sourceLabBranchId = sourceLabBranchId;
+	}
+	/**
+	 * @return the testUId
+	 */
+	public String getTestUId() {
+		return testUId;
+	}
+	/**
+	 * @param testUId the testUId to set
+	 */
+	public void setTestUId(String testUId) {
+		this.testUId = testUId;
 	}
 	
 
