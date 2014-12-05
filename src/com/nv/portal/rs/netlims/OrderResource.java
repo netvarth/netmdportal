@@ -51,7 +51,7 @@ public class OrderResource extends ServiceExceptionHandler{
 	private OrderService orderService;
 
 	/**
-	 * for listing orders
+	 * for listing orders while facility login
 	 * @param filterDTO
 	 * @return OrderListResponseDTO
 	 * @throws ServiceException
@@ -69,6 +69,21 @@ public class OrderResource extends ServiceExceptionHandler{
 		loginExp.setOperator("eq");
 		loginExp.setValue(Integer.toString(loginId));
 		filterDTO.getExp().add(loginExp);
+		return orderService.getFacilityOrderByFilter(filterDTO,user);
+	}
+	/**
+	 * for listing orders of facilities in corporate login
+	 * @param filterDTO
+	 * @return OrderListResponseDTO
+	 * @throws ServiceException
+	 * @throws RuntimeException
+	 */
+	@RequestMapping(value = "/facility/orders/getByFilter", method = RequestMethod.POST)
+	@ResponseBody
+	public ListResponse listOrdersUnderFacility(@RequestBody FilterDTO filterDTO)throws ServiceException, RuntimeException{
+		ServletRequestAttributes t = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		HttpServletRequest req = t.getRequest();
+		User user=(User) req.getSession().getAttribute("user");	
 		return orderService.getFacilityOrderByFilter(filterDTO,user);
 	}
 	@RequestMapping(value = "/getByFilter", method = RequestMethod.POST)
