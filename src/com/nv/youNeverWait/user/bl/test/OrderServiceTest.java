@@ -364,7 +364,17 @@ public class OrderServiceTest {
 		service.getOrderCountFromLab(ocf);
 		
 	}
-	
+	@Test
+	public void getOrderCountForFacility(){
+		OrderService service = (OrderService) applicationContext
+				.getBean("order.service");
+		OrderCountFilterDto ocf = new OrderCountFilterDto();
+		ocf.setBranch(285);
+		ocf.setFromDate("29-09-2013");
+		ocf.setToDate("30-09-2014");
+		service.getOrderCountForFacility(ocf);
+		
+	}
 	
 
 }
