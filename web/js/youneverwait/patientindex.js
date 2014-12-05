@@ -244,7 +244,12 @@ function PatientHome () {
 		$(this.ribbonAppointments).trigger('click');
 	}
 	this.getPatientId = function() {return $(constants.PATIENTSELECTCONTROLNAME).val().split("_")[0];}
-	this.getPatientEmail = function() {return $(constants.PATIENTSELECTCONTROLNAME).val().split("_")[1];}
+	this.getPatientEmail = function() {
+        if($(constants.PATIENTSELECTCONTROLNAME).val()!="" && $(constants.PATIENTSELECTCONTROLNAME).val()!=null)
+            return $(constants.PATIENTSELECTCONTROLNAME).val().split("_")[1];
+        else
+           	return $('#userName').html();
+    }
 	this.getSelectedPatient = function() {return $(constants.PATIENTSELECTCONTROLNAME + " :selected").text().split(" ")[0];	}
 	this.getSelectedPatientName = function() {return $(constants.PATIENTSELECTCONTROLNAME + " :selected").text();}
 	this.bindEvents = function() {
