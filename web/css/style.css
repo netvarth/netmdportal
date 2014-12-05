@@ -1460,6 +1460,8 @@ a.btn_email{background:url(../images/icon/ptb/email.png) no-repeat;}
 a.btn_collectioncharge{background:url(../images/icon/ptb/collect.png) no-repeat;}
 a.btn_home{background:url(../images/icon/ptb/home.png) no-repeat;}
 a.btn_setup{background:url(../images/icon/ptb/pagesetting.png) no-repeat;}
+a.btn_facilityList{background:url(../images/icon/ptb/list.png) no-repeat;}
+a.btn_orderList{background:url(../images/icon/ptb/list.png) no-repeat;}
 a.btn_orderCount{background:url(../images/icon/ptb/ordercount.png) no-repeat;}
 .stdbtn { 
 	font-weight: bold; padding: 7px 10px; border: 1px solid #ccc; background: #eee url(../images/buttons.png) repeat-x top left; color: #333; 
@@ -1712,6 +1714,7 @@ width:100px;
 #togglemenuleft a.toggle { background: url(../images/toggle.png) no-repeat 0 -25px; text-align: left; }
 
 .shortcuts { list-style: none; padding:0 0 20px 0;}
+
 .shortcuts li { 
 	float: left; margin-right: 50px; margin-bottom: 40px; width: 90px; height: 60px; background: #eee; 
 	padding: 10px; -moz-border-radius: 2px; -webkit-border-radius: 2px;  border-radius: 2px; position: relative; 
