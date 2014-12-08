@@ -64,7 +64,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 	public ResponseDTO createTest(AddTestDTO testDTO) {
 		ResponseDTO response = new ResponseDTO();
 		TestTbl testTbl = new TestTbl();
-			
+
 		String testName = testDTO.getName().trim().replaceAll(" +", " ");
 		TestTbl test = getTestTblByName(testName.toUpperCase());
 		if(test!=null){
@@ -120,7 +120,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 		response.setSuccess(true);
 		return response;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see com.nv.youNeverWait.user.pl.dao.TestDao#updateTest(com.nv.youNeverWait.rs.dto.AddTestDTO)
 	 */
@@ -225,25 +225,25 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 				}					
 			}
 		}
-		
-//		TestDTO testDto = new TestDTO();
-//		testDto.setUid(Constants.Test+testTbl.getUid());
-//		testDto.setName(testTbl.getTestName());
-//		testDto.setAbbreviation(testTbl.getAbbreviation());
-//		testDto.setGenericName(testTbl.getGenericName());
-//		testDto.setInformaticValue(testTbl.getInformaticValues());
-//		testDto.setRemarks(testTbl.getRemarks());
-//		testDto.setResult(testTbl.getResult());
-//		testDto.setMinTimeRequired(testTbl.getMinTimeRequired());
-//		testDto.setUploadStatus(testTbl.getUploadStatus());
-//		if(testRateTbl!=null)
-//			testDto.setStandardRate(testRateTbl.getStandardRate());			
-//		testDto.setTestSpecimen(testSpecimens);
-//		response.setTest(testDto);
+
+		//		TestDTO testDto = new TestDTO();
+		//		testDto.setUid(Constants.Test+testTbl.getUid());
+		//		testDto.setName(testTbl.getTestName());
+		//		testDto.setAbbreviation(testTbl.getAbbreviation());
+		//		testDto.setGenericName(testTbl.getGenericName());
+		//		testDto.setInformaticValue(testTbl.getInformaticValues());
+		//		testDto.setRemarks(testTbl.getRemarks());
+		//		testDto.setResult(testTbl.getResult());
+		//		testDto.setMinTimeRequired(testTbl.getMinTimeRequired());
+		//		testDto.setUploadStatus(testTbl.getUploadStatus());
+		//		if(testRateTbl!=null)
+		//			testDto.setStandardRate(testRateTbl.getStandardRate());			
+		//		testDto.setTestSpecimen(testSpecimens);
+		//		response.setTest(testDto);
 		response.setSuccess(true);
 		return response;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see com.nv.youNeverWait.user.pl.dao.TestDao#deleteTest(java.lang.String)
 	 */
@@ -251,7 +251,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 	@Transactional
 	public DeleteTestResponseDTO deleteTest(String uid) {
 		DeleteTestResponseDTO response = new DeleteTestResponseDTO();
-		
+
 		TestTbl testTbl = getByUid(TestTbl.class,Integer.parseInt(uid));
 		if(testTbl==null){
 			ServiceException se =new ServiceException(ErrorCodeEnum.InvalidTest);
@@ -259,13 +259,13 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-				
-			List<TestSpecimenTbl> testSpecimenList = getTestSpecimen(Integer.parseInt(uid));
-			for (TestSpecimenTbl testSpecimenTbl : testSpecimenList) {
-				delete(testSpecimenTbl);
-			}			
-			delete(testTbl);
-		
+
+		List<TestSpecimenTbl> testSpecimenList = getTestSpecimen(Integer.parseInt(uid));
+		for (TestSpecimenTbl testSpecimenTbl : testSpecimenList) {
+			delete(testSpecimenTbl);
+		}			
+		delete(testTbl);
+
 		response.setUid(uid);
 		response.setSuccess(true);
 		return response;
@@ -278,46 +278,46 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 	@Transactional
 	public ViewTestResponseDTO viewTest(String uid) {
 		ViewTestResponseDTO  response=new ViewTestResponseDTO() ;
-			
-			TestTbl testTbl= getByUid(TestTbl.class, Integer.parseInt(uid));
-			if(testTbl==null){
-				ServiceException se =new ServiceException(ErrorCodeEnum.NullTestUid);
-				se.addParam(new Parameter(Constants.TESTUID,uid));
-				se.setDisplayErrMsg(true);
-				throw se;
-			}
-			response.setUid(Integer.toString(testTbl.getUid()));
-			response.setName(testTbl.getTestName());
-			response.setAbbreviation(testTbl.getAbbreviation());
-			response.setGenericName(testTbl.getGenericName());
-			response.setMinTimeRequired(testTbl.getMinTimeRequired());
-			response.setNormalRange(testTbl.getNormalRange());
-			response.setRemarks(testTbl.getRemarks());
-			response.setUploadStatus(testTbl.isUploadStatus());
-			response.setSpecimenentryStatus(testTbl.isSpecimenentryStatus());
-			response.setMachineEntryStatus(testTbl.isMachineentryStatus());
-			response.setActive(testTbl.isActive());
-			response.setResult(testTbl.getResult());
-			
-			// get specimen details of the test
-			List<TestSpecimenTbl> testSpecimenList =(List<TestSpecimenTbl>)getTestSpecimen(Integer.parseInt(uid));
-			if(testSpecimenList.size()!=0){
-				List<TestSpecimenDTO>testSpecimens =new ArrayList<TestSpecimenDTO>();
-				for (TestSpecimenTbl testSpecimenTbl : testSpecimenList) {
-					TestSpecimenDTO testSpecimenDTO=new TestSpecimenDTO();
-					if(testSpecimenTbl.getSpecimenTbl()!=null){
-						testSpecimenDTO.setSpecimenName(testSpecimenTbl.getSpecimenTbl().getName());
-						testSpecimenDTO.setSpecimenUid(testSpecimenTbl.getSpecimenTbl().getUid());
-						testSpecimenDTO.setQuantity(testSpecimenTbl.getQuantity());
-					}
-					testSpecimens.add(testSpecimenDTO);
-				}// end of for loop
-				response.setTestSpecimens(testSpecimens);
-			}			
-			response.setSuccess(true);
-			return response;
 
-		
+		TestTbl testTbl= getByUid(TestTbl.class, Integer.parseInt(uid));
+		if(testTbl==null){
+			ServiceException se =new ServiceException(ErrorCodeEnum.NullTestUid);
+			se.addParam(new Parameter(Constants.TESTUID,uid));
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		response.setUid(Integer.toString(testTbl.getUid()));
+		response.setName(testTbl.getTestName());
+		response.setAbbreviation(testTbl.getAbbreviation());
+		response.setGenericName(testTbl.getGenericName());
+		response.setMinTimeRequired(testTbl.getMinTimeRequired());
+		response.setNormalRange(testTbl.getNormalRange());
+		response.setRemarks(testTbl.getRemarks());
+		response.setUploadStatus(testTbl.isUploadStatus());
+		response.setSpecimenentryStatus(testTbl.isSpecimenentryStatus());
+		response.setMachineEntryStatus(testTbl.isMachineentryStatus());
+		response.setActive(testTbl.isActive());
+		response.setResult(testTbl.getResult());
+
+		// get specimen details of the test
+		List<TestSpecimenTbl> testSpecimenList =(List<TestSpecimenTbl>)getTestSpecimen(Integer.parseInt(uid));
+		if(testSpecimenList.size()!=0){
+			List<TestSpecimenDTO>testSpecimens =new ArrayList<TestSpecimenDTO>();
+			for (TestSpecimenTbl testSpecimenTbl : testSpecimenList) {
+				TestSpecimenDTO testSpecimenDTO=new TestSpecimenDTO();
+				if(testSpecimenTbl.getSpecimenTbl()!=null){
+					testSpecimenDTO.setSpecimenName(testSpecimenTbl.getSpecimenTbl().getName());
+					testSpecimenDTO.setSpecimenUid(testSpecimenTbl.getSpecimenTbl().getUid());
+					testSpecimenDTO.setQuantity(testSpecimenTbl.getQuantity());
+				}
+				testSpecimens.add(testSpecimenDTO);
+			}// end of for loop
+			response.setTestSpecimens(testSpecimens);
+		}			
+		response.setSuccess(true);
+		return response;
+
+
 	}
 
 	/*
@@ -344,7 +344,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		
+
 		List<AddTestDTO> testList = new ArrayList<AddTestDTO>();
 		List<TestTbl> createdTests = getTestsByDateTime(lastSynTime,
 				currentSyncTime);
@@ -353,7 +353,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 			AddTestDTO newTests = new AddTestDTO();
 			List<TestSpecimenTbl> testSpecimenList = getSpecimenByTestUid(testTbl
 					.getUid());
-			
+
 			List<TestSpecimenDTO> testSpecimen = new ArrayList<TestSpecimenDTO>();
 			for (TestSpecimenTbl testSpecimenTbl : testSpecimenList) {
 				TestSpecimenDTO specimenDTO = new TestSpecimenDTO();
@@ -372,18 +372,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 			newTests.setMinTimeRequired(testTbl.getMinTimeRequired());
 			newTests.setInformaticValue(testTbl.getInformaticValues());
 			newTests.setMachineEntryStatus(testTbl.isMachineentryStatus());
-			try {
-				newTests.setResult(testTbl.getResult());
-			} catch (JsonGenerationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			newTests.setResult(testTbl.getResult());
 			newTests.setRemarks(testTbl.getRemarks());
 			newTests.setUploadStatus(testTbl.isUploadStatus());
 			newTests.setNormalRange(testTbl.getNormalRange());
@@ -405,7 +394,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 		query.setParameter("param1", uid);
 		return executeQuery(TestSpecimenTbl.class, query);
 	}
-	
+
 	/**
 	 * @param lastSyncTime
 	 * @param currentSyncTime
@@ -419,7 +408,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 		query.setParameter("param2", currentSyncTime);
 		return executeQuery(TestTbl.class, query);
 	}
-	
+
 	/**
 	 * @param parseInt
 	 * @return
@@ -454,7 +443,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 		query.setParameter("param1", abbreviation);
 		return executeUniqueQuery(TestTbl.class, query);
 	}
-	
+
 	/**
 	 * Query returning last record uid
 	 * @return
@@ -465,7 +454,7 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 		lastId=(Integer)query.getSingleResult();
 		return lastId;
 	}
-	
+
 	/**
 	 * @return the em
 	 */
@@ -493,8 +482,8 @@ public class TestDaoImpl extends GenericDaoHibernateImpl implements TestDao{
 		this.labDao = labDao;
 	}
 
-	
 
-	
+
+
 
 }
