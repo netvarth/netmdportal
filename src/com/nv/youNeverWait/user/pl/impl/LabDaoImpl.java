@@ -224,8 +224,8 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 				save(labUserTbl);
 			}
 		}
-		
-		
+
+
 		response.setGlobalId(newUser.getId());
 		response.setSuccess(true);
 
@@ -1401,10 +1401,9 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-
-		OrderTbl order = new OrderTbl();
+		OrderResultTbl orderResult = new OrderResultTbl();
 		if (!isValidBranch(resultTranferDto.getSourceLabId(),
-				resultTranferDto.getSourceBranchId())) {
+				resultTranferDto.getSourceLabBranchId())) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidSourceBranch);
 			se.setDisplayErrMsg(true);
@@ -1419,25 +1418,38 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		}
 		LabTbl sourceLab = getById(LabTbl.class,
 				resultTranferDto.getSourceLabId());
-		order.setSourceLabTbl(sourceLab);
-		LabBranchTbl sourceLabBranch = getById(LabBranchTbl.class,
-				resultTranferDto.getSourceBranchId());
-		order.setSourceBranchTbl(sourceLabBranch);
+		orderResult.setLabTbl(sourceLab);
 
-		LabTbl destLab = getById(LabTbl.class,
-				resultTranferDto.getDestinationLabId());
-		order.setDestinationLabTbl(destLab);
+		OrderBranchTbl orderBranchTbl =getByOrderUid_Branch(resultTranferDto.getOrderUid(),resultTranferDto.getDestinationBranchId());
+		orderResult.setOrderBranchTbl(orderBranchTbl);
+		orderResult.setTestUid(resultTranferDto.getTestUId());
+		orderResult.setResult(resultTranferDto.getResult());
+		orderResult.setCreatedDateTime(new Date());
+		orderResult.setUpdatedDateTime(new Date());
+		orderResult.setSent(false);
+		LabBranchTbl sourceLabBranch = getById(LabBranchTbl.class,
+				resultTranferDto.getSourceLabBranchId());
+		orderResult.setLabBranchTbl(sourceLabBranch);
 		LabBranchTbl destLabBranch = getById(LabBranchTbl.class,
 				resultTranferDto.getDestinationBranchId());
-		order.setDestinationBranchTbl(destLabBranch);
-
-		order.setLocalOrderUid(resultTranferDto.getOrderUid());
-		order.setResult(resultTranferDto.getResult());
-		order.setCreateTime(new Date());
-		order.setUpdateTime(new Date());
-		save(order);
+		orderResult.setOwnerLabBranchTbl(destLabBranch);
+		save(orderResult);
 		response.setSuccess(true);
 		return response;
+	}
+
+	/**
+	 * Mani E.V	
+	 * @param orderUid
+	 * @param destinationBranchId
+	 * @return
+	 */
+	private OrderBranchTbl getByOrderUid_Branch(String orderUid,
+			int destinationBranchId) {
+		javax.persistence.Query query = em.createQuery(Query.GET_ORDER_BY_UID_BRANCH);
+		query.setParameter("param1", orderUid);
+		query.setParameter("param2", destinationBranchId);
+		return executeUniqueQuery(OrderBranchTbl.class, query);
 	}
 
 	/**
@@ -1477,7 +1489,7 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 			result.setDestinationLabId(order.getDestinationLabTbl().getId());
 			result.setOrderUid(order.getLocalOrderUid());
 			result.setResult(order.getResult());
-			result.setSourceBranchId(order.getSourceBranchTbl().getId());
+			result.setSourceLabBranchId(order.getSourceBranchTbl().getId());
 			result.setSourceLabId(order.getSourceLabTbl().getId());
 			resultTransferDTOs.add(result);
 			lastSyncTime = order.getUpdateTime().toString();
@@ -1892,7 +1904,6 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		try {
 			orderDte = sdf.parse(branchOrders.getOrderDate());
 		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		OrderAmountTbl branchOrdrs = getOrdersByBranchOrderDate(
