@@ -60,7 +60,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/netlims/ui/lab/orderTransfer")
 							&& !request.getRequestURI().equals(
-									"/youNeverWait/netlims/ui/lab/resultTransfer")
+									"/youNeverWait/netlims/ui/lab/transferResult")
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/netlims/ui/sync/order")
 							&& !request.getRequestURI().equals(
