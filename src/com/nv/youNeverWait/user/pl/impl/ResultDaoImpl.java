@@ -21,7 +21,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nv.youNeverWait.common.Constants;
@@ -56,6 +55,7 @@ import com.nv.youNeverWait.user.pl.dao.DoctorDao;
 import com.nv.youNeverWait.user.pl.dao.FacilityDao;
 import com.nv.youNeverWait.user.pl.dao.PatientDao;
 import com.nv.youNeverWait.user.pl.dao.ResultDao;
+import com.nv.youNeverWait.util.filter.core.JsonUtil;
 
 /**
  * 
@@ -153,20 +153,17 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 		OrderTestResult	orderResult=null;
 		for (OrderResultTbl orderTestResult : orderResultTblList) {
 			uidC = orderTestResult.getOrderBranchTbl().getOrderUid();
+			Object result=JsonUtil.getObject(orderTestResult.getResult());
 			if (uid != uidC) {
-
 				if (orderResult !=null){
 					System.out.println(orderResult.getTestResultList().size());
 					orderTestResultList.add(orderResult);
 				}
 				orderResult = new OrderTestResult();
 				orderResult.setOrderUid(orderTestResult.getOrderBranchTbl().getOrderUid());
-				orderResult.addToMap(new String(orderTestResult.getTestUid()), new String(orderTestResult.getResult()));
-
-
+				orderResult.addToMap(new String(orderTestResult.getTestUid()), result);
 			} else {
-
-				orderResult.addToMap(new String(orderTestResult.getTestUid()), new String(orderTestResult.getResult()));
+				orderResult.addToMap(new String(orderTestResult.getTestUid()), result);
 			}
 			uid = uidC;
 			orderTestResult.setSent(true);  
@@ -385,14 +382,9 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 			if(resultTbl==null)
 				resultTbl = new NetlimsResultTbl();
 			resultTbl.setNetlimsOrderTbl(netlimsOrderTbl);
-			ObjectMapper maper = new ObjectMapper();
-			String result = null;
-			try {
-				result = maper.writeValueAsString(orderTestResult.getResult());
+			String result = JsonUtil.getString(orderTestResult.getResult());
+			if(result!=null)	
 				result = result.replaceAll("microsymbol", "\u00b5");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}	
 			resultTbl.setResult(result);
 			resultTbl.setTestName(orderTestResult.getTestName());
 			resultTbl.setTestUid(orderTestResult.getUid());

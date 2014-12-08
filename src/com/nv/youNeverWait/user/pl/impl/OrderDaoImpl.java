@@ -19,10 +19,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nv.security.youNeverWait.User;
@@ -57,6 +55,7 @@ import com.nv.youNeverWait.user.pl.dao.LabDao;
 import com.nv.youNeverWait.user.pl.dao.OrderDao;
 import com.nv.youNeverWait.util.filter.core.Filter;
 import com.nv.youNeverWait.util.filter.core.FilterFactory;
+import com.nv.youNeverWait.util.filter.core.JsonUtil;
 import com.nv.youNeverWait.util.filter.core.QueryBuilder;
 import com.nv.youNeverWait.util.filter.core.QueryBuilderFactory;
 
@@ -95,36 +94,28 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 
 		SimpleDateFormat sdf = new SimpleDateFormat(
 				Constants.DATE_FORMAT_WITH_TIME_SECONDS);
-		Date syncTime = null;
-		try {
-			syncTime = sdf.parse(lastSyncTime);
-		} catch (ParseException e) {
-			ServiceException se = new ServiceException(
-					ErrorCodeEnum.InvalidSyncTime);
-			se.setDisplayErrMsg(true);
-			throw se;
-		}
-		List<Object> orderList = new ArrayList<Object>();
-		List<OrderTransferTbl> recievedOrders = getTransferredOrders(
-				header.getHeadOfficeId(), header.getBranchId(), syncTime,
-				currentSyncTime);
-		for (OrderTransferTbl order : recievedOrders) {
-			Object orderDetails = new Object();
-			ObjectMapper maper = new ObjectMapper();
+		String syncTime = lastSyncTime;
+		String currentSync=sdf.format(currentSyncTime);
+		/*Date syncTime = null;
+		if(lastSyncTime!=null){
 			try {
-				orderDetails = maper.readValue(order.getOrderBranchTbl().getOrderDetails(),
-						Object.class);
-			} catch (Exception e) {
+				syncTime = sdf.parse(lastSyncTime);
+			} catch (ParseException e) {
 				ServiceException se = new ServiceException(
-						ErrorCodeEnum.OrderTransferException);
+						ErrorCodeEnum.InvalidSyncTime);
 				se.setDisplayErrMsg(true);
 				throw se;
 			}
+		}*/
+		List<Object> orderList = new ArrayList<Object>();
+		List<OrderTransferTbl> receivedOrders = getTransferredOrders(header.getHeadOfficeId(), header.getBranchId(),
+				syncTime, currentSync);
+		for (OrderTransferTbl order : receivedOrders) {
+			Object orderDetails = JsonUtil.getObject(order.getOrderBranchTbl().getOrderDetails());
 			order.setSent(true);  
 			update(order);
 			orderList.add(orderDetails);
 		}
-
 		orderDetail.setOrders(orderList);
 		orderDetail.setLastOrderSyncTime(sdf.format(currentSyncTime));
 		orderDetail.setSuccess(true);
@@ -145,15 +136,11 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		LabBranchTbl sourceLabBranch = getLabBranchId(
 				orderTranfer.getSourceLabBranchId(),
 				orderTranfer.getSourceLabId());
-
 		if (sourceLabBranch == null) {
-
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidSourceLabBranch);
-
 			se.setDisplayErrMsg(true);
 			throw se;
-
 		}
 
 		/* Saving orders in order branch tbl */
@@ -286,12 +273,12 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 	 * @return
 	 */
 	private List<OrderTransferTbl> getTransferredOrders(int labId,
-			int labBranchId, Date syncTime, Date currentSyncTime) {
+			int labBranchId, String syncTime, String currentSyncTime) {
 		javax.persistence.Query query = em.createQuery(Query.GET_ORDERS);
 		query.setParameter("param1", labId);
 		query.setParameter("param2", labBranchId);
-		query.setParameter("param3", syncTime,TemporalType.TIMESTAMP);
-		query.setParameter("param4", currentSyncTime,TemporalType.TIMESTAMP);
+		query.setParameter("param3", syncTime);
+		query.setParameter("param4", currentSyncTime);
 		return executeQuery(OrderTransferTbl.class, query);
 	}
 
@@ -320,24 +307,24 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 
 	@Override
 	public ListResponse getFacilityOrderByFilter(FilterDTO filterParam, User user) {
-//		ExpressionDTO branchExp = new ExpressionDTO();
-//		branchExp.setName("branchId");
-//		branchExp.setOperator("eq");
-//		branchExp.setValue(Integer.toString(user.getOrganisationId()));
-		
-	
+		//		ExpressionDTO branchExp = new ExpressionDTO();
+		//		branchExp.setName("branchId");
+		//		branchExp.setOperator("eq");
+		//		branchExp.setValue(Integer.toString(user.getOrganisationId()));
 
-//		LabFacilityTbl labFacilitytbl = getFacilityByEmailId(user.getUserName());
-//		ExpressionDTO expr = new ExpressionDTO();
-//		expr.setName("loginId");
-//		expr.setOperator("eq");
-//		expr.setValue(Integer.toString(labFacilitytbl.getId()));
-		
+
+
+		//		LabFacilityTbl labFacilitytbl = getFacilityByEmailId(user.getUserName());
+		//		ExpressionDTO expr = new ExpressionDTO();
+		//		expr.setName("loginId");
+		//		expr.setOperator("eq");
+		//		expr.setValue(Integer.toString(labFacilitytbl.getId()));
+
 		ListResponse response = new ListResponse();
 		//get queryBuilder for test from builder factory
 		QueryBuilder queryBuilder = queryBuilderFactory.getQueryBuilder(Constants.NETLIMS_FACILITY_ORDERS);
-	//	Filter brchFilter = filterFactory.getFilter(loginExp);
-	//	queryBuilder.addFilter(brchFilter);
+		//	Filter brchFilter = filterFactory.getFilter(loginExp);
+		//	queryBuilder.addFilter(brchFilter);
 		for (ExpressionDTO exp : filterParam.getExp()) {
 			//get filter from filter factory by setting expression name and value to filter
 			Filter filter = filterFactory.getFilter(exp);
@@ -445,7 +432,7 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 		order.setId(netlimsOrderTbl.getId());
 		order.setOrderStatus(netlimsOrderTbl.getOrderStatus());
 		order.setHeaderData(netlimsOrderTbl.getOrderHeader());
-		
+
 		List<NetlimsResultTbl> netlimsResults = netlimsOrderTbl.getNetlimsResultTbls();
 		List<OrderTest> tests = new ArrayList<OrderTest>();
 		for(NetlimsResultTbl netlimsResult : netlimsResults) {
@@ -573,14 +560,11 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 	@Override
 	public ListResponse getByPatientFilter(FilterDTO filterParam, User user) {
 		ListResponse response = new ListResponse();
-		//get queryBuilder for test from builder factory
 		QueryBuilder queryBuilder = queryBuilderFactory.getQueryBuilder(Constants.PATIENT_ORDERS);
 		for (ExpressionDTO exp : filterParam.getExp()) {
-			//get filter from filter factory by setting expression name and value to filter
 			Filter filter = filterFactory.getFilter(exp);
 			queryBuilder.addFilter(filter);
 		}
-		//build query
 		TypedQuery<PatientResultTbl> q =   queryBuilder.buildQuery(filterParam.isAsc(),
 				filterParam.getFrom(),filterParam.getCount()); 
 		Long count = queryBuilder.getCount();
@@ -595,7 +579,6 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			order.setBranchId(Integer.toString(orderTbl.getNetlimsOrderTbl().getLabBranchTbl().getId()));
 			order.setBranchName(orderTbl.getNetlimsOrderTbl().getLabBranchTbl().getName());
 			order.setHeaderData(orderTbl.getNetlimsOrderTbl().getOrderHeader());
-			//order.setHeader(orderTbl.get)
 			orders.add(order);
 		}
 		response.setList(orders);
@@ -609,14 +592,11 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 	@Override
 	public ListResponse getByFilter(FilterDTO filterParam, User user) {
 		ListResponse response = new ListResponse();
-		//get queryBuilder for test from builder factory
 		QueryBuilder queryBuilder = queryBuilderFactory.getQueryBuilder(Constants.NETLIMS_ORDERS);
 		for (ExpressionDTO exp : filterParam.getExp()) {
-			//get filter from filter factory by setting expression name and value to filter
 			Filter filter = filterFactory.getFilter(exp);
 			queryBuilder.addFilter(filter);
 		}
-		//build query
 		TypedQuery<NetlimsOrderTbl> q =   queryBuilder.buildQuery(filterParam.isAsc(),
 				filterParam.getFrom(),filterParam.getCount()); 
 		Long count = queryBuilder.getCount();
@@ -632,7 +612,6 @@ public class OrderDaoImpl extends GenericDaoHibernateImpl implements OrderDao {
 			order.setBranchId(Integer.toString(orderTbl.getLabBranchTbl().getId()));
 			order.setBranchName(orderTbl.getLabBranchTbl().getName());
 			order.setHeaderData(orderTbl.getOrderHeader());
-			//order.setHeader(orderTbl.get)
 			orders.add(order);
 		}
 		response.setList(orders);
