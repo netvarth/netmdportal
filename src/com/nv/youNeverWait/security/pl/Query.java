@@ -234,7 +234,7 @@ public class Query {
 	
 	/*OrderTransferTbl*/
 	//public static final String GET_LAST_UNIQUE_ID = "select MAX(u.uniqueId) from OrderTransferTbl as u"; -- wrong should use order branch tbl if this query is using
-	public static final String GET_ORDERS = "from OrderTransferTbl as order where order.labTbl.id=:param1 and order.labBranchTbl.id=:param2 and order.updatedDateTime>=:param3 and order.updatedDateTime<:param4";
+	public static final String GET_ORDERS = "from OrderTransferTbl as order where order.labTbl.id=:param1 and order.labBranchTbl.id=:param2 and order.updatedDateTime>=STR_TO_DATE(:param3, '%Y-%m-%d %H:%i:%s') and order.updatedDateTime<STR_TO_DATE(:param4, '%Y-%m-%d %H:%i:%s')";
 	public static final String GET_DESTINATION_BRANCHES_BY_ORDER_ID="from OrderTransferTbl as orderTransfer where orderTransfer.orderBranchTbl.id=:param1";
 
 	/*SpecimenTbl*/
@@ -255,6 +255,7 @@ public class Query {
 	
 	/*OrderBranchTbl*/
 	public static final String GET_ORDER_BY_UID = "from OrderBranchTbl as order where order.orderUid=:param1";
+	public static final String GET_ORDER_BY_UID_BRANCH = "from OrderBranchTbl as order where order.orderUid=:param1 and order.labBranchTbl.id=:param2";
 	/**************NetRx******************/
 	
 	/*NetRxTbl*/
