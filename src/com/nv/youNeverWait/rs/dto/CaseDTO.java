@@ -10,6 +10,8 @@ public class CaseDTO {
 	private int id;
 	private int patientId;
 	private int branchId;
+	private String patientFirstName;
+	private String patientLastName;
 	private String caseName;
 	private String patientType;
 	private String admittedDate;
@@ -54,6 +56,18 @@ public class CaseDTO {
 	 */
 	public void setPatientId(int patientId) {
 		this.patientId = patientId;
+	}
+	public String getPatientFirstName() {
+		return patientFirstName;
+	}
+	public void setPatientFirstName(String patientFirstName) {
+		this.patientFirstName = patientFirstName;
+	}
+	public String getPatientLastName() {
+		return patientLastName;
+	}
+	public void setPatientLastName(String patientLastName) {
+		this.patientLastName = patientLastName;
 	}
 	/**
 	 * @return the caseName
