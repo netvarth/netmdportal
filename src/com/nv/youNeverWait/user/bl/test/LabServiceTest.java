@@ -21,10 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.nv.framework.util.text.StringEncoder;
 import com.nv.security.youNeverWait.User;
 import com.nv.youNeverWait.exception.ServiceException;
-import com.nv.youNeverWait.pl.entity.LabBranchTbl;
 import com.nv.youNeverWait.rs.dto.BranchDetail;
-import com.nv.youNeverWait.rs.dto.BranchOrderDTO;
-import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
@@ -42,7 +39,6 @@ import com.nv.youNeverWait.rs.dto.SystemHealthDetails;
 import com.nv.youNeverWait.rs.dto.TransferNetMdResultDTO;
 import com.nv.youNeverWait.rs.dto.UserBranchDTO;
 import com.nv.youNeverWait.user.bl.service.LabService;
-import com.nv.youNeverWait.user.bl.service.NetMdService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 
@@ -1056,7 +1052,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		result.setOrderUid("JV005");
 		result.setResult("Diabetics all around");
 		result.setSourceLabId(249);
-		result.setSourceBranchId(179);
+		result.setSourceLabBranchId(179);
 		HeaderDTO header=new HeaderDTO();
 		header.setMacId("123");
 		header.setPassPhrase("iStxEG1I7u5a/vQAcIRBpg==");
@@ -1085,7 +1081,7 @@ List<UserBranchDTO> userbranch=new ArrayList<UserBranchDTO>();
 		result.setOrderUid("JV005");
 		result.setResult("Pressure all around");
 		result.setSourceLabId(249);
-		result.setSourceBranchId(179);
+		result.setSourceLabBranchId(179);
 		HeaderDTO header=new HeaderDTO();
 		header.setMacId("123");
 		header.setPassPhrase("iStxEG1I7u5a/vQAcIRBpg==");
