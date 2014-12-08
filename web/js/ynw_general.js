@@ -1986,7 +1986,7 @@ function OrderCountInput() {
 	this.setFromDate = function(fromDate) {this.fromDate = fromDate;}
 	this.getFromDate = function() {return this.fromDate;}
 	this.setToDate = function(toDate) {this.toDate = toDate;}
-	this.getToDate=function() {return this.toDate;
+	this.getToDate=function() {return this.toDate;}
 }
 function BranchSyncInput(){
 	this.setenableSync = function(enableSync) {this.enableSync=enableSync;}
