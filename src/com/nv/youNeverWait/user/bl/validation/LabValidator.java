@@ -377,11 +377,11 @@ public class LabValidator extends FilterValidator {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-		if (resultTranferDto.getSourceBranchId() <= 0) {
+		if (resultTranferDto.getSourceLabBranchId() <= 0) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidSourceBranch);
 			se.addParam(new Parameter(Constants.ID, Integer
-					.toString(resultTranferDto.getSourceBranchId())));
+					.toString(resultTranferDto.getSourceLabBranchId())));
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
