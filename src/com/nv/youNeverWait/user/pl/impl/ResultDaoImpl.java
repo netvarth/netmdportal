@@ -307,6 +307,7 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 			LabFacilityTbl labFacilityTbl = getById(LabFacilityTbl.class, facilityId);
 			BranchFacilityTbl branchFacility = new BranchFacilityTbl();
 			branchFacility.setLabFacilityTbl(labFacilityTbl);
+			branchFacility.setLabBranchTbl(netlimsOrderTbl.getLabBranchTbl());
 			saveOrUpdate(BranchFacilityTbl.class, branchFacility);
 			if(facilityResultTbl==null)
 				facilityResultTbl=new FacilityResultTbl();
