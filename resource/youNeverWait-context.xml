@@ -531,6 +531,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 	</bean>
 	<bean id="facility.service" class="com.nv.youNeverWait.user.bl.impl.FacilityServiceImpl">
+		<property name="validator">
+			<ref bean="facility.validator"/>
+		</property>
 		<property name="facilityDao">
 			<ref bean="facility.dao" />
 		</property>
@@ -544,6 +547,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="email.worker.thread" />
 		</property>
 	</bean>
+	<bean id="facility.validator" class="com.nv.youNeverWait.user.bl.validation.FacilityValidator"></bean>
 	<bean id="lab.service" class="com.nv.youNeverWait.user.bl.impl.LabServiceImpl">
 		<property name="labDao">
 			<ref bean="lab.dao" />
@@ -579,6 +583,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 		<property name="resultService">
 			<ref bean="result.service" />
+		</property>
+		<property name="facilityService">
+			<ref bean="facility.service"/>
 		</property>
 	</bean>
 
