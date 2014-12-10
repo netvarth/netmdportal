@@ -4,12 +4,14 @@
 package com.nv.youNeverWait.user.pl.impl;
 
 import java.util.Date;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nv.framework.util.text.StringEncoder;
+import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
 import com.nv.youNeverWait.pl.entity.LabFacilityTbl;
 import com.nv.youNeverWait.pl.entity.LoginTbl;
@@ -17,6 +19,7 @@ import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.FacilitySyncDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.security.pl.Query;
 import com.nv.youNeverWait.user.pl.dao.FacilityDao;
 
@@ -109,5 +112,59 @@ public class FacilityDaoImpl extends GenericDaoHibernateImpl implements Facility
 			return labFacilityTbl.getId();
 		}
 		return 0;	
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.FacilityDao#getLoginInfo(java.lang.Integer)
+	 */
+	@Override
+	public LoginDTO getLoginInfo(Integer globalId) {
+		LabFacilityTbl labFacilityTbl = getById(LabFacilityTbl.class, globalId);
+		LoginDTO loginInfo = new LoginDTO();
+		loginInfo.setUserName(labFacilityTbl.getLoginTbl().getUserName());
+		loginInfo.setPassword(labFacilityTbl.getLoginTbl().getPassword());
+		loginInfo.setUserType(labFacilityTbl.getLoginTbl().getUserType());
+		return loginInfo;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.FacilityDao#resetPassword(com.nv.youNeverWait.rs.dto.LoginDTO)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO resetPassword(LoginDTO login) {
+		ResponseDTO response = new ResponseDTO();
+		String newPassword = StringEncoder.encryptWithKey(login.getPassword());
+		String decrypedUserName = StringEncoder.decryptWithStaticKey(login
+				.getUserName());
+		/* Checking userName and password existing or not */
+		LoginTbl facilityLogin = getLoginByUserNameAndUserType(
+				decrypedUserName, NetmdUserTypeEnum.Facility.getDisplayName());
+
+		if (facilityLogin == null) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidUserName);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		facilityLogin.setPassword(newPassword);
+		update(facilityLogin);
+		response.setSuccess(true);
+		return response;
+	}
+
+	/**
+	 * Mani E.V	
+	 * @param decrypedUserName
+	 * @param displayName
+	 * @return
+	 */
+	private LoginTbl getLoginByUserNameAndUserType(String userName,
+			String userType) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_NETMD_LOGIN_BY_USERNAME_USERTYPE);
+		query.setParameter("param1", userName);
+		query.setParameter("param2", userType);
+		return executeUniqueQuery(LoginTbl.class, query);
 	}
 }
