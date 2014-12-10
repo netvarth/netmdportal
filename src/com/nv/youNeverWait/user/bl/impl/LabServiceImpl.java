@@ -43,11 +43,9 @@ import com.nv.youNeverWait.pl.entity.OrderAmountTbl;
 import com.nv.youNeverWait.pl.entity.OrderBranchTbl;
 import com.nv.youNeverWait.pl.entity.OrderResultTbl;
 import com.nv.youNeverWait.pl.entity.OrderTransferTbl;
-import com.nv.youNeverWait.rs.dto.BranchFacilityListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
-import com.nv.youNeverWait.rs.dto.FacilityListResponseDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
@@ -97,6 +95,7 @@ import com.nv.youNeverWait.rs.dto.TransferredResultDetails;
 import com.nv.youNeverWait.rs.dto.TransferredResults;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 import com.nv.youNeverWait.rs.dto.UserInfo;
+import com.nv.youNeverWait.user.bl.service.FacilityService;
 import com.nv.youNeverWait.user.bl.service.HealthMonitorService;
 import com.nv.youNeverWait.user.bl.service.LabService;
 import com.nv.youNeverWait.user.bl.service.NetMdService;
@@ -127,6 +126,7 @@ public class LabServiceImpl implements LabService {
 	private OrderService orderService;
 	private HealthMonitorService healthService;
 	private ResultService resultService;
+	private FacilityService facilityService;
 
 	/**
 	 * Create user in Lab
@@ -1766,5 +1766,27 @@ public class LabServiceImpl implements LabService {
 	public ListResponse getFacilityByFilter(
 			FilterDTO filterDTO, User user) {
 		return labDao.getFacilityByFilter(filterDTO, user);
+	}
+
+	/**
+	 * @return the facilityService
+	 */
+	public FacilityService getFacilityService() {
+		return facilityService;
+	}
+
+	/**
+	 * @param facilityService the facilityService to set
+	 */
+	public void setFacilityService(FacilityService facilityService) {
+		this.facilityService = facilityService;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.LabService#resetFacilityPassword(com.nv.youNeverWait.rs.dto.LoginDTO)
+	 */
+	@Override
+	public ResponseDTO resetFacilityPassword(LoginDTO login) {
+		return facilityService.resetPassword(login);
 	}
 }
