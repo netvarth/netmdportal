@@ -41,6 +41,7 @@ import com.nv.youNeverWait.rs.dto.LabOrderHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabResultHeaderDTO;
 import com.nv.youNeverWait.rs.dto.LabUserDTO;
 import com.nv.youNeverWait.rs.dto.ListResponse;
+import com.nv.youNeverWait.rs.dto.LoginDTO;
 import com.nv.youNeverWait.rs.dto.LoginResponseDTO;
 import com.nv.youNeverWait.rs.dto.MacStatusResponseDTO;
 import com.nv.youNeverWait.rs.dto.MailTransferInfo;
@@ -1047,7 +1048,24 @@ public class LabResource extends ServiceExceptionHandler{
 		return response;
 	}
 	
-	
+	@RequestMapping(value = "facility/resetPassword", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO resetFacilityPassword(@RequestBody LoginDTO login) {
+
+		ResponseDTO response = new ResponseDTO();
+		try {
+			response = labService.resetFacilityPassword(login);
+		} catch (ServiceException e) {
+			List<Parameter> parameters = e.getParamList();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setParams(parameters);
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setError(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
 
 	/**
 	 * @return the labService
