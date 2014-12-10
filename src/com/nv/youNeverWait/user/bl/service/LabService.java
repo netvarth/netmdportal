@@ -10,11 +10,9 @@ package com.nv.youNeverWait.user.bl.service;
 import java.util.Date;
 
 import com.nv.security.youNeverWait.User;
-import com.nv.youNeverWait.rs.dto.BranchFacilityListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
-import com.nv.youNeverWait.rs.dto.FacilityListResponseDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
@@ -114,5 +112,11 @@ public interface LabService {
 	public UserInfo getUserByReferredUid(int referredUid, int branchId);
 	public ListResponse getFacilityByFilter(
 			FilterDTO filterDTO, User user);
+	/**
+	 * Mani E.V	
+	 * @param login
+	 * @return ResponseDTO
+	 */
+	public ResponseDTO resetFacilityPassword(LoginDTO login);
 	
 }
