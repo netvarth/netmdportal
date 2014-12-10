@@ -1827,7 +1827,7 @@ public class SyncServiceImpl implements SyncService {
 			SyncResponse response = new SyncResponse();
 			try {
 				response.setLocalId(referral.getReferralInfo().getUid());
-				if (referral.getReferralInfo().getAddress().getEmail() != null) {
+				if (referral.getReferralInfo().getAddress().getEmail() != null && referral.getReferralInfo().getAddress().getEmail().trim()!="") {
 					int referral_GlobalId = doctorService
 							.processReferral(referral);
 					response.setGlobalId(referral_GlobalId);
@@ -1859,7 +1859,7 @@ public class SyncServiceImpl implements SyncService {
 			SyncResponse response = new SyncResponse();
 			try{
 				response.setLocalId(Integer.toString(facility.getFacility().getUid()));
-				if(facility.getFacility().getAddress().getEmail()!=null){
+				if(facility.getFacility().getAddress().getEmail()!=null && facility.getFacility().getAddress().getEmail().trim()!=""){
 					int facility_GlobalId=facilityService.processFacility(facility, bundle.getSource_branch_id());
 					response.setGlobalId(facility_GlobalId);
 					response.setStatusCode("200");
