@@ -1429,6 +1429,11 @@ function Validator() {
 					return true;}
 		return false;
 	}
+	this.validatePassword=function(password){
+		if(password.length<6)
+			return false;
+		return true;
+	}
 }
 function Notifier() {
 	//function to display the beeper and hide it 
