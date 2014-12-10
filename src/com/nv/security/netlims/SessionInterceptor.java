@@ -36,6 +36,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/netlims/ui/lab/resetPassword")
 							&& !request.getRequestURI().equals(
+									"/youNeverWait/netlims/ui/lab/facility/resetPassword")
+							&& !request.getRequestURI().equals(
 									"/youNeverWait/netlims/ui/lab/forgotPassword")
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/netlims/ui/lab/activateLab")
