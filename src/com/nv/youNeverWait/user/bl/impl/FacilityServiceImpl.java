@@ -19,7 +19,9 @@ import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.FacilitySyncDTO;
 import com.nv.youNeverWait.rs.dto.LoginDTO;
+import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.user.bl.service.FacilityService;
+import com.nv.youNeverWait.user.bl.validation.FacilityValidator;
 import com.nv.youNeverWait.user.pl.dao.FacilityDao;
 
 /**
@@ -27,7 +29,7 @@ import com.nv.youNeverWait.user.pl.dao.FacilityDao;
  *
  */
 public class FacilityServiceImpl implements FacilityService {
-	
+	private FacilityValidator validator;
 	private FacilityDao facilityDao;
 	private String netlimsServerIpAddress;
 	private String mailFrom;
@@ -39,21 +41,32 @@ public class FacilityServiceImpl implements FacilityService {
 		if(facility.getGlobalId()==0) {
 			facilityId = create(facility, branchId);
 		} else 
-			facilityId = facilityDao.update(facility, branchId);	
+			facilityId = update(facility, branchId);
 		return facilityId;
 	}
 
-	private void sendEmail(String subject, FacilitySyncDTO facility, LoginDTO login, String branch, String password) {
+	/**
+	 * Mani E.V	
+	 * @return
+	 */
+	private int update(FacilitySyncDTO facility, Integer branchId) {
+		int facilityId =  facilityDao.update(facility, branchId);	
+		String branch = facilityDao.getFacilityBranch(branchId);
+		sendEmail(Constants.USER_REGISTRATION, facility,branch);
+		return facilityId;
+	}
+
+	private void sendEmail(String subject, FacilitySyncDTO facility, String branch) {
 		
 		String msgBody = "";
 		URL url = null;
 		try {
 			url = new URL("http://" + netlimsServerIpAddress
 					+ "/youNeverWait/EmailFormat/NetlimsFacilityRegistration.html");
-			msgBody = createDefaultEmailBody(url, facility, login,branch, password);
+			msgBody = createDefaultEmailBody(url, facility,branch);
 
 			SendMailMsgObj obj = new SendMailMsgObj(subject, msgBody,
-					login.getUserName(), mailFrom, 0, 0, null,
+					facility.getFacility().getAddress().getEmail(), mailFrom, 0, 0, null,
 					SendMsgCallbackEnum.LAB_BRANCH_REGISTRATION.getId(), null);
 			mailThread.addSendMsgObj(obj);
 
@@ -63,11 +76,15 @@ public class FacilityServiceImpl implements FacilityService {
 
 		}
 	}
-	private String createDefaultEmailBody(URL url, FacilitySyncDTO facility, LoginDTO login, String branchName, String password)
+	private String createDefaultEmailBody(URL url, FacilitySyncDTO facility, String branchName)
 			throws IOException {
 
 		StringBuffer msgBodyBfr = new StringBuffer();
 		String fullMsgBody = "";
+		String encryptedUserName = StringEncoder.encryptWithStaticKey(facility.getFacility().getAddress().getEmail());
+		String resetPasswordLink = "http://" + netlimsServerIpAddress
+				+ "/youNeverWait/EmailFormat/NetlimsFacilityResetLink.html?userName="
+				+ encryptedUserName;
 		java.net.URLConnection openConnection = url.openConnection();
 		InputStream inputStream = openConnection.getInputStream();
 		BufferedReader in = new BufferedReader(new InputStreamReader(
@@ -80,8 +97,8 @@ public class FacilityServiceImpl implements FacilityService {
 		fullMsgBody = msgBodyBfr.toString();
 		fullMsgBody = fullMsgBody.replace("{facilityName}",facility.getFacility().getName());
 		fullMsgBody = fullMsgBody.replace("{branchName}", branchName);
-		fullMsgBody = fullMsgBody.replace("{userid}", login.getUserName());
-		fullMsgBody = fullMsgBody.replace("{password}",password);
+		fullMsgBody = fullMsgBody.replace("{userid}", facility.getFacility().getAddress().getEmail());
+		fullMsgBody = fullMsgBody.replace("{ResetLink}",resetPasswordLink);
 		fullMsgBody = fullMsgBody.replace("{serverIpAddress}",
 				netlimsServerIpAddress);
 		return fullMsgBody;
@@ -100,7 +117,7 @@ public class FacilityServiceImpl implements FacilityService {
 		login.setPassword(StringEncoder.encryptWithKey(password));
 		login = facilityDao.setLoginInfo(login, facilityId);
 		String branch = facilityDao.getFacilityBranch(branchId);
-		sendEmail(Constants.USER_REGISTRATION, facility,login, branch, password);
+		sendEmail(Constants.USER_REGISTRATION, facility, branch);
 		return facilityId;
 	}
 
@@ -158,9 +175,32 @@ public class FacilityServiceImpl implements FacilityService {
 	public void setMailThread(SendEmailMsgWorkerThread mailThread) {
 		this.mailThread = mailThread;
 	}
+	/**
+	 * @return the validator
+	 */
+	public FacilityValidator getValidator() {
+		return validator;
+	}
 
+	/**
+	 * @param validator the validator to set
+	 */
+	public void setValidator(FacilityValidator validator) {
+		this.validator = validator;
+	}
 	@Override
 	public String getFacilityBranchName(Integer source_branch_id) {
 		return facilityDao.getFacilityBranch(source_branch_id);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.FacilityService#resetPassword(com.nv.youNeverWait.rs.dto.LoginDTO)
+	 */
+	@Override
+	public ResponseDTO resetPassword(LoginDTO login) {
+		validator.validateUserNameAndPassword(login.getUserName(),
+				login.getPassword());
+		ResponseDTO response = facilityDao.resetPassword(login);
+		return response;
 	}
 }
