@@ -11,11 +11,16 @@ public class FacilityValidator {
 	 * @param userName
 	 * @param password
 	 */
-	public void validateUserNameAndPassword(String name) {
-	
-		if (name == null || name.isEmpty()) {
+	public void validateUserNameAndPassword(String userName, String password) {
+		if (userName == null || userName.isEmpty()) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidUserName);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		if (password == null || password.isEmpty()) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidPassword);
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
