@@ -61,7 +61,7 @@ function ServerUrlProcessor() {
 		$("#dvLoading").hide();
 		return postResponse;	
 	}
-	this.delete = function() {
+	this.delete_ = function() {
 		var postResponse;
 		$("#dvLoading").show();
 		jQuery.ajax({
