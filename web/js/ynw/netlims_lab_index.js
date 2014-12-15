@@ -11,7 +11,7 @@ var notifier = new Notifier();
 $(function() {
 	$('.filter-main').hide();
 	$('#filter').click(function () {
-        $('.filter-main').toggle(500);
+		$('.filter-main').toggle(500);
 		$('#filterWorkBench').hide();
 		dpi_y = document.getElementById('testdiv').offsetHeight;
 		methodInvoker.setDPI(dpi_y);
@@ -389,7 +389,7 @@ function User(user) {
 	this.bindEvents = function() {
 		$(".headright #dropdownOne #dd").die('click').live("click",function() {
 			$(this).toggleClass('active');
-	    });
+		});
 		$(this.logoutButton).die('click').live("click",function() {
 			var response =query.logout();
 			if(response==true)
@@ -614,6 +614,15 @@ function BranchListUI(){
 				self.setBranchInfo(branchInfo.branch);
 			}
 		});
+		$(self.orderListPTB).die('click').live('click',function() {
+			errorHandler.removeErrors();
+			var branchId=self.getSelectedbranchId(self.pgTableName);
+			if(branchId!="") {
+				self.setCurrentBranchId(branchId);
+				branchOrderList = new BranchOrderList();
+				branchOrderList.init(branchId);	
+			}	
+		});
 		$(self.editButton).die('click').live('click',function(){
 			self.errorHeader.hide();
 			errorHandler.removeErrors();
@@ -764,7 +773,7 @@ function BranchListUI(){
 			errorHandler.removeErrors();
 		});	
 		$(self.pgTableRowClass).die('click').live('click',function(){
-		   var branchId= $(this).parent().attr('id');
+			var branchId= $(this).parent().attr('id');
 			if(branchId!="") {
 				$(constants.PTBCONTAINER).empty().html('');
 				self.view(branchId);
@@ -936,7 +945,7 @@ function FacilityList(){
 		}
 	}
 	this.bindEvents = function(){
-		
+
 		var self = this;
 		$(self.pgTableName + ' tbody tr').die('click').live('click',function(){		
 			if($(this).attr('selected')) {
@@ -948,7 +957,7 @@ function FacilityList(){
 			}	
 			errorHandler.removeErrors();
 		});	
-	
+
 		$(self.orderCountPTB).die('click').live('click',function() {
 			errorHandler.removeErrors();
 			var facilityId=self.getSelectedfacilityId(self.pgTableName);
@@ -969,23 +978,23 @@ function FacilityList(){
 			}	
 		});
 		this.bindOrderCountEvents = function(){
-		var self=this;
-		$('#'+constants.ORDERCOUNTMODALNAME + ' #fromDate').datepicker();
-		$('#'+constants.ORDERCOUNTMODALNAME + ' #toDate').datepicker();
-		$('#'+constants.ORDERCOUNTMODALNAME + ' #btnCancel').die('click').live('click',function() {
-			$('#' + constants.ORDERCOUNTMODALNAME).trigger('reveal:close');
-		});
-		$('#'+constants.ORDERCOUNTMODALNAME + ' #btnSearch').die('click').live('click',function() {
-			var input = new OrderCountInput();
-			input.setFacility(self.getCurrentFacilityId());
-			input.setFromDate($('#'+constants.ORDERCOUNTMODALNAME + ' #fromDate').val());
-			input.setToDate($('#'+constants.ORDERCOUNTMODALNAME + ' #toDate').val());
-			
-			var result = query.findOrderCountForFacility(input);
-			
-			$('#'+constants.ORDERCOUNTMODALNAME + ' #orderCount').val(result);
-		});
-	}
+			var self=this;
+			$('#'+constants.ORDERCOUNTMODALNAME + ' #fromDate').datepicker();
+			$('#'+constants.ORDERCOUNTMODALNAME + ' #toDate').datepicker();
+			$('#'+constants.ORDERCOUNTMODALNAME + ' #btnCancel').die('click').live('click',function() {
+				$('#' + constants.ORDERCOUNTMODALNAME).trigger('reveal:close');
+			});
+			$('#'+constants.ORDERCOUNTMODALNAME + ' #btnSearch').die('click').live('click',function() {
+				var input = new OrderCountInput();
+				input.setFacility(self.getCurrentFacilityId());
+				input.setFromDate($('#'+constants.ORDERCOUNTMODALNAME + ' #fromDate').val());
+				input.setToDate($('#'+constants.ORDERCOUNTMODALNAME + ' #toDate').val());
+
+				var result = query.findOrderCountForFacility(input);
+
+				$('#'+constants.ORDERCOUNTMODALNAME + ' #orderCount').val(result);
+			});
+		}
 	}
 	this.getSelectedfacilityId = function(){
 		var self =this;
@@ -1001,6 +1010,71 @@ function FacilityList(){
 		}
 		return facilityId;
 	}
+}
+function BranchOrderList(){
+	this.orderCountPTB = "#facilityListPTBContainer #btn_ordercount_ptb_id";
+	this.pgTableContainer = "#orderListTableCont";
+	this.pgTableName=this.pgTableContainer + " #orders";
+	this.facility = "facility";
+	this.facilityListPTBCaption="facilityList";
+	this.pgTableRowClass=".facilityCol";
+	this.exp = new ExpressionListDTO();
+	this.listUrl =constants.ONLINERESULTSURL;
+	this.tableNavigator = new DataTableNavigator(this.pgTableName,this.listUrl,this.pgTableContainer,this,this.exp);
+	this.setCurrentFacilityId=function(facilityId){this.selectedFacilityId = facilityId};
+	this.setCurrentFacilityList = function(facilityList) {this.facilityList=facilityList};
+	this.getCurrentFacilityList = function(){return this.facilityList};
+	this.setCurrentBranchId = function(branchId) {this.branchId=branchId};
+	this.getCurrentFacilityId=function(){return this.selectedFacilityId};
+	this.getCurrentBranchId = function(){return this.branchId};
+	this.init=function(branchId){
+		this.setCurrentBranchId(branchId);
+		$(constants.PTBCONTAINER).empty().html('');
+		$(constants.PAGETITLE).empty().html("Order List");
+		dataTableProcessor.create(this.pgTableName,constants.ONLINERESULTSLISTJSONURL,constants.CONTAINER);
+		dataTableProcessor.setCustomTable(this.pgTableName);
+		var expList=new ExpressionListDTO();
+		var expr = new ExpressionDTO("branchId",branchId,"eq");
+		expList.add(expr);
+		this.tableNavigator.setExp(expList);
+		this.tableNavigator.list();
+//		var ptbProcessor = new PageToolBarProcessor();
+//		ptbProcessor.create(this.facilityListPTBCaption, constants.FACILITYLISTPTBJSONURL);
+//		this.bindEvents();
+	}
+	this.setTableValues = function(tableObj, orderResult) {
+		$(tableObj).dataTable().fnClearTable();
+		if(orderResult.list) {
+			if(orderResult.list.length>0) {	
+				$(orderResult.list).each(function(index, order) {
+					var patient=order.patient;
+					var createdOn=order.createdOn;
+					var paymentStatus=order.orderStatus
+					var branchId = order.branchId;
+					if(order.headerData!=null && order.headerData!="") {
+						var header = $.parseJSON(order.headerData).header;
+						var ageheader = header.age.split("-");
+						var age="";
+						var age_year = "";
+						var age_month = "";
+						var age_day = "";
+						if(ageheader[0]!="" && ageheader[0]!=undefined)
+							age_year = ageheader[0] + "Y";
+						if(ageheader[1]!="" && ageheader[1]!=undefined)
+							age_month = ageheader[1] + "M";
+						if(ageheader[2]!="" && ageheader[2]!=undefined)
+							age_day = ageheader[2] + "D";
+						age = age_year + age_month + age_day;
+						var rowData=$(tableObj).dataTable().fnAddData([order.uid, header.patientName, age, createdOn,header.collectedAt,header.referral, order.branchName]);
+						var row=$(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+						$(row).children("td:nth-child(9)").attr("class","column-2");
+						$(row).attr('id',order.id + "_" + branchId );
+						$(row).children("td:nth-child(1)").attr("class","orderIdCol Ustyle");
+					}
+				});
+			}	
+		}
+	}	
 }
 function OrderList(){
 	this.orderCountPTB = "#facilityListPTBContainer #btn_ordercount_ptb_id";
@@ -1029,9 +1103,9 @@ function OrderList(){
 		expList.add(expr);
 		this.tableNavigator.setExp(expList);
 		this.tableNavigator.list();
-	//	var ptbProcessor = new PageToolBarProcessor();
-	//	ptbProcessor.create(this.facilityListPTBCaption, constants.FACILITYLISTPTBJSONURL);
-	//	this.bindEvents();
+		//	var ptbProcessor = new PageToolBarProcessor();
+		//	ptbProcessor.create(this.facilityListPTBCaption, constants.FACILITYLISTPTBJSONURL);
+		//	this.bindEvents();
 	}
 	this.setTableValues = function(tableObj, orderResult) {
 		$(tableObj).dataTable().fnClearTable();
@@ -1056,18 +1130,18 @@ function OrderList(){
 						if(ageheader[2]!="" && ageheader[2]!=undefined)
 							age_day = ageheader[2] + "D";
 						age = age_year + age_month + age_day;
-					var rowData=$(tableObj).dataTable().fnAddData([order.uid, header.patientName, age, createdOn,header.collectedAt,header.referral, order.branchName]);
-					var row=$(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
-					$(row).children("td:nth-child(9)").attr("class","column-2");
-					$(row).attr('id',order.id + "_" + branchId );
-					$(row).children("td:nth-child(1)").attr("class","orderIdCol Ustyle");
+						var rowData=$(tableObj).dataTable().fnAddData([order.uid, header.patientName, age, createdOn,header.collectedAt,header.referral, order.branchName]);
+						var row=$(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+						$(row).children("td:nth-child(9)").attr("class","column-2");
+						$(row).attr('id',order.id + "_" + branchId );
+						$(row).children("td:nth-child(1)").attr("class","orderIdCol Ustyle");
 					}
 				});
 			}		
 		}
 	}		
 	this.bindEvents = function(){
-		
+
 		var self = this;
 		$(self.pgTableName + ' tbody tr').die('click').live('click',function(){		
 			if($(this).attr('selected')) {
@@ -1079,7 +1153,7 @@ function OrderList(){
 			}	
 			errorHandler.removeErrors();
 		});	
-	
+
 		$(self.orderCountPTB).die('click').live('click',function() {
 			errorHandler.removeErrors();
 			var facilityId=self.getSelectedfacilityId(self.pgTableName);
@@ -1100,23 +1174,23 @@ function OrderList(){
 			}	
 		});
 		this.bindOrderCountEvents = function(){
-		var self=this;
-		$('#'+constants.ORDERCOUNTMODALNAME + ' #fromDate').datepicker();
-		$('#'+constants.ORDERCOUNTMODALNAME + ' #toDate').datepicker();
-		$('#'+constants.ORDERCOUNTMODALNAME + ' #btnCancel').die('click').live('click',function() {
-			$('#' + constants.ORDERCOUNTMODALNAME).trigger('reveal:close');
-		});
-		$('#'+constants.ORDERCOUNTMODALNAME + ' #btnSearch').die('click').live('click',function() {
-			var input = new OrderCountInput();
-			input.setFacility(self.getCurrentFacilityId());
-			input.setFromDate($('#'+constants.ORDERCOUNTMODALNAME + ' #fromDate').val());
-			input.setToDate($('#'+constants.ORDERCOUNTMODALNAME + ' #toDate').val());
-			
-			var result = query.findOrderCountForFacility(input);
-			
-			$('#'+constants.ORDERCOUNTMODALNAME + ' #orderCount').val(result);
-		});
-	}
+			var self=this;
+			$('#'+constants.ORDERCOUNTMODALNAME + ' #fromDate').datepicker();
+			$('#'+constants.ORDERCOUNTMODALNAME + ' #toDate').datepicker();
+			$('#'+constants.ORDERCOUNTMODALNAME + ' #btnCancel').die('click').live('click',function() {
+				$('#' + constants.ORDERCOUNTMODALNAME).trigger('reveal:close');
+			});
+			$('#'+constants.ORDERCOUNTMODALNAME + ' #btnSearch').die('click').live('click',function() {
+				var input = new OrderCountInput();
+				input.setFacility(self.getCurrentFacilityId());
+				input.setFromDate($('#'+constants.ORDERCOUNTMODALNAME + ' #fromDate').val());
+				input.setToDate($('#'+constants.ORDERCOUNTMODALNAME + ' #toDate').val());
+
+				var result = query.findOrderCountForFacility(input);
+
+				$('#'+constants.ORDERCOUNTMODALNAME + ' #orderCount').val(result);
+			});
+		}
 	}
 	this.getSelectedfacilityId = function(){
 		var self =this;
@@ -1326,7 +1400,7 @@ function MethodInvoker() {
 							}															
 						});
 						if(state==true)
-						return false;
+							return false;
 					}
 				});
 			}
@@ -1339,7 +1413,7 @@ function MethodInvoker() {
 							var curMaxAge = self.getAgeValue(resultAgeLevel.maxAge);
 							if(age=="")
 								return;
-								
+
 							if(curMinAge<=age && curMaxAge>=age){
 								if(resultAgeLevel.minValue!=null && resultAgeLevel.maxValue!=null){
 									curNormalRange=resultAgeLevel.minValue + " - " + resultAgeLevel.maxValue + " " + testResult.testUnit;
@@ -1373,7 +1447,7 @@ function MethodInvoker() {
 							}															
 						});
 						if(state==true)
-						return false;
+							return false;
 					}
 				});
 			}
@@ -1431,10 +1505,10 @@ function SettingsList(){
 		var orderPassType = new OrderTypeInput(orderType,self.getLabId());
 		var response =query.updateOrderType(orderPassType);
 		if(response.error==null) {
-				notifier.showTip("Order Type Successfully Created");//For showing the global Tip			
-			} else 
-				errorHandler.createServerError(self.errorHeader, self.errorData,"Error");
-			//	errorHandler.createServerError(self.errorHeader,self.errorData, errorHandler.getErrorName(orderTypeResponse.error));
+			notifier.showTip("Order Type Successfully Created");//For showing the global Tip			
+		} else 
+			errorHandler.createServerError(self.errorHeader, self.errorData,"Error");
+		//	errorHandler.createServerError(self.errorHeader,self.errorData, errorHandler.getErrorName(orderTypeResponse.error));
 	}
 	this.cancel = function() {
 		var self=this;
@@ -1541,7 +1615,7 @@ function OnlineResults(){
 			var testTable=$(self.testTable).dataTable().fnAddData([this.uid, this.testName,checkbox]);
 			var row=$(tableObj).dataTable().fnSettings().aoData[testTable].nTr;
 			$(row).attr('id',this.uid);
-			
+
 		});
 	}
 	this.getSelectedOrder_BranchId=function() {
@@ -1781,8 +1855,8 @@ function OnlineResults(){
 					var tbl = $(this);
 					tbl.height("297mm");
 					if(count>1) {
-					//	var pageDiv = $('<div style="height:2mm;">&nbsp;</div>');
-					//	buffer.append(pageDiv);
+						//	var pageDiv = $('<div style="height:2mm;">&nbsp;</div>');
+						//	buffer.append(pageDiv);
 					}	
 					buffer.append(tbl.html());
 					count++;
@@ -1817,11 +1891,11 @@ function OnlineResults(){
 						if(ageheader[2]!="" && ageheader[2]!=undefined)
 							age_day = ageheader[2] + "D";
 						age = age_year + age_month + age_day;
-					var rowData=$(tableObj).dataTable().fnAddData([order.uid, header.patientName, age, createdOn,header.collectedAt,header.referral, order.branchName]);
-					var row=$(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
-					$(row).children("td:nth-child(9)").attr("class","column-2");
-					$(row).attr('id',order.id + "_" + branchId );
-					$(row).children("td:nth-child(1)").attr("class","orderIdCol Ustyle");
+						var rowData=$(tableObj).dataTable().fnAddData([order.uid, header.patientName, age, createdOn,header.collectedAt,header.referral, order.branchName]);
+						var row=$(tableObj).dataTable().fnSettings().aoData[rowData].nTr;
+						$(row).children("td:nth-child(9)").attr("class","column-2");
+						$(row).attr('id',order.id + "_" + branchId );
+						$(row).children("td:nth-child(1)").attr("class","orderIdCol Ustyle");
 					}
 				});
 			}		
@@ -1853,9 +1927,9 @@ function ResultPreviewProcessor(orderReference) {
 		var orderUI = this.getOrderUI();
 		var ReportPageRoot = $('<div class="pageRoot" />');	
 		if(printStatus!=true){
-		var wrapper = $('<div style="background-color:#D6FCFF;" class="groupResultTable" />');
+			var wrapper = $('<div style="background-color:#D6FCFF;" class="groupResultTable" />');
 		}else{
-		var wrapper = $('<div class="groupResultTable" />');
+			var wrapper = $('<div class="groupResultTable" />');
 		}
 		var resultContent = $('<div class="pageResultContent"  />');
 		var resultParent = result;
@@ -1888,7 +1962,7 @@ function ResultPreviewProcessor(orderReference) {
 											else
 												headerData = new generalLayoutHeader(tpTestResult, honorific);
 											tblObj.append(headerData.result);
-												status=false;
+											status=false;
 										}
 										if(tpTestResult.testLayout==constants.LAYOUTGENERAL)
 											var modalData = new generalLayout(tpTestResult, null, constants.MODEPRINT,honorific, order);	
@@ -1966,10 +2040,10 @@ function ResultPreviewProcessor(orderReference) {
 									var modalData = new generalOneLayout(singleResult, null, constants.MODEPRINT,honorific);	
 								tblObj.append(modalData.result);
 							} else if(singleResult.testLayout==constants.LAYOUTGENERALMED){
-									var modalData = new generalLayoutMed(singleResult, null, constants.MODEPRINT,honorific);	
-									tblObj.append(modalData.result);
-									headerData = modalData.result;
-									displayedIndex.push(resultIndex);		
+								var modalData = new generalLayoutMed(singleResult, null, constants.MODEPRINT,honorific);	
+								tblObj.append(modalData.result);
+								headerData = modalData.result;
+								displayedIndex.push(resultIndex);		
 							} else if(singleResult.testLayout==constants.LAYOUTCULTURE || singleResult.testLayout=="CultureReport" ) {
 								var modalData = new cultureLayout(honorific,singleResult,null, constants.MODEPRINT);
 								displayedIndex.push(resultIndex);
@@ -2174,7 +2248,7 @@ function ResultPreviewProcessor(orderReference) {
 								return false;
 							}	
 						} else {
-						    if(singleResult.testLayout==constants.LAYOUTGENERALONE) {						 
+							if(singleResult.testLayout==constants.LAYOUTGENERALONE) {						 
 								var tmpheaderData = new generalLayoutHeader(singleResult,honorific);
 								var header1= $('<div/>');
 								header1.append(headerData.result);	
@@ -2247,7 +2321,7 @@ function ResultPreviewProcessor(orderReference) {
 										else
 											headerData = new generalLayoutHeader(tpTestResult,honorific);
 										tblObj.append(headerData.result);
-											status=false;
+										status=false;
 									}
 									if(tpTestResult.testLayout==constants.LAYOUTGENERAL)
 										var modalData = new generalLayout(tpTestResult, null, constants.MODEPRINT,honorific,order);	
@@ -2308,16 +2382,16 @@ function ResultPreviewProcessor(orderReference) {
 		}
 		//remarks section
 		if(!result.testName) {				
-				$(result.testResult).each(function (resultIndex, singleResult) {
-						var remark=singleResult.remarks;
-						if(remark!=null && remark.trim()!="") {
-							var pTag = $('<p/>');	
-							var remarkInfo = commonMethodInvoker.nl2br(remark);
-							remarkInfo  = remarkInfo.replaceAll(" ", "&nbsp;");
-							pTag.append(remarkInfo);
-							remarksTag.append(pTag);
-						}
-				});
+			$(result.testResult).each(function (resultIndex, singleResult) {
+				var remark=singleResult.remarks;
+				if(remark!=null && remark.trim()!="") {
+					var pTag = $('<p/>');	
+					var remarkInfo = commonMethodInvoker.nl2br(remark);
+					remarkInfo  = remarkInfo.replaceAll(" ", "&nbsp;");
+					pTag.append(remarkInfo);
+					remarksTag.append(pTag);
+				}
+			});
 		} else {
 			var remark=result.remarks;
 			if(remark!=null && remark.trim()!="") {
@@ -2670,12 +2744,12 @@ function ResultDataGenerator() {
 					tstId = testId + "_" + result.specimenUid;		
 				var resultVar=result;					
 				if(resultVar.testLayout=="General" || resultVar.testLayout=="GeneralOne" || resultVar.testLayout=="DC" || resultVar.testLayout=='GTT' || resultVar.testLayout=='Urine' || resultVar.testLayout=='LipidLayout' || resultVar.testLayout=='PT' || resultVar.testLayout==constants.LAYOUTGENERALMED
-					|| resultVar.testLayout=="WidalLayoutMed" || resultVar.testLayout=="UrineLayoutMed" || resultVar.testLayout=="LipidLayoutMed" || resultVar.testLayout=="DCLayoutMed") {
+						|| resultVar.testLayout=="WidalLayoutMed" || resultVar.testLayout=="UrineLayoutMed" || resultVar.testLayout=="LipidLayoutMed" || resultVar.testLayout=="DCLayoutMed") {
 					if(resultVar.layoutHeight)
 						resultHeight+=resultVar.layoutHeight;	
 					var heightmm = commonMethodInvoker.getmmFromPixel(resultHeight, methodInvoker.getDPI());			
 					if(heightmm>totalHeight) {
-					var specimens="";
+						var specimens="";
 						//var specimens = resultSpecimenProcessor.getSpecimenList('{"testResult":[' + resultArray + ']}',orderHeader.header.uid);
 						var verifiedUserIds = verifiedUserProvider.getVerifiedUsers('{"testResult":' + JSON.stringify(resultArray) + '}',"");
 						resultSet.push('{"specimens":"' + specimens + '","testResult":' + JSON.stringify(resultArray) + ',"verifiedUsers":'+JSON.stringify(verifiedUserIds) + ',"reportDate":"' + curReportDate + '","reportTime":"'+ curReportTime + '"}');
@@ -2688,7 +2762,7 @@ function ResultDataGenerator() {
 			});	
 			if(resultArray.length>0){
 				var specimens="";
-			//	var specimens = resultSpecimenProcessor.getSpecimenList('{"testResult":[' + resultArray + ']}',orderInfo.header.uid);
+				//	var specimens = resultSpecimenProcessor.getSpecimenList('{"testResult":[' + resultArray + ']}',orderInfo.header.uid);
 				var verifiedUserIds = verifiedUserProvider.getVerifiedUsers('{"testResult":' + JSON.stringify(resultArray) + '}',"");
 				resultSet.push('{"specimens":"' + specimens + '","testResult":' + JSON.stringify(resultArray) + ',"verifiedUsers":['+verifiedUserIds + '],"reportDate":"' + curReportDate + '","reportTime":"'+ curReportTime + '"}');
 			}	
@@ -2763,22 +2837,22 @@ ResultDataGenerator.prototype.generatePrintJson = function(orderReference,select
 		var layoutStatus = methodInvoker.getPageSettingByKey('general_layout');
 		newLayouts=layoutStatus.visible;
 		if(newLayouts==false){				
-		if(resultVar.testLayout=="General" || resultVar.testLayout=="GeneralOne" || resultVar.testLayout=="DC" || resultVar.testLayout=='GTT' || resultVar.testLayout=='Urine' || resultVar.testLayout=='LipidLayout' || resultVar.testLayout=='PT' 
-			|| resultVar.testLayout==constants.LAYOUTGENERALMED || resultVar.testLayout=="WidalLayoutMed" || resultVar.testLayout=="UrineLayoutMed" || resultVar.testLayout=="LipidLayoutMed" || resultVar.testLayout=="DCLayoutMed") {
-			if(resultVar.layoutHeight)
-				resultHeight+=resultVar.layoutHeight;	
-			var heightmm = commonMethodInvoker.getmmFromPixel(resultHeight,methodInvoker.getDPI());		
-			if(heightmm>totalHeight) {
-				//var specimens="";
-				var specimens = resultSpecimenProcessor.getSpecimenList('{"testResult":' + JSON.stringify(resultArray)  + '}',"");
-				var verifiedUserIds = verifiedUserProvider.getVerifiedUsers('{"testResult":' + JSON.stringify(resultArray) + '}',"");
-				resultSet.push('{"specimens":"' + specimens + '","testResult":' + JSON.stringify(resultArray) + ',"verifiedUsers":'+JSON.stringify(verifiedUserIds) + ',"reportDate":"' + curReportDate + '","reportTime":"'+ curReportTime + '"}');
-				resultArray=[];
-				resultHeight=resultVar.layoutHeight+25;
-			}	
-			resultArray.push(result);
-		} else
-			resultTestPackageArray.push(result);
+			if(resultVar.testLayout=="General" || resultVar.testLayout=="GeneralOne" || resultVar.testLayout=="DC" || resultVar.testLayout=='GTT' || resultVar.testLayout=='Urine' || resultVar.testLayout=='LipidLayout' || resultVar.testLayout=='PT' 
+				|| resultVar.testLayout==constants.LAYOUTGENERALMED || resultVar.testLayout=="WidalLayoutMed" || resultVar.testLayout=="UrineLayoutMed" || resultVar.testLayout=="LipidLayoutMed" || resultVar.testLayout=="DCLayoutMed") {
+				if(resultVar.layoutHeight)
+					resultHeight+=resultVar.layoutHeight;	
+				var heightmm = commonMethodInvoker.getmmFromPixel(resultHeight,methodInvoker.getDPI());		
+				if(heightmm>totalHeight) {
+					//var specimens="";
+					var specimens = resultSpecimenProcessor.getSpecimenList('{"testResult":' + JSON.stringify(resultArray)  + '}',"");
+					var verifiedUserIds = verifiedUserProvider.getVerifiedUsers('{"testResult":' + JSON.stringify(resultArray) + '}',"");
+					resultSet.push('{"specimens":"' + specimens + '","testResult":' + JSON.stringify(resultArray) + ',"verifiedUsers":'+JSON.stringify(verifiedUserIds) + ',"reportDate":"' + curReportDate + '","reportTime":"'+ curReportTime + '"}');
+					resultArray=[];
+					resultHeight=resultVar.layoutHeight+25;
+				}	
+				resultArray.push(result);
+			} else
+				resultTestPackageArray.push(result);
 		}else {
 			resultArray.push(result);
 		}
@@ -2828,7 +2902,7 @@ function ResultHeaderProcessor(orderUI) {
 		header.css('margin-left',headerSetting.marginLeft+ "mm");
 		if(parseInt(headerSetting.fontSize)!=0)
 			header.css('font-size',headerSetting.fontSize + "px")
-		var columnSymbol = $('<div>:</div>');
+			var columnSymbol = $('<div>:</div>');
 		columnSymbol.addClass('column_symbol');
 		var row = $('<div/>');
 		row.addClass('five_sixth');
@@ -2953,17 +3027,17 @@ function ResultHeaderProcessor(orderUI) {
 		header.css('margin-left',headerSetting.marginLeft+ "mm");
 		if(parseInt(headerSetting.fontSize)!=0)
 			header.css('font-size',headerSetting.fontSize + "px")
-		if(parseInt(headerSetting.marginTop)!=0){
-			var newDiv = $("<div id='header'/>");
-			if(status!=true)
-			{
-				var imgTag=$('<img src="'+headerSetting.bgImage+'"  style="height:30mm; width:216mm;">');
-				newDiv.append(imgTag);
+			if(parseInt(headerSetting.marginTop)!=0){
+				var newDiv = $("<div id='header'/>");
+				if(status!=true)
+				{
+					var imgTag=$('<img src="'+headerSetting.bgImage+'"  style="height:30mm; width:216mm;">');
+					newDiv.append(imgTag);
+				}
+				newDiv.css("height",headerSetting.marginTop+"mm");
+				newDiv.css("width",headerSetting.width+"mm");
+				header.append(newDiv);
 			}
-			newDiv.css("height",headerSetting.marginTop+"mm");
-			newDiv.css("width",headerSetting.width+"mm");
-			header.append(newDiv);
-		}
 		/*Create the Header Sections*/
 		var headerTable = $("<table cellpadding=0 cellspacing=0/>");
 		//headerTable.css("height",(headerSetting.height - headerSetting.marginTop));
@@ -3076,7 +3150,7 @@ function ResultHeaderProcessor(orderUI) {
 			var lnccolumn = $("<td>&nbsp;</td>");
 			self.setStyles(lnccolumn, lnc);
 			//if(lnc.visible!=false && lnc.label!="") 
-				lnccolumn.empty().html(lnc.label);
+			lnccolumn.empty().html(lnc.label);
 			row.append(lnccolumn);
 			var lnvcolumn = $("<td>&nbsp;</td>");
 			self.setStyles(lnvcolumn, lnv);
@@ -3086,7 +3160,7 @@ function ResultHeaderProcessor(orderUI) {
 			var mnccolumn = $("<td>&nbsp;</td>");
 			self.setStyles(mnccolumn, mnc);
 			//if(mnc.visible!=false && mnc.label!="") 
-				mnccolumn.empty().html(mnc.label);
+			mnccolumn.empty().html(mnc.label);
 			row.append(mnccolumn);
 			var mnvcolumn = $("<td>&nbsp;</td>");
 			self.setStyles(mnvcolumn, mnv);
@@ -3097,7 +3171,7 @@ function ResultHeaderProcessor(orderUI) {
 		var rnccolumn = $("<td>&nbsp;</td>");
 		self.setStyles(rnccolumn, rnc);
 		//if(rnc.visible!=false && rnc.label!="") 
-			rnccolumn.empty().html(rnc.label);
+		rnccolumn.empty().html(rnc.label);
 		row.append(rnccolumn);
 		var rnvcolumn = $("<td>&nbsp;</td>");
 		self.setStyles(rnvcolumn, rnv);
@@ -3198,13 +3272,13 @@ function ResultHeaderProcessor(orderUI) {
 		header.css('margin-left',headerSetting.marginLeft+ "mm");
 		if(parseInt(headerSetting.fontSize)!=0)
 			header.css('font-size',headerSetting.fontSize + "px")
-		if(parseInt(headerSetting.marginTop)!=0){
-			var newDiv = $("<div>&nbsp;</div>");
-			newDiv.append(" ");
-			newDiv.css("height",headerSetting.marginTop+"mm");
-			newDiv.css("width",headerSetting.width+"mm");
-			header.append(newDiv);
-		}
+			if(parseInt(headerSetting.marginTop)!=0){
+				var newDiv = $("<div>&nbsp;</div>");
+				newDiv.append(" ");
+				newDiv.css("height",headerSetting.marginTop+"mm");
+				newDiv.css("width",headerSetting.width+"mm");
+				header.append(newDiv);
+			}
 		var l1c = methodInvoker.getPageSettingByKey('L1C');
 		var l1v = methodInvoker.getPageSettingByKey('L1V');
 		var m1c = methodInvoker.getPageSettingByKey('M1C');
@@ -3257,7 +3331,7 @@ function ResultHeaderProcessor(orderUI) {
 		if(l6v.label!="select" || m6v.label!="select" || r6v.label!="select"){
 			header.append(self.generateRowNew(result,combinedResult,orderId,honorific,l6c,l6v,m6c,m6v,r6c,r6v));	
 		}
-		
+
 		return header;
 	}
 	this.generateRowNew = function(result, combinedResult, orderId, honorific, lnc, lnv, mnc, mnv, rnc, rnv){
@@ -3266,7 +3340,7 @@ function ResultHeaderProcessor(orderUI) {
 		var curwidth=0;
 		var curcol = "";
 		if(lnv.label!='blank' || mnv.label!="blank" || rnv.label!="blank" || 
-			lnc.label.trim()!="" || mnc.label.trim()!="" || rnc.label.trim()!=""){
+				lnc.label.trim()!="" || mnc.label.trim()!="" || rnc.label.trim()!=""){
 			row=$('<div class="oneHeader" >&nbsp;</div>');
 			var column = $('<div class="columnleftalign">&nbsp;</div>');
 			column.append("Name");
@@ -3376,12 +3450,12 @@ function ResultFooterProcessor(orderUI) {
 				}else {
 					if(index==0)
 						divTag = $('<div style="min-width:31%;float:left;margin-left:1%;text-align:left" />')
-					else if(index==1)
-						divTag = $('<div style="min-width:31%;float:left;margin-left:1%;text-align:center" />')
-					else
-						divTag = $('<div style="min-width:31%;float:right;margin-right:1%;text-align:right" />')
+						else if(index==1)
+							divTag = $('<div style="min-width:31%;float:left;margin-left:1%;text-align:center" />')
+							else
+								divTag = $('<div style="min-width:31%;float:right;margin-right:1%;text-align:right" />')
 
-					var childTag = $('<div/>');
+								var childTag = $('<div/>');
 					var signTag=$('<div>&nbsp;</div>');
 					if(userInfo.signature  && signSetting.visible==true) {
 						signTag.html('<img src=' + userInfo.signature + ' width="200" height="40" style="margin-left:5%;"/>');
@@ -3398,7 +3472,7 @@ function ResultFooterProcessor(orderUI) {
 					tdTag.append(divTag);
 					if(index==2)
 						return false;
-					}
+				}
 			});
 			var f1l = methodInvoker.getPageSettingByKey('F1L');
 			var f1m = methodInvoker.getPageSettingByKey('F1M');
@@ -3406,7 +3480,7 @@ function ResultFooterProcessor(orderUI) {
 			var f2l = methodInvoker.getPageSettingByKey('F2L');
 			var f2m = methodInvoker.getPageSettingByKey('F2M');
 			var f2r = methodInvoker.getPageSettingByKey('F2R');
-			
+
 			if(f1l.label.trim()=="" && f1m.label.trim()=="" && f1r.label.trim()==""){
 
 			} else {
@@ -3551,11 +3625,11 @@ function ResultPrintHandler() {
 		strHtml += ".nomargin{margin:0px}";
 		strHtml += ".singleheight {height:6.5mm;}";
 		strHtml += ".oneHeader{width:100%}";
- 		strHtml += ".onethird {width:33%;float:left}";
- 		strHtml += ".onesecond {width:30%;float:left}";
- 		strHtml += ".onefirst{width:39%;float:left}";
- 		strHtml += ".onefive {width:20%;float:left;}";
- 		strHtml += ".onefourth {width:15%;float:left;}";
+		strHtml += ".onethird {width:33%;float:left}";
+		strHtml += ".onesecond {width:30%;float:left}";
+		strHtml += ".onefirst{width:39%;float:left}";
+		strHtml += ".onefive {width:20%;float:left;}";
+		strHtml += ".onefourth {width:15%;float:left;}";
 		//strHtml += ".remarks { margin:auto; width:90%}";
 		strHtml += ".column-2{text-align:right}";
 		strHtml += ".middle{text-align:center}";
@@ -3563,9 +3637,9 @@ function ResultPrintHandler() {
 		strHtml += ".underline{text-decoration:underline}";
 		strHtml += ".columnleftalign{float:left;}";
 		strHtml += ".one_first_column {width:17%}";
- 		strHtml += ".one_second_column{width:5%}";
- 		strHtml += ".one_third_column{width:77%}";
- 		strHtml += "#foodAllergy {font-size:12px}";
+		strHtml += ".one_second_column{width:5%}";
+		strHtml += ".one_third_column{width:77%}";
+		strHtml += "#foodAllergy {font-size:12px}";
 		strHtml += ".foodallergy_onethird_border {border:1px solid}";
 		strHtml += "#foodAllergy .one_third_column{font-size:11px}";
 		strHtml += ".smallheight {line-height:15px;}";
