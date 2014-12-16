@@ -214,6 +214,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 				</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.NetlimsOrderPropertyEnum</value>
 				<value>com.nv.youNeverWait.util.filter.queryBuilder.PatientResultPropertyEnum</value>
+				<value>com.nv.youNeverWait.util.filter.queryBuilder.FacilityPropertyEnum</value>
 			</list>
 		</property>
 	</bean>
@@ -529,6 +530,12 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="netlimsServerIpAddress">
 			<value>${netlims.server.ip.address}</value>
 		</property>
+		<property name="queryBuilderFactory">
+			<ref bean="queryBuilder.Factory" />
+		</property>
+		<property name="filterFactory">
+			<ref bean="filter.Factory" />
+		</property>
 	</bean>
 	<bean id="facility.service" class="com.nv.youNeverWait.user.bl.impl.FacilityServiceImpl">
 		<property name="validator">
@@ -649,6 +656,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 					value="com.nv.youNeverWait.util.filter.queryBuilder.NetlimsOrderQueryBuilder" />
 				<entry key="patientorders"
 					value="com.nv.youNeverWait.util.filter.queryBuilder.PatientResultQueryBuilder"/>
+					<entry key="facility"
+					value="com.nv.youNeverWait.util.filter.queryBuilder.FacilityQueryBuilder"/>
 			</map>
 		</property>
 
