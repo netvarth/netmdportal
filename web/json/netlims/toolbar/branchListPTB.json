@@ -3,6 +3,7 @@
 		{"name":"view","title":"View"},	
 		{"name":"change","title":"Sync Set"},
 		{"name":"orderCount","title":"Order count"},
+		{"name":"orderList","title":"Order list"},
 		{"name":"facilityList","title":"Facility List"}
 	]
 }
