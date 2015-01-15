@@ -59,7 +59,6 @@ public class GenericDaoHibernateImpl implements GenericDao, SendMsgBaseDAO {
 			se.setDisplayErrMsg(true);
 			throw se;
 		}
-
 	}
 	public <T> boolean saveOrUpdate(Class<T> className, T object) {
 		try {
@@ -81,10 +80,8 @@ public class GenericDaoHibernateImpl implements GenericDao, SendMsgBaseDAO {
 			throw new ServiceException(ErrorCodeEnum.InvalidDateFormat);
 
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			throw new ServiceException(ErrorCodeEnum.InvalidDateFormat);
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			throw new ServiceException(ErrorCodeEnum.InvalidDateFormat);
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
