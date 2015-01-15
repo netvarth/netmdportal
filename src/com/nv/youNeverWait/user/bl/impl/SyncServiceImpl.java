@@ -7,8 +7,6 @@
  */
 package com.nv.youNeverWait.user.bl.impl;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,6 +41,7 @@ import com.nv.youNeverWait.rs.dto.LabDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.LimsFacilityBundle;
+import com.nv.youNeverWait.rs.dto.LimsPageSettingsBundle;
 import com.nv.youNeverWait.rs.dto.LimsUserBundle;
 import com.nv.youNeverWait.rs.dto.MedicalRecordDTO;
 import com.nv.youNeverWait.rs.dto.MedicalRecordSyncResponseDTO;
@@ -1810,9 +1809,7 @@ public class SyncServiceImpl implements SyncService {
 				response.setGlobalId(globalId);
 				response.setStatusCode("200");
 			} catch(Exception e){
-				StringWriter stack = new StringWriter();
-				e.printStackTrace(new PrintWriter(stack));
-				log.error(stack.toString());
+				log.error("Process Order Result",e);
 				response.setStatusCode("500");
 			}
 			responses.add(response);
@@ -1839,9 +1836,7 @@ public class SyncServiceImpl implements SyncService {
 				}
 
 			} catch (Exception e) {
-				StringWriter stack = new StringWriter();
-				e.printStackTrace(new PrintWriter(stack));
-				log.error(stack.toString());
+				log.error("Process Referal",e);
 				response.setStatusCode("500");
 			}
 			responses.add(response);
@@ -1869,9 +1864,7 @@ public class SyncServiceImpl implements SyncService {
 					response.setStatusCode("200");
 				}
 			}catch (Exception e){
-				StringWriter stack = new StringWriter();
-				e.printStackTrace(new PrintWriter(stack));
-				log.error(stack.toString());
+				log.error("Process Facility",e);
 				response.setStatusCode("500");
 			}
 			responses.add(response);
@@ -1917,14 +1910,26 @@ public class SyncServiceImpl implements SyncService {
 					response.setStatusCode("200");
 				}
 			}catch (Exception e){
-				StringWriter stack = new StringWriter();
-				e.printStackTrace(new PrintWriter(stack));
-				log.error(stack.toString());
+				log.error("Process User",e);
 				response.setStatusCode("500");
 			}
 			responses.add(response);
 		}
 		return responses;
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.SyncService#processPageSettings(com.nv.youNeverWait.rs.dto.LimsPageSettingsBundle)
+	 */
+	@Override
+	public SyncResponse processPageSettings(LimsPageSettingsBundle bundle) {
+		SyncResponse response = new SyncResponse();
+		resultService.processPageSettings(bundle);
+		response.setGlobalId(bundle.getSource_branch_id());
+		response.setStatusCode("200");
+		return response;
 	}
 
 
