@@ -15,8 +15,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.LimsPageSettingsBundle;
 import com.nv.youNeverWait.rs.dto.OrderResultSyncDTO;
 import com.nv.youNeverWait.rs.dto.OrderTestResultList;
+import com.nv.youNeverWait.rs.dto.PageLayoutSettings;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
 import com.nv.youNeverWait.user.bl.service.FacilityService;
@@ -128,9 +130,19 @@ public class ResultServiceImpl implements ResultService{
 	public void setFacilityService(FacilityService facilityService) {
 		this.facilityService = facilityService;
 	}
-	
-	
-
-
-
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.ResultService#processPageSettings(com.nv.youNeverWait.rs.dto.LimsPageSettingsBundle)
+	 */
+	@Override
+	public void processPageSettings(LimsPageSettingsBundle bundle) {
+		resultDao.ProcessPageSettings(bundle);
+		
+	}
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.bl.service.ResultService#getPageSettings(int)
+	 */
+	@Override
+	public List<PageLayoutSettings> getPageSettings(int branchId) {
+		return resultDao.getPageSettings(branchId);
+	}
 }
