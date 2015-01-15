@@ -37,16 +37,19 @@ import com.nv.youNeverWait.pl.entity.NetlimsResultTbl;
 import com.nv.youNeverWait.pl.entity.NetmdPassphraseTbl;
 import com.nv.youNeverWait.pl.entity.OrderResultTbl;
 import com.nv.youNeverWait.pl.entity.OrderTransferCountTbl;
+import com.nv.youNeverWait.pl.entity.PageSettingsTbl;
 import com.nv.youNeverWait.pl.entity.PatientResultTbl;
 import com.nv.youNeverWait.pl.entity.PatientTbl;
 import com.nv.youNeverWait.pl.entity.ReferralResultTbl;
 import com.nv.youNeverWait.pl.entity.ResultTbl;
 import com.nv.youNeverWait.pl.impl.GenericDaoHibernateImpl;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.LimsPageSettingsBundle;
 import com.nv.youNeverWait.rs.dto.OrderResultSyncDTO;
 import com.nv.youNeverWait.rs.dto.OrderTestResult;
 import com.nv.youNeverWait.rs.dto.OrderTestResultDTO;
 import com.nv.youNeverWait.rs.dto.OrderTestResultList;
+import com.nv.youNeverWait.rs.dto.PageLayoutSettings;
 import com.nv.youNeverWait.rs.dto.ResultDTO;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
@@ -174,8 +177,6 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 			orderTestResultList.add(orderResult);
 
 		}
-
-
 		response.setOrderTestResultList(orderTestResultList);
 		response.setSuccess(true);
 		return response;
@@ -485,6 +486,103 @@ public class ResultDaoImpl extends GenericDaoHibernateImpl implements ResultDao 
 	 */
 	public void setFacilityDao(FacilityDao facilityDao) {
 		this.facilityDao = facilityDao;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.ResultDao#ProcessPageSettings(com.nv.youNeverWait.rs.dto.LimsPageSettingsBundle)
+	 */
+	@Override
+	@Transactional(readOnly=false)
+	public void ProcessPageSettings(LimsPageSettingsBundle bundle) {
+		for(PageLayoutSettings pagesetting:bundle.getPageSettings()){
+			PageSettingsTbl layout = getByKey(pagesetting.getKey(),bundle.getSource_branch_id());
+			if(layout==null){
+				layout=new PageSettingsTbl();
+			}
+			layout.setKeyName(pagesetting.getKey());
+			layout.setWidth(pagesetting.getWidth());
+			layout.setHeight(pagesetting.getHeight());
+			layout.setMarginTop(pagesetting.getMarginTop());
+			layout.setMarginLeft(pagesetting.getMarginLeft());
+			layout.setMarginRight(pagesetting.getMarginRight());
+			layout.setFontSize(pagesetting.getFontSize());
+			layout.setLabelValue(pagesetting.getLabel());
+			if(pagesetting.isBold())
+				layout.setBold(true);
+			else
+				layout.setBold(false);
+			if(pagesetting.isItalics())
+				layout.setItalics(true);
+			else
+				layout.setItalics(false);
+			if(pagesetting.isUnderline())
+				layout.setUnderline(true);
+			else
+				layout.setUnderline(false);
+			if(pagesetting.isVisible())
+				layout.setVisible(true);
+			else
+				layout.setVisible(false);
+			if(pagesetting.isBorder())
+				layout.setBorder(true);
+			else
+				layout.setBorder(false);		
+			layout.setBgImage(pagesetting.getBgImage());
+			layout.setLabBranchTbl(getById(LabBranchTbl.class, bundle.getSource_branch_id()));
+			saveOrUpdate(PageSettingsTbl.class,layout);
+		}	
+	}
+
+	/**
+	 * Mani E.V	
+	 * @param key
+	 * @return
+	 */
+	private PageSettingsTbl getByKey(String key, int branchId) {
+		javax.persistence.Query query=em.createQuery(Query.GET_PAGESETTING_BY_NAME);
+		query.setParameter("param1", key);
+		query.setParameter("param2", branchId);
+		return (PageSettingsTbl) executeUniqueQuery(PageSettingsTbl.class, query);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.nv.youNeverWait.user.pl.dao.ResultDao#getPageSettings(int)
+	 */
+	@Override
+	public List<PageLayoutSettings> getPageSettings(int branchId) {
+		List<PageLayoutSettings> pageSettingList = new ArrayList<PageLayoutSettings>();
+
+		List<PageSettingsTbl> layouts = getLayouts(branchId);
+		for(PageSettingsTbl layout:layouts){
+			PageLayoutSettings pagesetting = new PageLayoutSettings();
+			pagesetting.setKey(layout.getKeyName());
+			pagesetting.setBold(layout.getBold());
+			pagesetting.setHeight(layout.getHeight());
+			pagesetting.setItalics(layout.getItalics());
+			pagesetting.setLabel(layout.getLabelValue());
+			pagesetting.setUnderline(layout.getUnderline());
+			pagesetting.setVisible(layout.getVisible());
+			pagesetting.setWidth(layout.getWidth());
+			pagesetting.setMarginTop(layout.getMarginTop());
+			pagesetting.setMarginLeft(layout.getMarginLeft());
+			pagesetting.setMarginRight(layout.getMarginRight());
+			pagesetting.setFontSize(layout.getFontSize());
+			pagesetting.setBorder(layout.getBorder());
+			pagesetting.setBgImage(layout.getBgImage());
+			pageSettingList.add(pagesetting);
+		}
+		return pageSettingList;
+	}
+
+	/**
+	 * Mani E.V	
+	 * @param branchId 
+	 * @return
+	 */
+	private List<PageSettingsTbl> getLayouts(int branchId) {
+		javax.persistence.Query query=em.createQuery(Query.GET_PAGESETTINGS);
+		query.setParameter("param1", branchId);
+		return query.getResultList();
 	}
 
 }
