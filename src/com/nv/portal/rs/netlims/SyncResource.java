@@ -16,6 +16,7 @@ import com.nv.youNeverWait.rs.dto.ErrorDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.LimsFacilityBundle;
+import com.nv.youNeverWait.rs.dto.LimsPageSettingsBundle;
 import com.nv.youNeverWait.rs.dto.LimsUserBundle;
 import com.nv.youNeverWait.rs.dto.OrderResultBundle;
 import com.nv.youNeverWait.rs.dto.Parameter;
@@ -106,6 +107,17 @@ public class SyncResource extends ServiceExceptionHandler {
 		CommonSyncResponse responses=new CommonSyncResponse();
 		responses.setResponses(response);
 		return responses;
+	}
+	/**
+	 * Mani E.V	
+	 * @param bundle
+	 * @return SyncResponse
+	 */
+	@RequestMapping(value="pagesettings", method=RequestMethod.POST)
+	@ResponseBody
+	public SyncResponse processPageSettings(@RequestBody LimsPageSettingsBundle bundle){
+		SyncResponse response = service.processPageSettings(bundle);
+		return response;
 	}
 	
 	/**
