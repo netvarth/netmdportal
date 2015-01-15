@@ -71,6 +71,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 									"/youNeverWait/netlims/ui/sync/referral")
 							&& !request.getRequestURI().equals(
 									"/youNeverWait/netlims/ui/sync/user")
+							&& !request.getRequestURI().equals(
+									"/youNeverWait/netlims/ui/sync/pagesettings")
 							&& !request.getRequestURI().equals
 							("/youNeverWait/netlims/ui/lab/mailResult")) {
 						request.getRequestDispatcher("/netlims/auth/")
