@@ -15,8 +15,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.LimsPageSettingsBundle;
 import com.nv.youNeverWait.rs.dto.OrderResultSyncDTO;
 import com.nv.youNeverWait.rs.dto.OrderTestResultList;
+import com.nv.youNeverWait.rs.dto.PageLayoutSettings;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.rs.dto.RetrieveResultsResponseDTO;
 
@@ -58,5 +60,18 @@ public interface ResultDao {
 	 * @return globalid
 	 */
 	public int processOrderResult(OrderResultSyncDTO orderResult, int branchId, int patientId);
+
+	/**
+	 * Mani E.V	
+	 * @param bundle
+	 */
+	public void ProcessPageSettings(LimsPageSettingsBundle bundle);
+
+	/**
+	 * Mani E.V	
+	 * @param branchId
+	 * @return
+	 */
+	public List<PageLayoutSettings> getPageSettings(int branchId);
 	
 }
