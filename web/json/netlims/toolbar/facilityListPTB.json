@@ -1,6 +1,5 @@
 {		
 	"buttons":	[		
-		{"name":"view","title":"View"},	
 		{"name":"orderCount","title":"Order count"},
 		{"name":"orderList","title":"Order list"}
 		
