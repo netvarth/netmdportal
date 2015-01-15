@@ -15,6 +15,7 @@ import com.nv.youNeverWait.api.sync.LimsReferralBundle;
 import com.nv.youNeverWait.rs.dto.LabSyncDTO;
 import com.nv.youNeverWait.rs.dto.LabSyncResponseDTO;
 import com.nv.youNeverWait.rs.dto.LimsFacilityBundle;
+import com.nv.youNeverWait.rs.dto.LimsPageSettingsBundle;
 import com.nv.youNeverWait.rs.dto.LimsUserBundle;
 import com.nv.youNeverWait.rs.dto.OrderResultBundle;
 import com.nv.youNeverWait.rs.dto.SyncDTO;
@@ -56,5 +57,11 @@ public interface SyncService {
 	 * @return List<SyncResponse>
 	 */
 	public List<SyncResponse> processUser(LimsUserBundle bundle);
+	/**
+	 * Mani E.V	
+	 * @param bundle
+	 * @return
+	 */
+	public SyncResponse processPageSettings(LimsPageSettingsBundle bundle);
 
 }
