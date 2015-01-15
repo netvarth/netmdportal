@@ -361,4 +361,6 @@ public class Query {
 	public static final String GET_LAB_ORDER_COUNT="SELECT SUM(orderCount) as orderCt FROM OrderTransferCountTbl as ordercounttbl where ordercounttbl.labBranchTbl.labTbl.id =:param1 and ordercounttbl.date>=:param2 and ordercounttbl.date<=:param3 ";
 	public static final String GET_FACILITY_ORDER_COUNT="SELECT SUM(orderCount) as orderCt FROM OrderTransferCountTbl as ordercounttbl where ordercounttbl.labFacilityTbl.id =:param1 and ordercounttbl.date>=:param2 and ordercounttbl.date<=:param3 ";
 	//public static final String GET_FACILITY_LIST="SELECT lab_facility_tbl.* FROM lab_facility_tbl LEFT JOIN branch_facility_tbl ON lab_facility_tbl.id = branch_facility_tbl.facility LEFT JOIN lab_branch_tbl ON branch_facility_tbl.branch = lab_branch_tbl.id WHERE lab_branch_tbl.id =325";
+	public static final String GET_PAGESETTING_BY_NAME = "from PageSettingsTbl as setting where setting.keyName=:param1 and setting.labBranchTbl.id=:param2";
+	public static final String GET_PAGESETTINGS = "from PageSettingsTbl as setting where setting.labBranchTbl.id=:param1";
 }
