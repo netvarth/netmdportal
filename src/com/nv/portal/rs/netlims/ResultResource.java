@@ -33,6 +33,7 @@ import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.exception.ServiceExceptionHandler;
 import com.nv.youNeverWait.report.PDFResultView;
 import com.nv.youNeverWait.rs.dto.ErrorDTO;
+import com.nv.youNeverWait.rs.dto.PageLayoutSettings;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.ResultListResponseDTO;
 import com.nv.youNeverWait.user.bl.service.ResultService;
@@ -88,6 +89,14 @@ public class ResultResource extends ServiceExceptionHandler{
 		return modalview;
 	}
 
+	/** 
+	 * @return List
+	 */
+	@RequestMapping(value="/pageSettings/{branchId}", method=RequestMethod.GET)
+	@ResponseBody
+	public List<PageLayoutSettings> viewPageSettings(@PathVariable int branchId){
+		return resultService.getPageSettings(branchId);
+	}
 	/**
 	 * @return the resultService
 	 */
