@@ -318,6 +318,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="questionnaireService">
 			<ref bean="questionnaire.service" />
 		</property>
+		<property name="mailFrom">
+			<value>${mailFrom}</value>
+		</property>
 		<property name="ynwServerIpAddress">
 			<value>${ynw.server.ip.address}</value>
 		</property>
