@@ -48,6 +48,10 @@ function Query() {
 		ajaxProcessor.setUrl(constants.USERURL + uid + "/" + branchId);
 		return ajaxProcessor.get();
 	}
+	this.getPageSettings = function(branchId){
+		ajaxProcessor.setUrl(constants.GETPAGESETTINGSURL + branchId);
+		return ajaxProcessor.get();
+	}
 }
 function MethodInvoker() {
 	this.setDPI=function(dpi){this.dpi = dpi;}
@@ -195,6 +199,7 @@ function Constants() {
 	this.SELECTONEORDER = "Select atleast one order";
 	this.SELECTONEORDERONLY = "Select only one order";
 	this.VIEWORDERPAGEURL = "/youNeverWait/json/netlims/orderTests.json";
+	this.GETPAGESETTINGSURL="/youNeverWait/netlims/ui/result/pageSettings/";
 	this.DELIVERED="Delivered";
 	this.LAYOUTGENERAL="General";
 	this.LAYOUTGENERALONE="GeneralOne";
@@ -327,7 +332,29 @@ function Order() {
 	this.getOrder = function() {return this.order;}
 	this.getTestList = function() {return this.testList;}
 	this.setPageTitle = function(value) {this.pageTitle.empty().html(value);}
+	this.getPageSettingByKey = function(key){
+		var result = null; 
+		var self=this;
+		var result = null; 
+		$(self.setting).each(function(index, data){
+			if(data==key){
+				result=data;
+				return false;
+			}
+		});
+		return result;
+	}
 	this.setTestList = function(testList) {	this.testList=testList;}
+	this.getPageSettings = function(){
+		return this.pageSettings;
+	}
+	this.setPageSettings=function(branchId){
+		if(this.pageSettings==null || this.pageSettings=='undefined' || branchId!=this.getBranchId() ){
+			this.pageSettings = query.getPageSettings(branchId);
+		} 
+		if(this.pageSettings.length==0)
+			alert("Print settings not available for this branch");
+	}
 	this.list = function() {
 		this.orderTableNavigator.list();
 		this.setPageTitle("Orders");
@@ -346,6 +373,7 @@ function Order() {
 		orderId = orderbranchId[0];
 		branchId = orderbranchId[1];
 		this.setOrder(orderId);
+		this.setPageSettings(branchId);
 		this.setBranchId(branchId);
 		ajaxProcessor.setUrl("/youNeverWait/netlims/ui/order/getTests/"+orderId);
 		var tests = ajaxProcessor.get();
@@ -381,7 +409,8 @@ function Order() {
 	this.getResultPrintObj=function(){return this.resultPrintObj;}
 	this.setOrderHeader_Setting = function(header_setting){
 		this.orderHeader=$.parseJSON(header_setting).header;
-		this.setting=$.parseJSON(header_setting).settings;
+		//this.setting=$.parseJSON(header_setting).settings;
+		this.setting = this.getPageSettings();
 		methodInvoker.setSetting(this.setting);
 	}
 	this.getPageSettingByKey = function(key){
