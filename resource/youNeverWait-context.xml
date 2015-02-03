@@ -321,6 +321,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="mailFrom">
 			<value>${mailFrom}</value>
 		</property>
+		<property name="mailThread">
+			<ref bean="email.worker.thread" />
+		</property>
 		<property name="ynwServerIpAddress">
 			<value>${ynw.server.ip.address}</value>
 		</property>
