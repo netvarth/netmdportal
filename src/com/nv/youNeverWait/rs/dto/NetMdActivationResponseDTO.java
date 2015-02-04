@@ -22,6 +22,7 @@ public class NetMdActivationResponseDTO {
 	private List<ScheduleDetail> retrieveScheduleList= new ArrayList<ScheduleDetail>();
 	private List<AppointmentDTO> retrieveAppointments = new ArrayList<AppointmentDTO>();
 	private boolean primary;
+	private int id;
 	
 	
 	/**
@@ -143,6 +144,12 @@ public class NetMdActivationResponseDTO {
 	 */
 	public void setUser(List<NetMdUserDetail> user) {
 		this.user = user;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	

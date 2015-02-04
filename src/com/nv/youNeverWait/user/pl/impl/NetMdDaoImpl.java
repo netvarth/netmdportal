@@ -722,8 +722,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 	@Transactional
 	public NetMdActivationResponseDTO activateNetMd(HeaderDTO header) {
 		NetMdActivationResponseDTO response = new NetMdActivationResponseDTO();
-		NetmdPassphraseTbl netmdpassPhrase = (NetmdPassphraseTbl) getByPassphrase(header
-				.getPassPhrase());
+		NetmdPassphraseTbl netmdpassPhrase = (NetmdPassphraseTbl) getByPassphrase(header.getPassPhrase());
 		if (netmdpassPhrase == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidPassphrase);
@@ -806,8 +805,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 		netmdpassPhrase.setMacId(header.getMacId());
 		update(netmdpassPhrase);
 
-		NetmdBranchTbl netMdBranch = getById(NetmdBranchTbl.class,
-				netmdpassPhrase.getNetmdBranchTbl().getId());
+		NetmdBranchTbl netMdBranch = getById(NetmdBranchTbl.class,netmdpassPhrase.getNetmdBranchTbl().getId());
 		if (netMdBranch == null) {
 			ServiceException se = new ServiceException(
 					ErrorCodeEnum.InvalidNetMdAccount);
@@ -877,6 +875,7 @@ public class NetMdDaoImpl extends GenericDaoHibernateImpl implements NetMdDao {
 			userList.add(user);
 		}
 		response.setUser(userList);
+		response.setId(netmdpassPhrase.getId());
 		response.setSuccess(true);
 		return response;
 	}
