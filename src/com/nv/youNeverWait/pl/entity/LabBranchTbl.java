@@ -3,6 +3,7 @@ package com.nv.youNeverWait.pl.entity;
 import java.io.Serializable;
 
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 public class LabBranchTbl extends HealthCareOrganisationTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_date_time", nullable=false)
 	private Date createDateTime;
@@ -30,11 +31,14 @@ public class LabBranchTbl extends HealthCareOrganisationTbl implements Serializa
 
 	@Column(name="sync_time")
 	private int syncTime;
+	
+//	@Column(name="public_key", nullable=true, length=45)
+//	private String publicKey;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="update_date_time", nullable=false)
 	private Date updateDateTime;
-
+	
 	//bi-directional many-to-one association to LabBranchSystemInfoTbl
 	@OneToMany(mappedBy="labBranchTbl")
 	private List<LabBranchSystemInfoTbl> labBranchSystemInfoTbls;
@@ -106,6 +110,11 @@ public class LabBranchTbl extends HealthCareOrganisationTbl implements Serializa
 	//bi-directional many-to-one association to BranchFacilityTbl
 		@OneToMany(mappedBy="labBranchTbl")
 		private List<BranchFacilityTbl> branchFacilityTbls;
+		
+	//bi-directional one-to-one association to HealthCareOrganisationTbl	
+		@OneToOne
+		@JoinColumn(name="id")
+		private HealthCareOrganisationTbl healthCareOrganisationTbl;
 	/**
 	 * 
 	 */
@@ -735,4 +744,14 @@ public class LabBranchTbl extends HealthCareOrganisationTbl implements Serializa
 
 		return branchFacilityTbl;
 	}
+
+	public HealthCareOrganisationTbl getHealthCareOrganisationTbl() {
+		return healthCareOrganisationTbl;
+	}
+
+	public void setHealthCareOrganisationTbl(
+			HealthCareOrganisationTbl healthCareOrganisationTbl) {
+		this.healthCareOrganisationTbl = healthCareOrganisationTbl;
+	}
+	
 }
