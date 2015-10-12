@@ -1,7 +1,9 @@
 package com.nv.youNeverWait.pl.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 /**
@@ -30,7 +32,12 @@ public class HealthCareOrganisationTbl implements Serializable {
 	private String phone;
 
 	private String status;
+	
+	@Column(name="publickey")
+	private String publickey;
+		
 
+	
 	//bi-directional many-to-one association to AnswerSetTbl
 	@OneToMany(mappedBy="healthCareOrganisationTbl")
 	private List<AnswerSetTbl> answerSetTbls;
@@ -46,6 +53,12 @@ public class HealthCareOrganisationTbl implements Serializable {
 	//bi-directional one-to-one association to OrganisationTbl
 	@OneToOne(mappedBy="healthCareOrganisationTbl")
 	private OrganisationTbl organisationTbl;
+	
+	@OneToOne(mappedBy="healthCareOrganisationTbl")
+	private LabBranchTbl labBranchTbl;
+	
+	@OneToOne(mappedBy="healthCareOrganisationTbl")
+	private NetrxBranchTbl netrxBranchTbl;
 
 	public HealthCareOrganisationTbl() {
 	}
@@ -165,5 +178,32 @@ public class HealthCareOrganisationTbl implements Serializable {
 	public void setOrganisationTbl(OrganisationTbl organisationTbl) {
 		this.organisationTbl = organisationTbl;
 	}
+
+	public String getPublickey() {
+		return publickey;
+	}
+
+	public void setPublickey(String publickey) {
+		this.publickey = publickey;
+	}
+
+	public LabBranchTbl getLabBranchTbl() {
+		return labBranchTbl;
+	}
+
+	public NetrxBranchTbl getNetrxBranchTbl() {
+		return netrxBranchTbl;
+	}
+
+	public void setLabBranchTbl(LabBranchTbl labBranchTbl) {
+		this.labBranchTbl = labBranchTbl;
+	}
+
+	public void setNetrxBranchTbl(NetrxBranchTbl netrxBranchTbl) {
+		this.netrxBranchTbl = netrxBranchTbl;
+	}
+
+
+
 
 }
