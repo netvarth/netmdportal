@@ -14,6 +14,7 @@ import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.HealthCareDetailDTO;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
@@ -35,6 +36,7 @@ import com.nv.youNeverWait.rs.dto.MailTransferInfo;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
+import com.nv.youNeverWait.rs.dto.PublicKeyDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultRetrievalResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
@@ -119,4 +121,11 @@ public interface LabService {
 	 */
 	public ResponseDTO resetFacilityPassword(LoginDTO login);
 	
+	/**
+	 * rahul
+	 * @param branchId
+	 * @return PublicKeyDTO
+	 */
+	public PublicKeyDTO getPublicKey(int branchId);
+	public HealthCareDetailDTO getBranchDetail(String publicKey);
 }
