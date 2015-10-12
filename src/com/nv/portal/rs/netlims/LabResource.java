@@ -25,10 +25,12 @@ import com.nv.security.youNeverWait.User;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.exception.ServiceExceptionHandler;
+import com.nv.youNeverWait.globalsetting.PublicKeyGenerator;
 import com.nv.youNeverWait.pl.entity.ApplicationNameEnum;
 import com.nv.youNeverWait.pl.entity.LogUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.HealthCareDetailDTO;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.BranchListResponseDTO;
@@ -48,6 +50,7 @@ import com.nv.youNeverWait.rs.dto.MailTransferInfo;
 import com.nv.youNeverWait.rs.dto.OrderDetails;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.Parameter;
+import com.nv.youNeverWait.rs.dto.PublicKeyDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferResponseDTO;
@@ -1066,6 +1069,42 @@ public class LabResource extends ServiceExceptionHandler{
 		}
 		return response;
 	}
+	
+	@RequestMapping(value = "publickey/{branchId}", method = RequestMethod.GET)
+	@ResponseBody
+	public PublicKeyDTO getPublicKey(@PathVariable String branchId){
+		int bId = Integer.parseInt(branchId);
+		PublicKeyDTO response ;
+		try{
+			response = labService.getPublicKey(bId);
+		}catch(ServiceException e){
+			response = new PublicKeyDTO();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setErrorDTO(error);
+			response.setSuccess(false);
+		}
+		System.out.println(response);
+		return response;
+	}
+	@RequestMapping(value = "healthcareDetails/{publicKey}", method = RequestMethod.GET)
+	@ResponseBody
+	public HealthCareDetailDTO getHealthcareDetails(@PathVariable String publicKey){
+		HealthCareDetailDTO response = null;
+		try{
+		response = labService.getBranchDetail(publicKey);
+		}catch(ServiceException e){
+			response = new HealthCareDetailDTO();
+			ErrorDTO error = new ErrorDTO();
+			error.setErrCode(e.getError().getErrCode());
+			error.setDisplayErrMsg(e.isDisplayErrMsg());
+			response.setErrorDTO(error);
+			response.setSuccess(false);
+		}
+		return response;
+	}
+	
 
 	/**
 	 * @return the labService
