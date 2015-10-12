@@ -562,6 +562,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	</bean>
 	<bean id="facility.validator" class="com.nv.youNeverWait.user.bl.validation.FacilityValidator"></bean>
 	<bean id="lab.service" class="com.nv.youNeverWait.user.bl.impl.LabServiceImpl">
+	    <property name="publicKey">
+	        <ref bean="public.key"/>
+	     </property>
 		<property name="labDao">
 			<ref bean="lab.dao" />
 		</property>
@@ -915,5 +918,10 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 
 	<bean id="installer.validator"
 		class="com.nv.youNeverWait.user.bl.validation.InstallerValidator"></bean>
+	<bean id="public.key" class="com.nv.youNeverWait.globalsetting.PublicKeyGenerator">
+	    <property name="labDao">
+	        <ref bean="lab.dao"/>
+	    </property>
+	</bean>
 </beans>		
 		
