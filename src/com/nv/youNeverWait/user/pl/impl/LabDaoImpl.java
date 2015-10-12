@@ -30,6 +30,7 @@ import com.nv.youNeverWait.pl.entity.BranchFacilityTbl;
 import com.nv.youNeverWait.pl.entity.BranchStatusEnum;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.FrequencyEnum;
+import com.nv.youNeverWait.pl.entity.HealthCareOrganisationTbl;
 import com.nv.youNeverWait.pl.entity.LabBranchSystemInfoTbl;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
 import com.nv.youNeverWait.pl.entity.LabFacilityTbl;
@@ -40,6 +41,7 @@ import com.nv.youNeverWait.pl.entity.LabTbl;
 import com.nv.youNeverWait.pl.entity.LabUserTbl;
 import com.nv.youNeverWait.pl.entity.LoginTbl;
 import com.nv.youNeverWait.pl.entity.NetlimsOrderTbl;
+import com.nv.youNeverWait.pl.entity.NetrxBranchTbl;
 import com.nv.youNeverWait.pl.entity.UserTbl;
 import com.nv.youNeverWait.pl.entity.LabUserTypeEnum;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
@@ -3051,6 +3053,56 @@ public class LabDaoImpl extends GenericDaoHibernateImpl implements LabDao {
 		response.setList(facilities);
 		response.setCount(count);
 		return response;
+	}
+	
+	public HealthCareOrganisationTbl getBranchDetailsById(int id){
+		HealthCareOrganisationTbl tbl=null;
+		List<HealthCareOrganisationTbl> healthOrgTbl = getBranchDetail(id);
+		for(HealthCareOrganisationTbl tblObj : healthOrgTbl){
+			return tblObj;
+		}
+		 return tbl;
+	} 
+	
+	public List<LabBranchTbl> getLabBranchDetail(int labId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_DETAILS_FROM_LAB_BRANCH_TBL);
+		query.setParameter("param1", labId);
+		return executeQuery(LabBranchTbl.class, query);
+	}
+	public List<NetrxBranchTbl> getNetPharmaDetail(int labId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_DETAILS_FROM_NET_RX_BRANCH_TBL);
+		query.setParameter("param1", labId);
+		return executeQuery(NetrxBranchTbl.class, query);
+	}
+	public List<NetmdBranchTbl> getClinicDetail(int labId) {
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_DETAILS_FROM_NET_MD_BRANCH_TBL);
+		query.setParameter("param1", labId);
+		return executeQuery(NetmdBranchTbl.class, query);
+	}
+	
+	public List<HealthCareOrganisationTbl> getHealthCareDetail(String publicKey){
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_HEALTH_CARE_DEATILS);
+		query.setParameter("param1", publicKey);
+		return executeQuery(HealthCareOrganisationTbl.class, query);
+	}
+	@Transactional(readOnly=false)
+	public int updatePublickey(String key,int id){
+		javax.persistence.Query query = em.createQuery(Query.UPDATE_PUBLIC_KEY);
+		query.setParameter("param1", key);
+		query.setParameter("param2", id);
+		int i = query.executeUpdate();
+		return i;
+	}
+	public List<HealthCareOrganisationTbl> getBranchDetail(int branchId){
+		javax.persistence.Query query = em
+				.createQuery(Query.GET_BRANCH_DETAIL_BY_ID);
+		query.setParameter("param1", branchId);
+		return executeQuery(HealthCareOrganisationTbl.class, query);
+		
 	}
 
 }
