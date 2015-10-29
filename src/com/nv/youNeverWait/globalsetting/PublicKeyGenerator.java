@@ -60,20 +60,20 @@ public class PublicKeyGenerator {
 				labDao.updatePublickey(publicKey, id);
 				return publicKey;
 			}
-			if(healthCareDetails instanceof NetrxBranchTbl){
-				NetrxBranchTbl tbl = (NetrxBranchTbl)healthCareDetails;
-				String branchAddress = tbl.getAddress();
-				String branchName = tbl.getName();
-				int id = tbl.getId();
-				String[] bAdrs = branchAddress.split(",");
-				if(bAdrs.length>1){
-					branchAddress = bAdrs[0];
-				}
-				publicKey = branchAddress+"_"+branchName+"_"+"Pharma";
-				publicKey = publicKey.replaceAll("\\s+","");
-				labDao.updatePublickey(publicKey, id);
-				return publicKey;
-			}
+//			if(healthCareDetails instanceof NetrxBranchTbl){
+//				NetrxBranchTbl tbl = (NetrxBranchTbl)healthCareDetails;
+//				String branchAddress = tbl.getAddress();
+//				String branchName = tbl.getName();
+//				int id = tbl.getId();
+//				String[] bAdrs = branchAddress.split(",");
+//				if(bAdrs.length>1){
+//					branchAddress = bAdrs[0];
+//				}
+//				publicKey = branchAddress+"_"+branchName+"_"+"Pharma";
+//				publicKey = publicKey.replaceAll("\\s+","");
+//				labDao.updatePublickey(publicKey, id);
+//				return publicKey;
+//			}
 			return null;
 	}
 	
