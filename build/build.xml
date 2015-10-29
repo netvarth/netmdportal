@@ -1,7 +1,7 @@
 <project name="youNeverWait" default="all">
   
   <description>
-  	weblims version 1.0
+  	youNeverWait version 1.0
   </description>
 
   <property environment="env"/>
