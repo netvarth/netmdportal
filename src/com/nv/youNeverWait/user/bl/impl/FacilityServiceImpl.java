@@ -10,11 +10,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
-import com.nv.framework.sendmsg.SendMsgCallbackEnum;
-import com.nv.framework.sendmsg.email.SendMailMsgObj;
-import com.nv.framework.util.StringUtil;
-import com.nv.framework.util.text.StringEncoder;
+import com.nv.platform.email.sendmsg.SendEmailMsgWorkerThread;
+import com.nv.platform.email.sendmsg.SendMsgCallbackEnum;
+import com.nv.platform.email.sendmsg.email.SendMailMsgObj;
+import com.nv.platform.email.util.StringEncoder;
+import com.nv.platform.email.util.StringUtil;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.pl.entity.NetmdUserTypeEnum;
 import com.nv.youNeverWait.rs.dto.FacilitySyncDTO;

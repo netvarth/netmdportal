@@ -17,8 +17,8 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nv.framework.sendmsg.PendingMsgPojoTbl;
-import com.nv.framework.sendmsg.common.SendMsgBaseDAO;
+import com.nv.platform.email.sendmsg.PendingMsgPojoTbl;
+import com.nv.platform.email.sendmsg.common.SendMsgBaseDAO;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.dao.GenericDao;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;

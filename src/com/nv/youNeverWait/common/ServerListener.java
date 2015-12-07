@@ -13,7 +13,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
+import com.nv.platform.email.sendmsg.SendEmailMsgWorkerThread;
 
 
 /**

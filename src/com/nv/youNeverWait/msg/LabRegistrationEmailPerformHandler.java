@@ -7,9 +7,9 @@
  */
 package com.nv.youNeverWait.msg;
 
-import com.nv.framework.sendmsg.SendMsgResultNotifier;
-import com.nv.framework.sendmsg.SendMsgStatus;
-import com.nv.framework.sendmsg.email.SendMailMsgObj;
+import com.nv.platform.email.sendmsg.SendMsgResultNotifier;
+import com.nv.platform.email.sendmsg.SendMsgStatus;
+import com.nv.platform.email.sendmsg.email.SendMailMsgObj;
 
 public class LabRegistrationEmailPerformHandler implements
 		SendMsgResultNotifier<SendMailMsgObj> {

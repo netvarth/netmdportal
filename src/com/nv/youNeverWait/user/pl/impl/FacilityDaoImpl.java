@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nv.framework.util.text.StringEncoder;
+import com.nv.platform.email.util.StringEncoder;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;

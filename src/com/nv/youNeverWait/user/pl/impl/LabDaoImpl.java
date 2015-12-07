@@ -21,7 +21,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nv.framework.util.text.StringEncoder;
+import com.nv.platform.email.util.StringEncoder;
 import com.nv.security.youNeverWait.User;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;

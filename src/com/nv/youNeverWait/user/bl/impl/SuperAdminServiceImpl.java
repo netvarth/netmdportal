@@ -23,10 +23,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
-import com.nv.framework.sendmsg.SendMsgCallbackEnum;
-import com.nv.framework.sendmsg.email.SendMailMsgObj;
-import com.nv.framework.util.text.StringEncoder;
+import com.nv.platform.email.sendmsg.SendEmailMsgWorkerThread;
+import com.nv.platform.email.sendmsg.SendMsgCallbackEnum;
+import com.nv.platform.email.sendmsg.email.SendMailMsgObj;
+import com.nv.platform.email.util.StringEncoder;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;

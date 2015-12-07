@@ -10,10 +10,10 @@ import java.net.URL;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
-import com.nv.framework.sendmsg.SendMsgCallbackEnum;
-import com.nv.framework.sendmsg.email.SendMailMsgObj;
-import com.nv.framework.util.text.StringEncoder;
+import com.nv.platform.email.sendmsg.SendEmailMsgWorkerThread;
+import com.nv.platform.email.sendmsg.SendMsgCallbackEnum;
+import com.nv.platform.email.sendmsg.email.SendMailMsgObj;
+import com.nv.platform.email.util.StringEncoder;
 import com.nv.youNeverWait.rs.dto.UserCredentials;
 
 public class MailSendAdapter {

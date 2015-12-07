@@ -28,10 +28,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
-import com.nv.framework.sendmsg.SendMsgCallbackEnum;
-import com.nv.framework.sendmsg.email.SendMailMsgObj;
-import com.nv.framework.util.text.StringEncoder;
+import com.nv.platform.email.util.StringEncoder;
 import com.nv.security.youNeverWait.MailSendAdapter;
 import com.nv.youNeverWait.rs.dto.ErrorCodeListResponseDTO;
 import com.nv.youNeverWait.rs.dto.EnumDTO;
