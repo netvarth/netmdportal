@@ -11,9 +11,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 											
 	<bean id="email.worker.thread" class="com.nv.platform.email.sendmsg.SendEmailMsgWorkerThread"
 		scope="singleton">
-		<property name="maxSize">
-			<value>${Email.Queue.Max.Size}</value>
-		</property>
+		  <constructor-arg index="0" value="${Email.Queue.Max.Size}" />
+
 		<property name="context">
 			<value>youNeverWait</value>
 		</property>
