@@ -44,7 +44,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 
 	<bean class="org.codehaus.jackson.map.ObjectMapper" id="jacksonObjectMapper" />
 
-	<bean id="xmlMarshaller" class="com.nv.platform.email.core.NvJaxb2Marshaller">
+	<bean id="xmlMarshaller" class="com.nv.youNeverWait.common.NvJaxb2Marshaller">
 		<property name="classesToBeBound">
 			<list>
 				<value>com.nv.youNeverWait.rs.dto.LoginDTO</value>
