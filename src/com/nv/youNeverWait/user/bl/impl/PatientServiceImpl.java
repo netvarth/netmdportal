@@ -92,17 +92,17 @@ public class PatientServiceImpl implements PatientService {
 
 		//validator.validateCreatePatient(patient, header);
 		ResponseDTO response = patientDao.createPatient(patient, header);
-		String branchName = patientDao.getBranch(header.getBranchId());
+//		String branchName = patientDao.getBranch(header.getBranchId());
 
-		if (patient.getEmail() != null && !patient.getEmail().isEmpty()){
-			// send login details and password creation link to the user
-			List<NetmdPatientTbl>   patients = patientDao.listOfPatientsOnLogin(patient.getEmail());
-			log.info("CreatePatient----Sending Mail to patient..............");
-			mailSendAdapter.sendEmailForPatientCreation(patient.getFirstName(),
-					patient.getEmail(), Constants.PATIENT_REGISTRATION,
-					patient.getEmail(), branchName,patients.size());
-			log.info("CreatePatient----Mail Sent to queue ..........");
-		}	
+//		if (patient.getEmail() != null && !patient.getEmail().isEmpty()){
+//			// send login details and password creation link to the user
+//			List<NetmdPatientTbl>   patients = patientDao.listOfPatientsOnLogin(patient.getEmail());
+//			log.info("CreatePatient----Sending Mail to patient..............");
+//			mailSendAdapter.sendEmailForPatientCreation(patient.getFirstName(),
+//					patient.getEmail(), Constants.PATIENT_REGISTRATION,
+//					patient.getEmail(), branchName,patients.size());
+//			log.info("CreatePatient----Mail Sent to queue ..........");
+//		}	
 		return response;
 	}
 

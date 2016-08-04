@@ -80,12 +80,12 @@ public class DoctorServiceImpl implements DoctorService {
 
 		validator.validateCreateDoctor(doctor, header);
 		ResponseDTO response = doctorDao.create(doctor, header);
-		NetmdBranchTbl netmdBranchTbl = doctorDao.getById(NetmdBranchTbl.class,
-				header.getBranchId());
-		String netmdBranch= netmdBranchTbl.getName();
-		/*Sending mail to doctor*/
-			sendEmailToDoctor(Constants.DOCTOR_REGISTER, doctor,netmdBranch);
-		
+//		NetmdBranchTbl netmdBranchTbl = doctorDao.getById(NetmdBranchTbl.class,
+//				header.getBranchId());
+//		String netmdBranch= netmdBranchTbl.getName();
+//		/*Sending mail to doctor*/
+//		sendEmailToDoctor(Constants.DOCTOR_REGISTER, doctor,netmdBranch);
+
 		return response;
 	}
 
@@ -357,7 +357,7 @@ public class DoctorServiceImpl implements DoctorService {
 
 	@Override
 	public int processReferral(ReferralSyncDTO referral) {
-		
+
 		return doctorDao.processReferral(referral);
 	}
 
