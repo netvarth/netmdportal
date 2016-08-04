@@ -77,7 +77,7 @@
 	<target name="testApplication" depends="compile">
 	 
 		 	
-	   <JUNIT PRINTSUMMARY="YES" HALTONFAILURE="NO">
+	   <!--<JUNIT PRINTSUMMARY="YES" HALTONFAILURE="NO">
 		  	      <CLASSPATH>
 		  	            <PATHELEMENT LOCATION="${TEMP.BUILD.DIR}"/>
 		  	      	    <PATHELEMENT LOCATION="${RESOURCE.DIR}/SPRING}"/>
@@ -90,7 +90,7 @@
 				    </FILESET>
 				  	<FORMATTER TYPE="XML"/>
 				   </BATCHTEST>
-	   </JUNIT>
+	   </JUNIT>	-->
 		
 	</target>	
   <target name="dist" depends="testApplication" description="generate the distribution" >
