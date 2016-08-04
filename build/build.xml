@@ -77,20 +77,20 @@
 	<target name="testApplication" depends="compile">
 	 
 		 	
-	   <junit printsummary="yes" haltonfailure="no">
-		  	      <classpath>
-		  	            <pathelement location="${temp.build.dir}"/>
-		  	      	    <pathelement location="${resource.dir}/spring}"/>
-		  	            <path refid="project.class.path"/>
-		  	      </classpath>
+	   <JUNIT PRINTSUMMARY="YES" HALTONFAILURE="NO">
+		  	      <CLASSPATH>
+		  	            <PATHELEMENT LOCATION="${TEMP.BUILD.DIR}"/>
+		  	      	    <PATHELEMENT LOCATION="${RESOURCE.DIR}/SPRING}"/>
+		  	            <PATH REFID="PROJECT.CLASS.PATH"/>
+		  	      </CLASSPATH>
 	           	
-				  <batchtest fork="no" todir="${reports.tests}">
-				    <fileset dir="${src.dir}">
-				      <include name="**/test/*Test*.java"/>
-				    </fileset>
-				  	<formatter type="xml"/>
-				   </batchtest>
-	   </junit>	
+				  <BATCHTEST FORK="NO" TODIR="${REPORTS.TESTS}">
+				    <FILESET DIR="${SRC.DIR}">
+				      <INCLUDE NAME="**/TEST/*TEST*.JAVA"/>
+				    </FILESET>
+				  	<FORMATTER TYPE="XML"/>
+				   </BATCHTEST>
+	   </JUNIT>
 		
 	</target>	
   <target name="dist" depends="testApplication" description="generate the distribution" >

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+Rsc<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns:aop="http://www.springframework.org/schema/aop"
@@ -20,7 +20,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 <!--  <value>file:///${catalina.home}/conf/youNeverWait.properties</value>	 -->
 <!-- <value>file:///D:/Installations/apache-tomcat-8.0.9/conf/youNeverWait.properties</value> -->
 <!-- <value>file:////opt/jboss-as-7.1.2.Final-SNAPSHOT/standalone/configuration/youNeverWait.properties</value> -->
-	<value>file:////ebs/apache-tomcat-7.0.61/conf/youNeverWait.properties</value>
+	<value>file:////ebs/apache-tomcat-8.0.30/conf/youNeverWait.properties</value>
 
 </list>
 </property>
