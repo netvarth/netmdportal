@@ -12,6 +12,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.nv.security.youNeverWait.User;
+import com.nv.youNeverWait.pl.entity.HealthCareOrganisationTbl;
+import com.nv.youNeverWait.pl.entity.LabBranchTbl;
+import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;
+import com.nv.youNeverWait.pl.entity.NetrxBranchTbl;
 import com.nv.youNeverWait.pl.entity.OrderTransferTbl;
 import com.nv.youNeverWait.rs.dto.BranchFacilityListResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
@@ -95,5 +99,13 @@ public interface LabDao {
 	public int createBranchUser(SyncUser user, Integer source_branch_id);
 	public UserInfo getUserByReferredUid(int referredUid, int branchId);
 	public ListResponse getFacilityByFilter(FilterDTO filterDTO, User user);
-
+	
+	public HealthCareOrganisationTbl getBranchDetailsById(int branchId);
+	public List<LabBranchTbl> getLabBranchDetail(int labId);
+	public List<NetrxBranchTbl> getNetPharmaDetail(int labId);
+	public List<NetmdBranchTbl> getClinicDetail(int labId);
+	public List<HealthCareOrganisationTbl> getHealthCareDetail(String publicKey);
+	public int updatePublickey(String key,int id);
+	public List<HealthCareOrganisationTbl> getBranchDetail(int branchId);
+		
 }

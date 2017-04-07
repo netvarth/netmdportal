@@ -29,13 +29,14 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
-import com.nv.framework.sendmsg.SendMsgCallbackEnum;
-import com.nv.framework.sendmsg.email.SendMailMsgObj;
-import com.nv.framework.util.text.StringEncoder;
+import com.nv.platform.email.sendmsg.SendEmailMsgWorkerThread;
+import com.nv.platform.email.sendmsg.SendMsgCallbackEnum;
+import com.nv.platform.email.sendmsg.email.SendMailMsgObj;
+import com.nv.platform.email.util.StringEncoder;
 import com.nv.security.youNeverWait.User;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
+import com.nv.youNeverWait.globalsetting.PublicKeyGenerator;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LabBranchTbl;
 import com.nv.youNeverWait.pl.entity.LabTbl;
@@ -47,6 +48,7 @@ import com.nv.youNeverWait.rs.dto.BranchOrderCountResponseDTO;
 import com.nv.youNeverWait.rs.dto.BranchOrderDetail;
 import com.nv.youNeverWait.rs.dto.BranchOrdersResponseDTO;
 import com.nv.youNeverWait.rs.dto.HeaderDTO;
+import com.nv.youNeverWait.rs.dto.HealthCareDetailDTO;
 import com.nv.youNeverWait.rs.dto.HealthMonitorResponse;
 import com.nv.youNeverWait.rs.dto.LabBranchDTO;
 import com.nv.youNeverWait.rs.dto.LabBranchListResponseDTO;
@@ -75,6 +77,7 @@ import com.nv.youNeverWait.rs.dto.OrderTestResultList;
 import com.nv.youNeverWait.rs.dto.OrderTransfer;
 import com.nv.youNeverWait.rs.dto.Parameter;
 import com.nv.youNeverWait.rs.dto.PasswordDTO;
+import com.nv.youNeverWait.rs.dto.PublicKeyDTO;
 import com.nv.youNeverWait.rs.dto.ResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultRetrievalResponseDTO;
 import com.nv.youNeverWait.rs.dto.ResultTransferDTO;
@@ -127,6 +130,16 @@ public class LabServiceImpl implements LabService {
 	private HealthMonitorService healthService;
 	private ResultService resultService;
 	private FacilityService facilityService;
+	private PublicKeyGenerator publicKey;
+
+
+	public PublicKeyGenerator getPublicKey() {
+		return publicKey;
+	}
+
+	public void setPublicKey(PublicKeyGenerator publicKey) {
+		this.publicKey = publicKey;
+	}
 
 	/**
 	 * Create user in Lab
@@ -1789,4 +1802,26 @@ public class LabServiceImpl implements LabService {
 	public ResponseDTO resetFacilityPassword(LoginDTO login) {
 		return facilityService.resetPassword(login);
 	}
+	
+	
+	@Override
+	public PublicKeyDTO getPublicKey(int branchId){
+		if (branchId <= 0) {
+			ServiceException se = new ServiceException(
+					ErrorCodeEnum.InvalidBranchId);
+			se.setDisplayErrMsg(true);
+			throw se;
+		}
+		PublicKeyDTO dto  = publicKey.keyGenerator(branchId);
+		return dto;
+		
+	}
+
+	@Override
+	public HealthCareDetailDTO getBranchDetail(String pKey) {
+		
+		HealthCareDetailDTO dto = publicKey.receiveBranchDetail(pKey);
+		return dto;
+	}
+	
 }

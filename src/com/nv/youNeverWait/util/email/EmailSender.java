@@ -28,9 +28,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 
-import com.nv.framework.util.ClassUtil;
-import com.nv.framework.util.StringUtil;
-import com.nv.framework.util.collection.ArrayConverter;
+import com.nv.platform.email.util.ClassUtil;
+import com.nv.platform.email.util.StringUtil;
+import com.nv.platform.email.util.collection.ArrayConverter;
 
 /**
  * Utility to send email via SMTP.

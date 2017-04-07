@@ -363,4 +363,13 @@ public class Query {
 	//public static final String GET_FACILITY_LIST="SELECT lab_facility_tbl.* FROM lab_facility_tbl LEFT JOIN branch_facility_tbl ON lab_facility_tbl.id = branch_facility_tbl.facility LEFT JOIN lab_branch_tbl ON branch_facility_tbl.branch = lab_branch_tbl.id WHERE lab_branch_tbl.id =325";
 	public static final String GET_PAGESETTING_BY_NAME = "from PageSettingsTbl as setting where setting.keyName=:param1 and setting.labBranchTbl.id=:param2";
 	public static final String GET_PAGESETTINGS = "from PageSettingsTbl as setting where setting.labBranchTbl.id=:param1";
+	
+	
+	public static final String GET_DETAILS_FROM_LAB_BRANCH_TBL    = "from LabBranchTbl as id where labTbl.id = :param1"; 
+	public static final String GET_DETAILS_FROM_NET_MD_BRANCH_TBL = "from NetmdBranchTbl as id where netmdTbl.id = :param1";
+	public static final String GET_DETAILS_FROM_NET_RX_BRANCH_TBL = "from NetrxBranchTbl as id where netrxTbl.id = :param1";
+	public static final String UPDATE_PUBLIC_KEY = "UPDATE HealthCareOrganisationTbl as key set key.publickey= :param1 where key.id= :param2";
+	
+	public static final String GET_HEALTH_CARE_DEATILS =  "from HealthCareOrganisationTbl as key where key.publickey = :param1";
+	public static final String GET_BRANCH_DETAIL_BY_ID = "from HealthCareOrganisationTbl as branchId where branchId.id = :param1";
 }

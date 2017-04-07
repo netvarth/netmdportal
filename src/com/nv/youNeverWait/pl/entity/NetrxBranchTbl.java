@@ -68,6 +68,11 @@ public class NetrxBranchTbl implements Serializable {
 	@OneToMany(mappedBy="netrxBranchTbl")
 	private Set<NetrxUserTbl> netrxUserTbls;
 
+	//bi-directional one-to-one association to HealthCareOrganisationTbl
+	@OneToOne
+	@JoinColumn(name="id")
+	private HealthCareOrganisationTbl healthCareOrganisationTbl;
+	
     public NetrxBranchTbl() {
     }
 

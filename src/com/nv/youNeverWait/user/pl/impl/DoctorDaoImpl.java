@@ -19,7 +19,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nv.framework.util.text.StringEncoder;
+import com.nv.platform.email.util.StringEncoder;
 import com.nv.youNeverWait.api.sync.ReferralSyncDTO;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.exception.ServiceException;
@@ -29,7 +29,6 @@ import com.nv.youNeverWait.pl.entity.DoctorExpertiseTbl;
 import com.nv.youNeverWait.pl.entity.DoctorMembershipTbl;
 import com.nv.youNeverWait.pl.entity.DoctorPracticeExperienceTbl;
 import com.nv.youNeverWait.pl.entity.DoctorScheduleTbl;
-import com.nv.youNeverWait.pl.entity.DoctorTbl;
 import com.nv.youNeverWait.pl.entity.ErrorCodeEnum;
 import com.nv.youNeverWait.pl.entity.LoginTbl;
 import com.nv.youNeverWait.pl.entity.NetmdDoctorTbl;

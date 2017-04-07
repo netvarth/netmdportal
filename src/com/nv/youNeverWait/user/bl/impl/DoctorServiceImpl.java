@@ -18,10 +18,10 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.nv.framework.sendmsg.SendEmailMsgWorkerThread;
-import com.nv.framework.sendmsg.SendMsgCallbackEnum;
-import com.nv.framework.sendmsg.email.SendMailMsgObj;
-import com.nv.framework.util.text.StringEncoder;
+import com.nv.platform.email.sendmsg.SendEmailMsgWorkerThread;
+import com.nv.platform.email.sendmsg.SendMsgCallbackEnum;
+import com.nv.platform.email.sendmsg.email.SendMailMsgObj;
+import com.nv.platform.email.util.StringEncoder;
 import com.nv.youNeverWait.api.sync.ReferralSyncDTO;
 import com.nv.youNeverWait.common.Constants;
 import com.nv.youNeverWait.pl.entity.NetmdBranchTbl;

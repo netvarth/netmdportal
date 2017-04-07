@@ -18,7 +18,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.nv.framework.util.text.StringEncoder;
+import com.nv.platform.email.util.StringEncoder;
 import com.nv.security.youNeverWait.User;
 import com.nv.youNeverWait.exception.ServiceException;
 import com.nv.youNeverWait.rs.dto.BranchDetail;
